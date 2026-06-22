@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StackFreeks Tools — Free Developer Tools for VPS &amp; Cloud</title>
+  <meta name="description" content="Free browser-based tools for developers, sysadmins, and VPS users. No account required." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="StackFreeks Tools — Free Developer Tools for VPS &amp; Cloud" />
+  <meta property="og:description" content="Free browser-based tools for developers, sysadmins, and VPS users. No account required." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 56px 24px 40px;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--text-2);
+    }
+
+    /* Tools section */
+    .tools-section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+
+    .tools-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tool-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      color: var(--text-1);
+      transition: border-color 0.15s;
+    }
+    .tool-card:hover {
+      border-color: var(--border-2);
+      opacity: 1;
+    }
+
+    .tool-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-2);
+      border-radius: var(--radius);
+    }
+
+    .tool-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tool-name {
+      font-size: 14px;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .tool-desc {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .tool-arrow {
+      color: var(--text-3);
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .tool-card:hover .tool-arrow { color: var(--text-2); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 40px 16px 28px; }
+      .hero h1 { font-size: 24px; }
+      .hero p { font-size: 14px; }
+      .tools-section { padding: 0 16px 48px; }
+      .footer-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="logo">StackFreeks Tools</a>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>Free Tools for Developers &amp; VPS Users</h1>
+      <p>Browser-based utilities for sysadmins, developers, and cloud tinkerers. No account, no install — just open and use.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>개발자와 VPS 사용자를 위한 무료 툴</h1>
+      <p>서버 관리자, 개발자, 클라우드 사용자를 위한 브라우저 기반 툴 모음. 계정이나 설치 없이 바로 사용하세요.</p>
+    </div>
+  </section>
+
+  <!-- Tools Grid -->
+  <section class="tools-section">
+    <p class="section-label">Tools</p>
+    <div class="tools-grid">
+
+      <a href="/vps-cost-calculator/" class="tool-card">
+        <div class="tool-icon">💰</div>
+        <div class="tool-info">
+          <div class="lang-en">
+            <p class="tool-name">VPS Cost Calculator</p>
+            <p class="tool-desc">Compare Vultr, Hetzner, DigitalOcean costs</p>
+          </div>
+          <div class="lang-ko">
+            <p class="tool-name">VPS 비용 계산기</p>
+            <p class="tool-desc">Vultr, Hetzner, DigitalOcean 비용 비교</p>
+          </div>
+        </div>
+        <span class="tool-arrow">→</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script src="/shared/i18n.js"></script>
+
+</body>
+</html>

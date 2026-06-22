@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — StackFreeks Tools</title>
+  <meta name="description" content="Privacy Policy for StackFreeks Tools. Learn how we use cookies, Google AdSense, and affiliate links." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/privacy/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Privacy Policy | StackFreeks Tools" />
+  <meta property="og:url" content="https://tools.stackfreeks.com/privacy/" />
+  <meta name="robots" content="index, follow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --radius: 8px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-2);
+      font-family: var(--font);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navbar */
+    .navbar {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,11,0.85);
+    }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-mark {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-2); }
+
+    /* Hero */
+    .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 12px;
+    }
+    .effective-date { font-size: 13px; color: var(--text-3); }
+
+    /* Content */
+    .content { padding: 48px 0 64px; }
+    .content h2 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+      margin: 36px 0 12px;
+    }
+    .content h2:first-child { margin-top: 0; }
+    .content p { font-size: 0.9rem; color: var(--text-2); margin-bottom: 14px; line-height: 1.7; }
+    .content p:last-child { margin-bottom: 0; }
+    .content ul { list-style: none; margin: 0 0 14px; padding: 0; }
+    .content ul li {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      padding: 5px 0 5px 18px;
+      position: relative;
+    }
+    .content ul li::before { content: '—'; position: absolute; left: 0; color: var(--text-3); }
+    .content a { color: var(--accent); text-decoration: none; }
+    .content a:hover { text-decoration: underline; }
+    .divider { height: 1px; background: var(--border); margin: 36px 0; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-3);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-links { display: flex; gap: 16px; }
+    .footer a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .footer a:hover { color: var(--text-2); }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 1.4rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark"></div>
+      StackFreeks Tools
+    </a>
+    <div class="nav-actions">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <p class="eyebrow">Legal</p>
+    <div class="lang-en">
+      <h1>Privacy Policy</h1>
+      <p class="effective-date">Effective date: June 22, 2026</p>
+    </div>
+    <div class="lang-ko">
+      <h1>개인정보 처리방침</h1>
+      <p class="effective-date">시행일: 2026년 6월 22일</p>
+    </div>
+  </div>
+</section>
+
+<main class="content">
+  <div class="container">
+
+    <!-- English -->
+    <div class="lang-en">
+      <h2>Overview</h2>
+      <p>
+        StackFreeks Tools ("we", "us", "our") operates the website
+        <a href="https://tools.stackfreeks.com">tools.stackfreeks.com</a>.
+        This page explains what information we collect, how we use it, and your choices.
+      </p>
+
+      <h2>Information We Do Not Collect</h2>
+      <p>
+        All tools on this site run entirely in your browser (client-side JavaScript).
+        Data you enter into any tool — IP addresses, server configs, passwords, code —
+        is <strong style="color:var(--text-1)">never transmitted to our servers</strong> because we operate no backend servers.
+        We do not store, process, or have access to any input you provide to our tools.
+      </p>
+
+      <h2>Cookies &amp; Third-Party Advertising</h2>
+      <p>
+        We use <strong style="color:var(--text-1)">Google AdSense</strong> to display advertisements.
+        Google AdSense uses cookies to serve ads based on your prior visits to this and other websites.
+        Google's use of advertising cookies enables it and its partners to serve ads based on your visit
+        to our site and/or other sites on the Internet.
+      </p>
+      <p>You may opt out of personalized advertising by visiting:</p>
+      <ul>
+        <li><a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ad Settings</a></li>
+        <li><a href="https://www.aboutads.info" target="_blank" rel="noopener">aboutads.info</a> (industry opt-out)</li>
+      </ul>
+      <p>
+        For more information on how Google uses data when you use our site, visit
+        <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">google.com/policies/privacy/partners</a>.
+      </p>
+
+      <h2>Affiliate Links Disclosure</h2>
+      <p>
+        Some links on this site are affiliate links. We are a participant in the
+        <strong style="color:var(--text-1)">Vultr</strong> affiliate program and may earn a commission
+        when you click through and make a qualifying purchase. Affiliate links are marked with
+        <code style="font-size:12px;color:var(--text-3)">rel="nofollow sponsored"</code> in our HTML.
+        This comes at no additional cost to you.
+      </p>
+
+      <h2>Analytics</h2>
+      <p>
+        We may use privacy-focused analytics to understand aggregate traffic patterns
+        (e.g., page views, country of origin). We do not use Google Analytics.
+        If analytics are in use, no personally identifiable information is collected.
+      </p>
+
+      <h2>Third-Party Links</h2>
+      <p>
+        Our site contains links to external websites (stackfreeks.com, Vultr, etc.).
+        We are not responsible for the privacy practices of those sites. We encourage you
+        to review their privacy policies before providing any personal information.
+      </p>
+
+      <h2>Children's Privacy</h2>
+      <p>
+        Our site is not directed to children under 13. We do not knowingly collect
+        personal information from children. If you are a parent and believe your child
+        has provided us with personal information, please <a href="/contact/">contact us</a>.
+      </p>
+
+      <h2>Changes to This Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. Changes are effective when posted.
+        The effective date at the top of this page reflects the most recent revision.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        For privacy-related questions, email us at
+        <a href="/contact/">contact page</a> or see our
+        <a href="/contact/">Contact</a> page.
+      </p>
+    </div>
+
+    <!-- Korean -->
+    <div class="lang-ko">
+      <h2>개요</h2>
+      <p>
+        StackFreeks Tools("당사", "우리")는 웹사이트
+        <a href="https://tools.stackfreeks.com">tools.stackfreeks.com</a>을 운영합니다.
+        이 페이지는 수집하는 정보, 사용 방법 및 이용자의 선택권을 설명합니다.
+      </p>
+
+      <h2>수집하지 않는 정보</h2>
+      <p>
+        이 사이트의 모든 툴은 브라우저(클라이언트 측 JavaScript)에서만 실행됩니다.
+        툴에 입력하는 데이터 — IP 주소, 서버 설정, 비밀번호, 코드 — 는
+        <strong style="color:var(--text-1)">당사 서버로 전송되지 않습니다</strong>.
+        백엔드 서버를 운영하지 않기 때문입니다.
+        이용자가 툴에 입력한 내용은 저장, 처리, 접근되지 않습니다.
+      </p>
+
+      <h2>쿠키 및 제3자 광고</h2>
+      <p>
+        당사는 광고 게재를 위해 <strong style="color:var(--text-1)">Google AdSense</strong>를 사용합니다.
+        Google AdSense는 이용자의 과거 방문 기록을 기반으로 맞춤형 광고를 제공하기 위해 쿠키를 사용합니다.
+        Google의 광고 쿠키 사용으로 인해 Google 및 파트너사는 이 사이트 및 인터넷상의 다른 사이트 방문을
+        기반으로 광고를 제공할 수 있습니다.
+      </p>
+      <p>맞춤형 광고를 거부하려면 다음을 방문하세요:</p>
+      <ul>
+        <li><a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google 광고 설정</a></li>
+        <li><a href="https://www.aboutads.info" target="_blank" rel="noopener">aboutads.info</a> (업계 광고 거부)</li>
+      </ul>
+      <p>
+        Google이 이 사이트 이용 시 데이터를 사용하는 방식에 대한 자세한 내용은
+        <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">google.com/policies/privacy/partners</a>를 참조하세요.
+      </p>
+
+      <h2>제휴 링크 고지</h2>
+      <p>
+        이 사이트의 일부 링크는 제휴 링크입니다. 당사는
+        <strong style="color:var(--text-1)">Vultr</strong> 제휴 프로그램에 참여하며,
+        링크를 통해 가입 시 수수료를 받을 수 있습니다.
+        제휴 링크는 HTML에 <code style="font-size:12px;color:var(--text-3)">rel="nofollow sponsored"</code>로
+        표시됩니다. 이용자에게 추가 비용은 없습니다.
+      </p>
+
+      <h2>분석</h2>
+      <p>
+        집계된 트래픽 패턴(페이지뷰, 접속 국가 등)을 파악하기 위해 프라이버시 중심의 분석 도구를 사용할 수 있습니다.
+        Google Analytics는 사용하지 않습니다.
+        분석 도구를 사용하는 경우에도 개인 식별 정보는 수집되지 않습니다.
+      </p>
+
+      <h2>제3자 링크</h2>
+      <p>
+        이 사이트는 외부 웹사이트(stackfreeks.com, Vultr 등)로의 링크를 포함합니다.
+        해당 사이트의 개인정보 처리 방침에 대해서는 책임지지 않습니다.
+        개인정보를 제공하기 전에 해당 사이트의 개인정보 처리방침을 검토하시기 바랍니다.
+      </p>
+
+      <h2>아동 개인정보 보호</h2>
+      <p>
+        이 사이트는 13세 미만 아동을 대상으로 하지 않습니다.
+        자녀가 개인정보를 제공했다고 생각되는 경우
+        <a href="/contact/">문의 페이지</a>로 연락주세요.
+      </p>
+
+      <h2>방침 변경</h2>
+      <p>
+        개인정보 처리방침은 수시로 업데이트될 수 있습니다. 변경 사항은 게시 즉시 효력이 발생합니다.
+        상단의 시행일은 가장 최근의 개정일을 반영합니다.
+      </p>
+
+      <h2>문의</h2>
+      <p>
+        개인정보 관련 문의는
+        <a href="/contact/">문의 페이지</a>를 이용해 주세요.
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com →</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

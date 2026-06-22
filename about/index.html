@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — StackFreeks Tools</title>
+  <meta name="description" content="StackFreeks Tools is a collection of free, browser-based developer tools for VPS users, sysadmins, and indie hackers. No signup required." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/about/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="About | StackFreeks Tools" />
+  <meta property="og:description" content="Free browser-based developer tools for VPS users and sysadmins." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/about/" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-2);
+      font-family: var(--font);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navbar */
+    .navbar {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,11,0.85);
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-mark {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-2); }
+
+    /* Hero */
+    .hero {
+      padding: 56px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 12px;
+    }
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      max-width: 480px;
+    }
+
+    /* Content */
+    .content {
+      padding: 48px 0 64px;
+    }
+    .content h2 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+      margin: 36px 0 12px;
+    }
+    .content h2:first-child { margin-top: 0; }
+    .content p {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      margin-bottom: 14px;
+      line-height: 1.7;
+    }
+    .content p:last-child { margin-bottom: 0; }
+    .content ul {
+      list-style: none;
+      margin: 0 0 14px;
+      padding: 0;
+    }
+    .content ul li {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      padding: 5px 0;
+      padding-left: 18px;
+      position: relative;
+    }
+    .content ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--text-3);
+    }
+    .content a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .content a:hover { text-decoration: underline; }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 36px 0;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-3);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+    .footer a {
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer a:hover { color: var(--text-2); }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 1.4rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark"></div>
+      StackFreeks Tools
+    </a>
+    <div class="nav-actions">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <p class="eyebrow">About</p>
+    <div class="lang-en">
+      <h1>About StackFreeks Tools</h1>
+      <p class="hero-desc">Free, browser-based developer tools — no signup, no install.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>StackFreeks Tools 소개</h1>
+      <p class="hero-desc">무료 브라우저 기반 개발자 툴 — 가입도, 설치도 필요 없습니다.</p>
+    </div>
+  </div>
+</section>
+
+<main class="content">
+  <div class="container">
+
+    <!-- English content -->
+    <div class="lang-en">
+      <h2>What is StackFreeks Tools?</h2>
+      <p>
+        StackFreeks Tools is a collection of free, browser-based utilities built for developers,
+        sysadmins, VPS users, and indie hackers. Every tool runs entirely in your browser —
+        no server, no account, no tracking.
+      </p>
+      <p>
+        We focus on the tools that don't exist yet, or exist but have terrible UX.
+        If you've ever searched "free online [thing] tool" and landed on a spammy ad farm,
+        we built this for you.
+      </p>
+
+      <h2>What tools are available?</h2>
+      <p>Our current focus areas:</p>
+      <ul>
+        <li>VPS &amp; cloud cost calculators — compare Vultr, Hetzner, DigitalOcean</li>
+        <li>Server configuration generators — nginx, Apache, cron expressions</li>
+        <li>Developer utilities — JWT decoder, Base64, regex tester</li>
+        <li>Bandwidth &amp; uptime calculators</li>
+      </ul>
+      <p>New tools are added regularly. Check the <a href="/">homepage</a> for the full list.</p>
+
+      <div class="divider"></div>
+
+      <h2>Who made this?</h2>
+      <p>
+        StackFreeks Tools is part of <a href="https://stackfreeks.com" target="_blank" rel="noopener">StackFreeks</a>,
+        a blog covering VPS hosting, cloud servers, and practical developer guides.
+        The tools extend the blog — when we write about comparing VPS providers, we build
+        the calculator to go with it.
+      </p>
+
+      <h2>How is this free?</h2>
+      <p>
+        We're supported by Google AdSense display ads and affiliate partnerships —
+        notably <a href="/" rel="nofollow">Vultr</a>, who offer $100 free credit to new signups.
+        If you find a tool useful and sign up for Vultr through our link, you get free credits
+        and we earn a small commission. No cost to you.
+      </p>
+
+      <h2>Privacy &amp; data</h2>
+      <p>
+        All tools run client-side. No data you enter is ever sent to our servers — because we don't have any.
+        See our <a href="/privacy/">Privacy Policy</a> for details on cookies and advertising.
+      </p>
+    </div>
+
+    <!-- Korean content -->
+    <div class="lang-ko">
+      <h2>StackFreeks Tools란?</h2>
+      <p>
+        StackFreeks Tools는 개발자, 시스템 관리자, VPS 사용자, 인디 해커를 위한
+        무료 브라우저 기반 유틸리티 모음입니다. 모든 툴은 브라우저에서만 실행됩니다 —
+        서버도, 계정도, 추적도 없습니다.
+      </p>
+      <p>
+        아직 존재하지 않거나 UX가 나쁜 툴에 집중합니다.
+        "무료 온라인 [뭔가] 툴"을 검색하다가 광고 도배 사이트에 착지한 경험이 있다면,
+        이 사이트가 그 대안입니다.
+      </p>
+
+      <h2>어떤 툴이 있나요?</h2>
+      <p>현재 집중하는 카테고리:</p>
+      <ul>
+        <li>VPS · 클라우드 비용 계산기 — Vultr, Hetzner, DigitalOcean 비교</li>
+        <li>서버 설정 생성기 — nginx, Apache, cron 표현식</li>
+        <li>개발자 유틸리티 — JWT 디코더, Base64, 정규식 테스터</li>
+        <li>대역폭 · 업타임 계산기</li>
+      </ul>
+      <p>새 툴은 지속적으로 추가됩니다. 전체 목록은 <a href="/">홈페이지</a>에서 확인하세요.</p>
+
+      <div class="divider"></div>
+
+      <h2>누가 만들었나요?</h2>
+      <p>
+        StackFreeks Tools는 VPS 호스팅, 클라우드 서버, 개발자 가이드를 다루는 블로그
+        <a href="https://stackfreeks.com" target="_blank" rel="noopener">StackFreeks</a>의 일부입니다.
+        블로그 글을 쓸 때 필요한 계산기나 도구를 직접 만들어 함께 제공합니다.
+      </p>
+
+      <h2>왜 무료인가요?</h2>
+      <p>
+        Google AdSense 광고와 제휴 파트너십으로 운영됩니다.
+        특히 <a href="/" rel="nofollow">Vultr</a>는 신규 가입자에게 $100 크레딧을 제공합니다.
+        링크를 통해 가입하면 무료 크레딧을 받고 저희도 소액의 수수료를 받습니다.
+        여러분에게 추가 비용은 없습니다.
+      </p>
+
+      <h2>개인정보 및 데이터</h2>
+      <p>
+        모든 툴은 클라이언트 측에서만 실행됩니다. 입력한 데이터는 서버로 전송되지 않습니다 —
+        서버 자체가 없으니까요. 쿠키와 광고에 대한 자세한 내용은
+        <a href="/privacy/">개인정보 처리방침</a>을 확인하세요.
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com →</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

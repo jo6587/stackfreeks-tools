@@ -1,0 +1,17 @@
+# Claude / AI agent files
+CLAUDE.md
+Claude.md
+agents/
+guides/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Env / secrets
+.env
+.env.*

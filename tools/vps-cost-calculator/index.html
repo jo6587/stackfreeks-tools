@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VPS Cost Calculator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Compare monthly VPS costs across Vultr, Hetzner, and DigitalOcean. Filter by RAM and CPU to find the best-value plan instantly." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/vps-cost-calculator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="VPS Cost Calculator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Compare monthly VPS costs across Vultr, Hetzner, and DigitalOcean. Filter by RAM and CPU to find the best-value plan instantly." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/vps-cost-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Main */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .filter-group label {
+      font-size: 12px;
+      color: var(--text-2);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-group select {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      padding: 8px 32px 8px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      min-width: 160px;
+      transition: border-color 0.15s;
+    }
+    .filter-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* Results */
+    .results-header {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+
+    .plan-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .plan-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.15s;
+    }
+    .plan-card:hover { border-color: var(--border-2); }
+
+    .plan-card.best-value {
+      border-color: var(--success);
+      background: var(--surface);
+    }
+
+    .plan-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .plan-provider {
+      font-size: 12px;
+      color: var(--text-2);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-best {
+      font-size: 11px;
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid rgba(34,197,94,0.2);
+      padding: 1px 8px;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+
+    .plan-name {
+      font-size: 14px;
+      color: var(--text-1);
+    }
+
+    .plan-specs {
+      display: flex;
+      gap: 12px;
+      margin-top: 2px;
+    }
+
+    .plan-spec {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .plan-spec span {
+      color: var(--text-2);
+    }
+
+    .plan-price {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-1);
+      white-space: nowrap;
+    }
+
+    .plan-price-sub {
+      font-size: 12px;
+      color: var(--text-3);
+      text-align: right;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-2);
+    }
+
+    .empty-state p { font-size: 14px; }
+
+    /* Note */
+    .note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-3);
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto 0;
+      padding: 0 24px 32px;
+    }
+
+    .related-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    .related-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .related-title {
+      font-size: 14px;
+      color: var(--text-1);
+    }
+
+    .related-arrow {
+      color: var(--text-3);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+
+    .vultr-inner {
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--success-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .vultr-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .vultr-title {
+      font-size: 15px;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .vultr-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .vultr-cta {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-weight: 500;
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .vultr-cta:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      main { padding: 0 16px 40px; }
+      .filters { flex-direction: column; }
+      .filter-group select { min-width: 100%; }
+      .plan-card {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+      }
+      .plan-price-sub { display: none; }
+      .related { padding: 0 16px 24px; }
+      .vultr-banner { padding: 0 16px 24px; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+      .vultr-cta { align-self: stretch; text-align: center; }
+      .related-card { flex-direction: column; align-items: flex-start; }
+      .footer-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>VPS Cost Calculator</h1>
+      <p>Compare monthly VPS costs across Vultr, Hetzner, and DigitalOcean. Filter by your RAM and CPU needs to find the best-value plan instantly — no account required.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>VPS 비용 계산기</h1>
+      <p>Vultr, Hetzner, DigitalOcean의 월별 VPS 비용을 한눈에 비교하세요. RAM과 CPU 요구사항을 선택하면 최적의 플랜을 즉시 찾아드립니다.</p>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <main>
+    <div class="filters">
+      <div class="filter-group">
+        <label data-i18n="filter_ram">Minimum RAM</label>
+        <select id="sel-ram" onchange="renderPlans()">
+          <option value="1">1 GB</option>
+          <option value="2">2 GB</option>
+          <option value="4">4 GB</option>
+          <option value="8">8 GB</option>
+          <option value="16">16 GB</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label data-i18n="filter_cpu">Minimum CPU</label>
+        <select id="sel-cpu" onchange="renderPlans()">
+          <option value="1">1 Core</option>
+          <option value="2">2 Cores</option>
+          <option value="4">4 Cores</option>
+          <option value="6">6 Cores</option>
+          <option value="8">8 Cores</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="results-count" class="results-header"></div>
+    <div id="plan-list" class="plan-list"></div>
+
+    <p class="note" id="note-prices" data-i18n="note_prices">
+      Prices are approximate. Verify with provider before purchasing.
+    </p>
+  </main>
+
+  <!-- Related -->
+  <section class="related">
+    <a href="https://stackfreeks.com/vps-comparison/" class="related-card" target="_blank" rel="noopener">
+      <div>
+        <p class="related-label">stackfreeks.com</p>
+        <div class="lang-en">
+          <p class="related-title">How to Choose a VPS Provider in 2025 →</p>
+        </div>
+        <div class="lang-ko">
+          <p class="related-title">2025 VPS 제공업체 선택 가이드 →</p>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="vultr-inner">
+      <div>
+        <p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
+        <p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="vultr-sub" data-i18n="vultr_sub">$100 free credit for new accounts</p>
+      </div>
+      <a href="[VULTR_AFFILIATE_URL]" class="vultr-cta" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">
+        Try Vultr →
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    // Page-specific i18n
+    window.SF_PAGE_I18N = {
+      en: {
+        filter_ram:   'Minimum RAM',
+        filter_cpu:   'Minimum CPU',
+        col_provider: 'Provider',
+        col_plan:     'Plan',
+        col_cpu:      'CPU',
+        col_ram:      'RAM',
+        col_storage:  'Storage',
+        col_price:    'Price/mo',
+        badge_best:   'Best value',
+        no_results:   'No plans found — try relaxing your requirements.',
+        note_prices:  'Prices are approximate. Verify with provider before purchasing.',
+        results_count: (n) => `${n} plan${n !== 1 ? 's' : ''} found`,
+      },
+      ko: {
+        filter_ram:   '최소 RAM',
+        filter_cpu:   '최소 CPU',
+        col_provider: '제공업체',
+        col_plan:     '플랜',
+        col_cpu:      'CPU',
+        col_ram:      'RAM',
+        col_storage:  '스토리지',
+        col_price:    '월 요금',
+        badge_best:   '최저가',
+        no_results:   '조건에 맞는 플랜이 없습니다 — 조건을 완화해 보세요.',
+        note_prices:  '가격은 대략적인 수치입니다. 구매 전 제공업체에서 확인하세요.',
+        results_count: (n) => `플랜 ${n}개 찾음`,
+      }
+    };
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+  <script>
+    const PLANS = [
+      // Vultr
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 1, ram: 1,  storage: 25,  price: 6    },
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 1, ram: 2,  storage: 55,  price: 12   },
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 2, ram: 4,  storage: 80,  price: 24   },
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 4, ram: 8,  storage: 160, price: 48   },
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 6, ram: 16, storage: 320, price: 96   },
+      // Hetzner
+      { provider: 'Hetzner', name: 'CX11', cpu: 1, ram: 2,  storage: 20,  price: 4.15  },
+      { provider: 'Hetzner', name: 'CX21', cpu: 2, ram: 4,  storage: 40,  price: 7.55  },
+      { provider: 'Hetzner', name: 'CX31', cpu: 2, ram: 8,  storage: 80,  price: 14.39 },
+      { provider: 'Hetzner', name: 'CX41', cpu: 4, ram: 16, storage: 160, price: 27.27 },
+      { provider: 'Hetzner', name: 'CX51', cpu: 8, ram: 32, storage: 240, price: 54.54 },
+      // DigitalOcean
+      { provider: 'DigitalOcean', name: 'Basic Droplet',    cpu: 1, ram: 1,  storage: 25,  price: 6  },
+      { provider: 'DigitalOcean', name: 'Basic Droplet',    cpu: 1, ram: 2,  storage: 50,  price: 12 },
+      { provider: 'DigitalOcean', name: 'Basic Droplet',    cpu: 2, ram: 4,  storage: 80,  price: 24 },
+      { provider: 'DigitalOcean', name: 'Basic Droplet',    cpu: 2, ram: 8,  storage: 160, price: 48 },
+      { provider: 'DigitalOcean', name: 'General Purpose',  cpu: 4, ram: 16, storage: 100, price: 96 },
+    ];
+
+    const PROVIDER_LINKS = {
+      Vultr:        '[VULTR_AFFILIATE_URL]',
+      Hetzner:      'https://www.hetzner.com/cloud',
+      DigitalOcean: 'https://www.digitalocean.com/pricing',
+    };
+
+    function getLang() {
+      return document.documentElement.lang === 'ko' ? 'ko' : 'en';
+    }
+
+    function t(key) {
+      const lang = getLang();
+      const map = window.SF_PAGE_I18N;
+      return (map && map[lang] && map[lang][key]) || (map && map.en && map.en[key]) || key;
+    }
+
+    function renderPlans() {
+      const minRam = parseInt(document.getElementById('sel-ram').value, 10);
+      const minCpu = parseInt(document.getElementById('sel-cpu').value, 10);
+
+      const filtered = PLANS
+        .filter(p => p.ram >= minRam && p.cpu >= minCpu)
+        .sort((a, b) => a.price - b.price);
+
+      const listEl    = document.getElementById('plan-list');
+      const countEl   = document.getElementById('results-count');
+
+      if (filtered.length === 0) {
+        const noResultsKey = t('no_results');
+        listEl.innerHTML = `<div class="empty-state"><p>${noResultsKey}</p></div>`;
+        countEl.textContent = '';
+        return;
+      }
+
+      const fn = window.SF_PAGE_I18N[getLang()].results_count;
+      countEl.textContent = typeof fn === 'function' ? fn(filtered.length) : '';
+
+      const lowestPrice = filtered[0].price;
+
+      listEl.innerHTML = filtered.map((p, i) => {
+        const isBest = p.price === lowestPrice;
+        const badgeHtml = isBest
+          ? `<span class="badge-best">${t('badge_best')}</span>`
+          : '';
+
+        const relAttr = p.provider === 'Vultr'
+          ? 'rel="nofollow sponsored"'
+          : 'rel="noopener"';
+
+        return `
+          <div class="plan-card${isBest ? ' best-value' : ''}">
+            <div class="plan-left">
+              <div class="plan-provider">
+                ${p.provider}
+                ${badgeHtml}
+              </div>
+              <div class="plan-name">${p.name}</div>
+              <div class="plan-specs">
+                <div class="plan-spec">${t('col_cpu')}: <span>${p.cpu} vCPU</span></div>
+                <div class="plan-spec">${t('col_ram')}: <span>${p.ram} GB</span></div>
+                <div class="plan-spec">${t('col_storage')}: <span>${p.storage} GB SSD</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="plan-price">$${p.price.toFixed(2)}</div>
+              <div class="plan-price-sub">/mo</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Initial render
+    renderPlans();
+
+    // Re-render when language changes
+    document.addEventListener('sfLangChanged', renderPlans);
+  </script>
+
+</body>
+</html>
