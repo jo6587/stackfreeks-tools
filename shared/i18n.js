@@ -14,8 +14,8 @@ const SF_I18N = {
     // Vultr banner
     vultr_label: 'Sponsor',
     vultr_title: 'Get started on Vultr',
-    vultr_sub: '$100 free credit for new accounts',
-    vultr_cta: 'Try Vultr →',
+    vultr_sub: 'Get $300 free credit — valid for 30 days (limited-time offer)',
+    vultr_cta: 'Claim your credit →',
     // Footer
     footer_copy: '© 2026 StackFreeks',
   },
@@ -25,8 +25,8 @@ const SF_I18N = {
     // Vultr banner
     vultr_label: '스폰서',
     vultr_title: 'Vultr로 시작하세요',
-    vultr_sub: '신규 가입 시 $100 크레딧 무료',
-    vultr_cta: 'Vultr 시작하기 →',
+    vultr_sub: '$300 무료 크레딧 — 가입 후 30일 유효 (한정 기간)',
+    vultr_cta: '크레딧 받기 →',
     // Footer
     footer_copy: '© 2026 StackFreeks',
   }
