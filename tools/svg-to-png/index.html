@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SVG to PNG Converter — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Convert SVG to PNG at 1x, 2x, or 4x resolution. Export with transparent or white background. Free, no account, works in your browser." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/svg-to-png/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SVG to PNG Converter — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Convert SVG to PNG at 1x, 2x, or 4x resolution. Export with transparent or white background. Free, no account, works in your browser." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/svg-to-png/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-1); }
+
+    /* Hero */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 32px;
+    }
+
+    .hero h1 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text-1);
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--text-2);
+      max-width: 560px;
+    }
+
+    /* Tool area */
+    .tool-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Controls row */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-label {
+      font-size: 13px;
+      color: var(--text-2);
+      white-space: nowrap;
+    }
+
+    /* Button group toggle */
+    .btn-group { display: flex; gap: 4px; }
+    .btn-group button {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-group button.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Drop zone */
+    .drop-zone {
+      border: 2px dashed var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      margin-bottom: 24px;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--accent);
+      background: rgba(99,102,241,0.04);
+    }
+
+    .drop-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .drop-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .drop-sub {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    #file-input { display: none; }
+
+    /* Results */
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .results-count {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .btn-download-all, .btn-clear {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+
+    .btn-download-all {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn-download-all:hover { opacity: 0.85; }
+
+    .btn-clear {
+      background: transparent;
+      color: var(--text-2);
+    }
+    .btn-clear:hover { border-color: var(--border-2); color: var(--text-1); }
+
+    .results-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    /* Result card */
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .thumb-wrap {
+      background-image:
+        linear-gradient(45deg, #333 25%, transparent 25%),
+        linear-gradient(-45deg, #333 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #333 75%),
+        linear-gradient(-45deg, transparent 75%, #333 75%);
+      background-size: 12px 12px;
+      background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+      background-color: #222;
+      border-radius: var(--radius) var(--radius) 0 0;
+      overflow: hidden;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .thumb-wrap.bg-white-on {
+      background-image: none;
+      background-color: #fff;
+    }
+
+    .thumb-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .card-body {
+      padding: 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-filename {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-dims {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .btn-download {
+      flex: 1;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 7px 12px;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #fff;
+      cursor: pointer;
+      text-align: center;
+      transition: opacity 0.15s;
+    }
+    .btn-download:hover { opacity: 0.85; }
+
+    .btn-remove {
+      font-family: var(--font);
+      font-size: 13px;
+      padding: 7px 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-3);
+      cursor: pointer;
+      transition: all 0.15s;
+      line-height: 1;
+    }
+    .btn-remove:hover { border-color: #ef4444; color: #ef4444; }
+
+    /* Guide */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .related-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .related a {
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    /* Vultr banner */
+    .vultr-banner {
+      background: var(--success-bg);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 24px;
+    }
+    .banner-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+    .banner-title { font-size: 16px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .footer-links a { font-size: 13px; color: var(--text-3); }
+    .footer-links a:hover { color: var(--text-2); }
+    .footer-copy { font-size: 12px; color: var(--text-3); }
+
+    /* Empty state */
+    #results-section { display: none; }
+    #results-section.visible { display: block; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 32px 16px 24px; }
+      .tool-wrap { padding: 0 16px 32px; }
+      .guide { padding: 0 16px 32px; }
+      .faq { padding: 0 16px 32px; }
+      .related { padding: 0 16px 32px; }
+      .controls { gap: 12px; }
+      .results-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- 3. Hero (bilingual) -->
+  <div class="hero">
+    <div class="lang-en">
+      <h1>SVG to PNG Converter</h1>
+      <p>Convert SVG icons and graphics to PNG at any resolution. Free, no account, works in your browser.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>SVG → PNG 변환기</h1>
+      <p>SVG 아이콘과 그래픽을 원하는 해상도의 PNG로 변환. 무료, 계정 불필요.</p>
+    </div>
+  </div>
+
+  <!-- 4. Tool body -->
+  <div class="tool-wrap">
+
+    <!-- Controls row -->
+    <div class="controls">
+      <div class="control-group">
+        <span class="control-label" data-i18n="scale_label">Scale</span>
+        <div class="btn-group" id="scale-group">
+          <button class="active" data-scale="1">1x</button>
+          <button data-scale="2">2x</button>
+          <button data-scale="4">4x</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <span class="control-label">Background</span>
+        <div class="btn-group" id="bg-group">
+          <button class="active" data-bg="transparent" data-i18n="bg_transparent">Transparent</button>
+          <button data-bg="white" data-i18n="bg_white">White</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drag & drop zone -->
+    <div class="drop-zone" id="drop-zone">
+      <div class="drop-icon">🖼️</div>
+      <div class="drop-title" data-i18n="drop_label">Click or drag & drop SVG files here</div>
+      <div class="drop-sub">Supports multiple files · .svg · Converted locally in your browser</div>
+      <input type="file" id="file-input" accept=".svg,image/svg+xml" multiple />
+    </div>
+
+    <!-- Results -->
+    <div id="results-section">
+      <div class="results-header">
+        <span class="results-count" id="results-count"></span>
+        <div class="results-actions">
+          <button class="btn-clear" id="btn-clear" data-i18n="clear_btn">Clear all</button>
+          <button class="btn-download-all" id="btn-download-all" data-i18n="download_all_btn" style="display:none">Download All</button>
+        </div>
+      </div>
+      <div class="results-grid" id="results-grid"></div>
+    </div>
+
+  </div>
+
+  <!-- 5. Guide -->
+  <div class="guide">
+    <div class="lang-en">
+      <div class="guide-title">How to use</div>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">STEP 1</div>
+          <h3>Upload your SVG</h3>
+          <p>Click the drop zone or drag your SVG files directly. Batch processing supported — add multiple files at once.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 2</div>
+          <h3>Choose export scale</h3>
+          <p>2x is ideal for retina/HiDPI displays. Use 4x for print materials or very large previews. 1x for pixel-perfect web exports.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 3</div>
+          <h3>Set background</h3>
+          <p>Transparent keeps your icon clean for overlays. White background is best for documents, email templates, or JPG-only exports.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 4</div>
+          <h3>Download PNG</h3>
+          <p>Hit Download PNG for individual files, or use Download All to grab everything as separate PNGs — perfect for app stores and Figma exports.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <div class="guide-title">사용 방법</div>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">STEP 1</div>
+          <h3>SVG 업로드</h3>
+          <p>드롭 존을 클릭하거나 SVG 파일을 직접 드래그하세요. 여러 파일을 동시에 업로드할 수 있습니다.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 2</div>
+          <h3>내보내기 배율 선택</h3>
+          <p>레티나/HiDPI 디스플레이에는 2x가 적합합니다. 인쇄물이나 대형 미리보기에는 4x를 사용하세요. 웹 픽셀 정확도가 필요하면 1x.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 3</div>
+          <h3>배경 설정</h3>
+          <p>투명 배경은 아이콘 오버레이에 적합합니다. 흰색 배경은 문서, 이메일 템플릿, JPG 전용 내보내기에 좋습니다.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 4</div>
+          <h3>PNG 다운로드</h3>
+          <p>개별 파일은 Download PNG 버튼을, 전체는 Download All 버튼을 사용하세요. 앱스토어 제출, Figma 내보내기에 완벽합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. FAQ -->
+  <div class="faq">
+    <div class="lang-en">
+      <div class="faq-title">Frequently Asked Questions</div>
+
+      <div class="faq-item">
+        <div class="faq-q">How do I convert an SVG to PNG without losing quality?</div>
+        <div class="faq-a">SVG is a vector format, so it scales losslessly at any size. This tool renders your SVG onto an HTML5 Canvas at your chosen resolution — using 2x or 4x scale ensures the exported PNG looks sharp even on high-density displays. The conversion happens entirely in your browser using the Canvas API, preserving all colors, gradients, and shapes exactly.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What resolution should I use when converting SVG to PNG?</div>
+        <div class="faq-a">For standard web use, 1x matches the SVG's native viewBox dimensions. For retina and HiDPI screens (most modern phones and laptops), choose 2x — it doubles each dimension, giving 4× more pixels. For high-quality print or marketing materials, use 4x. For example, a 100×100 SVG exported at 4x becomes a 400×400 PNG — more than enough for most print contexts at 150 DPI.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I convert SVG to transparent PNG?</div>
+        <div class="faq-a">Yes — Transparent is the default background option. The Canvas is not filled with any color, so all areas outside your SVG artwork remain fully transparent (alpha = 0). This is ideal for icons you plan to place over colored backgrounds in apps, websites, or design tools like Figma. Toggle to White background if you need an opaque export for email or document use.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Why does my SVG look blurry when exported as PNG?</div>
+        <div class="faq-a">Blurriness usually happens when the SVG is exported at too small a resolution and then displayed at a larger size. Try increasing the scale to 2x or 4x before downloading. Another cause is missing width/height or viewBox attributes in the SVG source — this tool defaults to 512×512 in that case, but you can edit the SVG file to add explicit dimensions for better results.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What's the difference between SVG and PNG? When should I use each?</div>
+        <div class="faq-a">SVG (Scalable Vector Graphics) is resolution-independent — it's defined by math, not pixels, so it looks crisp at any size. Use SVG for logos, icons, and illustrations in web and UI contexts where you control the environment. PNG (Portable Network Graphics) is a raster format — fixed pixels with lossless compression and transparency support. Use PNG when you need broad compatibility: app stores (Apple, Google Play), email clients, Microsoft Office documents, or any platform that doesn't support SVG.</div>
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <div class="faq-title">자주 묻는 질문</div>
+
+      <div class="faq-item">
+        <div class="faq-q">화질 손상 없이 SVG를 PNG로 변환하려면 어떻게 하나요?</div>
+        <div class="faq-a">SVG는 벡터 형식이기 때문에 어떤 크기에서도 손실 없이 확대됩니다. 이 도구는 HTML5 Canvas를 사용해 선택한 해상도로 SVG를 렌더링합니다. 2x 또는 4x 배율을 사용하면 고밀도 디스플레이에서도 선명한 PNG를 얻을 수 있습니다. 변환은 Canvas API를 통해 브라우저에서 완전히 처리됩니다.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">SVG를 PNG로 변환할 때 어떤 해상도를 사용해야 하나요?</div>
+        <div class="faq-a">일반 웹 사용에는 1x(SVG 기본 viewBox 크기)가 적합합니다. 레티나 및 HiDPI 화면(대부분의 최신 폰/노트북)에는 2x를 선택하세요. 고품질 인쇄물이나 마케팅 자료에는 4x를 사용합니다. 예를 들어 100×100 SVG를 4x로 내보내면 400×400 PNG가 됩니다.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">SVG를 투명 PNG로 변환할 수 있나요?</div>
+        <div class="faq-a">네 — 기본 배경 옵션이 투명입니다. Canvas가 색으로 채워지지 않아 SVG 아트워크 밖의 영역이 완전히 투명(알파=0)하게 유지됩니다. 앱, 웹사이트, Figma 등에서 색상 배경 위에 아이콘을 배치할 때 이상적입니다. 이메일이나 문서용이라면 흰색 배경으로 전환하세요.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">SVG를 PNG로 내보냈는데 흐릿하게 보이는 이유는 무엇인가요?</div>
+        <div class="faq-a">대부분 SVG를 너무 작은 해상도로 내보낸 후 더 크게 표시하기 때문입니다. 배율을 2x 또는 4x로 올려 다시 다운로드해 보세요. 또 다른 원인은 SVG 소스에 width/height 또는 viewBox 속성이 없는 경우입니다. 이 경우 기본값 512×512로 처리되며, SVG 파일에 명시적 크기를 추가하면 더 나은 결과를 얻을 수 있습니다.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">SVG와 PNG의 차이점은 무엇인가요? 각각 언제 써야 하나요?</div>
+        <div class="faq-a">SVG(확장 가능한 벡터 그래픽)는 해상도 독립적입니다 — 픽셀이 아닌 수학으로 정의되어 어떤 크기에서도 선명합니다. 웹 및 UI 환경에서 로고, 아이콘, 일러스트에 사용하세요. PNG(휴대용 네트워크 그래픽)는 래스터 형식으로 손실 없는 압축과 투명도를 지원합니다. 앱 스토어(Apple, Google Play), 이메일 클라이언트, Microsoft Office 문서처럼 SVG를 지원하지 않는 플랫폼에서 사용하세요.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Related content -->
+  <div class="related">
+    <div class="related-title">Related</div>
+    <a href="https://stackfreeks.com" target="_blank" rel="noopener">More developer tips and tools on StackFreeks →</a>
+  </div>
+
+  <!-- 8. Vultr banner -->
+  <div class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <div class="eyebrow" data-i18n="vultr_label">Sponsor</div>
+        <div class="banner-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </div>
+
+  <!-- 9. Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+    <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
+  </footer>
+
+  <!-- i18n page-specific keys -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: '← All Tools',
+        drop_label: 'Click or drag & drop SVG files here',
+        scale_label: 'Scale',
+        bg_transparent: 'Transparent',
+        bg_white: 'White',
+        download_btn: 'Download PNG',
+        download_all_btn: 'Download All',
+        clear_btn: 'Clear all',
+        vultr_label: 'Sponsor',
+        vultr_title: 'Get started on Vultr',
+        vultr_sub: 'Get $300 free credit — valid for 30 days',
+        vultr_cta: 'Claim your credit →',
+        footer_copy: '© 2026 StackFreeks'
+      },
+      ko: {
+        nav_back: '← 전체 툴',
+        drop_label: 'SVG 파일을 클릭하거나 드래그해서 올리세요',
+        scale_label: '배율',
+        bg_transparent: '투명',
+        bg_white: '흰색',
+        download_btn: 'PNG 다운로드',
+        download_all_btn: '전체 다운로드',
+        clear_btn: '전체 삭제',
+        vultr_label: '스폰서',
+        vultr_title: 'Vultr로 시작하세요',
+        vultr_sub: '$300 무료 크레딧 — 가입 후 30일 유효 (한정 기간)',
+        vultr_cta: '크레딧 받기 →',
+        footer_copy: '© 2026 StackFreeks'
+      }
+    };
+  </script>
+
+  <!-- Tool logic -->
+  <script>
+    (function () {
+      var currentScale = 1;
+      var currentBg = 'transparent';
+      var items = []; // { file, svgText, blobUrl, origW, origH }
+
+      // --- Scale toggle ---
+      var scaleGroup = document.getElementById('scale-group');
+      scaleGroup.querySelectorAll('button').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          currentScale = parseInt(btn.dataset.scale, 10);
+          scaleGroup.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          renderAll();
+        });
+      });
+
+      // --- Background toggle ---
+      var bgGroup = document.getElementById('bg-group');
+      bgGroup.querySelectorAll('button').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          currentBg = btn.dataset.bg;
+          bgGroup.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          // Update thumb backgrounds
+          document.querySelectorAll('.thumb-wrap').forEach(function (tw) {
+            tw.classList.toggle('bg-white-on', currentBg === 'white');
+          });
+          // Re-render canvases (needed for white fill)
+          renderAll();
+        });
+      });
+
+      // --- Drop zone ---
+      var dropZone = document.getElementById('drop-zone');
+      var fileInput = document.getElementById('file-input');
+
+      dropZone.addEventListener('click', function () { fileInput.click(); });
+      fileInput.addEventListener('change', function () { handleFiles(fileInput.files); fileInput.value = ''; });
+
+      dropZone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+      });
+      dropZone.addEventListener('dragleave', function () { dropZone.classList.remove('drag-over'); });
+      dropZone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        handleFiles(e.dataTransfer.files);
+      });
+
+      // --- File handling ---
+      function handleFiles(files) {
+        var svgFiles = Array.from(files).filter(function (f) {
+          return f.type === 'image/svg+xml' || f.name.toLowerCase().endsWith('.svg');
+        });
+        if (!svgFiles.length) return;
+
+        svgFiles.forEach(function (file) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var svgText = e.target.result;
+            var dims = parseSvgDims(svgText);
+            var blob = new Blob([svgText], { type: 'image/svg+xml' });
+            var blobUrl = URL.createObjectURL(blob);
+            var item = { file: file, svgText: svgText, blobUrl: blobUrl, origW: dims.w, origH: dims.h };
+            items.push(item);
+            renderAll();
+          };
+          reader.readAsText(file);
+        });
+      }
+
+      // --- Parse SVG dimensions ---
+      function parseSvgDims(svgText) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(svgText, 'image/svg+xml');
+        var svg = doc.documentElement;
+        var w = 0, h = 0;
+
+        // Try explicit width/height
+        var wAttr = svg.getAttribute('width');
+        var hAttr = svg.getAttribute('height');
+        if (wAttr && hAttr) {
+          w = parseFloat(wAttr);
+          h = parseFloat(hAttr);
+        }
+
+        // Fallback to viewBox
+        if ((!w || !h) && svg.getAttribute('viewBox')) {
+          var vb = svg.getAttribute('viewBox').trim().split(/[\s,]+/);
+          if (vb.length === 4) {
+            w = parseFloat(vb[2]);
+            h = parseFloat(vb[3]);
+          }
+        }
+
+        // Default fallback
+        if (!w || !h || isNaN(w) || isNaN(h)) { w = 512; h = 512; }
+        return { w: Math.round(w), h: Math.round(h) };
+      }
+
+      // --- Render all items ---
+      function renderAll() {
+        var grid = document.getElementById('results-grid');
+        grid.innerHTML = '';
+        if (!items.length) {
+          document.getElementById('results-section').classList.remove('visible');
+          return;
+        }
+        document.getElementById('results-section').classList.add('visible');
+
+        items.forEach(function (item, idx) {
+          var outW = item.origW * currentScale;
+          var outH = item.origH * currentScale;
+          var card = createCard(item, idx, outW, outH);
+          grid.appendChild(card);
+
+          // Draw canvas async after img load
+          var canvas = card.querySelector('canvas');
+          var img = new window.Image();
+          img.onload = function () {
+            var ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, outW, outH);
+            if (currentBg === 'white') {
+              ctx.fillStyle = '#ffffff';
+              ctx.fillRect(0, 0, outW, outH);
+            }
+            ctx.drawImage(img, 0, 0, outW, outH);
+            // Update preview img src
+            var previewImg = card.querySelector('.preview-img');
+            previewImg.src = canvas.toDataURL('image/png');
+          };
+          img.src = item.blobUrl;
+        });
+
+        // Update count and Download All visibility
+        var countEl = document.getElementById('results-count');
+        countEl.textContent = items.length + ' file' + (items.length !== 1 ? 's' : '');
+        var dlAll = document.getElementById('btn-download-all');
+        dlAll.style.display = items.length >= 2 ? 'inline-block' : 'none';
+      }
+
+      // --- Create result card ---
+      function createCard(item, idx, outW, outH) {
+        var card = document.createElement('div');
+        card.className = 'result-card';
+
+        var thumbWrap = document.createElement('div');
+        thumbWrap.className = 'thumb-wrap' + (currentBg === 'white' ? ' bg-white-on' : '');
+
+        var previewImg = document.createElement('img');
+        previewImg.className = 'preview-img';
+        previewImg.alt = item.file.name;
+        previewImg.style.maxHeight = '140px';
+        thumbWrap.appendChild(previewImg);
+        card.appendChild(thumbWrap);
+
+        // Hidden canvas for rendering
+        var canvas = document.createElement('canvas');
+        canvas.width = outW;
+        canvas.height = outH;
+        canvas.style.display = 'none';
+        card.appendChild(canvas);
+
+        var body = document.createElement('div');
+        body.className = 'card-body';
+
+        var nameEl = document.createElement('div');
+        nameEl.className = 'card-filename';
+        nameEl.textContent = item.file.name;
+        nameEl.title = item.file.name;
+
+        var dimsEl = document.createElement('div');
+        dimsEl.className = 'card-dims';
+        dimsEl.textContent = item.origW + '×' + item.origH + ' → ' + outW + '×' + outH + ' px';
+
+        var actionsEl = document.createElement('div');
+        actionsEl.className = 'card-actions';
+
+        var dlBtn = document.createElement('button');
+        dlBtn.className = 'btn-download';
+        dlBtn.setAttribute('data-i18n', 'download_btn');
+        dlBtn.textContent = 'Download PNG';
+        dlBtn.addEventListener('click', function () { downloadCard(canvas, item.file.name); });
+
+        var removeBtn = document.createElement('button');
+        removeBtn.className = 'btn-remove';
+        removeBtn.textContent = '✕';
+        removeBtn.title = 'Remove';
+        removeBtn.addEventListener('click', function () {
+          URL.revokeObjectURL(item.blobUrl);
+          items.splice(idx, 1);
+          renderAll();
+        });
+
+        actionsEl.appendChild(dlBtn);
+        actionsEl.appendChild(removeBtn);
+
+        body.appendChild(nameEl);
+        body.appendChild(dimsEl);
+        body.appendChild(actionsEl);
+        card.appendChild(body);
+
+        return card;
+      }
+
+      // --- Download single ---
+      function downloadCard(canvas, filename) {
+        var dataUrl = canvas.toDataURL('image/png');
+        if (!dataUrl || dataUrl === 'data:,') return;
+        var a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = filename.replace(/\.svg$/i, '') + '_' + currentScale + 'x.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      // --- Download All ---
+      document.getElementById('btn-download-all').addEventListener('click', function () {
+        document.querySelectorAll('.result-card').forEach(function (card, idx) {
+          var canvas = card.querySelector('canvas');
+          var item = items[idx];
+          if (canvas && item) {
+            setTimeout(function () { downloadCard(canvas, item.file.name); }, idx * 120);
+          }
+        });
+      });
+
+      // --- Clear all ---
+      document.getElementById('btn-clear').addEventListener('click', function () {
+        items.forEach(function (item) { URL.revokeObjectURL(item.blobUrl); });
+        items = [];
+        renderAll();
+      });
+
+      // --- Re-apply i18n to dynamic buttons after lang change ---
+      document.addEventListener('sfLangChanged', function (e) {
+        var lang = e.detail.lang;
+        var t = Object.assign({}, (window.SF_PAGE_I18N || {})[lang]);
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          if (t[el.dataset.i18n] != null) el.textContent = t[el.dataset.i18n];
+        });
+      });
+
+    })();
+  </script>
+
+  <!-- 10. i18n script (must be last) -->
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>

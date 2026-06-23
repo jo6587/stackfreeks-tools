@@ -52,6 +52,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tools.stackfreeks.com/tools/svg-to-png/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/webp-to-jpg/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tools.stackfreeks.com/tools/json-to-csv/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebP to JPG Converter — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Convert WebP images to JPG free online. Batch convert multiple files, adjust quality, no account needed. Works entirely in your browser." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/webp-to-jpg/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WebP to JPG Converter — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Convert WebP images to JPG free online. Batch convert multiple files, adjust quality, no account needed. Works entirely in your browser." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/webp-to-jpg/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .lang-toggle:hover { color: var(--text-1); border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 32px;
+    }
+    .hero h1 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 16px;
+      color: var(--text-2);
+      max-width: 560px;
+    }
+
+    /* Tool section */
+    .tool-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Quality slider */
+    .quality-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .quality-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      white-space: nowrap;
+      min-width: 140px;
+    }
+    .quality-slider {
+      flex: 1;
+      min-width: 160px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      height: 4px;
+    }
+
+    /* Drop zone */
+    .drop-zone {
+      border: 2px dashed var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      margin-bottom: 32px;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--accent);
+      background: rgba(99,102,241,0.04);
+    }
+    .drop-zone-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+    .drop-zone-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+    .drop-zone-hint {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+    .drop-zone input[type="file"] {
+      display: none;
+    }
+
+    /* Batch controls */
+    .batch-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 16px;
+      transition: opacity 0.15s, background 0.15s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { opacity: 0.85; color: #fff; }
+    .btn-secondary {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+    }
+    .btn-secondary:hover { color: var(--text-1); background: var(--surface); }
+    .btn-danger {
+      background: transparent;
+      border: 1px solid rgba(239,68,68,0.3);
+      color: rgba(239,68,68,0.8);
+    }
+    .btn-danger:hover { background: rgba(239,68,68,0.08); color: #ef4444; }
+    .btn-download {
+      background: var(--success);
+      color: #000;
+    }
+    .btn-download:hover { opacity: 0.85; color: #000; }
+
+    /* Results grid */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+    }
+    .result-card-thumb {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: var(--surface-2);
+      display: block;
+    }
+    .result-card-thumb-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-3);
+      font-size: 12px;
+    }
+    .result-card-body {
+      padding: 12px;
+    }
+    .result-card-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .result-card-size {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+    .result-card-size .size-after {
+      color: var(--success);
+    }
+    .result-card-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .result-card-actions .btn {
+      flex: 1;
+      justify-content: center;
+      font-size: 12px;
+      padding: 7px 10px;
+    }
+    .result-card-remove {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid var(--border-2);
+      border-radius: 50%;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      transition: background 0.15s, color 0.15s;
+    }
+    .result-card-remove:hover { background: rgba(239,68,68,0.8); color: #fff; }
+
+    /* Processing indicator */
+    .processing {
+      opacity: 0.6;
+    }
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border-2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Guide */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .related-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .related a {
+      font-size: 14px;
+    }
+
+    /* Vultr banner */
+    .vultr-banner { background: var(--success-bg); border-top: 1px solid rgba(34,197,94,0.15); border-bottom: 1px solid rgba(34,197,94,0.15); padding: 24px; }
+    .banner-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--success); margin-bottom: 4px; }
+    .banner-title { font-size: 16px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr { display: inline-block; background: var(--success); color: #000; font-size: 13px; font-weight: 600; padding: 10px 20px; border-radius: var(--radius); white-space: nowrap; transition: opacity 0.15s; }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero { padding: 32px 16px 24px; }
+      .tool-section { padding: 0 16px 40px; }
+      .guide, .faq, .related { padding-left: 16px; padding-right: 16px; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+      .quality-label { min-width: auto; }
+    }
+    @media (max-width: 400px) {
+      .results-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Navigation -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- 2. AdSense slot -->
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <!-- 3. Hero -->
+  <header class="hero">
+    <div class="lang-en">
+      <h1>WebP to JPG Converter</h1>
+      <p>Convert WebP images to JPG instantly in your browser. Free, batch support, no account needed.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>WebP → JPG 변환기</h1>
+      <p>WebP 이미지를 브라우저에서 즉시 JPG로 변환. 무료, 일괄 변환 지원.</p>
+    </div>
+  </header>
+
+  <!-- 4. Tool body -->
+  <main class="tool-section">
+
+    <!-- Quality slider -->
+    <div class="quality-row">
+      <span class="quality-label" id="quality-display" data-i18n="quality_label">JPG Quality: 92%</span>
+      <input
+        type="range"
+        class="quality-slider"
+        id="quality-slider"
+        min="70"
+        max="100"
+        value="92"
+        step="1"
+        aria-label="JPG quality"
+      />
+    </div>
+
+    <!-- Drop zone -->
+    <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Drop WebP files here or click to select">
+      <div class="drop-zone-icon">🖼️</div>
+      <div class="drop-zone-label" data-i18n="drop_label">Drop WebP files here or click to select</div>
+      <div class="drop-zone-hint lang-en">Supports .webp files — multiple files OK</div>
+      <div class="drop-zone-hint lang-ko">.webp 파일 지원 — 여러 파일 동시 선택 가능</div>
+      <input type="file" id="file-input" accept=".webp,image/webp" multiple />
+    </div>
+
+    <!-- Batch controls (shown when results exist) -->
+    <div class="batch-bar" id="batch-bar" hidden>
+      <span class="badge" id="converted-badge">
+        <span class="badge-dot"></span>
+        <span id="converted-count">0</span>
+        <span class="lang-en"> converted</span>
+        <span class="lang-ko">개 변환됨</span>
+      </span>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-download" id="download-all-btn" data-i18n="download_all_btn" hidden>Download All</button>
+        <button class="btn btn-secondary" id="clear-btn" data-i18n="clear_btn" onclick="clearAll()">Clear All</button>
+      </div>
+    </div>
+
+    <!-- Results grid -->
+    <div class="results-grid" id="results-grid"></div>
+
+  </main>
+
+  <!-- 5. Guide -->
+  <section class="guide">
+    <div class="guide-title lang-en">How to use</div>
+    <div class="guide-title lang-ko">사용 방법</div>
+    <div class="guide-grid lang-en">
+      <div class="guide-card">
+        <div class="guide-step">STEP 1</div>
+        <h3>Select your files</h3>
+        <p>Click the drop zone or drag and drop one or more .webp files from your computer.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">STEP 2</div>
+        <h3>Adjust quality</h3>
+        <p>Set JPG quality with the slider. 92% is recommended — great balance of size and sharpness.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">STEP 3</div>
+        <h3>Preview the result</h3>
+        <p>Check the thumbnail and compare original WebP size vs converted JPG size in KB.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">STEP 4</div>
+        <h3>Download</h3>
+        <p>Click "Download JPG" per file, or "Download All" for batch. Everything stays in your browser — no upload.</p>
+      </div>
+    </div>
+    <div class="guide-grid lang-ko">
+      <div class="guide-card">
+        <div class="guide-step">STEP 1</div>
+        <h3>파일 선택</h3>
+        <p>드롭 존을 클릭하거나 .webp 파일을 드래그 앤 드롭하세요. 여러 파일 동시 선택 가능.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">STEP 2</div>
+        <h3>품질 조정</h3>
+        <p>슬라이더로 JPG 품질을 설정하세요. 92%가 크기와 화질의 균형이 가장 좋습니다.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">STEP 3</div>
+        <h3>결과 미리보기</h3>
+        <p>썸네일을 확인하고 원본 WebP 크기와 변환된 JPG 크기(KB)를 비교하세요.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">STEP 4</div>
+        <h3>다운로드</h3>
+        <p>파일별 "JPG 다운로드" 또는 "전체 다운로드"를 클릭. 모든 처리는 브라우저 내에서 완료됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FAQ -->
+  <section class="faq">
+    <div class="faq-title lang-en">Frequently Asked Questions</div>
+    <div class="faq-title lang-ko">자주 묻는 질문</div>
+
+    <div class="lang-en">
+      <div class="faq-item">
+        <div class="faq-q">What is a WebP file and why can't I open it everywhere?</div>
+        <div class="faq-a">WebP is a modern image format developed by Google, offering smaller file sizes than JPEG or PNG at similar quality. However, older apps, email clients, and some operating systems still don't support WebP natively — that's why converting to JPG ensures universal compatibility.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I convert WebP to JPG without losing quality?</div>
+        <div class="faq-a">Use a quality setting of 90–100% to minimize visible loss. Since JPEG is a lossy format, some quality reduction is inevitable, but at 92% the difference is barely noticeable for most images. This tool lets you dial in the exact quality you need.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Why does my WebP file look different after converting to JPG?</div>
+        <div class="faq-a">WebP can store transparency (alpha channel), which JPEG does not support. Transparent areas will be filled with white background during conversion. If your WebP has a transparent background, expect white where the transparency was.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I convert multiple WebP files to JPG at once for free?</div>
+        <div class="faq-a">Yes — this tool supports batch conversion with no limits. Simply select multiple .webp files at once (or drag them all into the drop zone), and each one will be converted instantly. Then use "Download All" to grab them all in one click.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Does converting WebP to JPG reduce file size?</div>
+        <div class="faq-a">It depends. WebP is generally more efficient than JPEG, so converting to JPG at high quality can actually increase file size. At lower quality settings (70–85%), the JPG may be smaller but with more visible compression artifacts. The size comparison shown for each file helps you decide the best quality setting.</div>
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <div class="faq-item">
+        <div class="faq-q">WebP 파일이 무엇이고 왜 모든 곳에서 열리지 않나요?</div>
+        <div class="faq-a">WebP는 Google이 개발한 현대적인 이미지 형식으로, JPEG나 PNG보다 비슷한 품질에서 더 작은 파일 크기를 제공합니다. 하지만 오래된 앱, 이메일 클라이언트, 일부 운영 체제는 WebP를 기본 지원하지 않기 때문에, JPG로 변환하면 어디서든 호환됩니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">화질 손실 없이 WebP를 JPG로 변환하려면 어떻게 하나요?</div>
+        <div class="faq-a">품질 설정을 90~100%로 높이면 가시적인 손실을 최소화할 수 있습니다. JPEG는 손실 압축 형식이므로 약간의 품질 저하는 피할 수 없지만, 92%에서는 대부분의 이미지에서 차이가 거의 보이지 않습니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">변환 후 WebP 파일이 다르게 보이는 이유는 무엇인가요?</div>
+        <div class="faq-a">WebP는 투명도(알파 채널)를 저장할 수 있지만 JPEG는 지원하지 않습니다. 변환 시 투명한 영역은 흰색 배경으로 채워집니다. 배경이 투명한 WebP 파일이라면 해당 부분이 흰색으로 표시됩니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">여러 WebP 파일을 한 번에 무료로 JPG로 변환할 수 있나요?</div>
+        <div class="faq-a">네, 이 도구는 제한 없이 일괄 변환을 지원합니다. 여러 .webp 파일을 동시에 선택하거나 드롭 존에 한꺼번에 드래그하면 즉시 변환됩니다. "전체 다운로드"로 한 번에 모두 저장하세요.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">WebP를 JPG로 변환하면 파일 크기가 줄어드나요?</div>
+        <div class="faq-a">경우에 따라 다릅니다. WebP는 일반적으로 JPEG보다 효율적이므로, 높은 품질로 JPG로 변환하면 오히려 파일 크기가 커질 수 있습니다. 낮은 품질(70~85%)에서는 JPG가 더 작아지지만 압축 아티팩트가 나타날 수 있습니다. 각 파일의 크기 비교를 참고해 최적의 품질을 설정하세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Related content -->
+  <section class="related">
+    <div class="related-title lang-en">Related</div>
+    <div class="related-title lang-ko">관련 콘텐츠</div>
+    <a href="https://stackfreeks.com" target="_blank" rel="noopener">
+      <span class="lang-en">More dev &amp; server guides on stackfreeks.com →</span>
+      <span class="lang-ko">stackfreeks.com에서 더 많은 개발·서버 가이드 보기 →</span>
+    </a>
+  </section>
+
+  <!-- 8. Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <div class="eyebrow" data-i18n="vultr_label">Sponsor</div>
+        <div class="banner-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
+      </div>
+      <a
+        href="https://www.vultr.com/?ref=9907834-9J"
+        target="_blank"
+        rel="nofollow sponsored noopener"
+        class="btn-vultr"
+        data-i18n="vultr_cta"
+      >Claim your credit →</a>
+    </div>
+  </div>
+
+  <!-- 9. Footer -->
+  <footer>
+    <div class="footer-inner">
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </nav>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
+    </div>
+  </footer>
+
+  <!-- i18n page-specific keys -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: '← all tools',
+        drop_label: 'Drop WebP files here or click to select',
+        quality_label: 'JPG Quality: 92%',
+        download_btn: 'Download JPG',
+        download_all_btn: 'Download All',
+        clear_btn: 'Clear All',
+      },
+      ko: {
+        nav_back: '← 전체 툴',
+        drop_label: 'WebP 파일을 드롭하거나 클릭해서 선택',
+        quality_label: 'JPG 품질: 92%',
+        download_btn: 'JPG 다운로드',
+        download_all_btn: '전체 다운로드',
+        clear_btn: '전체 삭제',
+      }
+    };
+  </script>
+
+  <!-- Tool logic -->
+  <script>
+    (function () {
+      'use strict';
+
+      // State
+      var items = []; // { id, file, originalSize, jpgDataUrl, jpgSize, filename }
+      var nextId = 0;
+      var quality = 0.92;
+
+      // Elements
+      var dropZone = document.getElementById('drop-zone');
+      var fileInput = document.getElementById('file-input');
+      var qualitySlider = document.getElementById('quality-slider');
+      var qualityDisplay = document.getElementById('quality-display');
+      var resultsGrid = document.getElementById('results-grid');
+      var batchBar = document.getElementById('batch-bar');
+      var convertedCount = document.getElementById('converted-count');
+      var downloadAllBtn = document.getElementById('download-all-btn');
+
+      // Quality slider
+      qualitySlider.addEventListener('input', function () {
+        quality = parseInt(this.value, 10) / 100;
+        updateQualityLabel();
+        // Re-convert all items with new quality
+        items.forEach(function (item) {
+          reconvertItem(item);
+        });
+      });
+
+      function updateQualityLabel() {
+        var pct = Math.round(quality * 100);
+        var lang = (typeof sfLang !== 'undefined' && sfLang.current === 'ko') ? 'ko' : 'en';
+        var label = lang === 'ko' ? ('JPG 품질: ' + pct + '%') : ('JPG Quality: ' + pct + '%');
+        qualityDisplay.textContent = label;
+      }
+
+      // Update quality label when language changes
+      document.addEventListener('sfLangChanged', function () {
+        updateQualityLabel();
+      });
+
+      // Drop zone interactions
+      dropZone.addEventListener('click', function () { fileInput.click(); });
+      dropZone.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+      });
+
+      dropZone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+      });
+      dropZone.addEventListener('dragleave', function () {
+        dropZone.classList.remove('drag-over');
+      });
+      dropZone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        var files = Array.from(e.dataTransfer.files).filter(function (f) {
+          return f.type === 'image/webp' || f.name.toLowerCase().endsWith('.webp');
+        });
+        if (files.length) processFiles(files);
+      });
+
+      fileInput.addEventListener('change', function () {
+        if (this.files && this.files.length) {
+          processFiles(Array.from(this.files));
+          this.value = '';
+        }
+      });
+
+      function processFiles(files) {
+        files.forEach(function (file) {
+          var item = {
+            id: nextId++,
+            file: file,
+            originalSize: file.size,
+            jpgDataUrl: null,
+            jpgSize: null,
+            filename: file.name.replace(/\.webp$/i, '.jpg')
+          };
+          items.push(item);
+          renderCard(item);
+          convertItem(item);
+        });
+        updateBatchBar();
+      }
+
+      function convertItem(item) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var img = new Image();
+          img.onload = function () {
+            var canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            var ctx = canvas.getContext('2d');
+            // Fill white background (JPEG has no alpha)
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+            var dataUrl = canvas.toDataURL('image/jpeg', quality);
+            // Calculate byte size of base64 data
+            var base64 = dataUrl.split(',')[1];
+            var jpgBytes = Math.round((base64.length * 3) / 4);
+            item.jpgDataUrl = dataUrl;
+            item.jpgSize = jpgBytes;
+            updateCardResult(item);
+            updateBatchBar();
+          };
+          img.onerror = function () {
+            updateCardError(item);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(item.file);
+      }
+
+      function reconvertItem(item) {
+        if (!item.file) return;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var img = new Image();
+          img.onload = function () {
+            var canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+            var dataUrl = canvas.toDataURL('image/jpeg', quality);
+            var base64 = dataUrl.split(',')[1];
+            var jpgBytes = Math.round((base64.length * 3) / 4);
+            item.jpgDataUrl = dataUrl;
+            item.jpgSize = jpgBytes;
+            updateCardResult(item);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(item.file);
+      }
+
+      function renderCard(item) {
+        var card = document.createElement('div');
+        card.className = 'result-card processing';
+        card.id = 'card-' + item.id;
+
+        var thumb = document.createElement('div');
+        thumb.className = 'result-card-thumb-placeholder';
+        thumb.id = 'thumb-' + item.id;
+        thumb.innerHTML = '<span class="spinner"></span>';
+
+        var body = document.createElement('div');
+        body.className = 'result-card-body';
+
+        var name = document.createElement('div');
+        name.className = 'result-card-name';
+        name.textContent = item.filename;
+        name.title = item.filename;
+
+        var size = document.createElement('div');
+        size.className = 'result-card-size';
+        size.id = 'size-' + item.id;
+        size.innerHTML = '<span class="lang-en">Converting…</span><span class="lang-ko">변환 중…</span>';
+
+        var actions = document.createElement('div');
+        actions.className = 'result-card-actions';
+
+        var dlBtn = document.createElement('button');
+        dlBtn.className = 'btn btn-download';
+        dlBtn.id = 'dl-' + item.id;
+        dlBtn.disabled = true;
+        dlBtn.setAttribute('data-i18n', 'download_btn');
+        dlBtn.textContent = getLangText('download_btn');
+        dlBtn.addEventListener('click', function () { downloadItem(item); });
+
+        actions.appendChild(dlBtn);
+        body.appendChild(name);
+        body.appendChild(size);
+        body.appendChild(actions);
+
+        var removeBtn = document.createElement('button');
+        removeBtn.className = 'result-card-remove';
+        removeBtn.title = 'Remove';
+        removeBtn.setAttribute('aria-label', 'Remove');
+        removeBtn.textContent = '×';
+        removeBtn.addEventListener('click', function () { removeItem(item.id); });
+
+        card.appendChild(thumb);
+        card.appendChild(body);
+        card.appendChild(removeBtn);
+
+        resultsGrid.appendChild(card);
+      }
+
+      function updateCardResult(item) {
+        var card = document.getElementById('card-' + item.id);
+        if (!card) return;
+        card.classList.remove('processing');
+
+        // Replace placeholder with actual thumbnail
+        var thumbPlaceholder = document.getElementById('thumb-' + item.id);
+        if (thumbPlaceholder) {
+          var img = document.createElement('img');
+          img.className = 'result-card-thumb';
+          img.src = item.jpgDataUrl;
+          img.alt = item.filename;
+          img.loading = 'lazy';
+          thumbPlaceholder.parentNode.replaceChild(img, thumbPlaceholder);
+        }
+
+        // Update size display
+        var sizeEl = document.getElementById('size-' + item.id);
+        if (sizeEl) {
+          var origKB = (item.originalSize / 1024).toFixed(1);
+          var jpgKB = (item.jpgSize / 1024).toFixed(1);
+          sizeEl.innerHTML =
+            origKB + ' KB → <span class="size-after">' + jpgKB + ' KB</span>';
+        }
+
+        // Enable download button
+        var dlBtn = document.getElementById('dl-' + item.id);
+        if (dlBtn) dlBtn.disabled = false;
+      }
+
+      function updateCardError(item) {
+        var sizeEl = document.getElementById('size-' + item.id);
+        if (sizeEl) {
+          sizeEl.innerHTML = '<span style="color:#ef4444">Failed to convert</span>';
+        }
+        var card = document.getElementById('card-' + item.id);
+        if (card) card.classList.remove('processing');
+      }
+
+      function downloadItem(item) {
+        if (!item.jpgDataUrl) return;
+        var a = document.createElement('a');
+        a.href = item.jpgDataUrl;
+        a.download = item.filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      function removeItem(id) {
+        items = items.filter(function (it) { return it.id !== id; });
+        var card = document.getElementById('card-' + id);
+        if (card) card.remove();
+        updateBatchBar();
+      }
+
+      window.clearAll = function () {
+        items = [];
+        resultsGrid.innerHTML = '';
+        updateBatchBar();
+      };
+
+      function updateBatchBar() {
+        var ready = items.filter(function (it) { return it.jpgDataUrl !== null; });
+        convertedCount.textContent = ready.length;
+        batchBar.hidden = items.length === 0;
+        downloadAllBtn.hidden = ready.length < 2;
+      }
+
+      // Download all
+      downloadAllBtn.addEventListener('click', function () {
+        var ready = items.filter(function (it) { return it.jpgDataUrl !== null; });
+        var delay = 0;
+        ready.forEach(function (item) {
+          setTimeout(function () { downloadItem(item); }, delay);
+          delay += 120;
+        });
+      });
+
+      function getLangText(key) {
+        var lang = (typeof sfLang !== 'undefined' && sfLang.current === 'ko') ? 'ko' : 'en';
+        var pageI18n = window.SF_PAGE_I18N || {};
+        var langMap = pageI18n[lang] || {};
+        return langMap[key] || key;
+      }
+
+      // Re-apply i18n to dynamically added elements on language change
+      document.addEventListener('sfLangChanged', function () {
+        items.forEach(function (item) {
+          var dlBtn = document.getElementById('dl-' + item.id);
+          if (dlBtn) dlBtn.textContent = getLangText('download_btn');
+        });
+        updateQualityLabel();
+      });
+
+    })();
+  </script>
+
+  <!-- 10. i18n script (must be last) -->
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>
