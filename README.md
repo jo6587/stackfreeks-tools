@@ -29,6 +29,12 @@ Small, single-purpose tools that do one thing and get out of the way. Everything
 - [Text Case Converter](https://tools.stackfreeks.com/tools/text-case-converter/) — 10 formats: camelCase, snake_case, kebab-case, etc.
 - [Hash Generator](https://tools.stackfreeks.com/tools/hash-generator/) — MD5, SHA-1, SHA-256, SHA-512 from text or file
 - [URL Encoder/Decoder](https://tools.stackfreeks.com/tools/url-encoder/) — encodeURI, encodeURIComponent, cheat sheet
+- [Chmod Calculator](https://tools.stackfreeks.com/tools/chmod-calculator/) — interactive permission grid, presets, octal ↔ symbolic
+- [JWT Decoder](https://tools.stackfreeks.com/tools/jwt-decoder/) — header/payload/expiry, claims table, no verification
+- [.htpasswd Generator](https://tools.stackfreeks.com/tools/htpasswd-generator/) — bcrypt, MD5-APR, SHA1, client-side only
+- [Diff Checker](https://tools.stackfreeks.com/tools/diff-checker/) — LCS-based line diff, side-by-side and unified view
+- [IP Subnet Calculator](https://tools.stackfreeks.com/tools/subnet-calculator/) — CIDR, host range, broadcast, subnet split helper
+- [OG Meta Tag Generator](https://tools.stackfreeks.com/tools/og-meta-generator/) — live Google/Facebook/Twitter previews
 
 **Server / VPS**
 - [VPS Cost Calculator](https://tools.stackfreeks.com/tools/vps-cost-calculator/) — Vultr / Hetzner / DigitalOcean

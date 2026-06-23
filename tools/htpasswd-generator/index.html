@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Htpasswd Generator — Create .htpasswd Entries Online | StackFreeks</title>
+  <meta name="description" content="Generate .htpasswd file entries for Apache and Nginx basic auth. Free online htpasswd generator — bcrypt, MD5, SHA1, and plain formats. Client-side only, no server." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/htpasswd-generator/" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png" />
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Htpasswd Generator — Create .htpasswd Entries Online | StackFreeks" />
+  <meta property="og:description" content="Generate .htpasswd file entries for Apache and Nginx basic auth. Free online htpasswd generator — bcrypt, MD5, SHA1, and plain formats. Client-side only, no server." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/htpasswd-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --warning: #f59e0b;
+      --warning-bg: rgba(245,158,11,0.08);
+      --error: #ef4444;
+      --error-bg: rgba(239,68,68,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    .navbar {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,11,0.85);
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-mark {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-2); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 10px;
+    }
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      max-width: 520px;
+    }
+
+    /* ── Main tool area ── */
+    .tool-section {
+      padding: 32px 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    /* ── Form elements ── */
+    .form-group { margin-bottom: 16px; }
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-2);
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus { border-color: var(--border-2); }
+    input::placeholder { color: var(--text-3); }
+
+    .pw-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .pw-wrapper input {
+      padding-right: 44px;
+    }
+    .pw-toggle {
+      position: absolute;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text-3);
+      cursor: pointer;
+      font-size: 13px;
+      padding: 4px;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .pw-toggle:hover { color: var(--text-2); }
+
+    /* ── Hash format radio pills ── */
+    .format-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .format-option {
+      display: block;
+      cursor: pointer;
+    }
+    .format-option input[type="radio"] { display: none; }
+    .format-pill {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .format-option input:checked + .format-pill {
+      border-color: var(--accent);
+      background: rgba(99,102,241,0.06);
+    }
+    .format-pill-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-1);
+    }
+    .format-pill-desc {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .format-option input:checked + .format-pill .format-pill-name { color: var(--accent); }
+    .badge-recommended {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--success);
+      background: var(--success-bg);
+      border-radius: 20px;
+      padding: 1px 7px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .badge-warning {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--warning);
+      background: var(--warning-bg);
+      border-radius: 20px;
+      padding: 1px 7px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      width: 100%;
+      background: var(--text-1);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radius);
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: opacity 0.15s;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--border-2); color: var(--text-1); }
+
+    .btn-vultr {
+      background: var(--success);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font);
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* ── Spinner ── */
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(0,0,0,0.3);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Output area ── */
+    .output-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .output-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .copy-btn:hover { border-color: var(--border-2); color: var(--text-2); }
+    .copy-btn.copied { color: var(--success); border-color: var(--success); }
+
+    .output-body {
+      padding: 16px;
+      min-height: 80px;
+    }
+    .output-code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-1);
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.8;
+    }
+    .output-empty {
+      font-size: 13px;
+      color: var(--text-3);
+      font-style: italic;
+    }
+
+    /* ── Plain text warning banner ── */
+    .plain-warning {
+      display: none;
+      background: var(--error-bg);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--error);
+      margin-bottom: 16px;
+    }
+    .plain-warning.visible { display: flex; align-items: flex-start; gap: 8px; }
+
+    /* ── Append-mode info ── */
+    .info-box {
+      background: rgba(99,102,241,0.05);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-top: 16px;
+    }
+    .info-box strong { color: var(--text-1); font-weight: 500; }
+
+    /* ── Add-another user row ── */
+    .add-user-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+
+    /* ── Layout: two columns on desktop ── */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 720px) {
+      .tool-grid { grid-template-columns: 1fr; }
+      .format-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 440px) {
+      .format-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Guide & FAQ ── */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-a code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: var(--text-1);
+    }
+
+    /* ── Related ── */
+    .related { padding: 40px 0; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* ── Vultr banner ── */
+    .vultr-banner {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+      margin: 48px 0 0;
+    }
+    .banner-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      margin-top: 0;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+
+    @media (max-width: 640px) {
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .hero h1 { font-size: 1.4rem; }
+      .footer-inner { flex-direction: column; gap: 12px; align-items: flex-start; }
+    }
+
+    /* ── Entry list items in output ── */
+    .output-entry {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-1);
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+      word-break: break-all;
+    }
+    .output-entry:last-child { border-bottom: none; padding-bottom: 0; }
+    .entry-count {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* additional user rows */
+    .user-rows { display: flex; flex-direction: column; gap: 16px; }
+    .user-row-block {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      position: relative;
+    }
+    .remove-user-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text-3);
+      font-size: 16px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 6px;
+      transition: color 0.15s;
+    }
+    .remove-user-btn:hover { color: var(--error); }
+    .user-row-block .form-group:last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark"></div>
+      StackFreeks Tools
+    </a>
+    <div class="nav-actions">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow">Server Security</p>
+      <h1>.htpasswd Generator</h1>
+      <p class="hero-desc">Generate .htpasswd entries for Apache and Nginx basic auth — bcrypt, MD5-APR, SHA1. Client-side only, your password never leaves the browser.</p>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow">서버 보안</p>
+      <h1>.htpasswd 생성기</h1>
+      <p class="hero-desc">Apache·Nginx 기본 인증용 .htpasswd 항목 생성 — bcrypt, MD5-APR, SHA1. 브라우저에서만 처리되며 비밀번호는 서버로 전송되지 않습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Tool ── -->
+<main class="tool-section">
+  <div class="container">
+    <!-- ADSENSE_SLOT_IN_TOOL -->
+
+    <div class="tool-grid">
+
+      <!-- LEFT: Input form -->
+      <div class="card">
+
+        <!-- Plain-text warning (shown only when Plain is selected) -->
+        <div class="plain-warning" id="plainWarning">
+          <span>⚠</span>
+          <span class="lang-en">Plain text passwords are extremely insecure. Anyone who can read your .htpasswd file will see passwords in clear text. Use bcrypt instead.</span>
+          <span class="lang-ko">평문 비밀번호는 매우 위험합니다. .htpasswd 파일을 읽을 수 있는 누구나 비밀번호를 볼 수 있습니다. bcrypt를 사용하세요.</span>
+        </div>
+
+        <!-- Hash format selector -->
+        <div class="form-group">
+          <label>
+            <span class="lang-en">Hash Format</span>
+            <span class="lang-ko">해시 형식</span>
+          </label>
+          <div class="format-grid" id="formatGrid">
+            <label class="format-option">
+              <input type="radio" name="hashFormat" value="bcrypt" checked onchange="onFormatChange()">
+              <div class="format-pill">
+                <span class="format-pill-name">bcrypt <span class="badge-recommended">recommended</span></span>
+                <span class="format-pill-desc">$2y$… · most secure</span>
+              </div>
+            </label>
+            <label class="format-option">
+              <input type="radio" name="hashFormat" value="apr1" onchange="onFormatChange()">
+              <div class="format-pill">
+                <span class="format-pill-name">MD5-APR</span>
+                <span class="format-pill-desc">$apr1$… · Apache compat</span>
+              </div>
+            </label>
+            <label class="format-option">
+              <input type="radio" name="hashFormat" value="sha1" onchange="onFormatChange()">
+              <div class="format-pill">
+                <span class="format-pill-name">SHA1</span>
+                <span class="format-pill-desc">{SHA}… · legacy</span>
+              </div>
+            </label>
+            <label class="format-option">
+              <input type="radio" name="hashFormat" value="plain" onchange="onFormatChange()">
+              <div class="format-pill">
+                <span class="format-pill-name">Plain <span class="badge-warning">insecure</span></span>
+                <span class="format-pill-desc">no hashing — avoid</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Primary user -->
+        <div class="form-group">
+          <label for="username0">
+            <span class="lang-en">Username</span>
+            <span class="lang-ko">사용자명</span>
+          </label>
+          <input type="text" id="username0" placeholder="e.g. admin" autocomplete="off" spellcheck="false" />
+        </div>
+        <div class="form-group">
+          <label for="password0">
+            <span class="lang-en">Password</span>
+            <span class="lang-ko">비밀번호</span>
+          </label>
+          <div class="pw-wrapper">
+            <input type="password" id="password0" placeholder="Enter password" autocomplete="new-password" />
+            <button class="pw-toggle" type="button" onclick="togglePw('password0', this)" title="Show / hide password">
+              👁
+            </button>
+          </div>
+        </div>
+
+        <!-- Additional user rows container -->
+        <div class="user-rows" id="extraUsers"></div>
+
+        <!-- Add another user -->
+        <div class="add-user-row">
+          <button class="btn-ghost" type="button" onclick="addUserRow()">
+            <span class="lang-en">+ Add another user</span>
+            <span class="lang-ko">+ 사용자 추가</span>
+          </button>
+        </div>
+
+        <!-- Generate button -->
+        <div style="margin-top:20px;">
+          <button class="btn-primary" id="generateBtn" onclick="generate()">
+            <span class="lang-en">Generate .htpasswd Entry</span>
+            <span class="lang-ko">.htpasswd 항목 생성</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Output -->
+      <div>
+        <div class="output-card">
+          <div class="output-header">
+            <span class="output-label">.htpasswd output</span>
+            <button class="copy-btn" id="copyBtn" onclick="copyOutput()">
+              <span class="lang-en">Copy</span>
+              <span class="lang-ko">복사</span>
+            </button>
+          </div>
+          <div class="output-body" id="outputBody">
+            <p class="output-empty" id="outputPlaceholder">
+              <span class="lang-en">Your generated entries will appear here.</span>
+              <span class="lang-ko">생성된 항목이 여기에 표시됩니다.</span>
+            </p>
+            <div id="outputEntries" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Append-mode info box -->
+        <div class="info-box">
+          <div class="lang-en">
+            <strong>Tip:</strong> You can append multiple entries to a single <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--text-1);">.htpasswd</code> file — one <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--text-1);">username:hash</code> per line. Use "Add another user" to generate multiple entries at once and copy them all together.
+          </div>
+          <div class="lang-ko">
+            <strong>팁:</strong> 하나의 <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--text-1);">.htpasswd</code> 파일에 여러 항목을 추가할 수 있습니다 — 한 줄에 <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--text-1);">사용자명:해시</code> 형식으로 작성하세요. "사용자 추가"를 눌러 여러 항목을 한 번에 생성하고 복사할 수 있습니다.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.tool-grid -->
+  </div>
+</main>
+
+<!-- ── How to use guide ── -->
+<section>
+  <div class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to use</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>Choose a hash format</h3>
+          <p>Select bcrypt for maximum security. Use MD5-APR if your server only supports older Apache formats. SHA1 is legacy and not recommended for new setups.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>Enter credentials</h3>
+          <p>Type a username and password. Add more users with the "Add another user" button — all entries will be generated at once.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>Generate &amp; copy</h3>
+          <p>Click "Generate" and copy the output. Each line is a ready-to-use .htpasswd entry in <code style="font-family:var(--font-mono);font-size:11px;">username:hash</code> format.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>Deploy to your server</h3>
+          <p>Save the output to a file named <code style="font-family:var(--font-mono);font-size:11px;">.htpasswd</code> and reference it in your Apache or Nginx config. Keep this file outside the web root.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>해시 형식 선택</h3>
+          <p>최고의 보안을 위해 bcrypt를 선택하세요. 구버전 Apache 형식만 지원하는 서버라면 MD5-APR을 사용하세요. SHA1은 레거시 형식으로 새 설정에는 권장하지 않습니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>자격증명 입력</h3>
+          <p>사용자명과 비밀번호를 입력하세요. "사용자 추가" 버튼으로 여러 사용자를 추가하면 한 번에 모든 항목을 생성할 수 있습니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>생성 및 복사</h3>
+          <p>생성 버튼을 클릭하고 결과를 복사하세요. 각 줄은 <code style="font-family:var(--font-mono);font-size:11px;">사용자명:해시</code> 형식의 .htpasswd 항목입니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>서버에 배포</h3>
+          <p>출력 내용을 <code style="font-family:var(--font-mono);font-size:11px;">.htpasswd</code> 파일로 저장하고 Apache 또는 Nginx 설정에서 참조하세요. 이 파일은 웹 루트 외부에 보관하세요.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section>
+  <div class="faq">
+    <div class="lang-en">
+      <p class="faq-title">Frequently asked questions</p>
+      <div class="faq-item">
+        <p class="faq-q">What is an .htpasswd file?</p>
+        <p class="faq-a">An <code>.htpasswd</code> file is a flat text file that stores username and hashed password pairs, one per line. Apache and Nginx use it to enforce HTTP Basic Authentication — prompting visitors for a username and password before serving protected content.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Which hash format should I use?</p>
+        <p class="faq-a"><strong>bcrypt</strong> is the best choice for new setups. It's slow by design (making brute-force attacks impractical) and is supported by Apache 2.4+ and Nginx via the <code>auth_basic</code> module with a bcrypt-capable PAM backend. MD5-APR (<code>$apr1$</code>) is widely supported but weaker. SHA1 is legacy and should be avoided on new deployments. Plain text is never acceptable in production.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Is bcrypt safe for .htpasswd?</p>
+        <p class="faq-a">Yes. bcrypt at cost factor 10 requires roughly 100ms per hash check, making automated credential-stuffing attacks extremely slow. Apache 2.4+ supports bcrypt natively via <code>AuthType Basic</code> + <code>AuthUserFile</code>. Note: Nginx does <em>not</em> natively verify bcrypt hashes — you need a bcrypt-capable PAM module or a reverse-proxy auth solution.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How do I use .htpasswd with Nginx?</p>
+        <p class="faq-a">Add these directives to your Nginx <code>server</code> or <code>location</code> block:<br><br><code>auth_basic "Protected Area";<br>auth_basic_user_file /etc/nginx/.htpasswd;</code><br><br>Nginx supports MD5-APR and SHA1 natively. For bcrypt support, install the <code>libnginx-mod-http-auth-pam</code> package and configure PAM.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Is my password sent to a server?</p>
+        <p class="faq-a">No. This tool runs entirely in your browser. All hashing is performed client-side using JavaScript — bcrypt via the bcryptjs library, SHA1 via the Web Crypto API, and MD5-APR via a self-contained pure-JS implementation. No data is transmitted anywhere.</p>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-item">
+        <p class="faq-q">.htpasswd 파일이란 무엇인가요?</p>
+        <p class="faq-a"><code>.htpasswd</code> 파일은 사용자명과 해시된 비밀번호 쌍을 한 줄씩 저장하는 텍스트 파일입니다. Apache와 Nginx는 이 파일을 사용해 HTTP 기본 인증(Basic Auth)을 적용하며, 보호된 콘텐츠에 접근하기 전에 방문자에게 사용자명과 비밀번호를 요구합니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">어떤 해시 형식을 사용해야 하나요?</p>
+        <p class="faq-a">새 설정에는 <strong>bcrypt</strong>가 가장 좋은 선택입니다. 설계상 느리게 동작해 무차별 대입 공격을 실용적으로 불가능하게 만들며, Apache 2.4+와 Nginx(bcrypt 지원 PAM 백엔드)에서 지원됩니다. MD5-APR(<code>$apr1$</code>)은 광범위하게 지원되지만 보안이 약합니다. SHA1은 레거시 형식으로 새 환경에는 피하세요. 평문은 프로덕션에서 절대 사용하면 안 됩니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">bcrypt는 .htpasswd에 안전한가요?</p>
+        <p class="faq-a">네. 비용 인자(cost factor) 10의 bcrypt는 해시 검증에 약 100ms가 소요되어 자동화된 크리덴셜 스터핑 공격을 극도로 느리게 만듭니다. Apache 2.4+는 <code>AuthType Basic</code> + <code>AuthUserFile</code> 조합으로 bcrypt를 기본 지원합니다. 단, Nginx는 기본적으로 bcrypt 해시를 검증하지 않으므로 bcrypt 지원 PAM 모듈이나 리버스 프록시 인증 솔루션이 필요합니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Nginx에서 .htpasswd를 어떻게 사용하나요?</p>
+        <p class="faq-a">Nginx <code>server</code> 또는 <code>location</code> 블록에 다음 지시어를 추가하세요:<br><br><code>auth_basic "Protected Area";<br>auth_basic_user_file /etc/nginx/.htpasswd;</code><br><br>Nginx는 MD5-APR과 SHA1을 기본 지원합니다. bcrypt 지원이 필요하면 <code>libnginx-mod-http-auth-pam</code> 패키지를 설치하고 PAM을 설정하세요.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">비밀번호가 서버로 전송되나요?</p>
+        <p class="faq-a">아닙니다. 이 도구는 완전히 브라우저 내에서 실행됩니다. 모든 해싱은 JavaScript를 통해 클라이언트 측에서 처리됩니다 — bcrypt는 bcryptjs 라이브러리, SHA1은 Web Crypto API, MD5-APR은 순수 JS 구현을 사용합니다. 어떠한 데이터도 전송되지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Related ── -->
+<section class="related">
+  <div class="container">
+    <p class="eyebrow" style="margin-bottom:12px;">
+      <span class="lang-en">Related guides</span>
+      <span class="lang-ko">관련 가이드</span>
+    </p>
+    <div class="related-grid">
+      <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+        <span class="related-tag">Security</span>
+        <p class="related-title lang-en">More server and VPS security guides on stackfreeks.com →</p>
+        <p class="related-title lang-ko">stackfreeks.com에서 더 많은 서버·VPS 보안 가이드 보기 →</p>
+        <span class="related-arrow">→</span>
+      </a>
+      <a href="/tools/vps-cost-calculator/" class="related-card">
+        <span class="related-tag">VPS</span>
+        <p class="related-title lang-en">VPS Cost Calculator — Compare Vultr, Hetzner &amp; DigitalOcean</p>
+        <p class="related-title lang-ko">VPS 비용 계산기 — Vultr, Hetzner, DigitalOcean 비교</p>
+        <span class="related-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Vultr banner ── -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Tool JavaScript ── -->
+<script>
+  // ── State ──
+  let extraUserCount = 0;
+  let generatedLines = [];
+
+  // ── Format change handler ──
+  function onFormatChange() {
+    const fmt = getFormat();
+    const warn = document.getElementById('plainWarning');
+    warn.classList.toggle('visible', fmt === 'plain');
+  }
+
+  function getFormat() {
+    return document.querySelector('input[name="hashFormat"]:checked').value;
+  }
+
+  // ── Show/hide password toggle ──
+  function togglePw(inputId, btn) {
+    const inp = document.getElementById(inputId);
+    if (inp.type === 'password') {
+      inp.type = 'text';
+      btn.textContent = '🙈';
+    } else {
+      inp.type = 'password';
+      btn.textContent = '👁';
+    }
+  }
+
+  // ── Add extra user row ──
+  function addUserRow() {
+    extraUserCount++;
+    const idx = extraUserCount;
+    const container = document.getElementById('extraUsers');
+    const block = document.createElement('div');
+    block.className = 'user-row-block';
+    block.id = 'userBlock' + idx;
+    block.innerHTML = `
+      <button class="remove-user-btn" type="button" onclick="removeUserRow(${idx})" title="Remove">✕</button>
+      <div class="form-group">
+        <label for="username${idx}">
+          <span class="lang-en">Username</span>
+          <span class="lang-ko">사용자명</span>
+        </label>
+        <input type="text" id="username${idx}" placeholder="e.g. editor" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="form-group">
+        <label for="password${idx}">
+          <span class="lang-en">Password</span>
+          <span class="lang-ko">비밀번호</span>
+        </label>
+        <div class="pw-wrapper">
+          <input type="password" id="password${idx}" placeholder="Enter password" autocomplete="new-password" />
+          <button class="pw-toggle" type="button" onclick="togglePw('password${idx}', this)" title="Show / hide password">👁</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(block);
+    // Re-apply i18n for the new block if available
+    if (window.sfLang) {
+      document.dispatchEvent(new Event('DOMContentLoaded'));
+    }
+  }
+
+  function removeUserRow(idx) {
+    const block = document.getElementById('userBlock' + idx);
+    if (block) block.remove();
+  }
+
+  // ── Collect all user pairs ──
+  function collectUsers() {
+    const users = [];
+    const u0 = document.getElementById('username0').value.trim();
+    const p0 = document.getElementById('password0').value;
+    if (u0) users.push({ username: u0, password: p0 });
+
+    document.querySelectorAll('.user-row-block').forEach(block => {
+      const idx = block.id.replace('userBlock', '');
+      const u = document.getElementById('username' + idx);
+      const p = document.getElementById('password' + idx);
+      if (u && u.value.trim()) users.push({ username: u.value.trim(), password: p.value });
+    });
+    return users;
+  }
+
+  // ── SHA-1 via Web Crypto ──
+  async function sha1Hash(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const b64 = btoa(String.fromCharCode(...hashArray));
+    return '{SHA}' + b64;
+  }
+
+  // ── MD5 / APR1 implementation ──
+  // Pure-JS APR1-MD5 ($apr1$) — Apache-specific variant of MD5-crypt
+  function apr1Md5(password, salt) {
+    // Underlying MD5 (pure JS)
+    function md5(input) {
+      function safeAdd(x, y) {
+        const lsw = (x & 0xffff) + (y & 0xffff);
+        const msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+        return (msw << 16) | (lsw & 0xffff);
+      }
+      function bitRotateLeft(num, cnt) { return (num << cnt) | (num >>> (32 - cnt)); }
+      function md5cmn(q, a, b, x, s, t) { return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b); }
+      function md5ff(a,b,c,d,x,s,t){ return md5cmn((b&c)|((~b)&d),a,b,x,s,t); }
+      function md5gg(a,b,c,d,x,s,t){ return md5cmn((b&d)|(c&(~d)),a,b,x,s,t); }
+      function md5hh(a,b,c,d,x,s,t){ return md5cmn(b^c^d,a,b,x,s,t); }
+      function md5ii(a,b,c,d,x,s,t){ return md5cmn(c^(b|(~d)),a,b,x,s,t); }
+
+      const bArr = [];
+      for (let i = 0; i < input.length * 8; i += 8) {
+        bArr[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << (i % 32);
+      }
+      const len = input.length * 8;
+      bArr[len >> 5] |= 0x80 << (len % 32);
+      bArr[(((len + 64) >>> 9) << 4) + 14] = len;
+
+      let a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
+      for (let i = 0; i < bArr.length; i += 16) {
+        const oa=a,ob=b,oc=c,od=d;
+        a=md5ff(a,b,c,d,bArr[i],7,-680876936);d=md5ff(d,a,b,c,bArr[i+1],12,-389564586);c=md5ff(c,d,a,b,bArr[i+2],17,606105819);b=md5ff(b,c,d,a,bArr[i+3],22,-1044525330);
+        a=md5ff(a,b,c,d,bArr[i+4],7,-176418897);d=md5ff(d,a,b,c,bArr[i+5],12,1200080426);c=md5ff(c,d,a,b,bArr[i+6],17,-1473231341);b=md5ff(b,c,d,a,bArr[i+7],22,-45705983);
+        a=md5ff(a,b,c,d,bArr[i+8],7,1770035416);d=md5ff(d,a,b,c,bArr[i+9],12,-1958414417);c=md5ff(c,d,a,b,bArr[i+10],17,-42063);b=md5ff(b,c,d,a,bArr[i+11],22,-1990404162);
+        a=md5ff(a,b,c,d,bArr[i+12],7,1804603682);d=md5ff(d,a,b,c,bArr[i+13],12,-40341101);c=md5ff(c,d,a,b,bArr[i+14],17,-1502002290);b=md5ff(b,c,d,a,bArr[i+15],22,1236535329);
+        a=md5gg(a,b,c,d,bArr[i+1],5,-165796510);d=md5gg(d,a,b,c,bArr[i+6],9,-1069501632);c=md5gg(c,d,a,b,bArr[i+11],14,643717713);b=md5gg(b,c,d,a,bArr[i],20,-373897302);
+        a=md5gg(a,b,c,d,bArr[i+5],5,-701558691);d=md5gg(d,a,b,c,bArr[i+10],9,38016083);c=md5gg(c,d,a,b,bArr[i+15],14,-660478335);b=md5gg(b,c,d,a,bArr[i+4],20,-405537848);
+        a=md5gg(a,b,c,d,bArr[i+9],5,568446438);d=md5gg(d,a,b,c,bArr[i+14],9,-1019803690);c=md5gg(c,d,a,b,bArr[i+3],14,-187363961);b=md5gg(b,c,d,a,bArr[i+8],20,1163531501);
+        a=md5gg(a,b,c,d,bArr[i+13],5,-1444681467);d=md5gg(d,a,b,c,bArr[i+2],9,-51403784);c=md5gg(c,d,a,b,bArr[i+7],14,1735328473);b=md5gg(b,c,d,a,bArr[i+12],20,-1926607734);
+        a=md5hh(a,b,c,d,bArr[i+5],4,-378558);d=md5hh(d,a,b,c,bArr[i+8],11,-2022574463);c=md5hh(c,d,a,b,bArr[i+11],16,1839030562);b=md5hh(b,c,d,a,bArr[i+14],23,-35309556);
+        a=md5hh(a,b,c,d,bArr[i+1],4,-1530992060);d=md5hh(d,a,b,c,bArr[i+4],11,1272893353);c=md5hh(c,d,a,b,bArr[i+7],16,-155497632);b=md5hh(b,c,d,a,bArr[i+10],23,-1094730640);
+        a=md5hh(a,b,c,d,bArr[i+13],4,681279174);d=md5hh(d,a,b,c,bArr[i],11,-358537222);c=md5hh(c,d,a,b,bArr[i+3],16,-722521979);b=md5hh(b,c,d,a,bArr[i+6],23,76029189);
+        a=md5hh(a,b,c,d,bArr[i+9],4,-640364487);d=md5hh(d,a,b,c,bArr[i+12],11,-421815835);c=md5hh(c,d,a,b,bArr[i+15],16,530742520);b=md5hh(b,c,d,a,bArr[i+2],23,-995338651);
+        a=md5ii(a,b,c,d,bArr[i],6,-198630844);d=md5ii(d,a,b,c,bArr[i+7],10,1126891415);c=md5ii(c,d,a,b,bArr[i+14],15,-1416354905);b=md5ii(b,c,d,a,bArr[i+5],21,-57434055);
+        a=md5ii(a,b,c,d,bArr[i+12],6,1700485571);d=md5ii(d,a,b,c,bArr[i+3],10,-1894986606);c=md5ii(c,d,a,b,bArr[i+10],15,-1051523);b=md5ii(b,c,d,a,bArr[i+1],21,-2054922799);
+        a=md5ii(a,b,c,d,bArr[i+8],6,1873313359);d=md5ii(d,a,b,c,bArr[i+15],10,-30611744);c=md5ii(c,d,a,b,bArr[i+6],15,-1560198380);b=md5ii(b,c,d,a,bArr[i+13],21,1309151649);
+        a=md5ii(a,b,c,d,bArr[i+4],6,-145523070);d=md5ii(d,a,b,c,bArr[i+11],10,-1120210379);c=md5ii(c,d,a,b,bArr[i+2],15,718787259);b=md5ii(b,c,d,a,bArr[i+9],21,-343485551);
+        a=safeAdd(a,oa);b=safeAdd(b,ob);c=safeAdd(c,oc);d=safeAdd(d,od);
+      }
+      // Return raw bytes as string
+      const bytes = [];
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          const word = (i === 0 ? a : i === 1 ? b : i === 2 ? c : d);
+          bytes.push((word >>> (j * 8)) & 0xff);
+        }
+      }
+      return bytes;
+    }
+
+    // APR1-specific base64 alphabet (different from standard)
+    const APR_ALPHA = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    function apr64(bytes, n1, n2, n3, cnt) {
+      let v = (bytes[n1] << 16) | (bytes[n2] << 8) | bytes[n3];
+      let out = '';
+      for (let i = 0; i < cnt; i++) {
+        out += APR_ALPHA[v & 0x3f];
+        v >>= 6;
+      }
+      return out;
+    }
+
+    // Helper: string to byte array
+    function strToBytes(s) {
+      const arr = [];
+      for (let i = 0; i < s.length; i++) arr.push(s.charCodeAt(i) & 0xff);
+      return arr;
+    }
+    // Helper: concat byte arrays
+    function concatBytes(...arrs) {
+      const total = arrs.reduce((a, b) => a + b.length, 0);
+      const out = new Array(total);
+      let pos = 0;
+      for (const arr of arrs) { for (const b of arr) out[pos++] = b; }
+      return out;
+    }
+    // Helper: bytes to string
+    function bytesToStr(bytes) {
+      return bytes.map(b => String.fromCharCode(b)).join('');
+    }
+
+    const pw = strToBytes(password);
+    const sl = strToBytes(salt);
+    const magic = strToBytes('$apr1$');
+
+    // Step 1: Start digest A = MD5(password + "$apr1$" + salt)
+    // Step 2: Digest B = MD5(password + salt + password)
+    const digestB = md5(bytesToStr(concatBytes(pw, sl, pw)));
+
+    // Step 3: Build intermediate string for digest A
+    let iA = bytesToStr(concatBytes(pw, magic, sl));
+    // Append bytes from digest B (plen bytes)
+    let plen = password.length;
+    while (plen > 16) { iA += bytesToStr(digestB); plen -= 16; }
+    iA += bytesToStr(digestB.slice(0, plen));
+
+    // Step 4: Alternate last bit
+    let pl = password.length;
+    while (pl > 0) {
+      if (pl & 1) iA += String.fromCharCode(0);
+      else iA += String.fromCharCode(password.charCodeAt(0));
+      pl >>= 1;
+    }
+
+    // Step 5: 1000 rounds
+    let digestA = md5(iA);
+    for (let i = 0; i < 1000; i++) {
+      let iC = [];
+      if (i & 1) iC = concatBytes(iC, pw);
+      else iC = concatBytes(iC, digestA);
+      if (i % 3) iC = concatBytes(iC, sl);
+      if (i % 7) iC = concatBytes(iC, pw);
+      if (i & 1) iC = concatBytes(iC, digestA);
+      else iC = concatBytes(iC, pw);
+      digestA = md5(bytesToStr(iC));
+    }
+
+    // Step 6: Encode using APR base64 (non-standard byte order)
+    const h = digestA;
+    const encoded =
+      apr64(h,0,6,12,4) +
+      apr64(h,1,7,13,4) +
+      apr64(h,2,8,14,4) +
+      apr64(h,3,9,15,4) +
+      apr64(h,4,10,5,4) +
+      apr64(h,11,0,0,2); // last group: only 2 chars
+
+    // Actually the last call should be apr64(h,11,0,0,2) — but we need the last 11
+    // Standard APR1 byte mapping (from FreeBSD crypt.c):
+    // We rebuild with correct mapping:
+    function to64(v, n) {
+      let s = '';
+      while (n-- > 0) { s += APR_ALPHA[v & 0x3f]; v >>= 6; }
+      return s;
+    }
+    const hash =
+      to64((h[0]<<16)|(h[6]<<8)|h[12], 4) +
+      to64((h[1]<<16)|(h[7]<<8)|h[13], 4) +
+      to64((h[2]<<16)|(h[8]<<8)|h[14], 4) +
+      to64((h[3]<<16)|(h[9]<<8)|h[15], 4) +
+      to64((h[4]<<16)|(h[10]<<8)|h[5], 4) +
+      to64(h[11], 2);
+
+    return '$apr1$' + salt + '$' + hash;
+  }
+
+  // ── Random salt for APR1 ──
+  function randomAprSalt(len) {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./';
+    let s = '';
+    const arr = new Uint8Array(len);
+    crypto.getRandomValues(arr);
+    for (let i = 0; i < len; i++) s += chars[arr[i] % chars.length];
+    return s;
+  }
+
+  // ── Hash a single user entry ──
+  async function hashEntry(username, password, format) {
+    switch (format) {
+      case 'bcrypt': {
+        const bcryptLib = window.dcodeIO ? window.dcodeIO.bcrypt : window.bcrypt;
+        const hash = bcryptLib.hashSync(password, 10);
+        return username + ':' + hash;
+      }
+      case 'apr1': {
+        const salt = randomAprSalt(8);
+        const hash = apr1Md5(password, salt);
+        return username + ':' + hash;
+      }
+      case 'sha1': {
+        const hash = await sha1Hash(password);
+        return username + ':' + hash;
+      }
+      case 'plain':
+        return username + ':' + password;
+      default:
+        throw new Error('Unknown format');
+    }
+  }
+
+  // ── Main generate function ──
+  async function generate() {
+    const users = collectUsers();
+    if (users.length === 0) {
+      alert('Please enter at least one username.');
+      return;
+    }
+    // Validate
+    for (const u of users) {
+      if (!u.username) { alert('Please fill in all usernames.'); return; }
+      if (!u.password) { alert('Please fill in all passwords.'); return; }
+      if (u.username.includes(':')) { alert('Usernames cannot contain a colon (:).'); return; }
+    }
+
+    const btn = document.getElementById('generateBtn');
+    const format = getFormat();
+
+    // Show spinner for bcrypt (slow)
+    if (format === 'bcrypt') {
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner"></div><span>Generating…</span>';
+    }
+
+    try {
+      const lines = [];
+      for (const u of users) {
+        const line = await hashEntry(u.username, u.password, format);
+        lines.push(line);
+      }
+      generatedLines = lines;
+      renderOutput(lines);
+    } catch (e) {
+      console.error(e);
+      alert('Error generating hash: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      const lang = window.sfLang ? window.sfLang.current : 'en';
+      btn.innerHTML = lang === 'ko'
+        ? '<span class="lang-en" style="display:none">.htpasswd Entry 생성</span><span class="lang-ko">.htpasswd 항목 생성</span>'
+        : '<span class="lang-en">.htpasswd Entry 생성</span><span class="lang-ko" style="display:none">.htpasswd 항목 생성</span>';
+      // Simpler reset:
+      btn.innerHTML = '<span class="lang-en">Generate .htpasswd Entry</span><span class="lang-ko">.htpasswd 항목 생성</span>';
+      if (window.sfLang) document.dispatchEvent(new Event('DOMContentLoaded'));
+    }
+  }
+
+  // ── Render output ──
+  function renderOutput(lines) {
+    const placeholder = document.getElementById('outputPlaceholder');
+    const entriesEl = document.getElementById('outputEntries');
+    placeholder.style.display = 'none';
+    entriesEl.style.display = 'block';
+    entriesEl.innerHTML = '';
+
+    lines.forEach(line => {
+      const div = document.createElement('div');
+      div.className = 'output-entry';
+      div.textContent = line;
+      entriesEl.appendChild(div);
+    });
+
+    if (lines.length > 1) {
+      const count = document.createElement('p');
+      count.className = 'entry-count';
+      const lang = window.sfLang ? window.sfLang.current : 'en';
+      count.textContent = lang === 'ko'
+        ? lines.length + '개 항목 생성됨'
+        : lines.length + ' entries generated';
+      entriesEl.appendChild(count);
+    }
+  }
+
+  // ── Copy output ──
+  function copyOutput() {
+    if (!generatedLines.length) return;
+    const text = generatedLines.join('\n');
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const lang = window.sfLang ? window.sfLang.current : 'en';
+      btn.classList.add('copied');
+      btn.textContent = lang === 'ko' ? '복사됨 ✓' : 'Copied ✓';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span class="lang-en">Copy</span><span class="lang-ko">복사</span>';
+        if (window.sfLang) document.dispatchEvent(new Event('DOMContentLoaded'));
+      }, 2000);
+    }).catch(() => {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    });
+  }
+</script>
+
+<!-- Page-specific i18n keys -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    nav_back: "← All Tools",
+    vultr_label: "Sponsor",
+    vultr_title: "Get started on Vultr",
+    vultr_sub: "Get $300 free credit — valid for 30 days",
+    vultr_cta: "Claim your credit →",
+    footer_copy: "© 2026 StackFreeks"
+  },
+  ko: {
+    nav_back: "← 전체 툴",
+    vultr_label: "스폰서",
+    vultr_title: "Vultr로 시작하세요",
+    vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+    vultr_cta: "크레딧 받기 →",
+    footer_copy: "© 2026 StackFreeks"
+  }
+};
+</script>
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

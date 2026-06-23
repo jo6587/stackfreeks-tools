@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JWT Decoder — Decode JSON Web Tokens Online | StackFreeks</title>
+  <meta name="description" content="Decode and inspect JWT tokens instantly. View header, payload, and expiry in a clean interface. Free online JWT decoder — no account, works in your browser." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/jwt-decoder/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="JWT Decoder — Decode JSON Web Tokens Online | StackFreeks" />
+  <meta property="og:description" content="Decode and inspect JWT tokens instantly. View header, payload, and expiry in a clean interface. Free online JWT decoder — no account, works in your browser." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/jwt-decoder/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --accent-fg: #ffffff;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --warning: #f59e0b;
+      --warning-bg: rgba(245,158,11,0.08);
+      --error: #ef4444;
+      --error-bg: rgba(239,68,68,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .logo {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-mark {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-2); opacity: 1; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+
+    /* ── Container ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      max-width: 520px;
+    }
+
+    /* ── Tool body ── */
+    .tool-wrap {
+      padding: 32px 0 0;
+    }
+
+    /* Input area */
+    .input-section { margin-bottom: 24px; }
+    .input-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .input-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      letter-spacing: 0.02em;
+    }
+    .input-actions { display: flex; gap: 8px; align-items: center; }
+
+    #jwt-input {
+      width: 100%;
+      min-height: 120px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      color: var(--text-1);
+      padding: 14px 16px;
+      font-size: 13px;
+      font-family: var(--font-mono);
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.15s;
+      line-height: 1.6;
+    }
+    #jwt-input:focus { border-color: var(--border-2); }
+    #jwt-input::placeholder { color: var(--text-3); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s, border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--text-1);
+      color: var(--bg);
+      padding: 8px 16px;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-3);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+    }
+    .btn-ghost:hover { border-color: var(--border-2); color: var(--text-2); }
+    .btn-sm {
+      font-size: 11px;
+      padding: 4px 10px;
+    }
+    .btn-copy {
+      background: transparent;
+      color: var(--text-3);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      font-size: 11px;
+    }
+    .btn-copy:hover { border-color: var(--border-2); color: var(--text-2); }
+    .btn-copy.copied { color: var(--success); border-color: var(--success); }
+    .btn-vultr {
+      background: var(--success);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font);
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Error banner */
+    .error-banner {
+      display: none;
+      background: var(--error-bg);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      color: var(--error);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    .error-banner.visible { display: flex; align-items: center; gap: 8px; }
+
+    /* Security note */
+    .security-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .security-note-icon {
+      font-size: 15px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .security-note-text { font-size: 12px; color: var(--text-3); line-height: 1.6; }
+    .security-note-text strong { color: var(--text-2); font-weight: 500; }
+
+    /* Output grid */
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    /* Output card */
+    .output-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .output-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .output-card-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .output-card-body {
+      padding: 16px;
+      min-height: 100px;
+    }
+    .output-placeholder {
+      font-size: 12px;
+      color: var(--text-3);
+      font-style: italic;
+    }
+
+    /* Signature warning badge */
+    .badge-warning {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--warning);
+      background: var(--warning-bg);
+      border-radius: 20px;
+      padding: 2px 8px;
+      letter-spacing: 0.03em;
+    }
+    .badge-success {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--success);
+      background: var(--success-bg);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .badge-error {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--error);
+      background: var(--error-bg);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+
+    /* JSON syntax highlight */
+    pre.json-output {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: var(--text-2);
+      overflow: auto;
+      max-height: 260px;
+    }
+    .json-key   { color: #818cf8; }
+    .json-str   { color: #86efac; }
+    .json-num   { color: #fdba74; }
+    .json-bool  { color: #f472b6; }
+    .json-null  { color: var(--text-3); }
+    .json-punct { color: var(--text-3); }
+
+    /* Signature raw */
+    .sig-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-3);
+      word-break: break-all;
+      line-height: 1.7;
+    }
+
+    /* Expiry status card */
+    .expiry-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .expiry-card.visible { display: block; }
+    .expiry-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .expiry-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .expiry-datetime {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+    .expiry-relative {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Claims table */
+    .claims-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 24px;
+      display: none;
+    }
+    .claims-section.visible { display: block; }
+    .claims-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .claims-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .claims-table tr { border-bottom: 1px solid var(--border); }
+    .claims-table tr:last-child { border-bottom: none; }
+    .claims-table td {
+      padding: 10px 16px;
+      font-size: 13px;
+      vertical-align: top;
+    }
+    .claim-key {
+      width: 120px;
+      color: var(--text-3);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .claim-label { color: var(--text-2); font-size: 12px; width: 110px; }
+    .claim-value {
+      color: var(--text-1);
+      word-break: break-all;
+      font-size: 12px;
+    }
+
+    /* How-to guide */
+    .guide {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .guide-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p  { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .faq-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-a code {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-1);
+    }
+
+    /* Related */
+    .related { padding: 0 0 40px; }
+    .related-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .related-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: border-color 0.15s;
+      font-size: 13px;
+      color: var(--text-1);
+      font-weight: 500;
+    }
+    .related-card:hover { border-color: var(--border-2); opacity: 1; }
+    .related-arrow { color: var(--text-3); }
+
+    /* Vultr banner */
+    .vultr-banner {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+      margin: 8px 0 0;
+    }
+    .banner-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      margin-top: 0;
+    }
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .footer a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .footer a:hover { color: var(--text-2); opacity: 1; }
+    .footer-links { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+
+    /* Divider */
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .container { padding: 0 16px; }
+      .hero { padding: 32px 0 24px; }
+      .hero h1 { font-size: 1.4rem; }
+      .output-grid { grid-template-columns: 1fr; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .expiry-header { flex-direction: column; align-items: flex-start; }
+      .claims-table td { padding: 8px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">
+        <div class="logo-mark"></div>
+        StackFreeks Tools
+      </a>
+    </div>
+    <div class="nav-right">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="lang-en">
+        <p class="eyebrow">Security &amp; Auth</p>
+        <h1>JWT Decoder</h1>
+        <p class="hero-desc">Decode and inspect JSON Web Tokens — view header, payload, and expiry instantly</p>
+      </div>
+      <div class="lang-ko">
+        <p class="eyebrow">보안 &amp; 인증</p>
+        <h1>JWT 디코더</h1>
+        <p class="hero-desc">JSON Web Token을 즉시 디코딩 — 헤더·페이로드·만료시간 확인</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tool body -->
+  <main>
+    <div class="tool-wrap">
+      <div class="container">
+
+        <!-- Security note -->
+        <div class="security-note">
+          <span class="security-note-icon">🔒</span>
+          <div class="security-note-text">
+            <strong>Your token stays in your browser.</strong>
+            Nothing is sent to any server. All decoding happens locally in JavaScript.
+            <br>
+            <strong>Signature is not verified</strong> — this tool only decodes the header and payload. Verification requires the secret key.
+          </div>
+        </div>
+
+        <!-- Input -->
+        <div class="input-section">
+          <div class="input-label-row">
+            <span class="input-label">Paste your JWT token</span>
+            <div class="input-actions">
+              <button class="btn btn-ghost btn-sm" id="btn-sample">Load sample</button>
+              <button class="btn btn-ghost btn-sm" id="btn-clear">Clear</button>
+            </div>
+          </div>
+          <textarea
+            id="jwt-input"
+            placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+            spellcheck="false"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+          ></textarea>
+        </div>
+
+        <!-- Error banner -->
+        <div class="error-banner" id="error-banner">
+          <span>⚠</span>
+          <span id="error-text">Invalid JWT format.</span>
+        </div>
+
+        <!-- Expiry status -->
+        <div class="expiry-card" id="expiry-card">
+          <div class="expiry-header">
+            <span class="expiry-label">Expiry Status</span>
+            <span id="expiry-badge"></span>
+          </div>
+          <div class="expiry-datetime" id="expiry-datetime"></div>
+          <div class="expiry-relative" id="expiry-relative"></div>
+        </div>
+
+        <!-- Output cards -->
+        <div class="output-grid">
+
+          <!-- Header card -->
+          <div class="output-card">
+            <div class="output-card-header">
+              <span class="output-card-title">Header</span>
+              <button class="btn btn-copy" data-target="header-output">Copy</button>
+            </div>
+            <div class="output-card-body">
+              <pre class="json-output" id="header-output"><span class="output-placeholder">—</span></pre>
+            </div>
+          </div>
+
+          <!-- Payload card -->
+          <div class="output-card">
+            <div class="output-card-header">
+              <span class="output-card-title">Payload</span>
+              <button class="btn btn-copy" data-target="payload-output">Copy</button>
+            </div>
+            <div class="output-card-body">
+              <pre class="json-output" id="payload-output"><span class="output-placeholder">—</span></pre>
+            </div>
+          </div>
+
+          <!-- Signature card -->
+          <div class="output-card">
+            <div class="output-card-header">
+              <span class="output-card-title">
+                Signature
+                <span class="badge-warning">⚠ Not verified</span>
+              </span>
+              <button class="btn btn-copy" data-target="sig-output">Copy</button>
+            </div>
+            <div class="output-card-body">
+              <div class="sig-value" id="sig-output">—</div>
+              <p style="font-size:11px;color:var(--text-3);margin-top:10px;">
+                Signature verification requires the secret key and must be done server-side.
+              </p>
+            </div>
+          </div>
+
+        </div><!-- /output-grid -->
+
+        <!-- Claims table -->
+        <div class="claims-section" id="claims-section">
+          <div class="claims-header">Well-Known Claims</div>
+          <table class="claims-table" id="claims-table">
+            <tbody></tbody>
+          </table>
+        </div>
+
+      </div><!-- /container -->
+    </div><!-- /tool-wrap -->
+  </main>
+
+  <!-- How to use -->
+  <section style="padding: 40px 0 0;">
+    <div class="guide">
+      <div class="lang-en">
+        <p class="guide-title">How to use</p>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <p class="guide-step">Step 1</p>
+            <h3>Paste your token</h3>
+            <p>Copy a JWT from your app, API response, or browser devtools and paste it into the textarea above.</p>
+          </div>
+          <div class="guide-card">
+            <p class="guide-step">Step 2</p>
+            <h3>Inspect header &amp; payload</h3>
+            <p>The algorithm, token type, and all payload claims are decoded and displayed instantly.</p>
+          </div>
+          <div class="guide-card">
+            <p class="guide-step">Step 3</p>
+            <h3>Check expiry</h3>
+            <p>If the token has an <code style="font-family:monospace;font-size:11px;">exp</code> claim, the expiry time and current validity status are shown prominently.</p>
+          </div>
+          <div class="guide-card">
+            <p class="guide-step">Step 4</p>
+            <h3>Copy decoded parts</h3>
+            <p>Use the Copy button on each panel to grab the decoded JSON for use in your debugging or testing workflow.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lang-ko">
+        <p class="guide-title">사용 방법</p>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <p class="guide-step">Step 1</p>
+            <h3>토큰 붙여넣기</h3>
+            <p>앱, API 응답, 또는 브라우저 개발자 도구에서 JWT를 복사해 위의 입력창에 붙여넣으세요.</p>
+          </div>
+          <div class="guide-card">
+            <p class="guide-step">Step 2</p>
+            <h3>헤더 &amp; 페이로드 확인</h3>
+            <p>알고리즘, 토큰 타입, 모든 페이로드 클레임이 즉시 디코딩되어 표시됩니다.</p>
+          </div>
+          <div class="guide-card">
+            <p class="guide-step">Step 3</p>
+            <h3>만료 시간 확인</h3>
+            <p>토큰에 <code style="font-family:monospace;font-size:11px;">exp</code> 클레임이 있으면 만료 시각과 현재 유효 여부가 강조 표시됩니다.</p>
+          </div>
+          <div class="guide-card">
+            <p class="guide-step">Step 4</p>
+            <h3>디코딩 결과 복사</h3>
+            <p>각 패널의 복사 버튼을 눌러 디코딩된 JSON을 디버깅 또는 테스트 워크플로우에 바로 사용하세요.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="faq">
+      <div class="lang-en">
+        <p class="faq-title">FAQ</p>
+
+        <div class="faq-item">
+          <p class="faq-q">What is a JWT token?</p>
+          <p class="faq-a">A JSON Web Token (JWT) is a compact, URL-safe token format defined in <a href="https://tools.ietf.org/html/rfc7519" target="_blank" rel="noopener">RFC 7519</a>. It consists of three base64url-encoded parts separated by dots: <code>header.payload.signature</code>. The header describes the signing algorithm, the payload carries claims (user data, expiry, etc.), and the signature ensures the token hasn't been tampered with.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Is my JWT token safe to paste here?</p>
+          <p class="faq-a">Yes. All decoding happens entirely in your browser using JavaScript — nothing is transmitted to any server. You can verify this by checking the browser's Network tab while using the tool. That said, avoid sharing production tokens with sensitive data in untrusted environments as a general security practice.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Why isn't the signature verified?</p>
+          <p class="faq-a">JWT signature verification requires the secret key (for HMAC algorithms like HS256) or the public key (for asymmetric algorithms like RS256). These keys are never included in the token itself, and your browser has no way to obtain them. Verification must happen server-side where the key is securely stored.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What is the <code>exp</code> claim?</p>
+          <p class="faq-a">The <code>exp</code> (Expiration Time) claim specifies when the token expires, as a Unix timestamp (seconds since January 1, 1970 UTC). Servers should reject tokens with an <code>exp</code> in the past. This tool converts the value to a human-readable date and shows whether the token is currently valid or expired.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">How do I decode a JWT in code?</p>
+          <p class="faq-a">In JavaScript: <code>JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))</code>. In Node.js use the <code>jsonwebtoken</code> library. In Python use <code>PyJWT</code>. In Go use <code>golang-jwt/jwt</code>. Remember that decoding is not the same as verification — always verify tokens server-side before trusting their contents.</p>
+        </div>
+      </div>
+
+      <div class="lang-ko">
+        <p class="faq-title">자주 묻는 질문</p>
+
+        <div class="faq-item">
+          <p class="faq-q">JWT 토큰이란 무엇인가요?</p>
+          <p class="faq-a">JSON Web Token(JWT)은 <a href="https://tools.ietf.org/html/rfc7519" target="_blank" rel="noopener">RFC 7519</a>에 정의된 컴팩트하고 URL-safe한 토큰 형식입니다. 점(.)으로 구분된 세 개의 base64url 인코딩 부분(<code>header.payload.signature</code>)으로 구성됩니다. 헤더는 서명 알고리즘을, 페이로드는 클레임(사용자 데이터, 만료 시간 등)을, 시그니처는 토큰 무결성을 보장합니다.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">JWT 토큰을 여기에 붙여넣어도 안전한가요?</p>
+          <p class="faq-a">네. 모든 디코딩은 브라우저 내 JavaScript로만 처리되며 어떤 서버에도 전송되지 않습니다. 브라우저 네트워크 탭에서 직접 확인하실 수 있습니다. 다만 일반적인 보안 원칙으로, 민감한 정보가 담긴 프로덕션 토큰은 신뢰할 수 없는 환경에서 공유하지 않는 것이 좋습니다.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">왜 서명을 검증하지 않나요?</p>
+          <p class="faq-a">JWT 서명 검증에는 비밀 키(HS256 등 HMAC 알고리즘) 또는 공개 키(RS256 등 비대칭 알고리즘)가 필요합니다. 이 키는 토큰 자체에 포함되지 않으며 브라우저에서는 접근할 수 없습니다. 검증은 키가 안전하게 보관된 서버 측에서 수행해야 합니다.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q"><code>exp</code> 클레임이란 무엇인가요?</p>
+          <p class="faq-a"><code>exp</code>(Expiration Time) 클레임은 토큰의 만료 시각을 Unix 타임스탬프(1970년 1월 1일 UTC 기준 초)로 나타냅니다. 서버는 <code>exp</code>가 과거인 토큰을 거부해야 합니다. 이 도구는 값을 사람이 읽기 쉬운 날짜로 변환하고 현재 유효 여부를 표시합니다.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">코드에서 JWT를 어떻게 디코딩하나요?</p>
+          <p class="faq-a">JavaScript: <code>JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))</code>. Node.js는 <code>jsonwebtoken</code> 라이브러리를, Python은 <code>PyJWT</code>를, Go는 <code>golang-jwt/jwt</code>를 사용하세요. 디코딩은 검증과 다릅니다 — 토큰의 내용을 신뢰하기 전에 반드시 서버 측에서 검증하세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related -->
+  <section class="related">
+    <div class="related-inner">
+      <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+      <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+        <span style="font-size:11px;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;">Security</span>
+        More security and developer guides on stackfreeks.com →
+      </a>
+    </div>
+  </section>
+
+  <!-- Vultr banner -->
+  <section class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
+      </div>
+      <a
+        href="https://www.vultr.com/?ref=9907834-9J"
+        class="btn-vultr"
+        rel="nofollow sponsored"
+        target="_blank"
+        data-i18n="vultr_cta"
+      >Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+        <a href="https://stackfreeks.com" target="_blank">stackfreeks.com →</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tool JS -->
+  <script>
+    (function () {
+      var SAMPLE_JWT =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' +
+        '.eyJzdWIiOiJ1c2VyXzEyMzQ1NiIsIm5hbWUiOiJKYW5lIERvZSIsImVtYWlsIjoiamFuZUBleGFtcGxlLmNvbSIsImlzcyI6ImF1dGgubXlhcHAuY29tIiwiYXVkIjoibXlhcHAuY29tIiwiaWF0IjoxNzE5MDAwMDAwLCJuYmYiOjE3MTkwMDAwMDAsImV4cCI6MTc4MjA3MjAwMCwianRpIjoiYWJjZGVmMTIzNDU2In0' +
+        '.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+
+      var KNOWN_CLAIMS = [
+        { key: 'iss', label: 'Issuer' },
+        { key: 'sub', label: 'Subject' },
+        { key: 'aud', label: 'Audience' },
+        { key: 'exp', label: 'Expires' },
+        { key: 'iat', label: 'Issued At' },
+        { key: 'nbf', label: 'Not Before' },
+        { key: 'jti', label: 'JWT ID' },
+      ];
+
+      var input    = document.getElementById('jwt-input');
+      var errorBanner = document.getElementById('error-banner');
+      var errorText   = document.getElementById('error-text');
+      var headerEl = document.getElementById('header-output');
+      var payloadEl = document.getElementById('payload-output');
+      var sigEl    = document.getElementById('sig-output');
+      var expiryCard = document.getElementById('expiry-card');
+      var expiryBadge = document.getElementById('expiry-badge');
+      var expiryDatetime = document.getElementById('expiry-datetime');
+      var expiryRelative = document.getElementById('expiry-relative');
+      var claimsSection = document.getElementById('claims-section');
+      var claimsTbody = document.querySelector('#claims-table tbody');
+
+      // base64url → binary string → utf-8
+      function b64urlDecode(str) {
+        var b64 = str.replace(/-/g, '+').replace(/_/g, '/');
+        while (b64.length % 4 !== 0) b64 += '=';
+        var binary = atob(b64);
+        // Handle unicode via TextDecoder if available
+        try {
+          var bytes = new Uint8Array(binary.length);
+          for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+          return new TextDecoder('utf-8').decode(bytes);
+        } catch (e) {
+          return decodeURIComponent(escape(binary));
+        }
+      }
+
+      // Syntax-highlight a JSON string
+      function highlightJson(json) {
+        return json
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(
+            /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+            function (match) {
+              var cls = 'json-num';
+              if (/^"/.test(match)) {
+                cls = /:$/.test(match) ? 'json-key' : 'json-str';
+              } else if (/true|false/.test(match)) {
+                cls = 'json-bool';
+              } else if (/null/.test(match) ) {
+                cls = 'json-null';
+              }
+              return '<span class="' + cls + '">' + match + '</span>';
+            }
+          );
+      }
+
+      function formatTimestamp(ts) {
+        try {
+          return new Intl.DateTimeFormat(undefined, {
+            dateStyle: 'medium',
+            timeStyle: 'long'
+          }).format(new Date(ts * 1000));
+        } catch (e) {
+          return new Date(ts * 1000).toISOString();
+        }
+      }
+
+      function relativeTime(ts) {
+        var now = Math.floor(Date.now() / 1000);
+        var diff = ts - now;
+        var abs = Math.abs(diff);
+        var past = diff < 0;
+
+        var unit, val;
+        if (abs < 120) { unit = 'seconds'; val = abs; }
+        else if (abs < 7200) { unit = 'minutes'; val = Math.round(abs / 60); }
+        else if (abs < 172800) { unit = 'hours'; val = Math.round(abs / 3600); }
+        else { unit = 'days'; val = Math.round(abs / 86400); }
+
+        if (past) return 'Expired ' + val + ' ' + unit + ' ago';
+        return 'Expires in ' + val + ' ' + unit;
+      }
+
+      function showError(msg) {
+        errorBanner.classList.add('visible');
+        errorText.textContent = msg;
+      }
+      function hideError() {
+        errorBanner.classList.remove('visible');
+      }
+
+      function resetOutputs() {
+        headerEl.innerHTML = '<span class="output-placeholder">—</span>';
+        payloadEl.innerHTML = '<span class="output-placeholder">—</span>';
+        sigEl.textContent = '—';
+        expiryCard.classList.remove('visible');
+        claimsSection.classList.remove('visible');
+        claimsTbody.innerHTML = '';
+      }
+
+      function decode(token) {
+        token = token.trim();
+        if (!token) { resetOutputs(); hideError(); return; }
+
+        var parts = token.split('.');
+        if (parts.length !== 3) {
+          resetOutputs();
+          showError('Invalid JWT: expected 3 dot-separated parts, got ' + parts.length + '.');
+          return;
+        }
+
+        var header, payload;
+        try {
+          header = JSON.parse(b64urlDecode(parts[0]));
+        } catch (e) {
+          resetOutputs();
+          showError('Could not decode header: ' + e.message);
+          return;
+        }
+        try {
+          payload = JSON.parse(b64urlDecode(parts[1]));
+        } catch (e) {
+          resetOutputs();
+          showError('Could not decode payload: ' + e.message);
+          return;
+        }
+
+        hideError();
+
+        // Header
+        headerEl.innerHTML = highlightJson(JSON.stringify(header, null, 2));
+
+        // Payload
+        payloadEl.innerHTML = highlightJson(JSON.stringify(payload, null, 2));
+
+        // Signature (raw base64url)
+        sigEl.textContent = parts[2];
+
+        // Expiry
+        if (typeof payload.exp === 'number') {
+          var now = Math.floor(Date.now() / 1000);
+          var expired = payload.exp < now;
+          expiryCard.classList.add('visible');
+          expiryBadge.innerHTML = expired
+            ? '<span class="badge-error">❌ Expired</span>'
+            : '<span class="badge-success">✅ Valid</span>';
+          expiryDatetime.textContent = formatTimestamp(payload.exp);
+          expiryRelative.textContent = relativeTime(payload.exp);
+        } else {
+          expiryCard.classList.remove('visible');
+        }
+
+        // Claims table
+        var rows = KNOWN_CLAIMS.filter(function (c) { return payload[c.key] !== undefined; });
+        if (rows.length > 0) {
+          claimsSection.classList.add('visible');
+          claimsTbody.innerHTML = rows.map(function (c) {
+            var raw = payload[c.key];
+            var display = raw;
+            if ((c.key === 'exp' || c.key === 'iat' || c.key === 'nbf') && typeof raw === 'number') {
+              display = formatTimestamp(raw) + ' (' + raw + ')';
+            } else if (Array.isArray(raw)) {
+              display = raw.join(', ');
+            } else {
+              display = String(raw);
+            }
+            // Escape HTML
+            display = display.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            return '<tr>' +
+              '<td class="claim-key">' + c.key + '</td>' +
+              '<td class="claim-label">' + c.label + '</td>' +
+              '<td class="claim-value">' + display + '</td>' +
+              '</tr>';
+          }).join('');
+        } else {
+          claimsSection.classList.remove('visible');
+        }
+      }
+
+      // Live decode on input
+      input.addEventListener('input', function () { decode(input.value); });
+
+      // Paste event
+      input.addEventListener('paste', function (e) {
+        setTimeout(function () { decode(input.value); }, 0);
+      });
+
+      // Sample
+      document.getElementById('btn-sample').addEventListener('click', function () {
+        input.value = SAMPLE_JWT;
+        decode(SAMPLE_JWT);
+      });
+
+      // Clear
+      document.getElementById('btn-clear').addEventListener('click', function () {
+        input.value = '';
+        resetOutputs();
+        hideError();
+      });
+
+      // Copy buttons
+      document.querySelectorAll('.btn-copy').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var targetId = btn.dataset.target;
+          var el = document.getElementById(targetId);
+          var text = el.textContent || el.innerText;
+          text = text.trim();
+          if (!text || text === '—') return;
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function () {
+              btn.textContent = 'Copy';
+              btn.classList.remove('copied');
+            }, 1500);
+          }).catch(function () {
+            // Fallback
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function () {
+              btn.textContent = 'Copy';
+              btn.classList.remove('copied');
+            }, 1500);
+          });
+        });
+      });
+
+    })();
+  </script>
+
+  <!-- i18n -->
+  <script>window.SF_PAGE_I18N = { en: { nav_back: "← All Tools", vultr_label: "Sponsor", vultr_title: "Get started on Vultr", vultr_sub: "Get $300 free credit — valid for 30 days", vultr_cta: "Claim your credit →", footer_copy: "© 2026 StackFreeks" }, ko: { nav_back: "← 전체 툴", vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요", vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)", vultr_cta: "크레딧 받기 →", footer_copy: "© 2026 StackFreeks" } }</script>
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>

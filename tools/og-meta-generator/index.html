@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Graph Meta Tag Generator — Free SEO Tool | StackFreeks</title>
+  <meta name="description" content="Generate Open Graph and Twitter Card meta tags for any webpage. Preview how your page looks on Google, Facebook, and Twitter. Free online meta tag generator, no account required." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/og-meta-generator/" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/og-meta-generator/" />
+  <meta property="og:title" content="Open Graph Meta Tag Generator — Free SEO Tool | StackFreeks" />
+  <meta property="og:description" content="Generate Open Graph and Twitter Card meta tags for any webpage. Preview how your page looks on Google, Facebook, and Twitter. Free online meta tag generator, no account required." />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://tools.stackfreeks.com/tools/og-meta-generator/" />
+  <meta property="twitter:title" content="Open Graph Meta Tag Generator — Free SEO Tool | StackFreeks" />
+  <meta property="twitter:description" content="Generate Open Graph and Twitter Card meta tags for any webpage. Preview how your page looks on Google, Facebook, and Twitter." />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool layout */
+    .tool-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .tool-cols {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .tool-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Form panel */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-panel-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .field-label label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+
+    .char-count {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .char-count.warn { color: #f59e0b; }
+    .char-count.over { color: #ef4444; }
+
+    .field input,
+    .field textarea,
+    .field select {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 13px;
+      padding: 9px 12px;
+      border-radius: var(--radius);
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: var(--text-3);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
+    }
+
+    .field select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-color: var(--surface-2);
+      cursor: pointer;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Preview panel */
+    .preview-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .preview-section-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    /* Google Preview */
+    .preview-google {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .google-url {
+      font-size: 12px;
+      color: #202124;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .google-url-icon {
+      width: 18px;
+      height: 18px;
+      background: #e8eaed;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .google-url-text {
+      color: #202124;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .google-title {
+      font-size: 18px;
+      color: #1a0dab;
+      line-height: 1.4;
+      margin-bottom: 4px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .google-desc {
+      font-size: 13px;
+      color: #4d5156;
+      line-height: 1.6;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .google-label {
+      font-size: 11px;
+      color: #70757a;
+      margin-bottom: 12px;
+    }
+
+    /* Facebook Preview */
+    .preview-facebook {
+      background: #1c1e21;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .fb-image {
+      width: 100%;
+      aspect-ratio: 1200/630;
+      background: #3a3b3c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .fb-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .fb-image-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #65676b;
+    }
+
+    .fb-image-placeholder svg {
+      opacity: 0.5;
+    }
+
+    .fb-image-placeholder span {
+      font-size: 12px;
+    }
+
+    .fb-meta {
+      padding: 12px 16px 14px;
+      background: #242526;
+    }
+
+    .fb-domain {
+      font-size: 11px;
+      color: #8a8d91;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .fb-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e4e6eb;
+      line-height: 1.4;
+      margin-bottom: 4px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .fb-desc {
+      font-size: 13px;
+      color: #8a8d91;
+      line-height: 1.4;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+    /* Twitter Preview */
+    .preview-twitter {
+      background: #15202b;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .tw-image {
+      width: 100%;
+      aspect-ratio: 1200/630;
+      background: #1e2c3a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .tw-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tw-image-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #536471;
+    }
+
+    .tw-image-placeholder span {
+      font-size: 12px;
+    }
+
+    .tw-meta {
+      padding: 12px 16px 14px;
+    }
+
+    .tw-domain {
+      font-size: 12px;
+      color: #536471;
+      margin-bottom: 3px;
+    }
+
+    .tw-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e7e9ea;
+      line-height: 1.4;
+      margin-bottom: 2px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .tw-desc {
+      font-size: 13px;
+      color: #71767b;
+      line-height: 1.4;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    /* Code output */
+    .code-section {
+      margin-top: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-header-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+
+    .copy-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--text-1); }
+    .copy-btn.copied { border-color: var(--success); color: var(--success); }
+
+    .code-block {
+      padding: 20px;
+      overflow-x: auto;
+      font-family: "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #a1a1aa;
+      white-space: pre;
+    }
+
+    .code-block .c-comment { color: #52525b; }
+    .code-block .c-tag { color: #818cf8; }
+    .code-block .c-attr { color: #6ee7b7; }
+    .code-block .c-val { color: #fbbf24; }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 0 48px;
+    }
+
+    /* Guide */
+    .guide { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* Related */
+    .related {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .related a {
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      max-width: 960px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .vultr-inner {
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+    .vultr-inner:hover { border-color: var(--success); opacity: 1; }
+
+    .vultr-left { display: flex; flex-direction: column; gap: 4px; }
+
+    .vultr-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--success);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .vultr-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+    }
+
+    .vultr-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .vultr-cta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--success);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      .hero { padding: 32px 16px 24px; }
+      .tool-wrap { padding: 0 16px 48px; }
+      .hero h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-left">
+    <a href="/" class="logo">StackFreeks Tools</a>
+    <div class="nav-sep"></div>
+    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+  </div>
+  <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="lang-en">
+    <h1>Open Graph Meta Tag Generator</h1>
+    <p>Generate OG and Twitter Card meta tags and preview how your page looks on Google, Facebook, and Twitter</p>
+  </div>
+  <div class="lang-ko">
+    <h1>Open Graph 메타 태그 생성기</h1>
+    <p>OG 및 Twitter Card 메타 태그를 생성하고 구글·페이스북·트위터에서 어떻게 보이는지 미리 확인하세요</p>
+  </div>
+</div>
+
+<!-- Tool body -->
+<div class="tool-wrap">
+  <div class="tool-cols">
+
+    <!-- Form panel -->
+    <div class="form-panel">
+      <div class="form-panel-title">Page Details</div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="f-title">Page Title</label>
+          <span class="char-count" id="cnt-title">0/60</span>
+        </div>
+        <input type="text" id="f-title" maxlength="100" placeholder="My Awesome Page" />
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="f-desc">Description</label>
+          <span class="char-count" id="cnt-desc">0/160</span>
+        </div>
+        <textarea id="f-desc" maxlength="300" placeholder="A short description of your page (140–160 chars recommended)."></textarea>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="f-url">Page URL</label>
+        </div>
+        <input type="url" id="f-url" placeholder="https://example.com/page" />
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="f-image">Image URL</label>
+        </div>
+        <input type="url" id="f-image" placeholder="https://example.com/og-image.jpg" />
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="f-sitename">Site Name</label>
+        </div>
+        <input type="text" id="f-sitename" placeholder="My Website" />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <div class="field-label">
+            <label for="f-type">Page Type</label>
+          </div>
+          <select id="f-type">
+            <option value="website" selected>website</option>
+            <option value="article">article</option>
+            <option value="product">product</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <div class="field-label">
+            <label for="f-locale">Locale</label>
+          </div>
+          <select id="f-locale">
+            <option value="en_US" selected>en_US</option>
+            <option value="ko_KR">ko_KR</option>
+            <option value="ja_JP">ja_JP</option>
+            <option value="zh_CN">zh_CN</option>
+            <option value="fr_FR">fr_FR</option>
+            <option value="de_DE">de_DE</option>
+            <option value="es_ES">es_ES</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <div class="field-label">
+            <label for="f-twcard">Twitter Card</label>
+          </div>
+          <select id="f-twcard">
+            <option value="summary_large_image" selected>summary_large_image</option>
+            <option value="summary">summary</option>
+            <option value="app">app</option>
+            <option value="player">player</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <div class="field-label">
+            <label for="f-twuser">Twitter @handle</label>
+          </div>
+          <input type="text" id="f-twuser" placeholder="@youraccount" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview panel -->
+    <div class="preview-panel">
+
+      <!-- Google preview -->
+      <div>
+        <div class="preview-section-title">Google Search Result</div>
+        <div class="preview-google">
+          <div class="google-url">
+            <div class="google-url-icon"></div>
+            <span class="google-url-text" id="prev-g-url">example.com</span>
+          </div>
+          <div class="google-title" id="prev-g-title">Page Title</div>
+          <div class="google-desc" id="prev-g-desc">Your page description will appear here. Keep it between 140–160 characters for best results in search engines.</div>
+        </div>
+      </div>
+
+      <!-- Facebook OG preview -->
+      <div>
+        <div class="preview-section-title">Facebook / Open Graph</div>
+        <div class="preview-facebook">
+          <div class="fb-image" id="prev-fb-img-wrap">
+            <div class="fb-image-placeholder" id="prev-fb-placeholder">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>1200 × 630 image</span>
+            </div>
+            <img id="prev-fb-img" src="" alt="OG preview image" style="display:none;" />
+          </div>
+          <div class="fb-meta">
+            <div class="fb-domain" id="prev-fb-domain">example.com</div>
+            <div class="fb-title" id="prev-fb-title">Page Title</div>
+            <div class="fb-desc" id="prev-fb-desc">Page description</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Twitter preview -->
+      <div>
+        <div class="preview-section-title">Twitter Card</div>
+        <div class="preview-twitter">
+          <div class="tw-image" id="prev-tw-img-wrap">
+            <div class="tw-image-placeholder" id="prev-tw-placeholder">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>1200 × 630 image</span>
+            </div>
+            <img id="prev-tw-img" src="" alt="Twitter card image" style="display:none;" />
+          </div>
+          <div class="tw-meta">
+            <div class="tw-domain" id="prev-tw-domain">example.com</div>
+            <div class="tw-title" id="prev-tw-title">Page Title</div>
+            <div class="tw-desc" id="prev-tw-desc">Page description</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Code output -->
+  <div class="code-section">
+    <div class="code-header">
+      <span class="code-header-title">Generated Meta Tags — copy and paste into your &lt;head&gt;</span>
+      <button class="copy-btn" id="copy-btn" onclick="copyCode()">Copy All</button>
+    </div>
+    <div class="code-block" id="code-output"></div>
+  </div>
+</div>
+
+<!-- How to use -->
+<div class="guide">
+  <div class="guide-title">How to Use</div>
+  <div class="guide-grid">
+    <div class="guide-card">
+      <div class="guide-step">STEP 01</div>
+      <div class="lang-en">
+        <h3>Fill in your page details</h3>
+        <p>Enter the title, description, URL, and image URL for the page you want to share.</p>
+      </div>
+      <div class="lang-ko">
+        <h3>페이지 정보 입력</h3>
+        <p>공유할 페이지의 제목, 설명, URL, 이미지 URL을 입력하세요.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-step">STEP 02</div>
+      <div class="lang-en">
+        <h3>Preview across platforms</h3>
+        <p>See live previews of how your link will look on Google, Facebook, and Twitter instantly.</p>
+      </div>
+      <div class="lang-ko">
+        <h3>플랫폼별 미리 보기</h3>
+        <p>구글, 페이스북, 트위터에서 링크가 어떻게 보일지 실시간으로 확인하세요.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-step">STEP 03</div>
+      <div class="lang-en">
+        <h3>Copy the generated code</h3>
+        <p>Click "Copy All" to copy the complete meta tag block to your clipboard.</p>
+      </div>
+      <div class="lang-ko">
+        <h3>코드 복사</h3>
+        <p>"Copy All" 버튼을 클릭해 메타 태그 코드를 클립보드에 복사하세요.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-step">STEP 04</div>
+      <div class="lang-en">
+        <h3>Paste into your &lt;head&gt;</h3>
+        <p>Paste the code inside your HTML &lt;head&gt; tag and deploy. No server-side code needed.</p>
+      </div>
+      <div class="lang-ko">
+        <h3>&lt;head&gt;에 붙여넣기</h3>
+        <p>HTML &lt;head&gt; 태그 안에 코드를 붙여넣고 배포하세요. 서버 코드 불필요.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq">
+  <div class="faq-title">FAQ</div>
+
+  <div class="faq-item">
+    <div class="lang-en">
+      <div class="faq-q">What are Open Graph meta tags?</div>
+      <div class="faq-a">Open Graph (OG) meta tags are HTML snippets placed in a page's &lt;head&gt; that control how the page appears when shared on social media platforms like Facebook, LinkedIn, and Slack. They define the title, description, and image shown in link preview cards.</div>
+    </div>
+    <div class="lang-ko">
+      <div class="faq-q">Open Graph 메타 태그란 무엇인가요?</div>
+      <div class="faq-a">Open Graph(OG) 메타 태그는 페이지의 &lt;head&gt;에 삽입하는 HTML 코드로, 페이스북·링크드인·슬랙 등에서 링크를 공유할 때 보이는 제목, 설명, 이미지를 제어합니다.</div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="lang-en">
+      <div class="faq-q">What size should my OG image be?</div>
+      <div class="faq-a">The recommended OG image size is 1200 × 630 pixels (roughly 1.91:1 ratio). This works well across Facebook, Twitter (summary_large_image), and LinkedIn. For Twitter's "summary" card type, a 1:1 square image (at least 144 × 144 px) is used instead.</div>
+    </div>
+    <div class="lang-ko">
+      <div class="faq-q">OG 이미지 권장 크기는 얼마인가요?</div>
+      <div class="faq-a">권장 OG 이미지 크기는 1200 × 630 픽셀(약 1.91:1 비율)입니다. 페이스북, 트위터(summary_large_image), 링크드인 모두에서 잘 작동합니다. 트위터 "summary" 카드 유형은 1:1 정사각형 이미지(최소 144 × 144 px)가 사용됩니다.</div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="lang-en">
+      <div class="faq-q">Why isn't my OG image showing on Facebook?</div>
+      <div class="faq-a">Facebook caches OG data aggressively. After updating your meta tags, use the <a href="https://developers.facebook.com/tools/debug/" target="_blank" rel="noopener">Facebook Sharing Debugger</a> to force a cache refresh. Also ensure your image URL is publicly accessible and the server returns the correct Content-Type header.</div>
+    </div>
+    <div class="lang-ko">
+      <div class="faq-q">페이스북에서 OG 이미지가 표시되지 않는 이유는?</div>
+      <div class="faq-a">페이스북은 OG 데이터를 강하게 캐시합니다. 메타 태그를 업데이트한 후 <a href="https://developers.facebook.com/tools/debug/" target="_blank" rel="noopener">Facebook Sharing Debugger</a>를 사용해 캐시를 강제 갱신하세요. 이미지 URL이 공개 접근 가능하고 서버가 올바른 Content-Type 헤더를 반환하는지도 확인하세요.</div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="lang-en">
+      <div class="faq-q">What is a Twitter Card?</div>
+      <div class="faq-a">Twitter Cards are Twitter's equivalent of OG tags — they control how your link looks when shared in a tweet. The most popular type is "summary_large_image," which shows a large image with the title and description below. You must add Twitter Card meta tags separately from OG tags.</div>
+    </div>
+    <div class="lang-ko">
+      <div class="faq-q">Twitter Card란 무엇인가요?</div>
+      <div class="faq-a">Twitter Card는 트위터에서 링크를 공유할 때 어떻게 보일지 제어하는 메타 태그입니다. 가장 많이 쓰이는 유형은 큰 이미지와 함께 제목·설명을 표시하는 "summary_large_image"입니다. OG 태그와 별도로 Twitter Card 메타 태그를 추가해야 합니다.</div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="lang-en">
+      <div class="faq-q">Do meta tags affect SEO?</div>
+      <div class="faq-a">The &lt;title&gt; and &lt;meta name="description"&gt; tags directly affect how your page appears in Google search results and can influence click-through rates. OG and Twitter Card tags don't directly influence rankings, but better social previews can drive more traffic and indirect SEO signals.</div>
+    </div>
+    <div class="lang-ko">
+      <div class="faq-q">메타 태그가 SEO에 영향을 미치나요?</div>
+      <div class="faq-a">&lt;title&gt;과 &lt;meta name="description"&gt; 태그는 구글 검색 결과 표시에 직접 영향을 미치며 클릭률(CTR)에도 영향을 줍니다. OG와 Twitter Card 태그는 직접적인 랭킹 요소는 아니지만, 더 나은 소셜 미리 보기는 트래픽을 늘려 간접적인 SEO 신호로 작용합니다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Related -->
+<div class="related">
+  <div class="lang-en">
+    <a href="https://stackfreeks.com" target="_blank" rel="noopener">More SEO and developer guides on stackfreeks.com →</a>
+  </div>
+  <div class="lang-ko">
+    <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com에서 더 많은 SEO·개발자 가이드 보기 →</a>
+  </div>
+</div>
+
+<!-- Vultr Banner -->
+<div class="vultr-banner">
+  <a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
+    <div class="vultr-left">
+      <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
+      <span class="vultr-title" data-i18n="vultr_title">Get started on Vultr</span>
+      <span class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+    </div>
+    <span class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</span>
+  </a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+    <a href="/terms/">Terms</a>
+  </div>
+  <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
+</footer>
+
+<script>
+(function () {
+  // ---- Field references ----
+  var fTitle   = document.getElementById('f-title');
+  var fDesc    = document.getElementById('f-desc');
+  var fUrl     = document.getElementById('f-url');
+  var fImage   = document.getElementById('f-image');
+  var fSite    = document.getElementById('f-sitename');
+  var fType    = document.getElementById('f-type');
+  var fLocale  = document.getElementById('f-locale');
+  var fTwCard  = document.getElementById('f-twcard');
+  var fTwUser  = document.getElementById('f-twuser');
+
+  var cntTitle = document.getElementById('cnt-title');
+  var cntDesc  = document.getElementById('cnt-desc');
+
+  // ---- Preview refs ----
+  var gUrl     = document.getElementById('prev-g-url');
+  var gTitle   = document.getElementById('prev-g-title');
+  var gDesc    = document.getElementById('prev-g-desc');
+
+  var fbDomain = document.getElementById('prev-fb-domain');
+  var fbTitle  = document.getElementById('prev-fb-title');
+  var fbDesc   = document.getElementById('prev-fb-desc');
+  var fbImgWrap= document.getElementById('prev-fb-img-wrap');
+  var fbImg    = document.getElementById('prev-fb-img');
+  var fbPlaceholder = document.getElementById('prev-fb-placeholder');
+
+  var twDomain = document.getElementById('prev-tw-domain');
+  var twTitle  = document.getElementById('prev-tw-title');
+  var twDesc   = document.getElementById('prev-tw-desc');
+  var twImg    = document.getElementById('prev-tw-img');
+  var twPlaceholder = document.getElementById('prev-tw-placeholder');
+
+  var codeOutput = document.getElementById('code-output');
+
+  // ---- Helpers ----
+  function esc(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function escPlain(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function getDomain(url) {
+    try {
+      return new URL(url).hostname;
+    } catch (e) {
+      return url || 'example.com';
+    }
+  }
+
+  function updateCounter(el, current, max, warnAt) {
+    el.textContent = current + '/' + max;
+    el.className = 'char-count';
+    if (current > max) {
+      el.classList.add('over');
+    } else if (current >= warnAt) {
+      el.classList.add('warn');
+    }
+  }
+
+  // ---- Update function ----
+  function update() {
+    var title   = fTitle.value;
+    var desc    = fDesc.value;
+    var url     = fUrl.value.trim();
+    var image   = fImage.value.trim();
+    var site    = fSite.value;
+    var type    = fType.value;
+    var locale  = fLocale.value;
+    var twCard  = fTwCard.value;
+    var twUser  = fTwUser.value.trim();
+
+    // Counters
+    updateCounter(cntTitle, title.length, 60, 50);
+    updateCounter(cntDesc, desc.length, 160, 130);
+
+    // Domain
+    var domain = getDomain(url) || 'example.com';
+
+    // ---- Google preview ----
+    var gUrlPath = '';
+    if (url) {
+      try { gUrlPath = new URL(url.startsWith('http') ? url : 'https://' + url).pathname; } catch(e) {}
+    }
+    gUrl.textContent   = domain + gUrlPath;
+    gTitle.textContent = title || 'Page Title';
+    gDesc.textContent  = desc  || 'Your page description will appear here. Keep it between 140–160 characters for best results in search engines.';
+
+    // ---- Facebook preview ----
+    fbDomain.textContent = domain;
+    fbTitle.textContent  = title || 'Page Title';
+    fbDesc.textContent   = desc  || 'Page description';
+
+    if (image) {
+      fbImg.src = image;
+      fbImg.style.display = 'block';
+      fbPlaceholder.style.display = 'none';
+    } else {
+      fbImg.style.display = 'none';
+      fbPlaceholder.style.display = 'flex';
+    }
+
+    // ---- Twitter preview ----
+    twDomain.textContent = domain;
+    twTitle.textContent  = title || 'Page Title';
+    twDesc.textContent   = desc  || 'Page description';
+
+    if (image) {
+      twImg.src = image;
+      twImg.style.display = 'block';
+      twPlaceholder.style.display = 'none';
+    } else {
+      twImg.style.display = 'none';
+      twPlaceholder.style.display = 'flex';
+    }
+
+    // ---- Code generation ----
+    var lines = [];
+
+    // Syntax-highlighted rendering helper
+    function tag(name, attrs) {
+      var attrStr = attrs.map(function(a) {
+        return '<span class="c-attr">' + a[0] + '</span>="<span class="c-val">' + escPlain(a[1]) + '</span>"';
+      }).join(' ');
+      return '<span class="c-tag">&lt;' + name + '</span> ' + attrStr + ' <span class="c-tag">/&gt;</span>';
+    }
+
+    function comment(text) {
+      return '<span class="c-comment">&lt;!-- ' + text + ' --&gt;</span>';
+    }
+
+    lines.push(comment('Primary Meta Tags'));
+    if (title) {
+      lines.push('<span class="c-tag">&lt;title&gt;</span><span class="c-val">' + escPlain(title) + '</span><span class="c-tag">&lt;/title&gt;</span>');
+      lines.push(tag('meta', [['name','title'],['content',title]]));
+    }
+    if (desc) {
+      lines.push(tag('meta', [['name','description'],['content',desc]]));
+    }
+    lines.push('');
+
+    lines.push(comment('Open Graph / Facebook'));
+    lines.push(tag('meta', [['property','og:type'],['content',type]]));
+    if (url)    lines.push(tag('meta', [['property','og:url'],['content',url]]));
+    if (title)  lines.push(tag('meta', [['property','og:title'],['content',title]]));
+    if (desc)   lines.push(tag('meta', [['property','og:description'],['content',desc]]));
+    if (image)  lines.push(tag('meta', [['property','og:image'],['content',image]]));
+    if (site)   lines.push(tag('meta', [['property','og:site_name'],['content',site]]));
+    lines.push(tag('meta', [['property','og:locale'],['content',locale]]));
+    lines.push('');
+
+    lines.push(comment('Twitter'));
+    lines.push(tag('meta', [['property','twitter:card'],['content',twCard]]));
+    if (url)    lines.push(tag('meta', [['property','twitter:url'],['content',url]]));
+    if (title)  lines.push(tag('meta', [['property','twitter:title'],['content',title]]));
+    if (desc)   lines.push(tag('meta', [['property','twitter:description'],['content',desc]]));
+    if (image)  lines.push(tag('meta', [['property','twitter:image'],['content',image]]));
+    if (twUser) {
+      var handle = twUser.startsWith('@') ? twUser : '@' + twUser;
+      lines.push(tag('meta', [['name','twitter:site'],['content',handle]]));
+    }
+
+    codeOutput.innerHTML = lines.join('\n');
+  }
+
+  // ---- Event listeners ----
+  [fTitle, fDesc, fUrl, fImage, fSite, fType, fLocale, fTwCard, fTwUser].forEach(function(el) {
+    el.addEventListener('input', update);
+    el.addEventListener('change', update);
+  });
+
+  // ---- Copy ----
+  window.copyCode = function() {
+    // Build plain text version
+    var title   = fTitle.value;
+    var desc    = fDesc.value;
+    var url     = fUrl.value.trim();
+    var image   = fImage.value.trim();
+    var site    = fSite.value;
+    var type    = fType.value;
+    var locale  = fLocale.value;
+    var twCard  = fTwCard.value;
+    var twUser  = fTwUser.value.trim();
+
+    function plainTag(name, attrs) {
+      var attrStr = attrs.map(function(a) {
+        return a[0] + '="' + a[1].replace(/"/g, '&quot;') + '"';
+      }).join(' ');
+      return '<' + name + ' ' + attrStr + ' />';
+    }
+
+    var out = [];
+    out.push('<!-- Primary Meta Tags -->');
+    if (title) {
+      out.push('<title>' + title + '</title>');
+      out.push(plainTag('meta', [['name','title'],['content',title]]));
+    }
+    if (desc) out.push(plainTag('meta', [['name','description'],['content',desc]]));
+    out.push('');
+    out.push('<!-- Open Graph / Facebook -->');
+    out.push(plainTag('meta', [['property','og:type'],['content',type]]));
+    if (url)   out.push(plainTag('meta', [['property','og:url'],['content',url]]));
+    if (title) out.push(plainTag('meta', [['property','og:title'],['content',title]]));
+    if (desc)  out.push(plainTag('meta', [['property','og:description'],['content',desc]]));
+    if (image) out.push(plainTag('meta', [['property','og:image'],['content',image]]));
+    if (site)  out.push(plainTag('meta', [['property','og:site_name'],['content',site]]));
+    out.push(plainTag('meta', [['property','og:locale'],['content',locale]]));
+    out.push('');
+    out.push('<!-- Twitter -->');
+    out.push(plainTag('meta', [['property','twitter:card'],['content',twCard]]));
+    if (url)   out.push(plainTag('meta', [['property','twitter:url'],['content',url]]));
+    if (title) out.push(plainTag('meta', [['property','twitter:title'],['content',title]]));
+    if (desc)  out.push(plainTag('meta', [['property','twitter:description'],['content',desc]]));
+    if (image) out.push(plainTag('meta', [['property','twitter:image'],['content',image]]));
+    if (twUser) {
+      var handle = twUser.startsWith('@') ? twUser : '@' + twUser;
+      out.push(plainTag('meta', [['name','twitter:site'],['content',handle]]));
+    }
+
+    var text = out.join('\n');
+    var btn = document.getElementById('copy-btn');
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = 'Copy All';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    } else {
+      // Fallback
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'Copy All';
+        btn.classList.remove('copied');
+      }, 2000);
+    }
+  };
+
+  // Initial render
+  update();
+})();
+</script>
+
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    nav_back: "← All Tools",
+    vultr_label: "Sponsor",
+    vultr_title: "Get started on Vultr",
+    vultr_sub: "Get $300 free credit — valid for 30 days",
+    vultr_cta: "Claim your credit →",
+    footer_copy: "© 2026 StackFreeks"
+  },
+  ko: {
+    nav_back: "← 전체 툴",
+    vultr_label: "스폰서",
+    vultr_title: "Vultr로 시작하세요",
+    vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+    vultr_cta: "크레딧 받기 →",
+    footer_copy: "© 2026 StackFreeks"
+  }
+};
+</script>
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

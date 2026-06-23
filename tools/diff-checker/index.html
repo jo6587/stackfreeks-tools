@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diff Checker — Compare Text Online Free | StackFreeks</title>
+  <meta name="description" content="Compare two texts side by side and highlight differences. Free online diff checker — no account, no file size limit, works in your browser instantly." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/diff-checker/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Diff Checker — Compare Text Online Free | StackFreeks" />
+  <meta property="og:description" content="Compare two texts side by side and highlight differences. Free online diff checker — no account, no file size limit, works in your browser instantly." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/diff-checker/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.1);
+      --error: #ef4444;
+      --error-bg: rgba(239,68,68,0.1);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-2); opacity: 1; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      max-width: 520px;
+    }
+
+    /* ── Main layout ── */
+    .main-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 0;
+    }
+
+    /* ── Input panels ── */
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      letter-spacing: 0.03em;
+    }
+    .panel-char-count {
+      font-size: 11px;
+      color: var(--text-3);
+      font-variant-numeric: tabular-nums;
+    }
+    textarea {
+      width: 100%;
+      background: var(--surface-2);
+      border: none;
+      color: var(--text-1);
+      padding: 12px 14px;
+      font-size: 13px;
+      font-family: var(--font-mono);
+      line-height: 1.65;
+      resize: vertical;
+      min-height: 220px;
+      outline: none;
+      display: block;
+    }
+    textarea::placeholder { color: var(--text-3); }
+    textarea:focus { background: var(--surface); }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      background: var(--text-1);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: opacity 0.15s;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover { border-color: var(--border-2); color: var(--text-1); }
+    .btn-ghost.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .toolbar-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .spacer { flex: 1; }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+    .stat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .stat-dot.added   { background: var(--success); }
+    .stat-dot.removed { background: var(--error); }
+    .stat-dot.equal   { background: var(--text-3); }
+    .stat-label { color: var(--text-2); }
+    .stat-num {
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-1);
+    }
+
+    /* ── Warning ── */
+    .warning-bar {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #f59e0b;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    /* ── Diff output: side-by-side ── */
+    .diff-output {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: auto;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .diff-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .diff-table colgroup col:nth-child(1) { width: 44px; }
+    .diff-table colgroup col:nth-child(2) { width: 50%; }
+    .diff-table colgroup col:nth-child(3) { width: 44px; }
+    .diff-table colgroup col:nth-child(4) { width: 50%; }
+
+    .diff-table td {
+      padding: 0;
+      vertical-align: top;
+      border: none;
+    }
+    .diff-line-num {
+      width: 44px;
+      min-width: 44px;
+      padding: 2px 10px 2px 8px;
+      text-align: right;
+      color: var(--text-3);
+      user-select: none;
+      font-size: 11px;
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .diff-line-content {
+      padding: 2px 14px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 20px;
+    }
+    .diff-line-divider {
+      width: 1px;
+      background: var(--border);
+      padding: 0;
+    }
+
+    .row-equal .diff-line-num    { background: var(--surface); }
+    .row-equal .diff-line-content { background: var(--surface); color: var(--text-2); }
+
+    .row-delete .diff-line-num    { background: rgba(239,68,68,0.06); color: var(--error); }
+    .row-delete .diff-line-content { background: var(--error-bg); color: var(--text-1); }
+    .row-delete .sign             { color: var(--error); font-weight: 500; user-select: none; }
+
+    .row-insert .diff-line-num    { background: rgba(34,197,94,0.06); color: var(--success); }
+    .row-insert .diff-line-content { background: var(--success-bg); color: var(--text-1); }
+    .row-insert .sign             { color: var(--success); font-weight: 500; user-select: none; }
+
+    .row-empty .diff-line-num     { background: var(--surface-2); border-right: 1px solid var(--border); }
+    .row-empty .diff-line-content { background: var(--surface-2); }
+
+    /* ── Diff output: unified ── */
+    .unified-output {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: auto;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .unified-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .unified-table td {
+      padding: 0;
+      vertical-align: top;
+      border: none;
+    }
+    .uni-num {
+      width: 40px;
+      padding: 2px 8px;
+      text-align: right;
+      color: var(--text-3);
+      user-select: none;
+      font-size: 11px;
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .uni-sign {
+      width: 20px;
+      padding: 2px 0 2px 8px;
+      font-weight: 500;
+      user-select: none;
+    }
+    .uni-content {
+      padding: 2px 14px 2px 4px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .uni-row-equal   td { background: var(--surface); color: var(--text-2); }
+    .uni-row-delete  td { background: var(--error-bg); }
+    .uni-row-delete .uni-sign, .uni-row-delete .uni-num { color: var(--error); }
+    .uni-row-delete .uni-content { color: var(--text-1); }
+    .uni-row-insert  td { background: var(--success-bg); }
+    .uni-row-insert .uni-sign, .uni-row-insert .uni-num { color: var(--success); }
+    .uni-row-insert .uni-content { color: var(--text-1); }
+
+    /* ── Empty/placeholder states ── */
+    .diff-placeholder {
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-3);
+      font-size: 13px;
+      font-family: var(--font);
+    }
+    .diff-placeholder strong {
+      display: block;
+      color: var(--text-2);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    /* ── Guide & FAQ ── */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* ── Related ── */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .related-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .related-link:hover { opacity: 0.8; }
+
+    /* ── Vultr banner ── */
+    .vultr-banner {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+      margin: 48px 0 0;
+    }
+    .banner-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    .banner-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin: 4px 0 2px;
+    }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font);
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      margin-top: 0;
+    }
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-3);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+    .footer a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .footer a:hover { color: var(--text-2); opacity: 1; }
+
+    /* ── Copy feedback ── */
+    .copy-feedback {
+      font-size: 12px;
+      color: var(--success);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .copy-feedback.show { opacity: 1; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .input-row { grid-template-columns: 1fr; }
+      h1 { font-size: 1.4rem; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .diff-table colgroup col:nth-child(1) { width: 36px; }
+      .diff-table colgroup col:nth-child(3) { width: 36px; }
+      .diff-line-num { width: 36px; min-width: 36px; padding: 2px 6px; }
+    }
+    @media (max-width: 480px) {
+      .toolbar { gap: 6px; }
+      .main-wrap { padding: 20px 16px 0; }
+      .hero { padding: 32px 16px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <div class="nav-left">
+    <a href="/" class="logo">
+      <div class="logo-mark"></div>
+      StackFreeks Tools
+    </a>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<div class="hero">
+  <div class="lang-en">
+    <p class="eyebrow">Developer Tools</p>
+    <h1>Diff Checker</h1>
+    <p class="hero-desc">Compare two texts and highlight added, removed, and unchanged lines — free, no account</p>
+  </div>
+  <div class="lang-ko">
+    <p class="eyebrow">개발자 도구</p>
+    <h1>Diff 체커</h1>
+    <p class="hero-desc">두 텍스트를 비교하고 추가·삭제·변경된 줄을 즉시 강조 표시 — 무료, 계정 불필요</p>
+  </div>
+</div>
+
+<!-- ── Tool body ── -->
+<div class="main-wrap">
+
+  <!-- ADSENSE_SLOT_IN_TOOL -->
+
+  <!-- Input panels -->
+  <div class="input-row">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-label">
+          <span class="lang-en">Original</span>
+          <span class="lang-ko">원본</span>
+        </span>
+        <span class="panel-char-count" id="countA">0 lines</span>
+      </div>
+      <textarea id="textA" spellcheck="false"
+        placeholder="Paste your original text here…"></textarea>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-label">
+          <span class="lang-en">Changed</span>
+          <span class="lang-ko">변경본</span>
+        </span>
+        <span class="panel-char-count" id="countB">0 lines</span>
+      </div>
+      <textarea id="textB" spellcheck="false"
+        placeholder="Paste your changed text here…"></textarea>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button class="btn-primary" onclick="runDiff()">
+      <span class="lang-en">Compare</span>
+      <span class="lang-ko">비교하기</span>
+    </button>
+    <div class="toolbar-sep"></div>
+    <button class="btn-ghost" id="btnSideBySide" onclick="setView('side')" title="Side-by-side view">
+      <span class="lang-en">Side by Side</span>
+      <span class="lang-ko">나란히 보기</span>
+    </button>
+    <button class="btn-ghost" id="btnUnified" onclick="setView('unified')" title="Unified view">
+      <span class="lang-en">Unified</span>
+      <span class="lang-ko">통합 보기</span>
+    </button>
+    <div class="toolbar-sep"></div>
+    <button class="btn-ghost" onclick="loadSample()">
+      <span class="lang-en">Sample</span>
+      <span class="lang-ko">샘플</span>
+    </button>
+    <button class="btn-ghost" onclick="clearAll()">
+      <span class="lang-en">Clear</span>
+      <span class="lang-ko">지우기</span>
+    </button>
+    <div class="spacer"></div>
+    <button class="btn-ghost" onclick="copyDiff()" id="btnCopy">
+      <span class="lang-en">Copy Diff</span>
+      <span class="lang-ko">diff 복사</span>
+    </button>
+    <span class="copy-feedback" id="copyFeedback">Copied!</span>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="stats-bar" id="statsBar" style="display:none;">
+    <div class="stat-item">
+      <span class="stat-dot added"></span>
+      <span class="stat-label">
+        <span class="lang-en">Added</span>
+        <span class="lang-ko">추가</span>
+      </span>
+      <span class="stat-num" id="statAdded">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-dot removed"></span>
+      <span class="stat-label">
+        <span class="lang-en">Removed</span>
+        <span class="lang-ko">삭제</span>
+      </span>
+      <span class="stat-num" id="statRemoved">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-dot equal"></span>
+      <span class="stat-label">
+        <span class="lang-en">Unchanged</span>
+        <span class="lang-ko">변경 없음</span>
+      </span>
+      <span class="stat-num" id="statEqual">0</span>
+    </div>
+  </div>
+
+  <!-- Line-limit warning -->
+  <div class="warning-bar" id="warningBar">
+    <span class="lang-en">⚠ Input capped at 2,000 lines per side for performance.</span>
+    <span class="lang-ko">⚠ 성능을 위해 각 입력은 최대 2,000줄로 제한됩니다.</span>
+  </div>
+
+  <!-- Diff output: side-by-side -->
+  <div class="diff-output" id="diffSide">
+    <div class="diff-placeholder">
+      <strong>
+        <span class="lang-en">Paste text in both panels and click Compare</span>
+        <span class="lang-ko">양쪽 패널에 텍스트를 붙여넣고 비교하기를 클릭하세요</span>
+      </strong>
+      <span class="lang-en">Differences will appear here</span>
+      <span class="lang-ko">차이점이 여기에 표시됩니다</span>
+    </div>
+  </div>
+
+  <!-- Diff output: unified -->
+  <div class="unified-output" id="diffUnified" style="display:none;">
+    <div class="diff-placeholder">
+      <strong>
+        <span class="lang-en">Paste text in both panels and click Compare</span>
+        <span class="lang-ko">양쪽 패널에 텍스트를 붙여넣고 비교하기를 클릭하세요</span>
+      </strong>
+      <span class="lang-en">Differences will appear here</span>
+      <span class="lang-ko">차이점이 여기에 표시됩니다</span>
+    </div>
+  </div>
+
+</div><!-- /.main-wrap -->
+
+<!-- ── How to use ── -->
+<section style="padding: 48px 0 0;">
+  <div class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to Use</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>Paste original text</h3>
+          <p>Paste your original or baseline text into the left "Original" panel.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>Paste changed text</h3>
+          <p>Paste the modified version into the right "Changed" panel.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>Click Compare</h3>
+          <p>Hit the Compare button. Added lines appear in green, removed lines in red.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>Switch views or copy</h3>
+          <p>Toggle between Side by Side and Unified view, or copy the diff to clipboard.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>원본 텍스트 붙여넣기</h3>
+          <p>왼쪽 "원본" 패널에 기준이 되는 원본 텍스트를 붙여넣으세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>변경본 붙여넣기</h3>
+          <p>오른쪽 "변경본" 패널에 수정된 버전을 붙여넣으세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>비교하기 클릭</h3>
+          <p>비교하기 버튼을 누르세요. 추가된 줄은 초록, 삭제된 줄은 빨간색으로 표시됩니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>뷰 전환 또는 복사</h3>
+          <p>나란히 보기와 통합 보기를 전환하거나, diff를 클립보드에 복사하세요.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section>
+  <div class="faq">
+    <div class="lang-en">
+      <p class="faq-title">FAQ</p>
+      <div class="faq-item">
+        <p class="faq-q">What is a diff checker?</p>
+        <p class="faq-a">A diff checker compares two pieces of text line by line and highlights what has been added, removed, or left unchanged. It's commonly used to review changes in code, documents, configuration files, or any text-based content.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Does this tool support file uploads?</p>
+        <p class="faq-a">Not yet — paste text directly into the panels. For most use cases (code, config, prose) this is the fastest workflow. File upload support may be added in a future update.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Is my text stored or sent anywhere?</p>
+        <p class="faq-a">No. All processing happens entirely in your browser using JavaScript. Nothing is sent to any server. Your text never leaves your device.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How do I compare code?</p>
+        <p class="faq-a">Paste code from your editor into the Original panel, paste the updated version into the Changed panel, and click Compare. The diff is line-based, so it works with any programming language without any special configuration.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What is the difference between unified and side-by-side diff?</p>
+        <p class="faq-a">Side-by-side shows the original and changed text in two columns so you can read both simultaneously. Unified diff combines both into a single column, prefixing removed lines with − and added lines with +. Unified is the format used by git diff.</p>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-item">
+        <p class="faq-q">Diff 체커란 무엇인가요?</p>
+        <p class="faq-a">Diff 체커는 두 텍스트를 줄 단위로 비교하여 추가·삭제·유지된 내용을 강조 표시합니다. 코드, 문서, 설정 파일 등 텍스트 기반 콘텐츠의 변경 사항을 검토할 때 널리 사용됩니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">파일 업로드를 지원하나요?</p>
+        <p class="faq-a">현재는 패널에 직접 텍스트를 붙여넣는 방식만 지원합니다. 코드, 설정 파일, 문서 등 대부분의 경우 이 방식이 가장 빠릅니다. 파일 업로드는 향후 업데이트에서 추가될 수 있습니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">입력한 텍스트가 저장되거나 전송되나요?</p>
+        <p class="faq-a">아니요. 모든 처리는 JavaScript를 사용하여 브라우저 내에서만 이루어집니다. 서버로 전송되는 데이터는 없으며, 텍스트는 사용자의 기기를 벗어나지 않습니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">코드를 비교하려면 어떻게 하나요?</p>
+        <p class="faq-a">에디터에서 원본 코드를 복사해 원본 패널에 붙여넣고, 수정된 코드를 변경본 패널에 붙여넣은 뒤 비교하기를 클릭하세요. 줄 단위 비교이므로 별도 설정 없이 모든 프로그래밍 언어에서 동작합니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">통합 보기와 나란히 보기의 차이는 무엇인가요?</p>
+        <p class="faq-a">나란히 보기는 원본과 변경본을 두 열로 나란히 표시하여 동시에 읽을 수 있습니다. 통합 보기는 하나의 열로 합쳐서 표시하며, 삭제된 줄은 −, 추가된 줄은 +로 표시합니다. 통합 보기는 git diff가 사용하는 형식입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Related ── -->
+<section>
+  <div class="related">
+    <p class="related-title">
+      <span class="lang-en">Related</span>
+      <span class="lang-ko">관련 콘텐츠</span>
+    </p>
+    <a href="https://stackfreeks.com" class="related-link" target="_blank" rel="noopener">
+      <span class="lang-en">More developer tools on stackfreeks.com →</span>
+      <span class="lang-ko">stackfreeks.com의 더 많은 개발자 툴 →</span>
+    </a>
+  </div>
+</section>
+
+<!-- ── Vultr banner ── -->
+<section class="vultr-banner">
+  <div class="banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── JS ── -->
+<script>
+(function () {
+  'use strict';
+
+  // ── State ──
+  let currentDiff = [];
+  let currentView = 'side'; // 'side' | 'unified'
+  const LINE_LIMIT = 2000;
+
+  // ── LCS diff algorithm ──
+  function lcs(a, b) {
+    const m = a.length, n = b.length;
+    // Build DP table
+    const dp = Array.from({ length: m + 1 }, function () {
+      return new Array(n + 1).fill(0);
+    });
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        dp[i][j] = a[i - 1] === b[j - 1]
+          ? dp[i - 1][j - 1] + 1
+          : Math.max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+    // Backtrack
+    const diff = [];
+    let i = m, j = n;
+    while (i > 0 || j > 0) {
+      if (i > 0 && j > 0 && a[i - 1] === b[j - 1]) {
+        diff.push({ type: 'equal', text: a[i - 1] });
+        i--; j--;
+      } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+        diff.push({ type: 'insert', text: b[j - 1] });
+        j--;
+      } else {
+        diff.push({ type: 'delete', text: a[i - 1] });
+        i--;
+      }
+    }
+    return diff.reverse();
+  }
+
+  // ── Escape HTML ──
+  function esc(s) {
+    return s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ── Render side-by-side ──
+  function renderSide(diff) {
+    // Build paired rows: each diff item becomes one or more table rows
+    // Pair deletions with insertions where possible
+    const rows = [];
+    let i = 0;
+    while (i < diff.length) {
+      const cur = diff[i];
+      if (cur.type === 'equal') {
+        rows.push({ type: 'equal', left: cur.text, right: cur.text });
+        i++;
+      } else if (cur.type === 'delete') {
+        // Look ahead for a matching insert to pair with
+        if (i + 1 < diff.length && diff[i + 1].type === 'insert') {
+          rows.push({ type: 'change', left: cur.text, right: diff[i + 1].text });
+          i += 2;
+        } else {
+          rows.push({ type: 'delete', left: cur.text, right: null });
+          i++;
+        }
+      } else { // insert
+        rows.push({ type: 'insert', left: null, right: cur.text });
+        i++;
+      }
+    }
+
+    if (rows.length === 0) {
+      return '<div class="diff-placeholder"><strong>Texts are identical</strong></div>';
+    }
+
+    let lineA = 1, lineB = 1;
+    let html = '<table class="diff-table"><colgroup><col><col><col><col></colgroup><tbody>';
+
+    rows.forEach(function (row) {
+      if (row.type === 'equal') {
+        html += '<tr class="row-equal">';
+        html += '<td class="diff-line-num">' + lineA + '</td>';
+        html += '<td class="diff-line-content">' + esc(row.left) + '</td>';
+        html += '<td class="diff-line-divider"></td>';
+        html += '<td class="diff-line-num">' + lineB + '</td>';
+        html += '<td class="diff-line-content">' + esc(row.right) + '</td>';
+        html += '</tr>';
+        lineA++; lineB++;
+      } else if (row.type === 'delete') {
+        html += '<tr class="row-delete">';
+        html += '<td class="diff-line-num">' + lineA + '</td>';
+        html += '<td class="diff-line-content"><span class="sign">− </span>' + esc(row.left) + '</td>';
+        html += '<td class="diff-line-divider"></td>';
+        html += '<td class="diff-line-num row-empty"></td>';
+        html += '<td class="diff-line-content row-empty"></td>';
+        html += '</tr>';
+        lineA++;
+      } else if (row.type === 'insert') {
+        html += '<tr class="row-insert">';
+        html += '<td class="diff-line-num row-empty"></td>';
+        html += '<td class="diff-line-content row-empty"></td>';
+        html += '<td class="diff-line-divider"></td>';
+        html += '<td class="diff-line-num">' + lineB + '</td>';
+        html += '<td class="diff-line-content"><span class="sign">+ </span>' + esc(row.right) + '</td>';
+        html += '</tr>';
+        lineB++;
+      } else { // change
+        html += '<tr class="row-delete">';
+        html += '<td class="diff-line-num">' + lineA + '</td>';
+        html += '<td class="diff-line-content"><span class="sign">− </span>' + esc(row.left) + '</td>';
+        html += '<td class="diff-line-divider"></td>';
+        html += '<td class="diff-line-num">' + lineB + '</td>';
+        html += '<td class="diff-line-content row-insert" style="background:var(--success-bg);color:var(--text-1)"><span class="sign" style="color:var(--success)">+ </span>' + esc(row.right) + '</td>';
+        html += '</tr>';
+        lineA++; lineB++;
+      }
+    });
+
+    html += '</tbody></table>';
+    return html;
+  }
+
+  // ── Render unified ──
+  function renderUnified(diff) {
+    if (diff.length === 0) {
+      return '<div class="diff-placeholder"><strong>Texts are identical</strong></div>';
+    }
+
+    let lineA = 1, lineB = 1;
+    let html = '<table class="unified-table"><tbody>';
+
+    diff.forEach(function (item) {
+      if (item.type === 'equal') {
+        html += '<tr class="uni-row-equal">';
+        html += '<td class="uni-num">' + lineA + '</td>';
+        html += '<td class="uni-num">' + lineB + '</td>';
+        html += '<td class="uni-sign"> </td>';
+        html += '<td class="uni-content">' + esc(item.text) + '</td>';
+        html += '</tr>';
+        lineA++; lineB++;
+      } else if (item.type === 'delete') {
+        html += '<tr class="uni-row-delete">';
+        html += '<td class="uni-num">' + lineA + '</td>';
+        html += '<td class="uni-num"></td>';
+        html += '<td class="uni-sign">−</td>';
+        html += '<td class="uni-content">' + esc(item.text) + '</td>';
+        html += '</tr>';
+        lineA++;
+      } else { // insert
+        html += '<tr class="uni-row-insert">';
+        html += '<td class="uni-num"></td>';
+        html += '<td class="uni-num">' + lineB + '</td>';
+        html += '<td class="uni-sign">+</td>';
+        html += '<td class="uni-content">' + esc(item.text) + '</td>';
+        html += '</tr>';
+        lineB++;
+      }
+    });
+
+    html += '</tbody></table>';
+    return html;
+  }
+
+  // ── Run diff ──
+  window.runDiff = function () {
+    const rawA = document.getElementById('textA').value;
+    const rawB = document.getElementById('textB').value;
+
+    let linesA = rawA === '' ? [] : rawA.split('\n');
+    let linesB = rawB === '' ? [] : rawB.split('\n');
+
+    let capped = false;
+    if (linesA.length > LINE_LIMIT || linesB.length > LINE_LIMIT) {
+      capped = true;
+      linesA = linesA.slice(0, LINE_LIMIT);
+      linesB = linesB.slice(0, LINE_LIMIT);
+    }
+    document.getElementById('warningBar').style.display = capped ? 'block' : 'none';
+
+    currentDiff = lcs(linesA, linesB);
+
+    // Stats
+    let added = 0, removed = 0, equal = 0;
+    currentDiff.forEach(function (item) {
+      if (item.type === 'insert') added++;
+      else if (item.type === 'delete') removed++;
+      else equal++;
+    });
+
+    document.getElementById('statAdded').textContent = added;
+    document.getElementById('statRemoved').textContent = removed;
+    document.getElementById('statEqual').textContent = equal;
+    document.getElementById('statsBar').style.display = 'flex';
+
+    updateDiffOutput();
+  };
+
+  // ── Update rendered output based on view ──
+  function updateDiffOutput() {
+    const sideEl = document.getElementById('diffSide');
+    const uniEl  = document.getElementById('diffUnified');
+
+    if (currentView === 'side') {
+      sideEl.style.display = '';
+      uniEl.style.display  = 'none';
+      sideEl.innerHTML = renderSide(currentDiff);
+    } else {
+      sideEl.style.display = 'none';
+      uniEl.style.display  = '';
+      uniEl.innerHTML = renderUnified(currentDiff);
+    }
+  }
+
+  // ── Set view ──
+  window.setView = function (v) {
+    currentView = v;
+    document.getElementById('btnSideBySide').classList.toggle('active', v === 'side');
+    document.getElementById('btnUnified').classList.toggle('active', v === 'unified');
+    if (currentDiff.length > 0) updateDiffOutput();
+  };
+
+  // ── Load sample ──
+  window.loadSample = function () {
+    document.getElementById('textA').value =
+      'The quick brown fox\njumps over the lazy dog.\nAll good things must come to an end.\nTo be or not to be, that is the question.\nHello, World!';
+    document.getElementById('textB').value =
+      'The quick brown fox\nleaps over the lazy cat.\nAll good things must come to an end.\nTo be or not to be — that is the question.\nHello, World!\nGoodbye, World!';
+    updateLineCounts();
+    runDiff();
+  };
+
+  // ── Clear ──
+  window.clearAll = function () {
+    document.getElementById('textA').value = '';
+    document.getElementById('textB').value = '';
+    currentDiff = [];
+    document.getElementById('statsBar').style.display = 'none';
+    document.getElementById('warningBar').style.display = 'none';
+    document.getElementById('diffSide').innerHTML =
+      '<div class="diff-placeholder"><strong>Paste text in both panels and click Compare</strong><br>Differences will appear here</div>';
+    document.getElementById('diffUnified').innerHTML =
+      '<div class="diff-placeholder"><strong>Paste text in both panels and click Compare</strong><br>Differences will appear here</div>';
+    updateLineCounts();
+  };
+
+  // ── Copy diff ──
+  window.copyDiff = function () {
+    if (currentDiff.length === 0) return;
+    const lines = currentDiff.map(function (item) {
+      if (item.type === 'insert') return '+ ' + item.text;
+      if (item.type === 'delete') return '- ' + item.text;
+      return '  ' + item.text;
+    });
+    navigator.clipboard.writeText(lines.join('\n')).then(function () {
+      const fb = document.getElementById('copyFeedback');
+      fb.classList.add('show');
+      setTimeout(function () { fb.classList.remove('show'); }, 1800);
+    }).catch(function () {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = lines.join('\n');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      const fb = document.getElementById('copyFeedback');
+      fb.classList.add('show');
+      setTimeout(function () { fb.classList.remove('show'); }, 1800);
+    });
+  };
+
+  // ── Line counts ──
+  function updateLineCounts() {
+    function countLines(text) {
+      if (text === '') return 0;
+      return text.split('\n').length;
+    }
+    const a = document.getElementById('textA').value;
+    const b = document.getElementById('textB').value;
+    document.getElementById('countA').textContent = countLines(a) + ' lines';
+    document.getElementById('countB').textContent = countLines(b) + ' lines';
+  }
+
+  document.getElementById('textA').addEventListener('input', updateLineCounts);
+  document.getElementById('textB').addEventListener('input', updateLineCounts);
+
+  // ── Init view buttons ──
+  document.getElementById('btnSideBySide').classList.add('active');
+
+  // ── Keyboard shortcut: Ctrl/Cmd+Enter → Compare ──
+  document.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      runDiff();
+    }
+  });
+
+})();
+</script>
+
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    nav_back: '← All Tools',
+    vultr_label: 'Sponsor',
+    vultr_title: 'Get started on Vultr',
+    vultr_sub: 'Get $300 free credit — valid for 30 days',
+    vultr_cta: 'Claim your credit →',
+    footer_copy: '© 2026 StackFreeks'
+  },
+  ko: {
+    nav_back: '← 전체 툴',
+    vultr_label: '스폰서',
+    vultr_title: 'Vultr로 시작하세요',
+    vultr_sub: '$300 무료 크레딧 — 30일 유효 (기간 한정)',
+    vultr_cta: '크레딧 받기 →',
+    footer_copy: '© 2026 StackFreeks'
+  }
+};
+</script>
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

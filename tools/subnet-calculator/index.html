@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IP Subnet Calculator — CIDR, Network &amp; Host Range | StackFreeks</title>
+  <meta name="description" content="Calculate IP subnet details from CIDR notation. Get network address, broadcast, host range, subnet mask, and usable hosts. Free online subnet calculator, no account required." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/subnet-calculator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="IP Subnet Calculator — CIDR, Network &amp; Host Range | StackFreeks" />
+  <meta property="og:description" content="Calculate IP subnet details from CIDR notation. Get network address, broadcast, host range, subnet mask, and usable hosts. Free online subnet calculator, no account required." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/subnet-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --error: #ef4444;
+      --error-bg: rgba(239,68,68,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Main tool wrapper */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Input area */
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-group label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .input-group input[type="text"],
+    .input-group input[type="number"] {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 15px;
+      padding: 9px 14px;
+      border-radius: var(--radius);
+      transition: border-color 0.15s;
+      outline: none;
+    }
+    .input-group input[type="text"]:focus,
+    .input-group input[type="number"]:focus {
+      border-color: var(--accent);
+    }
+    .input-group input[type="text"].error,
+    .input-group input[type="number"].error {
+      border-color: var(--error);
+      background: var(--error-bg);
+    }
+
+    #ip-input { width: 200px; font-family: "Courier New", monospace; }
+
+    .prefix-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .prefix-wrap span {
+      font-size: 20px;
+      color: var(--text-3);
+      font-weight: 300;
+      line-height: 1;
+      padding-bottom: 2px;
+    }
+    #prefix-input {
+      width: 72px;
+      text-align: center;
+      font-family: "Courier New", monospace;
+    }
+
+    #prefix-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 160px;
+      height: 4px;
+      background: var(--border-2);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #prefix-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+    }
+    #prefix-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: none;
+    }
+
+    .calc-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+      align-self: flex-end;
+    }
+    .calc-btn:hover { opacity: 0.85; }
+
+    .error-msg {
+      font-size: 13px;
+      color: var(--error);
+      padding: 8px 12px;
+      background: var(--error-bg);
+      border-radius: var(--radius);
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    /* Quick examples */
+    .examples {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .examples-label {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .example-chip {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-size: 12px;
+      font-family: "Courier New", monospace;
+      padding: 3px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .example-chip:hover { border-color: var(--accent); color: var(--text-1); }
+
+    /* Results table */
+    .results-section { display: none; }
+    .results-section.visible { display: block; }
+
+    .cidr-badge {
+      display: inline-block;
+      font-family: "Courier New", monospace;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      padding: 8px 16px;
+      background: rgba(99,102,241,0.08);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+    }
+
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .result-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .result-table tr:last-child { border-bottom: none; }
+    .result-table td {
+      padding: 11px 4px;
+      vertical-align: top;
+    }
+    .result-table td:first-child {
+      color: var(--text-2);
+      width: 50%;
+      padding-right: 16px;
+    }
+    .result-table td:last-child {
+      color: var(--text-1);
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      word-break: break-all;
+    }
+    .result-table .highlight td:last-child {
+      color: var(--success);
+    }
+
+    /* Subnet split table */
+    .split-section {
+      margin-top: 24px;
+    }
+    .split-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .split-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .split-table th {
+      text-align: left;
+      padding: 8px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
+    }
+    .split-table td {
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+    }
+    .split-table tr:last-child td { border-bottom: none; }
+    .split-table td:first-child { color: var(--accent); font-weight: 600; }
+    .split-table td:nth-child(2) { color: var(--text-1); }
+
+    /* Guide */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-a code {
+      font-family: "Courier New", monospace;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .related-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--accent);
+      border: 1px solid var(--border-2);
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      transition: border-color 0.15s;
+    }
+    .related-link:hover { border-color: var(--accent); opacity: 1; }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .vultr-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      flex-wrap: wrap;
+    }
+    .vultr-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+    .vultr-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+    .vultr-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .vultr-cta {
+      display: inline-block;
+      background: var(--success);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .vultr-cta:hover { opacity: 0.85; color: #fff; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    @media (max-width: 600px) {
+      .input-row { flex-direction: column; align-items: flex-start; }
+      #ip-input { width: 100%; }
+      #prefix-slider { width: 120px; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+      .result-table td:first-child { width: 45%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="/" class="logo">StackFreeks Tools</a>
+    <div class="nav-sep"></div>
+    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+  </div>
+  <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="lang-en">
+    <h1>IP Subnet Calculator</h1>
+    <p>Calculate network address, broadcast, host range, and usable hosts from any CIDR notation</p>
+  </div>
+  <div class="lang-ko">
+    <h1>IP 서브넷 계산기</h1>
+    <p>CIDR 표기법으로 네트워크 주소, 브로드캐스트, 호스트 범위를 즉시 계산</p>
+  </div>
+</div>
+
+<!-- TOOL BODY -->
+<main>
+  <div class="tool-card">
+    <div class="input-row">
+      <div class="input-group">
+        <label for="ip-input">IP Address</label>
+        <input type="text" id="ip-input" placeholder="192.168.1.0" maxlength="15" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="input-group">
+        <label for="prefix-input">Prefix Length</label>
+        <div class="prefix-wrap">
+          <span>/</span>
+          <input type="number" id="prefix-input" min="0" max="32" value="24" />
+          <input type="range" id="prefix-slider" min="0" max="32" value="24" />
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calculate()">Calculate</button>
+    </div>
+    <div id="error-msg" class="error-msg"></div>
+    <div class="examples">
+      <span class="examples-label">Try:</span>
+      <span class="example-chip" onclick="loadExample('192.168.1.0','24')">192.168.1.0/24</span>
+      <span class="example-chip" onclick="loadExample('10.0.0.0','8')">10.0.0.0/8</span>
+      <span class="example-chip" onclick="loadExample('172.16.0.0','12')">172.16.0.0/12</span>
+      <span class="example-chip" onclick="loadExample('192.168.0.0','16')">192.168.0.0/16</span>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="tool-card results-section" id="results-section">
+    <div id="cidr-badge" class="cidr-badge"></div>
+    <table class="result-table" id="result-table">
+      <tbody></tbody>
+    </table>
+
+    <div class="split-section" id="split-section">
+      <div class="split-title">Subnet Split Helper</div>
+      <table class="split-table">
+        <thead>
+          <tr>
+            <th>Prefix</th>
+            <th>Subnets</th>
+            <th>Hosts / Subnet</th>
+            <th>Total Addresses</th>
+          </tr>
+        </thead>
+        <tbody id="split-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- HOW TO USE -->
+<section class="guide">
+  <div class="lang-en">
+    <p class="guide-title">How to Use</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="guide-step">STEP 1</div>
+        <h3>Enter IP Address</h3>
+        <p>Type an IPv4 address in dotted decimal format, e.g. <code style="font-family:monospace;font-size:12px;">192.168.1.0</code></p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">STEP 2</div>
+        <h3>Set Prefix Length</h3>
+        <p>Enter or drag the slider to set the CIDR prefix from /0 to /32. Common values: /8, /16, /24.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">STEP 3</div>
+        <h3>Calculate</h3>
+        <p>Click Calculate (or press Enter) to see the full subnet breakdown including host range and masks.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">STEP 4</div>
+        <h3>Read the Split Table</h3>
+        <p>The Subnet Split Helper shows how your network breaks down into /25–/28 smaller subnets.</p>
+      </div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <p class="guide-title">사용 방법</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="guide-step">단계 1</div>
+        <h3>IP 주소 입력</h3>
+        <p>점으로 구분된 IPv4 주소를 입력하세요. 예: <code style="font-family:monospace;font-size:12px;">192.168.1.0</code></p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">단계 2</div>
+        <h3>프리픽스 길이 설정</h3>
+        <p>슬라이더를 드래그하거나 숫자를 직접 입력해 /0~/32 사이의 CIDR 프리픽스를 설정하세요.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">단계 3</div>
+        <h3>계산하기</h3>
+        <p>Calculate 버튼을 누르거나 Enter 키를 눌러 서브넷 전체 정보를 확인하세요.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">단계 4</div>
+        <h3>분할 테이블 확인</h3>
+        <p>서브넷 분할 도우미에서 /25~/28로 더 작은 서브넷으로 나눴을 때의 정보를 확인할 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="lang-en">
+    <p class="faq-title">Frequently Asked Questions</p>
+
+    <div class="faq-item">
+      <p class="faq-q">What is CIDR notation?</p>
+      <p class="faq-a">CIDR (Classless Inter-Domain Routing) notation represents an IP address and its associated network mask. Written as <code>192.168.1.0/24</code>, the number after the slash indicates how many bits are the network portion. A <code>/24</code> means the first 24 bits identify the network, leaving 8 bits for host addresses (256 total, 254 usable).</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">What is the difference between network address and broadcast address?</p>
+      <p class="faq-a">The <strong style="color:var(--text-1)">network address</strong> is the first address in a subnet (all host bits set to 0) and identifies the subnet itself — it cannot be assigned to a host. The <strong style="color:var(--text-1)">broadcast address</strong> is the last address (all host bits set to 1) and is used to send data to every device in the subnet simultaneously. All addresses in between are usable host addresses.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">How many hosts does a /24 subnet have?</p>
+      <p class="faq-a">A <code>/24</code> subnet has 256 total addresses (2<sup>8</sup> = 256). Subtracting the network address and broadcast address gives <strong style="color:var(--text-1)">254 usable host addresses</strong>. This is the most common subnet for home and office LANs. A <code>/25</code> gives 126 hosts, <code>/23</code> gives 510 hosts.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">What are private IP address ranges?</p>
+      <p class="faq-a">RFC 1918 defines three private IPv4 ranges not routed on the public Internet: <code>10.0.0.0/8</code> (Class A — 16 million addresses), <code>172.16.0.0/12</code> (Class B — ~1 million addresses), and <code>192.168.0.0/16</code> (Class C — 65,536 addresses). These are widely used in home networks, corporate intranets, and VPS private networking.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">How do I choose a subnet size for my VPS network?</p>
+      <p class="faq-a">For a small VPS project with a handful of servers, a <code>/28</code> (14 hosts) or <code>/29</code> (6 hosts) is usually enough. For a growing infrastructure or Kubernetes cluster, consider <code>/24</code> (254 hosts) or larger. On Vultr, you can create private networks with a custom CIDR range for free — assign each VPS a static private IP within that range for secure inter-server communication.</p>
+    </div>
+  </div>
+
+  <div class="lang-ko">
+    <p class="faq-title">자주 묻는 질문</p>
+
+    <div class="faq-item">
+      <p class="faq-q">CIDR 표기법이란 무엇인가요?</p>
+      <p class="faq-a">CIDR(Classless Inter-Domain Routing)은 IP 주소와 네트워크 마스크를 함께 표현하는 방식입니다. <code>192.168.1.0/24</code>에서 슬래시 뒤의 숫자는 네트워크 부분의 비트 수를 나타냅니다. <code>/24</code>는 첫 24비트가 네트워크를 식별하고, 나머지 8비트가 호스트 주소에 사용됩니다(총 256개, 사용 가능 254개).</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">네트워크 주소와 브로드캐스트 주소의 차이는 무엇인가요?</p>
+      <p class="faq-a"><strong style="color:var(--text-1)">네트워크 주소</strong>는 서브넷의 첫 번째 주소(호스트 비트 전부 0)로, 서브넷 자체를 식별하며 호스트에 할당할 수 없습니다. <strong style="color:var(--text-1)">브로드캐스트 주소</strong>는 마지막 주소(호스트 비트 전부 1)로, 서브넷 내 모든 장치에 동시에 데이터를 전송할 때 사용합니다. 그 사이의 모든 주소가 사용 가능한 호스트 주소입니다.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">/24 서브넷에는 몇 개의 호스트가 있나요?</p>
+      <p class="faq-a"><code>/24</code> 서브넷은 총 256개의 주소(2<sup>8</sup> = 256)를 가집니다. 네트워크 주소와 브로드캐스트 주소를 제외하면 <strong style="color:var(--text-1)">254개의 호스트 주소</strong>를 사용할 수 있습니다. 가정이나 사무실 LAN에서 가장 흔히 쓰이는 서브넷입니다.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">사설 IP 주소 범위란 무엇인가요?</p>
+      <p class="faq-a">RFC 1918은 공인 인터넷에서 라우팅되지 않는 세 가지 사설 IPv4 범위를 정의합니다: <code>10.0.0.0/8</code> (클래스 A — 1,600만 개), <code>172.16.0.0/12</code> (클래스 B — 약 100만 개), <code>192.168.0.0/16</code> (클래스 C — 65,536개). 가정 네트워크, 기업 인트라넷, VPS 사설 네트워크에 널리 사용됩니다.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">VPS 네트워크에 적합한 서브넷 크기는 어떻게 선택하나요?</p>
+      <p class="faq-a">서버 수가 적은 소규모 VPS 프로젝트는 <code>/28</code>(14개 호스트) 또는 <code>/29</code>(6개 호스트)로 충분합니다. 성장하는 인프라나 Kubernetes 클러스터는 <code>/24</code>(254개 호스트) 이상을 고려하세요. Vultr에서는 커스텀 CIDR 범위의 사설 네트워크를 무료로 만들 수 있어 서버 간 안전한 통신에 활용할 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED -->
+<section class="related">
+  <div class="lang-en">
+    <a href="https://stackfreeks.com" class="related-link" target="_blank" rel="noopener">
+      More networking and VPS guides on stackfreeks.com →
+    </a>
+  </div>
+  <div class="lang-ko">
+    <a href="https://stackfreeks.com" class="related-link" target="_blank" rel="noopener">
+      stackfreeks.com에서 더 많은 네트워킹·VPS 가이드 보기 →
+    </a>
+  </div>
+</section>
+
+<!-- VULTR BANNER -->
+<div class="vultr-banner">
+  <div class="vultr-inner">
+    <div>
+      <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+      <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+      <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="vultr-cta" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+    <a href="/terms/">Terms</a>
+  </div>
+  <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+</footer>
+
+<!-- PAGE I18N -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    nav_back: "← All Tools",
+    vultr_label: "Sponsor",
+    vultr_title: "Get started on Vultr",
+    vultr_sub: "Get $300 free credit — valid for 30 days",
+    vultr_cta: "Claim your credit →",
+    footer_copy: "© 2026 StackFreeks"
+  },
+  ko: {
+    nav_back: "← 전체 툴",
+    vultr_label: "스폰서",
+    vultr_title: "Vultr로 시작하세요",
+    vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+    vultr_cta: "크레딧 받기 →",
+    footer_copy: "© 2026 StackFreeks"
+  }
+};
+</script>
+
+<!-- TOOL JS -->
+<script>
+(function () {
+  var prefixInput = document.getElementById('prefix-input');
+  var prefixSlider = document.getElementById('prefix-slider');
+  var ipInput = document.getElementById('ip-input');
+  var errorMsg = document.getElementById('error-msg');
+  var resultsSection = document.getElementById('results-section');
+  var resultTbody = document.querySelector('#result-table tbody');
+  var cidrBadge = document.getElementById('cidr-badge');
+  var splitTbody = document.getElementById('split-tbody');
+  var splitSection = document.getElementById('split-section');
+
+  // Sync slider <-> number input
+  prefixInput.addEventListener('input', function () {
+    var v = parseInt(prefixInput.value, 10);
+    if (!isNaN(v) && v >= 0 && v <= 32) prefixSlider.value = v;
+  });
+  prefixSlider.addEventListener('input', function () {
+    prefixInput.value = prefixSlider.value;
+  });
+
+  // Enter key triggers calculate
+  ipInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') calculate(); });
+  prefixInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') calculate(); });
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+    ipInput.classList.add('error');
+    resultsSection.classList.remove('visible');
+  }
+
+  function clearError() {
+    errorMsg.classList.remove('visible');
+    ipInput.classList.remove('error');
+  }
+
+  function toIP(n) {
+    return [
+      (n >>> 24) & 255,
+      (n >>> 16) & 255,
+      (n >>> 8) & 255,
+      n & 255
+    ].join('.');
+  }
+
+  function toBinary(n) {
+    return [
+      pad8(((n >>> 24) & 255).toString(2)),
+      pad8(((n >>> 16) & 255).toString(2)),
+      pad8(((n >>> 8) & 255).toString(2)),
+      pad8((n & 255).toString(2))
+    ].join('.');
+  }
+
+  function pad8(s) {
+    while (s.length < 8) s = '0' + s;
+    return s;
+  }
+
+  function ipClass(firstOctet) {
+    if (firstOctet < 128) return 'A';
+    if (firstOctet < 192) return 'B';
+    if (firstOctet < 224) return 'C';
+    if (firstOctet < 240) return 'D (Multicast)';
+    return 'E (Reserved)';
+  }
+
+  function calcSubnet(ip, prefix) {
+    var parts = ip.split('.').map(Number);
+    if (parts.length !== 4) return null;
+    for (var i = 0; i < 4; i++) {
+      if (isNaN(parts[i]) || parts[i] < 0 || parts[i] > 255) return null;
+    }
+
+    var ipInt = ((parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3]) >>> 0;
+    var mask = prefix === 0 ? 0 : ((~0 << (32 - prefix)) >>> 0);
+    var network = (ipInt & mask) >>> 0;
+    var broadcast = (network | (~mask >>> 0)) >>> 0;
+
+    var totalAddresses = prefix === 32 ? 1 : prefix === 31 ? 2 : Math.pow(2, 32 - prefix);
+    var usableHosts = prefix >= 31 ? (prefix === 32 ? 1 : 2) : totalAddresses - 2;
+    var firstHost = prefix >= 31 ? network : (network + 1) >>> 0;
+    var lastHost = prefix >= 31 ? broadcast : (broadcast - 1) >>> 0;
+
+    return {
+      ip: ip,
+      prefix: prefix,
+      network: network,
+      broadcast: broadcast,
+      mask: mask,
+      ipInt: ipInt,
+      totalAddresses: totalAddresses,
+      usableHosts: usableHosts,
+      firstHost: firstHost,
+      lastHost: lastHost,
+      firstOctet: parts[0]
+    };
+  }
+
+  function formatNumber(n) {
+    return n.toLocaleString();
+  }
+
+  window.calculate = function () {
+    clearError();
+    var ip = ipInput.value.trim();
+    var prefix = parseInt(prefixInput.value, 10);
+
+    if (!ip) { showError('Please enter an IP address.'); return; }
+    if (isNaN(prefix) || prefix < 0 || prefix > 32) { showError('Prefix length must be between 0 and 32.'); return; }
+
+    var r = calcSubnet(ip, prefix);
+    if (!r) { showError('Invalid IP address. Please enter 4 octets (0–255), e.g. 192.168.1.0'); return; }
+
+    // Badge
+    cidrBadge.textContent = toIP(r.network) + '/' + prefix;
+
+    // Results table
+    var rows = [
+      ['IP Address', toIP(r.ipInt), false],
+      ['Network Address', toIP(r.network), false],
+      ['Broadcast Address', toIP(r.broadcast), false],
+      ['Subnet Mask', toIP(r.mask), false],
+      ['Wildcard Mask', toIP(~r.mask >>> 0), false],
+      ['First Usable Host', prefix >= 31 ? '(point-to-point)' : toIP(r.firstHost), false],
+      ['Last Usable Host', prefix >= 31 ? '(point-to-point)' : toIP(r.lastHost), false],
+      ['Usable Hosts', formatNumber(r.usableHosts), true],
+      ['Total Addresses', formatNumber(r.totalAddresses), false],
+      ['IP Class', ipClass(r.firstOctet), false],
+      ['Network Binary', toBinary(r.network), false],
+      ['CIDR Notation', toIP(r.network) + '/' + prefix, false]
+    ];
+
+    resultTbody.innerHTML = rows.map(function (row) {
+      return '<tr' + (row[2] ? ' class="highlight"' : '') + '><td>' + row[0] + '</td><td>' + row[1] + '</td></tr>';
+    }).join('');
+
+    // Subnet split helper — show /prefix+1 up to min(prefix+4, 28)
+    var splitRows = [];
+    var basePrefixStart = Math.max(prefix + 1, 25);
+    var basePrefixEnd = Math.min(prefix + 4, 29);
+
+    // Always show /25 through /28 if they're larger than current prefix
+    var splitPrefixes = [];
+    for (var p = 25; p <= 28; p++) {
+      if (p > prefix) splitPrefixes.push(p);
+    }
+
+    if (splitPrefixes.length > 0) {
+      splitSection.style.display = '';
+      splitTbody.innerHTML = splitPrefixes.map(function (p) {
+        var subnets = Math.pow(2, p - prefix);
+        var hostsPerSubnet = p >= 31 ? (p === 32 ? 1 : 2) : Math.pow(2, 32 - p) - 2;
+        var totalPerSubnet = Math.pow(2, 32 - p);
+        return '<tr><td>/' + p + '</td><td>' + formatNumber(subnets) + '</td><td>' + formatNumber(hostsPerSubnet) + '</td><td>' + formatNumber(totalPerSubnet) + '</td></tr>';
+      }).join('');
+    } else {
+      splitSection.style.display = 'none';
+    }
+
+    resultsSection.classList.add('visible');
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  window.loadExample = function (ip, prefix) {
+    ipInput.value = ip;
+    prefixInput.value = prefix;
+    prefixSlider.value = prefix;
+    calculate();
+  };
+
+  // Auto-calculate if URL has params
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('ip')) ipInput.value = params.get('ip');
+  if (params.get('prefix')) { prefixInput.value = params.get('prefix'); prefixSlider.value = params.get('prefix'); }
+  if (params.get('ip') && params.get('prefix')) calculate();
+})();
+</script>
+
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

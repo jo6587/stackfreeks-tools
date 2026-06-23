@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chmod Calculator — Linux File Permission Calculator | StackFreeks</title>
+  <meta name="description" content="Calculate Linux file permissions with an interactive chmod calculator. Convert between symbolic (rwxrwxrwx), octal (755), and numeric formats instantly. Free, no account required." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/chmod-calculator/" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png" />
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Chmod Calculator — Linux File Permission Calculator | StackFreeks" />
+  <meta property="og:description" content="Calculate Linux file permissions with an interactive chmod calculator. Convert between symbolic (rwxrwxrwx), octal (755), and numeric formats instantly. Free, no account required." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/chmod-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-mark {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-2); opacity: 1; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+
+    /* ── Layout ── */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      max-width: 520px;
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.4rem; }
+    }
+
+    /* ── Main tool area ── */
+    .tool-area { padding: 32px 0; }
+
+    /* ── Output row ── */
+    .output-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    @media (max-width: 640px) {
+      .output-row { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+
+    /* Octal display + input */
+    .octal-display {
+      font-size: 3rem;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-1);
+      font-family: var(--font-mono);
+      background: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      caret-color: var(--accent);
+    }
+    .octal-display::selection { background: var(--accent); color: #fff; }
+
+    /* Symbolic display */
+    .symbolic-display {
+      font-size: 1.6rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-1);
+      font-family: var(--font-mono);
+    }
+    .sym-r { color: #f59e0b; }
+    .sym-w { color: #ef4444; }
+    .sym-x { color: var(--success); }
+    .sym-dash { color: var(--text-3); }
+
+    /* ── Permission grid ── */
+    .perm-card { margin-bottom: 12px; }
+    .perm-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .perm-table th {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0 0 12px;
+      text-align: center;
+    }
+    .perm-table th:first-child { text-align: left; }
+    .perm-table td {
+      padding: 6px 0;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .perm-table td:first-child {
+      text-align: left;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      padding-right: 16px;
+      white-space: nowrap;
+    }
+    .perm-table tr + tr td { border-top: 1px solid var(--border); padding-top: 10px; }
+    .perm-table tr + tr td:first-child { padding-top: 10px; }
+
+    /* Special bits row separator */
+    .special-sep td { border-top: 2px solid var(--border-2) !important; }
+
+    /* Custom checkbox */
+    .perm-cb {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--border-2);
+      border-radius: 5px;
+      background: var(--surface-2);
+      cursor: pointer;
+      position: relative;
+      transition: background 0.12s, border-color 0.12s;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .perm-cb:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .perm-cb:checked::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 6px;
+      width: 5px;
+      height: 9px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+    .perm-cb:hover:not(:checked) { border-color: var(--accent); }
+
+    .row-label-wrap { display: flex; flex-direction: column; gap: 1px; }
+    .row-label-main { font-size: 12px; font-weight: 500; color: var(--text-2); }
+    .row-label-bits {
+      font-size: 10px;
+      color: var(--text-3);
+      font-family: var(--font-mono);
+    }
+
+    /* ── Command preview ── */
+    .cmd-card { margin-bottom: 12px; }
+    .cmd-block {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+    }
+    .cmd-text {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-1);
+      word-break: break-all;
+    }
+    .cmd-kw { color: var(--accent); }
+    .cmd-flag { color: #f59e0b; }
+    .cmd-num { color: var(--success); }
+    .cmd-filename { color: var(--text-2); }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { border-color: var(--border-2); color: var(--text-2); }
+    .copy-btn.copied { color: var(--success); border-color: var(--success); }
+
+    /* ── Options row ── */
+    .options-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .input-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 160px; }
+    .input-group label { font-size: 11px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
+    .input-group input[type="text"] {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 8px 12px;
+      font-size: 13px;
+      font-family: var(--font-mono);
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+    .input-group input[type="text"]:focus { border-color: var(--border-2); }
+    .input-group input::placeholder { color: var(--text-3); }
+
+    .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 18px; }
+    .checkbox-group label { font-size: 13px; color: var(--text-2); margin: 0; cursor: pointer; user-select: none; }
+    .toggle-cb {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--border-2);
+      border-radius: 4px;
+      background: var(--surface-2);
+      cursor: pointer;
+      position: relative;
+      transition: background 0.12s, border-color 0.12s;
+      flex-shrink: 0;
+    }
+    .toggle-cb:checked { background: var(--accent); border-color: var(--accent); }
+    .toggle-cb:checked::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      width: 4px;
+      height: 7px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    /* ── Presets ── */
+    .presets-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 0;
+    }
+    .preset-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .preset-btn:hover { border-color: var(--accent); color: var(--text-1); }
+    .preset-btn.active { border-color: var(--accent); background: rgba(99,102,241,0.1); color: var(--text-1); }
+    .preset-octal { color: var(--text-1); }
+    .preset-label { color: var(--text-3); font-family: var(--font); font-size: 11px; }
+
+    /* ── Guide section ── */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-a code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: var(--text-1);
+    }
+
+    /* ── Related ── */
+    .related { padding: 40px 0; border-top: 1px solid var(--border); }
+    .related-link {
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+    .related-link:hover { opacity: 0.8; }
+
+    /* ── Vultr banner ── */
+    .vultr-banner {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+    }
+    .banner-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font);
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+    @media (max-width: 640px) {
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+    }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      margin-top: 0;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-3);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .footer a:hover { color: var(--text-2); opacity: 1; }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">
+        <div class="logo-mark"></div>
+        StackFreeks Tools
+      </a>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <div class="nav-right">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="container">
+      <div class="lang-en">
+        <p class="eyebrow">Linux &amp; Server</p>
+        <h1>Chmod Calculator</h1>
+        <p class="hero-desc">Calculate Linux file permissions interactively — convert between octal, symbolic, and chmod commands</p>
+      </div>
+      <div class="lang-ko">
+        <p class="eyebrow">Linux &amp; 서버</p>
+        <h1>Chmod 계산기</h1>
+        <p class="hero-desc">Linux 파일 권한을 인터랙티브하게 계산 — 8진수, 심볼릭, chmod 명령어 변환</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tool Body ── -->
+  <main class="tool-area">
+    <div class="container">
+
+      <!-- ADSENSE_SLOT_IN_TOOL -->
+
+      <!-- Output: Octal + Symbolic -->
+      <div class="output-row">
+        <div class="card">
+          <div class="card-label">Octal</div>
+          <input
+            id="octal-input"
+            class="octal-display"
+            type="text"
+            maxlength="4"
+            value="644"
+            spellcheck="false"
+            autocomplete="off"
+            aria-label="Octal permission value"
+          />
+        </div>
+        <div class="card">
+          <div class="card-label">Symbolic</div>
+          <div class="symbolic-display" id="symbolic-out" aria-live="polite">rw-r--r--</div>
+        </div>
+      </div>
+
+      <!-- Command preview -->
+      <div class="card cmd-card">
+        <div class="card-label">Command</div>
+        <div class="cmd-block">
+          <code class="cmd-text" id="cmd-preview" aria-live="polite">
+            <span class="cmd-kw">chmod</span> <span class="cmd-num" id="cmd-octal">644</span> <span class="cmd-filename" id="cmd-fname">filename</span>
+          </code>
+          <button class="copy-btn" id="copy-btn" onclick="copyCmd()">Copy</button>
+        </div>
+      </div>
+
+      <!-- Filename + Recursive -->
+      <div class="options-row">
+        <div class="input-group">
+          <label for="filename-input">Filename (optional)</label>
+          <input type="text" id="filename-input" placeholder="filename" autocomplete="off" />
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="recursive-cb" class="toggle-cb" />
+          <label for="recursive-cb">Recursive (<code style="font-family:var(--font-mono);font-size:12px;color:var(--text-1);">-R</code>)</label>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-label">Common Presets</div>
+        <div class="presets-row">
+          <button class="preset-btn" onclick="applyPreset(644)">
+            <span class="preset-octal">644</span>
+            <span class="preset-label">Standard file</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset(755)">
+            <span class="preset-octal">755</span>
+            <span class="preset-label">Executable / dir</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset(600)">
+            <span class="preset-octal">600</span>
+            <span class="preset-label">Private (SSH key)</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset(700)">
+            <span class="preset-octal">700</span>
+            <span class="preset-label">Private executable</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset(777)">
+            <span class="preset-octal">777</span>
+            <span class="preset-label">Full access ⚠</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset(400)">
+            <span class="preset-octal">400</span>
+            <span class="preset-label">Read-only</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Permission grid -->
+      <div class="card perm-card">
+        <div class="card-label">Permission Bits</div>
+        <table class="perm-table" aria-label="Permission checkbox grid">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Read (r=4)</th>
+              <th>Write (w=2)</th>
+              <th>Execute (x=1)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="row-label-wrap">
+                  <span class="row-label-main">Owner</span>
+                  <span class="row-label-bits" id="owner-val">6</span>
+                </div>
+              </td>
+              <td><input type="checkbox" class="perm-cb" id="owner-r" data-group="owner" data-bit="4" aria-label="Owner read" /></td>
+              <td><input type="checkbox" class="perm-cb" id="owner-w" data-group="owner" data-bit="2" aria-label="Owner write" /></td>
+              <td><input type="checkbox" class="perm-cb" id="owner-x" data-group="owner" data-bit="1" aria-label="Owner execute" /></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="row-label-wrap">
+                  <span class="row-label-main">Group</span>
+                  <span class="row-label-bits" id="group-val">4</span>
+                </div>
+              </td>
+              <td><input type="checkbox" class="perm-cb" id="group-r" data-group="group" data-bit="4" aria-label="Group read" /></td>
+              <td><input type="checkbox" class="perm-cb" id="group-w" data-group="group" data-bit="2" aria-label="Group write" /></td>
+              <td><input type="checkbox" class="perm-cb" id="group-x" data-group="group" data-bit="1" aria-label="Group execute" /></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="row-label-wrap">
+                  <span class="row-label-main">Others</span>
+                  <span class="row-label-bits" id="other-val">4</span>
+                </div>
+              </td>
+              <td><input type="checkbox" class="perm-cb" id="other-r" data-group="other" data-bit="4" aria-label="Others read" /></td>
+              <td><input type="checkbox" class="perm-cb" id="other-w" data-group="other" data-bit="2" aria-label="Others write" /></td>
+              <td><input type="checkbox" class="perm-cb" id="other-x" data-group="other" data-bit="1" aria-label="Others execute" /></td>
+            </tr>
+            <tr class="special-sep">
+              <td>
+                <div class="row-label-wrap">
+                  <span class="row-label-main">Special</span>
+                  <span class="row-label-bits" id="special-val" style="color:var(--text-3);">—</span>
+                </div>
+              </td>
+              <td>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                  <input type="checkbox" class="perm-cb" id="sp-suid" data-group="special" data-bit="4" aria-label="Setuid" />
+                  <span style="font-size:10px;color:var(--text-3);">setuid</span>
+                </div>
+              </td>
+              <td>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                  <input type="checkbox" class="perm-cb" id="sp-sgid" data-group="special" data-bit="2" aria-label="Setgid" />
+                  <span style="font-size:10px;color:var(--text-3);">setgid</span>
+                </div>
+              </td>
+              <td>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                  <input type="checkbox" class="perm-cb" id="sp-sticky" data-group="special" data-bit="1" aria-label="Sticky bit" />
+                  <span style="font-size:10px;color:var(--text-3);">sticky</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── How-to-use Guide ── -->
+  <section>
+    <div class="guide">
+      <div class="lang-en">
+        <p class="guide-title">How to Use</p>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <div class="guide-step">Step 1</div>
+            <h3>Click checkboxes</h3>
+            <p>Toggle Read, Write, and Execute permissions for Owner, Group, and Others in the permission grid.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step">Step 2</div>
+            <h3>Or type the octal</h3>
+            <p>Click the large octal number (e.g. 755) and type a new value — the checkboxes update instantly.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step">Step 3</div>
+            <h3>Use a preset</h3>
+            <p>Select a common permission preset like 644 or 755 to jump-start your configuration.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step">Step 4</div>
+            <h3>Copy the command</h3>
+            <p>Enter your filename, optionally enable recursive (-R), then copy the ready-to-run chmod command.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lang-ko">
+        <p class="guide-title">사용 방법</p>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <div class="guide-step">Step 1</div>
+            <h3>체크박스 클릭</h3>
+            <p>권한 그리드에서 Owner, Group, Others별 읽기·쓰기·실행 권한을 토글합니다.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step">Step 2</div>
+            <h3>또는 8진수 직접 입력</h3>
+            <p>큰 숫자(예: 755)를 클릭하고 새 값을 입력하면 체크박스가 즉시 업데이트됩니다.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step">Step 3</div>
+            <h3>프리셋 사용</h3>
+            <p>644, 755 같은 일반적인 권한 프리셋을 선택해 빠르게 시작할 수 있습니다.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step">Step 4</div>
+            <h3>명령어 복사</h3>
+            <p>파일명을 입력하고 재귀(-R) 여부를 설정한 뒤, 완성된 chmod 명령어를 복사하세요.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section>
+    <div class="faq">
+      <div class="lang-en">
+        <p class="faq-title">Frequently Asked Questions</p>
+
+        <div class="faq-item">
+          <p class="faq-q">What does chmod 755 mean?</p>
+          <p class="faq-a"><code>chmod 755</code> sets Owner: read+write+execute (7), Group: read+execute (5), Others: read+execute (5). It is the standard permission for executables and directories that should be publicly readable but only writable by the owner.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What is the difference between 644 and 755?</p>
+          <p class="faq-a"><code>644</code> is for regular files — the owner can read and write, while group and others can only read. <code>755</code> adds execute permission, making it suitable for scripts, binaries, and directories (which require execute permission to be traversed).</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What is the sticky bit?</p>
+          <p class="faq-a">The sticky bit (octal 1000, shown as <code>t</code> in the symbolic notation) restricts file deletion inside a directory to the file's owner only. It is commonly used on shared directories like <code>/tmp</code> to prevent users from deleting each other's files.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">How do I apply permissions recursively?</p>
+          <p class="faq-a">Enable the <strong>Recursive (-R)</strong> toggle above the command preview. This adds the <code>-R</code> flag so <code>chmod -R 755 dirname</code> applies the permission to the directory and all its contents. Use with caution — recursive chmod can break files that need different permissions.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What permissions should SSH keys have?</p>
+          <p class="faq-a">Private SSH keys (<code>~/.ssh/id_rsa</code>) must be <code>600</code> (owner read+write only). The <code>~/.ssh/</code> directory should be <code>700</code>. Public keys (<code>authorized_keys</code>) should be <code>644</code>. SSH will refuse to use a private key that is accessible by group or others.</p>
+        </div>
+      </div>
+
+      <div class="lang-ko">
+        <p class="faq-title">자주 묻는 질문</p>
+
+        <div class="faq-item">
+          <p class="faq-q">chmod 755는 무엇을 의미하나요?</p>
+          <p class="faq-a"><code>chmod 755</code>는 Owner: 읽기+쓰기+실행(7), Group: 읽기+실행(5), Others: 읽기+실행(5)을 설정합니다. 실행 파일과 디렉터리에 사용하는 표준 권한으로, 소유자만 쓸 수 있고 나머지는 읽고 실행할 수 있습니다.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">644와 755의 차이점은 무엇인가요?</p>
+          <p class="faq-a"><code>644</code>는 일반 파일에 사용합니다 — 소유자는 읽기·쓰기, 그룹과 기타는 읽기만 가능합니다. <code>755</code>는 실행 권한이 추가되어 스크립트, 바이너리, 디렉터리(탐색에 실행 권한 필요)에 적합합니다.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">스티키 비트(Sticky bit)란 무엇인가요?</p>
+          <p class="faq-a">스티키 비트(8진수 1000, 심볼릭 <code>t</code>)는 디렉터리 내 파일을 소유자만 삭제할 수 있도록 제한합니다. <code>/tmp</code>처럼 여러 사용자가 공유하는 디렉터리에서 서로의 파일을 삭제하지 못하게 할 때 사용합니다.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">권한을 재귀적으로 적용하려면 어떻게 하나요?</p>
+          <p class="faq-a">명령어 미리보기 위의 <strong>Recursive (-R)</strong> 토글을 활성화하면 <code>-R</code> 플래그가 추가됩니다. <code>chmod -R 755 dirname</code>처럼 디렉터리와 모든 하위 파일에 권한이 적용됩니다. 파일별로 다른 권한이 필요한 경우 주의해서 사용하세요.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">SSH 키에는 어떤 권한이 필요한가요?</p>
+          <p class="faq-a">SSH 개인 키(<code>~/.ssh/id_rsa</code>)는 반드시 <code>600</code>(소유자 읽기+쓰기만)이어야 합니다. <code>~/.ssh/</code> 디렉터리는 <code>700</code>, 공개 키(<code>authorized_keys</code>)는 <code>644</code>로 설정하세요. 그룹이나 기타에 접근 권한이 있는 개인 키는 SSH가 사용을 거부합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Related content ── -->
+  <section class="related">
+    <div class="container">
+      <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+      <a href="https://stackfreeks.com" class="related-link" target="_blank" rel="noopener">
+        More Linux and VPS guides on stackfreeks.com →
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Vultr Banner ── -->
+  <section class="vultr-banner">
+    <div class="container banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
+      </div>
+      <a
+        href="https://www.vultr.com/?ref=9907834-9J"
+        class="btn-vultr"
+        rel="nofollow sponsored"
+        target="_blank"
+        data-i18n="vultr_cta"
+      >Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Tool JavaScript ── -->
+  <script>
+    // ── State ──
+    var state = {
+      owner:   6,  // rw-
+      group:   4,  // r--
+      other:   4,  // r--
+      special: 0   // none
+    };
+
+    // ── DOM refs ──
+    var octalInput   = document.getElementById('octal-input');
+    var symbolicOut  = document.getElementById('symbolic-out');
+    var cmdOctal     = document.getElementById('cmd-octal');
+    var cmdFname     = document.getElementById('cmd-fname');
+    var filenameInput = document.getElementById('filename-input');
+    var recursiveCb  = document.getElementById('recursive-cb');
+    var ownerVal     = document.getElementById('owner-val');
+    var groupVal     = document.getElementById('group-val');
+    var otherVal     = document.getElementById('other-val');
+    var specialVal   = document.getElementById('special-val');
+
+    // ── Checkbox refs ──
+    var CBs = {
+      'owner-r':  document.getElementById('owner-r'),
+      'owner-w':  document.getElementById('owner-w'),
+      'owner-x':  document.getElementById('owner-x'),
+      'group-r':  document.getElementById('group-r'),
+      'group-w':  document.getElementById('group-w'),
+      'group-x':  document.getElementById('group-x'),
+      'other-r':  document.getElementById('other-r'),
+      'other-w':  document.getElementById('other-w'),
+      'other-x':  document.getElementById('other-x'),
+      'sp-suid':  document.getElementById('sp-suid'),
+      'sp-sgid':  document.getElementById('sp-sgid'),
+      'sp-sticky': document.getElementById('sp-sticky')
+    };
+
+    // ── Convert number 0-7 to symbolic 3-char string ──
+    function bitsToSym(n, special, suidSet, sgidSet) {
+      var r = (n & 4) ? 'r' : '-';
+      var w = (n & 2) ? 'w' : '-';
+      var x;
+      if (special === 'suid') {
+        x = (n & 1) ? 's' : 'S';
+      } else if (special === 'sgid') {
+        x = (n & 1) ? 's' : 'S';
+      } else if (special === 'sticky') {
+        x = (n & 1) ? 't' : 'T';
+      } else {
+        x = (n & 1) ? 'x' : '-';
+      }
+      return r + w + x;
+    }
+
+    // ── Render colored symbolic string ──
+    function renderSymbolic(ownerN, groupN, otherN, specialN) {
+      var suid   = (specialN & 4) !== 0;
+      var sgid   = (specialN & 2) !== 0;
+      var sticky = (specialN & 1) !== 0;
+
+      var ownerStr  = bitsToSym(ownerN,  suid   ? 'suid'   : null);
+      var groupStr  = bitsToSym(groupN,  sgid   ? 'sgid'   : null);
+      var otherStr  = bitsToSym(otherN,  sticky ? 'sticky' : null);
+      var full = ownerStr + groupStr + otherStr;
+
+      var html = '';
+      for (var i = 0; i < full.length; i++) {
+        var c = full[i];
+        if (c === 'r') html += '<span class="sym-r">r</span>';
+        else if (c === 'w') html += '<span class="sym-w">w</span>';
+        else if (c === 'x') html += '<span class="sym-x">x</span>';
+        else if (c === 's' || c === 'S') html += '<span class="sym-x">' + c + '</span>';
+        else if (c === 't' || c === 'T') html += '<span class="sym-x">' + c + '</span>';
+        else html += '<span class="sym-dash">-</span>';
+      }
+      return html;
+    }
+
+    // ── Build octal string ──
+    function buildOctal() {
+      var sp = state.special;
+      if (sp > 0) {
+        return '' + sp + state.owner + state.group + state.other;
+      }
+      return '' + state.owner + state.group + state.other;
+    }
+
+    // ── Update all outputs from state ──
+    function updateFromState() {
+      // Octal
+      var octalStr = buildOctal();
+      octalInput.value = octalStr;
+
+      // Symbolic
+      symbolicOut.innerHTML = renderSymbolic(state.owner, state.group, state.other, state.special);
+
+      // Command
+      var flag = recursiveCb.checked ? ' -R' : '';
+      var fname = filenameInput.value.trim() || 'filename';
+      cmdFname.textContent = fname;
+      cmdOctal.textContent = octalStr;
+      // Rebuild the cmd-kw span (it's already in DOM, just update sibling text)
+      var cmdText = document.querySelector('.cmd-text');
+      cmdText.innerHTML =
+        '<span class="cmd-kw">chmod</span>' +
+        (flag ? ' <span class="cmd-flag">-R</span>' : '') +
+        ' <span class="cmd-num">' + octalStr + '</span>' +
+        ' <span class="cmd-filename">' + escHtml(fname) + '</span>';
+
+      // Checkboxes
+      CBs['owner-r'].checked = (state.owner & 4) !== 0;
+      CBs['owner-w'].checked = (state.owner & 2) !== 0;
+      CBs['owner-x'].checked = (state.owner & 1) !== 0;
+      CBs['group-r'].checked = (state.group & 4) !== 0;
+      CBs['group-w'].checked = (state.group & 2) !== 0;
+      CBs['group-x'].checked = (state.group & 1) !== 0;
+      CBs['other-r'].checked = (state.other & 4) !== 0;
+      CBs['other-w'].checked = (state.other & 2) !== 0;
+      CBs['other-x'].checked = (state.other & 1) !== 0;
+      CBs['sp-suid'].checked   = (state.special & 4) !== 0;
+      CBs['sp-sgid'].checked   = (state.special & 2) !== 0;
+      CBs['sp-sticky'].checked = (state.special & 1) !== 0;
+
+      // Bit labels
+      ownerVal.textContent   = state.owner;
+      groupVal.textContent   = state.group;
+      otherVal.textContent   = state.other;
+      specialVal.textContent = state.special > 0 ? state.special : '—';
+
+      // Highlight active preset
+      document.querySelectorAll('.preset-btn').forEach(function(btn) {
+        var presetVal = parseInt(btn.querySelector('.preset-octal').textContent, 10);
+        var curVal = parseInt(state.owner + '' + state.group + '' + state.other, 10);
+        btn.classList.toggle('active', presetVal === curVal && state.special === 0);
+      });
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // ── Parse octal string → state ──
+    function parseOctal(val) {
+      val = val.replace(/[^0-7]/g, '');
+      if (val.length === 0) return;
+      var n = parseInt(val, 8);
+      if (isNaN(n)) return;
+      state.other   = n & 7;
+      state.group   = (n >> 3) & 7;
+      state.owner   = (n >> 6) & 7;
+      state.special = (n >> 9) & 7;
+      updateFromState();
+    }
+
+    // ── Checkbox event handler ──
+    document.querySelectorAll('.perm-cb').forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        var grp = cb.dataset.group;
+        var bit = parseInt(cb.dataset.bit, 10);
+        if (cb.checked) {
+          state[grp] |= bit;
+        } else {
+          state[grp] &= ~bit;
+        }
+        updateFromState();
+      });
+    });
+
+    // ── Octal input handler ──
+    octalInput.addEventListener('input', function() {
+      parseOctal(this.value);
+    });
+    octalInput.addEventListener('keydown', function(e) {
+      // Allow only 0-7, backspace, delete, arrows, tab
+      if (
+        e.key.length === 1 &&
+        !/^[0-7]$/.test(e.key) &&
+        !e.ctrlKey && !e.metaKey
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    // ── Filename input ──
+    filenameInput.addEventListener('input', updateFromState);
+
+    // ── Recursive toggle ──
+    recursiveCb.addEventListener('change', updateFromState);
+
+    // ── Preset ──
+    function applyPreset(val) {
+      parseOctal(String(val));
+    }
+
+    // ── Copy command ──
+    function copyCmd() {
+      var flag = recursiveCb.checked ? ' -R' : '';
+      var fname = filenameInput.value.trim() || 'filename';
+      var text = 'chmod' + flag + ' ' + buildOctal() + ' ' + fname;
+      navigator.clipboard.writeText(text).then(function() {
+        var btn = document.getElementById('copy-btn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1800);
+      }).catch(function() {
+        // Fallback for older browsers
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        var btn = document.getElementById('copy-btn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1800);
+      });
+    }
+
+    // ── Init with 644 ──
+    parseOctal('644');
+  </script>
+
+  <!-- Page-specific i18n keys -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back:    '← All Tools',
+        vultr_label: 'Sponsor',
+        vultr_title: 'Get started on Vultr',
+        vultr_sub:   'Get $300 free credit — valid for 30 days',
+        vultr_cta:   'Claim your credit →',
+        footer_copy: '© 2026 StackFreeks'
+      },
+      ko: {
+        nav_back:    '← 전체 툴',
+        vultr_label: '스폰서',
+        vultr_title: 'Vultr로 시작하세요',
+        vultr_sub:   '$300 무료 크레딧 — 30일 유효 (기간 한정)',
+        vultr_cta:   '크레딧 받기 →',
+        footer_copy: '© 2026 StackFreeks'
+      }
+    };
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+</body>
+</html>
