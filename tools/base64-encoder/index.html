@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Base64 Encoder / Decoder — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Encode text and files to Base64 or decode Base64 strings. Supports images and any file type. Free, instant, works in your browser." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/base64-encoder/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Base64 Encoder / Decoder — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Encode text and files to Base64 or decode Base64 strings. Supports images and any file type. Free, instant, works in your browser." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/base64-encoder/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .nav-logo { font-weight: 700; font-size: 15px; color: var(--text-1); }
+    .nav-back { font-size: 13px; color: var(--text-2); }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-1); }
+
+    /* Hero */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 32px;
+    }
+    .hero h1 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* Tool container */
+    .tool-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { border-color: var(--border-2); color: var(--text-1); }
+    .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Code/textarea */
+    .code-area {
+      width: 100%;
+      font-family: monospace;
+      font-size: 13px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      color: var(--text-1);
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.5;
+    }
+    .code-area:focus { outline: none; border-color: var(--border-2); }
+    .code-area::placeholder { color: var(--text-3); }
+
+    /* Two-panel layout */
+    .two-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 600px) {
+      .two-panel { grid-template-columns: 1fr; }
+    }
+    .panel-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    /* Action row */
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-ghost {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 13px;
+      padding: 7px 14px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--border-2); color: var(--text-1); }
+    .btn-copy {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-left: auto;
+    }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-copy.copied { border-color: var(--success); color: var(--success); }
+
+    .char-count {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-left: 4px;
+    }
+
+    /* Error / status */
+    .status-msg {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: var(--radius);
+      margin-top: 8px;
+      display: none;
+    }
+    .status-msg.error { background: rgba(239,68,68,0.1); color: #f87171; display: block; }
+    .status-msg.ok { background: rgba(34,197,94,0.08); color: var(--success); display: block; }
+
+    /* Drop zone */
+    .drop-zone {
+      border: 2px dashed var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 36px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--accent);
+      background: rgba(99,102,241,0.04);
+    }
+    .drop-zone-icon { font-size: 32px; margin-bottom: 10px; }
+    .drop-zone-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .drop-zone-sub { font-size: 12px; color: var(--text-3); }
+    #fileInput { display: none; }
+
+    .file-info {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--text-2);
+      display: none;
+    }
+    .file-info.visible { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .file-info strong { color: var(--text-1); }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .toggle-row input[type="checkbox"] { accent-color: var(--accent); cursor: pointer; }
+    .toggle-row label { cursor: pointer; }
+
+    /* MIME select */
+    .select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .select-wrap label { font-size: 12px; color: var(--text-3); }
+    .mime-select {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+    .mime-select:focus { outline: none; border-color: var(--border-2); }
+
+    /* Guide */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* Related */
+    .related { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .related-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .related-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* Vultr banner */
+    .vultr-banner {
+      background: var(--success-bg);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 24px;
+    }
+    .banner-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--success); margin-bottom: 4px; }
+    .banner-title { font-size: 16px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    footer a { color: var(--text-3); }
+    footer a:hover { color: var(--text-2); opacity: 1; }
+    .footer-links { display: flex; gap: 16px; justify-content: center; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. Nav -->
+<nav>
+  <div class="nav-left">
+    <a href="/" class="nav-logo">StackFreeks Tools</a>
+    <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+  </div>
+  <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+</nav>
+
+<!-- 2. Hero -->
+<div class="hero">
+  <div class="lang-en">
+    <h1>Base64 Encoder / Decoder</h1>
+    <p>Encode text and files to Base64, or decode Base64 strings back. Free, instant, works in your browser.</p>
+  </div>
+  <div class="lang-ko">
+    <h1>Base64 인코더 / 디코더</h1>
+    <p>텍스트와 파일을 Base64로 인코딩하거나 Base64 문자열을 디코딩하세요. 무료, 즉시, 브라우저에서 작동.</p>
+  </div>
+</div>
+
+<!-- 3. Tool body -->
+<div class="tool-wrap">
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('text')" id="tab-text" data-i18n="tab_text">Text Encode / Decode</button>
+    <button class="tab-btn" onclick="switchTab('file')" id="tab-file" data-i18n="tab_file">File → Base64</button>
+    <button class="tab-btn" onclick="switchTab('decode')" id="tab-decode" data-i18n="tab_decode">Base64 → File</button>
+  </div>
+
+  <!-- Tab 1: Text Encode/Decode -->
+  <div class="tab-panel active" id="panel-text">
+    <div class="two-panel">
+      <div>
+        <div class="panel-label">Plain Text</div>
+        <textarea
+          id="textInput"
+          class="code-area"
+          placeholder="Type or paste plain text here…"
+          oninput="syncTextToBase64()"
+        ></textarea>
+      </div>
+      <div>
+        <div class="panel-label">Base64</div>
+        <textarea
+          id="base64Output"
+          class="code-area"
+          placeholder="Base64 output appears here…"
+          oninput="syncBase64ToText()"
+        ></textarea>
+      </div>
+    </div>
+    <div class="action-row">
+      <button class="btn" onclick="encodeText()" data-i18n="encode_btn">Encode →</button>
+      <button class="btn-ghost" onclick="decodeText()" data-i18n="decode_btn">← Decode</button>
+      <button class="btn-copy" id="copyTextBtn" onclick="copyOutput('base64Output','copyTextBtn')" data-i18n="copy_btn">Copy</button>
+    </div>
+    <div id="textStatus" class="status-msg"></div>
+  </div>
+
+  <!-- Tab 2: File → Base64 -->
+  <div class="tab-panel" id="panel-file">
+    <div
+      class="drop-zone"
+      id="dropZone"
+      onclick="document.getElementById('fileInput').click()"
+      ondragover="handleDragOver(event)"
+      ondragleave="handleDragLeave(event)"
+      ondrop="handleDrop(event)"
+    >
+      <div class="drop-zone-icon">📂</div>
+      <div class="drop-zone-title">Drop any file here, or click to select</div>
+      <div class="drop-zone-sub">Image, PDF, binary — any file type</div>
+    </div>
+    <input type="file" id="fileInput" onchange="handleFileSelect(event)" />
+
+    <div class="file-info" id="fileInfo">
+      <span><strong id="fileName">—</strong></span>
+      <span id="fileMeta" style="color:var(--text-3);font-size:12px;"></span>
+    </div>
+
+    <div class="toggle-row">
+      <input type="checkbox" id="showFullUrl" checked onchange="renderFileOutput()" />
+      <label for="showFullUrl">Show full data URL (with <code style="font-size:11px;color:var(--text-3)">data:mime;base64,</code> prefix)</label>
+    </div>
+
+    <div style="margin-top:12px;">
+      <div class="panel-label" id="fileCharLabel"><span data-i18n="char_count_label">Characters</span>: <span id="fileCharCount">0</span></div>
+      <textarea id="fileOutput" class="code-area" style="min-height:160px;" readonly placeholder="Base64 output will appear here after selecting a file…"></textarea>
+    </div>
+    <div class="action-row">
+      <button class="btn-copy" id="copyFileBtn" onclick="copyOutput('fileOutput','copyFileBtn')" data-i18n="copy_btn">Copy</button>
+    </div>
+  </div>
+
+  <!-- Tab 3: Base64 → File -->
+  <div class="tab-panel" id="panel-decode">
+    <div>
+      <div class="panel-label">Paste Base64 string (with or without data URL prefix)</div>
+      <textarea
+        id="decodeInput"
+        class="code-area"
+        style="min-height:160px;"
+        placeholder="data:image/png;base64,iVBORw0KGgo… or just the raw base64 string"
+        oninput="autoDetectMime()"
+      ></textarea>
+    </div>
+
+    <div class="select-wrap">
+      <label for="mimeSelect">File type:</label>
+      <select id="mimeSelect" class="mime-select">
+        <option value="auto">Auto-detect</option>
+        <option value="image/png">Image (PNG)</option>
+        <option value="image/jpeg">Image (JPEG)</option>
+        <option value="image/gif">Image (GIF)</option>
+        <option value="image/webp">Image (WebP)</option>
+        <option value="image/svg+xml">Image (SVG)</option>
+        <option value="application/pdf">PDF</option>
+        <option value="text/plain">Text (TXT)</option>
+        <option value="text/html">HTML</option>
+        <option value="application/json">JSON</option>
+        <option value="application/zip">ZIP</option>
+        <option value="application/octet-stream">Binary / Other</option>
+      </select>
+      <span id="detectedMime" style="font-size:12px;color:var(--text-3);"></span>
+    </div>
+
+    <div class="action-row">
+      <button class="btn" onclick="downloadDecoded()" data-i18n="download_btn">Download File</button>
+    </div>
+    <div id="decodeStatus" class="status-msg"></div>
+  </div>
+
+</div><!-- /tool-wrap -->
+
+<!-- 4. Guide -->
+<div class="guide">
+  <div class="lang-en">
+    <div class="guide-title">How to use</div>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="guide-step">Step 1</div>
+        <h3>Choose conversion type</h3>
+        <p>Select the tab that matches your task: text encode/decode, file to Base64, or Base64 back to a file.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">Step 2</div>
+        <h3>Paste text or drop a file</h3>
+        <p>Type or paste your plain text into the left panel, or drag and drop any file onto the upload area.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">Step 3</div>
+        <h3>Result appears instantly</h3>
+        <p>Encoding and decoding happen in real time in your browser — no upload, no server, fully private.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">Step 4</div>
+        <h3>Copy or download</h3>
+        <p>Click Copy to grab the Base64 output, or use Download File to save the decoded result to your device.</p>
+      </div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <div class="guide-title">사용 방법</div>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="guide-step">Step 1</div>
+        <h3>변환 유형 선택</h3>
+        <p>텍스트 인코딩/디코딩, 파일 → Base64, Base64 → 파일 중 원하는 탭을 선택하세요.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">Step 2</div>
+        <h3>텍스트 붙여넣기 또는 파일 드롭</h3>
+        <p>왼쪽 패널에 일반 텍스트를 입력하거나, 파일을 업로드 영역에 드래그 앤 드롭하세요.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">Step 3</div>
+        <h3>결과 즉시 표시</h3>
+        <p>인코딩과 디코딩은 브라우저에서 실시간으로 처리됩니다. 서버 업로드 없이 완전히 비공개로 작동합니다.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">Step 4</div>
+        <h3>복사 또는 다운로드</h3>
+        <p>복사 버튼으로 Base64 결과를 클립보드에 저장하거나, 파일 다운로드 버튼으로 디코딩된 파일을 저장하세요.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. FAQ -->
+<div class="faq">
+  <div class="lang-en">
+    <div class="faq-title">FAQ</div>
+    <div class="faq-item">
+      <div class="faq-q">What is Base64 encoding and what is it used for?</div>
+      <div class="faq-a">Base64 is a binary-to-text encoding scheme that represents binary data using 64 printable ASCII characters. It is widely used to embed images in HTML/CSS (as data URLs), transmit binary data in JSON APIs, encode email attachments (MIME), and store binary data in environments that only support text.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I encode an image to Base64 online?</div>
+      <div class="faq-a">Switch to the "File → Base64" tab, then drag and drop your image file onto the upload area or click to browse. The tool instantly converts it to a Base64 data URL. You can toggle between the full <code style="font-size:12px">data:image/...;base64,</code> prefix and the raw Base64-only string.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I decode a Base64 string back to a file?</div>
+      <div class="faq-a">Go to the "Base64 → File" tab, paste your Base64 string (with or without the data URL prefix), choose the file type if not auto-detected, and click "Download File". Your browser will prompt you to save the decoded file.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does Base64 encoding make data secure?</div>
+      <div class="faq-a">No. Base64 is an encoding scheme, not encryption. Anyone can decode a Base64 string without a key. Do not use Base64 to protect sensitive data — use proper encryption (AES, RSA, etc.) instead. Base64 is only for encoding, not security.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Why is Base64 encoded data longer than the original?</div>
+      <div class="faq-a">Base64 encodes every 3 bytes of binary data as 4 ASCII characters, which means the output is approximately 33% larger than the input. This overhead is the trade-off for representing arbitrary binary data as safe, printable text characters.</div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <div class="faq-title">자주 묻는 질문</div>
+    <div class="faq-item">
+      <div class="faq-q">Base64 인코딩이란 무엇이고 어떤 용도로 사용되나요?</div>
+      <div class="faq-a">Base64는 바이너리 데이터를 64개의 출력 가능한 ASCII 문자로 표현하는 인코딩 방식입니다. HTML/CSS에 이미지 삽입(데이터 URL), JSON API에서 바이너리 데이터 전송, 이메일 첨부 파일 인코딩(MIME), 텍스트만 지원하는 환경에서 바이너리 데이터 저장 등에 널리 사용됩니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">이미지를 온라인으로 Base64로 인코딩하는 방법은?</div>
+      <div class="faq-a">"파일 → Base64" 탭으로 전환한 후, 이미지 파일을 업로드 영역에 드래그 앤 드롭하거나 클릭해서 파일을 선택하세요. 도구가 즉시 Base64 데이터 URL로 변환합니다. 전체 <code style="font-size:12px">data:image/...;base64,</code> 접두사 포함 여부를 토글로 선택할 수 있습니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Base64 문자열을 파일로 다시 디코딩하는 방법은?</div>
+      <div class="faq-a">"Base64 → 파일" 탭으로 이동하여 Base64 문자열을 붙여넣고(데이터 URL 접두사 포함 여부 무관), 파일 유형이 자동 감지되지 않으면 선택한 후 "파일 다운로드"를 클릭하세요. 브라우저가 디코딩된 파일을 저장하도록 안내합니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Base64 인코딩으로 데이터를 보안처리할 수 있나요?</div>
+      <div class="faq-a">아니요. Base64는 인코딩 방식이지 암호화가 아닙니다. 누구든지 키 없이 Base64 문자열을 디코딩할 수 있습니다. 민감한 데이터 보호에는 Base64를 사용하지 말고 적절한 암호화(AES, RSA 등)를 사용하세요.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Base64로 인코딩된 데이터가 원본보다 크기가 더 큰 이유는?</div>
+      <div class="faq-a">Base64는 바이너리 데이터 3바이트를 ASCII 문자 4개로 인코딩하기 때문에 출력이 입력보다 약 33% 더 큽니다. 이것은 임의의 바이너리 데이터를 안전한 출력 가능 텍스트 문자로 표현하기 위한 트레이드오프입니다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. Related -->
+<div class="related">
+  <div class="related-title">Related</div>
+  <a href="https://stackfreeks.com" class="related-link" target="_blank" rel="noopener">
+    StackFreeks Blog — developer guides &amp; server tips ↗
+  </a>
+</div>
+
+<!-- 7. Vultr banner -->
+<div class="vultr-banner">
+  <div class="banner-inner">
+    <div>
+      <div class="eyebrow" data-i18n="vultr_label">Sponsor</div>
+      <div class="banner-title" data-i18n="vultr_title">Get started on Vultr</div>
+      <div class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
+    </div>
+    <a
+      href="https://www.vultr.com/?ref=9907834-9J"
+      class="btn-vultr"
+      target="_blank"
+      rel="nofollow sponsored noopener"
+      data-i18n="vultr_cta"
+    >Claim your credit →</a>
+  </div>
+</div>
+
+<!-- 8. Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy Policy</a>
+    <a href="/terms/">Terms</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div data-i18n="footer_copy">© 2026 StackFreeks</div>
+</footer>
+
+<!-- i18n page keys -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    tab_text: 'Text Encode / Decode',
+    tab_file: 'File → Base64',
+    tab_decode: 'Base64 → File',
+    encode_btn: 'Encode →',
+    decode_btn: '← Decode',
+    copy_btn: 'Copy',
+    copied_btn: 'Copied!',
+    download_btn: 'Download File',
+    char_count_label: 'Characters',
+    vultr_label: 'Sponsor',
+    vultr_title: 'Get started on Vultr',
+    vultr_sub: 'Get $300 free credit — valid for 30 days',
+    vultr_cta: 'Claim your credit →',
+    footer_copy: '© 2026 StackFreeks',
+  },
+  ko: {
+    tab_text: '텍스트 인코딩 / 디코딩',
+    tab_file: '파일 → Base64',
+    tab_decode: 'Base64 → 파일',
+    encode_btn: '인코딩 →',
+    decode_btn: '← 디코딩',
+    copy_btn: '복사',
+    copied_btn: '복사됨!',
+    download_btn: '파일 다운로드',
+    char_count_label: '문자 수',
+    vultr_label: '스폰서',
+    vultr_title: 'Vultr로 시작하세요',
+    vultr_sub: '$300 무료 크레딧 — 가입 후 30일 유효',
+    vultr_cta: '크레딧 받기 →',
+    footer_copy: '© 2026 StackFreeks',
+  }
+};
+</script>
+
+<!-- Tool logic -->
+<script>
+// ── Utilities ─────────────────────────────────────────────────────────────────
+
+/** Encode string to Base64, handling Unicode via encodeURIComponent. */
+function toBase64(str) {
+  try {
+    return btoa(unescape(encodeURIComponent(str)));
+  } catch (e) {
+    return null;
+  }
+}
+
+/** Decode Base64 to string, handling Unicode. */
+function fromBase64(b64) {
+  try {
+    return decodeURIComponent(escape(atob(b64)));
+  } catch (e) {
+    return null;
+  }
+}
+
+function showStatus(id, msg, type) {
+  var el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = 'status-msg ' + type;
+}
+
+function clearStatus(id) {
+  var el = document.getElementById(id);
+  el.textContent = '';
+  el.className = 'status-msg';
+}
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+
+function switchTab(name) {
+  ['text', 'file', 'decode'].forEach(function(t) {
+    document.getElementById('tab-' + t).classList.toggle('active', t === name);
+    document.getElementById('panel-' + t).classList.toggle('active', t === name);
+  });
+}
+
+// ── Tab 1: Text Encode / Decode ───────────────────────────────────────────────
+
+var _syncing = false;
+
+function syncTextToBase64() {
+  if (_syncing) return;
+  _syncing = true;
+  var val = document.getElementById('textInput').value;
+  if (val === '') {
+    document.getElementById('base64Output').value = '';
+    clearStatus('textStatus');
+    _syncing = false;
+    return;
+  }
+  var encoded = toBase64(val);
+  if (encoded !== null) {
+    document.getElementById('base64Output').value = encoded;
+    clearStatus('textStatus');
+  } else {
+    showStatus('textStatus', 'Encoding failed — check your input.', 'error');
+  }
+  _syncing = false;
+}
+
+function syncBase64ToText() {
+  if (_syncing) return;
+  _syncing = true;
+  var val = document.getElementById('base64Output').value.trim();
+  if (val === '') {
+    document.getElementById('textInput').value = '';
+    clearStatus('textStatus');
+    _syncing = false;
+    return;
+  }
+  var decoded = fromBase64(val);
+  if (decoded !== null) {
+    document.getElementById('textInput').value = decoded;
+    clearStatus('textStatus');
+  } else {
+    showStatus('textStatus', 'Invalid Base64 — check your input.', 'error');
+  }
+  _syncing = false;
+}
+
+function encodeText() {
+  syncTextToBase64();
+}
+
+function decodeText() {
+  syncBase64ToText();
+}
+
+// ── Copy helper ───────────────────────────────────────────────────────────────
+
+function copyOutput(textareaId, btnId) {
+  var val = document.getElementById(textareaId).value;
+  if (!val) return;
+  navigator.clipboard.writeText(val).then(function() {
+    var btn = document.getElementById(btnId);
+    var t = window.SF_PAGE_I18N &&
+            window.sfLang &&
+            window.SF_PAGE_I18N[window.sfLang._lang] &&
+            window.SF_PAGE_I18N[window.sfLang._lang].copied_btn
+            ? window.SF_PAGE_I18N[window.sfLang._lang].copied_btn
+            : 'Copied!';
+    btn.textContent = t;
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = btn.dataset.origText || 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    // Fallback for older browsers
+    var ta = document.getElementById(textareaId);
+    ta.select();
+    document.execCommand('copy');
+  });
+}
+
+// Store original button text after i18n loads
+document.addEventListener('DOMContentLoaded', function() {
+  ['copyTextBtn', 'copyFileBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.dataset.origText = el.textContent;
+  });
+});
+
+// ── Tab 2: File → Base64 ──────────────────────────────────────────────────────
+
+var _fileBase64Raw = ''; // raw base64 without prefix
+var _fileMime = 'application/octet-stream';
+
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  document.getElementById('dropZone').classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag-over');
+  var files = e.dataTransfer.files;
+  if (files && files[0]) processFile(files[0]);
+}
+
+function handleFileSelect(e) {
+  var files = e.target.files;
+  if (files && files[0]) processFile(files[0]);
+}
+
+function processFile(file) {
+  _fileMime = file.type || 'application/octet-stream';
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var dataUrl = e.target.result; // "data:mime;base64,..."
+    var idx = dataUrl.indexOf(',');
+    _fileBase64Raw = idx !== -1 ? dataUrl.slice(idx + 1) : dataUrl;
+
+    // Update file info bar
+    var info = document.getElementById('fileInfo');
+    info.classList.add('visible');
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileMeta').textContent =
+      _fileMime + ' · ' + formatBytes(file.size);
+
+    renderFileOutput();
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderFileOutput() {
+  if (!_fileBase64Raw) return;
+  var showFull = document.getElementById('showFullUrl').checked;
+  var output = showFull
+    ? 'data:' + _fileMime + ';base64,' + _fileBase64Raw
+    : _fileBase64Raw;
+  document.getElementById('fileOutput').value = output;
+  document.getElementById('fileCharCount').textContent = output.length.toLocaleString();
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
+
+// ── Tab 3: Base64 → File ──────────────────────────────────────────────────────
+
+var MIME_EXT = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/gif': 'gif',
+  'image/webp': 'webp',
+  'image/svg+xml': 'svg',
+  'application/pdf': 'pdf',
+  'text/plain': 'txt',
+  'text/html': 'html',
+  'application/json': 'json',
+  'application/zip': 'zip',
+  'application/octet-stream': 'bin',
+};
+
+function autoDetectMime() {
+  var val = document.getElementById('decodeInput').value.trim();
+  clearStatus('decodeStatus');
+  var match = val.match(/^data:([^;]+);base64,/);
+  if (match) {
+    var detected = match[1];
+    document.getElementById('detectedMime').textContent = 'Detected: ' + detected;
+    var sel = document.getElementById('mimeSelect');
+    // Try to match against option values
+    var found = false;
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === detected) {
+        sel.value = detected;
+        found = true;
+        break;
+      }
+    }
+    if (!found) sel.value = 'auto';
+  } else {
+    document.getElementById('detectedMime').textContent = '';
+  }
+}
+
+function downloadDecoded() {
+  var raw = document.getElementById('decodeInput').value.trim();
+  if (!raw) {
+    showStatus('decodeStatus', 'Please paste a Base64 string first.', 'error');
+    return;
+  }
+
+  var b64;
+  var detectedMime = null;
+  var match = raw.match(/^data:([^;]+);base64,(.+)$/);
+  if (match) {
+    detectedMime = match[1];
+    b64 = match[2];
+  } else {
+    b64 = raw;
+  }
+
+  // Determine MIME
+  var selVal = document.getElementById('mimeSelect').value;
+  var mime;
+  if (selVal !== 'auto') {
+    mime = selVal;
+  } else if (detectedMime) {
+    mime = detectedMime;
+  } else {
+    mime = 'application/octet-stream';
+  }
+
+  // Decode
+  var binary;
+  try {
+    binary = atob(b64.replace(/\s/g, ''));
+  } catch (e) {
+    showStatus('decodeStatus', 'Invalid Base64 string — please check your input.', 'error');
+    return;
+  }
+
+  // Build Uint8Array → Blob → object URL
+  var bytes = new Uint8Array(binary.length);
+  for (var i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  var blob = new Blob([bytes], { type: mime });
+  var url = URL.createObjectURL(blob);
+
+  var ext = MIME_EXT[mime] || 'bin';
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'decoded-file.' + ext;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function() { URL.revokeObjectURL(url); }, 10000);
+
+  showStatus('decodeStatus', 'Download started! (' + mime + ')', 'ok');
+}
+</script>
+
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

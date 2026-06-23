@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password Generator — Strong Random Passwords | StackFreeks</title>
+  <meta name="description" content="Generate strong random passwords free. Customize length and character types. Generated in your browser — never stored or sent anywhere." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/password-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Password Generator — Strong Random Passwords | StackFreeks" />
+  <meta property="og:description" content="Generate strong random passwords free. Customize length and character types. Generated in your browser — never stored or sent anywhere." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/password-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .lang-toggle:hover {
+      color: var(--text-1);
+      border-color: var(--accent);
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--text-2);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* lang blocks */
+    .lang-ko { display: none; }
+
+    /* Tool body */
+    .tool-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    /* Password display */
+    .pw-display {
+      width: 100%;
+      font-family: monospace;
+      font-size: 20px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      color: var(--text-1);
+      text-align: center;
+      letter-spacing: 0.05em;
+      outline: none;
+      cursor: default;
+      word-break: break-all;
+    }
+
+    /* Strength meter */
+    .strength-bar-wrap {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 8px 0 4px;
+    }
+
+    .strength-bar {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.3s, background 0.3s;
+    }
+
+    .strength-label {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Button row */
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--font);
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s, background 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      flex: 1;
+    }
+
+    .btn-primary:hover { opacity: 0.88; }
+
+    .btn-icon {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      padding: 10px 14px;
+    }
+
+    .btn-icon:hover { color: var(--text-1); border-color: var(--accent); }
+
+    .btn-copy-success {
+      background: rgba(34,197,94,0.15) !important;
+      color: var(--success) !important;
+      border-color: rgba(34,197,94,0.3) !important;
+    }
+
+    /* Slider */
+    .slider-row {
+      margin-bottom: 20px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: var(--text-2);
+      margin-bottom: 10px;
+    }
+
+    .slider-label .length-val {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 16px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border-2);
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: 2px solid var(--bg);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: 2px solid var(--bg);
+    }
+
+    /* Checkbox options */
+    .option-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .option-row:last-child { border-bottom: none; }
+
+    .option-row label {
+      font-size: 14px;
+      color: var(--text-2);
+      flex: 1;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .option-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Bulk generate */
+    .bulk-btn-wrap {
+      margin-top: 16px;
+    }
+
+    .btn-bulk {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--font);
+      cursor: pointer;
+      width: 100%;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .btn-bulk:hover { color: var(--text-1); border-color: var(--accent); }
+
+    .bulk-results {
+      display: none;
+      margin-top: 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 12px 16px;
+    }
+
+    .bulk-results.visible { display: block; }
+
+    .bulk-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bulk-item:last-child { border-bottom: none; }
+
+    .bulk-pw {
+      font-family: monospace;
+      font-size: 13px;
+      color: var(--text-1);
+      flex: 1;
+      word-break: break-all;
+    }
+
+    .btn-copy-sm {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      font-size: 11px;
+      font-weight: 500;
+      font-family: var(--font);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .btn-copy-sm:hover { color: var(--text-1); border-color: var(--accent); }
+    .btn-copy-sm.copied { color: var(--success); border-color: rgba(34,197,94,0.3); }
+
+    /* Guide */
+    .guide {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .guide-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .guide-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .guide-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .faq {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .faq-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+
+    .faq-q {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+
+    .faq-a {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .related-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .related a {
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      background: var(--success-bg);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 24px;
+    }
+
+    .banner-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .btn-vultr {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .hero { padding: 32px 16px 24px; }
+      .tool-wrap { padding: 0 16px 40px; }
+      .guide, .faq, .related { padding-left: 16px; padding-right: 16px; }
+      .pw-display { font-size: 16px; }
+      .btn-row { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Navigation -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- 3. Hero -->
+  <div class="hero">
+    <div class="lang-en">
+      <h1>Password Generator</h1>
+      <p>Generate strong, random passwords instantly. Free, secure — generated in your browser, never sent anywhere.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>비밀번호 생성기</h1>
+      <p>강력한 랜덤 비밀번호를 즉시 생성. 무료, 안전 — 브라우저에서만 생성, 외부 전송 없음.</p>
+    </div>
+  </div>
+
+  <!-- 4. Tool body -->
+  <div class="tool-wrap">
+    <!-- Password output -->
+    <div class="card">
+      <input type="text" class="pw-display" id="pwDisplay" readonly aria-label="Generated password" />
+
+      <!-- Strength meter -->
+      <div class="strength-bar-wrap">
+        <div class="strength-bar" id="strengthBar"></div>
+      </div>
+      <div class="strength-label" id="strengthLabel"></div>
+
+      <!-- Copy + Regenerate -->
+      <div class="btn-row">
+        <button class="btn btn-primary" id="copyBtn" onclick="copyPassword()" data-i18n="copy_btn">Copy Password</button>
+        <button class="btn btn-icon" id="regenBtn" onclick="generatePassword()" title="Regenerate" data-i18n="regenerate_btn">↺</button>
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div class="card">
+      <!-- Length slider -->
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="lang-en">Length: <span class="length-val" id="lenDisplay">16</span></span>
+          <span class="lang-ko" style="display:none;">길이: <span class="length-val" id="lenDisplayKo">16</span></span>
+        </div>
+        <input type="range" id="lengthSlider" min="8" max="64" value="16"
+               oninput="onLengthChange(this.value)" aria-label="Password length" />
+      </div>
+
+      <!-- Checkboxes -->
+      <div class="option-row">
+        <input type="checkbox" id="optUpper" checked onchange="generatePassword()" />
+        <label for="optUpper" data-i18n="uppercase_label">Uppercase (A–Z)</label>
+      </div>
+      <div class="option-row">
+        <input type="checkbox" id="optLower" checked onchange="generatePassword()" />
+        <label for="optLower" data-i18n="lowercase_label">Lowercase (a–z)</label>
+      </div>
+      <div class="option-row">
+        <input type="checkbox" id="optNumbers" checked onchange="generatePassword()" />
+        <label for="optNumbers" data-i18n="numbers_label">Numbers (0–9)</label>
+      </div>
+      <div class="option-row">
+        <input type="checkbox" id="optSymbols" checked onchange="generatePassword()" />
+        <label for="optSymbols" data-i18n="symbols_label">Symbols (!@#$%^&amp;*…)</label>
+      </div>
+      <div class="option-row">
+        <input type="checkbox" id="optNoAmbig" onchange="generatePassword()" />
+        <label for="optNoAmbig" data-i18n="exclude_ambiguous_label">Exclude ambiguous characters (0, O, l, 1, I)</label>
+      </div>
+    </div>
+
+    <!-- Bulk generate -->
+    <div class="bulk-btn-wrap">
+      <button class="btn-bulk" onclick="generateBulk()" data-i18n="bulk_btn">Generate 10 Passwords</button>
+      <div class="bulk-results" id="bulkResults"></div>
+    </div>
+  </div>
+
+  <!-- 5. Guide -->
+  <section class="guide">
+    <div class="lang-en">
+      <div class="guide-title">How to use</div>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">STEP 1</div>
+          <h3>Choose your length</h3>
+          <p>Use the slider to set password length. 16+ characters is recommended for strong security.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 2</div>
+          <h3>Select character types</h3>
+          <p>Enable uppercase, lowercase, numbers, and symbols. More variety equals a stronger password.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 3</div>
+          <h3>Copy your password</h3>
+          <p>Click the Copy Password button to instantly copy the generated password to your clipboard.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 4</div>
+          <h3>Store it safely</h3>
+          <p>Save your password in a password manager. Never reuse passwords across different accounts.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <div class="guide-title">사용 방법</div>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">STEP 1</div>
+          <h3>길이 선택</h3>
+          <p>슬라이더로 비밀번호 길이를 설정하세요. 강력한 보안을 위해 16자 이상을 권장합니다.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 2</div>
+          <h3>문자 유형 선택</h3>
+          <p>대문자, 소문자, 숫자, 기호를 활성화하세요. 다양할수록 더 강력한 비밀번호가 됩니다.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 3</div>
+          <h3>비밀번호 복사</h3>
+          <p>비밀번호 복사 버튼을 클릭하면 생성된 비밀번호가 즉시 클립보드에 복사됩니다.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 4</div>
+          <h3>안전하게 저장</h3>
+          <p>비밀번호 관리자에 저장하세요. 같은 비밀번호를 여러 계정에서 재사용하지 마세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <div class="faq-title">Frequently Asked Questions</div>
+
+      <div class="faq-item">
+        <div class="faq-q">How long should a strong password be?</div>
+        <div class="faq-a">Security experts recommend at least 16 characters for a strong password. Shorter passwords (under 12 characters) can be cracked much faster with modern hardware. For critical accounts like banking or email, aim for 20+ characters.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is this password generator safe to use?</div>
+        <div class="faq-a">Yes. All passwords are generated entirely in your browser using the <code>crypto.getRandomValues()</code> Web Crypto API — a cryptographically secure random number generator. No data is ever sent to a server, logged, or stored. You can even use this tool offline.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What characters should a strong password include?</div>
+        <div class="faq-a">A strong password should include all four character types: uppercase letters (A–Z), lowercase letters (a–z), digits (0–9), and special symbols (!@#$%^&amp;*). Combining all four character sets dramatically increases the number of possible combinations, making brute-force attacks infeasible.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What is the most secure random password generator?</div>
+        <div class="faq-a">The most secure generators use cryptographically secure pseudorandom number generators (CSPRNG) — which is exactly what this tool uses (<code>crypto.getRandomValues()</code>). Avoid password generators that rely on <code>Math.random()</code>, as it is not cryptographically secure.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Should I use a password manager?</div>
+        <div class="faq-a">Absolutely. Password managers like Bitwarden, 1Password, or KeePass let you store unique, strong passwords for every account without memorizing them. Since you only need to remember one master password, you can use long, complex passwords everywhere else.</div>
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <div class="faq-title">자주 묻는 질문</div>
+
+      <div class="faq-item">
+        <div class="faq-q">강력한 비밀번호는 얼마나 길어야 하나요?</div>
+        <div class="faq-a">보안 전문가들은 강력한 비밀번호로 최소 16자를 권장합니다. 12자 미만의 짧은 비밀번호는 현대 하드웨어로 훨씬 빠르게 해독될 수 있습니다. 은행이나 이메일 같은 중요한 계정은 20자 이상을 목표로 하세요.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">이 비밀번호 생성기는 안전한가요?</div>
+        <div class="faq-a">네. 모든 비밀번호는 암호학적으로 안전한 난수 생성기인 <code>crypto.getRandomValues()</code> Web Crypto API를 사용하여 브라우저에서만 생성됩니다. 데이터는 서버로 전송되거나 기록·저장되지 않습니다. 오프라인에서도 사용 가능합니다.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">강력한 비밀번호에는 어떤 문자가 포함되어야 하나요?</div>
+        <div class="faq-a">강력한 비밀번호는 대문자(A–Z), 소문자(a–z), 숫자(0–9), 특수기호(!@#$%^&amp;*)의 네 가지 문자 유형을 모두 포함해야 합니다. 모든 문자 집합을 조합하면 가능한 조합 수가 크게 늘어나 무차별 대입 공격이 사실상 불가능해집니다.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">가장 안전한 랜덤 비밀번호 생성기는?</div>
+        <div class="faq-a">가장 안전한 생성기는 암호학적으로 안전한 의사난수 생성기(CSPRNG)를 사용합니다. 이 도구가 바로 그렇습니다(<code>crypto.getRandomValues()</code>). <code>Math.random()</code>에 의존하는 생성기는 암호학적으로 안전하지 않으므로 피하세요.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">비밀번호 관리자를 사용해야 하나요?</div>
+        <div class="faq-a">물론입니다. Bitwarden, 1Password, KeePass 같은 비밀번호 관리자를 사용하면 모든 계정에 고유하고 강력한 비밀번호를 외울 필요 없이 저장할 수 있습니다. 마스터 비밀번호 하나만 기억하면 되므로 다른 곳에서는 길고 복잡한 비밀번호를 자유롭게 사용할 수 있습니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Related content -->
+  <section class="related">
+    <div class="related-title">Related Reading</div>
+    <p><a href="https://stackfreeks.com" target="_blank" rel="noopener">More developer guides and server tips on StackFreeks →</a></p>
+  </section>
+
+  <!-- 8. Vultr Banner -->
+  <div class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <div class="eyebrow" data-i18n="vultr_label">Sponsor</div>
+        <div class="banner-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr" target="_blank" rel="nofollow sponsored noopener" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </div>
+
+  <!-- 9. Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
+    </div>
+  </footer>
+
+  <!-- i18n page-specific keys -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: '← all tools',
+        copy_btn: 'Copy Password',
+        copied_btn: 'Copied!',
+        regenerate_btn: '↺',
+        length_label: 'Length',
+        uppercase_label: 'Uppercase (A–Z)',
+        lowercase_label: 'Lowercase (a–z)',
+        numbers_label: 'Numbers (0–9)',
+        symbols_label: 'Symbols (!@#$%^&*…)',
+        exclude_ambiguous_label: 'Exclude ambiguous characters (0, O, l, 1, I)',
+        strength_weak: 'Weak',
+        strength_fair: 'Fair',
+        strength_strong: 'Strong',
+        strength_very_strong: 'Very Strong',
+        bulk_btn: 'Generate 10 Passwords',
+        vultr_label: 'Sponsor',
+        vultr_title: 'Get started on Vultr',
+        vultr_sub: 'Get $300 free credit — valid for 30 days',
+        vultr_cta: 'Claim your credit →',
+        footer_copy: '© 2026 StackFreeks',
+      },
+      ko: {
+        nav_back: '← 전체 툴',
+        copy_btn: '비밀번호 복사',
+        copied_btn: '복사됨!',
+        regenerate_btn: '↺',
+        length_label: '길이',
+        uppercase_label: '대문자 (A–Z)',
+        lowercase_label: '소문자 (a–z)',
+        numbers_label: '숫자 (0–9)',
+        symbols_label: '기호 (!@#$%^&*…)',
+        exclude_ambiguous_label: '모호한 문자 제외 (0, O, l, 1, I)',
+        strength_weak: '약함',
+        strength_fair: '보통',
+        strength_strong: '강함',
+        strength_very_strong: '매우 강함',
+        bulk_btn: '비밀번호 10개 생성',
+        vultr_label: '스폰서',
+        vultr_title: 'Vultr로 시작하세요',
+        vultr_sub: '$300 무료 크레딧 — 가입 후 30일 유효',
+        vultr_cta: '크레딧 받기 →',
+        footer_copy: '© 2026 StackFreeks',
+      }
+    };
+  </script>
+
+  <!-- Tool logic -->
+  <script>
+    // Character sets
+    const CHARS = {
+      upper:   'ABCDEFGHJKLMNPQRSTUVWXYZ',      // ambiguous removed: I
+      upperFull: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      lower:   'abcdefghjkmnpqrstuvwxyz',         // ambiguous removed: l
+      lowerFull: 'abcdefghijklmnopqrstuvwxyz',
+      numbers: '23456789',                         // ambiguous removed: 0, 1
+      numbersFull: '0123456789',
+      symbols: '!@#$%^&*()-_=+[]{}|;:,.<>?',
+    };
+
+    function buildCharset() {
+      const noAmbig = document.getElementById('optNoAmbig').checked;
+      let charset = '';
+      if (document.getElementById('optUpper').checked)
+        charset += noAmbig ? CHARS.upper : CHARS.upperFull;
+      if (document.getElementById('optLower').checked)
+        charset += noAmbig ? CHARS.lower : CHARS.lowerFull;
+      if (document.getElementById('optNumbers').checked)
+        charset += noAmbig ? CHARS.numbers : CHARS.numbersFull;
+      if (document.getElementById('optSymbols').checked)
+        charset += CHARS.symbols;
+      return charset;
+    }
+
+    function countActiveCharsets() {
+      let count = 0;
+      if (document.getElementById('optUpper').checked) count++;
+      if (document.getElementById('optLower').checked) count++;
+      if (document.getElementById('optNumbers').checked) count++;
+      if (document.getElementById('optSymbols').checked) count++;
+      return count;
+    }
+
+    function generateRandom(charset, length) {
+      if (!charset) return '';
+      const arr = new Uint32Array(length);
+      crypto.getRandomValues(arr);
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += charset[arr[i] % charset.length];
+      }
+      return result;
+    }
+
+    function getStrength(length, charsetCount) {
+      const t = window.SF_PAGE_I18N
+        ? (localStorage.getItem('sf-lang') === 'ko' ? window.SF_PAGE_I18N.ko : window.SF_PAGE_I18N.en)
+        : {};
+      const labels = {
+        weak:       t.strength_weak       || 'Weak',
+        fair:       t.strength_fair       || 'Fair',
+        strong:     t.strength_strong     || 'Strong',
+        veryStrong: t.strength_very_strong || 'Very Strong',
+      };
+
+      if (length < 8 || charsetCount === 0) {
+        return { label: labels.weak, color: 'var(--danger)', width: '15%' };
+      }
+      if ((length >= 8 && length <= 11 && charsetCount >= 2) ||
+          (length >= 12 && length <= 15 && charsetCount === 1)) {
+        return { label: labels.fair, color: 'var(--warning)', width: '35%' };
+      }
+      if ((length >= 12 && length <= 15 && charsetCount >= 3) ||
+          (length >= 16 && charsetCount >= 2 && charsetCount < 4)) {
+        return { label: labels.strong, color: 'var(--accent)', width: '65%' };
+      }
+      if (length >= 16 && charsetCount >= 4) {
+        return { label: labels.veryStrong, color: 'var(--success)', width: '100%' };
+      }
+      // fallback for edge cases (e.g. length >= 8 with 1 charset)
+      return { label: labels.fair, color: 'var(--warning)', width: '35%' };
+    }
+
+    function updateStrength(length, charsetCount) {
+      const s = getStrength(length, charsetCount);
+      const bar = document.getElementById('strengthBar');
+      const lbl = document.getElementById('strengthLabel');
+      bar.style.width = s.width;
+      bar.style.background = s.color;
+      lbl.textContent = s.label;
+      lbl.style.color = s.color;
+    }
+
+    function generatePassword() {
+      const length = parseInt(document.getElementById('lengthSlider').value, 10);
+      const charset = buildCharset();
+      const pw = charset ? generateRandom(charset, length) : '';
+      document.getElementById('pwDisplay').value = pw;
+      updateStrength(length, countActiveCharsets());
+      return pw;
+    }
+
+    function onLengthChange(val) {
+      document.getElementById('lenDisplay').textContent = val;
+      document.getElementById('lenDisplayKo').textContent = val;
+      generatePassword();
+    }
+
+    function copyPassword() {
+      const val = document.getElementById('pwDisplay').value;
+      if (!val) return;
+      navigator.clipboard.writeText(val).then(() => {
+        const btn = document.getElementById('copyBtn');
+        const origText = btn.textContent;
+        const lang = localStorage.getItem('sf-lang') || 'en';
+        const copiedLabel = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang] && window.SF_PAGE_I18N[lang].copied_btn) || 'Copied!';
+        btn.textContent = copiedLabel;
+        btn.classList.add('btn-copy-success');
+        setTimeout(() => {
+          btn.textContent = origText;
+          btn.classList.remove('btn-copy-success');
+        }, 1500);
+      });
+    }
+
+    function copyBulkItem(pw, btn) {
+      navigator.clipboard.writeText(pw).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '✓';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('copied');
+        }, 1200);
+      });
+    }
+
+    function generateBulk() {
+      const charset = buildCharset();
+      const length = parseInt(document.getElementById('lengthSlider').value, 10);
+      const container = document.getElementById('bulkResults');
+      container.innerHTML = '';
+
+      for (let i = 0; i < 10; i++) {
+        const pw = charset ? generateRandom(charset, length) : '(no charset selected)';
+        const item = document.createElement('div');
+        item.className = 'bulk-item';
+
+        const pwSpan = document.createElement('span');
+        pwSpan.className = 'bulk-pw';
+        pwSpan.textContent = pw;
+
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'btn-copy-sm';
+        copyBtn.textContent = 'Copy';
+        copyBtn.onclick = function() { copyBulkItem(pw, this); };
+
+        item.appendChild(pwSpan);
+        item.appendChild(copyBtn);
+        container.appendChild(item);
+      }
+
+      container.classList.add('visible');
+    }
+
+    // Init on page load
+    generatePassword();
+  </script>
+
+  <!-- 10. i18n -->
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>

@@ -62,6 +62,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tools.stackfreeks.com/tools/password-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/image-compressor/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/base64-encoder/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/json-formatter/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tools.stackfreeks.com/tools/timestamp-converter/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
