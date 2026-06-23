@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unix Timestamp Converter — Epoch to Date | StackFreeks</title>
+  <meta name="description" content="Convert Unix timestamps to dates and back. See current epoch time live. Free online tool — no account needed, works in your browser." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/timestamp-converter/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Unix Timestamp Converter — Epoch to Date | StackFreeks" />
+  <meta property="og:description" content="Convert Unix timestamps to dates and back. See current epoch time live. Free online tool — no account needed, works in your browser." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/timestamp-converter/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Current time card */
+    .now-card {
+      max-width: 860px;
+      margin: 0 auto 32px;
+      padding: 0 24px;
+    }
+
+    .now-card-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+    }
+
+    .now-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .now-ts {
+      font-size: 36px;
+      font-weight: 600;
+      font-family: monospace;
+      color: var(--text-1);
+      letter-spacing: -0.02em;
+    }
+
+    .now-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .now-sub {
+      font-size: 13px;
+      color: var(--text-2);
+      font-family: monospace;
+    }
+
+    .now-dates {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .now-date-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .now-date-lbl {
+      font-size: 11px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .now-date-val {
+      font-size: 13px;
+      font-family: monospace;
+      color: var(--text-1);
+    }
+
+    /* Converter section */
+    .converter {
+      max-width: 860px;
+      margin: 0 auto 32px;
+      padding: 0 24px;
+    }
+
+    .converter-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Input fields */
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-label {
+      font-size: 12px;
+      color: var(--text-2);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .input-field {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-1);
+      font-family: monospace;
+      font-size: 15px;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      transition: border-color 0.15s;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .input-field::placeholder {
+      color: var(--text-3);
+    }
+
+    .input-hint {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 6px;
+    }
+
+    /* Result rows */
+    .results-block {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 4px 16px;
+    }
+
+    .result-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .result-row:last-child {
+      border-bottom: none;
+    }
+
+    .result-label {
+      font-size: 12px;
+      color: var(--text-3);
+      min-width: 100px;
+    }
+
+    .result-value {
+      font-family: monospace;
+      font-size: 14px;
+      color: var(--text-1);
+      flex: 1;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .copy-btn.copied {
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .empty-result {
+      font-size: 13px;
+      color: var(--text-3);
+      font-family: monospace;
+    }
+
+    .error-result {
+      font-size: 13px;
+      color: #f87171;
+      font-family: monospace;
+    }
+
+    /* Guide */
+    .guide {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .guide-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .guide-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .guide-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .faq {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .faq-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+
+    .faq-item:first-of-type {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-q {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+
+    .faq-a {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    .faq-a code {
+      font-family: monospace;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--text-1);
+    }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto 0;
+      padding: 0 24px 32px;
+    }
+
+    .related-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 0.15s;
+    }
+
+    .related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    .related-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .related-title {
+      font-size: 14px;
+      color: var(--text-1);
+    }
+
+    .related-arrow {
+      color: var(--text-3);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      background: var(--success-bg);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 24px;
+    }
+
+    .banner-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .btn-vultr {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      .now-card { padding: 0 16px; margin-bottom: 24px; }
+      .now-ts { font-size: 26px; }
+      .converter { padding: 0 16px; }
+      .tabs { flex-wrap: wrap; }
+      .result-label { min-width: 80px; font-size: 11px; }
+      .guide { padding: 0 16px 40px; }
+      .faq { padding: 0 16px 40px; }
+      .related { padding: 0 16px 24px; }
+      .vultr-banner { padding: 20px 16px; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { align-self: stretch; text-align: center; }
+      .footer-links { gap: 14px; }
+      .now-dates { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>Unix Timestamp Converter</h1>
+      <p>Convert Unix timestamps to human-readable dates and back. See the current epoch time live.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>Unix 타임스탬프 변환기</h1>
+      <p>Unix 타임스탬프를 날짜로, 날짜를 타임스탬프로 변환. 현재 Epoch 시간을 실시간으로 확인.</p>
+    </div>
+  </section>
+
+  <!-- Current Time Card -->
+  <section class="now-card" aria-label="Current Unix timestamp">
+    <div class="now-card-inner">
+      <p class="now-label" data-i18n="current_ts_label">Current Unix Timestamp</p>
+      <div class="now-row">
+        <span class="now-ts" id="now-seconds">—</span>
+        <button class="copy-btn" id="copy-now-sec" onclick="copyNow('sec')" data-i18n="copy_btn">Copy</button>
+      </div>
+      <div class="now-row" style="margin-top: 10px;">
+        <span class="now-sub" id="now-ms">— ms</span>
+        <button class="copy-btn" id="copy-now-ms" onclick="copyNow('ms')" data-i18n="copy_btn">Copy</button>
+      </div>
+      <div class="now-dates">
+        <div class="now-date-row">
+          <span class="now-date-lbl" data-i18n="local_label">Local Time</span>
+          <span class="now-date-val" id="now-local">—</span>
+        </div>
+        <div class="now-date-row">
+          <span class="now-date-lbl" data-i18n="utc_label">UTC</span>
+          <span class="now-date-val" id="now-utc">—</span>
+        </div>
+        <div class="now-date-row">
+          <span class="now-date-lbl" data-i18n="iso_label">ISO 8601</span>
+          <span class="now-date-val" id="now-iso">—</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Converter -->
+  <section class="converter" aria-label="Timestamp converter">
+    <div class="converter-card">
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" id="tab-ts" role="tab" aria-selected="true"
+          onclick="switchTab('ts')" data-i18n="tab_ts_to_date">Timestamp → Date</button>
+        <button class="tab-btn" id="tab-date" role="tab" aria-selected="false"
+          onclick="switchTab('date')" data-i18n="tab_date_to_ts">Date → Timestamp</button>
+      </div>
+
+      <!-- Tab: Timestamp → Date -->
+      <div class="tab-panel active" id="panel-ts" role="tabpanel">
+        <div class="input-group">
+          <label class="input-label" for="input-ts" data-i18n="tab_ts_to_date">Timestamp → Date</label>
+          <input
+            type="number"
+            id="input-ts"
+            class="input-field"
+            placeholder="e.g. 1719100800 or 1719100800000"
+            oninput="convertTsToDate()"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <p class="input-hint lang-en">Enter seconds (10 digits) or milliseconds (13 digits) — auto-detected.</p>
+          <p class="input-hint lang-ko">초 단위(10자리) 또는 밀리초 단위(13자리) 입력 — 자동으로 구분합니다.</p>
+        </div>
+
+        <div class="results-block" id="ts-results">
+          <div class="result-row">
+            <span class="result-label" data-i18n="local_label">Local</span>
+            <span class="result-value empty-result" id="res-ts-local" data-i18n="placeholder_result">—</span>
+            <button class="copy-btn" onclick="copyResult('res-ts-local')" data-i18n="copy_btn">Copy</button>
+          </div>
+          <div class="result-row">
+            <span class="result-label" data-i18n="utc_label">UTC</span>
+            <span class="result-value empty-result" id="res-ts-utc">—</span>
+            <button class="copy-btn" onclick="copyResult('res-ts-utc')" data-i18n="copy_btn">Copy</button>
+          </div>
+          <div class="result-row">
+            <span class="result-label" data-i18n="iso_label">ISO 8601</span>
+            <span class="result-value empty-result" id="res-ts-iso">—</span>
+            <button class="copy-btn" onclick="copyResult('res-ts-iso')" data-i18n="copy_btn">Copy</button>
+          </div>
+          <div class="result-row">
+            <span class="result-label" data-i18n="relative_label">Relative</span>
+            <span class="result-value empty-result" id="res-ts-relative">—</span>
+            <button class="copy-btn" onclick="copyResult('res-ts-relative')" data-i18n="copy_btn">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Date → Timestamp -->
+      <div class="tab-panel" id="panel-date" role="tabpanel">
+        <div class="input-group">
+          <label class="input-label" for="input-date" data-i18n="tab_date_to_ts">Date → Timestamp</label>
+          <input
+            type="datetime-local"
+            id="input-date"
+            class="input-field"
+            oninput="convertDateToTs()"
+            onchange="convertDateToTs()"
+          />
+          <p class="input-hint lang-en">Select a date and time to get its Unix timestamps.</p>
+          <p class="input-hint lang-ko">날짜와 시간을 선택하면 Unix 타임스탬프를 얻을 수 있습니다.</p>
+        </div>
+
+        <div class="results-block" id="date-results">
+          <div class="result-row">
+            <span class="result-label" data-i18n="seconds_label">Seconds</span>
+            <span class="result-value empty-result" id="res-date-sec">—</span>
+            <button class="copy-btn" onclick="copyResult('res-date-sec')" data-i18n="copy_btn">Copy</button>
+          </div>
+          <div class="result-row">
+            <span class="result-label" data-i18n="ms_label">Milliseconds</span>
+            <span class="result-value empty-result" id="res-date-ms">—</span>
+            <button class="copy-btn" onclick="copyResult('res-date-ms')" data-i18n="copy_btn">Copy</button>
+          </div>
+          <div class="result-row">
+            <span class="result-label" data-i18n="iso_label">ISO 8601</span>
+            <span class="result-value empty-result" id="res-date-iso">—</span>
+            <button class="copy-btn" onclick="copyResult('res-date-iso')" data-i18n="copy_btn">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Use Guide -->
+  <section class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to use this tool</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>See the current time live</h3>
+          <p>The top card shows the current Unix timestamp in real time, updating every second. Copy it with one click.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>Paste a timestamp</h3>
+          <p>Switch to the "Timestamp → Date" tab and paste any Unix timestamp (seconds or milliseconds). The tool auto-detects the unit.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>Or pick a date</h3>
+          <p>Use the "Date → Timestamp" tab to select a date and time. Get the corresponding Unix timestamp in seconds, milliseconds, and ISO 8601 instantly.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>Copy any result</h3>
+          <p>Each output field has its own Copy button. Click it once to copy that value to your clipboard — the button briefly confirms the copy.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>현재 시간을 실시간으로 확인</h3>
+          <p>상단 카드에서 현재 Unix 타임스탬프를 실시간으로 볼 수 있습니다. 매 초 업데이트되며, 버튼 한 번으로 복사할 수 있습니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>타임스탬프 붙여넣기</h3>
+          <p>"Timestamp → Date" 탭으로 전환한 뒤 Unix 타임스탬프를 입력하세요. 초 또는 밀리초 단위를 자동으로 감지합니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>날짜 선택</h3>
+          <p>"Date → Timestamp" 탭에서 날짜와 시간을 선택하면, 해당하는 Unix 타임스탬프(초/밀리초)와 ISO 8601 문자열을 즉시 확인할 수 있습니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>결과 복사</h3>
+          <p>각 출력 항목 옆에 복사 버튼이 있습니다. 한 번 클릭하면 해당 값이 클립보드에 복사됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <p class="faq-title">Frequently Asked Questions</p>
+      <div class="faq-item">
+        <p class="faq-q">What is a Unix timestamp?</p>
+        <p class="faq-a">A Unix timestamp (also called epoch time) is the number of seconds that have elapsed since January 1, 1970, 00:00:00 UTC — known as the Unix epoch. It is a single integer that represents any point in time unambiguously, regardless of timezone or locale. For example, the timestamp <code>1719100800</code> refers to June 23, 2024, 00:00:00 UTC.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What is the current Unix timestamp?</p>
+        <p class="faq-a">The current Unix timestamp is shown live at the top of this page, updating every second. You can also get it in any language: JavaScript: <code>Math.floor(Date.now() / 1000)</code>, Python: <code>import time; int(time.time())</code>, Bash: <code>date +%s</code>.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How do I convert a Unix timestamp to a readable date in JavaScript?</p>
+        <p class="faq-a">Use <code>new Date(timestamp * 1000)</code> to create a Date object from a seconds-based timestamp (multiply by 1000 to convert to milliseconds). Then call <code>.toLocaleString()</code> for local time, <code>.toUTCString()</code> for UTC, or <code>.toISOString()</code> for the ISO 8601 format. For example: <code>new Date(1719100800 * 1000).toISOString()</code> returns <code>"2024-06-23T00:00:00.000Z"</code>.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What's the difference between Unix timestamp in seconds vs milliseconds?</p>
+        <p class="faq-a">The standard Unix timestamp counts seconds (a 10-digit number in 2024, e.g. <code>1719100800</code>). Many programming environments — including JavaScript's <code>Date.now()</code> — use milliseconds instead (a 13-digit number, e.g. <code>1719100800000</code>). This converter auto-detects the unit: if the value is greater than 10,000,000,000 (1e10), it treats it as milliseconds.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What is epoch time and why do developers use it?</p>
+        <p class="faq-a">Epoch time is another name for Unix time / Unix timestamp. Developers prefer it because it is a simple integer — easy to store in a database, compare, sort, and do arithmetic on. It has no timezone ambiguity, no daylight saving time complications, and is universally supported across programming languages, operating systems, and databases.</p>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-item">
+        <p class="faq-q">Unix 타임스탬프란 무엇인가요?</p>
+        <p class="faq-a">Unix 타임스탬프(Epoch 시간이라고도 함)는 1970년 1월 1일 00:00:00 UTC(Unix Epoch)부터 경과한 초(秒) 수입니다. 타임존이나 로케일과 무관하게 특정 시각을 하나의 정수로 표현합니다. 예를 들어 <code>1719100800</code>은 2024년 6월 23일 00:00:00 UTC를 가리킵니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">현재 Unix 타임스탬프는 얼마인가요?</p>
+        <p class="faq-a">이 페이지 상단 카드에서 현재 Unix 타임스탬프를 실시간으로 확인할 수 있습니다. 코드로 얻으려면: JavaScript: <code>Math.floor(Date.now() / 1000)</code>, Python: <code>import time; int(time.time())</code>, Bash: <code>date +%s</code>.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">JavaScript에서 Unix 타임스탬프를 날짜로 변환하는 방법은?</p>
+        <p class="faq-a">초 단위 타임스탬프에 1000을 곱한 뒤 <code>new Date(timestamp * 1000)</code>으로 Date 객체를 만드세요. 그런 다음 <code>.toLocaleString()</code>으로 현지 시간, <code>.toUTCString()</code>으로 UTC, <code>.toISOString()</code>으로 ISO 8601 형식을 얻을 수 있습니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">초 단위 타임스탬프와 밀리초 단위 타임스탬프의 차이는?</p>
+        <p class="faq-a">표준 Unix 타임스탬프는 초 단위(2024년 기준 10자리, 예: <code>1719100800</code>)입니다. JavaScript의 <code>Date.now()</code> 등 많은 환경에서는 밀리초 단위(13자리, 예: <code>1719100800000</code>)를 사용합니다. 이 변환기는 10,000,000,000(1e10) 초과 여부로 단위를 자동 감지합니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Epoch 시간이란 무엇이고 왜 개발자들이 사용하나요?</p>
+        <p class="faq-a">Epoch 시간은 Unix 타임스탬프의 다른 이름입니다. 단순한 정수이기 때문에 데이터베이스 저장, 비교, 정렬, 산술 연산이 쉽습니다. 타임존이나 일광 절약 시간(DST)의 복잡함 없이 모든 프로그래밍 언어, OS, 데이터베이스에서 범용적으로 지원됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related -->
+  <section class="related">
+    <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+      <div>
+        <p class="related-label">stackfreeks.com</p>
+        <div class="lang-en">
+          <p class="related-title">More developer guides and tools on stackfreeks.com →</p>
+        </div>
+        <div class="lang-ko">
+          <p class="related-title">stackfreeks.com에서 더 많은 개발자 가이드 보기 →</p>
+        </div>
+      </div>
+      <span class="related-arrow">→</span>
+    </a>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">
+        Claim your credit →
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    // Page-specific i18n — must come BEFORE i18n.js
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back:         '← all tools',
+        copy_btn:         'Copy',
+        copied_btn:       'Copied!',
+        tab_ts_to_date:   'Timestamp → Date',
+        tab_date_to_ts:   'Date → Timestamp',
+        current_ts_label: 'Current Unix Timestamp',
+        local_label:      'Local',
+        utc_label:        'UTC',
+        iso_label:        'ISO 8601',
+        relative_label:   'Relative',
+        seconds_label:    'Seconds',
+        ms_label:         'Milliseconds',
+        vultr_label:      'Sponsor',
+        vultr_title:      'Get started on Vultr',
+        vultr_sub:        'Get $300 free credit — valid for 30 days',
+        vultr_cta:        'Claim your credit →',
+        footer_copy:      '© 2026 StackFreeks',
+      },
+      ko: {
+        nav_back:         '← 전체 툴',
+        copy_btn:         '복사',
+        copied_btn:       '복사됨!',
+        tab_ts_to_date:   'Timestamp → 날짜',
+        tab_date_to_ts:   '날짜 → Timestamp',
+        current_ts_label: '현재 Unix 타임스탬프',
+        local_label:      '현지 시간',
+        utc_label:        'UTC',
+        iso_label:        'ISO 8601',
+        relative_label:   '상대 시간',
+        seconds_label:    '초 (seconds)',
+        ms_label:         '밀리초 (ms)',
+        vultr_label:      '스폰서',
+        vultr_title:      'Vultr로 시작하세요',
+        vultr_sub:        '$300 무료 크레딧 — 가입 후 30일 유효',
+        vultr_cta:        '크레딧 받기 →',
+        footer_copy:      '© 2026 StackFreeks',
+      }
+    };
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+  <script>
+    // ── Utilities ──────────────────────────────────────────────────────────────
+
+    function getLang() {
+      return document.documentElement.lang === 'ko' ? 'ko' : 'en';
+    }
+
+    function t(key) {
+      const lang = getLang();
+      const map = window.SF_PAGE_I18N;
+      return (map && map[lang] && map[lang][key] != null)
+        ? map[lang][key]
+        : (map && map.en && map.en[key] != null ? map.en[key] : key);
+    }
+
+    // Get local timezone name (e.g. "Asia/Seoul")
+    function getTimezoneName() {
+      try {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      } catch (e) { return ''; }
+    }
+
+    // Format a Date to local time string with timezone
+    function formatLocal(d) {
+      const tz = getTimezoneName();
+      const opts = {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false,
+      };
+      const str = new Intl.DateTimeFormat(undefined, opts).format(d);
+      return tz ? str + ' (' + tz + ')' : str;
+    }
+
+    // Format a Date to UTC string
+    function formatUTC(d) {
+      const pad = (n) => String(n).padStart(2, '0');
+      return d.getUTCFullYear() + '-' +
+        pad(d.getUTCMonth() + 1) + '-' +
+        pad(d.getUTCDate()) + ' ' +
+        pad(d.getUTCHours()) + ':' +
+        pad(d.getUTCMinutes()) + ':' +
+        pad(d.getUTCSeconds()) + ' UTC';
+    }
+
+    // Relative time — e.g. "2 hours ago", "3 days from now"
+    function formatRelative(d) {
+      const now = Date.now();
+      const diffMs = d.getTime() - now;
+      const diffSec = Math.round(Math.abs(diffMs) / 1000);
+      const past = diffMs < 0;
+      const lang = getLang();
+
+      let val, unit;
+
+      if (diffSec < 60) {
+        val = diffSec; unit = diffSec === 1 ? 'second' : 'seconds';
+      } else if (diffSec < 3600) {
+        val = Math.round(diffSec / 60); unit = val === 1 ? 'minute' : 'minutes';
+      } else if (diffSec < 86400) {
+        val = Math.round(diffSec / 3600); unit = val === 1 ? 'hour' : 'hours';
+      } else if (diffSec < 86400 * 30) {
+        val = Math.round(diffSec / 86400); unit = val === 1 ? 'day' : 'days';
+      } else if (diffSec < 86400 * 365) {
+        val = Math.round(diffSec / (86400 * 30)); unit = val === 1 ? 'month' : 'months';
+      } else {
+        val = Math.round(diffSec / (86400 * 365)); unit = val === 1 ? 'year' : 'years';
+      }
+
+      if (lang === 'ko') {
+        const unitMap = {
+          second: '초', seconds: '초', minute: '분', minutes: '분',
+          hour: '시간', hours: '시간', day: '일', days: '일',
+          month: '개월', months: '개월', year: '년', years: '년',
+        };
+        return past ? val + unitMap[unit] + ' 전' : val + unitMap[unit] + ' 후';
+      }
+
+      return past ? val + ' ' + unit + ' ago' : 'in ' + val + ' ' + unit;
+    }
+
+    // ── Copy helpers ───────────────────────────────────────────────────────────
+
+    function flashCopy(btn) {
+      const orig = btn.textContent;
+      btn.textContent = t('copied_btn');
+      btn.classList.add('copied');
+      setTimeout(function () {
+        btn.textContent = t('copy_btn');
+        btn.classList.remove('copied');
+      }, 1500);
+    }
+
+    function copyText(text, btn) {
+      if (!text || text === '—') return;
+      navigator.clipboard.writeText(text).then(function () {
+        flashCopy(btn);
+      }).catch(function () {
+        // fallback
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        flashCopy(btn);
+      });
+    }
+
+    function copyResult(id) {
+      var el = document.getElementById(id);
+      var btn = el.nextElementSibling;
+      copyText(el.textContent, btn);
+    }
+
+    function copyNow(type) {
+      var btn = document.getElementById(type === 'sec' ? 'copy-now-sec' : 'copy-now-ms');
+      var text = type === 'sec'
+        ? document.getElementById('now-seconds').textContent
+        : document.getElementById('now-ms').textContent.replace(' ms', '');
+      copyText(text, btn);
+    }
+
+    // ── Live clock ─────────────────────────────────────────────────────────────
+
+    function tickClock() {
+      var now = new Date();
+      var sec = Math.floor(now.getTime() / 1000);
+      var ms  = now.getTime();
+
+      document.getElementById('now-seconds').textContent = sec;
+      document.getElementById('now-ms').textContent = ms + ' ms';
+      document.getElementById('now-local').textContent = formatLocal(now);
+      document.getElementById('now-utc').textContent = formatUTC(now);
+      document.getElementById('now-iso').textContent = now.toISOString();
+    }
+
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    // ── Tab switching ──────────────────────────────────────────────────────────
+
+    function switchTab(tab) {
+      document.getElementById('panel-ts').classList.toggle('active', tab === 'ts');
+      document.getElementById('panel-date').classList.toggle('active', tab === 'date');
+      document.getElementById('tab-ts').classList.toggle('active', tab === 'ts');
+      document.getElementById('tab-ts').setAttribute('aria-selected', tab === 'ts');
+      document.getElementById('tab-date').classList.toggle('active', tab === 'date');
+      document.getElementById('tab-date').setAttribute('aria-selected', tab === 'date');
+    }
+
+    // ── Section A: Timestamp → Date ────────────────────────────────────────────
+
+    function setResult(id, text, isError) {
+      var el = document.getElementById(id);
+      el.textContent = text;
+      el.className = 'result-value' + (isError ? ' error-result' : (text === '—' ? ' empty-result' : ''));
+    }
+
+    function convertTsToDate() {
+      var raw = document.getElementById('input-ts').value.trim();
+
+      if (!raw) {
+        ['res-ts-local','res-ts-utc','res-ts-iso','res-ts-relative'].forEach(function(id) {
+          setResult(id, '—', false);
+        });
+        return;
+      }
+
+      var num = parseFloat(raw);
+
+      if (isNaN(num)) {
+        ['res-ts-local','res-ts-utc','res-ts-iso','res-ts-relative'].forEach(function(id) {
+          setResult(id, 'Invalid input', true);
+        });
+        return;
+      }
+
+      // Auto-detect seconds vs milliseconds
+      var ms = num > 1e10 ? num : num * 1000;
+      var d = new Date(ms);
+
+      if (isNaN(d.getTime())) {
+        ['res-ts-local','res-ts-utc','res-ts-iso','res-ts-relative'].forEach(function(id) {
+          setResult(id, 'Invalid timestamp', true);
+        });
+        return;
+      }
+
+      setResult('res-ts-local',    formatLocal(d),      false);
+      setResult('res-ts-utc',      formatUTC(d),        false);
+      setResult('res-ts-iso',      d.toISOString(),     false);
+      setResult('res-ts-relative', formatRelative(d),   false);
+    }
+
+    // ── Section B: Date → Timestamp ────────────────────────────────────────────
+
+    function convertDateToTs() {
+      var val = document.getElementById('input-date').value;
+
+      if (!val) {
+        ['res-date-sec','res-date-ms','res-date-iso'].forEach(function(id) {
+          setResult(id, '—', false);
+        });
+        return;
+      }
+
+      var d = new Date(val);
+
+      if (isNaN(d.getTime())) {
+        ['res-date-sec','res-date-ms','res-date-iso'].forEach(function(id) {
+          setResult(id, 'Invalid date', true);
+        });
+        return;
+      }
+
+      var ms  = d.getTime();
+      var sec = Math.floor(ms / 1000);
+
+      setResult('res-date-sec', String(sec),        false);
+      setResult('res-date-ms',  String(ms),         false);
+      setResult('res-date-iso', d.toISOString(),    false);
+    }
+
+    // ── Re-label copy buttons on language change ───────────────────────────────
+
+    document.addEventListener('sfLangChanged', function () {
+      // Update all non-flashing copy buttons
+      document.querySelectorAll('.copy-btn:not(.copied)').forEach(function (btn) {
+        if (btn.dataset.i18n === 'copy_btn') {
+          btn.textContent = t('copy_btn');
+        }
+      });
+      // Re-run relative time if there's a result
+      var relEl = document.getElementById('res-ts-relative');
+      if (relEl && !relEl.classList.contains('empty-result') && !relEl.classList.contains('error-result')) {
+        convertTsToDate();
+      }
+    });
+
+    // Pre-fill datetime-local with current time for convenience
+    (function () {
+      try {
+        var now = new Date();
+        var pad = function(n) { return String(n).padStart(2, '0'); };
+        var local = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' +
+          pad(now.getDate()) + 'T' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+        document.getElementById('input-date').value = local;
+        convertDateToTs();
+      } catch (e) {}
+    })();
+  </script>
+
+</body>
+</html>

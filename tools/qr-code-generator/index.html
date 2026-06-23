@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator — Free, No Watermark | StackFreeks</title>
+  <meta name="description" content="Generate QR codes free online — no watermark, no account required. Customize colors, size, and error correction. Download PNG or SVG." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/qr-code-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="QR Code Generator — Free, No Watermark | StackFreeks" />
+  <meta property="og:description" content="Generate QR codes free online — no watermark, no account required. Customize colors, size, and error correction. Download PNG or SVG." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/qr-code-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool Layout */
+    .tool-layout {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 640px) {
+      .tool-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Controls */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .qr-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      padding: 12px 14px;
+      resize: vertical;
+      min-height: 88px;
+      transition: border-color 0.15s;
+      line-height: 1.5;
+    }
+    .qr-input::placeholder { color: var(--text-3); }
+    .qr-input:focus { outline: none; border-color: var(--accent); }
+
+    /* Button group */
+    .btn-group { display: flex; gap: 4px; flex-wrap: wrap; }
+    .btn-group button {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-group button:hover { border-color: var(--border-2); color: var(--text-1); }
+    .btn-group button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* EC tooltip */
+    .btn-group button[title] { position: relative; }
+
+    /* Color pickers row */
+    .color-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .color-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-field label {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .color-field input[type="color"] {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      cursor: pointer;
+      padding: 2px;
+    }
+    .color-field input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    .color-field input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
+
+    /* QR Preview */
+    .qr-preview-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      position: sticky;
+      top: 76px;
+    }
+
+    .qr-canvas-wrap {
+      background: #fff;
+      border-radius: var(--radius);
+      display: inline-block;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    #qr-canvas {
+      display: block;
+    }
+
+    .qr-empty {
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-3);
+      font-size: 13px;
+    }
+
+    .qr-download-btns {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .btn-download {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-download:hover { opacity: 0.85; }
+    .btn-download:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .no-watermark-note {
+      font-size: 11px;
+      color: var(--text-3);
+      line-height: 1.5;
+    }
+
+    /* Guide */
+    .guide {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .guide-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .guide-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .guide-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .faq {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .faq-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+
+    .faq-item:first-of-type {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-q {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+
+    .faq-a {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .related-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .related a {
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      background: var(--success-bg);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 24px;
+    }
+
+    .banner-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .btn-vultr {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Divider between sections */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 860px;
+      margin: 0 auto 48px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- 3. Hero -->
+  <header class="hero">
+    <div class="lang-en">
+      <h1>QR Code Generator</h1>
+      <p>Generate QR codes instantly — no watermark, no account, free forever. Download as PNG or SVG.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>QR 코드 생성기</h1>
+      <p>워터마크 없이 QR 코드를 즉시 생성. 계정 불필요, 무료. PNG·SVG 다운로드.</p>
+    </div>
+  </header>
+
+  <!-- 4. Tool Body -->
+  <div class="tool-layout">
+    <!-- Left: Controls -->
+    <div class="controls-panel">
+      <!-- Content input -->
+      <div class="control-group">
+        <span class="control-label" data-i18n="input_label">Content</span>
+        <textarea
+          id="qr-input"
+          class="qr-input"
+          data-i18n-placeholder="input_placeholder"
+          placeholder="Enter URL, text, email, phone..."
+          rows="4"
+        ></textarea>
+      </div>
+
+      <!-- Size -->
+      <div class="control-group">
+        <span class="control-label" data-i18n="size_label">Size</span>
+        <div class="btn-group" id="size-group">
+          <button data-size="256" class="active">Small</button>
+          <button data-size="512">Medium</button>
+          <button data-size="1024">Large</button>
+        </div>
+      </div>
+
+      <!-- Error Correction -->
+      <div class="control-group">
+        <span class="control-label" data-i18n="ec_label">Error Correction</span>
+        <div class="btn-group" id="ec-group">
+          <button data-ec="L" title="L — 7% data recovery">L</button>
+          <button data-ec="M" class="active" title="M — 15% data recovery">M</button>
+          <button data-ec="Q" title="Q — 25% data recovery">Q</button>
+          <button data-ec="H" title="H — 30% data recovery">H</button>
+        </div>
+      </div>
+
+      <!-- Colors -->
+      <div class="control-group">
+        <span class="control-label">Colors</span>
+        <div class="color-row">
+          <div class="color-field">
+            <input type="color" id="fg-color" value="#000000" />
+            <label for="fg-color" data-i18n="fg_label">Foreground</label>
+          </div>
+          <div class="color-field">
+            <input type="color" id="bg-color" value="#ffffff" />
+            <label for="bg-color" data-i18n="bg_label">Background</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: QR Preview -->
+    <div class="qr-preview-card">
+      <div class="qr-canvas-wrap" id="qr-wrap">
+        <div class="qr-empty" id="qr-empty">Type something to generate a QR code</div>
+        <canvas id="qr-canvas" style="display:none;"></canvas>
+      </div>
+
+      <div class="qr-download-btns">
+        <button class="btn-download" id="btn-png" disabled data-i18n="download_png">Download PNG</button>
+        <button class="btn-download" id="btn-svg" disabled data-i18n="download_svg">Download SVG</button>
+      </div>
+
+      <p class="no-watermark-note" data-i18n="no_watermark_note">No watermark · No signup · Unlimited</p>
+    </div>
+  </div>
+
+  <!-- 5. Guide -->
+  <section class="guide">
+    <p class="guide-title lang-en">How to use</p>
+    <p class="guide-title lang-ko">사용 방법</p>
+
+    <div class="guide-grid lang-en">
+      <div class="guide-card">
+        <p class="guide-step">STEP 1</p>
+        <h3>Enter your content</h3>
+        <p>Type or paste any URL, plain text, email address, or phone number into the input box.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 2</p>
+        <h3>Customize options</h3>
+        <p>Choose size (Small / Medium / Large), error correction level, and foreground / background colors.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 3</p>
+        <h3>Preview live</h3>
+        <p>The QR code updates in real time as you type — no button to click, no reload needed.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 4</p>
+        <h3>Download PNG or SVG</h3>
+        <p>PNG is perfect for printing; SVG scales infinitely without quality loss for design use.</p>
+      </div>
+    </div>
+
+    <div class="guide-grid lang-ko">
+      <div class="guide-card">
+        <p class="guide-step">STEP 1</p>
+        <h3>콘텐츠 입력</h3>
+        <p>URL, 텍스트, 이메일, 전화번호 등을 입력창에 입력하거나 붙여넣으세요.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 2</p>
+        <h3>옵션 설정</h3>
+        <p>크기(소/중/대), 오류 수정 레벨, 전경색·배경색을 자유롭게 설정하세요.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 3</p>
+        <h3>실시간 미리보기</h3>
+        <p>입력하는 즉시 QR 코드가 자동 생성됩니다. 별도 버튼 클릭이 필요 없습니다.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 4</p>
+        <h3>PNG 또는 SVG 다운로드</h3>
+        <p>PNG는 인쇄용에, SVG는 크기 조절이 자유로워 디자인 작업에 적합합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 6. FAQ -->
+  <section class="faq">
+    <p class="faq-title lang-en">Frequently Asked Questions</p>
+    <p class="faq-title lang-ko">자주 묻는 질문</p>
+
+    <!-- EN FAQs -->
+    <div class="lang-en">
+      <div class="faq-item">
+        <p class="faq-q">What is error correction level and which should I choose?</p>
+        <p class="faq-a">Error correction allows a QR code to be read even when partially damaged or covered. Level L recovers 7% of data — good for clean digital screens. Level M (15%) is the default and suits most use cases. Level Q (25%) is ideal for QR codes on surfaces that may get scratched. Level H (30%) is best for logos overlaid on the QR code, but produces a denser, larger code.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can I create a QR code for free without watermarks?</p>
+        <p class="faq-a">Yes — completely. This tool generates QR codes entirely in your browser using open-source libraries. There are no watermarks, no subscriptions, no account required, and no usage limits. The downloaded PNG and SVG files are clean and ready to use.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What's the best QR code size for printing?</p>
+        <p class="faq-a">For most printed materials, choose Large (1024px) to ensure the highest resolution output. As a rule of thumb, a QR code should be at least 2 cm × 2 cm when printed, and the scanning distance should be no more than 10× the code's width. For billboards or large posters, export as SVG and scale to any size without quality loss.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can I change the color of my QR code?</p>
+        <p class="faq-a">Yes. Use the Foreground color picker to change the module (dot) color, and the Background color picker for the quiet zone. Make sure there is sufficient contrast between the two colors — scanners need at least a 4:1 contrast ratio to reliably decode the code. Avoid reversing dark/light if the background becomes too close to the foreground.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How do I create a QR code for a website URL?</p>
+        <p class="faq-a">Paste your full URL (including https://) into the input box. The QR code generates instantly. We recommend using HTTPS URLs and keeping them as short as possible — shorter URLs produce simpler, more scannable codes. You can also use a URL shortener before generating the QR code to reduce density.</p>
+      </div>
+    </div>
+
+    <!-- KO FAQs -->
+    <div class="lang-ko">
+      <div class="faq-item">
+        <p class="faq-q">오류 수정 레벨이란 무엇이며 어떤 것을 선택해야 하나요?</p>
+        <p class="faq-a">오류 수정은 QR 코드가 일부 손상되거나 가려진 경우에도 인식되도록 합니다. L은 7% 복구로 깨끗한 화면 표시에 적합하고, M(15%)은 기본값으로 대부분의 용도에 맞습니다. Q(25%)는 긁힘이 생길 수 있는 표면에, H(30%)는 로고를 QR 코드 위에 겹칠 때 적합하지만 코드가 더 조밀해집니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">워터마크 없이 무료로 QR 코드를 만들 수 있나요?</p>
+        <p class="faq-a">네, 완전 무료입니다. 이 도구는 오픈소스 라이브러리를 사용해 브라우저에서 직접 QR 코드를 생성합니다. 워터마크, 구독, 계정, 사용 제한이 전혀 없습니다. 다운로드한 PNG 및 SVG 파일은 깨끗하게 바로 사용할 수 있습니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">인쇄용 QR 코드에 적합한 크기는 무엇인가요?</p>
+        <p class="faq-a">대부분의 인쇄물에는 Large(1024px)를 선택하여 최고 해상도를 확보하세요. 일반적으로 QR 코드는 인쇄 시 최소 2cm × 2cm 이상이어야 하며, 스캔 거리는 코드 너비의 10배를 넘지 않아야 합니다. 대형 포스터나 현수막에는 SVG로 내보내어 품질 손실 없이 원하는 크기로 확대하세요.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">QR 코드 색상을 바꿀 수 있나요?</p>
+        <p class="faq-a">가능합니다. 전경색 선택기로 모듈(점) 색상을, 배경색 선택기로 여백 영역 색상을 변경하세요. 스캐너가 코드를 인식하려면 두 색상 사이의 명도 대비가 최소 4:1 이상이어야 합니다. 전경과 배경이 너무 가깝지 않도록 주의하세요.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">웹사이트 URL QR 코드는 어떻게 만드나요?</p>
+        <p class="faq-a">전체 URL(https:// 포함)을 입력창에 붙여넣으면 QR 코드가 즉시 생성됩니다. HTTPS URL을 사용하고 가능한 짧게 유지하는 것이 좋습니다. URL이 짧을수록 더 단순하고 스캔하기 쉬운 코드가 만들어집니다. 코드 밀도를 줄이려면 URL 단축 서비스를 먼저 사용하세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 7. Related content -->
+  <section class="related">
+    <p class="related-title lang-en">Related Resources</p>
+    <p class="related-title lang-ko">관련 리소스</p>
+    <div class="lang-en">
+      <p style="font-size:14px; color:var(--text-2); margin-bottom:8px;">More developer tools and guides on our blog:</p>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com — Developer tips, VPS guides, and more →</a>
+    </div>
+    <div class="lang-ko">
+      <p style="font-size:14px; color:var(--text-2); margin-bottom:8px;">블로그에서 더 많은 개발자 툴과 가이드를 확인하세요:</p>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com — 개발자 팁, VPS 가이드 →</a>
+    </div>
+  </section>
+
+  <!-- 8. Vultr Banner -->
+  <div class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
+      </div>
+      <a
+        href="https://www.vultr.com/?ref=9907834-9J"
+        class="btn-vultr"
+        target="_blank"
+        rel="nofollow sponsored noopener"
+        data-i18n="vultr_cta"
+      >Claim your credit →</a>
+    </div>
+  </div>
+
+  <!-- 9. Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <!-- 10. Scripts -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        input_label: 'Content',
+        input_placeholder: 'Enter URL, text, email, phone...',
+        size_label: 'Size',
+        ec_label: 'Error Correction',
+        fg_label: 'Foreground',
+        bg_label: 'Background',
+        download_png: 'Download PNG',
+        download_svg: 'Download SVG',
+        no_watermark_note: 'No watermark · No signup · Unlimited',
+        vultr_label: 'Sponsor',
+        vultr_title: 'Get started on Vultr',
+        vultr_sub: 'Get $300 free credit — valid for 30 days',
+        vultr_cta: 'Claim your credit →',
+        footer_copy: '© 2026 StackFreeks',
+      },
+      ko: {
+        input_label: '입력 내용',
+        input_placeholder: 'URL, 텍스트, 이메일, 전화번호 등을 입력하세요...',
+        size_label: '크기',
+        ec_label: '오류 수정 레벨',
+        fg_label: '전경색',
+        bg_label: '배경색',
+        download_png: 'PNG 다운로드',
+        download_svg: 'SVG 다운로드',
+        no_watermark_note: '워터마크 없음 · 가입 불필요 · 무제한',
+        vultr_label: '스폰서',
+        vultr_title: 'Vultr로 시작하세요',
+        vultr_sub: '$300 무료 크레딧 — 가입 후 30일 유효',
+        vultr_cta: '크레딧 받기 →',
+        footer_copy: '© 2026 StackFreeks',
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+  <script>
+    (function () {
+      var canvas = document.getElementById('qr-canvas');
+      var emptyMsg = document.getElementById('qr-empty');
+      var btnPng = document.getElementById('btn-png');
+      var btnSvg = document.getElementById('btn-svg');
+      var input = document.getElementById('qr-input');
+      var fgColor = document.getElementById('fg-color');
+      var bgColor = document.getElementById('bg-color');
+
+      var currentSize = 256;
+      var currentEc = 'M';
+      var debounceTimer = null;
+      var lastText = '';
+
+      // Size button group
+      document.getElementById('size-group').addEventListener('click', function (e) {
+        var btn = e.target.closest('button');
+        if (!btn) return;
+        document.querySelectorAll('#size-group button').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentSize = parseInt(btn.dataset.size, 10);
+        generateQR();
+      });
+
+      // EC button group
+      document.getElementById('ec-group').addEventListener('click', function (e) {
+        var btn = e.target.closest('button');
+        if (!btn) return;
+        document.querySelectorAll('#ec-group button').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentEc = btn.dataset.ec;
+        generateQR();
+      });
+
+      // Input with debounce
+      input.addEventListener('input', function () {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(generateQR, 300);
+      });
+
+      // Color pickers
+      fgColor.addEventListener('input', generateQR);
+      bgColor.addEventListener('input', generateQR);
+
+      function generateQR() {
+        var text = input.value.trim();
+        lastText = text;
+
+        if (!text) {
+          canvas.style.display = 'none';
+          emptyMsg.style.display = 'flex';
+          btnPng.disabled = true;
+          btnSvg.disabled = true;
+          return;
+        }
+
+        var opts = {
+          errorCorrectionLevel: currentEc,
+          width: currentSize,
+          margin: 1,
+          color: {
+            dark: fgColor.value,
+            light: bgColor.value
+          }
+        };
+
+        QRCode.toCanvas(canvas, text, opts, function (err) {
+          if (err) {
+            console.error('QR generation error:', err);
+            return;
+          }
+          canvas.style.display = 'block';
+          emptyMsg.style.display = 'none';
+          btnPng.disabled = false;
+          btnSvg.disabled = false;
+        });
+      }
+
+      // Download PNG
+      btnPng.addEventListener('click', function () {
+        if (!lastText) return;
+        canvas.toBlob(function (blob) {
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'qrcode.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 'image/png');
+      });
+
+      // Download SVG
+      btnSvg.addEventListener('click', function () {
+        if (!lastText) return;
+        var opts = {
+          errorCorrectionLevel: currentEc,
+          type: 'svg',
+          width: currentSize,
+          margin: 1,
+          color: {
+            dark: fgColor.value,
+            light: bgColor.value
+          }
+        };
+        QRCode.toString(lastText, opts, function (err, svgString) {
+          if (err) {
+            console.error('SVG generation error:', err);
+            return;
+          }
+          var blob = new Blob([svgString], { type: 'image/svg+xml' });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'qrcode.svg';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        });
+      });
+
+      // Re-render on language change (labels update via i18n, no QR re-render needed)
+      document.addEventListener('sfLangChanged', function () {
+        // i18n.js handles all text via data-i18n; nothing extra needed for the canvas
+      });
+    })();
+  </script>
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>

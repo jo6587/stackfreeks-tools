@@ -105,12 +105,33 @@
       padding: 0 24px 64px;
     }
 
-    .section-label {
+    .category {
+      margin-bottom: 36px;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .category-icon {
+      font-size: 14px;
+    }
+
+    .category-label {
       font-size: 11px;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text-3);
-      margin-bottom: 16px;
+    }
+
+    .category-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
 
     .tools-grid {
@@ -230,115 +251,196 @@
 
   <!-- Tools Grid -->
   <section class="tools-section">
-    <p class="section-label">Tools</p>
-    <div class="tools-grid">
 
-      <a href="/tools/vps-cost-calculator/" class="tool-card">
-        <div class="tool-icon">💰</div>
-        <div class="tool-info">
-          <div class="lang-en">
-            <p class="tool-name">VPS Cost Calculator</p>
-            <p class="tool-desc">Compare Vultr, Hetzner, DigitalOcean costs</p>
-          </div>
-          <div class="lang-ko">
-            <p class="tool-name">VPS 비용 계산기</p>
-            <p class="tool-desc">Vultr, Hetzner, DigitalOcean 비용 비교</p>
-          </div>
-        </div>
-        <span class="tool-arrow">→</span>
-      </a>
+    <!-- Image Tools -->
+    <div class="category">
+      <div class="category-header">
+        <span class="category-icon">🖼️</span>
+        <div class="lang-en"><span class="category-label">Image Tools</span></div>
+        <div class="lang-ko"><span class="category-label">이미지 툴</span></div>
+        <div class="category-line"></div>
+      </div>
+      <div class="tools-grid">
 
-      <a href="/tools/vps-bandwidth-calculator/" class="tool-card">
-        <div class="tool-icon">📊</div>
-        <div class="tool-info">
-          <div class="lang-en">
-            <p class="tool-name">VPS Bandwidth Calculator</p>
-            <p class="tool-desc">Check if your traffic exceeds your VPS limit &amp; estimate overage costs</p>
+        <a href="/tools/heic-to-jpg/" class="tool-card">
+          <div class="tool-icon">📷</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">HEIC to JPG Converter</p>
+              <p class="tool-desc">Convert iPhone HEIC photos to JPG instantly — free, batch support, no account</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">HEIC → JPG 변환기</p>
+              <p class="tool-desc">iPhone HEIC 사진을 즉시 JPG로 변환 — 무료, 일괄 변환 지원</p>
+            </div>
           </div>
-          <div class="lang-ko">
-            <p class="tool-name">VPS 대역폭 계산기</p>
-            <p class="tool-desc">트래픽이 VPS 한도를 초과하는지 확인하고 초과 비용 계산</p>
-          </div>
-        </div>
-        <span class="tool-arrow">→</span>
-      </a>
+          <span class="tool-arrow">→</span>
+        </a>
 
-      <a href="/tools/cron-builder/" class="tool-card">
-        <div class="tool-icon">⏰</div>
-        <div class="tool-info">
-          <div class="lang-en">
-            <p class="tool-name">Cron Expression Builder</p>
-            <p class="tool-desc">Build &amp; validate cron expressions visually — preview next 5 run times</p>
+        <a href="/tools/webp-to-jpg/" class="tool-card">
+          <div class="tool-icon">🌐</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">WebP to JPG Converter</p>
+              <p class="tool-desc">Convert WebP images to JPG instantly — free, batch support, no account</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">WebP → JPG 변환기</p>
+              <p class="tool-desc">WebP 이미지를 즉시 JPG로 변환 — 무료, 일괄 변환 지원</p>
+            </div>
           </div>
-          <div class="lang-ko">
-            <p class="tool-name">크론 표현식 빌더</p>
-            <p class="tool-desc">비주얼 UI로 크론 표현식 생성·검증 — 다음 실행 시간 5회 미리보기</p>
-          </div>
-        </div>
-        <span class="tool-arrow">→</span>
-      </a>
+          <span class="tool-arrow">→</span>
+        </a>
 
-      <a href="/tools/svg-to-png/" class="tool-card">
-        <div class="tool-icon">✏️</div>
-        <div class="tool-info">
-          <div class="lang-en">
-            <p class="tool-name">SVG to PNG Converter</p>
-            <p class="tool-desc">Export SVG icons to PNG at 1x, 2x, or 4x resolution — transparent or white background</p>
+        <a href="/tools/exif-remover/" class="tool-card">
+          <div class="tool-icon">🔒</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">EXIF Data Remover</p>
+              <p class="tool-desc">Strip GPS location &amp; metadata from photos — private, works in your browser</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">EXIF 데이터 제거기</p>
+              <p class="tool-desc">사진의 GPS 위치·메타데이터 제거 — 브라우저에서만 처리, 업로드 없음</p>
+            </div>
           </div>
-          <div class="lang-ko">
-            <p class="tool-name">SVG → PNG 변환기</p>
-            <p class="tool-desc">SVG 아이콘을 1x·2x·4x 해상도 PNG로 내보내기 — 투명·흰 배경 선택 가능</p>
-          </div>
-        </div>
-        <span class="tool-arrow">→</span>
-      </a>
+          <span class="tool-arrow">→</span>
+        </a>
 
-      <a href="/tools/webp-to-jpg/" class="tool-card">
-        <div class="tool-icon">🌐</div>
-        <div class="tool-info">
-          <div class="lang-en">
-            <p class="tool-name">WebP to JPG Converter</p>
-            <p class="tool-desc">Convert WebP images to JPG instantly — free, batch support, no account</p>
+        <a href="/tools/svg-to-png/" class="tool-card">
+          <div class="tool-icon">✏️</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">SVG to PNG Converter</p>
+              <p class="tool-desc">Export SVG icons to PNG at 1x, 2x, or 4x resolution — transparent or white background</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">SVG → PNG 변환기</p>
+              <p class="tool-desc">SVG 아이콘을 1x·2x·4x 해상도 PNG로 내보내기 — 투명·흰 배경 선택 가능</p>
+            </div>
           </div>
-          <div class="lang-ko">
-            <p class="tool-name">WebP → JPG 변환기</p>
-            <p class="tool-desc">WebP 이미지를 즉시 JPG로 변환 — 무료, 일괄 변환 지원</p>
-          </div>
-        </div>
-        <span class="tool-arrow">→</span>
-      </a>
+          <span class="tool-arrow">→</span>
+        </a>
 
-      <a href="/tools/json-to-csv/" class="tool-card">
-        <div class="tool-icon">🔄</div>
-        <div class="tool-info">
-          <div class="lang-en">
-            <p class="tool-name">JSON to CSV Converter</p>
-            <p class="tool-desc">Convert JSON arrays to CSV and back — free, instant, works in your browser</p>
-          </div>
-          <div class="lang-ko">
-            <p class="tool-name">JSON ↔ CSV 변환기</p>
-            <p class="tool-desc">JSON 배열을 CSV로, CSV를 JSON으로 즉시 변환 — 무료, 브라우저에서 작동</p>
-          </div>
-        </div>
-        <span class="tool-arrow">→</span>
-      </a>
-
-      <a href="/tools/heic-to-jpg/" class="tool-card">
-        <div class="tool-icon">🖼️</div>
-        <div class="tool-info">
-          <div class="lang-en">
-            <p class="tool-name">HEIC to JPG Converter</p>
-            <p class="tool-desc">Convert iPhone HEIC photos to JPG instantly — free, batch support, no account</p>
-          </div>
-          <div class="lang-ko">
-            <p class="tool-name">HEIC → JPG 변환기</p>
-            <p class="tool-desc">iPhone HEIC 사진을 즉시 JPG로 변환 — 무료, 일괄 변환 지원</p>
-          </div>
-        </div>
-        <span class="tool-arrow">→</span>
-      </a>
-
+      </div>
     </div>
+
+    <!-- Developer Tools -->
+    <div class="category">
+      <div class="category-header">
+        <span class="category-icon">⚙️</span>
+        <div class="lang-en"><span class="category-label">Developer Tools</span></div>
+        <div class="lang-ko"><span class="category-label">개발자 툴</span></div>
+        <div class="category-line"></div>
+      </div>
+      <div class="tools-grid">
+
+        <a href="/tools/timestamp-converter/" class="tool-card">
+          <div class="tool-icon">🕐</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">Unix Timestamp Converter</p>
+              <p class="tool-desc">Convert epoch timestamps to dates and back — see current Unix time live</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">Unix 타임스탬프 변환기</p>
+              <p class="tool-desc">Epoch 타임스탬프를 날짜로 변환 — 현재 Unix 시간 실시간 확인</p>
+            </div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </a>
+
+        <a href="/tools/json-to-csv/" class="tool-card">
+          <div class="tool-icon">🔄</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">JSON to CSV Converter</p>
+              <p class="tool-desc">Convert JSON arrays to CSV and back — free, instant, works in your browser</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">JSON ↔ CSV 변환기</p>
+              <p class="tool-desc">JSON 배열을 CSV로, CSV를 JSON으로 즉시 변환 — 무료, 브라우저에서 작동</p>
+            </div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </a>
+
+        <a href="/tools/qr-code-generator/" class="tool-card">
+          <div class="tool-icon">📱</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">QR Code Generator</p>
+              <p class="tool-desc">Generate QR codes free — no watermark, no account, download PNG or SVG</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">QR 코드 생성기</p>
+              <p class="tool-desc">워터마크 없이 QR 코드 무료 생성 — PNG·SVG 다운로드</p>
+            </div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </a>
+
+        <a href="/tools/cron-builder/" class="tool-card">
+          <div class="tool-icon">⏰</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">Cron Expression Builder</p>
+              <p class="tool-desc">Build &amp; validate cron expressions visually — preview next 5 run times</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">크론 표현식 빌더</p>
+              <p class="tool-desc">비주얼 UI로 크론 표현식 생성·검증 — 다음 실행 시간 5회 미리보기</p>
+            </div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Server & VPS -->
+    <div class="category">
+      <div class="category-header">
+        <span class="category-icon">🖥️</span>
+        <div class="lang-en"><span class="category-label">Server &amp; VPS</span></div>
+        <div class="lang-ko"><span class="category-label">서버 &amp; VPS</span></div>
+        <div class="category-line"></div>
+      </div>
+      <div class="tools-grid">
+
+        <a href="/tools/vps-cost-calculator/" class="tool-card">
+          <div class="tool-icon">💰</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">VPS Cost Calculator</p>
+              <p class="tool-desc">Compare Vultr, Hetzner, DigitalOcean costs</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">VPS 비용 계산기</p>
+              <p class="tool-desc">Vultr, Hetzner, DigitalOcean 비용 비교</p>
+            </div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </a>
+
+        <a href="/tools/vps-bandwidth-calculator/" class="tool-card">
+          <div class="tool-icon">📊</div>
+          <div class="tool-info">
+            <div class="lang-en">
+              <p class="tool-name">VPS Bandwidth Calculator</p>
+              <p class="tool-desc">Check if your traffic exceeds your VPS limit &amp; estimate overage costs</p>
+            </div>
+            <div class="lang-ko">
+              <p class="tool-name">VPS 대역폭 계산기</p>
+              <p class="tool-desc">트래픽이 VPS 한도를 초과하는지 확인하고 초과 비용 계산</p>
+            </div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+
   </section>
 
   <!-- Footer -->
