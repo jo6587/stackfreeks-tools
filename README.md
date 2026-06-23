@@ -25,6 +25,10 @@ Small, single-purpose tools that do one thing and get out of the way. Everything
 - [QR Code Generator](https://tools.stackfreeks.com/tools/qr-code-generator/) — PNG + SVG download, no watermark
 - [Unix Timestamp Converter](https://tools.stackfreeks.com/tools/timestamp-converter/) — live clock, two-way
 - [Cron Expression Builder](https://tools.stackfreeks.com/tools/cron-builder/) — visual + manual, next 5 runs preview
+- [Word Counter](https://tools.stackfreeks.com/tools/word-counter/) — live stats, keyword density, reading time
+- [Text Case Converter](https://tools.stackfreeks.com/tools/text-case-converter/) — 10 formats: camelCase, snake_case, kebab-case, etc.
+- [Hash Generator](https://tools.stackfreeks.com/tools/hash-generator/) — MD5, SHA-1, SHA-256, SHA-512 from text or file
+- [URL Encoder/Decoder](https://tools.stackfreeks.com/tools/url-encoder/) — encodeURI, encodeURIComponent, cheat sheet
 
 **Server / VPS**
 - [VPS Cost Calculator](https://tools.stackfreeks.com/tools/vps-cost-calculator/) — Vultr / Hetzner / DigitalOcean

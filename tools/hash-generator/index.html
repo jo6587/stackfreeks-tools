@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hash Generator — MD5, SHA-1, SHA-256, SHA-512 | StackFreeks</title>
+  <meta name="description" content="Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files. Free online hash generator — works in your browser, no upload, no account." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/hash-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Hash Generator — MD5, SHA-1, SHA-256, SHA-512 | StackFreeks" />
+  <meta property="og:description" content="Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files. Free online hash generator — works in your browser, no upload, no account." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/hash-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <script src="https://cdn.jsdelivr.net/npm/spark-md5@3.0.2/spark-md5.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .lang-toggle:hover { color: var(--text-1); border-color: var(--border-2); }
+
+    /* Hero */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 32px;
+    }
+    .hero h1 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 16px;
+      color: var(--text-2);
+      max-width: 600px;
+    }
+
+    /* Tool */
+    .tool {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Tabs */
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 4px;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-2);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 18px;
+      border-radius: calc(var(--radius-lg) - 4px);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: background 0.15s, color 0.15s;
+    }
+    .tab-btn.active {
+      background: var(--surface-2);
+      color: var(--text-1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+    .tab-btn:hover:not(.active) { color: var(--text-1); }
+
+    /* Text input */
+    .text-panel { display: block; }
+    .file-panel { display: none; }
+
+    #text-input {
+      width: 100%;
+      min-height: 140px;
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    #text-input::placeholder { color: var(--text-3); }
+    #text-input:focus { border-color: var(--accent); }
+
+    /* File drop zone */
+    .drop-zone {
+      width: 100%;
+      min-height: 140px;
+      background: var(--surface);
+      border: 1.5px dashed var(--border-2);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+      padding: 24px;
+      text-align: center;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--accent);
+      background: rgba(99,102,241,0.04);
+    }
+    .drop-zone .drop-icon {
+      font-size: 28px;
+      opacity: 0.5;
+    }
+    .drop-zone .drop-label {
+      font-size: 14px;
+      color: var(--text-2);
+    }
+    .drop-zone .drop-sub {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .file-info {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--text-2);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+    .file-info.visible { display: flex; }
+    .file-name {
+      font-weight: 500;
+      color: var(--text-1);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-size { color: var(--text-3); font-size: 12px; flex-shrink: 0; }
+
+    /* Controls row */
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toggle-label {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .toggle-switch {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      background: var(--text-3);
+      border-radius: 50%;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .toggle-switch input:checked + .toggle-track { background: var(--accent); border-color: var(--accent); }
+    .toggle-switch input:checked + .toggle-track::after { transform: translateX(16px); background: #fff; }
+
+    .btn-clear {
+      background: transparent;
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-clear:hover { color: var(--text-1); border-color: var(--text-3); }
+
+    /* Hash results */
+    .hash-results {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hash-row {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      transition: border-color 0.15s;
+    }
+    .hash-row:hover { border-color: var(--border-2); }
+
+    .algo-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 6px;
+      padding: 3px 8px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .hash-output {
+      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+      font-size: 12px;
+      color: var(--text-1);
+      background: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: default;
+    }
+    .hash-output::placeholder { color: var(--text-3); font-style: italic; font-size: 12px; }
+
+    .btn-copy {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: var(--font);
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      min-width: 54px;
+      text-align: center;
+    }
+    .btn-copy:hover { color: var(--text-1); border-color: var(--border-2); }
+    .btn-copy.copied {
+      color: var(--success);
+      border-color: rgba(34,197,94,0.3);
+      background: var(--success-bg);
+    }
+
+    /* Divider */
+    .section-divider {
+      max-width: 860px;
+      margin: 0 auto 32px;
+      padding: 0 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Guide */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .related a {
+      font-size: 14px;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .related a:hover { opacity: 0.8; }
+
+    /* Vultr banner */
+    .vultr-banner {
+      max-width: 860px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+    .vultr-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      flex-wrap: wrap;
+    }
+    .vultr-text-block { display: flex; flex-direction: column; gap: 4px; }
+    .vultr-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--success);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .vultr-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .vultr-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .vultr-cta {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .vultr-cta:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-3);
+    }
+    footer a { color: var(--text-3); margin: 0 8px; }
+    footer a:hover { color: var(--text-2); opacity: 1; }
+    .footer-links { margin-bottom: 8px; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hash-row {
+        grid-template-columns: 70px 1fr;
+        grid-template-rows: auto auto;
+      }
+      .btn-copy {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: start;
+      }
+      .hash-output { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    </div>
+    <div class="nav-right">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="lang-en">
+      <h1>Hash Generator</h1>
+      <p>Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files instantly</p>
+    </div>
+    <div class="lang-ko">
+      <h1>해시 생성기</h1>
+      <p>텍스트나 파일에서 MD5, SHA-1, SHA-256, SHA-512 해시를 즉시 생성</p>
+    </div>
+  </div>
+
+  <!-- Tool -->
+  <div class="tool">
+
+    <!-- Tab bar -->
+    <div class="tab-bar" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" id="tab-text" onclick="switchTab('text')">
+        <span class="lang-en">Text</span>
+        <span class="lang-ko">텍스트</span>
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" id="tab-file" onclick="switchTab('file')">
+        <span class="lang-en">File</span>
+        <span class="lang-ko">파일</span>
+      </button>
+    </div>
+
+    <!-- Text panel -->
+    <div class="text-panel" id="panel-text">
+      <textarea
+        id="text-input"
+        rows="5"
+        placeholder="Type or paste text here…"
+        aria-label="Text to hash"
+        oninput="onTextInput()"
+      ></textarea>
+    </div>
+
+    <!-- File panel -->
+    <div class="file-panel" id="panel-file">
+      <div
+        class="drop-zone"
+        id="drop-zone"
+        role="button"
+        aria-label="File drop zone"
+        tabindex="0"
+      >
+        <div class="drop-icon">📂</div>
+        <div class="drop-label lang-en">Click to select a file or drag &amp; drop here</div>
+        <div class="drop-label lang-ko">파일을 클릭하거나 여기에 드래그 &amp; 드롭</div>
+        <div class="drop-sub lang-en">Any file type — processed in your browser</div>
+        <div class="drop-sub lang-ko">모든 파일 형식 — 브라우저에서만 처리됩니다</div>
+        <input type="file" id="file-input" aria-hidden="true" onchange="onFileSelected(this.files[0])" />
+      </div>
+      <div class="file-info" id="file-info">
+        <span class="file-name" id="file-name-display"></span>
+        <span class="file-size" id="file-size-display"></span>
+      </div>
+    </div>
+
+    <!-- Controls row -->
+    <div class="controls-row">
+      <label class="toggle-group" title="Toggle uppercase/lowercase display">
+        <span class="toggle-label lang-en">Uppercase</span>
+        <span class="toggle-label lang-ko">대문자</span>
+        <span class="toggle-switch">
+          <input type="checkbox" id="uppercase-toggle" onchange="rerender()" />
+          <span class="toggle-track"></span>
+        </span>
+      </label>
+      <button class="btn-clear" onclick="clearAll()">
+        <span class="lang-en">Clear</span>
+        <span class="lang-ko">초기화</span>
+      </button>
+    </div>
+
+    <!-- Hash results -->
+    <div class="hash-results" id="hash-results">
+      <div class="hash-row">
+        <span class="algo-badge">MD5</span>
+        <input class="hash-output" id="out-md5" type="text" readonly placeholder="—" aria-label="MD5 hash output" />
+        <button class="btn-copy" onclick="copyHash('out-md5', this)">Copy</button>
+      </div>
+      <div class="hash-row">
+        <span class="algo-badge">SHA-1</span>
+        <input class="hash-output" id="out-sha1" type="text" readonly placeholder="—" aria-label="SHA-1 hash output" />
+        <button class="btn-copy" onclick="copyHash('out-sha1', this)">Copy</button>
+      </div>
+      <div class="hash-row">
+        <span class="algo-badge">SHA-256</span>
+        <input class="hash-output" id="out-sha256" type="text" readonly placeholder="—" aria-label="SHA-256 hash output" />
+        <button class="btn-copy" onclick="copyHash('out-sha256', this)">Copy</button>
+      </div>
+      <div class="hash-row">
+        <span class="algo-badge">SHA-512</span>
+        <input class="hash-output" id="out-sha512" type="text" readonly placeholder="—" aria-label="SHA-512 hash output" />
+        <button class="btn-copy" onclick="copyHash('out-sha512', this)">Copy</button>
+      </div>
+    </div>
+
+  </div><!-- /.tool -->
+
+  <!-- How-to guide -->
+  <div class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to use</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">STEP 1</div>
+          <h3>Choose your input mode</h3>
+          <p>Select the <strong>Text</strong> tab to type or paste text, or the <strong>File</strong> tab to hash any file from your computer.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 2</div>
+          <h3>Enter text or select a file</h3>
+          <p>Type in the textarea for live hashing, or click the drop zone (or drag a file onto it) to load a file.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 3</div>
+          <h3>View all four hashes</h3>
+          <p>MD5, SHA-1, SHA-256, and SHA-512 are generated simultaneously and displayed below the input area.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 4</div>
+          <h3>Copy the hash you need</h3>
+          <p>Click the <strong>Copy</strong> button next to any algorithm to copy that hash to your clipboard instantly.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">STEP 1</div>
+          <h3>입력 방식 선택</h3>
+          <p><strong>텍스트</strong> 탭에서 텍스트를 입력하거나, <strong>파일</strong> 탭에서 컴퓨터의 파일을 선택하세요.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 2</div>
+          <h3>텍스트 입력 또는 파일 선택</h3>
+          <p>텍스트 영역에 입력하면 실시간으로 해시가 생성되거나, 드롭 존을 클릭하거나 파일을 드래그해서 올리세요.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 3</div>
+          <h3>4가지 해시 동시 확인</h3>
+          <p>MD5, SHA-1, SHA-256, SHA-512 해시가 동시에 생성되어 입력 영역 아래에 표시됩니다.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">STEP 4</div>
+          <h3>원하는 해시 복사</h3>
+          <p>각 알고리즘 옆의 <strong>Copy</strong> 버튼을 클릭하면 해시가 클립보드에 즉시 복사됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <div class="lang-en">
+      <p class="faq-title">Frequently Asked Questions</p>
+      <div class="faq-item">
+        <p class="faq-q">What is a hash and what is it used for?</p>
+        <p class="faq-a">A cryptographic hash function takes any input (text or file) and produces a fixed-length string called a hash or digest. Hashes are used to verify file integrity, store passwords securely, create checksums, and sign data digitally. Even a tiny change in the input produces a completely different hash.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Which hash algorithm should I use?</p>
+        <p class="faq-a">Use <strong>SHA-256</strong> for most modern use cases — it's the industry standard for checksums, code signing, and data integrity. Use <strong>SHA-512</strong> when you need extra security margins. Avoid <strong>MD5</strong> and <strong>SHA-1</strong> for security-critical applications; they are cryptographically broken, but still useful for non-security checksums and legacy compatibility.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Is SHA-256 more secure than MD5?</p>
+        <p class="faq-a">Yes, significantly. MD5 was shown to be vulnerable to collision attacks in 2004, and SHA-1 was officially deprecated in 2017. SHA-256 and SHA-512 (part of the SHA-2 family) have no known practical attacks and are recommended by NIST for all security-sensitive work.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can I reverse a hash to get the original text?</p>
+        <p class="faq-a">No. Hash functions are one-way — there is no algorithm to reverse them. However, for short or common inputs (like simple passwords), attackers can use rainbow tables or brute-force to guess the input. This is why passwords should always be salted before hashing.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Is my data sent to a server?</p>
+        <p class="faq-a">No. All hashing happens entirely inside your browser. Your text and files never leave your device. SHA-1, SHA-256, and SHA-512 use the browser's built-in Web Crypto API; MD5 uses the spark-md5 library loaded from a CDN — only the library code is downloaded, not your data.</p>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-item">
+        <p class="faq-q">해시란 무엇이고 어떻게 사용되나요?</p>
+        <p class="faq-a">암호화 해시 함수는 어떤 입력(텍스트나 파일)이든 받아서 고정 길이 문자열(해시 또는 다이제스트)을 생성합니다. 해시는 파일 무결성 검증, 비밀번호 안전 저장, 체크섬 생성, 디지털 서명 등에 사용됩니다. 입력에 아주 작은 변화가 있어도 완전히 다른 해시가 생성됩니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">어떤 해시 알고리즘을 사용해야 하나요?</p>
+        <p class="faq-a">대부분의 현대적 용도에는 <strong>SHA-256</strong>을 사용하세요 — 체크섬, 코드 서명, 데이터 무결성의 업계 표준입니다. 추가적인 보안 여유가 필요하면 <strong>SHA-512</strong>를 사용하세요. 보안이 중요한 용도에는 <strong>MD5</strong>와 <strong>SHA-1</strong>을 피하세요; 암호학적으로 취약하지만 비보안 체크섬이나 레거시 호환성에는 여전히 유용합니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">SHA-256이 MD5보다 더 안전한가요?</p>
+        <p class="faq-a">네, 훨씬 안전합니다. MD5는 2004년에 충돌 공격에 취약한 것으로 밝혀졌고, SHA-1은 2017년에 공식 폐기되었습니다. SHA-256과 SHA-512(SHA-2 패밀리)는 알려진 실용적 공격이 없으며 NIST에서 모든 보안 민감 작업에 권장합니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">해시를 역산해서 원본 텍스트를 얻을 수 있나요?</p>
+        <p class="faq-a">아니요. 해시 함수는 단방향으로, 역산하는 알고리즘은 존재하지 않습니다. 그러나 짧거나 일반적인 입력(단순 비밀번호 등)의 경우 공격자가 레인보우 테이블이나 무차별 대입으로 입력을 추측할 수 있습니다. 그래서 비밀번호는 해시 전에 항상 솔트(salt)를 추가해야 합니다.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">내 데이터가 서버로 전송되나요?</p>
+        <p class="faq-a">아니요. 모든 해시 연산은 브라우저 내에서만 처리됩니다. 텍스트와 파일은 절대 기기를 벗어나지 않습니다. SHA-1, SHA-256, SHA-512는 브라우저 내장 Web Crypto API를 사용하고, MD5는 CDN에서 로드되는 spark-md5 라이브러리를 사용합니다 — 라이브러리 코드만 다운로드되며, 여러분의 데이터는 전송되지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related -->
+  <div class="related">
+    <a href="https://stackfreeks.com" target="_blank" rel="noopener">More security and developer guides on stackfreeks.com →</a>
+  </div>
+
+  <!-- Vultr banner -->
+  <div class="vultr-banner">
+    <a href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank" style="display:block; text-decoration:none;">
+      <div class="vultr-inner">
+        <div class="vultr-text-block">
+          <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
+          <span class="vultr-title" data-i18n="vultr_title">Get started on Vultr</span>
+          <span class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+        </div>
+        <span class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+  </footer>
+
+  <!-- JS Logic -->
+  <script>
+    // ── State ──────────────────────────────────────────────────────────────
+    let currentTab = 'text';         // 'text' | 'file'
+    let currentFile = null;          // File object or null
+    let lastHashes = { md5: '', sha1: '', sha256: '', sha512: '' };
+
+    // ── Tab switching ──────────────────────────────────────────────────────
+    function switchTab(tab) {
+      currentTab = tab;
+      document.getElementById('panel-text').style.display = tab === 'text' ? 'block' : 'none';
+      document.getElementById('panel-file').style.display = tab === 'file' ? 'block' : 'none';
+      document.getElementById('tab-text').classList.toggle('active', tab === 'text');
+      document.getElementById('tab-file').classList.toggle('active', tab === 'file');
+      document.getElementById('tab-text').setAttribute('aria-selected', tab === 'text');
+      document.getElementById('tab-file').setAttribute('aria-selected', tab === 'file');
+      clearOutputs();
+      if (tab === 'text') {
+        const val = document.getElementById('text-input').value;
+        if (val) computeFromText(val);
+      } else if (tab === 'file' && currentFile) {
+        computeFromFile(currentFile);
+      }
+    }
+
+    // ── Text input ─────────────────────────────────────────────────────────
+    function onTextInput() {
+      const val = document.getElementById('text-input').value;
+      if (!val) { clearOutputs(); return; }
+      computeFromText(val);
+    }
+
+    async function computeFromText(text) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+
+      // MD5 via SparkMD5 (text path)
+      const md5 = SparkMD5.hash(text);
+
+      // SHA-* via Web Crypto API
+      const [sha1Buf, sha256Buf, sha512Buf] = await Promise.all([
+        crypto.subtle.digest('SHA-1',   data),
+        crypto.subtle.digest('SHA-256', data),
+        crypto.subtle.digest('SHA-512', data),
+      ]);
+
+      lastHashes = {
+        md5:    md5,
+        sha1:   bufToHex(sha1Buf),
+        sha256: bufToHex(sha256Buf),
+        sha512: bufToHex(sha512Buf),
+      };
+      rerender();
+    }
+
+    // ── File input ─────────────────────────────────────────────────────────
+    function onFileSelected(file) {
+      if (!file) return;
+      currentFile = file;
+
+      // Show file info
+      document.getElementById('file-name-display').textContent = file.name;
+      document.getElementById('file-size-display').textContent = formatBytes(file.size);
+      document.getElementById('file-info').classList.add('visible');
+
+      computeFromFile(file);
+    }
+
+    function computeFromFile(file) {
+      clearOutputs();
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        const arrayBuffer = e.target.result;
+
+        // MD5 via SparkMD5 ArrayBuffer path
+        const md5 = SparkMD5.ArrayBuffer.hash(arrayBuffer);
+
+        // SHA-* via Web Crypto API
+        const [sha1Buf, sha256Buf, sha512Buf] = await Promise.all([
+          crypto.subtle.digest('SHA-1',   arrayBuffer),
+          crypto.subtle.digest('SHA-256', arrayBuffer),
+          crypto.subtle.digest('SHA-512', arrayBuffer),
+        ]);
+
+        lastHashes = {
+          md5:    md5,
+          sha1:   bufToHex(sha1Buf),
+          sha256: bufToHex(sha256Buf),
+          sha512: bufToHex(sha512Buf),
+        };
+        rerender();
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    // ── Render outputs ─────────────────────────────────────────────────────
+    function rerender() {
+      const upper = document.getElementById('uppercase-toggle').checked;
+      const transform = upper ? (s) => s.toUpperCase() : (s) => s.toLowerCase();
+
+      document.getElementById('out-md5').value    = lastHashes.md5    ? transform(lastHashes.md5)    : '';
+      document.getElementById('out-sha1').value   = lastHashes.sha1   ? transform(lastHashes.sha1)   : '';
+      document.getElementById('out-sha256').value = lastHashes.sha256 ? transform(lastHashes.sha256) : '';
+      document.getElementById('out-sha512').value = lastHashes.sha512 ? transform(lastHashes.sha512) : '';
+    }
+
+    function clearOutputs() {
+      lastHashes = { md5: '', sha1: '', sha256: '', sha512: '' };
+      ['out-md5', 'out-sha1', 'out-sha256', 'out-sha512'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+    }
+
+    // ── Clear all ──────────────────────────────────────────────────────────
+    function clearAll() {
+      document.getElementById('text-input').value = '';
+      document.getElementById('file-input').value = '';
+      document.getElementById('file-info').classList.remove('visible');
+      document.getElementById('file-name-display').textContent = '';
+      document.getElementById('file-size-display').textContent = '';
+      currentFile = null;
+      clearOutputs();
+    }
+
+    // ── Copy hash ──────────────────────────────────────────────────────────
+    function copyHash(outputId, btn) {
+      const val = document.getElementById(outputId).value;
+      if (!val) return;
+      navigator.clipboard.writeText(val).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('copied');
+        }, 1800);
+      }).catch(() => {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = val;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1800);
+      });
+    }
+
+    // ── Helpers ────────────────────────────────────────────────────────────
+    function bufToHex(buffer) {
+      return Array.from(new Uint8Array(buffer))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0 B';
+      const units = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(1024));
+      return (bytes / Math.pow(1024, i)).toFixed(i === 0 ? 0 : 1) + ' ' + units[i];
+    }
+
+    // ── Drag-and-drop ──────────────────────────────────────────────────────
+    const dropZone = document.getElementById('drop-zone');
+
+    dropZone.addEventListener('dragenter', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragover',  (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', (e) => { dropZone.classList.remove('drag-over'); });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        // Switch to file tab if not already there
+        if (currentTab !== 'file') switchTab('file');
+        onFileSelected(file);
+      }
+    });
+
+    // Keyboard accessibility for drop zone
+    dropZone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        document.getElementById('file-input').click();
+      }
+    });
+  </script>
+
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: "← All Tools",
+        vultr_label: "Sponsor",
+        vultr_title: "Get started on Vultr",
+        vultr_sub: "Get $300 free credit — valid for 30 days",
+        vultr_cta: "Claim your credit →",
+        footer_copy: "© 2026 StackFreeks"
+      },
+      ko: {
+        nav_back: "← 전체 툴",
+        vultr_label: "스폰서",
+        vultr_title: "Vultr로 시작하세요",
+        vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+        vultr_cta: "크레딧 받기 →",
+        footer_copy: "© 2026 StackFreeks"
+      }
+    };
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+</body>
+</html>

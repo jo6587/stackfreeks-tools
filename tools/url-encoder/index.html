@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URL Encoder / Decoder — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Encode or decode URLs and query strings instantly. Free online URL encoder/decoder — supports percent-encoding, component encoding, and full URL encoding. No account required." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/url-encoder/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="URL Encoder / Decoder — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Encode or decode URLs and query strings instantly. Free online URL encoder/decoder — supports percent-encoding, component encoding, and full URL encoding. No account required." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/url-encoder/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --error: #ef4444;
+      --error-bg: rgba(239,68,68,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool main */
+    .tool-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Two-panel layout */
+    .panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .panel-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .panel-textarea {
+      width: 100%;
+      min-height: 180px;
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      color: var(--text-1);
+      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 14px 16px;
+      resize: vertical;
+      transition: border-color 0.15s;
+    }
+    .panel-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .panel-textarea[readonly] {
+      color: var(--text-2);
+      cursor: default;
+    }
+    .panel-textarea[readonly]:focus {
+      border-color: var(--border-2);
+    }
+
+    .panel-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 28px;
+    }
+
+    /* Info badge */
+    .info-badge {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .info-badge.visible { opacity: 1; }
+    .info-badge.success {
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid rgba(34,197,94,0.2);
+    }
+    .info-badge.error {
+      background: var(--error-bg);
+      color: var(--error);
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+
+    /* Copy button */
+    .btn-copy {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-2);
+      background: var(--surface-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-copy:hover { border-color: var(--accent); color: var(--text-1); }
+    .btn-copy.copied { border-color: var(--success); color: var(--success); }
+
+    /* Action buttons bar */
+    .btn-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .btn-action {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 9px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-2);
+      background: var(--surface);
+      color: var(--text-1);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .btn-action:hover {
+      border-color: var(--accent);
+      background: var(--surface-2);
+    }
+    .btn-action.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn-action.primary:hover {
+      background: #4f52d4;
+      border-color: #4f52d4;
+    }
+    .btn-action.danger {
+      border-color: rgba(239,68,68,0.3);
+      color: var(--text-2);
+    }
+    .btn-action.danger:hover {
+      border-color: var(--error);
+      color: var(--error);
+      background: var(--error-bg);
+    }
+
+    /* Divider between main buttons and utility buttons */
+    .btn-bar-sep {
+      width: 1px;
+      height: 36px;
+      background: var(--border-2);
+      align-self: center;
+    }
+
+    /* Error message */
+    .error-msg {
+      display: none;
+      background: var(--error-bg);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: var(--radius);
+      color: var(--error);
+      font-size: 13px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+    }
+    .error-msg.visible { display: block; }
+
+    /* Cheat sheet */
+    .cheatsheet {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .cheatsheet-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: none;
+      border: none;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      cursor: pointer;
+      text-align: left;
+      transition: color 0.15s;
+    }
+    .cheatsheet-toggle:hover { color: var(--text-1); }
+
+    .cheatsheet-arrow {
+      font-size: 10px;
+      transition: transform 0.2s;
+    }
+    .cheatsheet-arrow.open { transform: rotate(180deg); }
+
+    .cheatsheet-body {
+      display: none;
+      padding: 0 16px 16px;
+    }
+    .cheatsheet-body.open { display: block; }
+
+    .cheatsheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .cheatsheet-table th {
+      text-align: left;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
+    }
+    .cheatsheet-table td {
+      padding: 7px 12px;
+      color: var(--text-2);
+      border-bottom: 1px solid var(--border);
+    }
+    .cheatsheet-table tr:last-child td { border-bottom: none; }
+    .cheatsheet-table code {
+      font-family: "SFMono-Regular", "Consolas", monospace;
+      color: var(--accent);
+      font-size: 12px;
+      background: rgba(99,102,241,0.08);
+      border-radius: 4px;
+      padding: 1px 5px;
+    }
+    .cheatsheet-table .char-col {
+      font-family: "SFMono-Regular", "Consolas", monospace;
+      color: var(--text-1);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Guide */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+    .related-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .vultr-inner {
+      background: var(--surface);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .vultr-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+    .vultr-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+    .vultr-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .vultr-cta {
+      flex-shrink: 0;
+      background: var(--success);
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .vultr-cta:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      .tool-wrap { padding: 0 16px 40px; }
+      .panels { grid-template-columns: 1fr; }
+      .btn-bar { flex-direction: column; }
+      .btn-bar-sep { width: 100%; height: 1px; }
+      .btn-action { width: 100%; text-align: center; }
+      .guide { padding: 0 16px 40px; }
+      .faq { padding: 0 16px 40px; }
+      .related { padding: 0 16px 24px; }
+      .vultr-banner { padding: 0 16px 40px; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+      .vultr-cta { align-self: stretch; text-align: center; }
+      .footer-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>URL Encoder / Decoder</h1>
+      <p>Percent-encode URLs and query parameters, or decode encoded strings — instantly, in your browser.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>URL 인코더 / 디코더</h1>
+      <p>URL과 쿼리 파라미터를 퍼센트 인코딩하거나 디코딩 — 즉시, 브라우저에서 바로.</p>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <div class="tool-wrap">
+
+    <!-- Error message -->
+    <div class="error-msg" id="error-msg"></div>
+
+    <!-- Panels -->
+    <div class="panels">
+      <!-- Input panel -->
+      <div class="panel">
+        <div class="panel-label lang-en">Input</div>
+        <div class="panel-label lang-ko">입력</div>
+        <textarea
+          class="panel-textarea"
+          id="input-text"
+          placeholder="Paste your URL or text here…"
+          spellcheck="false"
+        ></textarea>
+        <div class="panel-footer"></div>
+      </div>
+
+      <!-- Output panel -->
+      <div class="panel">
+        <div class="panel-label lang-en">Output</div>
+        <div class="panel-label lang-ko">출력</div>
+        <textarea
+          class="panel-textarea"
+          id="output-text"
+          readonly
+          placeholder="Result will appear here…"
+          spellcheck="false"
+        ></textarea>
+        <div class="panel-footer">
+          <span class="info-badge" id="info-badge"></span>
+          <button class="btn-copy" id="btn-copy" onclick="copyOutput()">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="btn-bar">
+      <button class="btn-action primary" onclick="runEncode('encodeURI')">Encode URL</button>
+      <button class="btn-action primary" onclick="runEncode('decodeURI')">Decode URL</button>
+      <button class="btn-action" onclick="runEncode('encodeURIComponent')">Encode Component</button>
+      <button class="btn-action" onclick="runEncode('decodeURIComponent')">Decode Component</button>
+      <div class="btn-bar-sep"></div>
+      <button class="btn-action" onclick="swapValues()">⇄ Swap</button>
+      <button class="btn-action danger" onclick="clearAll()">Clear</button>
+    </div>
+
+    <!-- Cheat sheet (collapsed) -->
+    <div class="cheatsheet">
+      <button class="cheatsheet-toggle" onclick="toggleCheatsheet()" aria-expanded="false" id="cheatsheet-toggle-btn">
+        <span class="lang-en">% Encoding cheat sheet</span>
+        <span class="lang-ko">% 인코딩 치트 시트</span>
+        <span class="cheatsheet-arrow" id="cheatsheet-arrow">▼</span>
+      </button>
+      <div class="cheatsheet-body" id="cheatsheet-body">
+        <table class="cheatsheet-table">
+          <thead>
+            <tr>
+              <th>Character</th>
+              <th>Encoded</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="char-col">Space</td><td><code>%20</code></td><td>Whitespace in URLs</td></tr>
+            <tr><td class="char-col">&amp;</td><td><code>%26</code></td><td>Query param separator</td></tr>
+            <tr><td class="char-col">=</td><td><code>%3D</code></td><td>Key=value separator</td></tr>
+            <tr><td class="char-col">+</td><td><code>%2B</code></td><td>Plus sign (also used for space in form data)</td></tr>
+            <tr><td class="char-col">#</td><td><code>%23</code></td><td>Fragment identifier</td></tr>
+            <tr><td class="char-col">@</td><td><code>%40</code></td><td>Used in email/auth</td></tr>
+            <tr><td class="char-col">/</td><td><code>%2F</code></td><td>Path separator</td></tr>
+            <tr><td class="char-col">?</td><td><code>%3F</code></td><td>Query string start</td></tr>
+            <tr><td class="char-col">:</td><td><code>%3A</code></td><td>Scheme separator</td></tr>
+            <tr><td class="char-col">%</td><td><code>%25</code></td><td>Percent sign itself</td></tr>
+            <tr><td class="char-col">[</td><td><code>%5B</code></td><td>Left bracket (IPv6)</td></tr>
+            <tr><td class="char-col">]</td><td><code>%5D</code></td><td>Right bracket (IPv6)</td></tr>
+            <tr><td class="char-col">,</td><td><code>%2C</code></td><td>Comma</td></tr>
+            <tr><td class="char-col">"</td><td><code>%22</code></td><td>Double quote</td></tr>
+            <tr><td class="char-col">&lt;</td><td><code>%3C</code></td><td>Less-than sign</td></tr>
+            <tr><td class="char-col">&gt;</td><td><code>%3E</code></td><td>Greater-than sign</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- How to Use Guide -->
+  <section class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to use this tool</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>Paste your input</h3>
+          <p>Type or paste the URL or text string you want to encode or decode into the Input panel on the left.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>Choose an action</h3>
+          <p>Click <strong>Encode URL</strong> for a full URL, or <strong>Encode Component</strong> to encode a query parameter value. Use Decode to reverse.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>Copy the result</h3>
+          <p>The encoded or decoded result appears in the Output panel. Click <strong>Copy</strong> to put it on your clipboard.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Tip</p>
+          <h3>Use Swap to iterate</h3>
+          <p>Click <strong>Swap</strong> to move the output back to input. Useful when you want to encode an already-encoded string a second time.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>입력 붙여넣기</h3>
+          <p>인코딩하거나 디코딩할 URL 또는 텍스트를 왼쪽 입력 패널에 붙여넣으세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>동작 선택</h3>
+          <p>전체 URL에는 <strong>Encode URL</strong>을, 쿼리 파라미터 값에는 <strong>Encode Component</strong>를 클릭하세요. Decode로 반대 작업을 할 수 있습니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>결과 복사</h3>
+          <p>출력 패널에 결과가 표시됩니다. <strong>Copy</strong>를 클릭하면 클립보드에 복사됩니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">팁</p>
+          <h3>Swap으로 반복 작업</h3>
+          <p><strong>Swap</strong>을 클릭하면 출력 값이 입력으로 이동합니다. 이미 인코딩된 문자열을 다시 인코딩할 때 유용합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <p class="faq-title">Frequently Asked Questions</p>
+
+      <div class="faq-item">
+        <p class="faq-q">What is URL encoding?</p>
+        <p class="faq-a">URL encoding (also called percent-encoding) converts special characters into a format that can be safely transmitted in a URL. Each character is replaced with a "%" followed by its two-digit hexadecimal representation — for example, a space becomes <code style="font-family:monospace;color:var(--accent)">%20</code> and "&" becomes <code style="font-family:monospace;color:var(--accent)">%26</code>. This is necessary because URLs can only contain a limited set of ASCII characters.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What's the difference between encodeURI and encodeURIComponent?</p>
+        <p class="faq-a"><code style="font-family:monospace;color:var(--accent)">encodeURI</code> is designed for full URLs — it encodes most special characters but leaves the ones that have structural meaning in a URL intact (like <code style="font-family:monospace;color:var(--accent)">:// ? & = # /</code>). <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code> is meant for individual query parameter values — it encodes everything except letters, digits, and <code style="font-family:monospace;color:var(--accent)">- _ . ! ~ * ' ( )</code>. Use <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code> when encoding a value that will appear inside a query string.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Why does a space become %20?</p>
+        <p class="faq-a">The ASCII code for a space character is 32, which is 0x20 in hexadecimal. Percent-encoding simply takes the hexadecimal byte value of a character and prefixes it with "%". Some older systems encode spaces as "+" (used in HTML form submissions), but the modern standard is <code style="font-family:monospace;color:var(--accent)">%20</code>.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">When do I need to encode a URL?</p>
+        <p class="faq-a">You need to encode a URL whenever it contains characters that are not allowed in a URL or that have a special meaning you want to suppress. Common situations include: passing a URL as a query parameter, building dynamic links in JavaScript, writing API requests programmatically, or embedding special characters like spaces, ampersands, or hash signs in query string values.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I encode special characters in query parameters?</p>
+        <p class="faq-a">Yes — that is exactly what <strong>Encode Component</strong> is for. For example, if you want to pass an email address as a query value, use <code style="font-family:monospace;color:var(--accent)">encodeURIComponent("user@example.com")</code> to get <code style="font-family:monospace;color:var(--accent)">user%40example.com</code>. Always encode individual values with <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>, not the entire URL.</p>
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+
+      <div class="faq-item">
+        <p class="faq-q">URL 인코딩이란 무엇인가요?</p>
+        <p class="faq-a">URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 "%" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 <code style="font-family:monospace;color:var(--accent)">%20</code>이 되고 "&"는 <code style="font-family:monospace;color:var(--accent)">%26</code>이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">encodeURI와 encodeURIComponent의 차이는 무엇인가요?</p>
+        <p class="faq-a"><code style="font-family:monospace;color:var(--accent)">encodeURI</code>는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: <code style="font-family:monospace;color:var(--accent)">:// ? & = # /</code>)는 그대로 두고 나머지만 인코딩합니다. <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, <code style="font-family:monospace;color:var(--accent)">- _ . ! ~ * ' ( )</code>를 제외한 모든 것을 인코딩합니다.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">왜 공백이 %20이 되나요?</p>
+        <p class="faq-a">공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 "%"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 "+"로 표현하기도 하지만, 현대 표준은 <code style="font-family:monospace;color:var(--accent)">%20</code>을 사용합니다.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">URL 인코딩이 필요한 경우는 언제인가요?</p>
+        <p class="faq-a">URL에 허용되지 않거나 특별한 의미를 가진 문자가 포함될 때마다 인코딩이 필요합니다. 예를 들면: URL을 쿼리 파라미터로 전달할 때, JavaScript에서 동적 링크를 만들 때, API 요청을 프로그래밍 방식으로 작성할 때, 쿼리 문자열 값에 공백, 앰퍼샌드, 해시 기호 등을 포함할 때입니다.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">쿼리 파라미터에 특수 문자를 인코딩할 수 있나요?</p>
+        <p class="faq-a">네, 바로 <strong>Encode Component</strong>가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 <code style="font-family:monospace;color:var(--accent)">encodeURIComponent("user@example.com")</code>을 사용하면 <code style="font-family:monospace;color:var(--accent)">user%40example.com</code>이 됩니다. 개별 값에는 항상 <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>를 사용하세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Content -->
+  <section class="related">
+    <a href="https://stackfreeks.com" class="related-link" target="_blank" rel="noopener">
+      More developer guides on stackfreeks.com →
+    </a>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="vultr-inner">
+      <div>
+        <p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
+        <p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="vultr-cta" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">
+        Claim your credit →
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <!-- JS Logic -->
+  <script>
+    // --- Core encode/decode functions ---
+    const FN_LABELS = {
+      encodeURI:            { en: 'encodeURI applied',            ko: 'encodeURI 적용됨' },
+      decodeURI:            { en: 'decodeURI applied',            ko: 'decodeURI 적용됨' },
+      encodeURIComponent:   { en: 'encodeURIComponent applied',   ko: 'encodeURIComponent 적용됨' },
+      decodeURIComponent:   { en: 'decodeURIComponent applied',   ko: 'decodeURIComponent 적용됨' },
+    };
+
+    function getCurrentLang() {
+      return document.documentElement.lang === 'ko' ? 'ko' : 'en';
+    }
+
+    function showBadge(fnName, isError) {
+      const badge = document.getElementById('info-badge');
+      badge.classList.remove('visible', 'success', 'error');
+      if (isError) {
+        badge.textContent = getCurrentLang() === 'ko' ? '오류 발생' : 'Error';
+        badge.classList.add('error', 'visible');
+      } else {
+        const labels = FN_LABELS[fnName];
+        badge.textContent = labels ? labels[getCurrentLang()] : fnName;
+        badge.classList.add('success', 'visible');
+      }
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('error-msg');
+      el.textContent = msg;
+      el.classList.add('visible');
+    }
+
+    function hideError() {
+      const el = document.getElementById('error-msg');
+      el.classList.remove('visible');
+    }
+
+    function runEncode(fnName) {
+      hideError();
+      const input = document.getElementById('input-text').value;
+      if (!input.trim()) {
+        showError(getCurrentLang() === 'ko'
+          ? '입력 텍스트를 먼저 입력해 주세요.'
+          : 'Please enter some text in the Input field first.');
+        return;
+      }
+      try {
+        let result;
+        if      (fnName === 'encodeURI')            result = encodeURI(input);
+        else if (fnName === 'decodeURI')            result = decodeURI(input);
+        else if (fnName === 'encodeURIComponent')   result = encodeURIComponent(input);
+        else if (fnName === 'decodeURIComponent')   result = decodeURIComponent(input);
+        else throw new Error('Unknown function');
+
+        document.getElementById('output-text').value = result;
+        showBadge(fnName, false);
+      } catch (err) {
+        const lang = getCurrentLang();
+        const msg = lang === 'ko'
+          ? `디코딩 오류: 잘못된 URI 형식입니다. (${err.message})`
+          : `Decode error: malformed URI — ${err.message}`;
+        document.getElementById('output-text').value = '';
+        showError(msg);
+        showBadge(fnName, true);
+      }
+    }
+
+    function swapValues() {
+      const inputEl  = document.getElementById('input-text');
+      const outputEl = document.getElementById('output-text');
+      const tmp = inputEl.value;
+      inputEl.value  = outputEl.value;
+      outputEl.value = tmp;
+      hideError();
+      // Clear badge
+      const badge = document.getElementById('info-badge');
+      badge.classList.remove('visible', 'success', 'error');
+    }
+
+    function clearAll() {
+      document.getElementById('input-text').value  = '';
+      document.getElementById('output-text').value = '';
+      hideError();
+      const badge = document.getElementById('info-badge');
+      badge.classList.remove('visible', 'success', 'error');
+    }
+
+    function copyOutput() {
+      const outputEl = document.getElementById('output-text');
+      const text = outputEl.value;
+      if (!text) return;
+
+      navigator.clipboard.writeText(text).then(function () {
+        const btn = document.getElementById('btn-copy');
+        const prevText = btn.textContent;
+        btn.textContent = getCurrentLang() === 'ko' ? '복사됨!' : 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = prevText;
+          btn.classList.remove('copied');
+        }, 1500);
+      }).catch(function () {
+        // Fallback for older browsers
+        outputEl.select();
+        document.execCommand('copy');
+      });
+    }
+
+    // --- Cheat sheet toggle ---
+    function toggleCheatsheet() {
+      const body   = document.getElementById('cheatsheet-body');
+      const arrow  = document.getElementById('cheatsheet-arrow');
+      const btn    = document.getElementById('cheatsheet-toggle-btn');
+      const isOpen = body.classList.contains('open');
+
+      body.classList.toggle('open', !isOpen);
+      arrow.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    }
+  </script>
+
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back:    '← All Tools',
+        vultr_label: 'Sponsor',
+        vultr_title: 'Get started on Vultr',
+        vultr_sub:   'Get $300 free credit — valid for 30 days',
+        vultr_cta:   'Claim your credit →',
+        footer_copy: '© 2026 StackFreeks'
+      },
+      ko: {
+        nav_back:    '← 전체 툴',
+        vultr_label: '스폰서',
+        vultr_title: 'Vultr로 시작하세요',
+        vultr_sub:   '$300 무료 크레딧 — 30일 유효 (기간 한정)',
+        vultr_cta:   '크레딧 받기 →',
+        footer_copy: '© 2026 StackFreeks'
+      }
+    };
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+</body>
+</html>
