@@ -35,6 +35,13 @@ Small, single-purpose tools that do one thing and get out of the way. Everything
 - [Diff Checker](https://tools.stackfreeks.com/tools/diff-checker/) — LCS-based line diff, side-by-side and unified view
 - [IP Subnet Calculator](https://tools.stackfreeks.com/tools/subnet-calculator/) — CIDR, host range, broadcast, subnet split helper
 - [OG Meta Tag Generator](https://tools.stackfreeks.com/tools/og-meta-generator/) — live Google/Facebook/Twitter previews
+- [UUID Generator](https://tools.stackfreeks.com/tools/uuid-generator/) — crypto.randomUUID(), bulk up to 100, uppercase & braces options
+- [Hex/RGB/HSL Color Converter](https://tools.stackfreeks.com/tools/color-converter/) — three-way live conversion, color picker, preset swatches
+- [Number Base Converter](https://tools.stackfreeks.com/tools/base-converter/) — binary/octal/decimal/hex four-way conversion, bit-length info
+- [Lorem Ipsum Generator](https://tools.stackfreeks.com/tools/lorem-ipsum/) — words/sentences/paragraphs, classic opening toggle
+- [Markdown Previewer](https://tools.stackfreeks.com/tools/markdown-previewer/) — live split-pane, marked.js GFM, toolbar, copy HTML
+- [px ↔ rem Converter](https://tools.stackfreeks.com/tools/px-rem-converter/) — adjustable base size, reference table, live text preview
+- [Regex Tester](https://tools.stackfreeks.com/tools/regex-tester/) — live match highlighting, g/i/m/s flags, capture groups, cheat sheet
 
 **Server / VPS**
 - [VPS Cost Calculator](https://tools.stackfreeks.com/tools/vps-cost-calculator/) — Vultr / Hetzner / DigitalOcean

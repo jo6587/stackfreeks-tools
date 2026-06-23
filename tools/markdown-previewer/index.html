@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown Previewer — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Live Markdown preview tool with split-pane editor, quick-insert toolbar, HTML export, and dark theme. No install needed — runs entirely in your browser." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/markdown-previewer/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Markdown Previewer — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Live Markdown preview tool with split-pane editor, quick-insert toolbar, HTML export, and dark theme. No install needed — runs entirely in your browser." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/markdown-previewer/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    .nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--text-3); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+      text-decoration: none;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 560px;
+    }
+
+    /* ── Tool wrapper ── */
+    .tool-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 10px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .toolbar-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border-2);
+      align-self: center;
+      margin: 0 4px;
+    }
+
+    .tb-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 9px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s, color 0.12s;
+      white-space: nowrap;
+    }
+    .tb-btn:hover {
+      background: var(--surface-2);
+      border-color: var(--border-2);
+      color: var(--text-1);
+    }
+    .tb-btn.bold { font-weight: 700; }
+    .tb-btn.italic { font-style: italic; }
+    .tb-btn.mono { font-family: "Fira Code", "Cascadia Code", monospace; }
+
+    /* ── Action buttons row ── */
+    .actions-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 1px solid var(--border-2);
+      border-bottom: none;
+    }
+
+    .stats {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-left: auto;
+    }
+
+    .action-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s, color 0.12s;
+    }
+    .action-btn:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.22);
+      color: var(--text-1);
+    }
+    .action-btn.copy-html {
+      background: rgba(99,102,241,0.10);
+      border-color: rgba(99,102,241,0.35);
+      color: var(--accent);
+    }
+    .action-btn.copy-html:hover {
+      background: rgba(99,102,241,0.18);
+    }
+    .action-btn.copy-html.success {
+      background: var(--success-bg);
+      border-color: rgba(34,197,94,0.35);
+      color: var(--success);
+    }
+
+    /* ── Split pane ── */
+    .split-pane {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 540px;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .pane {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .pane + .pane {
+      border-left: 1px solid var(--border);
+    }
+
+    .pane-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 8px 14px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    #md-input {
+      flex: 1;
+      background: var(--surface);
+      color: var(--text-1);
+      border: none;
+      outline: none;
+      padding: 16px;
+      font-family: "Fira Code", "Cascadia Code", "Consolas", monospace;
+      font-size: 13.5px;
+      line-height: 1.7;
+      resize: none;
+      tab-size: 2;
+    }
+    #md-input::placeholder { color: var(--text-3); }
+
+    .preview-pane {
+      background: var(--surface);
+      overflow-y: auto;
+    }
+
+    .preview-output {
+      padding: 16px 20px;
+      word-break: break-word;
+    }
+
+    /* ── Preview typography ── */
+    .preview-output h1 { font-size: 1.8em; font-weight: 700; color: var(--text-1); margin: 0.8em 0 0.4em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+    .preview-output h2 { font-size: 1.4em; font-weight: 600; color: var(--text-1); margin: 0.8em 0 0.4em; border-bottom: 1px solid var(--border); padding-bottom: 0.2em; }
+    .preview-output h3 { font-size: 1.15em; font-weight: 600; color: var(--text-1); margin: 0.6em 0 0.3em; }
+    .preview-output p { color: var(--text-2); margin: 0.5em 0; line-height: 1.7; }
+    .preview-output a { color: var(--accent); }
+    .preview-output code { background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-size: 0.88em; font-family: "Fira Code", "Cascadia Code", monospace; color: #a78bfa; }
+    .preview-output pre { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; overflow-x: auto; margin: 0.8em 0; }
+    .preview-output pre code { background: none; border: none; padding: 0; color: var(--text-1); }
+    .preview-output blockquote { border-left: 3px solid var(--accent); margin: 0.8em 0; padding: 8px 16px; background: var(--surface-2); color: var(--text-2); border-radius: 0 var(--radius) var(--radius) 0; }
+    .preview-output ul, .preview-output ol { color: var(--text-2); padding-left: 1.5em; margin: 0.5em 0; }
+    .preview-output li { margin: 0.25em 0; line-height: 1.6; }
+    .preview-output table { width: 100%; border-collapse: collapse; margin: 0.8em 0; }
+    .preview-output th { background: var(--surface-2); padding: 8px 12px; text-align: left; font-size: 13px; color: var(--text-1); border-bottom: 1px solid var(--border-2); }
+    .preview-output td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); font-size: 13px; }
+    .preview-output hr { border: none; border-top: 1px solid var(--border); margin: 1.5em 0; }
+    .preview-output img { max-width: 100%; border-radius: var(--radius); }
+
+    /* ── Guide ── */
+    .guide {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .guide-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .guide-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .guide-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* ── FAQ ── */
+    .faq {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .faq-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+
+    .faq-item:first-of-type {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-q {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+
+    .faq-a {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* ── Vultr banner ── */
+    .vultr-banner {
+      background: var(--success-bg);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 20px 24px;
+      margin-bottom: 48px;
+    }
+
+    .vultr-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .vultr-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--success);
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 4px;
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+
+    .vultr-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 160px;
+    }
+
+    .vultr-text strong {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+    }
+
+    .vultr-text span {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .vultr-cta {
+      background: var(--success);
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      text-decoration: none;
+    }
+    .vultr-cta:hover { opacity: 0.88; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 22px; }
+      .split-pane {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .pane + .pane {
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+      #md-input { height: 280px; }
+      .preview-pane { min-height: 280px; }
+      .actions-bar { flex-wrap: wrap; }
+      .stats { margin-left: 0; width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .toolbar { gap: 2px; }
+      .tb-btn { padding: 4px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
+    <div class="nav-right">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <div class="lang-en">
+    <h1>Markdown Previewer</h1>
+    <p>Write Markdown on the left, see the rendered output on the right — live, as you type. Copy the HTML output or use the toolbar to insert formatting instantly.</p>
+  </div>
+  <div class="lang-ko">
+    <h1>마크다운 미리보기</h1>
+    <p>왼쪽에 마크다운을 작성하면 오른쪽에 실시간으로 렌더링됩니다. HTML 출력을 복사하거나 툴바로 서식을 빠르게 삽입하세요.</p>
+  </div>
+</header>
+
+<!-- ── Tool body ── -->
+<div class="tool-wrapper">
+
+  <!-- Toolbar -->
+  <div class="toolbar" role="toolbar" aria-label="Markdown formatting toolbar">
+    <button class="tb-btn bold" title="Bold" onclick="tbWrap('**','**','bold text')">B</button>
+    <button class="tb-btn italic" title="Italic" onclick="tbWrap('*','*','italic text')"><em>I</em></button>
+    <button class="tb-btn mono" title="Inline code" onclick="tbWrap('`','`','code')">`code`</button>
+    <div class="toolbar-sep"></div>
+    <button class="tb-btn" title="Heading 1" onclick="tbLinePrefix('# ')">H1</button>
+    <button class="tb-btn" title="Heading 2" onclick="tbLinePrefix('## ')">H2</button>
+    <button class="tb-btn" title="Heading 3" onclick="tbLinePrefix('### ')">H3</button>
+    <div class="toolbar-sep"></div>
+    <button class="tb-btn" title="Link" onclick="tbLink()">Link</button>
+    <button class="tb-btn" title="Image" onclick="tbImage()">Image</button>
+    <div class="toolbar-sep"></div>
+    <button class="tb-btn" title="Blockquote" onclick="tbLinePrefix('> ')">Quote</button>
+    <button class="tb-btn" title="Unordered list" onclick="tbLinePrefix('- ')">UL</button>
+    <button class="tb-btn" title="Ordered list" onclick="tbLinePrefix('1. ')">OL</button>
+    <div class="toolbar-sep"></div>
+    <button class="tb-btn" title="Horizontal rule" onclick="tbInsert('\n---\n')">HR</button>
+  </div>
+
+  <!-- Actions bar -->
+  <div class="actions-bar">
+    <button class="action-btn copy-html" id="copy-html-btn" onclick="copyHTML()" data-i18n="copy_html">Copy HTML</button>
+    <button class="action-btn" onclick="clearAll()" data-i18n="clear">Clear</button>
+    <span class="stats" id="stats-bar">0 <span data-i18n="word_count">words</span> &bull; 0 <span data-i18n="char_count">chars</span></span>
+  </div>
+
+  <!-- Split pane -->
+  <div class="split-pane">
+    <!-- Editor -->
+    <div class="pane">
+      <div class="pane-label" data-i18n="editor_label">Markdown Input</div>
+      <textarea id="md-input" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+    </div>
+
+    <!-- Preview -->
+    <div class="pane preview-pane">
+      <div class="pane-label" data-i18n="preview_label">Preview</div>
+      <div class="preview-output" id="preview-output"></div>
+    </div>
+  </div>
+
+</div><!-- /tool-wrapper -->
+
+<!-- ── How to Use (Guide) ── -->
+<section class="guide">
+  <div class="guide-title">
+    <span class="lang-en">How to Use</span>
+    <span class="lang-ko">사용 방법</span>
+  </div>
+  <div class="guide-grid">
+
+    <div class="guide-card">
+      <div class="guide-step">STEP 1</div>
+      <div class="lang-en">
+        <h3>Type or paste Markdown</h3>
+        <p>Write in the left editor — the preview on the right updates instantly on every keystroke.</p>
+      </div>
+      <div class="lang-ko">
+        <h3>마크다운 입력</h3>
+        <p>왼쪽 에디터에 작성하세요. 오른쪽 미리보기가 키 입력마다 즉시 업데이트됩니다.</p>
+      </div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-step">STEP 2</div>
+      <div class="lang-en">
+        <h3>Use the toolbar</h3>
+        <p>Click toolbar buttons to quickly insert bold, italic, headings, links, lists, and more.</p>
+      </div>
+      <div class="lang-ko">
+        <h3>툴바 활용</h3>
+        <p>툴바 버튼을 클릭해 굵게, 기울임, 제목, 링크, 목록 등 서식을 빠르게 삽입하세요.</p>
+      </div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-step">STEP 3</div>
+      <div class="lang-en">
+        <h3>Copy the HTML output</h3>
+        <p>Click "Copy HTML" to copy the rendered HTML to your clipboard — ready to paste anywhere.</p>
+      </div>
+      <div class="lang-ko">
+        <h3>HTML 복사</h3>
+        <p>"HTML 복사" 버튼을 클릭하면 렌더링된 HTML이 클립보드에 복사됩니다.</p>
+      </div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-step">STEP 4</div>
+      <div class="lang-en">
+        <h3>Clear and start fresh</h3>
+        <p>Hit the Clear button to wipe the editor and preview so you can start a new document.</p>
+      </div>
+      <div class="lang-ko">
+        <h3>초기화</h3>
+        <p>지우기 버튼을 누르면 에디터와 미리보기가 모두 초기화되어 새 문서를 작성할 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="faq">
+  <div class="faq-title">
+    <span class="lang-en">FAQ</span>
+    <span class="lang-ko">자주 묻는 질문</span>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <span class="lang-en">What Markdown features are supported?</span>
+      <span class="lang-ko">어떤 마크다운 기능이 지원되나요?</span>
+    </div>
+    <div class="faq-a">
+      <span class="lang-en">GFM (GitHub Flavored Markdown) — headings, bold, italic, lists, links, images, tables, code blocks, blockquotes, and horizontal rules.</span>
+      <span class="lang-ko">GFM(GitHub Flavored Markdown)을 지원합니다 — 제목, 굵게, 기울임, 목록, 링크, 이미지, 표, 코드 블록, 인용구, 수평선 등이 포함됩니다.</span>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <span class="lang-en">Does it support syntax highlighting?</span>
+      <span class="lang-ko">코드 구문 강조(Syntax Highlighting)를 지원하나요?</span>
+    </div>
+    <div class="faq-a">
+      <span class="lang-en">Not currently — code blocks render clearly but without language-specific color highlighting.</span>
+      <span class="lang-ko">현재는 지원하지 않습니다. 코드 블록은 렌더링되지만 언어별 색상 강조는 없습니다.</span>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <span class="lang-en">Can I paste from a file?</span>
+      <span class="lang-ko">파일에서 붙여넣기 할 수 있나요?</span>
+    </div>
+    <div class="faq-a">
+      <span class="lang-en">Yes — open your .md file in any text editor, select all, and paste directly into the left editor panel.</span>
+      <span class="lang-ko">네 — .md 파일을 텍스트 에디터에서 열고, 전체 선택 후 왼쪽 에디터에 붙여넣기 하면 됩니다.</span>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <span class="lang-en">Is my content saved?</span>
+      <span class="lang-ko">작성한 내용이 저장되나요?</span>
+    </div>
+    <div class="faq-a">
+      <span class="lang-en">No — content lives in your browser only while the tab is open. Nothing is sent to a server. Copy your work before closing.</span>
+      <span class="lang-ko">아니요 — 내용은 탭이 열려 있는 동안 브라우저에만 존재합니다. 서버로 전송되지 않으며, 닫기 전에 복사해 두세요.</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ── Vultr banner ── -->
+<section class="vultr-banner">
+  <div class="vultr-inner">
+    <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
+    <div class="vultr-text">
+      <strong data-i18n="vultr_title">Get started on Vultr</strong>
+      <span data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" target="_blank" rel="nofollow sponsored" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <nav class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- i18n page keys — must be defined before i18n.js and before tool script -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    nav_back: "← All Tools",
+    vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
+    vultr_sub: "Get $300 free credit — valid for 30 days",
+    vultr_cta: "Claim your credit →",
+    footer_copy: "© 2026 StackFreeks",
+    editor_label: "Markdown Input", preview_label: "Preview",
+    copy_html: "Copy HTML", copied: "Copied!",
+    clear: "Clear", word_count: "words", char_count: "chars"
+  },
+  ko: {
+    nav_back: "← 전체 툴",
+    vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
+    vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+    vultr_cta: "크레딧 받기 →",
+    footer_copy: "© 2026 StackFreeks",
+    editor_label: "마크다운 입력", preview_label: "미리보기",
+    copy_html: "HTML 복사", copied: "복사됨!",
+    clear: "지우기", word_count: "단어", char_count: "글자"
+  }
+};
+</script>
+
+<!-- marked.js -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+  // ── marked config ──
+  marked.setOptions({ breaks: true, gfm: true });
+
+  // ── Default content ──
+  const DEFAULT_MD = `# Hello, Markdown!
+
+This is a **live preview** of your markdown. Start typing to see changes instantly.
+
+## Features
+
+- Live rendering as you type
+- Copy rendered HTML output
+- Quick-insert toolbar for common formatting
+
+## Code Example
+
+\`\`\`javascript
+const greet = (name) => \`Hello, \${name}!\`;
+console.log(greet("World"));
+\`\`\`
+
+> Blockquotes look great in dark mode.
+
+| Column A | Column B | Column C |
+|----------|----------|----------|
+| Cell 1   | Cell 2   | Cell 3   |
+
+---
+
+[Visit StackFreeks](https://stackfreeks.com)
+`;
+
+  const input  = document.getElementById('md-input');
+  const output = document.getElementById('preview-output');
+  const statsBar = document.getElementById('stats-bar');
+  const copyBtn  = document.getElementById('copy-html-btn');
+
+  function render() {
+    const val = input.value;
+    output.innerHTML = marked.parse(val);
+    updateStats(val);
+  }
+
+  function updateStats(text) {
+    const chars = text.length;
+    const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    const wLabel = (window.SF_PAGE_I18N && sfLang && sfLang.current === 'ko')
+      ? window.SF_PAGE_I18N.ko.word_count
+      : (window.SF_PAGE_I18N && window.SF_PAGE_I18N.en.word_count) || 'words';
+    const cLabel = (window.SF_PAGE_I18N && sfLang && sfLang.current === 'ko')
+      ? window.SF_PAGE_I18N.ko.char_count
+      : (window.SF_PAGE_I18N && window.SF_PAGE_I18N.en.char_count) || 'chars';
+    statsBar.textContent = words + ' ' + wLabel + ' • ' + chars + ' ' + cLabel;
+  }
+
+  input.addEventListener('input', render);
+
+  // Refresh stats on language change
+  document.addEventListener('sfLangChanged', function() {
+    updateStats(input.value);
+  });
+
+  // ── Copy HTML ──
+  function copyHTML() {
+    const html = output.innerHTML;
+    navigator.clipboard.writeText(html).then(function() {
+      const lang = (window.sfLang && sfLang.current === 'ko') ? 'ko' : 'en';
+      const label = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang].copied) || 'Copied!';
+      copyBtn.textContent = label;
+      copyBtn.classList.add('success');
+      setTimeout(function() {
+        const origLang = (window.sfLang && sfLang.current === 'ko') ? 'ko' : 'en';
+        const origLabel = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[origLang].copy_html) || 'Copy HTML';
+        copyBtn.textContent = origLabel;
+        copyBtn.classList.remove('success');
+      }, 1800);
+    });
+  }
+
+  // ── Clear ──
+  function clearAll() {
+    input.value = '';
+    output.innerHTML = '';
+    updateStats('');
+    input.focus();
+  }
+
+  // ── Toolbar helpers ──
+  function getSelection() {
+    const start = input.selectionStart;
+    const end   = input.selectionEnd;
+    return { start, end, text: input.value.slice(start, end) };
+  }
+
+  function setCaretAt(pos) {
+    input.selectionStart = pos;
+    input.selectionEnd   = pos;
+    input.focus();
+  }
+
+  function replaceRange(start, end, replacement) {
+    const val = input.value;
+    input.value = val.slice(0, start) + replacement + val.slice(end);
+    render();
+  }
+
+  function tbWrap(before, after, placeholder) {
+    const { start, end, text } = getSelection();
+    const inner = text || placeholder;
+    const replacement = before + inner + after;
+    replaceRange(start, end, replacement);
+    // Select the inner text
+    const newStart = start + before.length;
+    const newEnd   = newStart + inner.length;
+    input.selectionStart = newStart;
+    input.selectionEnd   = newEnd;
+    input.focus();
+  }
+
+  function tbLinePrefix(prefix) {
+    const { start } = getSelection();
+    // Find start of line
+    const val = input.value;
+    let lineStart = val.lastIndexOf('\n', start - 1) + 1;
+    const lineEnd = val.indexOf('\n', start);
+    const endIdx  = lineEnd === -1 ? val.length : lineEnd;
+    const line    = val.slice(lineStart, endIdx);
+    // Toggle: remove if already present
+    if (line.startsWith(prefix)) {
+      replaceRange(lineStart, lineStart + prefix.length, '');
+      setCaretAt(start - prefix.length);
+    } else {
+      replaceRange(lineStart, lineStart, prefix);
+      setCaretAt(start + prefix.length);
+    }
+  }
+
+  function tbInsert(text) {
+    const { start, end } = getSelection();
+    replaceRange(start, end, text);
+    setCaretAt(start + text.length);
+  }
+
+  function tbLink() {
+    const { start, end, text } = getSelection();
+    const url = 'url';
+    const label = text || 'text';
+    const replacement = '[' + label + '](' + url + ')';
+    replaceRange(start, end, replacement);
+    // Select the url part
+    const urlStart = start + label.length + 3; // after "[label]("
+    input.selectionStart = urlStart;
+    input.selectionEnd   = urlStart + url.length;
+    input.focus();
+  }
+
+  function tbImage() {
+    const { start, end } = getSelection();
+    const replacement = '![alt](url)';
+    replaceRange(start, end, replacement);
+    // Select "alt"
+    input.selectionStart = start + 2;
+    input.selectionEnd   = start + 5;
+    input.focus();
+  }
+
+  // ── Init ──
+  input.value = DEFAULT_MD;
+  render();
+</script>
+
+<script src="/shared/i18n.js"></script>
+
+</body>
+</html>

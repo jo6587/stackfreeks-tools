@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PX to REM Converter — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Instantly convert px to rem and rem to px with a live preview. Adjust the root font size and get a reference table of common values. Free, no signup." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/px-rem-converter/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="PX to REM Converter — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Instantly convert px to rem and rem to px with a live preview. Adjust the root font size and get a reference table of common values." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/px-rem-converter/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    .nav {
+      border-bottom: 1px solid var(--border);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .lang-toggle:hover { color: var(--text-1); border-color: var(--accent); }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 52px 24px 40px;
+    }
+    .hero h1 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 600px;
+      line-height: 1.65;
+    }
+
+    /* ── Tool wrapper ── */
+    .tool-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── Converter card ── */
+    .converter-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+
+    /* Base setting row */
+    .base-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .base-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      white-space: nowrap;
+    }
+    .base-number {
+      width: 68px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 7px 10px;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .base-number:focus { border-color: var(--accent); }
+    .base-slider {
+      flex: 1;
+      min-width: 160px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      height: 4px;
+    }
+    .base-range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    /* Converter fields */
+    .converter-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: end;
+    }
+    .conv-field { display: flex; flex-direction: column; gap: 8px; }
+    .conv-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .conv-input-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      transition: border-color 0.15s;
+    }
+    .conv-input-wrap:focus-within { border-color: var(--accent); }
+    .conv-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-1);
+      font-size: 22px;
+      font-weight: 600;
+      padding: 12px 14px;
+      font-family: var(--font);
+      letter-spacing: -0.02em;
+      min-width: 0;
+    }
+    .conv-input::placeholder { color: var(--text-3); font-weight: 400; font-size: 18px; }
+    .conv-unit {
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+    }
+    .copy-btn {
+      margin: 0 8px 0 0;
+      background: none;
+      border: 1px solid var(--border-2);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 9px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .copy-btn:hover { color: var(--text-1); border-color: var(--accent); }
+    .copy-btn.copied {
+      color: var(--success);
+      border-color: var(--success);
+      background: var(--success-bg);
+    }
+
+    /* Arrow divider */
+    .arrow-divider {
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 14px;
+      color: var(--text-3);
+      font-size: 20px;
+      justify-content: center;
+    }
+
+    /* ── Live preview ── */
+    .preview-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+    }
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .preview-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .preview-size-badge {
+      font-size: 12px;
+      color: var(--text-2);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 8px;
+    }
+    .preview-text {
+      color: var(--text-1);
+      font-weight: 500;
+      line-height: 1.4;
+      transition: font-size 0.15s;
+      word-break: break-word;
+    }
+
+    /* ── Reference table ── */
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .table-header {
+      padding: 18px 24px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .table-title-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .ref-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 10px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+    .ref-table td {
+      padding: 10px 24px;
+      font-size: 13px;
+      color: var(--text-2);
+      border-bottom: 1px solid var(--border);
+      font-variant-numeric: tabular-nums;
+    }
+    .ref-table tbody tr:last-child td { border-bottom: none; }
+    .ref-table tbody tr:hover td { background: var(--surface-2); color: var(--text-1); }
+    .ref-table td:first-child { color: var(--text-1); font-weight: 500; }
+    .ref-table td.highlight-row { color: var(--accent); font-weight: 600; }
+
+    /* ── Guide ── */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-a code {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    /* ── Vultr banner ── */
+    .vultr-banner {
+      background: linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(34,197,94,0.06) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+    }
+    .vultr-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .vultr-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .vultr-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 200px;
+    }
+    .vultr-text strong {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .vultr-text span {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .vultr-cta {
+      background: var(--success);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .vultr-cta:hover { opacity: 0.88; color: #fff; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 24px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    footer p { font-size: 13px; color: var(--text-3); }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a { font-size: 13px; color: var(--text-3); }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .converter-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .arrow-divider {
+        padding-bottom: 0;
+        transform: rotate(90deg);
+        margin: 4px 0;
+        justify-content: flex-start;
+      }
+      .base-row { flex-direction: column; align-items: flex-start; }
+      .base-slider { width: 100%; }
+      .hero { padding: 36px 24px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
+      <div class="nav-right">
+        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="lang-en">
+      <h1>PX ↔ REM Converter</h1>
+      <p>Convert between px and rem instantly. Adjust the root font size for your project and get a reference table of common values — all calculated live in your browser.</p>
+    </div>
+    <div class="lang-ko" hidden>
+      <h1>PX ↔ REM 변환기</h1>
+      <p>px와 rem을 즉시 변환하세요. 프로젝트의 루트 폰트 크기를 설정하고 자주 쓰는 값을 한눈에 확인하세요 — 브라우저에서 실시간으로 계산됩니다.</p>
+    </div>
+  </header>
+
+  <!-- Tool Body -->
+  <main class="tool-wrap">
+
+    <!-- Converter card -->
+    <div class="converter-card">
+
+      <!-- Base font size -->
+      <div class="base-row">
+        <label class="base-label" for="base-number" data-i18n="base_label">Root font size (px)</label>
+        <input
+          id="base-number"
+          class="base-number"
+          type="number"
+          min="10" max="32" step="1"
+          value="16"
+          aria-label="Base font size in px"
+        />
+        <div style="flex:1; min-width:160px;">
+          <input
+            id="base-slider"
+            class="base-slider"
+            type="range"
+            min="10" max="32" step="1"
+            value="16"
+            aria-label="Base font size slider"
+          />
+          <div class="base-range-labels"><span>10px</span><span>32px</span></div>
+        </div>
+      </div>
+
+      <!-- px / rem inputs -->
+      <div class="converter-grid">
+        <!-- PX input -->
+        <div class="conv-field">
+          <span class="conv-label" data-i18n="px_label">px</span>
+          <div class="conv-input-wrap">
+            <input
+              id="px-input"
+              class="conv-input"
+              type="number"
+              min="0"
+              step="any"
+              placeholder="0"
+              aria-label="Value in px"
+            />
+            <span class="conv-unit">px</span>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="arrow-divider">⇄</div>
+
+        <!-- REM input -->
+        <div class="conv-field">
+          <span class="conv-label" data-i18n="rem_label">rem</span>
+          <div class="conv-input-wrap">
+            <input
+              id="rem-input"
+              class="conv-input"
+              type="number"
+              min="0"
+              step="any"
+              placeholder="0"
+              aria-label="Value in rem"
+            />
+            <span class="conv-unit">rem</span>
+            <button class="copy-btn" id="copy-rem-btn" onclick="copyValue('rem')" data-i18n="copy">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live preview card -->
+    <div class="preview-card">
+      <div class="preview-header">
+        <span class="preview-label">Live Preview</span>
+        <span class="preview-size-badge" id="preview-badge">16px</span>
+      </div>
+      <p class="preview-text" id="preview-text" style="font-size: 16px;">The quick brown fox jumps over the lazy dog.</p>
+    </div>
+
+    <!-- Reference table -->
+    <div class="table-card">
+      <div class="table-header">
+        <span class="table-title-text" data-i18n="table_title">Common Values</span>
+      </div>
+      <table class="ref-table" aria-label="Common px to rem values">
+        <thead>
+          <tr>
+            <th data-i18n="table_px">px</th>
+            <th data-i18n="table_rem">rem</th>
+          </tr>
+        </thead>
+        <tbody id="ref-table-body">
+          <!-- populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Guide -->
+  <section class="guide">
+    <p class="guide-title">How to use</p>
+    <div class="guide-grid">
+
+      <div class="guide-card">
+        <p class="guide-step">Step 1</p>
+        <div class="lang-en">
+          <h3>Enter a value</h3>
+          <p>Type a px value to get the rem equivalent, or type a rem value to get px back. Conversion is live on every keystroke.</p>
+        </div>
+        <div class="lang-ko" hidden>
+          <h3>값 입력</h3>
+          <p>px 값을 입력하면 rem 값을, rem 값을 입력하면 px 값을 즉시 계산합니다. 타이핑할 때마다 실시간으로 변환됩니다.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <p class="guide-step">Step 2</p>
+        <div class="lang-en">
+          <h3>Adjust the base</h3>
+          <p>If your project sets a custom root font size (e.g. 62.5% = 10px), change the base to match. Slider and number input stay in sync.</p>
+        </div>
+        <div class="lang-ko" hidden>
+          <h3>기준 크기 조정</h3>
+          <p>프로젝트에서 루트 폰트 크기를 변경했다면 (예: 62.5% = 10px), 기준 값을 맞춰 입력하세요. 슬라이더와 숫자 입력이 함께 동기화됩니다.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <p class="guide-step">Step 3</p>
+        <div class="lang-en">
+          <h3>Use the table</h3>
+          <p>Scroll down to the reference table for quick lookups of the most commonly used sizes. Values recalculate automatically when the base changes.</p>
+        </div>
+        <div class="lang-ko" hidden>
+          <h3>테이블 참고</h3>
+          <p>자주 사용하는 크기를 한눈에 확인하려면 하단의 참고 테이블을 사용하세요. 기준 크기를 바꾸면 모든 값이 자동으로 재계산됩니다.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <p class="guide-step">Step 4</p>
+        <div class="lang-en">
+          <h3>Copy the result</h3>
+          <p>Click the Copy button next to any rem output to copy the value to your clipboard — ready to paste into your CSS.</p>
+        </div>
+        <div class="lang-ko" hidden>
+          <h3>결과 복사</h3>
+          <p>rem 출력 옆의 복사 버튼을 클릭하면 값이 클립보드에 복사됩니다. CSS에 바로 붙여넣기할 수 있습니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <p class="faq-title">FAQ</p>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <p class="faq-q">What is rem?</p>
+        <p class="faq-a">"Root em" — a CSS unit relative to the font size of the root <code>&lt;html&gt;</code> element. Browsers default to 16px, so <code>1rem = 16px</code> out of the box.</p>
+      </div>
+      <div class="lang-ko" hidden>
+        <p class="faq-q">rem이란 무엇인가요?</p>
+        <p class="faq-a">"Root em"의 약자로, 루트 <code>&lt;html&gt;</code> 요소의 폰트 크기를 기준으로 하는 CSS 단위입니다. 브라우저 기본값은 16px이므로 기본적으로 <code>1rem = 16px</code>입니다.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <p class="faq-q">Why use rem instead of px?</p>
+        <p class="faq-a">rem scales with the user's browser font settings, making your UI more accessible. It also makes global font scaling easy — change one root value and everything adjusts proportionally.</p>
+      </div>
+      <div class="lang-ko" hidden>
+        <p class="faq-q">px 대신 rem을 쓰는 이유가 뭔가요?</p>
+        <p class="faq-a">rem은 사용자의 브라우저 폰트 설정에 따라 확장되어 접근성이 향상됩니다. 또한 전체적인 폰트 크기 조정이 쉬워 루트 값 하나만 변경하면 모든 요소가 비례적으로 조정됩니다.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <p class="faq-q">What's the default base font size?</p>
+        <p class="faq-a">Browsers default to 16px. However, many projects set <code>html { font-size: 62.5%; }</code> to make <code>1rem = 10px</code> for easier mental math. Always check your project's CSS reset or global styles.</p>
+      </div>
+      <div class="lang-ko" hidden>
+        <p class="faq-q">기본 루트 폰트 크기는 얼마인가요?</p>
+        <p class="faq-a">브라우저 기본값은 16px입니다. 하지만 많은 프로젝트에서 <code>html { font-size: 62.5%; }</code>를 설정해 <code>1rem = 10px</code>로 계산을 편하게 만듭니다. 프로젝트의 CSS 리셋이나 전역 스타일을 확인하세요.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <p class="faq-q">Can I use this for other CSS units?</p>
+        <p class="faq-a">This tool focuses on px ↔ rem conversion only. For other unit conversions (em, vw, pt, etc.) keep an eye on our other tools at StackFreeks Tools.</p>
+      </div>
+      <div class="lang-ko" hidden>
+        <p class="faq-q">다른 CSS 단위도 변환할 수 있나요?</p>
+        <p class="faq-a">이 도구는 px ↔ rem 변환만 지원합니다. em, vw, pt 등 다른 단위 변환은 StackFreeks Tools의 다른 도구를 확인해 주세요.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Vultr banner -->
+  <section class="vultr-banner">
+    <div class="vultr-inner">
+      <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
+      <div class="vultr-text">
+        <strong data-i18n="vultr_title">Get started on Vultr</strong>
+        <span data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" target="_blank" rel="nofollow sponsored" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <p data-i18n="footer_copy">© 2026 StackFreeks</p>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- i18n (page-specific keys defined first) -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: "← All Tools",
+        vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
+        vultr_sub: "Get $300 free credit — valid for 30 days",
+        vultr_cta: "Claim your credit →",
+        footer_copy: "© 2026 StackFreeks",
+        px_label: "px", rem_label: "rem",
+        base_label: "Root font size (px)", copy: "Copy", copied: "Copied!",
+        table_px: "px", table_rem: "rem", table_title: "Common Values"
+      },
+      ko: {
+        nav_back: "← 전체 툴",
+        vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
+        vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+        vultr_cta: "크레딧 받기 →",
+        footer_copy: "© 2026 StackFreeks",
+        px_label: "px", rem_label: "rem",
+        base_label: "루트 폰트 크기 (px)", copy: "복사", copied: "복사됨!",
+        table_px: "px", table_rem: "rem", table_title: "자주 쓰는 값"
+      }
+    };
+  </script>
+
+  <script>
+    (function () {
+      const TABLE_PX = [8, 10, 12, 13, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 56, 64, 72, 80, 96];
+
+      const pxInput   = document.getElementById('px-input');
+      const remInput  = document.getElementById('rem-input');
+      const baseNum   = document.getElementById('base-number');
+      const baseSlider = document.getElementById('base-slider');
+      const tableBody = document.getElementById('ref-table-body');
+      const previewText  = document.getElementById('preview-text');
+      const previewBadge = document.getElementById('preview-badge');
+      const copyRemBtn   = document.getElementById('copy-rem-btn');
+
+      function getBase() {
+        const v = parseFloat(baseNum.value);
+        return (isNaN(v) || v <= 0) ? 16 : v;
+      }
+
+      function round(n, d) {
+        return parseFloat(n.toFixed(d));
+      }
+
+      // Converter logic
+      function onPxChange() {
+        const px = parseFloat(pxInput.value);
+        const base = getBase();
+        if (!isNaN(px)) {
+          remInput.value = round(px / base, 4);
+          updatePreview(px);
+        } else {
+          remInput.value = '';
+          updatePreview(null);
+        }
+      }
+
+      function onRemChange() {
+        const rem = parseFloat(remInput.value);
+        const base = getBase();
+        if (!isNaN(rem)) {
+          const px = round(rem * base, 4);
+          pxInput.value = px;
+          updatePreview(px);
+        } else {
+          pxInput.value = '';
+          updatePreview(null);
+        }
+      }
+
+      // Base sync
+      function onBaseNumChange() {
+        let v = parseInt(baseNum.value, 10);
+        if (isNaN(v)) return;
+        v = Math.min(32, Math.max(10, v));
+        baseNum.value = v;
+        baseSlider.value = v;
+        recalcAll();
+      }
+
+      function onBaseSliderChange() {
+        baseNum.value = baseSlider.value;
+        recalcAll();
+      }
+
+      function recalcAll() {
+        // Re-run whichever field has a value
+        if (pxInput.value !== '') {
+          onPxChange();
+        } else if (remInput.value !== '') {
+          onRemChange();
+        }
+        buildTable();
+      }
+
+      // Live preview
+      function updatePreview(px) {
+        if (px !== null && !isNaN(px) && px > 0) {
+          const clamped = Math.min(Math.max(px, 8), 96);
+          previewText.style.fontSize = clamped + 'px';
+          previewBadge.textContent = round(px, 2) + 'px';
+        } else {
+          previewText.style.fontSize = '16px';
+          previewBadge.textContent = '—';
+        }
+      }
+
+      // Reference table
+      function buildTable() {
+        const base = getBase();
+        tableBody.innerHTML = '';
+        TABLE_PX.forEach(function (px) {
+          const rem = round(px / base, 4);
+          const tr = document.createElement('tr');
+          const tdPx = document.createElement('td');
+          const tdRem = document.createElement('td');
+          tdPx.textContent = px;
+          tdRem.textContent = rem;
+          // Highlight 16px row (the default)
+          if (px === base) {
+            tdPx.classList.add('highlight-row');
+            tdRem.classList.add('highlight-row');
+          }
+          tr.appendChild(tdPx);
+          tr.appendChild(tdRem);
+          tableBody.appendChild(tr);
+        });
+      }
+
+      // Copy
+      window.copyValue = function (unit) {
+        const btn = copyRemBtn;
+        const val = unit === 'rem' ? remInput.value : pxInput.value;
+        if (!val) return;
+        navigator.clipboard.writeText(val + unit).then(function () {
+          const lang = (window.sfLang && window.sfLang.current) || 'en';
+          const copiedLabel = (window.SF_PAGE_I18N[lang] || {}).copied || 'Copied!';
+          const copyLabel   = (window.SF_PAGE_I18N[lang] || {}).copy   || 'Copy';
+          btn.textContent = copiedLabel;
+          btn.classList.add('copied');
+          setTimeout(function () {
+            btn.textContent = copyLabel;
+            btn.classList.remove('copied');
+          }, 1600);
+        });
+      };
+
+      // Also update copy label when lang changes
+      document.addEventListener('sfLangChanged', function (e) {
+        const lang = e.detail.lang;
+        const copyLabel = (window.SF_PAGE_I18N[lang] || {}).copy || 'Copy';
+        if (!copyRemBtn.classList.contains('copied')) {
+          copyRemBtn.textContent = copyLabel;
+        }
+      });
+
+      // Wire events
+      pxInput.addEventListener('input', onPxChange);
+      remInput.addEventListener('input', onRemChange);
+      baseNum.addEventListener('change', onBaseNumChange);
+      baseNum.addEventListener('input', onBaseNumChange);
+      baseSlider.addEventListener('input', onBaseSliderChange);
+
+      // Init table
+      buildTable();
+    })();
+  </script>
+
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>

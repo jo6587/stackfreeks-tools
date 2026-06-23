@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Number Base Converter — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Instantly convert numbers between Binary, Octal, Decimal, and Hexadecimal. Live four-way conversion with copy buttons and bit-length analysis." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/base-converter/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Number Base Converter — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Instantly convert numbers between Binary, Octal, Decimal, and Hexadecimal. Live four-way conversion with copy buttons and bit-length analysis." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/base-converter/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    .nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); color: var(--text-1); }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 32px;
+    }
+    .hero h1 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── Tool body ── */
+    .tool-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Presets */
+    .presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .presets-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      width: 100%;
+      margin-bottom: 2px;
+    }
+    .preset-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .preset-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-1);
+      background: rgba(99,102,241,0.08);
+    }
+
+    /* Base grid */
+    .base-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .base-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      transition: border-color 0.15s;
+    }
+    .base-card:focus-within {
+      border-color: var(--accent);
+    }
+    .base-card.error {
+      border-color: #ef4444;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .card-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+    .card-badge {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+      min-width: 28px;
+      text-align: center;
+    }
+    .card-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .base-input {
+      flex: 1;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+      font-size: 16px;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.15s;
+      width: 0; /* flex child: allow shrinking */
+      min-width: 0;
+    }
+    .base-input:focus {
+      border-color: var(--accent);
+    }
+    .base-input.is-error {
+      border-color: #ef4444;
+      color: #f87171;
+    }
+    .base-input::placeholder {
+      color: var(--text-3);
+    }
+    .copy-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--font);
+      padding: 9px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .copy-btn:hover {
+      border-color: var(--border-2);
+      color: var(--text-1);
+    }
+    .copy-btn.copied {
+      border-color: var(--success);
+      color: var(--success);
+      background: var(--success-bg);
+    }
+
+    /* Bit-length info card */
+    .bit-info {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      display: none;
+    }
+    .bit-info.visible { display: block; }
+    .bit-info-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+    .bit-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+    }
+    .bit-stat {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+    }
+    .bit-stat-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-1);
+      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+      margin-bottom: 2px;
+      letter-spacing: -0.02em;
+    }
+    .bit-stat-label {
+      font-size: 11px;
+      color: var(--text-2);
+    }
+    .bit-fit {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .bit-fit-badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-3);
+    }
+    .bit-fit-badge.ok {
+      border-color: var(--success);
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    /* ── Guide ── */
+    .guide {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .guide-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .guide-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+    .guide-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* ── FAQ ── */
+    .faq {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .faq-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+    .faq-a {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* ── Vultr banner ── */
+    .vultr-banner {
+      background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(34,197,94,0.02) 100%);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 20px 24px;
+    }
+    .vultr-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .vultr-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--success);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.25);
+      padding: 3px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .vultr-text {
+      flex: 1;
+      min-width: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .vultr-text strong {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .vultr-text span {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .vultr-cta {
+      background: var(--success);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: opacity 0.15s;
+    }
+    .vultr-cta:hover { opacity: 0.88; color: #fff; }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+    }
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hero { padding: 32px 16px 24px; }
+      .tool-body { padding: 0 16px 40px; }
+      .base-grid { grid-template-columns: 1fr; }
+      .guide { padding: 0 16px 40px; }
+      .faq { padding: 0 16px 40px; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
+      <div class="nav-right">
+        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="lang-en">
+      <h1>Number Base Converter</h1>
+      <p>Instantly convert between Binary, Octal, Decimal, and Hexadecimal. Edit any field — the other three update in real time.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>진법 변환기</h1>
+      <p>2진수, 8진수, 10진수, 16진수를 즉시 변환합니다. 어느 필드를 수정해도 나머지 세 필드가 실시간으로 업데이트됩니다.</p>
+    </div>
+  </header>
+
+  <!-- Tool body -->
+  <main class="tool-body">
+
+    <!-- Presets -->
+    <div class="presets">
+      <div class="presets-label">Quick presets</div>
+      <button class="preset-btn" data-preset="0">0</button>
+      <button class="preset-btn" data-preset="1">1</button>
+      <button class="preset-btn" data-preset="8">8</button>
+      <button class="preset-btn" data-preset="10">10</button>
+      <button class="preset-btn" data-preset="16">16</button>
+      <button class="preset-btn" data-preset="255">255</button>
+      <button class="preset-btn" data-preset="256">256</button>
+      <button class="preset-btn" data-preset="65535">65535</button>
+      <button class="preset-btn" data-preset="1048576">1048576</button>
+    </div>
+
+    <!-- Base cards -->
+    <div class="base-grid">
+
+      <!-- Binary -->
+      <div class="base-card" id="card-bin">
+        <div class="card-header">
+          <span class="card-label" data-i18n="bin_label">Binary (Base 2)</span>
+          <span class="card-badge" id="badge-bin">0</span>
+        </div>
+        <div class="card-input-row">
+          <input
+            class="base-input"
+            id="input-bin"
+            type="text"
+            inputmode="text"
+            placeholder="0 or 1"
+            autocomplete="off"
+            spellcheck="false"
+            data-base="2"
+            data-pattern="^[01]+$"
+          />
+          <button class="copy-btn" data-target="input-bin" data-i18n="copy">Copy</button>
+        </div>
+      </div>
+
+      <!-- Octal -->
+      <div class="base-card" id="card-oct">
+        <div class="card-header">
+          <span class="card-label" data-i18n="oct_label">Octal (Base 8)</span>
+          <span class="card-badge" id="badge-oct">0</span>
+        </div>
+        <div class="card-input-row">
+          <input
+            class="base-input"
+            id="input-oct"
+            type="text"
+            inputmode="text"
+            placeholder="0–7"
+            autocomplete="off"
+            spellcheck="false"
+            data-base="8"
+            data-pattern="^[0-7]+$"
+          />
+          <button class="copy-btn" data-target="input-oct" data-i18n="copy">Copy</button>
+        </div>
+      </div>
+
+      <!-- Decimal -->
+      <div class="base-card" id="card-dec">
+        <div class="card-header">
+          <span class="card-label" data-i18n="dec_label">Decimal (Base 10)</span>
+          <span class="card-badge" id="badge-dec">0</span>
+        </div>
+        <div class="card-input-row">
+          <input
+            class="base-input"
+            id="input-dec"
+            type="text"
+            inputmode="numeric"
+            placeholder="0–9"
+            autocomplete="off"
+            spellcheck="false"
+            data-base="10"
+            data-pattern="^\d+$"
+          />
+          <button class="copy-btn" data-target="input-dec" data-i18n="copy">Copy</button>
+        </div>
+      </div>
+
+      <!-- Hexadecimal -->
+      <div class="base-card" id="card-hex">
+        <div class="card-header">
+          <span class="card-label" data-i18n="hex_label">Hexadecimal (Base 16)</span>
+          <span class="card-badge" id="badge-hex">0</span>
+        </div>
+        <div class="card-input-row">
+          <input
+            class="base-input"
+            id="input-hex"
+            type="text"
+            inputmode="text"
+            placeholder="0–9, A–F"
+            autocomplete="off"
+            spellcheck="false"
+            data-base="16"
+            data-pattern="^[0-9a-fA-F]+$"
+          />
+          <button class="copy-btn" data-target="input-hex" data-i18n="copy">Copy</button>
+        </div>
+      </div>
+
+    </div><!-- /.base-grid -->
+
+    <!-- Bit-length info -->
+    <div class="bit-info" id="bit-info">
+      <div class="bit-info-title">Bit analysis</div>
+      <div class="bit-info-grid">
+        <div class="bit-stat">
+          <div class="bit-stat-val" id="bit-digits">—</div>
+          <div class="bit-stat-label">Binary digits</div>
+        </div>
+        <div class="bit-stat">
+          <div class="bit-stat-val" id="bit-min">—</div>
+          <div class="bit-stat-label">Min bits needed</div>
+        </div>
+      </div>
+      <div class="bit-fit" id="bit-fit"></div>
+    </div>
+
+  </main>
+
+  <!-- Guide -->
+  <section class="guide">
+    <div class="guide-title">How to use</div>
+    <div class="guide-grid">
+
+      <div class="guide-card">
+        <div class="guide-step">STEP 1</div>
+        <div class="lang-en">
+          <h3>Type in any field</h3>
+          <p>Enter a number in Binary, Octal, Decimal, or Hex — the other three fields update instantly.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>아무 필드에 입력하세요</h3>
+          <p>2진수, 8진수, 10진수, 16진수 중 어느 필드에 숫자를 입력하면 나머지 세 필드가 즉시 업데이트됩니다.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-step">STEP 2</div>
+        <div class="lang-en">
+          <h3>Hex is case-insensitive</h3>
+          <p>You can type A–F in upper or lower case — the result is always displayed in uppercase.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>Hex는 대소문자 구분 없음</h3>
+          <p>16진수는 대문자·소문자 모두 입력 가능하며, 결과는 항상 대문자로 표시됩니다.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-step">STEP 3</div>
+        <div class="lang-en">
+          <h3>Use quick presets</h3>
+          <p>Click a preset button (e.g. 255, 65535) to instantly load a common value and see all conversions.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>빠른 프리셋 사용</h3>
+          <p>프리셋 버튼(예: 255, 65535)을 클릭하면 자주 쓰는 값을 즉시 불러와 모든 진법 변환 결과를 확인할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-step">STEP 4</div>
+        <div class="lang-en">
+          <h3>Copy any result</h3>
+          <p>Click the Copy button next to any field to copy the value to your clipboard in one click.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>결과 복사</h3>
+          <p>각 필드 옆의 복사 버튼을 클릭하면 해당 값이 클립보드에 즉시 복사됩니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="faq-title">FAQ</div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">What number bases does this tool support?</div>
+        <div class="faq-a">Binary (Base 2), Octal (Base 8), Decimal (Base 10), and Hexadecimal (Base 16). These are the four most common bases in computer science and programming.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">어떤 진법을 지원하나요?</div>
+        <div class="faq-a">2진수(Base 2), 8진수(Base 8), 10진수(Base 10), 16진수(Base 16)를 지원합니다. 컴퓨터 과학에서 가장 널리 사용되는 네 가지 진법입니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">Does it support negative numbers?</div>
+        <div class="faq-a">No — only non-negative integers are supported. Typing a minus sign (<code>-</code>) will trigger an error. For negative numbers, consider two's complement representation.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">음수는 지원하나요?</div>
+        <div class="faq-a">아니요 — 0 이상의 정수만 지원합니다. 마이너스 기호(<code>-</code>)를 입력하면 오류가 표시됩니다. 음수 표현에는 2의 보수 표현 방식을 사용하세요.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">What is the maximum number I can convert?</div>
+        <div class="faq-a">There is no hard limit enforced by the tool, but JavaScript's number type is accurate up to 2<sup>53</sup> − 1 (9,007,199,254,740,991). Very large numbers beyond this may lose precision.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">변환할 수 있는 최대 숫자는 얼마인가요?</div>
+        <div class="faq-a">별도의 제한은 없지만, JavaScript의 숫자 타입은 2<sup>53</sup> − 1 (9,007,199,254,740,991)까지만 정확합니다. 이보다 큰 숫자는 정밀도가 떨어질 수 있습니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">Why is hexadecimal always shown in uppercase?</div>
+        <div class="faq-a">Uppercase hex (e.g. <code>0xFF</code>) is the dominant convention in programming, debuggers, and hardware documentation. It's easier to distinguish letters from numbers at a glance.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">16진수는 왜 항상 대문자로 표시되나요?</div>
+        <div class="faq-a">대문자 16진수(예: <code>0xFF</code>)는 프로그래밍, 디버거, 하드웨어 문서에서 표준 관례입니다. 숫자와 문자를 한눈에 구별하기 쉬워 가독성이 높습니다.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Vultr affiliate banner -->
+  <section class="vultr-banner">
+    <div class="vultr-inner">
+      <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
+      <div class="vultr-text">
+        <strong data-i18n="vultr_title">Get started on Vultr</strong>
+        <span data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" target="_blank" rel="nofollow sponsored" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
+      <nav class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/tools/vps-cost-calculator/">VPS Calculator</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- i18n -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: "← All Tools",
+        vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
+        vultr_sub: "Get $300 free credit — valid for 30 days",
+        vultr_cta: "Claim your credit →",
+        footer_copy: "© 2026 StackFreeks",
+        copy: "Copy", copied: "Copied!",
+        bin_label: "Binary (Base 2)", oct_label: "Octal (Base 8)",
+        dec_label: "Decimal (Base 10)", hex_label: "Hexadecimal (Base 16)",
+        invalid: "Invalid input"
+      },
+      ko: {
+        nav_back: "← 전체 툴",
+        vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
+        vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+        vultr_cta: "크레딧 받기 →",
+        footer_copy: "© 2026 StackFreeks",
+        copy: "복사", copied: "복사됨!",
+        bin_label: "2진수 (Base 2)", oct_label: "8진수 (Base 8)",
+        dec_label: "10진수 (Base 10)", hex_label: "16진수 (Base 16)",
+        invalid: "유효하지 않은 입력"
+      }
+    };
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+  <!-- Tool logic -->
+  <script>
+    (function () {
+      var FIELDS = [
+        { id: 'bin', base: 2,  pattern: /^[01]+$/       },
+        { id: 'oct', base: 8,  pattern: /^[0-7]+$/      },
+        { id: 'dec', base: 10, pattern: /^\d+$/          },
+        { id: 'hex', base: 16, pattern: /^[0-9a-fA-F]+$/ }
+      ];
+
+      // Cache DOM refs
+      var inputs = {};
+      var badges = {};
+      var cards  = {};
+      FIELDS.forEach(function (f) {
+        inputs[f.id] = document.getElementById('input-' + f.id);
+        badges[f.id] = document.getElementById('badge-' + f.id);
+        cards[f.id]  = document.getElementById('card-'  + f.id);
+      });
+
+      var bitInfo   = document.getElementById('bit-info');
+      var bitDigits = document.getElementById('bit-digits');
+      var bitMin    = document.getElementById('bit-min');
+      var bitFit    = document.getElementById('bit-fit');
+
+      // ── helpers ──────────────────────────────────────────────────────────────
+      function getI18n(key) {
+        try {
+          var lang = (window.sfLang && window.sfLang.current) || 'en';
+          return (window.SF_PAGE_I18N[lang] || {})[key] || key;
+        } catch (e) { return key; }
+      }
+
+      function setInvalid(skipId) {
+        FIELDS.forEach(function (f) {
+          if (f.id === skipId) return;
+          inputs[f.id].value = '';
+          inputs[f.id].placeholder = getI18n('invalid');
+          inputs[f.id].classList.add('is-error');
+          badges[f.id].textContent = '—';
+          cards[f.id].classList.add('error');
+        });
+        bitInfo.classList.remove('visible');
+      }
+
+      function clearError() {
+        FIELDS.forEach(function (f) {
+          inputs[f.id].classList.remove('is-error');
+          cards[f.id].classList.remove('error');
+          // Restore placeholder
+          var placeholders = { bin: '0 or 1', oct: '0–7', dec: '0–9', hex: '0–9, A–F' };
+          inputs[f.id].placeholder = placeholders[f.id];
+        });
+      }
+
+      function clearAll() {
+        FIELDS.forEach(function (f) {
+          inputs[f.id].value = '';
+          badges[f.id].textContent = '0';
+        });
+        clearError();
+        bitInfo.classList.remove('visible');
+      }
+
+      function updateBitInfo(n) {
+        if (n === 0) {
+          bitDigits.textContent = '1';
+          bitMin.textContent    = '1';
+        } else {
+          var bits = Math.floor(Math.log2(n)) + 1;
+          bitDigits.textContent = n.toString(2).length;
+          bitMin.textContent    = bits;
+        }
+
+        // Fit badges
+        var sizes = [
+          { label: '8-bit',  max: 255 },
+          { label: '16-bit', max: 65535 },
+          { label: '32-bit', max: 4294967295 },
+          { label: '>32-bit', max: Infinity }
+        ];
+        bitFit.innerHTML = '';
+        sizes.forEach(function (s) {
+          var span = document.createElement('span');
+          span.className = 'bit-fit-badge' + (n <= s.max ? ' ok' : '');
+          span.textContent = s.label;
+          bitFit.appendChild(span);
+          if (n <= s.max) return; // stop colouring after first fit
+        });
+        // reset: only highlight the smallest fitting size
+        var badges2 = bitFit.querySelectorAll('.bit-fit-badge');
+        var found = false;
+        badges2.forEach(function (b) {
+          b.classList.remove('ok');
+        });
+        for (var i = 0; i < sizes.length; i++) {
+          if (n <= sizes[i].max) {
+            badges2[i].classList.add('ok');
+            break;
+          }
+        }
+
+        bitInfo.classList.add('visible');
+      }
+
+      // ── core conversion ───────────────────────────────────────────────────────
+      function convert(sourceId, rawValue) {
+        if (rawValue === '') { clearAll(); return; }
+
+        var srcField = FIELDS.find(function (f) { return f.id === sourceId; });
+        if (!srcField) return;
+
+        // Validate
+        if (!srcField.pattern.test(rawValue)) {
+          setInvalid(sourceId);
+          return;
+        }
+
+        var n = parseInt(rawValue, srcField.base);
+        if (isNaN(n) || n < 0) { setInvalid(sourceId); return; }
+
+        clearError();
+
+        // Update all other fields
+        FIELDS.forEach(function (f) {
+          if (f.id === sourceId) {
+            // Update badge for source
+            badges[f.id].textContent = rawValue.replace(/^0+(?!$)/, '').length || rawValue.length;
+            return;
+          }
+          var val = n.toString(f.base).toUpperCase();
+          inputs[f.id].value = val;
+          badges[f.id].textContent = val.length;
+        });
+
+        // Source badge (use display length)
+        var dispVal = sourceId === 'hex' ? rawValue.toUpperCase() : rawValue;
+        badges[sourceId].textContent = dispVal.length;
+        if (sourceId === 'hex') inputs[sourceId].value = dispVal;
+
+        updateBitInfo(n);
+      }
+
+      // ── event wiring ──────────────────────────────────────────────────────────
+      FIELDS.forEach(function (f) {
+        inputs[f.id].addEventListener('input', function () {
+          convert(f.id, this.value);
+        });
+      });
+
+      // Copy buttons
+      document.querySelectorAll('.copy-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var targetId = btn.getAttribute('data-target');
+          var inp = document.getElementById(targetId);
+          if (!inp || !inp.value || inp.classList.contains('is-error')) return;
+
+          navigator.clipboard.writeText(inp.value).then(function () {
+            var prev = btn.textContent;
+            btn.textContent = getI18n('copied');
+            btn.classList.add('copied');
+            setTimeout(function () {
+              btn.textContent = getI18n('copy');
+              btn.classList.remove('copied');
+            }, 1500);
+          }).catch(function () {
+            // Fallback for older browsers
+            inp.select();
+            document.execCommand('copy');
+          });
+        });
+      });
+
+      // Presets
+      document.querySelectorAll('.preset-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var val = btn.getAttribute('data-preset');
+          inputs['dec'].value = val;
+          convert('dec', val);
+          inputs['dec'].focus();
+        });
+      });
+
+      // Re-apply i18n on lang change (update copy button text if mid-copied state)
+      document.addEventListener('sfLangChanged', function () {
+        document.querySelectorAll('.copy-btn').forEach(function (btn) {
+          if (!btn.classList.contains('copied')) {
+            btn.textContent = getI18n('copy');
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

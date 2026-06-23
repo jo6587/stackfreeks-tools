@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Converter — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Convert colors between HEX, RGB, and HSL instantly. Live three-way sync, color picker, preset palette, and one-click copy for each format." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/color-converter/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Color Converter — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Convert colors between HEX, RGB, and HSL instantly. Live three-way sync, color picker, preset palette, and one-click copy for each format." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/color-converter/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    .nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); color: var(--text-1); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 560px;
+    }
+
+    /* ── Tool Main ── */
+    .tool-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Color Swatch Preview */
+    .color-swatch {
+      width: 100%;
+      height: 160px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      transition: background-color 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .swatch-label {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      font-family: 'Courier New', monospace;
+      mix-blend-mode: difference;
+      color: #fff;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Color Picker Row */
+    .picker-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .picker-label {
+      font-size: 12px;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+
+    input[type="color"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 48px;
+      height: 36px;
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      cursor: pointer;
+      padding: 3px;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
+
+    /* Format Cards */
+    .format-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .format-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      transition: border-color 0.15s;
+    }
+    .format-card:focus-within { border-color: var(--border-2); }
+
+    .format-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .format-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .copy-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--text-1); }
+    .copy-btn.copied {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .format-inputs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 56px;
+    }
+
+    .input-group label {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .format-input {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      padding: 7px 10px;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+    .format-input:focus { border-color: var(--accent); }
+    .format-input.wide { font-size: 14px; }
+
+    /* Preset Palette */
+    .presets-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .preset-palette {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 0;
+    }
+
+    .preset-swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.1s, border-color 0.15s;
+    }
+    .preset-swatch:hover { transform: scale(1.12); border-color: rgba(255,255,255,0.3); }
+    .preset-swatch.active { border-color: var(--text-1); }
+
+    /* ── Guide ── */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* ── Vultr Banner ── */
+    .vultr-banner {
+      max-width: 860px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .vultr-inner {
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .vultr-badge {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .vultr-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 3px;
+    }
+
+    .vultr-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .vultr-cta {
+      display: inline-block;
+      background: var(--success);
+      color: #0a0a0b;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 9px 18px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .vultr-cta:hover { opacity: 0.88; color: #0a0a0b; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    /* ── Lang visibility ── */
+    .lang-ko { display: none; }
+    body.lang-ko .lang-ko { display: block; }
+    body.lang-ko .lang-en { display: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 22px; }
+      .format-grid { grid-template-columns: 1fr; }
+      .guide-grid { grid-template-columns: 1fr; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
+      <div class="nav-right">
+        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="lang-en">
+      <h1>Color Converter</h1>
+      <p>Convert colors between HEX, RGB, and HSL in real time. Use the picker, type a value, or click a preset — all three formats stay in sync.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>색상 변환기</h1>
+      <p>HEX, RGB, HSL 색상을 실시간으로 변환하세요. 색상 피커, 직접 입력, 프리셋 클릭 — 세 가지 형식이 항상 동기화됩니다.</p>
+    </div>
+  </header>
+
+  <!-- Tool Body -->
+  <main class="tool-wrap">
+
+    <!-- Color Swatch Preview -->
+    <div class="color-swatch" id="colorSwatch">
+      <span class="swatch-label" id="swatchLabel">#6366f1</span>
+    </div>
+
+    <!-- Color Picker Row -->
+    <div class="picker-row">
+      <span class="picker-label lang-en">Pick a color:</span>
+      <span class="picker-label lang-ko">색상 선택:</span>
+      <input type="color" id="colorPicker" value="#6366f1" title="Color Picker" />
+    </div>
+
+    <!-- Format Cards -->
+    <div class="format-grid">
+
+      <!-- HEX Card -->
+      <div class="format-card">
+        <div class="format-card-header">
+          <span class="format-tag" data-i18n="hex_label">HEX</span>
+          <button class="copy-btn" id="copyHex" onclick="copyFormat('hex')" data-i18n="copy">Copy</button>
+        </div>
+        <div class="format-inputs">
+          <div class="input-group" style="flex:1; min-width:100%;">
+            <label for="hexInput">#rrggbb</label>
+            <input type="text" id="hexInput" class="format-input wide" value="#6366f1" maxlength="9" spellcheck="false" autocomplete="off" placeholder="#rrggbb" />
+          </div>
+        </div>
+      </div>
+
+      <!-- RGB Card -->
+      <div class="format-card">
+        <div class="format-card-header">
+          <span class="format-tag" data-i18n="rgb_label">RGB</span>
+          <button class="copy-btn" id="copyRgb" onclick="copyFormat('rgb')" data-i18n="copy">Copy</button>
+        </div>
+        <div class="format-inputs">
+          <div class="input-group">
+            <label for="rInput">R</label>
+            <input type="number" id="rInput" class="format-input" value="99" min="0" max="255" />
+          </div>
+          <div class="input-group">
+            <label for="gInput">G</label>
+            <input type="number" id="gInput" class="format-input" value="102" min="0" max="255" />
+          </div>
+          <div class="input-group">
+            <label for="bInput">B</label>
+            <input type="number" id="bInput" class="format-input" value="241" min="0" max="255" />
+          </div>
+        </div>
+      </div>
+
+      <!-- HSL Card -->
+      <div class="format-card">
+        <div class="format-card-header">
+          <span class="format-tag" data-i18n="hsl_label">HSL</span>
+          <button class="copy-btn" id="copyHsl" onclick="copyFormat('hsl')" data-i18n="copy">Copy</button>
+        </div>
+        <div class="format-inputs">
+          <div class="input-group">
+            <label for="hInput">H°</label>
+            <input type="number" id="hInput" class="format-input" value="239" min="0" max="360" />
+          </div>
+          <div class="input-group">
+            <label for="sInput">S%</label>
+            <input type="number" id="sInput" class="format-input" value="84" min="0" max="100" />
+          </div>
+          <div class="input-group">
+            <label for="lInput">L%</label>
+            <input type="number" id="lInput" class="format-input" value="67" min="0" max="100" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Preset Palette -->
+    <div class="presets-label lang-en">Preset colors</div>
+    <div class="presets-label lang-ko">프리셋 색상</div>
+    <div class="preset-palette" id="presetPalette">
+      <div class="preset-swatch" style="background:#ef4444;" title="#ef4444" onclick="loadPreset('#ef4444')"></div>
+      <div class="preset-swatch" style="background:#f97316;" title="#f97316" onclick="loadPreset('#f97316')"></div>
+      <div class="preset-swatch" style="background:#eab308;" title="#eab308" onclick="loadPreset('#eab308')"></div>
+      <div class="preset-swatch" style="background:#22c55e;" title="#22c55e" onclick="loadPreset('#22c55e')"></div>
+      <div class="preset-swatch" style="background:#06b6d4;" title="#06b6d4" onclick="loadPreset('#06b6d4')"></div>
+      <div class="preset-swatch" style="background:#6366f1;" title="#6366f1" onclick="loadPreset('#6366f1')" class="active"></div>
+      <div class="preset-swatch" style="background:#a855f7;" title="#a855f7" onclick="loadPreset('#a855f7')"></div>
+      <div class="preset-swatch" style="background:#ec4899;" title="#ec4899" onclick="loadPreset('#ec4899')"></div>
+    </div>
+
+  </main>
+
+  <!-- Guide -->
+  <section class="guide">
+    <div class="guide-title lang-en">How to use</div>
+    <div class="guide-title lang-ko">사용 방법</div>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="guide-step lang-en">Step 1</div>
+        <div class="guide-step lang-ko">1단계</div>
+        <h3 class="lang-en">Enter a color value</h3>
+        <h3 class="lang-ko">색상 값 입력</h3>
+        <p class="lang-en">Type a HEX, RGB, or HSL value in any field — the other two formats update instantly.</p>
+        <p class="lang-ko">HEX, RGB, HSL 중 어느 필드에나 값을 입력하면 나머지 두 형식이 즉시 업데이트됩니다.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step lang-en">Step 2</div>
+        <div class="guide-step lang-ko">2단계</div>
+        <h3 class="lang-en">Use the color picker</h3>
+        <h3 class="lang-ko">색상 피커 사용</h3>
+        <p class="lang-en">Click the color picker for a visual selection. All three format fields sync automatically.</p>
+        <p class="lang-ko">색상 피커를 클릭해 시각적으로 선택하세요. 세 가지 형식이 자동으로 동기화됩니다.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step lang-en">Step 3</div>
+        <div class="guide-step lang-ko">3단계</div>
+        <h3 class="lang-en">Click a preset swatch</h3>
+        <h3 class="lang-ko">프리셋 클릭</h3>
+        <p class="lang-en">Choose from 8 common web colors to load them instantly into all three format fields.</p>
+        <p class="lang-ko">8가지 대표 웹 색상 중 하나를 클릭하면 모든 형식에 즉시 로드됩니다.</p>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step lang-en">Step 4</div>
+        <div class="guide-step lang-ko">4단계</div>
+        <h3 class="lang-en">Copy any format</h3>
+        <h3 class="lang-ko">형식 복사</h3>
+        <p class="lang-en">Click the Copy button next to HEX, RGB, or HSL to copy the formatted string to your clipboard.</p>
+        <p class="lang-ko">HEX, RGB, HSL 옆의 복사 버튼을 클릭해 형식화된 문자열을 클립보드에 복사하세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="faq-title lang-en">Frequently Asked Questions</div>
+    <div class="faq-title lang-ko">자주 묻는 질문</div>
+
+    <div class="faq-item">
+      <div class="faq-q lang-en">What's the difference between HEX, RGB, and HSL?</div>
+      <div class="faq-q lang-ko">HEX, RGB, HSL의 차이는 무엇인가요?</div>
+      <div class="faq-a lang-en">HEX is a hexadecimal notation widely used in CSS (e.g. <code>#ff0000</code>). RGB specifies the red, green, and blue channels as numbers from 0 to 255. HSL stands for Hue, Saturation, and Lightness — it's more intuitive for designers because you can shift the hue or adjust brightness independently.</div>
+      <div class="faq-a lang-ko">HEX는 CSS에서 널리 사용되는 16진수 표기법입니다 (예: <code>#ff0000</code>). RGB는 빨강, 초록, 파랑 채널을 0~255 숫자로 지정합니다. HSL은 색상(Hue), 채도(Saturation), 밝기(Lightness)의 약자로, 색조나 밝기를 독립적으로 조정할 수 있어 디자이너에게 직관적입니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q lang-en">Why use HSL over HEX or RGB?</div>
+      <div class="faq-q lang-ko">HEX나 RGB 대신 HSL을 쓰는 이유는?</div>
+      <div class="faq-a lang-en">HSL is easier to reason about. Want a lighter shade? Increase L. Want a more muted tone? Lower S. Shifting the hue to a complementary color is as simple as adding 180 to H — without touching saturation or lightness at all.</div>
+      <div class="faq-a lang-ko">HSL은 직관적입니다. 더 밝은 색을 원하면 L을 높이고, 채도를 낮추려면 S를 줄이면 됩니다. 보색으로 이동하려면 H에 180만 더하면 되며 채도나 밝기를 건드릴 필요가 없습니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q lang-en">Does this tool support alpha / opacity?</div>
+      <div class="faq-q lang-ko">투명도(알파)를 지원하나요?</div>
+      <div class="faq-a lang-en">Not currently. This tool handles fully opaque RGB colors only. Support for RGBA and HSLA formats is planned for a future update.</div>
+      <div class="faq-a lang-ko">현재는 지원하지 않습니다. 이 툴은 불투명한 RGB 색상만 처리합니다. RGBA 및 HSLA 형식 지원은 향후 업데이트에서 추가될 예정입니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q lang-en">Are the conversions exact?</div>
+      <div class="faq-q lang-ko">변환 결과가 정확한가요?</div>
+      <div class="faq-a lang-en">HEX ↔ RGB conversion is lossless. HSL values may have minor rounding differences due to floating-point math, but the visual result is identical. Converting from HEX → HSL → HEX will reproduce the original HEX within 1 rounding step.</div>
+      <div class="faq-a lang-ko">HEX ↔ RGB 변환은 손실 없이 정확합니다. HSL 값은 부동소수점 연산으로 인해 약간의 반올림 차이가 있을 수 있지만 시각적 결과는 동일합니다. HEX → HSL → HEX로 변환해도 원래 HEX가 1 반올림 이내로 재현됩니다.</div>
+    </div>
+  </section>
+
+  <!-- Vultr Affiliate Banner -->
+  <div class="vultr-banner">
+    <div class="vultr-inner">
+      <div>
+        <div class="vultr-badge" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── i18n page keys (must come BEFORE i18n.js) ── -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: "← All Tools",
+        vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
+        vultr_sub: "Get $300 free credit — valid for 30 days",
+        vultr_cta: "Claim your credit →",
+        footer_copy: "© 2026 StackFreeks",
+        copy: "Copy", copied: "Copied!",
+        hex_label: "HEX", rgb_label: "RGB", hsl_label: "HSL",
+        preview_label: "Color Preview"
+      },
+      ko: {
+        nav_back: "← 전체 툴",
+        vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
+        vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+        vultr_cta: "크레딧 받기 →",
+        footer_copy: "© 2026 StackFreeks",
+        copy: "복사", copied: "복사됨!",
+        hex_label: "HEX", rgb_label: "RGB", hsl_label: "HSL",
+        preview_label: "색상 미리보기"
+      }
+    };
+  </script>
+
+  <!-- ── Color Converter Logic ── -->
+  <script>
+    // ── Conversion helpers ──────────────────────────────────────────────────
+
+    function hexToRgb(hex) {
+      hex = hex.replace(/^#/, '');
+      if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+      if (hex.length !== 6) return null;
+      const n = parseInt(hex, 16);
+      if (isNaN(n)) return null;
+      return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+    }
+
+    function rgbToHex(r, g, b) {
+      return '#' +
+        r.toString(16).padStart(2, '0') +
+        g.toString(16).padStart(2, '0') +
+        b.toString(16).padStart(2, '0');
+    }
+
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s;
+      const l = (max + min) / 2;
+      if (max === min) {
+        h = s = 0;
+      } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+          case g: h = ((b - r) / d + 2) / 6; break;
+          case b: h = ((r - g) / d + 4) / 6; break;
+        }
+      }
+      return {
+        h: Math.round(h * 360),
+        s: Math.round(s * 100),
+        l: Math.round(l * 100)
+      };
+    }
+
+    function hslToRgb(h, s, l) {
+      h /= 360; s /= 100; l /= 100;
+      let r, g, b;
+      if (s === 0) {
+        r = g = b = l;
+      } else {
+        function hue2rgb(p, q, t) {
+          if (t < 0) t += 1;
+          if (t > 1) t -= 1;
+          if (t < 1 / 6) return p + (q - p) * 6 * t;
+          if (t < 1 / 2) return q;
+          if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+          return p;
+        }
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+      }
+      return {
+        r: Math.round(r * 255),
+        g: Math.round(g * 255),
+        b: Math.round(b * 255)
+      };
+    }
+
+    // ── DOM refs ────────────────────────────────────────────────────────────
+    const hexInput   = document.getElementById('hexInput');
+    const rInput     = document.getElementById('rInput');
+    const gInput     = document.getElementById('gInput');
+    const bInput     = document.getElementById('bInput');
+    const hInput     = document.getElementById('hInput');
+    const sInput     = document.getElementById('sInput');
+    const lInput     = document.getElementById('lInput');
+    const picker     = document.getElementById('colorPicker');
+    const swatch     = document.getElementById('colorSwatch');
+    const swatchLbl  = document.getElementById('swatchLabel');
+
+    // Currently resolved hex (always 6-char #rrggbb)
+    let currentHex = '#6366f1';
+
+    // ── Clamp helpers ───────────────────────────────────────────────────────
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+    // ── Update swatch & picker ──────────────────────────────────────────────
+    function updateSwatch(hex) {
+      swatch.style.backgroundColor = hex;
+      swatchLbl.textContent = hex.toUpperCase();
+      picker.value = hex;
+
+      // Auto text color for readability
+      const rgb = hexToRgb(hex);
+      if (rgb) {
+        const lum = 0.2126 * (rgb.r / 255) + 0.7152 * (rgb.g / 255) + 0.0722 * (rgb.b / 255);
+        swatchLbl.style.color = lum > 0.45 ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.85)';
+      }
+
+      // Update active preset highlight
+      document.querySelectorAll('.preset-swatch').forEach(el => {
+        el.classList.toggle('active', el.title.toLowerCase() === hex.toLowerCase());
+      });
+    }
+
+    // ── Source = HEX ────────────────────────────────────────────────────────
+    function applyHex(hex) {
+      const rgb = hexToRgb(hex);
+      if (!rgb) return false;
+      const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+
+      rInput.value = rgb.r;
+      gInput.value = rgb.g;
+      bInput.value = rgb.b;
+      hInput.value = hsl.h;
+      sInput.value = hsl.s;
+      lInput.value = hsl.l;
+
+      currentHex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      updateSwatch(currentHex);
+      return true;
+    }
+
+    // ── Source = RGB ─────────────────────────────────────────────────────────
+    function applyRgb(r, g, b) {
+      const hsl = rgbToHsl(r, g, b);
+      const hex = rgbToHex(r, g, b);
+
+      hexInput.value = hex;
+      hInput.value = hsl.h;
+      sInput.value = hsl.s;
+      lInput.value = hsl.l;
+
+      currentHex = hex;
+      updateSwatch(hex);
+    }
+
+    // ── Source = HSL ─────────────────────────────────────────────────────────
+    function applyHsl(h, s, l) {
+      const rgb = hslToRgb(h, s, l);
+      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+
+      hexInput.value = hex;
+      rInput.value = rgb.r;
+      gInput.value = rgb.g;
+      bInput.value = rgb.b;
+
+      currentHex = hex;
+      updateSwatch(hex);
+    }
+
+    // ── Event listeners ──────────────────────────────────────────────────────
+
+    hexInput.addEventListener('input', () => {
+      let raw = hexInput.value.trim();
+      if (!raw.startsWith('#')) raw = '#' + raw;
+      // Accept partial while typing; only apply when length looks complete
+      if (raw.length === 4 || raw.length === 7) {
+        applyHex(raw);
+      }
+    });
+
+    hexInput.addEventListener('blur', () => {
+      // On blur, normalize regardless
+      let raw = hexInput.value.trim();
+      if (!raw.startsWith('#')) raw = '#' + raw;
+      if (!applyHex(raw)) {
+        // revert to last valid
+        hexInput.value = currentHex;
+      }
+    });
+
+    [rInput, gInput, bInput].forEach(input => {
+      input.addEventListener('input', () => {
+        const r = clamp(parseInt(rInput.value) || 0, 0, 255);
+        const g = clamp(parseInt(gInput.value) || 0, 0, 255);
+        const b = clamp(parseInt(bInput.value) || 0, 0, 255);
+        applyRgb(r, g, b);
+      });
+      input.addEventListener('blur', () => {
+        input.value = clamp(parseInt(input.value) || 0, 0, 255);
+      });
+    });
+
+    [hInput, sInput, lInput].forEach(input => {
+      input.addEventListener('input', () => {
+        const h = clamp(parseInt(hInput.value) || 0, 0, 360);
+        const s = clamp(parseInt(sInput.value) || 0, 0, 100);
+        const l = clamp(parseInt(lInput.value) || 0, 0, 100);
+        applyHsl(h, s, l);
+      });
+      input.addEventListener('blur', () => {
+        const isH = input === hInput;
+        const max = isH ? 360 : 100;
+        input.value = clamp(parseInt(input.value) || 0, 0, max);
+      });
+    });
+
+    picker.addEventListener('input', () => {
+      applyHex(picker.value);
+    });
+
+    // ── Preset loader ────────────────────────────────────────────────────────
+    function loadPreset(hex) {
+      applyHex(hex);
+      hexInput.value = currentHex;
+    }
+
+    // ── Copy buttons ─────────────────────────────────────────────────────────
+    function getCopyLabel(key) {
+      const lang = document.body.classList.contains('lang-ko') ? 'ko' : 'en';
+      return (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang] && window.SF_PAGE_I18N[lang][key]) || key;
+    }
+
+    function copyFormat(format) {
+      let text = '';
+      const rgb = hexToRgb(currentHex);
+      const hsl = rgb ? rgbToHsl(rgb.r, rgb.g, rgb.b) : null;
+
+      if (format === 'hex') {
+        text = currentHex.toUpperCase();
+      } else if (format === 'rgb' && rgb) {
+        text = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+      } else if (format === 'hsl' && hsl) {
+        text = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+      }
+
+      if (!text) return;
+
+      navigator.clipboard.writeText(text).then(() => {
+        const btnId = { hex: 'copyHex', rgb: 'copyRgb', hsl: 'copyHsl' }[format];
+        const btn = document.getElementById(btnId);
+        const origText = btn.textContent;
+        btn.textContent = getCopyLabel('copied');
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = getCopyLabel('copy');
+          btn.classList.remove('copied');
+        }, 1800);
+      }).catch(() => {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      });
+    }
+
+    // ── Init ─────────────────────────────────────────────────────────────────
+    applyHex('#6366f1');
+  </script>
+
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>

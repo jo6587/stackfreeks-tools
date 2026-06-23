@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regex Tester — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Test and debug regular expressions instantly in your browser. Live match highlighting, flag toggles, capture group viewer, and a regex cheat sheet — no signup needed." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/regex-tester/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Regex Tester — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Test and debug regular expressions instantly in your browser. Live match highlighting, flag toggles, capture group viewer, and a regex cheat sheet." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/regex-tester/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    .nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .lang-toggle:hover { color: var(--text-1); border-color: var(--accent); }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px 36px;
+    }
+    .hero h1 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-1);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 16px;
+      color: var(--text-2);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── Tool body ── */
+    .tool-body {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .field-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    /* Pattern row */
+    .pattern-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .pattern-wrap {
+      flex: 1;
+    }
+
+    .pattern-input-group {
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+    .pattern-input-group:focus-within { border-color: var(--accent); }
+    .pattern-slash {
+      padding: 0 10px;
+      color: var(--text-3);
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 18px;
+      line-height: 1;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    #patternInput {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-1);
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 15px;
+      padding: 10px 0;
+      min-width: 0;
+    }
+    #patternInput::placeholder { color: var(--text-3); }
+
+    .copy-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      align-self: flex-end;
+      height: 44px;
+    }
+    .copy-btn:hover { color: var(--text-1); border-color: var(--accent); }
+    .copy-btn.copied { color: var(--success); border-color: var(--success); }
+
+    /* Flags */
+    .flags-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+    .flag-btn {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .flag-btn:hover { color: var(--text-1); border-color: var(--border-2); }
+    .flag-btn.active {
+      background: rgba(99,102,241,0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .flag-desc {
+      font-family: var(--font);
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .flag-btn.active .flag-desc { color: rgba(99,102,241,0.7); }
+
+    /* Test string */
+    #testInput {
+      width: 100%;
+      min-height: 200px;
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 14px;
+      padding: 12px 14px;
+      outline: none;
+      resize: vertical;
+      line-height: 1.7;
+      transition: border-color 0.15s;
+    }
+    #testInput:focus { border-color: var(--accent); }
+    #testInput::placeholder { color: var(--text-3); }
+
+    /* Error state */
+    .error-msg {
+      font-size: 13px;
+      color: #f87171;
+      margin-top: 6px;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    /* Highlighted output */
+    .output-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+    .output-header-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .match-count-badge {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      background: rgba(99,102,241,0.12);
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+    .match-count-badge.no-match { color: var(--text-3); background: transparent; }
+
+    .highlighted-output {
+      padding: 14px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-2);
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 60px;
+    }
+
+    mark.match-highlight {
+      background: rgba(99,102,241,0.25);
+      color: var(--text-1);
+      border-radius: 3px;
+      padding: 1px 0;
+    }
+
+    /* Match list */
+    .match-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 14px;
+      border-top: 1px solid var(--border);
+    }
+    .match-item {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .match-index {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(99,102,241,0.12);
+      border-radius: 4px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .match-text {
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      color: var(--text-1);
+      word-break: break-all;
+    }
+    .match-groups { font-size: 11px; color: var(--text-3); margin-top: 3px; }
+    .match-meta {
+      font-size: 11px;
+      color: var(--text-3);
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .no-match-state {
+      padding: 24px 14px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-3);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Cheat sheet ── */
+    .cheatsheet {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 24px;
+    }
+    .cheatsheet-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 16px;
+    }
+    .cheatsheet-toggle-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .cheatsheet-toggle-icon {
+      font-size: 11px;
+      color: var(--text-3);
+      transition: transform 0.2s;
+    }
+    .cheatsheet-toggle.open .cheatsheet-toggle-icon { transform: rotate(180deg); }
+
+    .cheatsheet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 10px;
+    }
+    .cheat-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .cheat-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+    .cheat-pattern {
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      word-break: break-all;
+      background: rgba(99,102,241,0.08);
+      padding: 6px 8px;
+      border-radius: 5px;
+      flex: 1;
+    }
+    .cheat-use-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      align-self: flex-start;
+    }
+    .cheat-use-btn:hover { color: var(--text-1); border-color: var(--accent); }
+
+    /* ── Guide ── */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    code { font-family: 'Menlo', 'Consolas', monospace; background: rgba(99,102,241,0.12); color: var(--accent); padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+
+    /* ── Vultr banner ── */
+    .vultr-banner {
+      background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(34,197,94,0.02) 100%);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 20px 24px;
+      margin-bottom: 0;
+    }
+    .vultr-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .vultr-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--success);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.2);
+      padding: 3px 10px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .vultr-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 180px;
+    }
+    .vultr-text strong { font-size: 14px; color: var(--text-1); }
+    .vultr-text span { font-size: 13px; color: var(--text-2); }
+    .vultr-cta {
+      background: var(--success);
+      color: #000;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .vultr-cta:hover { opacity: 0.9; color: #000; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy { font-size: 13px; color: var(--text-3); }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a { font-size: 13px; color: var(--text-3); }
+    .footer-links a:hover { color: var(--text-2); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .pattern-row { flex-direction: column; }
+      .copy-btn { align-self: flex-start; }
+      .match-item { grid-template-columns: 28px 1fr; }
+      .match-meta { grid-column: 2; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+      .footer-inner { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
+      <div class="nav-right">
+        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 2. AdSense slot (top) -->
+  <!-- ADSENSE_SLOT_HERO -->
+
+  <!-- 3. Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>Regex Tester</h1>
+      <p>Test and debug regular expressions instantly in your browser. Live match highlighting, flag toggles, capture group viewer, and a quick-access cheat sheet — no signup required.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>정규식 테스터</h1>
+      <p>브라우저에서 바로 정규 표현식을 테스트하고 디버깅하세요. 실시간 매치 하이라이팅, 플래그 토글, 캡처 그룹 뷰어, 빠른 치트시트까지 — 회원가입 불필요.</p>
+    </div>
+  </section>
+
+  <!-- 4. Tool body -->
+  <main class="tool-body" aria-label="Regex tester tool">
+
+    <!-- Pattern input -->
+    <div>
+      <div class="field-label" data-i18n="pattern_label">Regular Expression</div>
+      <div class="pattern-row">
+        <div class="pattern-wrap">
+          <div class="pattern-input-group" id="patternGroup">
+            <span class="pattern-slash">/</span>
+            <input
+              type="text"
+              id="patternInput"
+              spellcheck="false"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              placeholder="pattern"
+              value="\b\w{4}\b"
+              aria-label="Regex pattern"
+            />
+            <span class="pattern-slash" id="flagsDisplay">/gi</span>
+          </div>
+          <div class="error-msg" id="errorMsg" role="alert"></div>
+        </div>
+        <button class="copy-btn" id="copyBtn" onclick="copyPattern()" data-i18n="copy_pattern">Copy Pattern</button>
+      </div>
+    </div>
+
+    <!-- Flags -->
+    <div>
+      <div class="field-label" data-i18n="flags_label">Flags</div>
+      <div class="flags-wrap" id="flagsWrap">
+        <button class="flag-btn active" data-flag="g" onclick="toggleFlag(this)" title="Global — find all matches">
+          <span>g</span><span class="flag-desc">global</span>
+        </button>
+        <button class="flag-btn active" data-flag="i" onclick="toggleFlag(this)" title="Case insensitive">
+          <span>i</span><span class="flag-desc">ignore case</span>
+        </button>
+        <button class="flag-btn" data-flag="m" onclick="toggleFlag(this)" title="Multiline — ^ and $ match line boundaries">
+          <span>m</span><span class="flag-desc">multiline</span>
+        </button>
+        <button class="flag-btn" data-flag="s" onclick="toggleFlag(this)" title="Dotall — . matches newlines too">
+          <span>s</span><span class="flag-desc">dotall</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Test string -->
+    <div>
+      <div class="field-label" data-i18n="test_label">Test String</div>
+      <textarea
+        id="testInput"
+        spellcheck="false"
+        aria-label="Test string"
+      >The quick brown fox jumps over the lazy dog</textarea>
+    </div>
+
+    <!-- Output / match results -->
+    <div class="output-section">
+      <div class="output-header">
+        <span class="output-header-label" data-i18n="matches_label">Matches</span>
+        <span class="match-count-badge" id="matchCountBadge">0 matches</span>
+      </div>
+      <div class="highlighted-output" id="highlightedOutput" aria-live="polite"></div>
+      <div id="matchList" class="match-list" style="display:none;"></div>
+      <div id="noMatchState" class="no-match-state" style="display:none;" data-i18n="no_match">No matches</div>
+    </div>
+
+  </main>
+
+  <!-- 5. Cheat sheet (collapsible) -->
+  <section class="cheatsheet">
+    <button class="cheatsheet-toggle" id="cheatToggle" onclick="toggleCheatsheet()" aria-expanded="false">
+      <span class="cheatsheet-toggle-label">Regex Cheat Sheet</span>
+      <span class="cheatsheet-toggle-icon">▼</span>
+    </button>
+    <div class="cheatsheet-grid" id="cheatGrid" style="display:none;">
+      <div class="cheat-item">
+        <span class="cheat-name">Email</span>
+        <code class="cheat-pattern">[\w.-]+@[\w.-]+\.\w+</code>
+        <button class="cheat-use-btn" onclick="useCheat('[\\w.-]+@[\\w.-]+\\.\\w+','g')">Use</button>
+      </div>
+      <div class="cheat-item">
+        <span class="cheat-name">URL</span>
+        <code class="cheat-pattern">https?:\/\/[^\s]+</code>
+        <button class="cheat-use-btn" onclick="useCheat('https?:\\/\\/[^\\s]+','g')">Use</button>
+      </div>
+      <div class="cheat-item">
+        <span class="cheat-name">Phone (US)</span>
+        <code class="cheat-pattern">\d{3}[-.\s]\d{3}[-.\s]\d{4}</code>
+        <button class="cheat-use-btn" onclick="useCheat('\\d{3}[-.\\s]\\d{3}[-.\\s]\\d{4}','g')">Use</button>
+      </div>
+      <div class="cheat-item">
+        <span class="cheat-name">IPv4</span>
+        <code class="cheat-pattern">\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b</code>
+        <button class="cheat-use-btn" onclick="useCheat('\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b','g')">Use</button>
+      </div>
+      <div class="cheat-item">
+        <span class="cheat-name">Date (YYYY-MM-DD)</span>
+        <code class="cheat-pattern">\d{4}-\d{2}-\d{2}</code>
+        <button class="cheat-use-btn" onclick="useCheat('\\d{4}-\\d{2}-\\d{2}','g')">Use</button>
+      </div>
+      <div class="cheat-item">
+        <span class="cheat-name">Hex Color</span>
+        <code class="cheat-pattern">#[0-9a-fA-F]{3,6}</code>
+        <button class="cheat-use-btn" onclick="useCheat('#[0-9a-fA-F]{3,6}','g')">Use</button>
+      </div>
+      <div class="cheat-item">
+        <span class="cheat-name">Numbers Only</span>
+        <code class="cheat-pattern">\d+</code>
+        <button class="cheat-use-btn" onclick="useCheat('\\d+','g')">Use</button>
+      </div>
+      <div class="cheat-item">
+        <span class="cheat-name">Words</span>
+        <code class="cheat-pattern">\b\w+\b</code>
+        <button class="cheat-use-btn" onclick="useCheat('\\b\\w+\\b','g')">Use</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Related link -->
+  <section style="max-width:860px;margin:0 auto;padding:0 24px 40px;">
+    <div class="lang-en">
+      <p style="font-size:13px;color:var(--text-3);">
+        More dev tools on <a href="https://stackfreeks.com" style="color:var(--accent);">stackfreeks.com</a> — VPS guides, server setup tutorials, and developer resources.
+      </p>
+    </div>
+    <div class="lang-ko">
+      <p style="font-size:13px;color:var(--text-3);">
+        <a href="https://stackfreeks.com" style="color:var(--accent);">stackfreeks.com</a>에서 더 많은 개발 도구와 VPS 가이드, 서버 설정 튜토리얼을 확인하세요.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. Guide section -->
+  <section class="guide">
+    <div class="guide-title">How to use</div>
+    <div class="guide-grid">
+
+      <div class="guide-card">
+        <div class="guide-step">STEP 1</div>
+        <div class="lang-en">
+          <h3>Enter your pattern</h3>
+          <p>Type your regex pattern in the pattern field — no slashes needed. The tool adds them for display.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>패턴 입력</h3>
+          <p>패턴 필드에 정규식을 입력하세요 — 슬래시 불필요. 도구가 자동으로 표시해줍니다.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-step">STEP 2</div>
+        <div class="lang-en">
+          <h3>Toggle flags</h3>
+          <p>Use the flag pills to activate <code>g</code> (global), <code>i</code> (case-insensitive), <code>m</code> (multiline), or <code>s</code> (dotall).</p>
+        </div>
+        <div class="lang-ko">
+          <h3>플래그 선택</h3>
+          <p>플래그 버튼으로 <code>g</code>(전체), <code>i</code>(대소문자 무시), <code>m</code>(여러 줄), <code>s</code>(점 전체 일치)를 활성화하세요.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-step">STEP 3</div>
+        <div class="lang-en">
+          <h3>Paste your test string</h3>
+          <p>Type or paste any text into the test string area — matches highlight instantly as you type.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>테스트 문자열 붙여넣기</h3>
+          <p>테스트 영역에 텍스트를 입력하거나 붙여넣으세요 — 입력과 동시에 매치가 하이라이트됩니다.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-step">STEP 4</div>
+        <div class="lang-en">
+          <h3>Use the cheat sheet</h3>
+          <p>Open the cheat sheet to load common patterns — email, URL, IP address, date, hex color — in one click.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>치트시트 활용</h3>
+          <p>치트시트를 열어 이메일, URL, IP 주소, 날짜, 색상 코드 등 자주 쓰는 패턴을 한 번에 불러오세요.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 8. FAQ section -->
+  <section class="faq">
+    <div class="faq-title">FAQ</div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">What regex flavor does this use?</div>
+        <div class="faq-a">JavaScript's built-in <code>RegExp</code> — fully compatible with JavaScript, Node.js, and most modern engines (V8, SpiderMonkey). If you're writing regex for another language, minor syntax differences may apply.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">어떤 정규식 엔진을 사용하나요?</div>
+        <div class="faq-a">자바스크립트 내장 <code>RegExp</code>를 사용합니다. JavaScript, Node.js 및 대부분의 현대 엔진(V8, SpiderMonkey)과 완전 호환됩니다. 다른 언어용 정규식 작성 시 소소한 문법 차이가 있을 수 있습니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">What does the <code>g</code> flag do?</div>
+        <div class="faq-a">Global — makes the engine find <em>all</em> matches in the test string instead of stopping at the first one. Without <code>g</code>, only the first match is returned and highlighted.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q"><code>g</code> 플래그는 무엇인가요?</div>
+        <div class="faq-a">글로벌(Global) — 첫 번째 매치에서 멈추지 않고 테스트 문자열에서 <em>모든</em> 매치를 찾습니다. <code>g</code>가 없으면 첫 번째 매치만 반환되고 하이라이트됩니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">What does the <code>s</code> flag do?</div>
+        <div class="faq-a">Dotall — makes <code>.</code> match newline characters (<code>\n</code>) too. Without <code>s</code>, a dot only matches characters on the same line. Introduced in ES2018, supported in all modern browsers.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q"><code>s</code> 플래그는 무엇인가요?</div>
+        <div class="faq-a">닷올(Dotall) — <code>.</code>이 줄바꿈 문자(<code>\n</code>)까지 일치하게 합니다. <code>s</code>가 없으면 점(.)은 같은 줄의 문자만 일치합니다. ES2018에서 도입되었으며 모든 현대 브라우저에서 지원됩니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">Can I use capture groups?</div>
+        <div class="faq-a">Yes — use parentheses like <code>(\w+)</code> to define capture groups. Each match card in the results panel shows the matched text plus any captured groups in order.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">캡처 그룹을 사용할 수 있나요?</div>
+        <div class="faq-a">네 — <code>(\w+)</code>처럼 괄호를 사용해 캡처 그룹을 정의하세요. 결과 패널의 각 매치 카드에서 매치된 텍스트와 함께 캡처 그룹이 순서대로 표시됩니다.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 9. Vultr affiliate banner -->
+  <section class="vultr-banner">
+    <div class="vultr-inner">
+      <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
+      <div class="vultr-text">
+        <strong data-i18n="vultr_title">Get started on Vultr</strong>
+        <span data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" target="_blank" rel="nofollow sponsored" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- 10. Footer -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/tools/">Tools</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- i18n config (must be before i18n.js) -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: "← All Tools",
+        vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
+        vultr_sub: "Get $300 free credit — valid for 30 days",
+        vultr_cta: "Claim your credit →",
+        footer_copy: "© 2026 StackFreeks",
+        pattern_label: "Regular Expression", flags_label: "Flags",
+        test_label: "Test String", matches_label: "Matches",
+        no_match: "No matches", invalid_regex: "Invalid regex",
+        match_count: "match", matches_count: "matches",
+        copy_pattern: "Copy Pattern", copied: "Copied!"
+      },
+      ko: {
+        nav_back: "← 전체 툴",
+        vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
+        vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+        vultr_cta: "크레딧 받기 →",
+        footer_copy: "© 2026 StackFreeks",
+        pattern_label: "정규 표현식", flags_label: "플래그",
+        test_label: "테스트 문자열", matches_label: "매치 결과",
+        no_match: "매치 없음", invalid_regex: "유효하지 않은 정규식",
+        match_count: "개 매치", matches_count: "개 매치",
+        copy_pattern: "패턴 복사", copied: "복사됨!"
+      }
+    };
+  </script>
+
+  <!-- Tool logic -->
+  <script>
+    // ── State ──
+    const patternInput    = document.getElementById('patternInput');
+    const testInput       = document.getElementById('testInput');
+    const flagsDisplay    = document.getElementById('flagsDisplay');
+    const errorMsg        = document.getElementById('errorMsg');
+    const highlightedOutput = document.getElementById('highlightedOutput');
+    const matchList       = document.getElementById('matchList');
+    const noMatchState    = document.getElementById('noMatchState');
+    const matchCountBadge = document.getElementById('matchCountBadge');
+    const copyBtn         = document.getElementById('copyBtn');
+
+    function getFlags() {
+      return [...document.querySelectorAll('.flag-btn.active')]
+        .map(b => b.dataset.flag)
+        .join('');
+    }
+
+    function toggleFlag(btn) {
+      btn.classList.toggle('active');
+      updateFlagsDisplay();
+      run();
+    }
+
+    function updateFlagsDisplay() {
+      flagsDisplay.textContent = '/' + getFlags();
+    }
+
+    // ── Core matching ──
+    function run() {
+      const pattern = patternInput.value;
+      const flags   = getFlags();
+      const text    = testInput.value;
+
+      // Clear error
+      errorMsg.classList.remove('visible');
+      errorMsg.textContent = '';
+
+      if (!pattern) {
+        highlightedOutput.textContent = text;
+        showNoMatches();
+        return;
+      }
+
+      let regex;
+      try {
+        regex = new RegExp(pattern, flags);
+      } catch (e) {
+        const t = window.SF_PAGE_I18N && window.sfLang
+          ? (window.SF_PAGE_I18N[window.sfLang.current] || {})
+          : {};
+        errorMsg.textContent = (t.invalid_regex || 'Invalid regex') + ': ' + e.message;
+        errorMsg.classList.add('visible');
+        highlightedOutput.textContent = text;
+        showNoMatches();
+        return;
+      }
+
+      // Collect matches
+      let matches = [];
+      if (flags.includes('g')) {
+        matches = [...text.matchAll(regex)];
+      } else {
+        const m = text.match(regex);
+        if (m) matches = [m];
+      }
+
+      renderHighlights(text, matches);
+      renderMatchList(matches);
+    }
+
+    // ── Highlight rendering ──
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderHighlights(text, matches) {
+      if (!matches.length) {
+        highlightedOutput.textContent = text;
+        return;
+      }
+
+      // Sort by index to be safe
+      const sorted = [...matches].sort((a, b) => a.index - b.index);
+      let html = '';
+      let cursor = 0;
+
+      for (const m of sorted) {
+        const start = m.index;
+        const end   = start + m[0].length;
+
+        if (start < cursor) continue; // overlapping match — skip
+        html += escapeHtml(text.slice(cursor, start));
+        html += '<mark class="match-highlight">' + escapeHtml(m[0]) + '</mark>';
+        cursor = end;
+      }
+      html += escapeHtml(text.slice(cursor));
+      highlightedOutput.innerHTML = html;
+    }
+
+    // ── Match list ──
+    function renderMatchList(matches) {
+      const lang = window.sfLang ? window.sfLang.current : 'en';
+      const t    = (window.SF_PAGE_I18N || {})[lang] || {};
+
+      if (!matches.length) {
+        showNoMatches();
+        return;
+      }
+
+      noMatchState.style.display = 'none';
+      matchList.style.display = 'flex';
+      matchList.innerHTML = '';
+
+      matches.forEach((m, i) => {
+        const groups = m.slice(1); // capture groups
+        const div = document.createElement('div');
+        div.className = 'match-item';
+
+        let groupsHtml = '';
+        if (groups.length) {
+          groupsHtml = `<div class="match-groups">Groups: ${groups.map((g, gi) => `[${gi+1}] ${g === undefined ? '<em>undefined</em>' : escapeHtml(String(g))}`).join('  ')}</div>`;
+        }
+
+        div.innerHTML = `
+          <div class="match-index">${i + 1}</div>
+          <div>
+            <div class="match-text">${escapeHtml(m[0])}</div>
+            ${groupsHtml}
+          </div>
+          <div class="match-meta">
+            pos ${m.index}<br>len ${m[0].length}
+          </div>
+        `;
+        matchList.appendChild(div);
+      });
+
+      // Badge
+      const count = matches.length;
+      const label = count === 1
+        ? `1 ${t.match_count || 'match'}`
+        : `${count} ${t.matches_count || 'matches'}`;
+      matchCountBadge.textContent = label;
+      matchCountBadge.className   = 'match-count-badge';
+    }
+
+    function showNoMatches() {
+      const lang = window.sfLang ? window.sfLang.current : 'en';
+      const t    = (window.SF_PAGE_I18N || {})[lang] || {};
+
+      matchList.style.display    = 'none';
+      noMatchState.style.display = 'block';
+      noMatchState.textContent   = t.no_match || 'No matches';
+      matchCountBadge.textContent = '0 ' + (t.matches_count || 'matches');
+      matchCountBadge.className  = 'match-count-badge no-match';
+    }
+
+    // ── Copy pattern ──
+    function copyPattern() {
+      const lang = window.sfLang ? window.sfLang.current : 'en';
+      const t    = (window.SF_PAGE_I18N || {})[lang] || {};
+
+      const text = `/${patternInput.value}/${getFlags()}`;
+      navigator.clipboard.writeText(text).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity  = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      });
+
+      copyBtn.textContent = t.copied || 'Copied!';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.textContent = t.copy_pattern || 'Copy Pattern';
+        copyBtn.classList.remove('copied');
+      }, 1800);
+    }
+
+    // ── Cheat sheet ──
+    function toggleCheatsheet() {
+      const btn  = document.getElementById('cheatToggle');
+      const grid = document.getElementById('cheatGrid');
+      const open = grid.style.display === 'none';
+      grid.style.display = open ? 'grid' : 'none';
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+    }
+
+    function useCheat(pattern, flags) {
+      patternInput.value = pattern;
+
+      // Set flags
+      document.querySelectorAll('.flag-btn').forEach(btn => {
+        const active = flags.includes(btn.dataset.flag);
+        btn.classList.toggle('active', active);
+      });
+
+      updateFlagsDisplay();
+      run();
+      patternInput.focus();
+    }
+
+    // ── Event listeners ──
+    patternInput.addEventListener('input', run);
+    testInput.addEventListener('input', run);
+
+    // Re-run when language changes so match count labels update
+    document.addEventListener('sfLangChanged', run);
+
+    // ── Init ──
+    updateFlagsDisplay();
+    // Run after DOMContentLoaded so i18n is ready
+    document.addEventListener('DOMContentLoaded', run);
+  </script>
+
+  <!-- 11. i18n (must be last) -->
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>

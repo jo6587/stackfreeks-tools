@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lorem Ipsum Generator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Free lorem ipsum generator. Generate placeholder text by words, sentences, or paragraphs in seconds. Classic filler text for designers and developers." />
+  <meta property="og:title" content="Lorem Ipsum Generator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Generate lorem ipsum placeholder text instantly. Choose words, sentences, or paragraphs. Free, no signup required." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/lorem-ipsum/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://tools.stackfreeks.com/lorem-ipsum/" />
+
+  <!-- AdSense slot — insert code here after approval -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0b; --surface: #111113; --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08); --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa; --text-2: #a1a1aa; --text-3: #52525b;
+      --accent: #6366f1; --success: #22c55e; --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px; --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,11,0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-1);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .lang-toggle:hover { color: var(--text-1); border-color: rgba(255,255,255,0.24); }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px 32px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 20px;
+      padding: 3px 12px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 14px;
+    }
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── TOOL CARD ── */
+    .tool-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .tool-body { padding: 24px; }
+
+    /* Controls row */
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .ctrl-group { display: flex; flex-direction: column; gap: 8px; }
+    .ctrl-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    /* Radio buttons */
+    .radio-group { display: flex; gap: 4px; }
+    .radio-opt { position: relative; }
+    .radio-opt input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .radio-opt label {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .radio-opt input[type="radio"]:checked + label {
+      background: rgba(99,102,241,0.15);
+      color: var(--accent);
+      border-color: rgba(99,102,241,0.4);
+    }
+    .radio-opt label:hover { color: var(--text-1); border-color: var(--border-2); }
+
+    /* Number input */
+    .num-input {
+      width: 100px;
+      padding: 6px 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .num-input:focus { border-color: rgba(99,102,241,0.5); }
+    .num-input::-webkit-inner-spin-button { opacity: 0.5; }
+
+    /* Checkbox */
+    .checkbox-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .checkbox-wrap input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .checkbox-wrap span {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    /* Generate button */
+    .btn-generate {
+      display: block;
+      width: 100%;
+      padding: 11px 24px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 20px;
+      letter-spacing: 0.01em;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-generate:hover { opacity: 0.88; }
+    .btn-generate:active { transform: scale(0.99); }
+
+    /* Output area */
+    .output-wrap { position: relative; }
+    .output-textarea {
+      width: 100%;
+      min-height: 220px;
+      padding: 14px 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.8;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .output-textarea:focus { border-color: var(--border-2); }
+    .output-textarea::placeholder { color: var(--text-3); }
+
+    /* Stats + Copy row */
+    .output-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .stats {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .stat-item span:last-child {
+      color: var(--text-2);
+      font-weight: 500;
+      margin-left: 4px;
+    }
+    .btn-copy {
+      padding: 6px 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-copy:hover { color: var(--text-1); border-color: rgba(255,255,255,0.24); }
+    .btn-copy.copied {
+      color: var(--success);
+      border-color: rgba(34,197,94,0.4);
+      background: var(--success-bg);
+    }
+
+    /* ── GUIDE ── */
+    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title {
+      font-size: 13px; font-weight: 500; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title {
+      font-size: 13px; font-weight: 500; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
+    }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* ── VULTR BANNER ── */
+    .vultr-banner {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(34,197,94,0.04) 0%, rgba(34,197,94,0.01) 100%);
+      margin-bottom: 0;
+    }
+    .vultr-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .vultr-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--success);
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 20px;
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+    .vultr-text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .vultr-text strong { font-size: 14px; color: var(--text-1); font-weight: 600; }
+    .vultr-text span { font-size: 13px; color: var(--text-2); }
+    .vultr-cta {
+      display: inline-block;
+      padding: 8px 18px;
+      background: var(--success);
+      color: #000;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .vultr-cta:hover { opacity: 0.88; }
+
+    /* ── RELATED LINK ── */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+    .related-title {
+      font-size: 13px; font-weight: 500; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;
+    }
+    .related-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .related-link:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy { font-size: 13px; color: var(--text-3); }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a { font-size: 13px; color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text-2); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero { padding: 32px 20px 24px; }
+      .tool-body { padding: 18px; }
+      .controls-row { gap: 12px; }
+      .vultr-inner { gap: 12px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
+      <div class="nav-right">
+        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Free Tool</div>
+    <div class="lang-en">
+      <h1>Lorem Ipsum Generator</h1>
+      <p>Generate classic placeholder text instantly. Choose words, sentences, or paragraphs — ready to paste into any design or document.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>Lorem Ipsum 생성기</h1>
+      <p>디자인이나 문서에 바로 사용할 수 있는 플레이스홀더 텍스트를 즉시 생성하세요. 단어, 문장, 단락을 자유롭게 선택할 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- TOOL -->
+  <div class="tool-wrap">
+    <div class="tool-card">
+      <div class="tool-body">
+
+        <!-- Output Type -->
+        <div class="controls-row">
+          <div class="ctrl-group">
+            <div class="ctrl-label lang-en">Output Type</div>
+            <div class="ctrl-label lang-ko">출력 형식</div>
+            <div class="radio-group">
+              <div class="radio-opt">
+                <input type="radio" name="type" id="type-paragraphs" value="paragraphs" checked />
+                <label for="type-paragraphs" data-i18n="paragraphs_label">Paragraphs</label>
+              </div>
+              <div class="radio-opt">
+                <input type="radio" name="type" id="type-sentences" value="sentences" />
+                <label for="type-sentences" data-i18n="sentences_label">Sentences</label>
+              </div>
+              <div class="radio-opt">
+                <input type="radio" name="type" id="type-words" value="words" />
+                <label for="type-words" data-i18n="words_label">Words</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="ctrl-group">
+            <div class="ctrl-label lang-en">Count</div>
+            <div class="ctrl-label lang-ko">수량</div>
+            <input type="number" id="count-input" class="num-input" value="5" min="1" max="100" />
+          </div>
+        </div>
+
+        <!-- Checkbox -->
+        <label class="checkbox-wrap">
+          <input type="checkbox" id="start-lorem" checked />
+          <span data-i18n="start_lorem">Start with "Lorem ipsum..."</span>
+        </label>
+
+        <!-- Generate button -->
+        <button class="btn-generate" id="btn-generate" onclick="generateText()" data-i18n="generate">
+          Generate
+        </button>
+
+        <!-- Output -->
+        <div class="output-wrap">
+          <textarea
+            id="output"
+            class="output-textarea"
+            readonly
+            placeholder="Click Generate to produce filler text…"
+          ></textarea>
+        </div>
+
+        <!-- Stats + Copy -->
+        <div class="output-footer">
+          <div class="stats">
+            <div class="stat-item">
+              <span data-i18n="word_count">Words</span><span id="stat-words">0</span>
+            </div>
+            <div class="stat-item">
+              <span data-i18n="char_count">Characters</span><span id="stat-chars">0</span>
+            </div>
+          </div>
+          <button class="btn-copy" id="btn-copy" onclick="copyText()" data-i18n="copy">
+            Copy
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDE -->
+  <section class="guide">
+    <div class="guide-title lang-en">How to use</div>
+    <div class="guide-title lang-ko">사용 방법</div>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="guide-step">Step 1</div>
+        <div class="lang-en">
+          <h3>Choose output type</h3>
+          <p>Select Words, Sentences, or Paragraphs depending on how much structure you need for your placeholder text.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>출력 형식 선택</h3>
+          <p>플레이스홀더 텍스트에 필요한 구조에 따라 단어, 문장, 단락 중 하나를 선택하세요.</p>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">Step 2</div>
+        <div class="lang-en">
+          <h3>Set count &amp; options</h3>
+          <p>Enter the number of units to generate. Toggle the classic opening to start with the traditional "Lorem ipsum" sentence.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>수량 및 옵션 설정</h3>
+          <p>생성할 수량을 입력하세요. 클래식 오프닝 토글로 전통적인 "Lorem ipsum" 문장으로 시작할 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">Step 3</div>
+        <div class="lang-en">
+          <h3>Generate filler text</h3>
+          <p>Click the Generate button to instantly produce randomized lorem ipsum placeholder text from the classic Latin corpus.</p>
+        </div>
+        <div class="lang-ko">
+          <h3>텍스트 생성</h3>
+          <p>생성 버튼을 클릭하면 고전 라틴어 코퍼스를 기반으로 무작위 lorem ipsum 텍스트가 즉시 생성됩니다.</p>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">Step 4</div>
+        <div class="lang-en">
+          <h3>Copy and paste</h3>
+          <p>Click Copy to grab the text and paste it directly into your design tool, document, or code editor. That's it!</p>
+        </div>
+        <div class="lang-ko">
+          <h3>복사 후 붙여넣기</h3>
+          <p>복사 버튼을 클릭하고 디자인 툴, 문서, 또는 코드 에디터에 바로 붙여넣으세요. 끝!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="faq-title lang-en">Frequently Asked Questions</div>
+    <div class="faq-title lang-ko">자주 묻는 질문</div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">What is Lorem Ipsum?</div>
+        <div class="faq-a">Lorem ipsum is the industry-standard placeholder text used in design and typesetting since the 1500s. It is derived from Cicero's philosophical work "de Finibus Bonorum et Malorum" and has been used to fill space in layouts ever since the advent of desktop publishing.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">Lorem Ipsum이란 무엇인가요?</div>
+        <div class="faq-a">Lorem ipsum은 1500년대부터 디자인과 조판에 사용되어 온 업계 표준 플레이스홀더 텍스트입니다. 키케로의 철학 저서 "de Finibus Bonorum et Malorum"에서 파생되었으며, 데스크톱 퍼블리싱의 등장 이후 레이아웃 공간을 채우는 데 사용되어 왔습니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">Is it real Latin?</div>
+        <div class="faq-a">Not exactly. Lorem ipsum is scrambled Latin — it looks like natural text but is not grammatically correct. This is intentional: readers cannot extract meaning from the words, so they focus on layout and typography rather than content.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">실제 라틴어인가요?</div>
+        <div class="faq-a">정확히는 아닙니다. Lorem ipsum은 뒤섞인 라틴어로, 자연스러운 텍스트처럼 보이지만 문법적으로 올바르지 않습니다. 이는 의도적인 것으로, 독자가 단어에서 의미를 파악할 수 없어 콘텐츠보다 레이아웃과 타이포그래피에 집중하게 됩니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">Why use Lorem Ipsum instead of real text?</div>
+        <div class="faq-a">Using real text during design reviews can distract reviewers who start reading the content instead of evaluating the layout. Placeholder text like lorem ipsum keeps the visual focus on spacing, hierarchy, and typography without the noise of actual meaning.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">실제 텍스트 대신 Lorem Ipsum을 사용하는 이유는 무엇인가요?</div>
+        <div class="faq-a">디자인 검토 중에 실제 텍스트를 사용하면 검토자가 레이아웃을 평가하는 대신 내용을 읽기 시작할 수 있습니다. Lorem ipsum 같은 플레이스홀더 텍스트는 실제 의미의 방해 없이 간격, 계층 구조, 타이포그래피에 시각적 초점을 맞출 수 있게 합니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="lang-en">
+        <div class="faq-q">Can I customize the output?</div>
+        <div class="faq-a">Yes! You can choose between words, sentences, and paragraphs, and set the exact count you need. You can also toggle whether the text starts with the classic "Lorem ipsum dolor sit amet…" opening. All generation happens in your browser — nothing is sent to a server.</div>
+      </div>
+      <div class="lang-ko">
+        <div class="faq-q">출력을 커스터마이즈할 수 있나요?</div>
+        <div class="faq-a">네! 단어, 문장, 단락 중에서 선택하고 필요한 정확한 수량을 설정할 수 있습니다. 텍스트가 고전적인 "Lorem ipsum dolor sit amet…" 오프닝으로 시작할지도 토글할 수 있습니다. 모든 생성은 브라우저에서 이루어지며 서버로 전송되는 정보는 없습니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="related">
+    <div class="related-title lang-en">Related Articles</div>
+    <div class="related-title lang-ko">관련 글</div>
+    <a href="https://stackfreeks.com/web-design-tools" class="related-link" target="_blank" rel="noopener">
+      <span class="lang-en">Essential Web Design Tools for Developers →</span>
+      <span class="lang-ko">개발자를 위한 필수 웹 디자인 툴 →</span>
+    </a>
+  </section>
+
+  <!-- VULTR BANNER -->
+  <section class="vultr-banner">
+    <div class="vultr-inner">
+      <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
+      <div class="vultr-text">
+        <strong data-i18n="vultr_title">Get started on Vultr</strong>
+        <span data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" target="_blank" rel="nofollow sponsored" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
+      <nav class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- i18n -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: "← All Tools",
+        vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
+        vultr_sub: "Get $300 free credit — valid for 30 days",
+        vultr_cta: "Claim your credit →",
+        footer_copy: "© 2026 StackFreeks",
+        generate: "Generate", copy: "Copy", copied: "Copied!",
+        words_label: "Words", sentences_label: "Sentences", paragraphs_label: "Paragraphs",
+        start_lorem: "Start with \"Lorem ipsum...\"",
+        word_count: "Words", char_count: "Characters"
+      },
+      ko: {
+        nav_back: "← 전체 툴",
+        vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
+        vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+        vultr_cta: "크레딧 받기 →",
+        footer_copy: "© 2026 StackFreeks",
+        generate: "생성", copy: "복사", copied: "복사됨!",
+        words_label: "단어", sentences_label: "문장", paragraphs_label: "단락",
+        start_lorem: "\"Lorem ipsum...\"으로 시작",
+        word_count: "단어 수", char_count: "글자 수"
+      }
+    };
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+  <script>
+    // ── LOREM IPSUM WORD BANK (200+ unique words) ──
+    const WORDS = [
+      "lorem","ipsum","dolor","sit","amet","consectetur","adipiscing","elit","sed","do",
+      "eiusmod","tempor","incididunt","ut","labore","et","dolore","magna","aliqua","enim",
+      "ad","minim","veniam","quis","nostrud","exercitation","ullamco","laboris","nisi","aliquip",
+      "ex","ea","commodo","consequat","duis","aute","irure","in","reprehenderit","voluptate",
+      "velit","esse","cillum","eu","fugiat","nulla","pariatur","excepteur","sint","occaecat",
+      "cupidatat","non","proident","sunt","culpa","qui","officia","deserunt","mollit","anim",
+      "id","est","laborum","perspiciatis","unde","omnis","iste","natus","error","voluptatem",
+      "accusantium","doloremque","laudantium","totam","rem","aperiam","eaque","ipsa","quae","ab",
+      "illo","inventore","veritatis","quasi","architecto","beatae","vitae","dicta","explicabo","nemo",
+      "ipsam","quia","voluptas","aspernatur","aut","odit","fugit","consequuntur","magni","dolores",
+      "eos","ratione","sequi","nesciunt","neque","porro","quisquam","dolorem","adipisci","numquam",
+      "eius","modi","tempora","incidunt","magnam","aliquam","quaerat","minima","nostrum",
+      "exercitationem","ullam","corporis","suscipit","laboriosam","aliquid","commodi","vel","eum",
+      "iure","quam","nihil","molestiae","illum","quo","temporibus","quibusdam","officiis","debitis",
+      "rerum","necessitatibus","saepe","eveniet","voluptates","repudiandae","recusandae","itaque",
+      "earum","hic","tenetur","sapiente","delectus","facilis","autem","dignissimos","blanditiis",
+      "praesentium","voluptatum","deleniti","atque","corrupti","quos","quas","perferendis",
+      "doloribus","asperiores","repellat","voluptatibus","maiores","alias","consequatur","aut",
+      "perferendis","doloribus","asperiores","repellat","deserunt","ullam","quaerat","quisquam",
+      "laborum","distinctio","nam","libero","tempore","cum","soluta","nobis","eligendi","optio",
+      "cumque","nihil","impedit","minus","assumenda","repellendus","maxime","placeat","facere",
+      "possimus","omnis","voluptas","assumenda","repellendus","temporibus","officiis","debitis",
+      "saepe","eveniet","recusandae","itaque","tenetur","blanditiis","praesentium","corrupti",
+      "molestias","excepturi","similique","provident","quasi","minima","sint","occaecati",
+      "cupiditate","non","provident","similique","sunt","culpa","perspiciatis","unde","natus"
+    ];
+
+    const LOREM_OPENING_SENTENCE = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+    const LOREM_OPENING_WORDS = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua".split(" ");
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function randomWord() {
+      return WORDS[Math.floor(Math.random() * WORDS.length)];
+    }
+
+    function randomSentence(startWord) {
+      const len = Math.floor(Math.random() * 13) + 8; // 8–20 words
+      const words = [];
+      for (let i = 0; i < len; i++) words.push(randomWord());
+      if (startWord) words[0] = startWord;
+      words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+
+      // Occasionally add a comma mid-sentence for natural feel
+      if (len >= 12) {
+        const commaPos = rand(4, len - 4);
+        words[commaPos] = words[commaPos] + ",";
+      }
+      return words.join(" ") + ".";
+    }
+
+    function randomParagraph(isFirst, startWithLorem) {
+      const sentenceCount = rand(4, 8);
+      const sentences = [];
+      for (let i = 0; i < sentenceCount; i++) {
+        if (i === 0 && isFirst && startWithLorem) {
+          sentences.push(LOREM_OPENING_SENTENCE);
+        } else {
+          sentences.push(randomSentence());
+        }
+      }
+      return sentences.join(" ");
+    }
+
+    function generateText() {
+      const type = document.querySelector('input[name="type"]:checked').value;
+      const countEl = document.getElementById("count-input");
+      let count = parseInt(countEl.value, 10);
+      const startWithLorem = document.getElementById("start-lorem").checked;
+
+      // Clamp count
+      if (type === "paragraphs") count = Math.min(Math.max(count, 1), 100);
+      else if (type === "sentences") count = Math.min(Math.max(count, 1), 500);
+      else count = Math.min(Math.max(count, 1), 2000);
+      countEl.value = count;
+
+      let result = "";
+
+      if (type === "paragraphs") {
+        const paras = [];
+        for (let i = 0; i < count; i++) {
+          paras.push(randomParagraph(i === 0, startWithLorem));
+        }
+        result = paras.join("\n\n");
+      } else if (type === "sentences") {
+        const sents = [];
+        for (let i = 0; i < count; i++) {
+          if (i === 0 && startWithLorem) {
+            sents.push(LOREM_OPENING_SENTENCE);
+          } else {
+            sents.push(randomSentence());
+          }
+        }
+        result = sents.join("\n");
+      } else {
+        // words
+        const words = [];
+        if (startWithLorem) {
+          const loremSlice = LOREM_OPENING_WORDS.slice(0, Math.min(count, LOREM_OPENING_WORDS.length));
+          words.push(...loremSlice);
+        }
+        while (words.length < count) {
+          words.push(randomWord());
+        }
+        result = words.slice(0, count).join(" ");
+      }
+
+      const output = document.getElementById("output");
+      output.value = result;
+      updateStats(result);
+
+      // Reset copy button
+      const copyBtn = document.getElementById("btn-copy");
+      copyBtn.classList.remove("copied");
+      const lang = (document.documentElement.lang === "ko") ? "ko" : "en";
+      copyBtn.textContent = SF_PAGE_I18N[lang].copy;
+    }
+
+    function updateStats(text) {
+      if (!text.trim()) {
+        document.getElementById("stat-words").textContent = "0";
+        document.getElementById("stat-chars").textContent = "0";
+        return;
+      }
+      const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+      const charCount = text.length;
+      document.getElementById("stat-words").textContent = wordCount.toLocaleString();
+      document.getElementById("stat-chars").textContent = charCount.toLocaleString();
+    }
+
+    function copyText() {
+      const output = document.getElementById("output");
+      if (!output.value) return;
+
+      const lang = (document.documentElement.lang === "ko") ? "ko" : "en";
+      const copyBtn = document.getElementById("btn-copy");
+
+      navigator.clipboard.writeText(output.value).then(() => {
+        copyBtn.classList.add("copied");
+        copyBtn.textContent = SF_PAGE_I18N[lang].copied;
+        setTimeout(() => {
+          copyBtn.classList.remove("copied");
+          copyBtn.textContent = SF_PAGE_I18N[lang].copy;
+        }, 2000);
+      }).catch(() => {
+        // Fallback
+        output.select();
+        document.execCommand("copy");
+        copyBtn.classList.add("copied");
+        copyBtn.textContent = SF_PAGE_I18N[lang].copied;
+        setTimeout(() => {
+          copyBtn.classList.remove("copied");
+          copyBtn.textContent = SF_PAGE_I18N[lang].copy;
+        }, 2000);
+      });
+    }
+
+    // Update count defaults when type changes
+    const typeRadios = document.querySelectorAll('input[name="type"]');
+    const countInput = document.getElementById("count-input");
+    const typeDefaults = { paragraphs: 5, sentences: 3, words: 50 };
+    const typeMaxes    = { paragraphs: 100, sentences: 500, words: 2000 };
+
+    typeRadios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        const t = radio.value;
+        countInput.value = typeDefaults[t];
+        countInput.max   = typeMaxes[t];
+      });
+    });
+
+    // Generate on load
+    generateText();
+  </script>
+
+</body>
+</html>
