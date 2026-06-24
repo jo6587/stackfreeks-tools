@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Firewall Rule Builder — Free iptables &amp; ufw Generator | StackFreeks</title>
+  <meta name="description" content="Generate iptables and ufw firewall rules instantly. Visual rule builder for Linux servers — no syntax memorization needed. Free online tool." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/firewall-rule-builder/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/firewall-rule-builder/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/firewall-rule-builder/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/firewall-rule-builder/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Firewall Rule Builder — Free iptables &amp; ufw Generator | StackFreeks" />
+  <meta property="og:description" content="Generate iptables and ufw firewall rules instantly. Visual rule builder for Linux servers — no syntax memorization needed. Free online tool." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/firewall-rule-builder/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool layout */
+    .tool-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Firewall type tabs */
+    .fw-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .fw-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 9px 16px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .fw-tab.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .fw-tab:not(.active):hover {
+      background: var(--surface-2);
+      color: var(--text-1);
+    }
+
+    /* Form panel */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .field select,
+    .field input[type="text"] {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      padding: 9px 12px;
+      border-radius: var(--radius);
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+
+    .field select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      cursor: pointer;
+    }
+
+    .field select:focus,
+    .field input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .field input[type="text"]::placeholder {
+      color: var(--text-3);
+    }
+
+    .field.hidden { display: none; }
+
+    /* Output panel */
+    .output-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .output-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .output-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn:hover { border-color: var(--accent); color: var(--text-1); }
+    .btn.btn-accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn.btn-accent:hover { opacity: 0.85; }
+    .btn.btn-success {
+      background: var(--success);
+      border-color: var(--success);
+      color: #000;
+    }
+    .btn.btn-success:hover { opacity: 0.85; }
+    .btn.btn-danger {
+      border-color: rgba(239,68,68,0.4);
+      color: #f87171;
+    }
+    .btn.btn-danger:hover { border-color: #ef4444; }
+
+    .output-code {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--success);
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 56px;
+    }
+
+    .output-code.placeholder {
+      color: var(--text-3);
+      font-family: var(--font);
+      font-style: italic;
+    }
+
+    /* Notice (ufw forward) */
+    .notice {
+      background: rgba(99,102,241,0.08);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--text-2);
+      display: none;
+    }
+    .notice.visible { display: block; }
+
+    /* Script section */
+    .script-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .script-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .script-code {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 80px;
+    }
+
+    .script-empty {
+      color: var(--text-3);
+      font-family: var(--font);
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    .rule-count {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-left: 8px;
+    }
+
+    /* How to use */
+    .guide {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .guide-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .guide-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .faq {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+
+    .related-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    .related-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .related-title {
+      font-size: 14px;
+      color: var(--text-1);
+    }
+
+    .related-arrow {
+      color: var(--text-3);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+
+    .vultr-inner {
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--success-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .vultr-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .vultr-title {
+      font-size: 15px;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .vultr-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .vultr-cta {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-weight: 500;
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .vultr-cta:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      .tool-wrap {
+        grid-template-columns: 1fr;
+        padding: 0 16px 40px;
+      }
+      .guide { padding: 0 16px 40px; }
+      .faq { padding: 0 16px 40px; }
+      .related { padding: 0 16px 24px; }
+      .vultr-banner { padding: 0 16px 24px; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+      .vultr-cta { align-self: stretch; text-align: center; }
+      .related-card { flex-direction: column; align-items: flex-start; }
+      .footer-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>🔥 Firewall Rule Builder</h1>
+      <p>Generate <strong>iptables</strong> and <strong>ufw</strong> firewall rules visually. Fill in the form, get a ready-to-paste shell command — no syntax memorization needed.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>🔥 방화벽 규칙 생성기</h1>
+      <p><strong>iptables</strong>와 <strong>ufw</strong> 방화벽 규칙을 시각적으로 생성하세요. 폼을 채우면 바로 복사할 수 있는 쉘 명령어가 생성됩니다 — 명령어 암기 불필요.</p>
+    </div>
+  </section>
+
+  <!-- ADSENSE_SLOT_IN_TOOL -->
+
+  <!-- Tool -->
+  <div class="tool-wrap">
+
+    <!-- Left: Form -->
+    <div>
+      <!-- Firewall type tabs -->
+      <div class="fw-tabs">
+        <button class="fw-tab active" id="tab-iptables" onclick="setFwType('iptables')">iptables</button>
+        <button class="fw-tab" id="tab-ufw" onclick="setFwType('ufw')">ufw</button>
+      </div>
+
+      <div class="form-panel">
+
+        <!-- Direction -->
+        <div class="field">
+          <label data-i18n="label_direction">Direction</label>
+          <select id="sel-direction" onchange="onFormChange()">
+            <option value="in">Inbound (INPUT)</option>
+            <option value="out">Outbound (OUTPUT)</option>
+            <option value="fwd" class="ipt-only">Forward (FORWARD)</option>
+          </select>
+        </div>
+
+        <!-- Action -->
+        <div class="field">
+          <label data-i18n="label_action">Action</label>
+          <select id="sel-action" onchange="onFormChange()">
+            <option value="ACCEPT">Allow (ACCEPT)</option>
+            <option value="DROP">Deny (DROP)</option>
+            <option value="REJECT">Reject (REJECT)</option>
+          </select>
+        </div>
+
+        <!-- Protocol -->
+        <div class="field">
+          <label data-i18n="label_protocol">Protocol</label>
+          <select id="sel-protocol" onchange="onFormChange()">
+            <option value="tcp">TCP</option>
+            <option value="udp">UDP</option>
+            <option value="icmp">ICMP</option>
+            <option value="all">All</option>
+          </select>
+        </div>
+
+        <!-- Port -->
+        <div class="field" id="field-port">
+          <label data-i18n="label_port">Port</label>
+          <input type="text" id="inp-port" placeholder="e.g. 80, 443, 8000:8090" oninput="onFormChange()" />
+        </div>
+
+        <!-- Source IP -->
+        <div class="field" id="field-src">
+          <label data-i18n="label_src">Source IP / CIDR</label>
+          <input type="text" id="inp-src" placeholder="e.g. 0.0.0.0/0, 192.168.1.0/24" oninput="onFormChange()" />
+        </div>
+
+        <!-- Dest IP -->
+        <div class="field" id="field-dst">
+          <label data-i18n="label_dst">Destination IP / CIDR</label>
+          <input type="text" id="inp-dst" placeholder="e.g. 10.0.0.1, 10.0.0.0/8" oninput="onFormChange()" />
+        </div>
+
+        <!-- Interface (iptables only) -->
+        <div class="field" id="field-iface">
+          <label data-i18n="label_iface">Interface <span style="font-weight:400;color:var(--text-3)">(optional)</span></label>
+          <input type="text" id="inp-iface" placeholder="e.g. eth0, ens3" oninput="onFormChange()" />
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right: Output -->
+    <div class="output-panel">
+
+      <!-- Generated rule -->
+      <div class="output-block">
+        <div class="output-header">
+          <span class="output-label" data-i18n="label_generated">Generated Rule</span>
+          <div class="btn-row">
+            <button class="btn" onclick="copyRule()" id="btn-copy" data-i18n="btn_copy">Copy</button>
+            <button class="btn btn-accent" onclick="addToScript()" data-i18n="btn_add">Add to Script</button>
+          </div>
+        </div>
+        <pre class="output-code placeholder" id="output-rule" data-placeholder-en="Fill in the form to generate a rule…" data-placeholder-ko="폼을 채우면 규칙이 생성됩니다…">Fill in the form to generate a rule…</pre>
+      </div>
+
+      <!-- ufw Forward notice -->
+      <div class="notice" id="ufw-fwd-notice">
+        <div class="lang-en">ℹ️ <strong>ufw does not support the FORWARD chain.</strong> Use <code>iptables</code> mode for forward rules, or enable IP forwarding manually with <code>iptables -A FORWARD ...</code></div>
+        <div class="lang-ko">ℹ️ <strong>ufw는 FORWARD 체인을 지원하지 않습니다.</strong> 포워드 규칙은 <code>iptables</code> 모드를 사용하거나, <code>iptables -A FORWARD ...</code> 명령어를 직접 입력하세요.</div>
+      </div>
+
+      <!-- Script builder -->
+      <div class="script-section">
+        <div class="script-header">
+          <div style="display:flex;align-items:center;gap:0;">
+            <span class="output-label" data-i18n="label_script">Script Builder</span>
+            <span class="rule-count" id="rule-count"></span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-success" onclick="copyScript()" data-i18n="btn_copy_script">Copy Script</button>
+            <button class="btn btn-danger" onclick="clearScript()" data-i18n="btn_clear">Clear</button>
+          </div>
+        </div>
+        <pre class="script-code" id="script-output"><span class="script-empty" data-i18n="script_empty">Add rules above to build a script…</span></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- How to Use -->
+  <section class="guide">
+    <div class="lang-en">
+      <p class="section-title">How to use this tool</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>Choose firewall type</h3>
+          <p>Pick <strong>iptables</strong> for low-level control or <strong>ufw</strong> for a simpler interface. Both are common on Ubuntu/Debian servers.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>Fill in the options</h3>
+          <p>Set direction, action, protocol, port, and source/destination IPs. Leave optional fields blank to generate a broader rule.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>Copy or add to script</h3>
+          <p>Copy the single rule, or click "Add to Script" to accumulate multiple rules into a complete bash script.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>Run on your server</h3>
+          <p>SSH into your server and paste. Run as root or with <code>sudo</code>. Always test in a safe environment first.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="section-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>방화벽 유형 선택</h3>
+          <p>세밀한 제어가 필요하면 <strong>iptables</strong>, 더 간단한 인터페이스를 원하면 <strong>ufw</strong>를 선택하세요. 둘 다 Ubuntu/Debian 서버에서 일반적으로 사용됩니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>옵션 입력</h3>
+          <p>방향, 동작, 프로토콜, 포트, 출발지/목적지 IP를 설정하세요. 선택 항목은 비워두면 더 넓은 범위의 규칙이 생성됩니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>복사 또는 스크립트 추가</h3>
+          <p>단일 규칙을 복사하거나 "스크립트에 추가"를 클릭해 여러 규칙을 완전한 bash 스크립트로 모으세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>서버에서 실행</h3>
+          <p>서버에 SSH 접속 후 붙여넣기하세요. root 또는 <code>sudo</code>로 실행하고, 항상 안전한 환경에서 먼저 테스트하세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <p class="section-title">Frequently Asked Questions</p>
+    </div>
+    <div class="lang-ko">
+      <p class="section-title">자주 묻는 질문</p>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>What is the difference between iptables and ufw?</span></div>
+          <div class="lang-ko"><span>iptables와 ufw의 차이점은 무엇인가요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">iptables is the low-level Linux kernel firewall tool — it gives you full control but requires knowing its exact syntax. ufw (Uncomplicated Firewall) is a frontend that simplifies common firewall tasks. For most Ubuntu VPS setups, ufw is recommended; for advanced scenarios like NAT, packet marking, or FORWARD chains, use iptables directly.</div>
+        <div class="lang-ko">iptables는 리눅스 커널의 저수준 방화벽 도구로, 완전한 제어가 가능하지만 정확한 문법 숙지가 필요합니다. ufw(Uncomplicated Firewall)는 일반적인 방화벽 작업을 단순화한 프론트엔드입니다. Ubuntu VPS 설정에는 ufw를 권장하며, NAT·패킷 마킹·FORWARD 체인 등 고급 시나리오에서는 iptables를 직접 사용하세요.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>Are these rules persistent across reboots?</span></div>
+          <div class="lang-ko"><span>이 규칙들은 재부팅 후에도 유지되나요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">ufw rules are persistent by default — they survive reboots. iptables rules are NOT persistent by default and will be lost after a reboot. To persist iptables rules on Debian/Ubuntu, install <code>iptables-persistent</code> and run <code>netfilter-persistent save</code>. On RHEL/CentOS, use <code>service iptables save</code>.</div>
+        <div class="lang-ko">ufw 규칙은 기본적으로 영구 적용되어 재부팅 후에도 유지됩니다. iptables 규칙은 기본적으로 영구 적용되지 않으며 재부팅 시 초기화됩니다. Debian/Ubuntu에서는 <code>iptables-persistent</code>를 설치하고 <code>netfilter-persistent save</code>를 실행하세요. RHEL/CentOS에서는 <code>service iptables save</code>를 사용하세요.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>What is the difference between DROP and REJECT?</span></div>
+          <div class="lang-ko"><span>DROP과 REJECT의 차이점은 무엇인가요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">DROP silently discards packets — the sender gets no response and must wait for a timeout. This is good for hiding that a port/service even exists. REJECT sends back an error response (TCP RST or ICMP unreachable) immediately, so the sender knows the connection was refused. REJECT gives a better user experience for internal networks; DROP is preferred for blocking external attackers.</div>
+        <div class="lang-ko">DROP은 패킷을 조용히 버립니다 — 발신자는 응답을 받지 못하고 타임아웃을 기다려야 합니다. 포트나 서비스의 존재 자체를 숨기는 데 유용합니다. REJECT는 즉시 오류 응답(TCP RST 또는 ICMP unreachable)을 전송하므로 발신자가 연결이 거부되었음을 즉시 알 수 있습니다. 내부 네트워크에는 REJECT, 외부 공격자 차단에는 DROP을 권장합니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>How do I allow a port range (e.g. 8000–8090)?</span></div>
+          <div class="lang-ko"><span>포트 범위(예: 8000–8090)는 어떻게 허용하나요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">Enter a colon-separated range in the Port field: <code>8000:8090</code>. This generates <code>--dport 8000:8090</code> for iptables or <code>8000:8090</code> for ufw. Both tools support port ranges natively. Note that for ufw, you must also specify a protocol (tcp or udp) when using port ranges — this tool does that automatically.</div>
+        <div class="lang-ko">포트 필드에 콜론으로 구분된 범위를 입력하세요: <code>8000:8090</code>. iptables에는 <code>--dport 8000:8090</code>으로, ufw에는 <code>8000:8090</code>으로 생성됩니다. 두 도구 모두 포트 범위를 기본 지원합니다. ufw의 경우 포트 범위 사용 시 프로토콜(tcp 또는 udp)을 반드시 지정해야 하며, 이 도구가 자동으로 처리합니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>Does this tool send my data to a server?</span></div>
+          <div class="lang-ko"><span>이 도구가 내 데이터를 서버로 전송하나요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">No. All rule generation happens entirely in your browser using JavaScript. Nothing you type is sent to any server. Your IP addresses and network configuration stay private.</div>
+        <div class="lang-ko">아니요. 모든 규칙 생성은 JavaScript를 사용하여 브라우저 내에서만 처리됩니다. 입력한 내용은 어떤 서버에도 전송되지 않습니다. IP 주소와 네트워크 구성 정보는 완전히 비공개로 유지됩니다.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Related -->
+  <section class="related">
+    <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+      <div>
+        <p class="related-label">stackfreeks.com</p>
+        <div class="lang-en">
+          <p class="related-title">Linux server security &amp; firewall guides on stackfreeks.com →</p>
+        </div>
+        <div class="lang-ko">
+          <p class="related-title">stackfreeks.com에서 Linux 서버 보안 · 방화벽 가이드 보기 →</p>
+        </div>
+      </div>
+      <span class="related-arrow">→</span>
+    </a>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="vultr-inner">
+      <div>
+        <p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
+        <p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="vultr-cta" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back:        '← all tools',
+        label_direction: 'Direction',
+        label_action:    'Action',
+        label_protocol:  'Protocol',
+        label_port:      'Port',
+        label_src:       'Source IP / CIDR',
+        label_dst:       'Destination IP / CIDR',
+        label_iface:     'Interface',
+        label_generated: 'Generated Rule',
+        label_script:    'Script Builder',
+        btn_copy:        'Copy',
+        btn_add:         'Add to Script',
+        btn_copy_script: 'Copy Script',
+        btn_clear:       'Clear',
+        script_empty:    'Add rules above to build a script…',
+        vultr_label:     'Sponsor',
+        vultr_title:     'Get started on Vultr',
+        vultr_sub:       'Get $300 free credit — valid for 30 days (limited-time offer)',
+        vultr_cta:       'Claim your credit →',
+        footer_copy:     '© 2026 StackFreeks',
+      },
+      ko: {
+        nav_back:        '← 모든 툴',
+        label_direction: '방향',
+        label_action:    '동작',
+        label_protocol:  '프로토콜',
+        label_port:      '포트',
+        label_src:       '출발지 IP / CIDR',
+        label_dst:       '목적지 IP / CIDR',
+        label_iface:     '인터페이스',
+        label_generated: '생성된 규칙',
+        label_script:    '스크립트 빌더',
+        btn_copy:        '복사',
+        btn_add:         '스크립트에 추가',
+        btn_copy_script: '스크립트 복사',
+        btn_clear:       '초기화',
+        script_empty:    '위에서 규칙을 추가하여 스크립트를 만드세요…',
+        vultr_label:     '스폰서',
+        vultr_title:     'Vultr 시작하기',
+        vultr_sub:       '$300 무료 크레딧 — 30일간 유효 (기간 한정)',
+        vultr_cta:       '크레딧 받기 →',
+        footer_copy:     '© 2026 StackFreeks',
+      }
+    };
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+  <script>
+    // ─── State ────────────────────────────────────────────
+    let fwType = 'iptables'; // 'iptables' | 'ufw'
+    let scriptRules = [];
+
+    // ─── Tab toggle ───────────────────────────────────────
+    function setFwType(type) {
+      fwType = type;
+      document.getElementById('tab-iptables').classList.toggle('active', type === 'iptables');
+      document.getElementById('tab-ufw').classList.toggle('active', type === 'ufw');
+
+      // Show/hide Forward option for ufw
+      const fwdOpt = document.querySelector('#sel-direction option[value="fwd"]');
+      if (type === 'ufw' && document.getElementById('sel-direction').value === 'fwd') {
+        document.getElementById('sel-direction').value = 'in';
+      }
+      fwdOpt.style.display = type === 'iptables' ? '' : 'none';
+
+      // Show/hide interface field (iptables only)
+      document.getElementById('field-iface').style.display = type === 'iptables' ? '' : 'none';
+
+      onFormChange();
+    }
+
+    // ─── Form change handler ──────────────────────────────
+    function onFormChange() {
+      const direction = document.getElementById('sel-direction').value;
+      const protocol  = document.getElementById('sel-protocol').value;
+
+      // Port: hide for ICMP or All
+      const showPort = (protocol !== 'icmp' && protocol !== 'all');
+      document.getElementById('field-port').style.display = showPort ? '' : 'none';
+
+      // Source IP: show for Inbound and Forward
+      document.getElementById('field-src').style.display = (direction === 'in' || direction === 'fwd') ? '' : 'none';
+
+      // Destination IP: show for Outbound and Forward
+      document.getElementById('field-dst').style.display = (direction === 'out' || direction === 'fwd') ? '' : 'none';
+
+      // ufw Forward notice
+      const ufwFwdNotice = document.getElementById('ufw-fwd-notice');
+      ufwFwdNotice.classList.toggle('visible', fwType === 'ufw' && direction === 'fwd');
+
+      // Generate
+      const rule = generateRule();
+      const el = document.getElementById('output-rule');
+      const lang = document.documentElement.lang === 'ko' ? 'ko' : 'en';
+
+      if (!rule || (fwType === 'ufw' && direction === 'fwd')) {
+        el.textContent = el.dataset['placeholder' + (lang === 'ko' ? 'Ko' : 'En')];
+        el.classList.add('placeholder');
+      } else {
+        el.textContent = rule;
+        el.classList.remove('placeholder');
+      }
+    }
+
+    // ─── Rule generators ──────────────────────────────────
+    function generateRule() {
+      const direction = document.getElementById('sel-direction').value;
+      const action    = document.getElementById('sel-action').value;
+      const protocol  = document.getElementById('sel-protocol').value;
+      const port      = document.getElementById('inp-port').value.trim();
+      const src       = document.getElementById('inp-src').value.trim();
+      const dst       = document.getElementById('inp-dst').value.trim();
+      const iface     = document.getElementById('inp-iface').value.trim();
+
+      if (fwType === 'ufw' && direction === 'fwd') return null;
+
+      return fwType === 'iptables'
+        ? buildIptables(direction, action, protocol, port, src, dst, iface)
+        : buildUfw(direction, action, protocol, port, src, dst);
+    }
+
+    function buildIptables(direction, action, protocol, port, src, dst, iface) {
+      const chainMap = { in: 'INPUT', out: 'OUTPUT', fwd: 'FORWARD' };
+      const chain = chainMap[direction];
+
+      let cmd = `iptables -A ${chain}`;
+
+      if (protocol !== 'all') {
+        cmd += ` -p ${protocol}`;
+      }
+
+      if (iface) {
+        if (direction === 'in' || direction === 'fwd') {
+          cmd += ` -i ${iface}`;
+        } else {
+          cmd += ` -o ${iface}`;
+        }
+      }
+
+      if (src && (direction === 'in' || direction === 'fwd')) {
+        cmd += ` -s ${src}`;
+      }
+
+      if (dst && (direction === 'out' || direction === 'fwd')) {
+        cmd += ` -d ${dst}`;
+      }
+
+      if (port && protocol !== 'icmp' && protocol !== 'all') {
+        cmd += ` --dport ${port}`;
+      }
+
+      cmd += ` -j ${action}`;
+      return cmd;
+    }
+
+    function buildUfw(direction, action, protocol, port, src, dst) {
+      // ufw action word
+      const actionWord = action === 'ACCEPT' ? 'allow' : action === 'DROP' ? 'deny' : 'reject';
+      const dirWord    = direction === 'out' ? 'out' : ''; // inbound has no keyword
+
+      let parts = ['ufw', actionWord];
+      if (dirWord) parts.push(dirWord);
+
+      if (src && direction === 'in') {
+        parts.push('from', src);
+      }
+
+      if (dst && direction === 'out') {
+        parts.push('to', dst);
+      }
+
+      if (!dst && direction === 'out') {
+        // no destination means "to any"
+      }
+
+      if (port && protocol !== 'icmp' && protocol !== 'all') {
+        if (direction === 'in') {
+          parts.push('to any port', port);
+        } else {
+          parts.push('port', port);
+        }
+      }
+
+      if (protocol !== 'all' && protocol !== 'icmp') {
+        parts.push('proto', protocol);
+      } else if (protocol === 'icmp') {
+        // ufw handles icmp differently — just specify proto
+        parts.push('proto', 'icmp');
+      }
+
+      return parts.join(' ');
+    }
+
+    // ─── Copy rule ────────────────────────────────────────
+    function copyRule() {
+      const el = document.getElementById('output-rule');
+      if (el.classList.contains('placeholder')) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        const btn = document.getElementById('btn-copy');
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied';
+        setTimeout(() => { btn.textContent = orig; }, 1500);
+      });
+    }
+
+    // ─── Script builder ───────────────────────────────────
+    function addToScript() {
+      const rule = generateRule();
+      const direction = document.getElementById('sel-direction').value;
+      if (!rule || (fwType === 'ufw' && direction === 'fwd')) return;
+
+      scriptRules.push(rule);
+      renderScript();
+    }
+
+    function renderScript() {
+      const el = document.getElementById('script-output');
+      const countEl = document.getElementById('rule-count');
+
+      if (scriptRules.length === 0) {
+        const lang = document.documentElement.lang === 'ko' ? 'ko' : 'en';
+        const emptyText = lang === 'ko' ? '위에서 규칙을 추가하여 스크립트를 만드세요…' : 'Add rules above to build a script…';
+        el.innerHTML = `<span class="script-empty">${emptyText}</span>`;
+        countEl.textContent = '';
+        return;
+      }
+
+      const script = ['#!/bin/bash', '', ...scriptRules, ''].join('\n');
+      el.textContent = script;
+      countEl.textContent = `(${scriptRules.length} rule${scriptRules.length !== 1 ? 's' : ''})`;
+    }
+
+    function copyScript() {
+      if (scriptRules.length === 0) return;
+      const script = ['#!/bin/bash', '', ...scriptRules, ''].join('\n');
+      navigator.clipboard.writeText(script).then(() => {
+        const btn = event.target;
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied';
+        setTimeout(() => { btn.textContent = orig; }, 1500);
+      });
+    }
+
+    function clearScript() {
+      scriptRules = [];
+      renderScript();
+    }
+
+    // ─── FAQ ──────────────────────────────────────────────
+    function toggleFaq(btn) {
+      btn.closest('.faq-item').classList.toggle('open');
+    }
+
+    // ─── Language change hook ─────────────────────────────
+    document.addEventListener('sfLangChanged', () => {
+      onFormChange();
+      renderScript();
+      // Update placeholder text
+      const el = document.getElementById('output-rule');
+      if (el.classList.contains('placeholder')) {
+        const lang = document.documentElement.lang === 'ko' ? 'ko' : 'en';
+        el.textContent = lang === 'ko'
+          ? '폼을 채우면 규칙이 생성됩니다…'
+          : 'Fill in the form to generate a rule…';
+      }
+    });
+
+    // ─── Init ─────────────────────────────────────────────
+    setFwType('iptables');
+    onFormChange();
+  </script>
+
+</body>
+</html>
