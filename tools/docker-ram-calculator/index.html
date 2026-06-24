@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Docker RAM Calculator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Estimate RAM requirements for your Docker containers and get a VPS plan recommendation. Add containers, set replicas, and find the right server size instantly." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/docker-ram-calculator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Docker RAM Calculator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Estimate RAM requirements for your Docker containers and get a VPS plan recommendation. Add containers, set replicas, and find the right server size instantly." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/docker-ram-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 8px; }
+    .logo-mark {
+      width: 20px; height: 20px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back {
+      font-size: 13px; color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-2); }
+
+    /* ── Container ── */
+    .container { max-width: 840px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Hero ── */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 1.75rem; font-weight: 500;
+      letter-spacing: -0.03em; color: var(--text-1);
+      line-height: 1.2;
+    }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 480px; }
+
+    /* ── Main layout ── */
+    main { padding: 32px 0 48px; }
+    .tool-section { margin-bottom: 16px; }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .card + .card { margin-top: 12px; }
+    .card-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 16px;
+    }
+
+    /* ── Container rows ── */
+    .container-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+
+    .container-row {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr 80px 36px;
+      gap: 8px;
+      align-items: end;
+    }
+    .container-row.has-custom {
+      grid-template-columns: 1fr 1.4fr 90px 80px 36px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px; color: var(--text-2);
+      margin-bottom: 4px;
+    }
+
+    input, select {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 8px 10px;
+      font-size: 13px; font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus { border-color: var(--border-2); }
+    input::placeholder { color: var(--text-3); }
+    input[type="number"] { -moz-appearance: textfield; }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+    }
+
+    .btn-remove {
+      width: 36px; height: 36px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-3);
+      font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s, color 0.15s;
+      flex-shrink: 0;
+      font-family: var(--font);
+    }
+    .btn-remove:hover { border-color: #ef4444; color: #ef4444; }
+
+    .btn-add {
+      background: transparent;
+      border: 1px dashed var(--border-2);
+      border-radius: var(--radius);
+      color: var(--text-3);
+      font-size: 13px; font-weight: 500;
+      padding: 9px 16px; cursor: pointer;
+      font-family: var(--font);
+      width: 100%;
+      transition: border-color 0.15s, color 0.15s;
+      letter-spacing: -0.01em;
+    }
+    .btn-add:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Summary card ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .summary-cell {
+      background: var(--surface-2);
+      padding: 14px 16px;
+    }
+    .summary-label { font-size: 11px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .summary-val { font-size: 1.1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .summary-val.accent { color: var(--accent); }
+
+    .total-row {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .total-label { font-size: 12px; color: var(--text-2); margin-bottom: 4px; }
+    .total-val {
+      font-size: 2rem; font-weight: 500;
+      letter-spacing: -0.04em; color: var(--text-1);
+      font-variant-numeric: tabular-nums;
+    }
+    .total-unit { font-size: 14px; color: var(--text-3); margin-left: 4px; }
+
+    /* ── VPS table ── */
+    .vps-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .vps-table th {
+      text-align: left; font-size: 11px; font-weight: 500;
+      color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0 12px 10px; border-bottom: 1px solid var(--border);
+    }
+    .vps-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-2);
+      vertical-align: middle;
+    }
+    .vps-table tr:last-child td { border-bottom: none; }
+    .vps-table td:first-child, .vps-table th:first-child { padding-left: 0; }
+    .vps-table td.val { color: var(--text-1); font-variant-numeric: tabular-nums; font-weight: 500; }
+
+    .vps-row-recommended td { background: var(--success-bg); }
+    .vps-row-recommended td:first-child { position: relative; }
+    .badge-rec {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 500;
+      color: var(--success); background: var(--success-bg);
+      border-radius: 20px; padding: 2px 8px;
+      white-space: nowrap;
+    }
+
+    .btn-vultr-plan {
+      background: var(--success);
+      color: #fff; border: none;
+      border-radius: var(--radius);
+      padding: 10px 20px;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      text-decoration: none; display: inline-block;
+      transition: opacity 0.15s;
+      margin-top: 16px;
+    }
+    .btn-vultr-plan:hover { opacity: 0.85; }
+
+    /* ── How-to section ── */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 {
+      font-size: 1.1rem; font-weight: 500;
+      letter-spacing: -0.01em; color: var(--text-1);
+      margin-bottom: 20px;
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+    .guide-step {
+      font-size: 11px; font-weight: 500;
+      color: var(--accent); text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 8px;
+    }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* ── FAQ ── */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font);
+    }
+    .faq-a {
+      display: none; font-size: 13px;
+      color: var(--text-2); line-height: 1.7; margin-top: 10px;
+    }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; margin-left: 12px; }
+
+    /* ── Related ── */
+    .related { padding: 40px 0; border-top: 1px solid var(--border); }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .related-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px;
+      text-decoration: none; display: flex;
+      flex-direction: column; gap: 6px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag {
+      font-size: 11px; font-weight: 500;
+      color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* ── Vultr Banner ── */
+    .vultr-banner {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+      margin: 48px 0 0;
+    }
+    .banner-inner {
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 24px;
+    }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* ── Footer ── */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner {
+      display: flex; justify-content: space-between;
+      align-items: center; font-size: 12px; color: var(--text-3);
+    }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .container-row {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+      .container-row .field-replicas { grid-column: 1; }
+      .container-row .field-remove { grid-column: 2; justify-self: end; align-self: end; }
+      .container-row.has-custom {
+        grid-template-columns: 1fr 1fr;
+      }
+      .summary-grid { grid-template-columns: 1fr; }
+      .total-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 1. Nav -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+  <div class="nav-right">
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+  </div>
+</nav>
+
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+
+<!-- 3. Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow">Docker &amp; VPS</p>
+      <h1>Docker RAM Calculator</h1>
+      <p class="hero-desc">Add your containers, set replicas, and instantly see how much RAM your server needs — with a matched Vultr plan.</p>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow">Docker &amp; VPS</p>
+      <h1>Docker RAM 계산기</h1>
+      <p class="hero-desc">컨테이너를 추가하고 복제 수를 설정하면 서버에 필요한 RAM과 적합한 Vultr 플랜을 즉시 확인할 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Tool body -->
+<main>
+  <div class="container">
+
+    <!-- Container input card -->
+    <div class="card tool-section">
+      <p class="card-label" data-i18n="tool_containers_label">Containers</p>
+
+      <div class="container-list" id="containerList"></div>
+
+      <button class="btn-add" onclick="addRow()" data-i18n="tool_add_btn">+ Add Container</button>
+    </div>
+
+    <!-- Results card -->
+    <div class="card tool-section" id="resultsCard">
+      <p class="card-label" data-i18n="tool_results_label">RAM Estimate</p>
+
+      <!-- Breakdown grid -->
+      <div class="summary-grid">
+        <div class="summary-cell">
+          <div class="summary-label" data-i18n="tool_breakdown_containers">Container RAM</div>
+          <div class="summary-val" id="sumContainers">0 MB</div>
+        </div>
+        <div class="summary-cell">
+          <div class="summary-label" data-i18n="tool_breakdown_os">OS Overhead</div>
+          <div class="summary-val">512 MB</div>
+        </div>
+        <div class="summary-cell">
+          <div class="summary-label" data-i18n="tool_breakdown_docker">Docker Overhead</div>
+          <div class="summary-val">256 MB</div>
+        </div>
+        <div class="summary-cell">
+          <div class="summary-label" data-i18n="tool_breakdown_buffer">Buffer (20%)</div>
+          <div class="summary-val" id="sumBuffer">0 MB</div>
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div class="total-row">
+        <div>
+          <div class="total-label" data-i18n="tool_total_label">Recommended RAM</div>
+          <div>
+            <span class="total-val" id="totalRam">1</span>
+            <span class="total-unit">GB</span>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div class="summary-label" data-i18n="tool_raw_label">Raw total</div>
+          <div class="summary-val accent" id="rawTotal">0 MB</div>
+        </div>
+      </div>
+
+      <!-- VPS recommendation table -->
+      <p class="card-label" data-i18n="tool_plans_label">Vultr Plans</p>
+      <table class="vps-table" id="vpsTable">
+        <thead>
+          <tr>
+            <th data-i18n="tool_th_plan">Plan</th>
+            <th data-i18n="tool_th_ram">RAM</th>
+            <th data-i18n="tool_th_cpu">vCPU</th>
+            <th data-i18n="tool_th_price">Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="vpsTableBody"></tbody>
+      </table>
+
+      <a href="https://www.vultr.com/?ref=9907834-9J"
+         class="btn-vultr-plan"
+         id="vultrCta"
+         rel="nofollow sponsored"
+         target="_blank"
+         data-i18n="tool_vultr_cta">Get this plan on Vultr →</a>
+    </div>
+
+  </div>
+</main>
+
+<!-- 5. How-to section -->
+<section class="guide-section">
+  <div class="container">
+
+    <div class="lang-en">
+      <h2>How to use this calculator</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">Add containers</div>
+          <div class="guide-desc">Click "Add Container" and give each container a name. Start with the defaults or clear the list and start fresh.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">Pick an image</div>
+          <div class="guide-desc">Select a preset image (nginx, postgres, redis…) or choose "Custom" and enter your own MB estimate.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">Set replicas</div>
+          <div class="guide-desc">Enter how many replicas you'll run. The calculator multiplies the image RAM by the replica count automatically.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">Get your plan</div>
+          <div class="guide-desc">The recommended Vultr plan is highlighted in green. Click the CTA to provision a matching server instantly.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <h2>계산기 사용 방법</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">컨테이너 추가</div>
+          <div class="guide-desc">"Add Container" 버튼을 클릭하고 컨테이너 이름을 입력하세요. 기본 값을 유지하거나 새로 시작할 수 있습니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">이미지 선택</div>
+          <div class="guide-desc">nginx, postgres, redis 등 프리셋 이미지를 선택하거나 "Custom"을 골라 직접 MB 값을 입력하세요.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">복제 수 설정</div>
+          <div class="guide-desc">실행할 복제 수를 입력하면 이미지 RAM에 자동으로 곱해집니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">플랜 확인</div>
+          <div class="guide-desc">권장 Vultr 플랜이 초록색으로 강조 표시됩니다. CTA 버튼을 클릭하면 바로 서버를 프로비저닝할 수 있습니다.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 6. FAQ -->
+<section class="faq-section">
+  <div class="container">
+
+    <div class="lang-en">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Are the RAM values accurate for every use case?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">The values are typical idle/low-load estimates for common images. Real usage depends on your workload, configuration, and data volume. Use this calculator as a starting baseline — add 20–40 % headroom for production workloads.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Why is OS overhead fixed at 512 MB?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">A minimal Linux distribution (Ubuntu Server, Debian, etc.) typically uses 200–400 MB of RAM at rest. The 512 MB figure accounts for the kernel, system daemons (sshd, cron, journald), and some headroom for OS-level I/O buffers.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>What does Docker overhead include?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">The 256 MB Docker overhead covers the dockerd daemon, containerd, the overlay2 filesystem layer, and internal Docker networking. This is a conservative estimate — on a busy host it may be higher.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Why does the recommended RAM round up to a power of 2?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Cloud VPS plans (including Vultr) come in 1, 2, 4, 8, 16, and 32 GB tiers. Rounding up to the nearest power of 2 ensures the calculator always maps cleanly to an available plan, giving you the minimum plan that fits your workload plus buffer.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Can I use this for Docker Swarm or Kubernetes?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes — the replica field directly maps to Docker Swarm replicas or Kubernetes pod counts on a single node. For multi-node clusters, calculate the per-node RAM by distributing replicas across nodes first, then use this tool for each node's footprint.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>RAM 값이 모든 경우에 정확한가요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">제공된 수치는 일반적인 이미지의 유휴/저부하 시 예상값입니다. 실제 사용량은 워크로드, 설정, 데이터 양에 따라 다릅니다. 이 계산기를 기초 기준으로 사용하고, 프로덕션 환경에서는 20~40% 여유분을 추가하세요.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>OS 오버헤드가 왜 512 MB로 고정되어 있나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">최소화된 리눅스 배포판(Ubuntu Server, Debian 등)은 유휴 상태에서 보통 200~400 MB의 RAM을 사용합니다. 512 MB는 커널, 시스템 데몬(sshd, cron, journald), OS 수준의 I/O 버퍼를 포함한 보수적 값입니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Docker 오버헤드에는 무엇이 포함되나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">256 MB Docker 오버헤드는 dockerd 데몬, containerd, overlay2 파일시스템 레이어, Docker 내부 네트워킹을 포함합니다. 이는 보수적 추정치이며, 바쁜 호스트에서는 더 높을 수 있습니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>권장 RAM이 왜 2의 거듭제곱으로 올림되나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Vultr를 포함한 클라우드 VPS 플랜은 1, 2, 4, 8, 16, 32 GB 단계로 제공됩니다. 2의 거듭제곱으로 올림하면 계산기가 항상 사용 가능한 플랜에 정확히 매핑되어, 버퍼를 포함한 최소 적합 플랜을 안내합니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Docker Swarm 또는 Kubernetes에도 사용할 수 있나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">네 — 복제 수 필드는 단일 노드의 Docker Swarm 복제본 또는 Kubernetes 파드 수에 직접 매핑됩니다. 멀티 노드 클러스터의 경우 노드별로 복제본을 분배한 후, 각 노드에 대해 이 도구를 사용하세요.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 7. Related content -->
+<section class="related">
+  <div class="container">
+    <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+    <div class="related-grid">
+      <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+        <span class="related-tag">Docker</span>
+        <p class="related-title">Docker &amp; VPS guides on StackFreeks</p>
+        <span class="related-arrow">→</span>
+      </a>
+      <a href="/tools/vps-cost-calculator/" class="related-card">
+        <span class="related-tag">VPS</span>
+        <p class="related-title">VPS Cost Calculator</p>
+        <span class="related-arrow">→</span>
+      </a>
+      <a href="/tools/server-spec-recommender/" class="related-card">
+        <span class="related-tag">VPS</span>
+        <p class="related-title">Server Spec Recommender</p>
+        <span class="related-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank"
+       data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- 9. Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    tool_containers_label: "Containers",
+    tool_add_btn: "+ Add Container",
+    tool_results_label: "RAM Estimate",
+    tool_breakdown_containers: "Container RAM",
+    tool_breakdown_os: "OS Overhead",
+    tool_breakdown_docker: "Docker Overhead",
+    tool_breakdown_buffer: "Buffer (20%)",
+    tool_total_label: "Recommended RAM",
+    tool_raw_label: "Raw total",
+    tool_plans_label: "Vultr Plans",
+    tool_th_plan: "Plan",
+    tool_th_ram: "RAM",
+    tool_th_cpu: "vCPU",
+    tool_th_price: "Price",
+    tool_vultr_cta: "Get this plan on Vultr →",
+    tool_name_ph: "e.g. nginx",
+    tool_custom_ph: "MB",
+    tool_replicas_lbl: "Replicas",
+    tool_image_lbl: "Image",
+    tool_name_lbl: "Name",
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
+  },
+  ko: {
+    tool_containers_label: "컨테이너",
+    tool_add_btn: "+ 컨테이너 추가",
+    tool_results_label: "RAM 예상",
+    tool_breakdown_containers: "컨테이너 RAM",
+    tool_breakdown_os: "OS 오버헤드",
+    tool_breakdown_docker: "Docker 오버헤드",
+    tool_breakdown_buffer: "버퍼 (20%)",
+    tool_total_label: "권장 RAM",
+    tool_raw_label: "원시 합계",
+    tool_plans_label: "Vultr 플랜",
+    tool_th_plan: "플랜",
+    tool_th_ram: "RAM",
+    tool_th_cpu: "vCPU",
+    tool_th_price: "가격",
+    tool_vultr_cta: "Vultr에서 이 플랜 선택 →",
+    tool_name_ph: "예: nginx",
+    tool_custom_ph: "MB",
+    tool_replicas_lbl: "복제 수",
+    tool_image_lbl: "이미지",
+    tool_name_lbl: "이름",
+    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
+  }
+};
+</script>
+
+<script>
+// ── Image presets ──
+const IMAGES = [
+  { label: 'nginx',           mb: 50   },
+  { label: 'Apache',          mb: 100  },
+  { label: 'MySQL',           mb: 400  },
+  { label: 'PostgreSQL',      mb: 200  },
+  { label: 'Redis',           mb: 50   },
+  { label: 'MongoDB',         mb: 300  },
+  { label: 'Node.js app',     mb: 150  },
+  { label: 'Python app',      mb: 120  },
+  { label: 'WordPress',       mb: 200  },
+  { label: 'Elasticsearch',   mb: 1000 },
+  { label: 'Custom',          mb: null }
+];
+
+// ── Vultr plans ──
+const PLANS = [
+  { name: 'Cloud Compute', ram: 1,  cpu: 1, price: '$6/mo'   },
+  { name: 'Cloud Compute', ram: 2,  cpu: 1, price: '$12/mo'  },
+  { name: 'Cloud Compute', ram: 4,  cpu: 2, price: '$24/mo'  },
+  { name: 'Cloud Compute', ram: 8,  cpu: 4, price: '$48/mo'  },
+  { name: 'Cloud Compute', ram: 16, cpu: 6, price: '$96/mo'  },
+  { name: 'Cloud Compute', ram: 32, cpu: 8, price: '$192/mo' },
+];
+
+const OS_OVERHEAD_MB     = 512;
+const DOCKER_OVERHEAD_MB = 256;
+const BUFFER_FACTOR      = 0.20;
+
+let rowId = 0;
+
+function imgOptions(selectedLabel) {
+  return IMAGES.map(img =>
+    `<option value="${img.label}" ${img.label === selectedLabel ? 'selected' : ''}>${img.label}${img.mb !== null ? ' (~' + (img.mb >= 1000 ? (img.mb/1000)+'GB' : img.mb+'MB') + ')' : ''}</option>`
+  ).join('');
+}
+
+function addRow(name = '', image = 'nginx', replicas = 1, customMb = '') {
+  const id = ++rowId;
+  const isCustom = image === 'Custom';
+  const list = document.getElementById('containerList');
+  const div = document.createElement('div');
+  div.className = 'container-row' + (isCustom ? ' has-custom' : '');
+  div.id = 'row-' + id;
+  div.innerHTML = buildRowHTML(id, name, image, replicas, customMb);
+  list.appendChild(div);
+  recalc();
+}
+
+function buildRowHTML(id, name, image, replicas, customMb) {
+  const isCustom = image === 'Custom';
+  return `
+    <div>
+      <label>Name</label>
+      <input type="text" value="${escHtml(name)}" placeholder="e.g. nginx"
+             oninput="recalc()" id="name-${id}" />
+    </div>
+    <div>
+      <label>Image</label>
+      <select id="img-${id}" onchange="onImageChange(${id})">${imgOptions(image)}</select>
+    </div>
+    ${isCustom ? `<div id="custom-wrap-${id}">
+      <label>MB</label>
+      <input type="number" id="custom-${id}" value="${escHtml(String(customMb))}" placeholder="MB" min="1" oninput="recalc()" />
+    </div>` : `<div id="custom-wrap-${id}" style="display:none;">
+      <label>MB</label>
+      <input type="number" id="custom-${id}" value="" placeholder="MB" min="1" oninput="recalc()" />
+    </div>`}
+    <div class="field-replicas">
+      <label>Replicas</label>
+      <input type="number" id="rep-${id}" value="${replicas}" min="1" max="20" oninput="recalc()" />
+    </div>
+    <div class="field-remove" style="display:flex;align-items:flex-end;">
+      <button class="btn-remove" onclick="removeRow(${id})" title="Remove">×</button>
+    </div>
+  `;
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function onImageChange(id) {
+  const sel = document.getElementById('img-' + id);
+  const wrap = document.getElementById('custom-wrap-' + id);
+  const row  = document.getElementById('row-' + id);
+  const isCustom = sel.value === 'Custom';
+  wrap.style.display = isCustom ? '' : 'none';
+  row.className = 'container-row' + (isCustom ? ' has-custom' : '');
+  recalc();
+}
+
+function removeRow(id) {
+  const el = document.getElementById('row-' + id);
+  if (el) el.remove();
+  recalc();
+}
+
+function getRowMb(id) {
+  const sel = document.getElementById('img-' + id);
+  if (!sel) return 0;
+  if (sel.value === 'Custom') {
+    const v = parseFloat(document.getElementById('custom-' + id).value);
+    return isNaN(v) || v < 0 ? 0 : v;
+  }
+  const preset = IMAGES.find(i => i.label === sel.value);
+  return preset ? preset.mb : 0;
+}
+
+function getRowReplicas(id) {
+  const el = document.getElementById('rep-' + id);
+  if (!el) return 1;
+  const v = parseInt(el.value, 10);
+  return isNaN(v) || v < 1 ? 1 : Math.min(v, 20);
+}
+
+function roundUpPow2GB(mb) {
+  const gb = mb / 1024;
+  const tiers = [1, 2, 4, 8, 16, 32];
+  for (const t of tiers) { if (t >= gb) return t; }
+  return 32;
+}
+
+function fmtMb(mb) {
+  if (mb >= 1024) return (mb / 1024).toFixed(mb % 1024 === 0 ? 0 : 1) + ' GB';
+  return mb.toFixed(0) + ' MB';
+}
+
+function recalc() {
+  // Gather all row IDs currently in DOM
+  const rows = [...document.querySelectorAll('#containerList .container-row')];
+  const ids  = rows.map(r => parseInt(r.id.replace('row-', ''), 10));
+
+  let containerMb = 0;
+  ids.forEach(id => {
+    containerMb += getRowMb(id) * getRowReplicas(id);
+  });
+
+  const bufferMb = Math.round((containerMb + OS_OVERHEAD_MB + DOCKER_OVERHEAD_MB) * BUFFER_FACTOR);
+  const rawMb    = containerMb + OS_OVERHEAD_MB + DOCKER_OVERHEAD_MB + bufferMb;
+  const recGB    = roundUpPow2GB(rawMb);
+
+  // Update summary
+  document.getElementById('sumContainers').textContent = fmtMb(containerMb);
+  document.getElementById('sumBuffer').textContent     = fmtMb(bufferMb);
+  document.getElementById('rawTotal').textContent      = fmtMb(rawMb);
+  document.getElementById('totalRam').textContent      = recGB;
+
+  // Update VPS table
+  const tbody = document.getElementById('vpsTableBody');
+  tbody.innerHTML = '';
+  PLANS.forEach(plan => {
+    const isRec = plan.ram === recGB;
+    const tr = document.createElement('tr');
+    if (isRec) tr.className = 'vps-row-recommended';
+    tr.innerHTML = `
+      <td>${plan.name}${isRec ? ' <span class="badge-rec">✓ Recommended</span>' : ''}</td>
+      <td class="val">${plan.ram} GB</td>
+      <td class="val">${plan.cpu}</td>
+      <td class="val">${plan.price}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// FAQ accordion
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  item.classList.toggle('open');
+  btn.querySelector('.faq-icon').textContent = item.classList.contains('open') ? '−' : '+';
+}
+
+// Init with 2 default rows
+addRow('nginx',    'nginx',      1);
+addRow('postgres', 'PostgreSQL', 1);
+</script>
+
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>
