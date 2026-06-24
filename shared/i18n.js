@@ -10,7 +10,7 @@
 const SF_I18N = {
   en: {
     // Navbar
-    nav_back: '← all tools',
+    nav_back: '← All Tools',
     // Vultr banner
     vultr_label: 'Sponsor',
     vultr_title: 'Get started on Vultr',
