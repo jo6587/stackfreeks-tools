@@ -379,10 +379,17 @@
     /* FAQ */
     .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
-    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
     .faq-a code {
       font-family: "Courier New", monospace;
       background: var(--surface-2);
@@ -628,28 +635,28 @@
     <p class="faq-title">Frequently Asked Questions</p>
 
     <div class="faq-item">
-      <p class="faq-q">What is CIDR notation?</p>
-      <p class="faq-a">CIDR (Classless Inter-Domain Routing) notation represents an IP address and its associated network mask. Written as <code>192.168.1.0/24</code>, the number after the slash indicates how many bits are the network portion. A <code>/24</code> means the first 24 bits identify the network, leaving 8 bits for host addresses (256 total, 254 usable).</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What is CIDR notation?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">CIDR (Classless Inter-Domain Routing) notation represents an IP address and its associated network mask. Written as <code>192.168.1.0/24</code>, the number after the slash indicates how many bits are the network portion. A <code>/24</code> means the first 24 bits identify the network, leaving 8 bits for host addresses (256 total, 254 usable).</div>
     </div>
 
     <div class="faq-item">
-      <p class="faq-q">What is the difference between network address and broadcast address?</p>
-      <p class="faq-a">The <strong style="color:var(--text-1)">network address</strong> is the first address in a subnet (all host bits set to 0) and identifies the subnet itself — it cannot be assigned to a host. The <strong style="color:var(--text-1)">broadcast address</strong> is the last address (all host bits set to 1) and is used to send data to every device in the subnet simultaneously. All addresses in between are usable host addresses.</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between network address and broadcast address?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">The <strong style="color:var(--text-1)">network address</strong> is the first address in a subnet (all host bits set to 0) and identifies the subnet itself — it cannot be assigned to a host. The <strong style="color:var(--text-1)">broadcast address</strong> is the last address (all host bits set to 1) and is used to send data to every device in the subnet simultaneously. All addresses in between are usable host addresses.</div>
     </div>
 
     <div class="faq-item">
-      <p class="faq-q">How many hosts does a /24 subnet have?</p>
-      <p class="faq-a">A <code>/24</code> subnet has 256 total addresses (2<sup>8</sup> = 256). Subtracting the network address and broadcast address gives <strong style="color:var(--text-1)">254 usable host addresses</strong>. This is the most common subnet for home and office LANs. A <code>/25</code> gives 126 hosts, <code>/23</code> gives 510 hosts.</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How many hosts does a /24 subnet have?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">A <code>/24</code> subnet has 256 total addresses (2<sup>8</sup> = 256). Subtracting the network address and broadcast address gives <strong style="color:var(--text-1)">254 usable host addresses</strong>. This is the most common subnet for home and office LANs. A <code>/25</code> gives 126 hosts, <code>/23</code> gives 510 hosts.</div>
     </div>
 
     <div class="faq-item">
-      <p class="faq-q">What are private IP address ranges?</p>
-      <p class="faq-a">RFC 1918 defines three private IPv4 ranges not routed on the public Internet: <code>10.0.0.0/8</code> (Class A — 16 million addresses), <code>172.16.0.0/12</code> (Class B — ~1 million addresses), and <code>192.168.0.0/16</code> (Class C — 65,536 addresses). These are widely used in home networks, corporate intranets, and VPS private networking.</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What are private IP address ranges?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">RFC 1918 defines three private IPv4 ranges not routed on the public Internet: <code>10.0.0.0/8</code> (Class A — 16 million addresses), <code>172.16.0.0/12</code> (Class B — ~1 million addresses), and <code>192.168.0.0/16</code> (Class C — 65,536 addresses). These are widely used in home networks, corporate intranets, and VPS private networking.</div>
     </div>
 
     <div class="faq-item">
-      <p class="faq-q">How do I choose a subnet size for my VPS network?</p>
-      <p class="faq-a">For a small VPS project with a handful of servers, a <code>/28</code> (14 hosts) or <code>/29</code> (6 hosts) is usually enough. For a growing infrastructure or Kubernetes cluster, consider <code>/24</code> (254 hosts) or larger. On Vultr, you can create private networks with a custom CIDR range for free — assign each VPS a static private IP within that range for secure inter-server communication.</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I choose a subnet size for my VPS network?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">For a small VPS project with a handful of servers, a <code>/28</code> (14 hosts) or <code>/29</code> (6 hosts) is usually enough. For a growing infrastructure or Kubernetes cluster, consider <code>/24</code> (254 hosts) or larger. On Vultr, you can create private networks with a custom CIDR range for free — assign each VPS a static private IP within that range for secure inter-server communication.</div>
     </div>
   </div>
 
@@ -657,28 +664,28 @@
     <p class="faq-title">자주 묻는 질문</p>
 
     <div class="faq-item">
-      <p class="faq-q">CIDR 표기법이란 무엇인가요?</p>
-      <p class="faq-a">CIDR(Classless Inter-Domain Routing)은 IP 주소와 네트워크 마스크를 함께 표현하는 방식입니다. <code>192.168.1.0/24</code>에서 슬래시 뒤의 숫자는 네트워크 부분의 비트 수를 나타냅니다. <code>/24</code>는 첫 24비트가 네트워크를 식별하고, 나머지 8비트가 호스트 주소에 사용됩니다(총 256개, 사용 가능 254개).</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>CIDR 표기법이란 무엇인가요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">CIDR(Classless Inter-Domain Routing)은 IP 주소와 네트워크 마스크를 함께 표현하는 방식입니다. <code>192.168.1.0/24</code>에서 슬래시 뒤의 숫자는 네트워크 부분의 비트 수를 나타냅니다. <code>/24</code>는 첫 24비트가 네트워크를 식별하고, 나머지 8비트가 호스트 주소에 사용됩니다(총 256개, 사용 가능 254개).</div>
     </div>
 
     <div class="faq-item">
-      <p class="faq-q">네트워크 주소와 브로드캐스트 주소의 차이는 무엇인가요?</p>
-      <p class="faq-a"><strong style="color:var(--text-1)">네트워크 주소</strong>는 서브넷의 첫 번째 주소(호스트 비트 전부 0)로, 서브넷 자체를 식별하며 호스트에 할당할 수 없습니다. <strong style="color:var(--text-1)">브로드캐스트 주소</strong>는 마지막 주소(호스트 비트 전부 1)로, 서브넷 내 모든 장치에 동시에 데이터를 전송할 때 사용합니다. 그 사이의 모든 주소가 사용 가능한 호스트 주소입니다.</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>네트워크 주소와 브로드캐스트 주소의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a"><strong style="color:var(--text-1)">네트워크 주소</strong>는 서브넷의 첫 번째 주소(호스트 비트 전부 0)로, 서브넷 자체를 식별하며 호스트에 할당할 수 없습니다. <strong style="color:var(--text-1)">브로드캐스트 주소</strong>는 마지막 주소(호스트 비트 전부 1)로, 서브넷 내 모든 장치에 동시에 데이터를 전송할 때 사용합니다. 그 사이의 모든 주소가 사용 가능한 호스트 주소입니다.</div>
     </div>
 
     <div class="faq-item">
-      <p class="faq-q">/24 서브넷에는 몇 개의 호스트가 있나요?</p>
-      <p class="faq-a"><code>/24</code> 서브넷은 총 256개의 주소(2<sup>8</sup> = 256)를 가집니다. 네트워크 주소와 브로드캐스트 주소를 제외하면 <strong style="color:var(--text-1)">254개의 호스트 주소</strong>를 사용할 수 있습니다. 가정이나 사무실 LAN에서 가장 흔히 쓰이는 서브넷입니다.</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>/24 서브넷에는 몇 개의 호스트가 있나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a"><code>/24</code> 서브넷은 총 256개의 주소(2<sup>8</sup> = 256)를 가집니다. 네트워크 주소와 브로드캐스트 주소를 제외하면 <strong style="color:var(--text-1)">254개의 호스트 주소</strong>를 사용할 수 있습니다. 가정이나 사무실 LAN에서 가장 흔히 쓰이는 서브넷입니다.</div>
     </div>
 
     <div class="faq-item">
-      <p class="faq-q">사설 IP 주소 범위란 무엇인가요?</p>
-      <p class="faq-a">RFC 1918은 공인 인터넷에서 라우팅되지 않는 세 가지 사설 IPv4 범위를 정의합니다: <code>10.0.0.0/8</code> (클래스 A — 1,600만 개), <code>172.16.0.0/12</code> (클래스 B — 약 100만 개), <code>192.168.0.0/16</code> (클래스 C — 65,536개). 가정 네트워크, 기업 인트라넷, VPS 사설 네트워크에 널리 사용됩니다.</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>사설 IP 주소 범위란 무엇인가요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">RFC 1918은 공인 인터넷에서 라우팅되지 않는 세 가지 사설 IPv4 범위를 정의합니다: <code>10.0.0.0/8</code> (클래스 A — 1,600만 개), <code>172.16.0.0/12</code> (클래스 B — 약 100만 개), <code>192.168.0.0/16</code> (클래스 C — 65,536개). 가정 네트워크, 기업 인트라넷, VPS 사설 네트워크에 널리 사용됩니다.</div>
     </div>
 
     <div class="faq-item">
-      <p class="faq-q">VPS 네트워크에 적합한 서브넷 크기는 어떻게 선택하나요?</p>
-      <p class="faq-a">서버 수가 적은 소규모 VPS 프로젝트는 <code>/28</code>(14개 호스트) 또는 <code>/29</code>(6개 호스트)로 충분합니다. 성장하는 인프라나 Kubernetes 클러스터는 <code>/24</code>(254개 호스트) 이상을 고려하세요. Vultr에서는 커스텀 CIDR 범위의 사설 네트워크를 무료로 만들 수 있어 서버 간 안전한 통신에 활용할 수 있습니다.</p>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>VPS 네트워크에 적합한 서브넷 크기는 어떻게 선택하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">서버 수가 적은 소규모 VPS 프로젝트는 <code>/28</code>(14개 호스트) 또는 <code>/29</code>(6개 호스트)로 충분합니다. 성장하는 인프라나 Kubernetes 클러스터는 <code>/24</code>(254개 호스트) 이상을 고려하세요. Vultr에서는 커스텀 CIDR 범위의 사설 네트워크를 무료로 만들 수 있어 서버 간 안전한 통신에 활용할 수 있습니다.</div>
     </div>
   </div>
 </section>
@@ -923,6 +930,11 @@ window.SF_PAGE_I18N = {
 })();
 </script>
 
-<script src="/shared/i18n.js"></script>
+<script src="/shared/i18n.js">
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>

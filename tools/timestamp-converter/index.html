@@ -422,27 +422,19 @@
       margin-bottom: 16px;
     }
 
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: 18px 0;
-    }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
 
-    .faq-item:first-of-type {
-      border-top: 1px solid var(--border);
-    }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
 
-    .faq-q {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 8px;
-    }
-
-    .faq-a {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.7;
-    }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
 
     .faq-a code {
       font-family: monospace;
@@ -797,47 +789,47 @@
     <div class="lang-en">
       <p class="faq-title">Frequently Asked Questions</p>
       <div class="faq-item">
-        <p class="faq-q">What is a Unix timestamp?</p>
-        <p class="faq-a">A Unix timestamp (also called epoch time) is the number of seconds that have elapsed since January 1, 1970, 00:00:00 UTC — known as the Unix epoch. It is a single integer that represents any point in time unambiguously, regardless of timezone or locale. For example, the timestamp <code>1719100800</code> refers to June 23, 2024, 00:00:00 UTC.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is a Unix timestamp?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">A Unix timestamp (also called epoch time) is the number of seconds that have elapsed since January 1, 1970, 00:00:00 UTC — known as the Unix epoch. It is a single integer that represents any point in time unambiguously, regardless of timezone or locale. For example, the timestamp <code>1719100800</code> refers to June 23, 2024, 00:00:00 UTC.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">What is the current Unix timestamp?</p>
-        <p class="faq-a">The current Unix timestamp is shown live at the top of this page, updating every second. You can also get it in any language: JavaScript: <code>Math.floor(Date.now() / 1000)</code>, Python: <code>import time; int(time.time())</code>, Bash: <code>date +%s</code>.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the current Unix timestamp?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">The current Unix timestamp is shown live at the top of this page, updating every second. You can also get it in any language: JavaScript: <code>Math.floor(Date.now() / 1000)</code>, Python: <code>import time; int(time.time())</code>, Bash: <code>date +%s</code>.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">How do I convert a Unix timestamp to a readable date in JavaScript?</p>
-        <p class="faq-a">Use <code>new Date(timestamp * 1000)</code> to create a Date object from a seconds-based timestamp (multiply by 1000 to convert to milliseconds). Then call <code>.toLocaleString()</code> for local time, <code>.toUTCString()</code> for UTC, or <code>.toISOString()</code> for the ISO 8601 format. For example: <code>new Date(1719100800 * 1000).toISOString()</code> returns <code>"2024-06-23T00:00:00.000Z"</code>.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I convert a Unix timestamp to a readable date in JavaScript?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Use <code>new Date(timestamp * 1000)</code> to create a Date object from a seconds-based timestamp (multiply by 1000 to convert to milliseconds). Then call <code>.toLocaleString()</code> for local time, <code>.toUTCString()</code> for UTC, or <code>.toISOString()</code> for the ISO 8601 format. For example: <code>new Date(1719100800 * 1000).toISOString()</code> returns <code>"2024-06-23T00:00:00.000Z"</code>.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">What's the difference between Unix timestamp in seconds vs milliseconds?</p>
-        <p class="faq-a">The standard Unix timestamp counts seconds (a 10-digit number in 2024, e.g. <code>1719100800</code>). Many programming environments — including JavaScript's <code>Date.now()</code> — use milliseconds instead (a 13-digit number, e.g. <code>1719100800000</code>). This converter auto-detects the unit: if the value is greater than 10,000,000,000 (1e10), it treats it as milliseconds.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between Unix timestamp in seconds vs milliseconds?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">The standard Unix timestamp counts seconds (a 10-digit number in 2024, e.g. <code>1719100800</code>). Many programming environments — including JavaScript's <code>Date.now()</code> — use milliseconds instead (a 13-digit number, e.g. <code>1719100800000</code>). This converter auto-detects the unit: if the value is greater than 10,000,000,000 (1e10), it treats it as milliseconds.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">What is epoch time and why do developers use it?</p>
-        <p class="faq-a">Epoch time is another name for Unix time / Unix timestamp. Developers prefer it because it is a simple integer — easy to store in a database, compare, sort, and do arithmetic on. It has no timezone ambiguity, no daylight saving time complications, and is universally supported across programming languages, operating systems, and databases.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is epoch time and why do developers use it?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Epoch time is another name for Unix time / Unix timestamp. Developers prefer it because it is a simple integer — easy to store in a database, compare, sort, and do arithmetic on. It has no timezone ambiguity, no daylight saving time complications, and is universally supported across programming languages, operating systems, and databases.</div>
       </div>
     </div>
     <div class="lang-ko">
       <p class="faq-title">자주 묻는 질문</p>
       <div class="faq-item">
-        <p class="faq-q">Unix 타임스탬프란 무엇인가요?</p>
-        <p class="faq-a">Unix 타임스탬프(Epoch 시간이라고도 함)는 1970년 1월 1일 00:00:00 UTC(Unix Epoch)부터 경과한 초(秒) 수입니다. 타임존이나 로케일과 무관하게 특정 시각을 하나의 정수로 표현합니다. 예를 들어 <code>1719100800</code>은 2024년 6월 23일 00:00:00 UTC를 가리킵니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Unix 타임스탬프란 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Unix 타임스탬프(Epoch 시간이라고도 함)는 1970년 1월 1일 00:00:00 UTC(Unix Epoch)부터 경과한 초(秒) 수입니다. 타임존이나 로케일과 무관하게 특정 시각을 하나의 정수로 표현합니다. 예를 들어 <code>1719100800</code>은 2024년 6월 23일 00:00:00 UTC를 가리킵니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">현재 Unix 타임스탬프는 얼마인가요?</p>
-        <p class="faq-a">이 페이지 상단 카드에서 현재 Unix 타임스탬프를 실시간으로 확인할 수 있습니다. 코드로 얻으려면: JavaScript: <code>Math.floor(Date.now() / 1000)</code>, Python: <code>import time; int(time.time())</code>, Bash: <code>date +%s</code>.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>현재 Unix 타임스탬프는 얼마인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">이 페이지 상단 카드에서 현재 Unix 타임스탬프를 실시간으로 확인할 수 있습니다. 코드로 얻으려면: JavaScript: <code>Math.floor(Date.now() / 1000)</code>, Python: <code>import time; int(time.time())</code>, Bash: <code>date +%s</code>.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">JavaScript에서 Unix 타임스탬프를 날짜로 변환하는 방법은?</p>
-        <p class="faq-a">초 단위 타임스탬프에 1000을 곱한 뒤 <code>new Date(timestamp * 1000)</code>으로 Date 객체를 만드세요. 그런 다음 <code>.toLocaleString()</code>으로 현지 시간, <code>.toUTCString()</code>으로 UTC, <code>.toISOString()</code>으로 ISO 8601 형식을 얻을 수 있습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>JavaScript에서 Unix 타임스탬프를 날짜로 변환하는 방법은?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">초 단위 타임스탬프에 1000을 곱한 뒤 <code>new Date(timestamp * 1000)</code>으로 Date 객체를 만드세요. 그런 다음 <code>.toLocaleString()</code>으로 현지 시간, <code>.toUTCString()</code>으로 UTC, <code>.toISOString()</code>으로 ISO 8601 형식을 얻을 수 있습니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">초 단위 타임스탬프와 밀리초 단위 타임스탬프의 차이는?</p>
-        <p class="faq-a">표준 Unix 타임스탬프는 초 단위(2024년 기준 10자리, 예: <code>1719100800</code>)입니다. JavaScript의 <code>Date.now()</code> 등 많은 환경에서는 밀리초 단위(13자리, 예: <code>1719100800000</code>)를 사용합니다. 이 변환기는 10,000,000,000(1e10) 초과 여부로 단위를 자동 감지합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>초 단위 타임스탬프와 밀리초 단위 타임스탬프의 차이는?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">표준 Unix 타임스탬프는 초 단위(2024년 기준 10자리, 예: <code>1719100800</code>)입니다. JavaScript의 <code>Date.now()</code> 등 많은 환경에서는 밀리초 단위(13자리, 예: <code>1719100800000</code>)를 사용합니다. 이 변환기는 10,000,000,000(1e10) 초과 여부로 단위를 자동 감지합니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Epoch 시간이란 무엇이고 왜 개발자들이 사용하나요?</p>
-        <p class="faq-a">Epoch 시간은 Unix 타임스탬프의 다른 이름입니다. 단순한 정수이기 때문에 데이터베이스 저장, 비교, 정렬, 산술 연산이 쉽습니다. 타임존이나 일광 절약 시간(DST)의 복잡함 없이 모든 프로그래밍 언어, OS, 데이터베이스에서 범용적으로 지원됩니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Epoch 시간이란 무엇이고 왜 개발자들이 사용하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Epoch 시간은 Unix 타임스탬프의 다른 이름입니다. 단순한 정수이기 때문에 데이터베이스 저장, 비교, 정렬, 산술 연산이 쉽습니다. 타임존이나 일광 절약 시간(DST)의 복잡함 없이 모든 프로그래밍 언어, OS, 데이터베이스에서 범용적으로 지원됩니다.</div>
       </div>
     </div>
   </section>
@@ -1182,6 +1174,11 @@
         convertDateToTs();
       } catch (e) {}
     })();
+  
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
   </script>
 
 </body>

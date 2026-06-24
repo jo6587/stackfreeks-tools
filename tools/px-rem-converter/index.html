@@ -349,10 +349,17 @@
     /* ── FAQ ── */
     .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
-    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
     .faq-a code {
       background: var(--surface-2);
       border: 1px solid var(--border-2);
@@ -641,45 +648,45 @@
 
     <div class="faq-item">
       <div class="lang-en">
-        <p class="faq-q">What is rem?</p>
-        <p class="faq-a">"Root em" — a CSS unit relative to the font size of the root <code>&lt;html&gt;</code> element. Browsers default to 16px, so <code>1rem = 16px</code> out of the box.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is rem?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">"Root em" — a CSS unit relative to the font size of the root <code>&lt;html&gt;</code> element. Browsers default to 16px, so <code>1rem = 16px</code> out of the box.</div>
       </div>
       <div class="lang-ko" hidden>
-        <p class="faq-q">rem이란 무엇인가요?</p>
-        <p class="faq-a">"Root em"의 약자로, 루트 <code>&lt;html&gt;</code> 요소의 폰트 크기를 기준으로 하는 CSS 단위입니다. 브라우저 기본값은 16px이므로 기본적으로 <code>1rem = 16px</code>입니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>rem이란 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">"Root em"의 약자로, 루트 <code>&lt;html&gt;</code> 요소의 폰트 크기를 기준으로 하는 CSS 단위입니다. 브라우저 기본값은 16px이므로 기본적으로 <code>1rem = 16px</code>입니다.</div>
       </div>
     </div>
 
     <div class="faq-item">
       <div class="lang-en">
-        <p class="faq-q">Why use rem instead of px?</p>
-        <p class="faq-a">rem scales with the user's browser font settings, making your UI more accessible. It also makes global font scaling easy — change one root value and everything adjusts proportionally.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why use rem instead of px?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">rem scales with the user's browser font settings, making your UI more accessible. It also makes global font scaling easy — change one root value and everything adjusts proportionally.</div>
       </div>
       <div class="lang-ko" hidden>
-        <p class="faq-q">px 대신 rem을 쓰는 이유가 뭔가요?</p>
-        <p class="faq-a">rem은 사용자의 브라우저 폰트 설정에 따라 확장되어 접근성이 향상됩니다. 또한 전체적인 폰트 크기 조정이 쉬워 루트 값 하나만 변경하면 모든 요소가 비례적으로 조정됩니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>px 대신 rem을 쓰는 이유가 뭔가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">rem은 사용자의 브라우저 폰트 설정에 따라 확장되어 접근성이 향상됩니다. 또한 전체적인 폰트 크기 조정이 쉬워 루트 값 하나만 변경하면 모든 요소가 비례적으로 조정됩니다.</div>
       </div>
     </div>
 
     <div class="faq-item">
       <div class="lang-en">
-        <p class="faq-q">What's the default base font size?</p>
-        <p class="faq-a">Browsers default to 16px. However, many projects set <code>html { font-size: 62.5%; }</code> to make <code>1rem = 10px</code> for easier mental math. Always check your project's CSS reset or global styles.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What's the default base font size?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Browsers default to 16px. However, many projects set <code>html { font-size: 62.5%; }</code> to make <code>1rem = 10px</code> for easier mental math. Always check your project's CSS reset or global styles.</div>
       </div>
       <div class="lang-ko" hidden>
-        <p class="faq-q">기본 루트 폰트 크기는 얼마인가요?</p>
-        <p class="faq-a">브라우저 기본값은 16px입니다. 하지만 많은 프로젝트에서 <code>html { font-size: 62.5%; }</code>를 설정해 <code>1rem = 10px</code>로 계산을 편하게 만듭니다. 프로젝트의 CSS 리셋이나 전역 스타일을 확인하세요.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>기본 루트 폰트 크기는 얼마인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">브라우저 기본값은 16px입니다. 하지만 많은 프로젝트에서 <code>html { font-size: 62.5%; }</code>를 설정해 <code>1rem = 10px</code>로 계산을 편하게 만듭니다. 프로젝트의 CSS 리셋이나 전역 스타일을 확인하세요.</div>
       </div>
     </div>
 
     <div class="faq-item">
       <div class="lang-en">
-        <p class="faq-q">Can I use this for other CSS units?</p>
-        <p class="faq-a">This tool focuses on px ↔ rem conversion only. For other unit conversions (em, vw, pt, etc.) keep an eye on our other tools at StackFreeks Tools.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I use this for other CSS units?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">This tool focuses on px ↔ rem conversion only. For other unit conversions (em, vw, pt, etc.) keep an eye on our other tools at StackFreeks Tools.</div>
       </div>
       <div class="lang-ko" hidden>
-        <p class="faq-q">다른 CSS 단위도 변환할 수 있나요?</p>
-        <p class="faq-a">이 도구는 px ↔ rem 변환만 지원합니다. em, vw, pt 등 다른 단위 변환은 StackFreeks Tools의 다른 도구를 확인해 주세요.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>다른 CSS 단위도 변환할 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">이 도구는 px ↔ rem 변환만 지원합니다. em, vw, pt 등 다른 단위 변환은 StackFreeks Tools의 다른 도구를 확인해 주세요.</div>
       </div>
     </div>
 
@@ -881,6 +888,11 @@
     })();
   </script>
 
-  <script src="/shared/i18n.js"></script>
+  <script src="/shared/i18n.js">
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>

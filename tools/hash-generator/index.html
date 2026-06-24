@@ -400,10 +400,17 @@
     /* FAQ */
     .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
-    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
 
     /* Related */
     .related {
@@ -671,47 +678,47 @@
     <div class="lang-en">
       <p class="faq-title">Frequently Asked Questions</p>
       <div class="faq-item">
-        <p class="faq-q">What is a hash and what is it used for?</p>
-        <p class="faq-a">A cryptographic hash function takes any input (text or file) and produces a fixed-length string called a hash or digest. Hashes are used to verify file integrity, store passwords securely, create checksums, and sign data digitally. Even a tiny change in the input produces a completely different hash.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is a hash and what is it used for?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">A cryptographic hash function takes any input (text or file) and produces a fixed-length string called a hash or digest. Hashes are used to verify file integrity, store passwords securely, create checksums, and sign data digitally. Even a tiny change in the input produces a completely different hash.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Which hash algorithm should I use?</p>
-        <p class="faq-a">Use <strong>SHA-256</strong> for most modern use cases — it's the industry standard for checksums, code signing, and data integrity. Use <strong>SHA-512</strong> when you need extra security margins. Avoid <strong>MD5</strong> and <strong>SHA-1</strong> for security-critical applications; they are cryptographically broken, but still useful for non-security checksums and legacy compatibility.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Which hash algorithm should I use?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Use <strong>SHA-256</strong> for most modern use cases — it's the industry standard for checksums, code signing, and data integrity. Use <strong>SHA-512</strong> when you need extra security margins. Avoid <strong>MD5</strong> and <strong>SHA-1</strong> for security-critical applications; they are cryptographically broken, but still useful for non-security checksums and legacy compatibility.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Is SHA-256 more secure than MD5?</p>
-        <p class="faq-a">Yes, significantly. MD5 was shown to be vulnerable to collision attacks in 2004, and SHA-1 was officially deprecated in 2017. SHA-256 and SHA-512 (part of the SHA-2 family) have no known practical attacks and are recommended by NIST for all security-sensitive work.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Is SHA-256 more secure than MD5?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes, significantly. MD5 was shown to be vulnerable to collision attacks in 2004, and SHA-1 was officially deprecated in 2017. SHA-256 and SHA-512 (part of the SHA-2 family) have no known practical attacks and are recommended by NIST for all security-sensitive work.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Can I reverse a hash to get the original text?</p>
-        <p class="faq-a">No. Hash functions are one-way — there is no algorithm to reverse them. However, for short or common inputs (like simple passwords), attackers can use rainbow tables or brute-force to guess the input. This is why passwords should always be salted before hashing.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I reverse a hash to get the original text?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">No. Hash functions are one-way — there is no algorithm to reverse them. However, for short or common inputs (like simple passwords), attackers can use rainbow tables or brute-force to guess the input. This is why passwords should always be salted before hashing.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Is my data sent to a server?</p>
-        <p class="faq-a">No. All hashing happens entirely inside your browser. Your text and files never leave your device. SHA-1, SHA-256, and SHA-512 use the browser's built-in Web Crypto API; MD5 uses the spark-md5 library loaded from a CDN — only the library code is downloaded, not your data.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Is my data sent to a server?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">No. All hashing happens entirely inside your browser. Your text and files never leave your device. SHA-1, SHA-256, and SHA-512 use the browser's built-in Web Crypto API; MD5 uses the spark-md5 library loaded from a CDN — only the library code is downloaded, not your data.</div>
       </div>
     </div>
     <div class="lang-ko">
       <p class="faq-title">자주 묻는 질문</p>
       <div class="faq-item">
-        <p class="faq-q">해시란 무엇이고 어떻게 사용되나요?</p>
-        <p class="faq-a">암호화 해시 함수는 어떤 입력(텍스트나 파일)이든 받아서 고정 길이 문자열(해시 또는 다이제스트)을 생성합니다. 해시는 파일 무결성 검증, 비밀번호 안전 저장, 체크섬 생성, 디지털 서명 등에 사용됩니다. 입력에 아주 작은 변화가 있어도 완전히 다른 해시가 생성됩니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>해시란 무엇이고 어떻게 사용되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">암호화 해시 함수는 어떤 입력(텍스트나 파일)이든 받아서 고정 길이 문자열(해시 또는 다이제스트)을 생성합니다. 해시는 파일 무결성 검증, 비밀번호 안전 저장, 체크섬 생성, 디지털 서명 등에 사용됩니다. 입력에 아주 작은 변화가 있어도 완전히 다른 해시가 생성됩니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">어떤 해시 알고리즘을 사용해야 하나요?</p>
-        <p class="faq-a">대부분의 현대적 용도에는 <strong>SHA-256</strong>을 사용하세요 — 체크섬, 코드 서명, 데이터 무결성의 업계 표준입니다. 추가적인 보안 여유가 필요하면 <strong>SHA-512</strong>를 사용하세요. 보안이 중요한 용도에는 <strong>MD5</strong>와 <strong>SHA-1</strong>을 피하세요; 암호학적으로 취약하지만 비보안 체크섬이나 레거시 호환성에는 여전히 유용합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>어떤 해시 알고리즘을 사용해야 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">대부분의 현대적 용도에는 <strong>SHA-256</strong>을 사용하세요 — 체크섬, 코드 서명, 데이터 무결성의 업계 표준입니다. 추가적인 보안 여유가 필요하면 <strong>SHA-512</strong>를 사용하세요. 보안이 중요한 용도에는 <strong>MD5</strong>와 <strong>SHA-1</strong>을 피하세요; 암호학적으로 취약하지만 비보안 체크섬이나 레거시 호환성에는 여전히 유용합니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">SHA-256이 MD5보다 더 안전한가요?</p>
-        <p class="faq-a">네, 훨씬 안전합니다. MD5는 2004년에 충돌 공격에 취약한 것으로 밝혀졌고, SHA-1은 2017년에 공식 폐기되었습니다. SHA-256과 SHA-512(SHA-2 패밀리)는 알려진 실용적 공격이 없으며 NIST에서 모든 보안 민감 작업에 권장합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>SHA-256이 MD5보다 더 안전한가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네, 훨씬 안전합니다. MD5는 2004년에 충돌 공격에 취약한 것으로 밝혀졌고, SHA-1은 2017년에 공식 폐기되었습니다. SHA-256과 SHA-512(SHA-2 패밀리)는 알려진 실용적 공격이 없으며 NIST에서 모든 보안 민감 작업에 권장합니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">해시를 역산해서 원본 텍스트를 얻을 수 있나요?</p>
-        <p class="faq-a">아니요. 해시 함수는 단방향으로, 역산하는 알고리즘은 존재하지 않습니다. 그러나 짧거나 일반적인 입력(단순 비밀번호 등)의 경우 공격자가 레인보우 테이블이나 무차별 대입으로 입력을 추측할 수 있습니다. 그래서 비밀번호는 해시 전에 항상 솔트(salt)를 추가해야 합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>해시를 역산해서 원본 텍스트를 얻을 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">아니요. 해시 함수는 단방향으로, 역산하는 알고리즘은 존재하지 않습니다. 그러나 짧거나 일반적인 입력(단순 비밀번호 등)의 경우 공격자가 레인보우 테이블이나 무차별 대입으로 입력을 추측할 수 있습니다. 그래서 비밀번호는 해시 전에 항상 솔트(salt)를 추가해야 합니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">내 데이터가 서버로 전송되나요?</p>
-        <p class="faq-a">아니요. 모든 해시 연산은 브라우저 내에서만 처리됩니다. 텍스트와 파일은 절대 기기를 벗어나지 않습니다. SHA-1, SHA-256, SHA-512는 브라우저 내장 Web Crypto API를 사용하고, MD5는 CDN에서 로드되는 spark-md5 라이브러리를 사용합니다 — 라이브러리 코드만 다운로드되며, 여러분의 데이터는 전송되지 않습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>내 데이터가 서버로 전송되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">아니요. 모든 해시 연산은 브라우저 내에서만 처리됩니다. 텍스트와 파일은 절대 기기를 벗어나지 않습니다. SHA-1, SHA-256, SHA-512는 브라우저 내장 Web Crypto API를 사용하고, MD5는 CDN에서 로드되는 spark-md5 라이브러리를 사용합니다 — 라이브러리 코드만 다운로드되며, 여러분의 데이터는 전송되지 않습니다.</div>
       </div>
     </div>
   </div>
@@ -961,7 +968,12 @@
       }
     };
   </script>
-  <script src="/shared/i18n.js"></script>
+  <script src="/shared/i18n.js">
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>

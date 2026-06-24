@@ -374,10 +374,17 @@
     /* FAQ */
     .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
-    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
 
     /* Related */
     .related {
@@ -660,28 +667,28 @@
       <p class="faq-title">Frequently Asked Questions</p>
 
       <div class="faq-item">
-        <p class="faq-q">What is URL encoding?</p>
-        <p class="faq-a">URL encoding (also called percent-encoding) converts special characters into a format that can be safely transmitted in a URL. Each character is replaced with a "%" followed by its two-digit hexadecimal representation — for example, a space becomes <code style="font-family:monospace;color:var(--accent)">%20</code> and "&" becomes <code style="font-family:monospace;color:var(--accent)">%26</code>. This is necessary because URLs can only contain a limited set of ASCII characters.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is URL encoding?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">URL encoding (also called percent-encoding) converts special characters into a format that can be safely transmitted in a URL. Each character is replaced with a "%" followed by its two-digit hexadecimal representation — for example, a space becomes <code style="font-family:monospace;color:var(--accent)">%20</code> and "&" becomes <code style="font-family:monospace;color:var(--accent)">%26</code>. This is necessary because URLs can only contain a limited set of ASCII characters.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">What's the difference between encodeURI and encodeURIComponent?</p>
-        <p class="faq-a"><code style="font-family:monospace;color:var(--accent)">encodeURI</code> is designed for full URLs — it encodes most special characters but leaves the ones that have structural meaning in a URL intact (like <code style="font-family:monospace;color:var(--accent)">:// ? & = # /</code>). <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code> is meant for individual query parameter values — it encodes everything except letters, digits, and <code style="font-family:monospace;color:var(--accent)">- _ . ! ~ * ' ( )</code>. Use <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code> when encoding a value that will appear inside a query string.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between encodeURI and encodeURIComponent?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="font-family:monospace;color:var(--accent)">encodeURI</code> is designed for full URLs — it encodes most special characters but leaves the ones that have structural meaning in a URL intact (like <code style="font-family:monospace;color:var(--accent)">:// ? & = # /</code>). <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code> is meant for individual query parameter values — it encodes everything except letters, digits, and <code style="font-family:monospace;color:var(--accent)">- _ . ! ~ * ' ( )</code>. Use <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code> when encoding a value that will appear inside a query string.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">Why does a space become %20?</p>
-        <p class="faq-a">The ASCII code for a space character is 32, which is 0x20 in hexadecimal. Percent-encoding simply takes the hexadecimal byte value of a character and prefixes it with "%". Some older systems encode spaces as "+" (used in HTML form submissions), but the modern standard is <code style="font-family:monospace;color:var(--accent)">%20</code>.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why does a space become %20?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">The ASCII code for a space character is 32, which is 0x20 in hexadecimal. Percent-encoding simply takes the hexadecimal byte value of a character and prefixes it with "%". Some older systems encode spaces as "+" (used in HTML form submissions), but the modern standard is <code style="font-family:monospace;color:var(--accent)">%20</code>.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">When do I need to encode a URL?</p>
-        <p class="faq-a">You need to encode a URL whenever it contains characters that are not allowed in a URL or that have a special meaning you want to suppress. Common situations include: passing a URL as a query parameter, building dynamic links in JavaScript, writing API requests programmatically, or embedding special characters like spaces, ampersands, or hash signs in query string values.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>When do I need to encode a URL?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">You need to encode a URL whenever it contains characters that are not allowed in a URL or that have a special meaning you want to suppress. Common situations include: passing a URL as a query parameter, building dynamic links in JavaScript, writing API requests programmatically, or embedding special characters like spaces, ampersands, or hash signs in query string values.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">Can I encode special characters in query parameters?</p>
-        <p class="faq-a">Yes — that is exactly what <strong>Encode Component</strong> is for. For example, if you want to pass an email address as a query value, use <code style="font-family:monospace;color:var(--accent)">encodeURIComponent("user@example.com")</code> to get <code style="font-family:monospace;color:var(--accent)">user%40example.com</code>. Always encode individual values with <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>, not the entire URL.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I encode special characters in query parameters?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes — that is exactly what <strong>Encode Component</strong> is for. For example, if you want to pass an email address as a query value, use <code style="font-family:monospace;color:var(--accent)">encodeURIComponent("user@example.com")</code> to get <code style="font-family:monospace;color:var(--accent)">user%40example.com</code>. Always encode individual values with <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>, not the entire URL.</div>
       </div>
     </div>
 
@@ -689,28 +696,28 @@
       <p class="faq-title">자주 묻는 질문</p>
 
       <div class="faq-item">
-        <p class="faq-q">URL 인코딩이란 무엇인가요?</p>
-        <p class="faq-a">URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 "%" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 <code style="font-family:monospace;color:var(--accent)">%20</code>이 되고 "&"는 <code style="font-family:monospace;color:var(--accent)">%26</code>이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>URL 인코딩이란 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 "%" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 <code style="font-family:monospace;color:var(--accent)">%20</code>이 되고 "&"는 <code style="font-family:monospace;color:var(--accent)">%26</code>이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">encodeURI와 encodeURIComponent의 차이는 무엇인가요?</p>
-        <p class="faq-a"><code style="font-family:monospace;color:var(--accent)">encodeURI</code>는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: <code style="font-family:monospace;color:var(--accent)">:// ? & = # /</code>)는 그대로 두고 나머지만 인코딩합니다. <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, <code style="font-family:monospace;color:var(--accent)">- _ . ! ~ * ' ( )</code>를 제외한 모든 것을 인코딩합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>encodeURI와 encodeURIComponent의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="font-family:monospace;color:var(--accent)">encodeURI</code>는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: <code style="font-family:monospace;color:var(--accent)">:// ? & = # /</code>)는 그대로 두고 나머지만 인코딩합니다. <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, <code style="font-family:monospace;color:var(--accent)">- _ . ! ~ * ' ( )</code>를 제외한 모든 것을 인코딩합니다.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">왜 공백이 %20이 되나요?</p>
-        <p class="faq-a">공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 "%"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 "+"로 표현하기도 하지만, 현대 표준은 <code style="font-family:monospace;color:var(--accent)">%20</code>을 사용합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>왜 공백이 %20이 되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 "%"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 "+"로 표현하기도 하지만, 현대 표준은 <code style="font-family:monospace;color:var(--accent)">%20</code>을 사용합니다.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">URL 인코딩이 필요한 경우는 언제인가요?</p>
-        <p class="faq-a">URL에 허용되지 않거나 특별한 의미를 가진 문자가 포함될 때마다 인코딩이 필요합니다. 예를 들면: URL을 쿼리 파라미터로 전달할 때, JavaScript에서 동적 링크를 만들 때, API 요청을 프로그래밍 방식으로 작성할 때, 쿼리 문자열 값에 공백, 앰퍼샌드, 해시 기호 등을 포함할 때입니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>URL 인코딩이 필요한 경우는 언제인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">URL에 허용되지 않거나 특별한 의미를 가진 문자가 포함될 때마다 인코딩이 필요합니다. 예를 들면: URL을 쿼리 파라미터로 전달할 때, JavaScript에서 동적 링크를 만들 때, API 요청을 프로그래밍 방식으로 작성할 때, 쿼리 문자열 값에 공백, 앰퍼샌드, 해시 기호 등을 포함할 때입니다.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">쿼리 파라미터에 특수 문자를 인코딩할 수 있나요?</p>
-        <p class="faq-a">네, 바로 <strong>Encode Component</strong>가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 <code style="font-family:monospace;color:var(--accent)">encodeURIComponent("user@example.com")</code>을 사용하면 <code style="font-family:monospace;color:var(--accent)">user%40example.com</code>이 됩니다. 개별 값에는 항상 <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>를 사용하세요.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>쿼리 파라미터에 특수 문자를 인코딩할 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네, 바로 <strong>Encode Component</strong>가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 <code style="font-family:monospace;color:var(--accent)">encodeURIComponent("user@example.com")</code>을 사용하면 <code style="font-family:monospace;color:var(--accent)">user%40example.com</code>이 됩니다. 개별 값에는 항상 <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>를 사용하세요.</div>
       </div>
     </div>
   </section>
@@ -890,7 +897,12 @@
       }
     };
   </script>
-  <script src="/shared/i18n.js"></script>
+  <script src="/shared/i18n.js">
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>

@@ -357,10 +357,17 @@
     /* ── FAQ ── */
     .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
-    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
 
     /* ── Related ── */
     .related {
@@ -542,47 +549,47 @@
 
     <div class="lang-en">
       <div class="faq-item">
-        <p class="faq-q">What is a HEIC file?</p>
-        <p class="faq-a">HEIC (High Efficiency Image Container) is the default photo format used by iPhones since iOS 11. It uses the HEIF standard to store images at roughly half the file size of JPG while maintaining similar visual quality. Apple adopted it to save storage on devices, but the format is not universally supported outside the Apple ecosystem.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is a HEIC file?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">HEIC (High Efficiency Image Container) is the default photo format used by iPhones since iOS 11. It uses the HEIF standard to store images at roughly half the file size of JPG while maintaining similar visual quality. Apple adopted it to save storage on devices, but the format is not universally supported outside the Apple ecosystem.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Why can't I open HEIC files on Windows or Android?</p>
-        <p class="faq-a">Windows and Android do not natively support the HEIC format. On Windows 10/11 you can install the optional "HEIC Image Extensions" codec from the Microsoft Store, but many apps still don't recognize the format. On Android, most gallery apps simply don't support HEIC. Converting HEIC to JPG is the most reliable way to ensure broad compatibility across all platforms and devices.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why can't I open HEIC files on Windows or Android?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Windows and Android do not natively support the HEIC format. On Windows 10/11 you can install the optional "HEIC Image Extensions" codec from the Microsoft Store, but many apps still don't recognize the format. On Android, most gallery apps simply don't support HEIC. Converting HEIC to JPG is the most reliable way to ensure broad compatibility across all platforms and devices.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Does converting HEIC to JPG reduce quality?</p>
-        <p class="faq-a">There is a small, often imperceptible quality loss when converting HEIC to JPG, because JPG uses lossy compression. At the default 92% quality setting in this tool, the output is visually nearly identical to the original HEIC. You can increase the quality slider to 100% for a lossless-looking output, though the file size will be larger. HEIC files converted at 92% quality typically produce JPGs that are 10–30% larger in file size than the original HEIC.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Does converting HEIC to JPG reduce quality?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">There is a small, often imperceptible quality loss when converting HEIC to JPG, because JPG uses lossy compression. At the default 92% quality setting in this tool, the output is visually nearly identical to the original HEIC. You can increase the quality slider to 100% for a lossless-looking output, though the file size will be larger. HEIC files converted at 92% quality typically produce JPGs that are 10–30% larger in file size than the original HEIC.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Is this HEIC converter free with no file size limit?</p>
-        <p class="faq-a">Yes. This tool is completely free and there is no file size limit. Since conversion runs entirely in your browser using the heic2any library, the only limit is the available memory in your device. You can convert large RAW-quality HEIC photos from any iPhone model without restrictions and without creating an account.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Is this HEIC converter free with no file size limit?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes. This tool is completely free and there is no file size limit. Since conversion runs entirely in your browser using the heic2any library, the only limit is the available memory in your device. You can convert large RAW-quality HEIC photos from any iPhone model without restrictions and without creating an account.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Can I convert multiple HEIC files at once?</p>
-        <p class="faq-a">Yes. Click the drop zone and select multiple files at once (hold Shift or Cmd/Ctrl to multi-select), or drag a batch of HEIC files onto the drop zone. Each file is converted in parallel and displays its own preview card. Once all conversions are done, the "Download All" button appears for one-click batch export.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I convert multiple HEIC files at once?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes. Click the drop zone and select multiple files at once (hold Shift or Cmd/Ctrl to multi-select), or drag a batch of HEIC files onto the drop zone. Each file is converted in parallel and displays its own preview card. Once all conversions are done, the "Download All" button appears for one-click batch export.</div>
       </div>
     </div>
 
     <div class="lang-ko">
       <div class="faq-item">
-        <p class="faq-q">HEIC 파일이란 무엇인가요?</p>
-        <p class="faq-a">HEIC(High Efficiency Image Container)는 iOS 11부터 iPhone의 기본 사진 포맷입니다. HEIF 표준을 사용하여 JPG의 약 절반 크기로 유사한 화질을 제공합니다. Apple이 기기 저장 공간을 절약하기 위해 도입했지만, Apple 생태계 외부에서는 범용적으로 지원되지 않습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>HEIC 파일이란 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">HEIC(High Efficiency Image Container)는 iOS 11부터 iPhone의 기본 사진 포맷입니다. HEIF 표준을 사용하여 JPG의 약 절반 크기로 유사한 화질을 제공합니다. Apple이 기기 저장 공간을 절약하기 위해 도입했지만, Apple 생태계 외부에서는 범용적으로 지원되지 않습니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Windows나 Android에서 HEIC를 열 수 없는 이유는?</p>
-        <p class="faq-a">Windows와 Android는 HEIC 포맷을 기본적으로 지원하지 않습니다. Windows 10/11에서는 Microsoft Store에서 'HEIC 이미지 확장' 코덱을 설치할 수 있지만, 많은 앱에서 여전히 인식하지 못합니다. Android 갤러리 앱도 대부분 HEIC를 지원하지 않습니다. HEIC를 JPG로 변환하는 것이 모든 플랫폼에서 호환성을 보장하는 가장 확실한 방법입니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Windows나 Android에서 HEIC를 열 수 없는 이유는?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Windows와 Android는 HEIC 포맷을 기본적으로 지원하지 않습니다. Windows 10/11에서는 Microsoft Store에서 'HEIC 이미지 확장' 코덱을 설치할 수 있지만, 많은 앱에서 여전히 인식하지 못합니다. Android 갤러리 앱도 대부분 HEIC를 지원하지 않습니다. HEIC를 JPG로 변환하는 것이 모든 플랫폼에서 호환성을 보장하는 가장 확실한 방법입니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">HEIC를 JPG로 변환하면 화질이 떨어지나요?</p>
-        <p class="faq-a">JPG가 손실 압축을 사용하기 때문에 약간의 화질 저하가 있을 수 있지만, 기본값 92% 품질에서는 육안으로 거의 구별할 수 없습니다. 슬라이더를 100%로 올리면 더 큰 파일 크기지만 최상의 화질을 얻을 수 있습니다. 92% 품질로 변환된 JPG는 원본 HEIC보다 파일 크기가 10~30% 정도 커지는 경향이 있습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>HEIC를 JPG로 변환하면 화질이 떨어지나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">JPG가 손실 압축을 사용하기 때문에 약간의 화질 저하가 있을 수 있지만, 기본값 92% 품질에서는 육안으로 거의 구별할 수 없습니다. 슬라이더를 100%로 올리면 더 큰 파일 크기지만 최상의 화질을 얻을 수 있습니다. 92% 품질로 변환된 JPG는 원본 HEIC보다 파일 크기가 10~30% 정도 커지는 경향이 있습니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">파일 크기 제한 없이 무료인가요?</p>
-        <p class="faq-a">네, 완전히 무료이며 파일 크기 제한이 없습니다. 변환이 heic2any 라이브러리를 사용하여 브라우저에서 직접 실행되므로, 유일한 제한은 기기의 가용 메모리입니다. 어떤 iPhone 모델의 고화질 HEIC 사진도 계정 생성 없이 제한 없이 변환할 수 있습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>파일 크기 제한 없이 무료인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네, 완전히 무료이며 파일 크기 제한이 없습니다. 변환이 heic2any 라이브러리를 사용하여 브라우저에서 직접 실행되므로, 유일한 제한은 기기의 가용 메모리입니다. 어떤 iPhone 모델의 고화질 HEIC 사진도 계정 생성 없이 제한 없이 변환할 수 있습니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">여러 HEIC 파일을 한 번에 변환할 수 있나요?</p>
-        <p class="faq-a">네. 드롭 존을 클릭하고 Shift 또는 Cmd/Ctrl을 누른 채 여러 파일을 선택하거나, HEIC 파일을 드롭 존으로 일괄 드래그하세요. 각 파일이 병렬로 변환되며 개별 미리보기 카드로 표시됩니다. 모든 변환이 완료되면 '전체 다운로드' 버튼이 나타납니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>여러 HEIC 파일을 한 번에 변환할 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네. 드롭 존을 클릭하고 Shift 또는 Cmd/Ctrl을 누른 채 여러 파일을 선택하거나, HEIC 파일을 드롭 존으로 일괄 드래그하세요. 각 파일이 병렬로 변환되며 개별 미리보기 카드로 표시됩니다. 모든 변환이 완료되면 '전체 다운로드' 버튼이 나타납니다.</div>
       </div>
     </div>
   </section>
@@ -948,6 +955,11 @@
     })();
   </script>
 
-  <script src="/shared/i18n.js"></script>
+  <script src="/shared/i18n.js">
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>

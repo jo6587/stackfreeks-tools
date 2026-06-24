@@ -488,22 +488,17 @@
       letter-spacing: 0.08em;
       margin-bottom: 16px;
     }
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: 18px 0;
-    }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 8px;
-    }
-    .faq-a {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.7;
-    }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
     .faq-a code {
       font-family: 'Courier New', Courier, monospace;
       background: var(--surface-2);
@@ -894,47 +889,47 @@
     <div class="lang-en">
       <p class="faq-title">Frequently Asked Questions</p>
       <div class="faq-item">
-        <p class="faq-q">What is cron syntax and how do the 5 fields work?</p>
-        <p class="faq-a">A standard cron expression has 5 fields separated by spaces: <code>minute hour day-of-month month day-of-week</code>. Each field can be a specific number, a wildcard <code>*</code> (meaning "every"), a step value <code>*/n</code> (every n units), a list <code>1,5,10</code>, or a range <code>1-5</code>. For example, <code>30 9 * * 1-5</code> runs at 9:30 AM every weekday.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is cron syntax and how do the 5 fields work?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">A standard cron expression has 5 fields separated by spaces: <code>minute hour day-of-month month day-of-week</code>. Each field can be a specific number, a wildcard <code>*</code> (meaning "every"), a step value <code>*/n</code> (every n units), a list <code>1,5,10</code>, or a range <code>1-5</code>. For example, <code>30 9 * * 1-5</code> runs at 9:30 AM every weekday.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">What is the difference between day-of-month and day-of-week?</p>
-        <p class="faq-a">Day-of-month (field 3) targets specific dates in a month — like the 1st or 15th. Day-of-week (field 5) targets specific weekdays — like Monday (1) or Friday (5). If both are set to non-wildcard values, most cron implementations run the job when <em>either</em> condition is true (OR logic). To avoid confusion, it's common practice to set one to <code>*</code> and only use the other.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between day-of-month and day-of-week?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Day-of-month (field 3) targets specific dates in a month — like the 1st or 15th. Day-of-week (field 5) targets specific weekdays — like Monday (1) or Friday (5). If both are set to non-wildcard values, most cron implementations run the job when <em>either</em> condition is true (OR logic). To avoid confusion, it's common practice to set one to <code>*</code> and only use the other.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">How do I run a cron job on a VPS or Linux server?</p>
-        <p class="faq-a">SSH into your server and run <code>crontab -e</code> to open the cron editor. Add a line with your expression followed by the command to run, for example: <code>0 2 * * * /home/user/backup.sh</code>. Save and exit — cron will start scheduling immediately. You can verify active jobs with <code>crontab -l</code>. Make sure your script has execute permissions (<code>chmod +x script.sh</code>) and uses absolute paths for commands.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I run a cron job on a VPS or Linux server?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">SSH into your server and run <code>crontab -e</code> to open the cron editor. Add a line with your expression followed by the command to run, for example: <code>0 2 * * * /home/user/backup.sh</code>. Save and exit — cron will start scheduling immediately. You can verify active jobs with <code>crontab -l</code>. Make sure your script has execute permissions (<code>chmod +x script.sh</code>) and uses absolute paths for commands.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Does cron use UTC or my server's local timezone?</p>
-        <p class="faq-a">By default, cron uses the system timezone of your server — which may be UTC, especially on cloud VPS instances. You can check with <code>timedatectl</code> or <code>date</code>. To set a specific timezone for a crontab, add <code>CRON_TZ=America/New_York</code> at the top of your crontab file (supported by most modern cron implementations). This tool shows run times in your <em>browser's</em> local timezone, not your server's timezone.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Does cron use UTC or my server's local timezone?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">By default, cron uses the system timezone of your server — which may be UTC, especially on cloud VPS instances. You can check with <code>timedatectl</code> or <code>date</code>. To set a specific timezone for a crontab, add <code>CRON_TZ=America/New_York</code> at the top of your crontab file (supported by most modern cron implementations). This tool shows run times in your <em>browser's</em> local timezone, not your server's timezone.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">What are the most common cron mistakes to avoid?</p>
-        <p class="faq-a">1. <strong>Wrong timezone</strong> — your server likely runs UTC; schedule accordingly. 2. <strong>Relative paths</strong> — always use absolute paths like <code>/usr/bin/python3</code> instead of just <code>python3</code>. 3. <strong>Missing execute permission</strong> — run <code>chmod +x yourscript.sh</code>. 4. <strong>No output logging</strong> — redirect output to a log file: <code>command >> /var/log/myjob.log 2&amp;&amp;1</code>. 5. <strong>Forgetting the newline</strong> — crontab files must end with a newline or the last entry may be ignored.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What are the most common cron mistakes to avoid?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">1. <strong>Wrong timezone</strong> — your server likely runs UTC; schedule accordingly. 2. <strong>Relative paths</strong> — always use absolute paths like <code>/usr/bin/python3</code> instead of just <code>python3</code>. 3. <strong>Missing execute permission</strong> — run <code>chmod +x yourscript.sh</code>. 4. <strong>No output logging</strong> — redirect output to a log file: <code>command >> /var/log/myjob.log 2&amp;&amp;1</code>. 5. <strong>Forgetting the newline</strong> — crontab files must end with a newline or the last entry may be ignored.</div>
       </div>
     </div>
     <div class="lang-ko">
       <p class="faq-title">자주 묻는 질문</p>
       <div class="faq-item">
-        <p class="faq-q">크론 문법과 5개 필드는 어떻게 동작하나요?</p>
-        <p class="faq-a">표준 크론 표현식은 공백으로 구분된 5개 필드로 구성됩니다: <code>분 시 일(월) 월 요일</code>. 각 필드에는 특정 숫자, 와일드카드 <code>*</code>("모든"을 의미), 스텝 값 <code>*/n</code>(n 단위마다), 목록 <code>1,5,10</code>, 또는 범위 <code>1-5</code>를 사용할 수 있습니다. 예를 들어 <code>30 9 * * 1-5</code>는 평일 오전 9시 30분에 실행됩니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>크론 문법과 5개 필드는 어떻게 동작하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">표준 크론 표현식은 공백으로 구분된 5개 필드로 구성됩니다: <code>분 시 일(월) 월 요일</code>. 각 필드에는 특정 숫자, 와일드카드 <code>*</code>("모든"을 의미), 스텝 값 <code>*/n</code>(n 단위마다), 목록 <code>1,5,10</code>, 또는 범위 <code>1-5</code>를 사용할 수 있습니다. 예를 들어 <code>30 9 * * 1-5</code>는 평일 오전 9시 30분에 실행됩니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">일(월)과 요일 필드의 차이는 무엇인가요?</p>
-        <p class="faq-a">일(월) 필드(3번째)는 1일 또는 15일처럼 특정 날짜를 지정합니다. 요일 필드(5번째)는 월요일(1) 또는 금요일(5)처럼 특정 요일을 지정합니다. 두 필드 모두 와일드카드가 아닌 값으로 설정하면, 대부분의 크론 구현체는 두 조건 중 하나라도 맞으면 실행합니다(OR 로직). 혼란을 피하려면 하나를 <code>*</code>로 두고 다른 하나만 사용하는 것이 일반적입니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>일(월)과 요일 필드의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">일(월) 필드(3번째)는 1일 또는 15일처럼 특정 날짜를 지정합니다. 요일 필드(5번째)는 월요일(1) 또는 금요일(5)처럼 특정 요일을 지정합니다. 두 필드 모두 와일드카드가 아닌 값으로 설정하면, 대부분의 크론 구현체는 두 조건 중 하나라도 맞으면 실행합니다(OR 로직). 혼란을 피하려면 하나를 <code>*</code>로 두고 다른 하나만 사용하는 것이 일반적입니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">VPS 또는 Linux 서버에서 크론 작업을 어떻게 실행하나요?</p>
-        <p class="faq-a">서버에 SSH로 접속한 후 <code>crontab -e</code>를 실행해 크론 편집기를 엽니다. 표현식과 실행 명령을 한 줄에 추가하세요. 예: <code>0 2 * * * /home/user/backup.sh</code>. 저장 후 종료하면 즉시 스케줄링이 시작됩니다. <code>crontab -l</code>로 현재 작업을 확인할 수 있습니다. 스크립트에 실행 권한(<code>chmod +x script.sh</code>)을 부여하고 명령어에 절대 경로를 사용하세요.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>VPS 또는 Linux 서버에서 크론 작업을 어떻게 실행하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">서버에 SSH로 접속한 후 <code>crontab -e</code>를 실행해 크론 편집기를 엽니다. 표현식과 실행 명령을 한 줄에 추가하세요. 예: <code>0 2 * * * /home/user/backup.sh</code>. 저장 후 종료하면 즉시 스케줄링이 시작됩니다. <code>crontab -l</code>로 현재 작업을 확인할 수 있습니다. 스크립트에 실행 권한(<code>chmod +x script.sh</code>)을 부여하고 명령어에 절대 경로를 사용하세요.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">크론은 UTC를 사용하나요, 서버 현지 시간대를 사용하나요?</p>
-        <p class="faq-a">기본적으로 크론은 서버의 시스템 시간대를 사용합니다 — 클라우드 VPS 인스턴스는 보통 UTC입니다. <code>timedatectl</code> 또는 <code>date</code> 명령으로 확인할 수 있습니다. crontab 파일 맨 위에 <code>CRON_TZ=Asia/Seoul</code>을 추가하면 해당 크론탭만 다른 시간대로 실행할 수 있습니다. 이 도구는 서버가 아닌 <em>브라우저</em>의 현지 시간대를 기준으로 실행 시간을 표시합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>크론은 UTC를 사용하나요, 서버 현지 시간대를 사용하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">기본적으로 크론은 서버의 시스템 시간대를 사용합니다 — 클라우드 VPS 인스턴스는 보통 UTC입니다. <code>timedatectl</code> 또는 <code>date</code> 명령으로 확인할 수 있습니다. crontab 파일 맨 위에 <code>CRON_TZ=Asia/Seoul</code>을 추가하면 해당 크론탭만 다른 시간대로 실행할 수 있습니다. 이 도구는 서버가 아닌 <em>브라우저</em>의 현지 시간대를 기준으로 실행 시간을 표시합니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">크론 설정 시 자주 하는 실수는 무엇인가요?</p>
-        <p class="faq-a">1. <strong>시간대 오류</strong> — 서버는 보통 UTC로 동작합니다. 그에 맞춰 스케줄하세요. 2. <strong>상대 경로 사용</strong> — <code>python3</code> 대신 <code>/usr/bin/python3</code>처럼 절대 경로를 사용하세요. 3. <strong>실행 권한 누락</strong> — <code>chmod +x yourscript.sh</code>를 실행하세요. 4. <strong>출력 로깅 없음</strong> — 로그 파일로 리다이렉션하세요: <code>command >> /var/log/myjob.log 2&amp;&amp;1</code>. 5. <strong>개행 문자 누락</strong> — crontab 파일은 반드시 개행으로 끝나야 합니다. 그렇지 않으면 마지막 항목이 무시될 수 있습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>크론 설정 시 자주 하는 실수는 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">1. <strong>시간대 오류</strong> — 서버는 보통 UTC로 동작합니다. 그에 맞춰 스케줄하세요. 2. <strong>상대 경로 사용</strong> — <code>python3</code> 대신 <code>/usr/bin/python3</code>처럼 절대 경로를 사용하세요. 3. <strong>실행 권한 누락</strong> — <code>chmod +x yourscript.sh</code>를 실행하세요. 4. <strong>출력 로깅 없음</strong> — 로그 파일로 리다이렉션하세요: <code>command >> /var/log/myjob.log 2&amp;&amp;1</code>. 5. <strong>개행 문자 누락</strong> — crontab 파일은 반드시 개행으로 끝나야 합니다. 그렇지 않으면 마지막 항목이 무시될 수 있습니다.</div>
       </div>
     </div>
   </section>
@@ -1575,6 +1570,11 @@
 
     // Re-render when language changes
     document.addEventListener('sfLangChanged', updateOutput);
+  
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
   </script>
 
 </body>

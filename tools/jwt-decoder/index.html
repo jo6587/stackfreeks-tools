@@ -504,10 +504,17 @@
       letter-spacing: 0.08em;
       margin-bottom: 16px;
     }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
-    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
     .faq-a code {
       background: var(--surface-2);
       border: 1px solid var(--border);
@@ -803,28 +810,28 @@
         <p class="faq-title">FAQ</p>
 
         <div class="faq-item">
-          <p class="faq-q">What is a JWT token?</p>
-          <p class="faq-a">A JSON Web Token (JWT) is a compact, URL-safe token format defined in <a href="https://tools.ietf.org/html/rfc7519" target="_blank" rel="noopener">RFC 7519</a>. It consists of three base64url-encoded parts separated by dots: <code>header.payload.signature</code>. The header describes the signing algorithm, the payload carries claims (user data, expiry, etc.), and the signature ensures the token hasn't been tampered with.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is a JWT token?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">A JSON Web Token (JWT) is a compact, URL-safe token format defined in <a href="https://tools.ietf.org/html/rfc7519" target="_blank" rel="noopener">RFC 7519</a>. It consists of three base64url-encoded parts separated by dots: <code>header.payload.signature</code>. The header describes the signing algorithm, the payload carries claims (user data, expiry, etc.), and the signature ensures the token hasn't been tampered with.</div>
         </div>
 
         <div class="faq-item">
-          <p class="faq-q">Is my JWT token safe to paste here?</p>
-          <p class="faq-a">Yes. All decoding happens entirely in your browser using JavaScript — nothing is transmitted to any server. You can verify this by checking the browser's Network tab while using the tool. That said, avoid sharing production tokens with sensitive data in untrusted environments as a general security practice.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Is my JWT token safe to paste here?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Yes. All decoding happens entirely in your browser using JavaScript — nothing is transmitted to any server. You can verify this by checking the browser's Network tab while using the tool. That said, avoid sharing production tokens with sensitive data in untrusted environments as a general security practice.</div>
         </div>
 
         <div class="faq-item">
-          <p class="faq-q">Why isn't the signature verified?</p>
-          <p class="faq-a">JWT signature verification requires the secret key (for HMAC algorithms like HS256) or the public key (for asymmetric algorithms like RS256). These keys are never included in the token itself, and your browser has no way to obtain them. Verification must happen server-side where the key is securely stored.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Why isn't the signature verified?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">JWT signature verification requires the secret key (for HMAC algorithms like HS256) or the public key (for asymmetric algorithms like RS256). These keys are never included in the token itself, and your browser has no way to obtain them. Verification must happen server-side where the key is securely stored.</div>
         </div>
 
         <div class="faq-item">
-          <p class="faq-q">What is the <code>exp</code> claim?</p>
-          <p class="faq-a">The <code>exp</code> (Expiration Time) claim specifies when the token expires, as a Unix timestamp (seconds since January 1, 1970 UTC). Servers should reject tokens with an <code>exp</code> in the past. This tool converts the value to a human-readable date and shows whether the token is currently valid or expired.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is the <code>exp</code> claim?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">The <code>exp</code> (Expiration Time) claim specifies when the token expires, as a Unix timestamp (seconds since January 1, 1970 UTC). Servers should reject tokens with an <code>exp</code> in the past. This tool converts the value to a human-readable date and shows whether the token is currently valid or expired.</div>
         </div>
 
         <div class="faq-item">
-          <p class="faq-q">How do I decode a JWT in code?</p>
-          <p class="faq-a">In JavaScript: <code>JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))</code>. In Node.js use the <code>jsonwebtoken</code> library. In Python use <code>PyJWT</code>. In Go use <code>golang-jwt/jwt</code>. Remember that decoding is not the same as verification — always verify tokens server-side before trusting their contents.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I decode a JWT in code?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">In JavaScript: <code>JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))</code>. In Node.js use the <code>jsonwebtoken</code> library. In Python use <code>PyJWT</code>. In Go use <code>golang-jwt/jwt</code>. Remember that decoding is not the same as verification — always verify tokens server-side before trusting their contents.</div>
         </div>
       </div>
 
@@ -832,28 +839,28 @@
         <p class="faq-title">자주 묻는 질문</p>
 
         <div class="faq-item">
-          <p class="faq-q">JWT 토큰이란 무엇인가요?</p>
-          <p class="faq-a">JSON Web Token(JWT)은 <a href="https://tools.ietf.org/html/rfc7519" target="_blank" rel="noopener">RFC 7519</a>에 정의된 컴팩트하고 URL-safe한 토큰 형식입니다. 점(.)으로 구분된 세 개의 base64url 인코딩 부분(<code>header.payload.signature</code>)으로 구성됩니다. 헤더는 서명 알고리즘을, 페이로드는 클레임(사용자 데이터, 만료 시간 등)을, 시그니처는 토큰 무결성을 보장합니다.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>JWT 토큰이란 무엇인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">JSON Web Token(JWT)은 <a href="https://tools.ietf.org/html/rfc7519" target="_blank" rel="noopener">RFC 7519</a>에 정의된 컴팩트하고 URL-safe한 토큰 형식입니다. 점(.)으로 구분된 세 개의 base64url 인코딩 부분(<code>header.payload.signature</code>)으로 구성됩니다. 헤더는 서명 알고리즘을, 페이로드는 클레임(사용자 데이터, 만료 시간 등)을, 시그니처는 토큰 무결성을 보장합니다.</div>
         </div>
 
         <div class="faq-item">
-          <p class="faq-q">JWT 토큰을 여기에 붙여넣어도 안전한가요?</p>
-          <p class="faq-a">네. 모든 디코딩은 브라우저 내 JavaScript로만 처리되며 어떤 서버에도 전송되지 않습니다. 브라우저 네트워크 탭에서 직접 확인하실 수 있습니다. 다만 일반적인 보안 원칙으로, 민감한 정보가 담긴 프로덕션 토큰은 신뢰할 수 없는 환경에서 공유하지 않는 것이 좋습니다.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>JWT 토큰을 여기에 붙여넣어도 안전한가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">네. 모든 디코딩은 브라우저 내 JavaScript로만 처리되며 어떤 서버에도 전송되지 않습니다. 브라우저 네트워크 탭에서 직접 확인하실 수 있습니다. 다만 일반적인 보안 원칙으로, 민감한 정보가 담긴 프로덕션 토큰은 신뢰할 수 없는 환경에서 공유하지 않는 것이 좋습니다.</div>
         </div>
 
         <div class="faq-item">
-          <p class="faq-q">왜 서명을 검증하지 않나요?</p>
-          <p class="faq-a">JWT 서명 검증에는 비밀 키(HS256 등 HMAC 알고리즘) 또는 공개 키(RS256 등 비대칭 알고리즘)가 필요합니다. 이 키는 토큰 자체에 포함되지 않으며 브라우저에서는 접근할 수 없습니다. 검증은 키가 안전하게 보관된 서버 측에서 수행해야 합니다.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>왜 서명을 검증하지 않나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">JWT 서명 검증에는 비밀 키(HS256 등 HMAC 알고리즘) 또는 공개 키(RS256 등 비대칭 알고리즘)가 필요합니다. 이 키는 토큰 자체에 포함되지 않으며 브라우저에서는 접근할 수 없습니다. 검증은 키가 안전하게 보관된 서버 측에서 수행해야 합니다.</div>
         </div>
 
         <div class="faq-item">
-          <p class="faq-q"><code>exp</code> 클레임이란 무엇인가요?</p>
-          <p class="faq-a"><code>exp</code>(Expiration Time) 클레임은 토큰의 만료 시각을 Unix 타임스탬프(1970년 1월 1일 UTC 기준 초)로 나타냅니다. 서버는 <code>exp</code>가 과거인 토큰을 거부해야 합니다. 이 도구는 값을 사람이 읽기 쉬운 날짜로 변환하고 현재 유효 여부를 표시합니다.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span><code>exp</code> 클레임이란 무엇인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><code>exp</code>(Expiration Time) 클레임은 토큰의 만료 시각을 Unix 타임스탬프(1970년 1월 1일 UTC 기준 초)로 나타냅니다. 서버는 <code>exp</code>가 과거인 토큰을 거부해야 합니다. 이 도구는 값을 사람이 읽기 쉬운 날짜로 변환하고 현재 유효 여부를 표시합니다.</div>
         </div>
 
         <div class="faq-item">
-          <p class="faq-q">코드에서 JWT를 어떻게 디코딩하나요?</p>
-          <p class="faq-a">JavaScript: <code>JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))</code>. Node.js는 <code>jsonwebtoken</code> 라이브러리를, Python은 <code>PyJWT</code>를, Go는 <code>golang-jwt/jwt</code>를 사용하세요. 디코딩은 검증과 다릅니다 — 토큰의 내용을 신뢰하기 전에 반드시 서버 측에서 검증하세요.</p>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>코드에서 JWT를 어떻게 디코딩하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">JavaScript: <code>JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))</code>. Node.js는 <code>jsonwebtoken</code> 라이브러리를, Python은 <code>PyJWT</code>를, Go는 <code>golang-jwt/jwt</code>를 사용하세요. 디코딩은 검증과 다릅니다 — 토큰의 내용을 신뢰하기 전에 반드시 서버 측에서 검증하세요.</div>
         </div>
       </div>
     </div>
@@ -1154,6 +1161,11 @@
 
   <!-- i18n -->
   <script>window.SF_PAGE_I18N = { en: { nav_back: "← All Tools", vultr_label: "Sponsor", vultr_title: "Get started on Vultr", vultr_sub: "Get $300 free credit — valid for 30 days", vultr_cta: "Claim your credit →", footer_copy: "© 2026 StackFreeks" }, ko: { nav_back: "← 전체 툴", vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요", vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)", vultr_cta: "크레딧 받기 →", footer_copy: "© 2026 StackFreeks" } }</script>
-  <script src="/shared/i18n.js"></script>
+  <script src="/shared/i18n.js">
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>

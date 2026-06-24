@@ -350,27 +350,19 @@
       margin-bottom: 16px;
     }
 
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: 18px 0;
-    }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
 
-    .faq-item:first-of-type {
-      border-top: 1px solid var(--border);
-    }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
 
-    .faq-q {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 8px;
-    }
-
-    .faq-a {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.7;
-    }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
 
     /* Related */
     .related {
@@ -637,48 +629,48 @@
     <!-- EN FAQs -->
     <div class="lang-en">
       <div class="faq-item">
-        <p class="faq-q">What is error correction level and which should I choose?</p>
-        <p class="faq-a">Error correction allows a QR code to be read even when partially damaged or covered. Level L recovers 7% of data — good for clean digital screens. Level M (15%) is the default and suits most use cases. Level Q (25%) is ideal for QR codes on surfaces that may get scratched. Level H (30%) is best for logos overlaid on the QR code, but produces a denser, larger code.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is error correction level and which should I choose?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Error correction allows a QR code to be read even when partially damaged or covered. Level L recovers 7% of data — good for clean digital screens. Level M (15%) is the default and suits most use cases. Level Q (25%) is ideal for QR codes on surfaces that may get scratched. Level H (30%) is best for logos overlaid on the QR code, but produces a denser, larger code.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Can I create a QR code for free without watermarks?</p>
-        <p class="faq-a">Yes — completely. This tool generates QR codes entirely in your browser using open-source libraries. There are no watermarks, no subscriptions, no account required, and no usage limits. The downloaded PNG and SVG files are clean and ready to use.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I create a QR code for free without watermarks?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes — completely. This tool generates QR codes entirely in your browser using open-source libraries. There are no watermarks, no subscriptions, no account required, and no usage limits. The downloaded PNG and SVG files are clean and ready to use.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">What's the best QR code size for printing?</p>
-        <p class="faq-a">For most printed materials, choose Large (1024px) to ensure the highest resolution output. As a rule of thumb, a QR code should be at least 2 cm × 2 cm when printed, and the scanning distance should be no more than 10× the code's width. For billboards or large posters, export as SVG and scale to any size without quality loss.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What's the best QR code size for printing?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">For most printed materials, choose Large (1024px) to ensure the highest resolution output. As a rule of thumb, a QR code should be at least 2 cm × 2 cm when printed, and the scanning distance should be no more than 10× the code's width. For billboards or large posters, export as SVG and scale to any size without quality loss.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Can I change the color of my QR code?</p>
-        <p class="faq-a">Yes. Use the Foreground color picker to change the module (dot) color, and the Background color picker for the quiet zone. Make sure there is sufficient contrast between the two colors — scanners need at least a 4:1 contrast ratio to reliably decode the code. Avoid reversing dark/light if the background becomes too close to the foreground.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I change the color of my QR code?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes. Use the Foreground color picker to change the module (dot) color, and the Background color picker for the quiet zone. Make sure there is sufficient contrast between the two colors — scanners need at least a 4:1 contrast ratio to reliably decode the code. Avoid reversing dark/light if the background becomes too close to the foreground.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">How do I create a QR code for a website URL?</p>
-        <p class="faq-a">Paste your full URL (including https://) into the input box. The QR code generates instantly. We recommend using HTTPS URLs and keeping them as short as possible — shorter URLs produce simpler, more scannable codes. You can also use a URL shortener before generating the QR code to reduce density.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I create a QR code for a website URL?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Paste your full URL (including https://) into the input box. The QR code generates instantly. We recommend using HTTPS URLs and keeping them as short as possible — shorter URLs produce simpler, more scannable codes. You can also use a URL shortener before generating the QR code to reduce density.</div>
       </div>
     </div>
 
     <!-- KO FAQs -->
     <div class="lang-ko">
       <div class="faq-item">
-        <p class="faq-q">오류 수정 레벨이란 무엇이며 어떤 것을 선택해야 하나요?</p>
-        <p class="faq-a">오류 수정은 QR 코드가 일부 손상되거나 가려진 경우에도 인식되도록 합니다. L은 7% 복구로 깨끗한 화면 표시에 적합하고, M(15%)은 기본값으로 대부분의 용도에 맞습니다. Q(25%)는 긁힘이 생길 수 있는 표면에, H(30%)는 로고를 QR 코드 위에 겹칠 때 적합하지만 코드가 더 조밀해집니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>오류 수정 레벨이란 무엇이며 어떤 것을 선택해야 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">오류 수정은 QR 코드가 일부 손상되거나 가려진 경우에도 인식되도록 합니다. L은 7% 복구로 깨끗한 화면 표시에 적합하고, M(15%)은 기본값으로 대부분의 용도에 맞습니다. Q(25%)는 긁힘이 생길 수 있는 표면에, H(30%)는 로고를 QR 코드 위에 겹칠 때 적합하지만 코드가 더 조밀해집니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">워터마크 없이 무료로 QR 코드를 만들 수 있나요?</p>
-        <p class="faq-a">네, 완전 무료입니다. 이 도구는 오픈소스 라이브러리를 사용해 브라우저에서 직접 QR 코드를 생성합니다. 워터마크, 구독, 계정, 사용 제한이 전혀 없습니다. 다운로드한 PNG 및 SVG 파일은 깨끗하게 바로 사용할 수 있습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>워터마크 없이 무료로 QR 코드를 만들 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네, 완전 무료입니다. 이 도구는 오픈소스 라이브러리를 사용해 브라우저에서 직접 QR 코드를 생성합니다. 워터마크, 구독, 계정, 사용 제한이 전혀 없습니다. 다운로드한 PNG 및 SVG 파일은 깨끗하게 바로 사용할 수 있습니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">인쇄용 QR 코드에 적합한 크기는 무엇인가요?</p>
-        <p class="faq-a">대부분의 인쇄물에는 Large(1024px)를 선택하여 최고 해상도를 확보하세요. 일반적으로 QR 코드는 인쇄 시 최소 2cm × 2cm 이상이어야 하며, 스캔 거리는 코드 너비의 10배를 넘지 않아야 합니다. 대형 포스터나 현수막에는 SVG로 내보내어 품질 손실 없이 원하는 크기로 확대하세요.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>인쇄용 QR 코드에 적합한 크기는 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">대부분의 인쇄물에는 Large(1024px)를 선택하여 최고 해상도를 확보하세요. 일반적으로 QR 코드는 인쇄 시 최소 2cm × 2cm 이상이어야 하며, 스캔 거리는 코드 너비의 10배를 넘지 않아야 합니다. 대형 포스터나 현수막에는 SVG로 내보내어 품질 손실 없이 원하는 크기로 확대하세요.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">QR 코드 색상을 바꿀 수 있나요?</p>
-        <p class="faq-a">가능합니다. 전경색 선택기로 모듈(점) 색상을, 배경색 선택기로 여백 영역 색상을 변경하세요. 스캐너가 코드를 인식하려면 두 색상 사이의 명도 대비가 최소 4:1 이상이어야 합니다. 전경과 배경이 너무 가깝지 않도록 주의하세요.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>QR 코드 색상을 바꿀 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">가능합니다. 전경색 선택기로 모듈(점) 색상을, 배경색 선택기로 여백 영역 색상을 변경하세요. 스캐너가 코드를 인식하려면 두 색상 사이의 명도 대비가 최소 4:1 이상이어야 합니다. 전경과 배경이 너무 가깝지 않도록 주의하세요.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">웹사이트 URL QR 코드는 어떻게 만드나요?</p>
-        <p class="faq-a">전체 URL(https:// 포함)을 입력창에 붙여넣으면 QR 코드가 즉시 생성됩니다. HTTPS URL을 사용하고 가능한 짧게 유지하는 것이 좋습니다. URL이 짧을수록 더 단순하고 스캔하기 쉬운 코드가 만들어집니다. 코드 밀도를 줄이려면 URL 단축 서비스를 먼저 사용하세요.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>웹사이트 URL QR 코드는 어떻게 만드나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">전체 URL(https:// 포함)을 입력창에 붙여넣으면 QR 코드가 즉시 생성됩니다. HTTPS URL을 사용하고 가능한 짧게 유지하는 것이 좋습니다. URL이 짧을수록 더 단순하고 스캔하기 쉬운 코드가 만들어집니다. 코드 밀도를 줄이려면 URL 단축 서비스를 먼저 사용하세요.</div>
       </div>
     </div>
   </section>
@@ -896,6 +888,11 @@
       });
     })();
   </script>
-  <script src="/shared/i18n.js"></script>
+  <script src="/shared/i18n.js">
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>

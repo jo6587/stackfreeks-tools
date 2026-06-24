@@ -286,10 +286,17 @@
     /* FAQ */
     .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
-    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
 
     /* Related */
     .related {
@@ -505,47 +512,47 @@
     <div class="lang-en">
       <p class="faq-title">FAQ</p>
       <div class="faq-item">
-        <p class="faq-q">What JSON format does this converter support?</p>
-        <p class="faq-a">This tool supports a JSON array of objects — the most common format for data export and APIs. Each object in the array becomes one row in the CSV. The keys of the first object are used as the header row. Flat objects work best; nested objects are serialized as a JSON string in the CSV cell.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What JSON format does this converter support?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">This tool supports a JSON array of objects — the most common format for data export and APIs. Each object in the array becomes one row in the CSV. The keys of the first object are used as the header row. Flat objects work best; nested objects are serialized as a JSON string in the CSV cell.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">How do I convert a JSON file to CSV for Excel?</p>
-        <p class="faq-a">Paste your JSON into the "JSON → CSV" tab and click Convert. Then click "Download .csv". Open Excel, go to File → Open, select the downloaded file, and Excel will import it automatically. Make sure your JSON is an array of flat objects for the best compatibility with Excel columns.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I convert a JSON file to CSV for Excel?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Paste your JSON into the "JSON → CSV" tab and click Convert. Then click "Download .csv". Open Excel, go to File → Open, select the downloaded file, and Excel will import it automatically. Make sure your JSON is an array of flat objects for the best compatibility with Excel columns.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">What happens to nested JSON objects when converting to CSV?</p>
-        <p class="faq-a">CSV is a flat format, so nested objects and sub-arrays cannot be represented as separate columns. This converter handles them gracefully: nested objects are serialized with JSON.stringify(), and array values are joined with a semicolon. You can always split these cells further in Excel or a script after importing.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What happens to nested JSON objects when converting to CSV?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">CSV is a flat format, so nested objects and sub-arrays cannot be represented as separate columns. This converter handles them gracefully: nested objects are serialized with JSON.stringify(), and array values are joined with a semicolon. You can always split these cells further in Excel or a script after importing.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Can this tool handle large JSON files?</p>
-        <p class="faq-a">Yes — because everything runs client-side in your browser, your data never leaves your machine. Performance depends on your device, but most modern browsers handle tens of thousands of rows without issues. For very large files (100k+ rows), consider splitting them first or using a command-line tool like jq.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can this tool handle large JSON files?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes — because everything runs client-side in your browser, your data never leaves your machine. Performance depends on your device, but most modern browsers handle tens of thousands of rows without issues. For very large files (100k+ rows), consider splitting them first or using a command-line tool like jq.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Is there a free way to convert CSV back to JSON online?</p>
-        <p class="faq-a">Yes — just switch to the "CSV → JSON" tab on this page. Paste your CSV (with a header row), click Convert, and the tool outputs a formatted JSON array. Quoted fields containing commas are handled correctly. Download the result as a .json file or copy it directly to your clipboard.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Is there a free way to convert CSV back to JSON online?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes — just switch to the "CSV → JSON" tab on this page. Paste your CSV (with a header row), click Convert, and the tool outputs a formatted JSON array. Quoted fields containing commas are handled correctly. Download the result as a .json file or copy it directly to your clipboard.</div>
       </div>
     </div>
     <div class="lang-ko">
       <p class="faq-title">자주 묻는 질문</p>
       <div class="faq-item">
-        <p class="faq-q">어떤 JSON 형식을 지원하나요?</p>
-        <p class="faq-a">이 툴은 객체 배열 형태의 JSON을 지원합니다. 배열 안의 각 객체가 CSV의 한 행이 됩니다. 첫 번째 객체의 키가 헤더 행으로 사용됩니다. 평면(flat) 객체가 가장 잘 작동하며, 중첩 객체는 CSV 셀 안에 JSON 문자열로 직렬화됩니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>어떤 JSON 형식을 지원하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">이 툴은 객체 배열 형태의 JSON을 지원합니다. 배열 안의 각 객체가 CSV의 한 행이 됩니다. 첫 번째 객체의 키가 헤더 행으로 사용됩니다. 평면(flat) 객체가 가장 잘 작동하며, 중첩 객체는 CSV 셀 안에 JSON 문자열로 직렬화됩니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">JSON 파일을 Excel용 CSV로 변환하는 방법은?</p>
-        <p class="faq-a">JSON을 "JSON → CSV" 탭에 붙여넣고 변환 버튼을 클릭하세요. 그 다음 "다운로드 .csv"를 클릭합니다. Excel에서 파일 → 열기로 다운로드한 파일을 선택하면 자동으로 가져옵니다. Excel 열 호환성을 위해 JSON이 평면 객체 배열인지 확인하세요.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>JSON 파일을 Excel용 CSV로 변환하는 방법은?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">JSON을 "JSON → CSV" 탭에 붙여넣고 변환 버튼을 클릭하세요. 그 다음 "다운로드 .csv"를 클릭합니다. Excel에서 파일 → 열기로 다운로드한 파일을 선택하면 자동으로 가져옵니다. Excel 열 호환성을 위해 JSON이 평면 객체 배열인지 확인하세요.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">중첩된 JSON 객체는 CSV로 어떻게 변환되나요?</p>
-        <p class="faq-a">CSV는 평면 형식이므로 중첩 객체와 하위 배열을 별도 열로 표현할 수 없습니다. 이 변환기는 중첩 객체를 JSON.stringify()로 직렬화하고, 배열 값은 세미콜론으로 연결합니다. 가져온 후 Excel이나 스크립트에서 해당 셀을 추가로 분리할 수 있습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>중첩된 JSON 객체는 CSV로 어떻게 변환되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">CSV는 평면 형식이므로 중첩 객체와 하위 배열을 별도 열로 표현할 수 없습니다. 이 변환기는 중첩 객체를 JSON.stringify()로 직렬화하고, 배열 값은 세미콜론으로 연결합니다. 가져온 후 Excel이나 스크립트에서 해당 셀을 추가로 분리할 수 있습니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">큰 JSON 파일도 처리할 수 있나요?</p>
-        <p class="faq-a">네 — 모든 처리가 브라우저에서 클라이언트 측으로 실행되므로 데이터가 서버로 전송되지 않습니다. 성능은 기기에 따라 다르지만 대부분의 최신 브라우저는 수만 행도 문제없이 처리합니다. 100만 행 이상의 매우 큰 파일은 먼저 분할하거나 jq 같은 커맨드라인 도구를 사용하는 것을 권장합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>큰 JSON 파일도 처리할 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네 — 모든 처리가 브라우저에서 클라이언트 측으로 실행되므로 데이터가 서버로 전송되지 않습니다. 성능은 기기에 따라 다르지만 대부분의 최신 브라우저는 수만 행도 문제없이 처리합니다. 100만 행 이상의 매우 큰 파일은 먼저 분할하거나 jq 같은 커맨드라인 도구를 사용하는 것을 권장합니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">CSV를 JSON으로 무료로 다시 변환할 수 있나요?</p>
-        <p class="faq-a">네 — 이 페이지에서 "CSV → JSON" 탭으로 전환하세요. 헤더 행이 있는 CSV를 붙여넣고 변환 버튼을 클릭하면 형식화된 JSON 배열이 출력됩니다. 쉼표를 포함한 인용 필드도 올바르게 처리됩니다. 결과를 .json 파일로 다운로드하거나 클립보드로 복사할 수 있습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>CSV를 JSON으로 무료로 다시 변환할 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네 — 이 페이지에서 "CSV → JSON" 탭으로 전환하세요. 헤더 행이 있는 CSV를 붙여넣고 변환 버튼을 클릭하면 형식화된 JSON 배열이 출력됩니다. 쉼표를 포함한 인용 필드도 올바르게 처리됩니다. 결과를 .json 파일로 다운로드하거나 클립보드로 복사할 수 있습니다.</div>
       </div>
     </div>
   </section>
@@ -864,6 +871,11 @@
   </script>
 
   <!-- 10. i18n -->
-  <script src="/shared/i18n.js"></script>
+  <script src="/shared/i18n.js">
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>

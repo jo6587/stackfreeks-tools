@@ -298,10 +298,17 @@
     .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
     .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
-    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
 
     /* ── Related ── */
     .related {
@@ -553,28 +560,28 @@
       <p class="faq-title">Frequently Asked Questions</p>
 
       <div class="faq-item">
-        <p class="faq-q">What is camelCase?</p>
-        <p class="faq-a">camelCase is a naming convention where the first word is all lowercase and each subsequent word starts with a capital letter, with no spaces or punctuation — e.g. <code style="font-family:monospace;color:var(--accent)">myVariableName</code>. It is widely used in JavaScript, Java, and many other programming languages for variable and function names.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is camelCase?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">camelCase is a naming convention where the first word is all lowercase and each subsequent word starts with a capital letter, with no spaces or punctuation — e.g. <code style="font-family:monospace;color:var(--accent)">myVariableName</code>. It is widely used in JavaScript, Java, and many other programming languages for variable and function names.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">What is snake_case used for?</p>
-        <p class="faq-a">snake_case separates words with underscores and keeps all letters lowercase — e.g. <code style="font-family:monospace;color:var(--accent)">my_variable_name</code>. It is the conventional style for Python variables and functions, Ruby methods, and SQL column names, as well as file names in many projects.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is snake_case used for?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">snake_case separates words with underscores and keeps all letters lowercase — e.g. <code style="font-family:monospace;color:var(--accent)">my_variable_name</code>. It is the conventional style for Python variables and functions, Ruby methods, and SQL column names, as well as file names in many projects.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">What is the difference between Title Case and Sentence case?</p>
-        <p class="faq-a">Title Case capitalizes the first letter of every word — e.g. <em>The Quick Brown Fox</em>. Sentence case only capitalizes the very first letter of each sentence (after a period or at the start of the text) — e.g. <em>The quick brown fox</em>. Title Case is common for headings; Sentence case follows normal prose rules.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between Title Case and Sentence case?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Title Case capitalizes the first letter of every word — e.g. <em>The Quick Brown Fox</em>. Sentence case only capitalizes the very first letter of each sentence (after a period or at the start of the text) — e.g. <em>The quick brown fox</em>. Title Case is common for headings; Sentence case follows normal prose rules.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">Can I convert code variable names?</p>
-        <p class="faq-a">Yes. The converter intelligently splits on spaces, underscores, hyphens, and camelCase boundaries, so you can paste an existing variable like <code style="font-family:monospace;color:var(--accent)">myVariableName</code> or <code style="font-family:monospace;color:var(--accent)">my_variable_name</code> and convert it to any other format in one click.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I convert code variable names?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes. The converter intelligently splits on spaces, underscores, hyphens, and camelCase boundaries, so you can paste an existing variable like <code style="font-family:monospace;color:var(--accent)">myVariableName</code> or <code style="font-family:monospace;color:var(--accent)">my_variable_name</code> and convert it to any other format in one click.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">Is my text sent to a server?</p>
-        <p class="faq-a">No. All conversion logic runs entirely in your browser using JavaScript. Your text never leaves your device — no network requests are made, no data is stored or logged anywhere.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Is my text sent to a server?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">No. All conversion logic runs entirely in your browser using JavaScript. Your text never leaves your device — no network requests are made, no data is stored or logged anywhere.</div>
       </div>
     </div>
 
@@ -582,28 +589,28 @@
       <p class="faq-title">자주 묻는 질문</p>
 
       <div class="faq-item">
-        <p class="faq-q">camelCase란 무엇인가요?</p>
-        <p class="faq-a">camelCase는 첫 단어를 소문자로 쓰고, 이후 각 단어의 첫 글자를 대문자로 쓰는 명명 규칙입니다. 공백이나 구분 기호 없이 <code style="font-family:monospace;color:var(--accent)">myVariableName</code>처럼 표기합니다. JavaScript, Java 등 많은 프로그래밍 언어에서 변수명과 함수명에 사용됩니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>camelCase란 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">camelCase는 첫 단어를 소문자로 쓰고, 이후 각 단어의 첫 글자를 대문자로 쓰는 명명 규칙입니다. 공백이나 구분 기호 없이 <code style="font-family:monospace;color:var(--accent)">myVariableName</code>처럼 표기합니다. JavaScript, Java 등 많은 프로그래밍 언어에서 변수명과 함수명에 사용됩니다.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">snake_case는 어디에 사용하나요?</p>
-        <p class="faq-a">snake_case는 단어 사이를 언더스코어(_)로 구분하고 모든 글자를 소문자로 씁니다 — 예: <code style="font-family:monospace;color:var(--accent)">my_variable_name</code>. Python 변수·함수, Ruby 메서드, SQL 컬럼명 및 파일명에 관례적으로 사용됩니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>snake_case는 어디에 사용하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">snake_case는 단어 사이를 언더스코어(_)로 구분하고 모든 글자를 소문자로 씁니다 — 예: <code style="font-family:monospace;color:var(--accent)">my_variable_name</code>. Python 변수·함수, Ruby 메서드, SQL 컬럼명 및 파일명에 관례적으로 사용됩니다.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">Title Case와 Sentence case의 차이는 무엇인가요?</p>
-        <p class="faq-a">Title Case는 모든 단어의 첫 글자를 대문자로 씁니다 — 예: <em>The Quick Brown Fox</em>. Sentence case는 문장의 첫 번째 글자만 대문자로 씁니다 — 예: <em>The quick brown fox</em>. Title Case는 제목에, Sentence case는 일반 문장에 사용됩니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Title Case와 Sentence case의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Title Case는 모든 단어의 첫 글자를 대문자로 씁니다 — 예: <em>The Quick Brown Fox</em>. Sentence case는 문장의 첫 번째 글자만 대문자로 씁니다 — 예: <em>The quick brown fox</em>. Title Case는 제목에, Sentence case는 일반 문장에 사용됩니다.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">코드 변수명도 변환할 수 있나요?</p>
-        <p class="faq-a">네. 변환기는 공백, 언더스코어, 하이픈, camelCase 경계를 자동으로 인식하여 분리합니다. <code style="font-family:monospace;color:var(--accent)">myVariableName</code>이나 <code style="font-family:monospace;color:var(--accent)">my_variable_name</code>을 붙여넣고 원하는 형식으로 한 번에 변환할 수 있습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>코드 변수명도 변환할 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네. 변환기는 공백, 언더스코어, 하이픈, camelCase 경계를 자동으로 인식하여 분리합니다. <code style="font-family:monospace;color:var(--accent)">myVariableName</code>이나 <code style="font-family:monospace;color:var(--accent)">my_variable_name</code>을 붙여넣고 원하는 형식으로 한 번에 변환할 수 있습니다.</div>
       </div>
 
       <div class="faq-item">
-        <p class="faq-q">텍스트가 서버로 전송되나요?</p>
-        <p class="faq-a">아니요. 모든 변환 로직은 브라우저 내 JavaScript로 실행됩니다. 텍스트는 절대 기기 밖으로 나가지 않으며, 네트워크 요청도 발생하지 않고 데이터가 저장되거나 기록되지 않습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>텍스트가 서버로 전송되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">아니요. 모든 변환 로직은 브라우저 내 JavaScript로 실행됩니다. 텍스트는 절대 기기 밖으로 나가지 않으며, 네트워크 요청도 발생하지 않고 데이터가 저장되거나 기록되지 않습니다.</div>
       </div>
     </div>
   </section>
@@ -853,7 +860,12 @@
       }
     };
   </script>
-  <script src="/shared/i18n.js"></script>
+  <script src="/shared/i18n.js">
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>

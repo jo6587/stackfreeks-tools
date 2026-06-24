@@ -457,22 +457,17 @@
       letter-spacing: 0.08em;
       margin-bottom: 16px;
     }
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: 18px 0;
-    }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 8px;
-    }
-    .faq-a {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.7;
-    }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
 
     /* Mobile */
     @media (max-width: 768px) {
@@ -615,47 +610,47 @@
     <div class="lang-en">
       <p class="faq-title">Frequently Asked Questions</p>
       <div class="faq-item">
-        <p class="faq-q">What is a VPS?</p>
-        <p class="faq-a">A Virtual Private Server (VPS) is a virtualized server you rent from a cloud provider. Unlike shared hosting, you get dedicated CPU and RAM resources. VPS plans are ideal for running web apps, APIs, databases, game servers, or any always-on workload.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is a VPS?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">A Virtual Private Server (VPS) is a virtualized server you rent from a cloud provider. Unlike shared hosting, you get dedicated CPU and RAM resources. VPS plans are ideal for running web apps, APIs, databases, game servers, or any always-on workload.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Why is Hetzner so much cheaper than Vultr or DigitalOcean?</p>
-        <p class="faq-a">Hetzner operates primarily from data centers in Europe (Germany, Finland) and the US. Their lower operating costs and data center locations let them offer significantly lower prices. The trade-off: fewer regions and slightly longer latency for users in Asia or South America.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why is Hetzner so much cheaper than Vultr or DigitalOcean?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Hetzner operates primarily from data centers in Europe (Germany, Finland) and the US. Their lower operating costs and data center locations let them offer significantly lower prices. The trade-off: fewer regions and slightly longer latency for users in Asia or South America.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">How much RAM do I actually need?</p>
-        <p class="faq-a">1 GB is enough for a lightweight static site or small Node.js/Python app. 2–4 GB covers most production web apps and small databases (MySQL, PostgreSQL). 8 GB+ is recommended for self-hosted tools, larger databases, or running multiple services on one server.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How much RAM do I actually need?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">1 GB is enough for a lightweight static site or small Node.js/Python app. 2–4 GB covers most production web apps and small databases (MySQL, PostgreSQL). 8 GB+ is recommended for self-hosted tools, larger databases, or running multiple services on one server.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Is storage (SSD) included in the monthly price?</p>
-        <p class="faq-a">Yes — all plans listed include local NVMe/SSD storage at no extra cost. However, if you need additional block storage or object storage (like S3), providers charge separately for that.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Is storage (SSD) included in the monthly price?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes — all plans listed include local NVMe/SSD storage at no extra cost. However, if you need additional block storage or object storage (like S3), providers charge separately for that.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Are these prices up to date?</p>
-        <p class="faq-a">Prices are manually maintained and reflect approximate costs as of mid-2025. Cloud providers change pricing occasionally. Always verify on the provider's pricing page before purchasing.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Are these prices up to date?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Prices are manually maintained and reflect approximate costs as of mid-2025. Cloud providers change pricing occasionally. Always verify on the provider's pricing page before purchasing.</div>
       </div>
     </div>
     <div class="lang-ko">
       <p class="faq-title">자주 묻는 질문</p>
       <div class="faq-item">
-        <p class="faq-q">VPS란 무엇인가요?</p>
-        <p class="faq-a">VPS(가상 사설 서버)는 클라우드 제공업체에서 임대하는 가상화된 서버입니다. 공유 호스팅과 달리 CPU와 RAM이 독립적으로 할당됩니다. 웹 앱, API, 데이터베이스, 게임 서버 등 상시 실행이 필요한 워크로드에 적합합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>VPS란 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">VPS(가상 사설 서버)는 클라우드 제공업체에서 임대하는 가상화된 서버입니다. 공유 호스팅과 달리 CPU와 RAM이 독립적으로 할당됩니다. 웹 앱, API, 데이터베이스, 게임 서버 등 상시 실행이 필요한 워크로드에 적합합니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">Hetzner가 Vultr나 DigitalOcean보다 훨씬 저렴한 이유는?</p>
-        <p class="faq-a">Hetzner는 주로 유럽(독일, 핀란드)과 미국에 데이터센터를 운영합니다. 낮은 운영 비용 덕분에 훨씬 저렴한 가격을 제공할 수 있습니다. 단점은 리전이 적고, 아시아·남미 사용자는 레이턴시가 다소 높을 수 있습니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Hetzner가 Vultr나 DigitalOcean보다 훨씬 저렴한 이유는?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Hetzner는 주로 유럽(독일, 핀란드)과 미국에 데이터센터를 운영합니다. 낮은 운영 비용 덕분에 훨씬 저렴한 가격을 제공할 수 있습니다. 단점은 리전이 적고, 아시아·남미 사용자는 레이턴시가 다소 높을 수 있습니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">실제로 RAM이 얼마나 필요한가요?</p>
-        <p class="faq-a">경량 정적 사이트나 소규모 Node.js/Python 앱은 1 GB면 충분합니다. 대부분의 프로덕션 웹 앱과 소규모 데이터베이스(MySQL, PostgreSQL)는 2–4 GB가 적당합니다. 셀프 호스팅 툴, 대형 DB, 여러 서비스를 한 서버에서 운영한다면 8 GB 이상을 권장합니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>실제로 RAM이 얼마나 필요한가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">경량 정적 사이트나 소규모 Node.js/Python 앱은 1 GB면 충분합니다. 대부분의 프로덕션 웹 앱과 소규모 데이터베이스(MySQL, PostgreSQL)는 2–4 GB가 적당합니다. 셀프 호스팅 툴, 대형 DB, 여러 서비스를 한 서버에서 운영한다면 8 GB 이상을 권장합니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">스토리지(SSD)는 월 요금에 포함되나요?</p>
-        <p class="faq-a">네, 목록의 모든 플랜은 NVMe/SSD 로컬 스토리지가 기본 포함됩니다. 단, 추가 블록 스토리지나 오브젝트 스토리지(S3 등)가 필요하면 별도 요금이 부과됩니다.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>스토리지(SSD)는 월 요금에 포함되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네, 목록의 모든 플랜은 NVMe/SSD 로컬 스토리지가 기본 포함됩니다. 단, 추가 블록 스토리지나 오브젝트 스토리지(S3 등)가 필요하면 별도 요금이 부과됩니다.</div>
       </div>
       <div class="faq-item">
-        <p class="faq-q">가격 정보가 최신인가요?</p>
-        <p class="faq-a">가격은 2025년 중반 기준으로 수동 관리되는 참고 데이터입니다. 클라우드 제공업체는 가격을 수시로 변경할 수 있으므로, 구매 전 반드시 해당 제공업체의 공식 가격 페이지에서 확인하세요.</p>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>가격 정보가 최신인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">가격은 2025년 중반 기준으로 수동 관리되는 참고 데이터입니다. 클라우드 제공업체는 가격을 수시로 변경할 수 있으므로, 구매 전 반드시 해당 제공업체의 공식 가격 페이지에서 확인하세요.</div>
       </div>
     </div>
   </section>
@@ -835,6 +830,11 @@
 
     // Re-render when language changes
     document.addEventListener('sfLangChanged', renderPlans);
+  
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
   </script>
 
 </body>
