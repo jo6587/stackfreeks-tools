@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Server Cost Calculator — VPS Hosting Estimator | StackFreeks</title>
+  <meta name="description" content="Estimate your game server hosting cost by player count. Supports Minecraft, Valheim, Rust, ARK, CS2 and more. Find the right Vultr VPS plan instantly." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/game-server-cost-calculator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/game-server-cost-calculator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/game-server-cost-calculator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/game-server-cost-calculator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Game Server Cost Calculator — VPS Hosting Estimator | StackFreeks" />
+  <meta property="og:description" content="Estimate your game server hosting cost by player count. Supports Minecraft, Valheim, Rust, ARK, CS2 and more. Find the right Vultr VPS plan instantly." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/game-server-cost-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .back-link {
+      font-size: 13px;
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--text-2); opacity: 1; }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Container */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 20px;
+      padding: 3px 10px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      color: var(--text-1);
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 600px;
+    }
+
+    /* Tool layout */
+    .tool-wrapper {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Panels */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-3);
+      margin-bottom: 20px;
+    }
+
+    /* Form elements */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      margin-bottom: 6px;
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2352525b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      cursor: pointer;
+    }
+
+    select:focus, input[type="number"]:focus {
+      border-color: var(--accent);
+    }
+
+    /* Slider */
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border-2);
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: 2px solid var(--bg);
+    }
+
+    .slider-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    /* Toggle switch */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .toggle-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      margin-bottom: 0;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .switch input { opacity: 0; width: 0; height: 0; }
+
+    .slider-track {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: 22px;
+      transition: background 0.2s;
+    }
+
+    .slider-track:before {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 2px;
+      top: 2px;
+      background: var(--text-3);
+      border-radius: 50%;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .switch input:checked + .slider-track { background: rgba(99,102,241,0.3); border-color: var(--accent); }
+    .switch input:checked + .slider-track:before { transform: translateX(18px); background: var(--accent); }
+
+    /* Custom RAM field */
+    #custom-ram-field { display: none; }
+
+    /* Result specs */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .spec-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      text-align: center;
+    }
+
+    .spec-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .spec-unit {
+      font-size: 11px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .spec-label {
+      font-size: 11px;
+      color: var(--text-2);
+      margin-top: 6px;
+    }
+
+    /* Plan table */
+    .plans-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 12px;
+    }
+
+    .plan-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .plan-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-3);
+      padding: 0 12px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .plan-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-2);
+      vertical-align: middle;
+    }
+
+    .plan-table tr:last-child td { border-bottom: none; }
+
+    .plan-table tr.plan-recommended {
+      background: var(--success-bg);
+    }
+
+    .plan-table tr.plan-recommended td {
+      color: var(--text-1);
+    }
+
+    .plan-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+
+    .plan-price-mo {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-3);
+    }
+
+    .badge-rec {
+      display: inline-block;
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid rgba(34,197,94,0.25);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 7px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .annual-note {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    /* Vultr CTA inline */
+    .btn-vultr {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--success);
+      color: #0a0a0b;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn-vultr:hover { opacity: 0.88; }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .cta-label {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    /* How to use */
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 20px;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: rgba(99,102,241,0.15);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .step-heading {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .step-body {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* FAQ */
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 10px;
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 16px 20px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .faq-q:hover { color: var(--accent); }
+
+    .faq-icon {
+      font-size: 16px;
+      color: var(--text-3);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-a {
+      display: none;
+      padding: 0 20px 16px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related guides */
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.15s;
+    }
+    .guide-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    .guide-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .guide-info { flex: 1; }
+
+    .guide-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .guide-sub {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    /* Vultr banner */
+    .vultr-banner {
+      background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.04) 100%);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 32px 24px;
+      margin-bottom: 0;
+    }
+
+    .banner-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy { font-size: 12px; color: var(--text-3); }
+
+    /* No-result state */
+    .no-result {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-3);
+      font-size: 13px;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+
+      .tool-wrapper { padding: 0 16px 48px; }
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+      .spec-value { font-size: 18px; }
+
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+
+      .guides-grid { grid-template-columns: 1fr; }
+
+      .section { padding: 0 16px 40px; }
+
+      .cta-row { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; justify-content: center; }
+
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .banner-inner .btn-vultr { width: 100%; justify-content: center; }
+
+      .plan-table { font-size: 12px; }
+      .plan-table th, .plan-table td { padding: 8px; }
+
+      .footer-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <a href="/" class="back-link">← <span data-i18n="nav_all_tools">All tools</span></a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">🖥️ <span data-i18n="hero_category">Server &amp; VPS</span></div>
+    <div class="lang-en">
+      <h1>🎮 Game Server Cost Calculator</h1>
+      <p>Estimate the VPS cost to host your game server based on concurrent players and game type. Get Vultr plan recommendations instantly.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>🎮 게임 서버 비용 계산기</h1>
+      <p>동접자 수와 게임 종류로 VPS 호스팅 비용을 즉시 추정합니다. 최적의 Vultr 플랜을 바로 확인하세요.</p>
+    </div>
+  </section>
+
+  <!-- ADSENSE_SLOT_IN_TOOL -->
+
+  <!-- Tool Body -->
+  <div class="tool-wrapper">
+    <div class="tool-grid">
+
+      <!-- Inputs Panel -->
+      <div class="panel">
+        <p class="panel-title" data-i18n="inputs_title">Configuration</p>
+
+        <div class="field">
+          <label for="game-type" data-i18n="label_game_type">Game Type</label>
+          <select id="game-type" onchange="handleGameChange()">
+            <option value="minecraft-java">Minecraft (Java)</option>
+            <option value="minecraft-bedrock">Minecraft (Bedrock)</option>
+            <option value="valheim">Valheim</option>
+            <option value="cs2">CS2 / CS:GO</option>
+            <option value="rust">Rust</option>
+            <option value="ark">ARK: Survival Evolved</option>
+            <option value="terraria">Terraria</option>
+            <option value="custom" data-i18n="option_custom">Custom</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label data-i18n="label_players">Concurrent Players</label>
+          <div class="slider-row">
+            <input type="range" id="players-slider" min="1" max="200" value="20" oninput="syncSlider(this.value)" />
+            <span class="slider-value" id="players-display">20</span>
+          </div>
+          <div style="margin-top:8px;">
+            <input type="number" id="players-input" min="1" max="200" value="20" oninput="syncInput(this.value)" style="width:100px;" />
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="toggle-row">
+            <label class="toggle-label" data-i18n="label_mods">Mods / Plugins (+20% RAM)</label>
+            <label class="switch">
+              <input type="checkbox" id="mods-toggle" onchange="calculate()" />
+              <span class="slider-track"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field" id="custom-ram-field">
+          <label for="custom-ram" data-i18n="label_custom_ram">RAM per Player (MB)</label>
+          <input type="number" id="custom-ram" min="1" value="512" oninput="calculate()" />
+        </div>
+      </div>
+
+      <!-- Results Panel -->
+      <div class="panel" id="results-panel">
+        <p class="panel-title" data-i18n="results_title">Recommended Specs</p>
+
+        <div class="spec-grid">
+          <div class="spec-card">
+            <div class="spec-value" id="res-ram">—</div>
+            <div class="spec-unit">GB RAM</div>
+            <div class="spec-label" data-i18n="spec_ram">Required</div>
+          </div>
+          <div class="spec-card">
+            <div class="spec-value" id="res-cpu">—</div>
+            <div class="spec-unit">vCPU</div>
+            <div class="spec-label" data-i18n="spec_cpu">Cores</div>
+          </div>
+          <div class="spec-card">
+            <div class="spec-value" id="res-storage">—</div>
+            <div class="spec-unit">GB SSD</div>
+            <div class="spec-label" data-i18n="spec_storage">Storage</div>
+          </div>
+        </div>
+
+        <p class="plans-title" data-i18n="plans_title">Vultr Plan Comparison</p>
+
+        <table class="plan-table" id="plan-table">
+          <thead>
+            <tr>
+              <th data-i18n="th_plan">Plan</th>
+              <th data-i18n="th_specs">Specs</th>
+              <th data-i18n="th_price">Price</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="plan-tbody"></tbody>
+        </table>
+
+        <p class="annual-note" id="annual-note"></p>
+
+        <div class="cta-row">
+          <div class="cta-label lang-en">Start your game server on Vultr today</div>
+          <div class="cta-label lang-ko">지금 Vultr에서 게임 서버 시작하기</div>
+          <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr" rel="nofollow sponsored" target="_blank" data-i18n="cta_vultr_plan">Get this plan on Vultr →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- How to Use -->
+  <section class="section">
+    <div class="lang-en"><h2 class="section-title">How to Use</h2></div>
+    <div class="lang-ko"><h2 class="section-title">사용 방법</h2></div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="lang-en">
+          <p class="step-heading">Select your game</p>
+          <p class="step-body">Pick a game from the dropdown. Each game has pre-set RAM requirements per player based on real-world benchmarks.</p>
+        </div>
+        <div class="lang-ko">
+          <p class="step-heading">게임 선택</p>
+          <p class="step-body">드롭다운에서 게임을 선택하세요. 각 게임은 실제 벤치마크 기반의 플레이어당 RAM 요구량이 설정되어 있습니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="lang-en">
+          <p class="step-heading">Set player count</p>
+          <p class="step-body">Use the slider or type in the number of concurrent players you expect on your server at peak time.</p>
+        </div>
+        <div class="lang-ko">
+          <p class="step-heading">동접자 수 설정</p>
+          <p class="step-body">슬라이더를 조정하거나 피크 타임의 예상 동접자 수를 입력하세요.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="lang-en">
+          <p class="step-heading">Toggle mods/plugins</p>
+          <p class="step-body">Running mods or plugins? Enable the toggle to add a 20% RAM overhead for mod management overhead.</p>
+        </div>
+        <div class="lang-ko">
+          <p class="step-heading">모드/플러그인 설정</p>
+          <p class="step-body">모드나 플러그인을 사용할 경우 토글을 활성화하면 20% RAM 오버헤드가 추가됩니다.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="lang-en">
+          <p class="step-heading">Pick your plan</p>
+          <p class="step-body">Review the recommended Vultr plans and click "Get this plan on Vultr" to get started instantly.</p>
+        </div>
+        <div class="lang-ko">
+          <p class="step-heading">플랜 선택</p>
+          <p class="step-body">추천된 Vultr 플랜을 확인하고 "Vultr에서 플랜 시작하기"를 클릭해 바로 시작하세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="lang-en"><h2 class="section-title">Frequently Asked Questions</h2></div>
+    <div class="lang-ko"><h2 class="section-title">자주 묻는 질문</h2></div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>How much RAM does a Minecraft server need?</span></div>
+          <div class="lang-ko"><span>마인크래프트 서버는 RAM이 얼마나 필요한가요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">A Minecraft Java server typically needs about 512 MB of RAM per 10 players as a baseline, plus 1–2 GB for the JVM itself. For a 20-player server without mods, expect 2–3 GB total. With plugins or mods, plan for at least 4 GB.</div>
+        <div class="lang-ko">마인크래프트 Java 서버는 기본적으로 플레이어 10명당 약 512MB RAM이 필요하고, JVM 자체에 1~2GB가 추가됩니다. 모드 없이 20명이라면 총 2~3GB, 플러그인/모드가 있다면 최소 4GB를 권장합니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>Is Vultr good for game server hosting?</span></div>
+          <div class="lang-ko"><span>Vultr는 게임 서버 호스팅에 적합한가요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">Yes. Vultr offers high-frequency compute instances with NVMe SSDs and data centers worldwide, making it a solid choice for game servers. The Cloud Compute plans are great for small-to-medium game servers, while High Frequency plans suit demanding games like Rust or ARK.</div>
+        <div class="lang-ko">네. Vultr는 NVMe SSD와 전세계 데이터센터를 갖춘 고성능 컴퓨트 인스턴스를 제공해 게임 서버에 적합합니다. Cloud Compute 플랜은 소-중규모 게임 서버에, 고주파 플랜은 Rust나 ARK 같은 요구사항이 큰 게임에 적합합니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>Why does Rust need so much RAM?</span></div>
+          <div class="lang-ko"><span>Rust 서버는 왜 RAM이 그렇게 많이 필요한가요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">Rust has a large open-world map and complex server-side physics simulation. The world state, entity tracking, and procedural terrain data all consume significant RAM. A 50-player Rust server can easily use 12–16 GB of RAM, making it one of the most resource-intensive games to host.</div>
+        <div class="lang-ko">Rust는 광대한 오픈월드 맵과 복잡한 서버 측 물리 시뮬레이션을 사용합니다. 월드 상태, 엔티티 추적, 절차적 지형 데이터가 모두 RAM을 많이 소모합니다. 50명 Rust 서버는 쉽게 12~16GB RAM을 사용하며, 가장 자원 집약적인 게임 중 하나입니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>Do I need dedicated CPU cores for a game server?</span></div>
+          <div class="lang-ko"><span>게임 서버에는 전용 CPU 코어가 필요한가요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">Most game servers are single-threaded for core logic, so raw single-core performance matters more than core count. However, more vCPUs help with background tasks, OS overhead, and multi-threaded mods. The calculator recommends 1 core per 20 players as a practical baseline.</div>
+        <div class="lang-ko">대부분의 게임 서버는 핵심 로직이 싱글스레드로 동작하므로 코어 수보다 단일 코어 성능이 중요합니다. 그러나 백그라운드 작업, OS 오버헤드, 멀티스레드 모드에는 더 많은 vCPU가 도움이 됩니다. 이 계산기는 플레이어 20명당 1코어를 실용적 기준으로 권장합니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>How accurate are these estimates?</span></div>
+          <div class="lang-ko"><span>이 추정치는 얼마나 정확한가요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">These are community-based estimates for typical gameplay. Actual RAM usage varies with map size, installed mods, tick rate, and player behavior. We recommend starting with the "one up" plan from the recommendation to have headroom, then downsizing if resources allow.</div>
+        <div class="lang-ko">이 추정치는 일반적인 게임플레이 기반의 커뮤니티 경험치입니다. 실제 RAM 사용량은 맵 크기, 설치된 모드, 틱레이트, 플레이어 행동에 따라 달라집니다. 여유를 두기 위해 추천 플랜보다 한 단계 높은 플랜으로 시작하고, 여유가 생기면 다운그레이드하는 것을 권장합니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Guides -->
+  <section class="section">
+    <div class="lang-en"><h2 class="section-title">Related Guides</h2></div>
+    <div class="lang-ko"><h2 class="section-title">관련 가이드</h2></div>
+
+    <div class="guides-grid">
+      <a href="https://stackfreeks.com/vps-comparison/" class="guide-card" target="_blank" rel="noopener">
+        <span class="guide-icon">📊</span>
+        <div class="guide-info">
+          <div class="lang-en">
+            <p class="guide-title">VPS Provider Comparison</p>
+            <p class="guide-sub">Vultr vs Hetzner vs DigitalOcean for game servers</p>
+          </div>
+          <div class="lang-ko">
+            <p class="guide-title">VPS 제공업체 비교</p>
+            <p class="guide-sub">게임 서버용 Vultr vs Hetzner vs DigitalOcean</p>
+          </div>
+        </div>
+      </a>
+      <a href="https://stackfreeks.com/game-server-hosting-guide/" class="guide-card" target="_blank" rel="noopener">
+        <span class="guide-icon">🎮</span>
+        <div class="guide-info">
+          <div class="lang-en">
+            <p class="guide-title">Game Server Hosting Guide</p>
+            <p class="guide-sub">Step-by-step setup for Minecraft, Valheim, and more</p>
+          </div>
+          <div class="lang-ko">
+            <p class="guide-title">게임 서버 호스팅 가이드</p>
+            <p class="guide-sub">마인크래프트, 발하임 등 단계별 설정 방법</p>
+          </div>
+        </div>
+      </a>
+      <a href="/tools/vps-cost-calculator/" class="guide-card">
+        <span class="guide-icon">💰</span>
+        <div class="guide-info">
+          <div class="lang-en">
+            <p class="guide-title">VPS Cost Calculator</p>
+            <p class="guide-sub">Compare Vultr, Hetzner &amp; DigitalOcean pricing</p>
+          </div>
+          <div class="lang-ko">
+            <p class="guide-title">VPS 비용 계산기</p>
+            <p class="guide-sub">Vultr, Hetzner, DigitalOcean 가격 비교</p>
+          </div>
+        </div>
+      </a>
+      <a href="/tools/server-spec-recommender/" class="guide-card">
+        <span class="guide-icon">🖥️</span>
+        <div class="guide-info">
+          <div class="lang-en">
+            <p class="guide-title">Server Spec Recommender</p>
+            <p class="guide-sub">Get RAM &amp; CPU recommendations for any workload</p>
+          </div>
+          <div class="lang-ko">
+            <p class="guide-title">서버 사양 추천기</p>
+            <p class="guide-sub">모든 워크로드에 맞는 RAM·CPU 추천</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="container banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_all_tools: "All tools",
+        hero_category: "Server & VPS",
+        inputs_title: "Configuration",
+        label_game_type: "Game Type",
+        option_custom: "Custom",
+        label_players: "Concurrent Players",
+        label_mods: "Mods / Plugins (+20% RAM)",
+        label_custom_ram: "RAM per Player (MB)",
+        results_title: "Recommended Specs",
+        spec_ram: "Required",
+        spec_cpu: "Cores",
+        spec_storage: "Storage",
+        plans_title: "Vultr Plan Comparison",
+        th_plan: "Plan",
+        th_specs: "Specs",
+        th_price: "Price",
+        cta_vultr_plan: "Get this plan on Vultr →",
+        vultr_label: "Sponsor",
+        vultr_title: "Get started on Vultr",
+        vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)",
+        vultr_cta: "Claim your credit →",
+        footer_copy: "© 2026 StackFreeks"
+      },
+      ko: {
+        nav_all_tools: "모든 툴",
+        hero_category: "서버 & VPS",
+        inputs_title: "설정",
+        label_game_type: "게임 종류",
+        option_custom: "커스텀",
+        label_players: "동접자 수",
+        label_mods: "모드 / 플러그인 (+20% RAM)",
+        label_custom_ram: "플레이어당 RAM (MB)",
+        results_title: "추천 사양",
+        spec_ram: "필요량",
+        spec_cpu: "코어",
+        spec_storage: "스토리지",
+        plans_title: "Vultr 플랜 비교",
+        th_plan: "플랜",
+        th_specs: "사양",
+        th_price: "가격",
+        cta_vultr_plan: "Vultr에서 플랜 시작하기 →",
+        vultr_label: "스폰서",
+        vultr_title: "Vultr에서 시작하기",
+        vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정 혜택)",
+        vultr_cta: "크레딧 받기 →",
+        footer_copy: "© 2026 StackFreeks"
+      }
+    };
+  </script>
+
+  <script>
+    // Game definitions: ramPer10 = MB per 10 players
+    const GAMES = {
+      "minecraft-java":    { ramPer10: 512 },
+      "minecraft-bedrock": { ramPer10: 256 },
+      "valheim":           { ramPer10: 1024 },
+      "cs2":               { ramPer10: 1536 },
+      "rust":              { ramPer10: 3072 },
+      "ark":               { ramPer10: 4096 },
+      "terraria":          { ramPer10: 256 },
+      "custom":            { ramPer10: null }  // uses custom-ram input
+    };
+
+    // Vultr plans: { price, cpu, ram (GB), storage (GB) }
+    const VULTR_PLANS = [
+      { price: 6,   cpu: 1, ram: 1,  storage: 25  },
+      { price: 12,  cpu: 1, ram: 2,  storage: 55  },
+      { price: 24,  cpu: 2, ram: 4,  storage: 80  },
+      { price: 48,  cpu: 2, ram: 8,  storage: 160 },
+      { price: 96,  cpu: 4, ram: 16, storage: 320 },
+      { price: 192, cpu: 6, ram: 32, storage: 640 }
+    ];
+
+    function roundUpHalf(n) {
+      // Round up to nearest 0.5
+      return Math.ceil(n * 2) / 2;
+    }
+
+    function syncSlider(val) {
+      val = Math.min(200, Math.max(1, parseInt(val) || 1));
+      document.getElementById('players-slider').value = val;
+      document.getElementById('players-input').value = val;
+      document.getElementById('players-display').textContent = val;
+      calculate();
+    }
+
+    function syncInput(val) {
+      val = Math.min(200, Math.max(1, parseInt(val) || 1));
+      document.getElementById('players-slider').value = val;
+      document.getElementById('players-display').textContent = val;
+      calculate();
+    }
+
+    function handleGameChange() {
+      const game = document.getElementById('game-type').value;
+      const customField = document.getElementById('custom-ram-field');
+      customField.style.display = (game === 'custom') ? 'block' : 'none';
+      calculate();
+    }
+
+    function calculate() {
+      const game = document.getElementById('game-type').value;
+      const players = parseInt(document.getElementById('players-input').value) || 20;
+      const mods = document.getElementById('mods-toggle').checked;
+      const customRam = parseFloat(document.getElementById('custom-ram').value) || 512;
+
+      let ramPer10;
+      if (game === 'custom') {
+        ramPer10 = customRam * 10; // MB per 10 players (input is per player)
+      } else {
+        ramPer10 = GAMES[game].ramPer10;
+      }
+
+      // RAM in MB
+      let ramMB = (ramPer10 / 10) * players;
+      if (mods) ramMB *= 1.2;
+
+      // Add 1GB base OS overhead
+      ramMB += 1024;
+
+      // Convert to GB, round up to 0.5
+      const ramGB = roundUpHalf(ramMB / 1024);
+
+      // CPU: 1 core per 20 players, min 1
+      const cpu = Math.max(1, Math.ceil(players / 20));
+
+      // Storage: 20GB base + 1GB per 10 players
+      const storage = 20 + Math.ceil(players / 10);
+
+      // Update spec display
+      document.getElementById('res-ram').textContent = ramGB;
+      document.getElementById('res-cpu').textContent = cpu;
+      document.getElementById('res-storage').textContent = storage;
+
+      // Find best plan: smallest plan that satisfies both RAM and storage
+      let bestIdx = -1;
+      for (let i = 0; i < VULTR_PLANS.length; i++) {
+        if (VULTR_PLANS[i].ram >= ramGB && VULTR_PLANS[i].storage >= storage) {
+          bestIdx = i;
+          break;
+        }
+      }
+
+      // If no plan fits, pick the largest
+      if (bestIdx === -1) bestIdx = VULTR_PLANS.length - 1;
+
+      // Show: one below (if exists), best fit, one above (if exists)
+      const showIdxs = [];
+      if (bestIdx > 0) showIdxs.push(bestIdx - 1);
+      showIdxs.push(bestIdx);
+      if (bestIdx < VULTR_PLANS.length - 1) showIdxs.push(bestIdx + 1);
+
+      // Render table
+      const tbody = document.getElementById('plan-tbody');
+      tbody.innerHTML = '';
+
+      const isKo = document.documentElement.lang === 'ko';
+
+      showIdxs.forEach(idx => {
+        const p = VULTR_PLANS[idx];
+        const isRec = (idx === bestIdx);
+        const tr = document.createElement('tr');
+        if (isRec) tr.className = 'plan-recommended';
+
+        const recBadge = isRec
+          ? `<span class="badge-rec">${isKo ? '추천' : 'Recommended'}</span>`
+          : '';
+
+        tr.innerHTML = `
+          <td>
+            <span class="plan-price">$${p.price}<span class="plan-price-mo">/mo</span></span>
+            ${recBadge}
+          </td>
+          <td>${p.cpu} vCPU · ${p.ram} GB RAM · ${p.storage} GB SSD</td>
+          <td style="color:var(--text-1);">$${(p.price * 12).toLocaleString()}/yr</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Annual note for recommended plan
+      const recPlan = VULTR_PLANS[bestIdx];
+      const annualText = isKo
+        ? `추천 플랜 연간 비용: $${(recPlan.price * 12).toLocaleString()}`
+        : `Annual cost for recommended plan: $${(recPlan.price * 12).toLocaleString()}`;
+      document.getElementById('annual-note').textContent = annualText;
+    }
+
+    function toggleFaq(btn) {
+      btn.closest('.faq-item').classList.toggle('open');
+    }
+
+    // Re-render table when language changes (badge text)
+    document.addEventListener('sfLangChanged', function() {
+      calculate();
+    });
+
+    // Init
+    handleGameChange();
+  </script>
+
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>
