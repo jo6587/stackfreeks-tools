@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Filter Previewer — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Preview and generate CSS filter effects in real-time. Adjust blur, brightness, contrast, saturation and more — copy the code instantly." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/css-filter-previewer/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CSS Filter Previewer — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Preview and generate CSS filter effects in real-time. Adjust blur, brightness, contrast, saturation and more — copy the code instantly." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/css-filter-previewer/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/css-filter-previewer/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/css-filter-previewer/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/css-filter-previewer/" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ── */
+    .nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); color: var(--text-1); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 600px;
+    }
+
+    /* ── Tool Main ── */
+    .tool-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* ── Two-panel layout ── */
+    .tool-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Left: Preview Panel ── */
+    .preview-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .preview-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      align-self: flex-start;
+    }
+
+    .preview-image-wrap {
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border-2);
+      line-height: 0;
+    }
+
+    .preview-image-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: filter 0.1s ease;
+    }
+
+    /* ── Right: Sliders Panel ── */
+    .sliders-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sliders-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sliders-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+    }
+
+    .btn-reset {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-reset:hover { border-color: var(--accent); color: var(--text-1); }
+
+    .slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slider-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      font-family: 'Courier New', monospace;
+    }
+
+    .slider-value {
+      font-size: 12px;
+      color: var(--accent);
+      font-family: 'Courier New', monospace;
+      min-width: 56px;
+      text-align: right;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: var(--surface-2);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      border: 1px solid var(--border);
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    input[type="range"]:focus::-webkit-slider-thumb {
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.3);
+    }
+
+    /* ── CSS Output ── */
+    .output-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .output-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+    }
+
+    .btn-copy {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .btn-copy:hover { border-color: var(--accent); color: var(--text-1); }
+    .btn-copy.copied {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .css-output {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: var(--text-1);
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.7;
+      min-height: 52px;
+      user-select: all;
+    }
+
+    /* ── Guide ── */
+    .guide { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; padding: 16px 20px; }
+    .faq-q { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: none; color: var(--text-1); font-size: 14px; font-weight: 500; cursor: pointer; text-align: left; padding: 0; font-family: var(--font); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; margin-left: 12px; }
+
+    /* ── Related Content ── */
+    .related { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
+    .related-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .related-card h3 { font-size: 15px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .related-card p { font-size: 13px; color: var(--text-2); }
+    .related-link {
+      display: inline-block;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-1);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: border-color 0.15s;
+    }
+    .related-link:hover { border-color: var(--accent); opacity: 1; }
+
+    /* ── Vultr Banner ── */
+    .vultr-banner { max-width: 960px; margin: 0 auto 48px; padding: 0 24px; }
+    .vultr-inner {
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .vultr-badge { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--success); margin-bottom: 4px; }
+    .vultr-title { font-size: 15px; font-weight: 500; color: var(--text-1); margin-bottom: 3px; }
+    .vultr-sub { font-size: 13px; color: var(--text-2); }
+    .vultr-cta {
+      display: inline-block;
+      background: var(--success);
+      color: #0a0a0b;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 9px 18px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .vultr-cta:hover { opacity: 0.88; color: #0a0a0b; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+    }
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy { font-size: 13px; color: var(--text-3); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: var(--text-3); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .tool-panels {
+        grid-template-columns: 1fr;
+      }
+      .sliders-panel {
+        gap: 14px;
+      }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 22px; }
+      .guide-grid { grid-template-columns: 1fr; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+      .related-card { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
+      <div class="nav-right">
+        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 2. AdSense -->
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <!-- 3. Hero -->
+  <header class="hero">
+    <div class="lang-en">
+      <h1>CSS Filter Previewer</h1>
+      <p>Adjust blur, brightness, contrast, saturation, hue and more with live sliders. The preview updates instantly — copy the generated CSS with one click.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>CSS 필터 미리보기</h1>
+      <p>블러, 밝기, 대비, 채도, 색조 등을 슬라이더로 실시간 조정하세요. 미리보기가 즉시 반영되며 생성된 CSS 코드를 한 번에 복사할 수 있습니다.</p>
+    </div>
+  </header>
+
+  <!-- 4. Tool Body -->
+  <main class="tool-wrap">
+
+    <div class="tool-panels">
+
+      <!-- Left: Preview -->
+      <div class="preview-panel">
+        <div class="preview-label lang-en">Live Preview</div>
+        <div class="preview-label lang-ko">실시간 미리보기</div>
+
+        <div class="preview-image-wrap">
+          <!-- Inline SVG landscape scene: sky, ground, sun, tree, clouds -->
+          <svg id="previewSvg" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+            <!-- Sky gradient background -->
+            <defs>
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1e90ff"/>
+                <stop offset="100%" stop-color="#87ceeb"/>
+              </linearGradient>
+              <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4caf50"/>
+                <stop offset="100%" stop-color="#2e7d32"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Sky -->
+            <rect x="0" y="0" width="400" height="165" fill="url(#skyGrad)"/>
+
+            <!-- Sun -->
+            <circle cx="320" cy="55" r="36" fill="#FFD700"/>
+            <!-- Sun glow -->
+            <circle cx="320" cy="55" r="46" fill="#FFD700" opacity="0.2"/>
+
+            <!-- Clouds -->
+            <g opacity="0.9">
+              <ellipse cx="80" cy="50" rx="38" ry="18" fill="white"/>
+              <ellipse cx="110" cy="42" rx="28" ry="18" fill="white"/>
+              <ellipse cx="55" cy="54" rx="22" ry="14" fill="white"/>
+            </g>
+            <g opacity="0.8">
+              <ellipse cx="210" cy="68" rx="30" ry="13" fill="white"/>
+              <ellipse cx="235" cy="62" rx="22" ry="13" fill="white"/>
+              <ellipse cx="190" cy="70" rx="18" ry="10" fill="white"/>
+            </g>
+
+            <!-- Ground -->
+            <rect x="0" y="160" width="400" height="90" fill="url(#groundGrad)"/>
+
+            <!-- Hill / rolling ground -->
+            <ellipse cx="200" cy="162" rx="220" ry="22" fill="#388e3c"/>
+
+            <!-- Tree trunk (left) -->
+            <rect x="58" y="115" width="14" height="50" fill="#5d4037" rx="3"/>
+            <!-- Tree foliage (left) - 3 layers -->
+            <polygon points="65,55 95,120 35,120" fill="#1b5e20"/>
+            <polygon points="65,72 90,130 40,130" fill="#2e7d32"/>
+            <polygon points="65,88 88,140 42,140" fill="#388e3c"/>
+
+            <!-- Tree trunk (right) -->
+            <rect x="328" y="125" width="10" height="40" fill="#5d4037" rx="2"/>
+            <!-- Tree foliage (right) - smaller -->
+            <polygon points="333,75 358,130 308,130" fill="#1b5e20"/>
+            <polygon points="333,90 355,138 311,138" fill="#2e7d32"/>
+
+            <!-- Distant mountains -->
+            <polygon points="130,160 175,90 220,160" fill="#78909c" opacity="0.5"/>
+            <polygon points="170,160 225,80 280,160" fill="#90a4ae" opacity="0.45"/>
+
+            <!-- Path / dirt road -->
+            <polygon points="160,250 240,250 220,165 180,165" fill="#bcaaa4" opacity="0.6"/>
+
+            <!-- Flowers -->
+            <circle cx="110" cy="192" r="5" fill="#ff5252"/>
+            <circle cx="118" cy="197" r="4" fill="#ffeb3b"/>
+            <circle cx="280" cy="188" r="5" fill="#ff4081"/>
+            <circle cx="290" cy="195" r="4" fill="#e040fb"/>
+            <circle cx="155" cy="200" r="4" fill="#ffeb3b"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right: Sliders -->
+      <div class="sliders-panel">
+        <div class="sliders-header">
+          <div class="sliders-title lang-en">Filter Controls</div>
+          <div class="sliders-title lang-ko">필터 컨트롤</div>
+          <button class="btn-reset" onclick="resetFilters()" data-i18n="btn_reset">Reset</button>
+        </div>
+
+        <!-- blur -->
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">blur</span>
+            <span class="slider-value" id="val-blur">0px</span>
+          </div>
+          <input type="range" id="sl-blur" min="0" max="20" step="0.5" value="0" oninput="updateFilter()">
+        </div>
+
+        <!-- brightness -->
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">brightness</span>
+            <span class="slider-value" id="val-brightness">100%</span>
+          </div>
+          <input type="range" id="sl-brightness" min="0" max="200" step="5" value="100" oninput="updateFilter()">
+        </div>
+
+        <!-- contrast -->
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">contrast</span>
+            <span class="slider-value" id="val-contrast">100%</span>
+          </div>
+          <input type="range" id="sl-contrast" min="0" max="200" step="5" value="100" oninput="updateFilter()">
+        </div>
+
+        <!-- saturate -->
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">saturate</span>
+            <span class="slider-value" id="val-saturate">100%</span>
+          </div>
+          <input type="range" id="sl-saturate" min="0" max="200" step="5" value="100" oninput="updateFilter()">
+        </div>
+
+        <!-- grayscale -->
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">grayscale</span>
+            <span class="slider-value" id="val-grayscale">0%</span>
+          </div>
+          <input type="range" id="sl-grayscale" min="0" max="100" step="5" value="0" oninput="updateFilter()">
+        </div>
+
+        <!-- hue-rotate -->
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">hue&#8209;rotate</span>
+            <span class="slider-value" id="val-hue-rotate">0deg</span>
+          </div>
+          <input type="range" id="sl-hue-rotate" min="0" max="360" step="5" value="0" oninput="updateFilter()">
+        </div>
+
+        <!-- sepia -->
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">sepia</span>
+            <span class="slider-value" id="val-sepia">0%</span>
+          </div>
+          <input type="range" id="sl-sepia" min="0" max="100" step="5" value="0" oninput="updateFilter()">
+        </div>
+
+        <!-- invert -->
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">invert</span>
+            <span class="slider-value" id="val-invert">0%</span>
+          </div>
+          <input type="range" id="sl-invert" min="0" max="100" step="5" value="0" oninput="updateFilter()">
+        </div>
+
+        <!-- opacity -->
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">opacity</span>
+            <span class="slider-value" id="val-opacity">100%</span>
+          </div>
+          <input type="range" id="sl-opacity" min="0" max="100" step="5" value="100" oninput="updateFilter()">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CSS Output -->
+    <div class="output-panel">
+      <div class="output-header">
+        <span class="output-label lang-en">Generated CSS</span>
+        <span class="output-label lang-ko">생성된 CSS</span>
+        <button class="btn-copy" id="copyBtn" onclick="copyCss()" data-i18n="btn_copy">Copy CSS</button>
+      </div>
+      <pre class="css-output" id="cssOutput">filter: none;</pre>
+    </div>
+
+  </main>
+
+  <!-- 5. How to Use -->
+  <section class="guide">
+    <div class="guide-title lang-en">How to use</div>
+    <div class="guide-title lang-ko">사용 방법</div>
+    <div class="guide-grid">
+
+      <div class="guide-card">
+        <div class="guide-step lang-en">Step 1</div>
+        <div class="guide-step lang-ko">1단계</div>
+        <h3 class="lang-en">Move a slider</h3>
+        <h3 class="lang-ko">슬라이더 조작</h3>
+        <p class="lang-en">Drag any slider on the right panel. The preview image on the left updates instantly as you move it.</p>
+        <p class="lang-ko">오른쪽 패널의 슬라이더를 드래그하면 왼쪽 미리보기 이미지가 즉시 변경됩니다.</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-step lang-en">Step 2</div>
+        <div class="guide-step lang-ko">2단계</div>
+        <h3 class="lang-en">Combine filters</h3>
+        <h3 class="lang-ko">필터 조합</h3>
+        <p class="lang-en">Adjust multiple sliders at once — blur + sepia for a vintage look, grayscale + contrast for B&W drama, and more.</p>
+        <p class="lang-ko">여러 슬라이더를 동시에 조정하세요. 블러+세피아로 빈티지, 그레이스케일+대비로 흑백 드라마 효과 등을 연출할 수 있습니다.</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-step lang-en">Step 3</div>
+        <div class="guide-step lang-ko">3단계</div>
+        <h3 class="lang-en">Check the output</h3>
+        <h3 class="lang-ko">출력 확인</h3>
+        <p class="lang-en">The Generated CSS panel below shows only the non-default values. Defaults are omitted to keep your code clean.</p>
+        <p class="lang-ko">아래 CSS 출력 패널에는 기본값이 아닌 값만 표시됩니다. 기본값은 생략되어 코드가 깔끔하게 유지됩니다.</p>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-step lang-en">Step 4</div>
+        <div class="guide-step lang-ko">4단계</div>
+        <h3 class="lang-en">Copy and paste</h3>
+        <h3 class="lang-ko">복사 후 붙여넣기</h3>
+        <p class="lang-en">Click "Copy CSS" and paste the rule directly into your stylesheet or &lt;style&gt; block. Done.</p>
+        <p class="lang-ko">"CSS 복사" 버튼을 클릭한 뒤 스타일시트나 &lt;style&gt; 블록에 바로 붙여넣으면 완료됩니다.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. FAQ -->
+  <section class="faq">
+    <div class="faq-title lang-en">Frequently Asked Questions</div>
+    <div class="faq-title lang-ko">자주 묻는 질문</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="lang-en">What is the CSS <code>filter</code> property?</span>
+        <span class="lang-ko">CSS <code>filter</code> 속성이란 무엇인가요?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <span class="lang-en">The CSS <code>filter</code> property applies visual effects to an element — like blur, brightness adjustment, grayscale conversion, and more — directly in the browser without any image editing. It works on images, videos, backgrounds, and any HTML element.</span>
+        <span class="lang-ko">CSS <code>filter</code> 속성은 이미지 편집 없이 브라우저에서 직접 요소에 블러, 밝기 조정, 그레이스케일 변환 등 시각적 효과를 적용합니다. 이미지, 비디오, 배경, 모든 HTML 요소에 사용할 수 있습니다.</span>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="lang-en">Why does the output only include some filter functions?</span>
+        <span class="lang-ko">일부 필터 함수만 출력에 포함되는 이유는?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <span class="lang-en">The tool omits filter functions that are at their default value (e.g. <code>brightness(100%)</code> and <code>contrast(100%)</code> have no visual effect). Only changed values are included to keep the generated CSS minimal and clean. If nothing is changed, it shows <code>filter: none;</code>.</span>
+        <span class="lang-ko">기본값인 필터 함수(예: <code>brightness(100%)</code>, <code>contrast(100%)</code>)는 시각적 효과가 없으므로 생략됩니다. 변경된 값만 포함해 생성되는 CSS를 최소화하고 깔끔하게 유지합니다. 아무것도 변경하지 않으면 <code>filter: none;</code>이 표시됩니다.</span>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="lang-en">What browsers support CSS filters?</span>
+        <span class="lang-ko">CSS 필터를 지원하는 브라우저는?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <span class="lang-en">CSS filters are supported in all modern browsers: Chrome, Firefox, Safari, Edge, and Opera. Global browser support is above 96%. No vendor prefix is needed for the standard <code>filter</code> property today.</span>
+        <span class="lang-ko">CSS 필터는 Chrome, Firefox, Safari, Edge, Opera 등 모든 최신 브라우저에서 지원됩니다. 전 세계 브라우저 지원율은 96% 이상이며, 현재는 벤더 프리픽스 없이 표준 <code>filter</code> 속성을 사용하면 됩니다.</span>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="lang-en">Can I apply CSS filters to background images?</span>
+        <span class="lang-ko">배경 이미지에도 CSS 필터를 적용할 수 있나요?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <span class="lang-en">Yes, but <code>filter</code> applies to the entire element including children. To filter only the background, use a pseudo-element (<code>::before</code>) with the background and apply <code>filter</code> to that pseudo-element instead. Alternatively, CSS <code>backdrop-filter</code> applies effects to the area behind an element.</span>
+        <span class="lang-ko">네, 단 <code>filter</code>는 자식 요소를 포함한 전체 요소에 적용됩니다. 배경만 필터링하려면 <code>::before</code> 가상 요소에 배경을 지정하고 그 가상 요소에 <code>filter</code>를 적용하세요. 또는 요소 뒤 영역에 효과를 주는 CSS <code>backdrop-filter</code>를 활용할 수도 있습니다.</span>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="lang-en">Does using multiple filters affect performance?</span>
+        <span class="lang-ko">여러 필터를 사용하면 성능에 영향을 미치나요?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <span class="lang-en">CSS filters are GPU-accelerated in modern browsers, so they are generally fast. However, applying heavy filters (especially <code>blur</code>) to large elements or animating them continuously can be expensive. For animations, prefer <code>will-change: filter</code> to hint the browser to promote the element to its own compositor layer.</span>
+        <span class="lang-ko">CSS 필터는 최신 브라우저에서 GPU 가속이 적용되어 일반적으로 빠릅니다. 단, 큰 요소에 무거운 필터(특히 <code>blur</code>)를 적용하거나 연속 애니메이션에 사용하면 비용이 클 수 있습니다. 애니메이션에는 <code>will-change: filter</code>를 사용해 브라우저가 해당 요소를 별도의 컴포지터 레이어로 승격하도록 힌트를 주세요.</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 7. Related Content -->
+  <section class="related">
+    <div class="related-card">
+      <div>
+        <h3 class="lang-en">CSS Tips &amp; Frontend Guides on StackFreeks</h3>
+        <h3 class="lang-ko">StackFreeks CSS 팁 &amp; 프론트엔드 가이드</h3>
+        <p class="lang-en">Tutorials on CSS tricks, web performance, and server-side tooling for developers.</p>
+        <p class="lang-ko">CSS 트릭, 웹 성능, 서버 사이드 툴링에 관한 개발자 튜토리얼을 확인하세요.</p>
+      </div>
+      <a href="https://stackfreeks.com" class="related-link" rel="noopener" target="_blank" data-i18n="related_cta">Visit Blog →</a>
+    </div>
+  </section>
+
+  <!-- 8. Vultr Affiliate Banner -->
+  <div class="vultr-banner">
+    <div class="vultr-inner">
+      <div>
+        <div class="vultr-badge" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="vultr-cta"
+         rel="nofollow sponsored" target="_blank"
+         data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </div>
+
+  <!-- 9. Footer -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- i18n page-specific keys (must come BEFORE i18n.js) -->
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        btn_reset: 'Reset',
+        btn_copy: 'Copy CSS',
+        btn_copied: 'Copied!',
+        related_cta: 'Visit Blog →'
+      },
+      ko: {
+        btn_reset: '초기화',
+        btn_copy: 'CSS 복사',
+        btn_copied: '복사됨!',
+        related_cta: '블로그 방문 →'
+      }
+    };
+  </script>
+
+  <!-- Filter logic -->
+  <script>
+    // Slider definitions: [id-suffix, default, unit, isPercent]
+    const SLIDERS = [
+      { id: 'blur',       def: 0,   unit: 'px',  fn: v => `blur(${v}px)`,         isDefault: v => v === 0   },
+      { id: 'brightness', def: 100, unit: '%',   fn: v => `brightness(${v}%)`,    isDefault: v => v === 100 },
+      { id: 'contrast',   def: 100, unit: '%',   fn: v => `contrast(${v}%)`,      isDefault: v => v === 100 },
+      { id: 'saturate',   def: 100, unit: '%',   fn: v => `saturate(${v}%)`,      isDefault: v => v === 100 },
+      { id: 'grayscale',  def: 0,   unit: '%',   fn: v => `grayscale(${v}%)`,     isDefault: v => v === 0   },
+      { id: 'hue-rotate', def: 0,   unit: 'deg', fn: v => `hue-rotate(${v}deg)`, isDefault: v => v === 0   },
+      { id: 'sepia',      def: 0,   unit: '%',   fn: v => `sepia(${v}%)`,         isDefault: v => v === 0   },
+      { id: 'invert',     def: 0,   unit: '%',   fn: v => `invert(${v}%)`,        isDefault: v => v === 0   },
+      { id: 'opacity',    def: 100, unit: '%',   fn: v => `opacity(${v}%)`,       isDefault: v => v === 100 },
+    ];
+
+    const svg = document.getElementById('previewSvg');
+    const cssOutput = document.getElementById('cssOutput');
+
+    function updateFilter() {
+      const parts = [];
+
+      SLIDERS.forEach(s => {
+        const input = document.getElementById('sl-' + s.id);
+        const val = parseFloat(input.value);
+
+        // Update label
+        const label = document.getElementById('val-' + s.id);
+        label.textContent = val + s.unit;
+
+        // Collect non-default parts
+        if (!s.isDefault(val)) {
+          parts.push(s.fn(val));
+        }
+      });
+
+      // Apply filter to SVG
+      const filterStr = parts.length ? parts.join(' ') : 'none';
+      svg.style.filter = filterStr;
+
+      // Update CSS output
+      cssOutput.textContent = parts.length
+        ? 'filter: ' + parts.join('\n        ') + ';'
+        : 'filter: none;';
+    }
+
+    function resetFilters() {
+      SLIDERS.forEach(s => {
+        const input = document.getElementById('sl-' + s.id);
+        input.value = s.def;
+      });
+      updateFilter();
+    }
+
+    function copyCss() {
+      const text = cssOutput.textContent;
+      const btn = document.getElementById('copyBtn');
+
+      const getLang = () => (window.sfLang && window.sfLang.current) || 'en';
+      const t = key => (window.SF_PAGE_I18N && window.SF_PAGE_I18N[getLang()] && window.SF_PAGE_I18N[getLang()][key]) || key;
+
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = t('btn_copied');
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = t('btn_copy');
+          btn.classList.remove('copied');
+        }, 1800);
+      }).catch(() => {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      });
+    }
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      item.classList.toggle('open');
+      btn.querySelector('.faq-icon').textContent = item.classList.contains('open') ? '−' : '+';
+    }
+
+    // Init
+    updateFilter();
+  </script>
+
+  <!-- 10. i18n -->
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>
