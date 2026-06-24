@@ -595,29 +595,29 @@
     <div class="faq-title lang-ko">자주 묻는 질문</div>
 
     <div class="faq-item">
-      <div class="faq-q lang-en">What's the difference between HEX, RGB, and HSL?</div>
-      <div class="faq-q lang-ko">HEX, RGB, HSL의 차이는 무엇인가요?</div>
+      <div class="faq-q lang-en" onclick="toggleFaq(this)" style="cursor:pointer">What's the difference between HEX, RGB, and HSL?</div>
+      <div class="faq-q lang-ko" onclick="toggleFaq(this)" style="cursor:pointer">HEX, RGB, HSL의 차이는 무엇인가요?</div>
       <div class="faq-a lang-en">HEX is a hexadecimal notation widely used in CSS (e.g. <code>#ff0000</code>). RGB specifies the red, green, and blue channels as numbers from 0 to 255. HSL stands for Hue, Saturation, and Lightness — it's more intuitive for designers because you can shift the hue or adjust brightness independently.</div>
       <div class="faq-a lang-ko">HEX는 CSS에서 널리 사용되는 16진수 표기법입니다 (예: <code>#ff0000</code>). RGB는 빨강, 초록, 파랑 채널을 0~255 숫자로 지정합니다. HSL은 색상(Hue), 채도(Saturation), 밝기(Lightness)의 약자로, 색조나 밝기를 독립적으로 조정할 수 있어 디자이너에게 직관적입니다.</div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q lang-en">Why use HSL over HEX or RGB?</div>
-      <div class="faq-q lang-ko">HEX나 RGB 대신 HSL을 쓰는 이유는?</div>
+      <div class="faq-q lang-en" onclick="toggleFaq(this)" style="cursor:pointer">Why use HSL over HEX or RGB?</div>
+      <div class="faq-q lang-ko" onclick="toggleFaq(this)" style="cursor:pointer">HEX나 RGB 대신 HSL을 쓰는 이유는?</div>
       <div class="faq-a lang-en">HSL is easier to reason about. Want a lighter shade? Increase L. Want a more muted tone? Lower S. Shifting the hue to a complementary color is as simple as adding 180 to H — without touching saturation or lightness at all.</div>
       <div class="faq-a lang-ko">HSL은 직관적입니다. 더 밝은 색을 원하면 L을 높이고, 채도를 낮추려면 S를 줄이면 됩니다. 보색으로 이동하려면 H에 180만 더하면 되며 채도나 밝기를 건드릴 필요가 없습니다.</div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q lang-en">Does this tool support alpha / opacity?</div>
-      <div class="faq-q lang-ko">투명도(알파)를 지원하나요?</div>
+      <div class="faq-q lang-en" onclick="toggleFaq(this)" style="cursor:pointer">Does this tool support alpha / opacity?</div>
+      <div class="faq-q lang-ko" onclick="toggleFaq(this)" style="cursor:pointer">투명도(알파)를 지원하나요?</div>
       <div class="faq-a lang-en">Not currently. This tool handles fully opaque RGB colors only. Support for RGBA and HSLA formats is planned for a future update.</div>
       <div class="faq-a lang-ko">현재는 지원하지 않습니다. 이 툴은 불투명한 RGB 색상만 처리합니다. RGBA 및 HSLA 형식 지원은 향후 업데이트에서 추가될 예정입니다.</div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q lang-en">Are the conversions exact?</div>
-      <div class="faq-q lang-ko">변환 결과가 정확한가요?</div>
+      <div class="faq-q lang-en" onclick="toggleFaq(this)" style="cursor:pointer">Are the conversions exact?</div>
+      <div class="faq-q lang-ko" onclick="toggleFaq(this)" style="cursor:pointer">변환 결과가 정확한가요?</div>
       <div class="faq-a lang-en">HEX ↔ RGB conversion is lossless. HSL values may have minor rounding differences due to floating-point math, but the visual result is identical. Converting from HEX → HSL → HEX will reproduce the original HEX within 1 rounding step.</div>
       <div class="faq-a lang-ko">HEX ↔ RGB 변환은 손실 없이 정확합니다. HSL 값은 부동소수점 연산으로 인해 약간의 반올림 차이가 있을 수 있지만 시각적 결과는 동일합니다. HEX → HSL → HEX로 변환해도 원래 HEX가 1 반올림 이내로 재현됩니다.</div>
     </div>

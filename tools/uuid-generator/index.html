@@ -636,29 +636,29 @@
     <div class="faq-title lang-ko">자주 묻는 질문</div>
 
     <div class="faq-item">
-      <div class="faq-q lang-en">What is a UUID?</div>
-      <div class="faq-q lang-ko">UUID란 무엇인가요?</div>
+      <div class="faq-q lang-en" onclick="toggleFaq(this)" style="cursor:pointer">What is a UUID?</div>
+      <div class="faq-q lang-ko" onclick="toggleFaq(this)" style="cursor:pointer">UUID란 무엇인가요?</div>
       <div class="faq-a lang-en">UUID stands for <strong>Universally Unique Identifier</strong>. It's a 128-bit label defined by <strong>RFC 4122</strong> (and updated by RFC 9562) used to uniquely identify information in computer systems without a central authority. UUIDs are commonly used as primary keys in databases, identifiers in APIs, and correlation IDs in logging.</div>
       <div class="faq-a lang-ko">UUID는 <strong>Universally Unique Identifier</strong>의 약자로, <strong>RFC 4122</strong>(RFC 9562로 업데이트)에 정의된 128비트 식별자입니다. 중앙 조정 기관 없이 컴퓨터 시스템에서 정보를 고유하게 식별하는 데 사용됩니다. 데이터베이스 기본 키, API 식별자, 로깅의 상관관계 ID 등으로 널리 활용됩니다.</div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q lang-en">What makes UUID v4 different from other versions?</div>
-      <div class="faq-q lang-ko">UUID v4는 다른 버전과 어떻게 다른가요?</div>
+      <div class="faq-q lang-en" onclick="toggleFaq(this)" style="cursor:pointer">What makes UUID v4 different from other versions?</div>
+      <div class="faq-q lang-ko" onclick="toggleFaq(this)" style="cursor:pointer">UUID v4는 다른 버전과 어떻게 다른가요?</div>
       <div class="faq-a lang-en">UUID v4 is <strong>randomly generated</strong> — 122 of its 128 bits come from a cryptographically secure random source (<code>crypto.randomUUID()</code>). Other versions use different strategies: v1 encodes a timestamp + MAC address, v3 and v5 use MD5/SHA-1 hashes of a namespace + name, and v7 (newer) uses a Unix timestamp prefix for sortability. For most use cases where you just need a unique ID without ordering requirements, v4 is the simplest and most common choice.</div>
       <div class="faq-a lang-ko">UUID v4는 <strong>무작위로 생성</strong>됩니다 — 128비트 중 122비트가 암호학적으로 안전한 난수 소스(<code>crypto.randomUUID()</code>)에서 옵니다. 다른 버전은 다른 방식을 사용합니다: v1은 타임스탬프 + MAC 주소, v3/v5는 네임스페이스+이름의 MD5/SHA-1 해시, v7(최신)은 정렬 가능하도록 Unix 타임스탬프 접두사를 사용합니다. 순서 요구 사항 없이 고유 ID만 필요한 대부분의 경우 v4가 가장 간단하고 일반적인 선택입니다.</div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q lang-en">Are UUID v4 values safe to use as database primary keys?</div>
-      <div class="faq-q lang-ko">UUID v4를 데이터베이스 기본 키로 사용해도 안전한가요?</div>
+      <div class="faq-q lang-en" onclick="toggleFaq(this)" style="cursor:pointer">Are UUID v4 values safe to use as database primary keys?</div>
+      <div class="faq-q lang-ko" onclick="toggleFaq(this)" style="cursor:pointer">UUID v4를 데이터베이스 기본 키로 사용해도 안전한가요?</div>
       <div class="faq-a lang-en">Yes. The collision probability is astronomically low — approximately 1 in 5.3 × 10³⁶ for any two given UUIDs. In practice, you would need to generate about 2.7 × 10¹⁸ UUIDs before the probability of a single collision exceeds 50%. Note that UUID v4's random ordering can cause index fragmentation in B-tree databases at very high insert rates; if that's a concern, consider UUID v7 which is time-ordered.</div>
       <div class="faq-a lang-ko">네, 안전합니다. 충돌 확률은 약 5.3 × 10³⁶ 분의 1로 사실상 불가능합니다. 충돌 확률이 50%를 넘으려면 약 2.7 × 10¹⁸ 개의 UUID를 생성해야 합니다. 다만 v4의 무작위 순서는 매우 높은 삽입 속도에서 B-트리 데이터베이스의 인덱스 단편화를 유발할 수 있습니다. 이것이 우려된다면 시간 순서가 있는 UUID v7을 고려하세요.</div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q lang-en">Does this tool send my UUIDs to a server?</div>
-      <div class="faq-q lang-ko">이 툴은 생성된 UUID를 서버로 전송하나요?</div>
+      <div class="faq-q lang-en" onclick="toggleFaq(this)" style="cursor:pointer">Does this tool send my UUIDs to a server?</div>
+      <div class="faq-q lang-ko" onclick="toggleFaq(this)" style="cursor:pointer">이 툴은 생성된 UUID를 서버로 전송하나요?</div>
       <div class="faq-a lang-en">No. Everything is generated entirely in your browser using the built-in <code>crypto.randomUUID()</code> Web API. No data is sent to any server. You can even disconnect from the internet and the tool will continue to work.</div>
       <div class="faq-a lang-ko">아니오. 모든 UUID는 브라우저 내장 <code>crypto.randomUUID()</code> Web API를 사용해 브라우저 안에서만 생성됩니다. 어떤 데이터도 서버로 전송되지 않습니다. 인터넷을 끊어도 이 툴은 계속 작동합니다.</div>
     </div>

@@ -32,6 +32,13 @@ const SF_I18N = {
   }
 };
 
+// Ensure [hidden] beats any author display: rule (display: grid, block, flex, etc.)
+(function () {
+  var s = document.createElement('style');
+  s.textContent = '[hidden] { display: none !important; }';
+  document.head.appendChild(s);
+})();
+
 (function () {
   // Detect language: localStorage > browser preference > default EN
   let lang = localStorage.getItem('sf-lang') ||
@@ -66,6 +73,7 @@ const SF_I18N = {
 
   window.sfLang = {
     get current() { return lang; },
+    apply: applyLang,
     toggle: function () {
       lang = lang === 'en' ? 'ko' : 'en';
       localStorage.setItem('sf-lang', lang);
