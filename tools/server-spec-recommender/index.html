@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Spec Recommender — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Find the right VPS plan for your workload. Enter your use case and traffic scale to get instant RAM, CPU, and storage recommendations — free, no signup.">
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/server-spec-recommender/">
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/server-spec-recommender/">
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/server-spec-recommender/">
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/server-spec-recommender/">
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-size: 15px; font-weight: 500; color: var(--text-1); letter-spacing: -0.01em; }
+    .nav-sep { width: 1px; height: 16px; background: var(--border-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* AdSense */
+    .adsense-slot {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px 24px 0;
+      min-height: 1px;
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 32px;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 20px;
+      padding: 3px 10px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .hero p { font-size: 15px; color: var(--text-2); max-width: 560px; }
+
+    /* Tool section */
+    .tool-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+
+    /* Workload cards */
+    .workload-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .workload-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .workload-card:hover { border-color: var(--border-2); }
+    .workload-card.selected {
+      border-color: var(--accent);
+      background: rgba(99,102,241,0.05);
+    }
+    .workload-icon { font-size: 22px; margin-bottom: 8px; line-height: 1; }
+    .workload-name { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 3px; }
+    .workload-desc { font-size: 12px; color: var(--text-2); line-height: 1.4; }
+
+    /* Traffic */
+    .traffic-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .traffic-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s, background 0.15s;
+      font-family: var(--font);
+    }
+    .traffic-btn:hover { border-color: var(--border-2); }
+    .traffic-btn.selected {
+      background: var(--surface-2);
+      border-color: var(--border-2);
+      color: var(--text-1);
+    }
+    .traffic-btn-label { font-size: 13px; font-weight: 600; color: var(--text-1); display: block; margin-bottom: 2px; }
+    .traffic-btn-desc { font-size: 11px; color: var(--text-2); display: block; }
+
+    /* Extras */
+    .extras-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .extra-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+      user-select: none;
+      font-size: 13px;
+      color: var(--text-1);
+    }
+    .extra-item:hover { border-color: var(--border-2); }
+    .extra-item.checked { border-color: var(--accent); background: rgba(99,102,241,0.05); }
+    .extra-item input[type="checkbox"] { display: none; }
+    .extra-check {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--border-2);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .extra-item.checked .extra-check {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .extra-item.checked .extra-check::after {
+      content: '✓';
+      font-size: 10px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* Result */
+    .result-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .result-empty {
+      padding: 32px;
+      text-align: center;
+      color: var(--text-3);
+      font-size: 14px;
+    }
+    .result-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .result-col {
+      padding: 24px;
+    }
+    .result-col:first-child {
+      border-right: 1px solid var(--border);
+    }
+    .result-col-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+    .spec-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .spec-key { font-size: 12px; color: var(--text-2); }
+    .spec-val { font-size: 14px; font-weight: 600; color: var(--text-1); }
+    .plan-name { font-size: 18px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
+    .plan-price { font-size: 28px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+    .plan-price span { font-size: 14px; font-weight: 400; color: var(--text-2); }
+    .plan-storage { font-size: 12px; color: var(--text-2); margin-top: 4px; margin-bottom: 16px; }
+    .plan-cta {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+      transition: opacity 0.15s;
+      text-decoration: none;
+    }
+    .plan-cta:hover { opacity: 0.85; }
+    .result-comfort {
+      border-top: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .comfort-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      margin-bottom: 3px;
+    }
+    .comfort-text { font-size: 13px; color: var(--text-2); }
+    .comfort-badge {
+      display: inline-block;
+      font-size: 11px;
+      color: var(--success);
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 4px;
+      padding: 2px 7px;
+      white-space: nowrap;
+    }
+
+    /* Guide */
+    .guide-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .guide-section h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 20px; }
+    .guide-steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .guide-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .step-num {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .step-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
+    .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .faq-section h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 20px; }
+    .faq-list { display: flex; flex-direction: column; gap: 2px; }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 16px 20px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      display: none;
+      padding: 0 20px 16px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related */
+    .related-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .related-section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+    .related-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .related-link {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text-2);
+      transition: border-color 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .related-link:hover { border-color: var(--accent); color: var(--text-1); opacity: 1; }
+
+    /* Vultr banner */
+    .vultr-banner { max-width: 860px; margin: 0 auto; padding: 0 24px 32px; }
+    .vultr-inner {
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--success-bg);
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .vultr-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--success); margin-bottom: 4px; }
+    .vultr-title { font-size: 15px; color: var(--text-1); margin-bottom: 2px; }
+    .vultr-sub { font-size: 13px; color: var(--text-2); }
+    .vultr-cta {
+      display: inline-block; background: var(--success); color: #000; font-weight: 500;
+      font-size: 13px; padding: 8px 18px; border-radius: var(--radius); white-space: nowrap;
+      transition: opacity 0.15s; flex-shrink: 0; text-decoration: none;
+    }
+    .vultr-cta:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .footer-links a { font-size: 13px; color: var(--text-2); }
+    .footer-links a:hover { color: var(--text-1); opacity: 1; }
+    .footer-copy { font-size: 12px; color: var(--text-3); }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .workload-grid { grid-template-columns: repeat(2, 1fr); }
+      .traffic-grid { grid-template-columns: repeat(2, 1fr); }
+      .result-main { grid-template-columns: 1fr; }
+      .result-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .result-comfort { flex-direction: column; align-items: flex-start; }
+      .guide-steps { grid-template-columns: 1fr; }
+      .vultr-inner { flex-direction: column; }
+      .hero h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- ADSENSE_SLOT_TOP: Insert AdSense code here after approval -->
+  <div class="adsense-slot"></div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="lang-en">
+      <p class="hero-badge">Server Tools</p>
+      <h1>Server Spec Recommender</h1>
+      <p>Pick your workload and traffic scale — get instant RAM, CPU &amp; storage minimums plus a matching Vultr plan.</p>
+    </div>
+    <div class="lang-ko">
+      <p class="hero-badge">서버 도구</p>
+      <h1>서버 사양 추천기</h1>
+      <p>워크로드와 트래픽 규모를 선택하면 필요한 최소 RAM, CPU, 스토리지와 Vultr 플랜을 즉시 추천합니다.</p>
+    </div>
+  </div>
+
+  <!-- Tool -->
+  <div class="tool-section">
+
+    <!-- Step 1: Workload -->
+    <div class="section-label lang-en">Step 1 — Select your workload</div>
+    <div class="section-label lang-ko">Step 1 — 워크로드 선택</div>
+    <div class="workload-grid" id="workloadGrid"></div>
+
+    <!-- Step 2: Traffic -->
+    <div class="section-label lang-en">Step 2 — Expected traffic</div>
+    <div class="section-label lang-ko">Step 2 — 예상 트래픽</div>
+    <div class="traffic-grid" id="trafficGrid"></div>
+
+    <!-- Step 3: Extras -->
+    <div class="section-label lang-en">Step 3 — Additional services (optional)</div>
+    <div class="section-label lang-ko">Step 3 — 추가 서비스 (선택)</div>
+    <div class="extras-row" id="extrasRow"></div>
+
+    <!-- Result -->
+    <div class="section-label lang-en">Recommendation</div>
+    <div class="section-label lang-ko">추천 사양</div>
+    <div class="result-section" id="resultSection">
+      <div class="result-empty lang-en">Select a workload above to see recommendations</div>
+      <div class="result-empty lang-ko">위에서 워크로드를 선택하면 추천 결과가 표시됩니다</div>
+    </div>
+
+  </div>
+
+  <!-- Guide -->
+  <div class="guide-section">
+    <div class="lang-en">
+      <h2>How to use this tool</h2>
+      <div class="guide-steps">
+        <div class="guide-step">
+          <div class="step-num">Step 1</div>
+          <div class="step-title">Pick your workload</div>
+          <div class="step-desc">Each workload type has a different base spec. A CI/CD runner needs more CPU; a database server needs more RAM. Choose the one that best matches your use case.</div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">Step 2</div>
+          <div class="step-title">Set your traffic scale</div>
+          <div class="step-desc">Low traffic? Start small and save money. Higher traffic means more concurrent connections, so the spec multiplier scales up RAM and CPU accordingly.</div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">Step 3</div>
+          <div class="step-title">Add extra services</div>
+          <div class="step-desc">Running a database on the same server as your app? That costs extra RAM and storage. Redis adds ~1 GB RAM. Each extra checkbox adjusts the minimum requirements.</div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">Tip</div>
+          <div class="step-title">Start small, upgrade later</div>
+          <div class="step-desc">Vultr lets you upgrade your plan in seconds with minimal downtime. Start with the minimum plan and move up as your traffic grows — no need to over-provision from day one.</div>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2>사용 방법</h2>
+      <div class="guide-steps">
+        <div class="guide-step">
+          <div class="step-num">Step 1</div>
+          <div class="step-title">워크로드 선택</div>
+          <div class="step-desc">각 워크로드 유형마다 기본 사양이 다릅니다. CI/CD 러너는 CPU가 많이 필요하고, 데이터베이스 서버는 RAM이 더 필요합니다. 용도에 맞는 항목을 선택하세요.</div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">Step 2</div>
+          <div class="step-title">트래픽 규모 설정</div>
+          <div class="step-desc">트래픽이 적으면 작은 플랜으로 시작하세요. 트래픽이 많을수록 동시 접속이 늘어나므로 RAM과 CPU 배수가 올라갑니다.</div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">Step 3</div>
+          <div class="step-title">추가 서비스 선택</div>
+          <div class="step-desc">앱과 같은 서버에 DB를 운영하면 RAM과 스토리지가 더 필요합니다. Redis는 약 1GB RAM이 추가됩니다. 체크박스를 선택하면 최소 요구사항이 자동 조정됩니다.</div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">팁</div>
+          <div class="step-title">작게 시작, 나중에 업그레이드</div>
+          <div class="step-desc">Vultr는 다운타임 없이 몇 초 만에 플랜을 업그레이드할 수 있습니다. 최소 플랜으로 시작하고 트래픽이 늘어날 때 올리세요. 처음부터 과도한 사양은 불필요합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="lang-en">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How much RAM does a WordPress site need?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">A basic WordPress blog runs on 1 GB RAM, but it's tight. With caching plugins like WP Super Cache, 1 GB is workable for low traffic. Add WooCommerce or a page builder and you'll want 2 GB minimum. For any meaningful traffic (5K+ daily visits), start with 2–4 GB RAM to avoid slowdowns.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can I run a database on the same server as my app?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes, and it's common for small projects. The trade-off: your app and database compete for the same RAM and CPU. For personal or small-scale projects this is fine. Once you reach medium traffic or need high availability, move the database to a dedicated server to avoid resource contention and simplify scaling.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            What's the difference between vCPU count and real performance?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">vCPUs are virtual cores shared on physical hardware. 1 vCPU on Vultr is roughly equivalent to one thread of a modern server CPU. For most web apps, CPU count matters less than RAM — apps are typically memory-bound. CPU becomes the bottleneck for compute-heavy tasks like image processing, video encoding, or large CI/CD builds.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            When should I upgrade my VPS plan?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Upgrade when sustained RAM usage exceeds 80%, average CPU load stays above 70% for extended periods, or response times start degrading. Use <code>htop</code> or <code>free -h</code> on Linux to monitor. Most platforms including Vultr let you resize (upgrade) with a quick reboot — downsize requires a fresh deployment.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How does Vultr's pricing compare to AWS or Google Cloud?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Vultr is typically 40–60% cheaper than AWS EC2 or Google Cloud Compute Engine for equivalent specs. The $6/mo plan (1 vCPU, 1 GB RAM) vs. AWS t3.micro (~$8.50/mo) is a common comparison. Vultr also includes bandwidth and NVMe SSD storage in the plan price, whereas AWS charges extra for network egress.</div>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            WordPress 사이트에 RAM이 얼마나 필요한가요?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">기본 WordPress 블로그는 1GB RAM에서 실행되지만 여유가 없습니다. WP Super Cache 같은 캐싱 플러그인을 사용하면 1GB로 저트래픽은 가능합니다. WooCommerce나 페이지 빌더를 추가하면 최소 2GB가 필요합니다. 하루 5천 이상 방문이면 속도 저하를 막기 위해 2–4GB RAM으로 시작하세요.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            앱과 같은 서버에 데이터베이스를 운영할 수 있나요?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">네, 소규모 프로젝트에서는 일반적입니다. 단점은 앱과 DB가 같은 RAM·CPU를 공유한다는 점입니다. 개인 또는 소규모 트래픽에는 괜찮습니다. 중규모 이상이 되거나 고가용성이 필요하면 DB를 전용 서버로 분리해 리소스 경쟁을 없애고 스케일링을 단순화하세요.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            vCPU 수와 실제 성능의 차이는 무엇인가요?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">vCPU는 물리 하드웨어에서 공유되는 가상 코어입니다. Vultr의 1 vCPU는 현대 서버 CPU의 스레드 하나와 비슷합니다. 대부분의 웹 앱은 CPU보다 RAM이 병목입니다. CPU가 병목이 되는 경우는 이미지 처리, 동영상 인코딩, 대용량 CI/CD 빌드 같은 연산 집중 작업입니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            VPS 플랜을 언제 업그레이드해야 하나요?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">지속적인 RAM 사용률이 80%를 넘거나, 평균 CPU 부하가 장시간 70% 이상을 유지하거나, 응답 시간이 느려지기 시작하면 업그레이드하세요. Linux에서 <code>htop</code>이나 <code>free -h</code>로 모니터링하세요. Vultr를 포함한 대부분의 플랫폼은 빠른 재부팅으로 플랜을 업그레이드할 수 있습니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Vultr 가격은 AWS나 Google Cloud와 비교해 어떤가요?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Vultr는 동급 사양의 AWS EC2나 Google Cloud Compute Engine보다 보통 40–60% 저렴합니다. $6/월 플랜(1 vCPU, 1GB RAM) vs AWS t3.micro(약 $8.50/월)가 일반적인 비교입니다. Vultr는 대역폭과 NVMe SSD 스토리지가 플랜 가격에 포함되어 있고, AWS는 네트워크 이그레스 비용이 별도로 청구됩니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="lang-en">
+      <h2>Related Tools</h2>
+      <div class="related-links">
+        <a href="/tools/vps-cost-calculator/" class="related-link">💰 VPS Cost Calculator</a>
+        <a href="/tools/vps-bandwidth-calculator/" class="related-link">📊 VPS Bandwidth Calculator</a>
+        <a href="https://stackfreeks.com" target="_blank" rel="noopener" class="related-link">📖 VPS Comparison Guide ↗</a>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2>관련 도구</h2>
+      <div class="related-links">
+        <a href="/tools/vps-cost-calculator/" class="related-link">💰 VPS 비용 계산기</a>
+        <a href="/tools/vps-bandwidth-calculator/" class="related-link">📊 VPS 대역폭 계산기</a>
+        <a href="https://stackfreeks.com" target="_blank" rel="noopener" class="related-link">📖 VPS 비교 가이드 ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="vultr-inner">
+      <div>
+        <p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
+        <p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="vultr-sub" data-i18n="vultr_sub">$300 free credit for new accounts. Deploy in seconds.</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="vultr-cta" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back: '← all tools',
+        vultr_label: 'Sponsor',
+        vultr_title: 'Get started on Vultr',
+        vultr_sub: '$300 free credit for new accounts. Deploy in seconds.',
+        vultr_cta: 'Claim your credit →',
+        footer_copy: '© 2026 StackFreeks'
+      },
+      ko: {
+        nav_back: '← 전체 도구',
+        vultr_label: '스폰서',
+        vultr_title: 'Vultr 시작하기',
+        vultr_sub: '신규 계정에 $300 무료 크레딧 제공. 몇 초 만에 배포.',
+        vultr_cta: '크레딧 받기 →',
+        footer_copy: '© 2026 StackFreeks'
+      }
+    };
+  </script>
+
+  <script src="/shared/i18n.js"></script>
+
+  <script>
+    const WORKLOADS = [
+      { id: 'wordpress',  icon: '📝', cpu: 1, ram: 1,  storage: 25, label_en: 'WordPress / CMS',      label_ko: 'WordPress / CMS',     desc_en: 'Blog, WooCommerce, or CMS site',          desc_ko: '블로그, WooCommerce, CMS 사이트' },
+      { id: 'nodejs',     icon: '⚡', cpu: 1, ram: 1,  storage: 25, label_en: 'Node.js / Python API',  label_ko: 'Node.js / Python API', desc_en: 'REST API, Express, FastAPI, Django',      desc_ko: 'REST API, Express, FastAPI, Django' },
+      { id: 'database',   icon: '🗄️', cpu: 1, ram: 2,  storage: 40, label_en: 'PostgreSQL / MySQL DB', label_ko: 'PostgreSQL / MySQL DB', desc_en: 'Dedicated database server',               desc_ko: '전용 데이터베이스 서버' },
+      { id: 'nextjs',     icon: '▲',  cpu: 1, ram: 1,  storage: 25, label_en: 'Next.js / SSR App',     label_ko: 'Next.js / SSR 앱',     desc_en: 'Server-side rendered React or Nuxt',     desc_ko: '서버 사이드 렌더링 React / Nuxt' },
+      { id: 'docker',     icon: '🐳', cpu: 2, ram: 2,  storage: 40, label_en: 'Docker (multi-app)',    label_ko: 'Docker (멀티 앱)',      desc_en: 'Multiple containerized services',        desc_ko: '여러 컨테이너화된 서비스' },
+      { id: 'cicd',       icon: '🔁', cpu: 2, ram: 4,  storage: 80, label_en: 'CI/CD Runner',          label_ko: 'CI/CD 러너',           desc_en: 'GitHub Actions self-hosted, Jenkins',    desc_ko: 'GitHub Actions, Jenkins 빌드 서버' },
+      { id: 'gameserver', icon: '🎮', cpu: 2, ram: 4,  storage: 80, label_en: 'Game Server',           label_ko: '게임 서버',             desc_en: 'Minecraft, Valheim, CS2 server',         desc_ko: 'Minecraft, Valheim, CS2 서버' },
+      { id: 'static',     icon: '🌐', cpu: 1, ram: 1,  storage: 25, label_en: 'Static / Nginx Proxy',  label_ko: '정적 사이트 / Nginx',  desc_en: 'HTML/JS site or nginx reverse proxy',   desc_ko: 'HTML/JS 사이트 또는 Nginx 리버스 프록시' },
+    ];
+
+    const TRAFFIC_TIERS = [
+      { id: 'personal', label_en: 'Personal / Dev', label_ko: '개인 / 개발', desc_en: '< 1K visits/day',    desc_ko: '1일 1천 방문 미만',  cpuMul: 1, ramMul: 1 },
+      { id: 'small',    label_en: 'Small',           label_ko: '소규모',       desc_en: '1K–10K visits/day',  desc_ko: '1일 1천~1만 방문',  cpuMul: 1, ramMul: 2 },
+      { id: 'medium',   label_en: 'Medium',          label_ko: '중규모',       desc_en: '10K–50K visits/day', desc_ko: '1일 1만~5만 방문',  cpuMul: 2, ramMul: 4 },
+      { id: 'high',     label_en: 'High Traffic',    label_ko: '대용량',       desc_en: '50K+ visits/day',    desc_ko: '1일 5만+ 방문',     cpuMul: 4, ramMul: 8 },
+    ];
+
+    const EXTRAS = [
+      { id: 'db',    label_en: 'Database on same server',  label_ko: '같은 서버에 DB 운영',   ramAdd: 2, storageAdd: 20, cpuAdd: 0 },
+      { id: 'redis', label_en: 'Redis / caching layer',    label_ko: 'Redis / 캐시 레이어',   ramAdd: 1, storageAdd: 0,  cpuAdd: 0 },
+      { id: 'multi', label_en: 'Multiple sites / apps',    label_ko: '여러 사이트 / 앱 운영', ramAdd: 1, storageAdd: 10, cpuAdd: 1 },
+    ];
+
+    const PLANS = [
+      { cpu: 1, ram: 1,  storage: 25,  price: 6   },
+      { cpu: 1, ram: 2,  storage: 55,  price: 12  },
+      { cpu: 2, ram: 4,  storage: 80,  price: 24  },
+      { cpu: 4, ram: 8,  storage: 160, price: 48  },
+      { cpu: 6, ram: 16, storage: 320, price: 96  },
+      { cpu: 8, ram: 32, storage: 640, price: 192 },
+    ];
+
+    // State
+    let selectedWorkload = null;
+    let selectedTraffic = TRAFFIC_TIERS[0];
+    let selectedExtras = new Set();
+
+    const isKo = () => document.documentElement.lang === 'ko' || (typeof sfLang !== 'undefined' && sfLang.current === 'ko');
+
+    // Build workload grid
+    const workloadGrid = document.getElementById('workloadGrid');
+    WORKLOADS.forEach(w => {
+      const card = document.createElement('div');
+      card.className = 'workload-card';
+      card.dataset.id = w.id;
+      card.innerHTML = `
+        <div class="workload-icon">${w.icon}</div>
+        <div class="workload-name lang-en">${w.label_en}</div>
+        <div class="workload-name lang-ko">${w.label_ko}</div>
+        <div class="workload-desc lang-en">${w.desc_en}</div>
+        <div class="workload-desc lang-ko">${w.desc_ko}</div>
+      `;
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.workload-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedWorkload = w;
+        updateResult();
+      });
+      workloadGrid.appendChild(card);
+    });
+
+    // Build traffic grid
+    const trafficGrid = document.getElementById('trafficGrid');
+    TRAFFIC_TIERS.forEach((t, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'traffic-btn' + (i === 0 ? ' selected' : '');
+      btn.dataset.id = t.id;
+      btn.innerHTML = `
+        <span class="traffic-btn-label lang-en">${t.label_en}</span>
+        <span class="traffic-btn-label lang-ko">${t.label_ko}</span>
+        <span class="traffic-btn-desc lang-en">${t.desc_en}</span>
+        <span class="traffic-btn-desc lang-ko">${t.desc_ko}</span>
+      `;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.traffic-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedTraffic = t;
+        updateResult();
+      });
+      trafficGrid.appendChild(btn);
+    });
+
+    // Build extras
+    const extrasRow = document.getElementById('extrasRow');
+    EXTRAS.forEach(e => {
+      const item = document.createElement('label');
+      item.className = 'extra-item';
+      item.dataset.id = e.id;
+      item.innerHTML = `
+        <input type="checkbox" value="${e.id}">
+        <span class="extra-check"></span>
+        <span class="lang-en">${e.label_en}</span>
+        <span class="lang-ko">${e.label_ko}</span>
+      `;
+      item.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        if (selectedExtras.has(e.id)) {
+          selectedExtras.delete(e.id);
+          item.classList.remove('checked');
+        } else {
+          selectedExtras.add(e.id);
+          item.classList.add('checked');
+        }
+        updateResult();
+      });
+      extrasRow.appendChild(item);
+    });
+
+    function recommend(workload, traffic, extrasSet) {
+      let cpu = Math.ceil(workload.cpu * traffic.cpuMul);
+      let ram = Math.ceil(workload.ram * traffic.ramMul);
+      let storage = workload.storage;
+
+      EXTRAS.forEach(e => {
+        if (extrasSet.has(e.id)) {
+          cpu += e.cpuAdd;
+          ram += e.ramAdd;
+          storage += e.storageAdd;
+        }
+      });
+
+      const plan = PLANS.find(p => p.cpu >= cpu && p.ram >= ram && p.storage >= storage)
+                || PLANS[PLANS.length - 1];
+      const planIdx = PLANS.indexOf(plan);
+      const planUp = PLANS[planIdx + 1] || null;
+
+      return { minCpu: cpu, minRam: ram, minStorage: storage, plan, planUp };
+    }
+
+    function updateResult() {
+      const section = document.getElementById('resultSection');
+      if (!selectedWorkload) {
+        section.innerHTML = `
+          <div class="result-empty lang-en">Select a workload above to see recommendations</div>
+          <div class="result-empty lang-ko">위에서 워크로드를 선택하면 추천 결과가 표시됩니다</div>
+        `;
+        if (typeof sfLang !== 'undefined') sfLang.apply();
+        return;
+      }
+
+      const { minCpu, minRam, minStorage, plan, planUp } = recommend(selectedWorkload, selectedTraffic, selectedExtras);
+
+      const vultrUrl = 'https://www.vultr.com/?ref=9907834-9J';
+
+      section.innerHTML = `
+        <div class="result-main">
+          <div class="result-col">
+            <div class="result-col-label lang-en">MINIMUM REQUIREMENTS</div>
+            <div class="result-col-label lang-ko">최소 요구사항</div>
+            <div class="spec-row">
+              <span class="spec-key">CPU</span>
+              <span class="spec-val">${minCpu} vCPU</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">RAM</span>
+              <span class="spec-val">${minRam} GB</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key lang-en">Storage</span>
+              <span class="spec-key lang-ko">스토리지</span>
+              <span class="spec-val">${minStorage} GB+</span>
+            </div>
+          </div>
+          <div class="result-col">
+            <div class="result-col-label lang-en">RECOMMENDED PLAN</div>
+            <div class="result-col-label lang-ko">추천 플랜</div>
+            <div class="plan-name">${plan.cpu} vCPU / ${plan.ram} GB RAM</div>
+            <div class="plan-price">$${plan.price}<span> / mo</span></div>
+            <div class="plan-storage lang-en">${plan.storage} GB NVMe SSD</div>
+            <div class="plan-storage lang-ko">${plan.storage} GB NVMe SSD</div>
+            <a href="${vultrUrl}" class="plan-cta" rel="nofollow sponsored" target="_blank">
+              <span class="lang-en">Start on Vultr →</span>
+              <span class="lang-ko">Vultr 시작하기 →</span>
+            </a>
+          </div>
+        </div>
+        ${planUp ? `
+        <div class="result-comfort">
+          <div>
+            <div class="comfort-label lang-en">COMFORTABLE OPTION</div>
+            <div class="comfort-label lang-ko">여유 있는 옵션</div>
+            <div class="comfort-text lang-en">${planUp.cpu} vCPU / ${planUp.ram} GB RAM — $${planUp.price}/mo — ${planUp.storage} GB SSD · recommended for growth</div>
+            <div class="comfort-text lang-ko">${planUp.cpu} vCPU / ${planUp.ram} GB RAM — $${planUp.price}/월 — ${planUp.storage} GB SSD · 성장 여유를 위한 추천</div>
+          </div>
+          <span class="comfort-badge lang-en">↑ one tier up</span>
+          <span class="comfort-badge lang-ko">↑ 한 단계 위</span>
+        </div>` : ''}
+      `;
+
+      if (typeof sfLang !== 'undefined') sfLang.apply();
+    }
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
