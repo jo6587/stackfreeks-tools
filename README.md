@@ -68,4 +68,8 @@ sitemap.xml
 
 ---
 
+Built with [Claude Code](https://claude.ai/code) — agentic coding from tool design to deployment.
+
+---
+
 Part of [stackfreeks.com](https://stackfreeks.com)
