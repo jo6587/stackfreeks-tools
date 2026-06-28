@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSH Config Generator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Generate a ready-to-paste ~/.ssh/config file by filling in a simple form — no manual SSH config syntax lookup needed." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/ssh-config-generator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/ssh-config-generator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/ssh-config-generator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/ssh-config-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SSH Config Generator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Generate a ready-to-paste ~/.ssh/config file by filling in a simple form — no manual SSH config syntax lookup needed." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/ssh-config-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool layout */
+    .tool-wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Left column: form + host list */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Form panel */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .panel-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .field select,
+    .field input[type="text"],
+    .field input[type="number"] {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      padding: 9px 12px;
+      border-radius: var(--radius);
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+
+    .field select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      cursor: pointer;
+    }
+
+    .field select:focus,
+    .field input[type="text"]:focus,
+    .field input[type="number"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .field input::placeholder {
+      color: var(--text-3);
+    }
+
+    /* Toggle row */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .toggle-label {
+      font-size: 13px;
+      color: var(--text-1);
+      font-weight: 500;
+    }
+
+    .switch {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .switch-track::after {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 14px;
+      height: 14px;
+      background: var(--text-3);
+      border-radius: 50%;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .switch input:checked + .switch-track {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .switch input:checked + .switch-track::after {
+      transform: translateX(16px);
+      background: #fff;
+    }
+
+    .form-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2px 0;
+    }
+
+    /* Add host button */
+    .btn-add {
+      width: 100%;
+      padding: 10px;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-add:hover { opacity: 0.85; }
+
+    .error-msg {
+      font-size: 12px;
+      color: var(--danger);
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    /* Host list */
+    .host-list-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .host-list-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .host-list-header p {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .host-list-empty {
+      padding: 20px 16px;
+      font-size: 13px;
+      color: var(--text-3);
+      font-style: italic;
+    }
+
+    .host-list {
+      list-style: none;
+    }
+
+    .host-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .host-item:last-child { border-bottom: none; }
+
+    .host-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .host-alias {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      font-family: var(--font-mono);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .host-hostname {
+      font-size: 12px;
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn-remove {
+      background: none;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-remove:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* Output panel */
+    .output-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .output-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .output-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn:hover { border-color: var(--accent); color: var(--text-1); }
+
+    .output-code {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--success);
+      line-height: 1.7;
+      white-space: pre;
+      overflow-x: auto;
+      min-height: 240px;
+    }
+
+    .output-code.placeholder {
+      color: var(--text-3);
+      font-family: var(--font);
+      font-style: italic;
+      white-space: normal;
+    }
+
+    /* Install hint */
+    .install-hint {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+    }
+
+    .install-hint p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    .install-hint code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-1);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* How to use */
+    .guide {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .guide-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .guide-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .faq {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: none; color: var(--text-1); font-size: 14px; font-weight: 500; cursor: pointer; text-align: left; padding: 16px 20px; font-family: var(--font); gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; padding: 0 20px 16px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; margin-left: 12px; }
+
+    /* Related */
+    .related {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+
+    .related-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    .related-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .related-title {
+      font-size: 14px;
+      color: var(--text-1);
+    }
+
+    .related-arrow {
+      color: var(--text-3);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+
+    .vultr-inner {
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--success-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .vultr-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .vultr-title {
+      font-size: 15px;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .vultr-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .vultr-cta {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-weight: 500;
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .vultr-cta:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      .tool-wrap {
+        grid-template-columns: 1fr;
+        padding: 0 16px 40px;
+      }
+      .guide { padding: 0 16px 40px; }
+      .faq { padding: 0 16px 40px; }
+      .related { padding: 0 16px 24px; }
+      .vultr-banner { padding: 0 16px 24px; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+      .vultr-cta { align-self: stretch; text-align: center; }
+      .related-card { flex-direction: column; align-items: flex-start; }
+      .footer-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>SSH Config Generator</h1>
+      <p>Fill in the form to build a ready-to-paste <strong>~/.ssh/config</strong> file. Add multiple hosts, set aliases, keys, and jump proxies — no manual syntax lookup needed.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>SSH Config 생성기</h1>
+      <p>폼을 채우면 바로 붙여넣을 수 있는 <strong>~/.ssh/config</strong> 파일이 생성됩니다. 여러 호스트 추가, 별칭·키·점프 프록시 설정 — 직접 문법을 찾아볼 필요가 없습니다.</p>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <div class="tool-wrap">
+
+    <!-- Left column -->
+    <div class="left-col">
+
+      <!-- Form panel -->
+      <div class="form-panel">
+        <p class="panel-title" data-i18n="panel_form">Configure Host Entry</p>
+
+        <div class="field">
+          <label data-i18n="label_alias">Host Alias *</label>
+          <input type="text" id="inp-alias" placeholder="myserver" data-i18n-placeholder="ph_alias" />
+        </div>
+
+        <div class="field">
+          <label data-i18n="label_hostname">HostName *</label>
+          <input type="text" id="inp-hostname" placeholder="192.168.1.100 or example.com" data-i18n-placeholder="ph_hostname" />
+        </div>
+
+        <div class="field">
+          <label data-i18n="label_user">User</label>
+          <input type="text" id="inp-user" placeholder="ubuntu" data-i18n-placeholder="ph_user" />
+        </div>
+
+        <div class="field">
+          <label data-i18n="label_port">Port</label>
+          <input type="number" id="inp-port" placeholder="22 (default)" min="1" max="65535" data-i18n-placeholder="ph_port" />
+        </div>
+
+        <div class="field">
+          <label data-i18n="label_identity">IdentityFile</label>
+          <input type="text" id="inp-identity" placeholder="~/.ssh/id_rsa" data-i18n-placeholder="ph_identity" />
+        </div>
+
+        <div class="form-divider"></div>
+
+        <div class="field">
+          <label data-i18n="label_alive">ServerAliveInterval (seconds)</label>
+          <input type="number" id="inp-alive" placeholder="60" min="0" data-i18n-placeholder="ph_alive" />
+        </div>
+
+        <div class="field">
+          <label data-i18n="label_proxyjump">ProxyJump</label>
+          <input type="text" id="inp-proxyjump" placeholder="jumphost" data-i18n-placeholder="ph_proxyjump" />
+        </div>
+
+        <div class="form-divider"></div>
+
+        <div class="toggle-row">
+          <span class="toggle-label" data-i18n="label_forward">ForwardAgent</span>
+          <label class="switch">
+            <input type="checkbox" id="chk-forward" />
+            <span class="switch-track"></span>
+          </label>
+        </div>
+
+        <div class="field">
+          <label data-i18n="label_stricthost">StrictHostKeyChecking</label>
+          <select id="sel-strict">
+            <option value="">(omit)</option>
+            <option value="accept-new">accept-new</option>
+            <option value="yes">yes</option>
+            <option value="no">no</option>
+          </select>
+        </div>
+
+        <p class="error-msg" id="form-error" data-i18n="err_required">Host Alias and HostName are required.</p>
+
+        <button class="btn-add" onclick="addHost()" data-i18n="btn_add">+ Add Host</button>
+      </div>
+
+      <!-- Host list -->
+      <div class="host-list-panel">
+        <div class="host-list-header">
+          <p data-i18n="panel_hosts">Added Hosts</p>
+        </div>
+        <div id="host-list-empty" class="host-list-empty">
+          <span class="lang-en">No hosts yet — fill in the form above and click "Add Host".</span>
+          <span class="lang-ko">아직 호스트가 없습니다 — 위 폼을 작성하고 "호스트 추가"를 클릭하세요.</span>
+        </div>
+        <ul class="host-list" id="host-list"></ul>
+      </div>
+
+    </div>
+
+    <!-- Right: Output -->
+    <div class="output-panel">
+
+      <div class="output-block">
+        <div class="output-header">
+          <span class="output-label" data-i18n="label_output">~/.ssh/config</span>
+          <div class="btn-row">
+            <button class="btn" id="btn-copy" onclick="copyConfig()" data-i18n="btn_copy">Copy</button>
+            <button class="btn" onclick="downloadConfig()" data-i18n="btn_download">Download</button>
+          </div>
+        </div>
+        <pre class="output-code placeholder" id="output-config">Add a host entry to generate your config…</pre>
+      </div>
+
+      <div class="install-hint">
+        <div class="lang-en">
+          <p>Paste the output into <code>~/.ssh/config</code> (create it if it doesn't exist). Make sure the file is readable only by you: <code>chmod 600 ~/.ssh/config</code></p>
+        </div>
+        <div class="lang-ko">
+          <p>생성된 내용을 <code>~/.ssh/config</code>에 붙여넣으세요 (없으면 새로 만드세요). 파일 권한을 본인만 읽을 수 있게 설정하세요: <code>chmod 600 ~/.ssh/config</code></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- How to Use -->
+  <section class="guide">
+    <div class="lang-en">
+      <p class="section-title">How to use this tool</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>Fill in a host entry</h3>
+          <p>Enter a short <strong>alias</strong> (e.g. <code>prod</code>) and the actual <strong>HostName</strong> (IP or domain). Other fields are optional.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>Click "Add Host"</h3>
+          <p>The host is appended to the list and the config output updates instantly. Repeat for each server you want to configure.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>Copy or download</h3>
+          <p>Click <strong>Copy</strong> to paste directly, or <strong>Download</strong> to save as <code>ssh_config</code>. You can reorder by removing and re-adding hosts.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>Deploy to ~/.ssh/config</h3>
+          <p>Paste into <code>~/.ssh/config</code> and run <code>chmod 600 ~/.ssh/config</code>. Then connect with <code>ssh alias</code> — no flags needed.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="section-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">Step 1</p>
+          <h3>호스트 항목 입력</h3>
+          <p>짧은 <strong>별칭</strong>(예: <code>prod</code>)과 실제 <strong>HostName</strong>(IP 또는 도메인)을 입력하세요. 나머지 필드는 선택 사항입니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 2</p>
+          <h3>"호스트 추가" 클릭</h3>
+          <p>호스트가 목록에 추가되고 설정 출력이 즉시 업데이트됩니다. 설정할 서버마다 반복하세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 3</p>
+          <h3>복사 또는 다운로드</h3>
+          <p><strong>복사</strong>를 눌러 바로 붙여넣거나 <strong>다운로드</strong>를 눌러 <code>ssh_config</code>로 저장하세요. 호스트를 삭제 후 재추가해 순서를 바꿀 수 있습니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">Step 4</p>
+          <h3>~/.ssh/config에 적용</h3>
+          <p><code>~/.ssh/config</code>에 붙여넣고 <code>chmod 600 ~/.ssh/config</code>를 실행하세요. 이후 <code>ssh 별칭</code>으로 플래그 없이 접속 가능합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <p class="section-title">Frequently Asked Questions</p>
+    </div>
+    <div class="lang-ko">
+      <p class="section-title">자주 묻는 질문</p>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>What is the SSH config file and where does it live?</span></div>
+          <div class="lang-ko"><span>SSH config 파일이란 무엇이며 어디에 있나요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">The SSH client config file is located at <code>~/.ssh/config</code> on Linux and macOS. It lets you set per-host options — aliases, usernames, ports, key paths — so you can type <code>ssh prod</code> instead of <code>ssh -i ~/.ssh/id_rsa ubuntu@192.168.1.100 -p 2222</code>. On Windows (OpenSSH), the path is <code>C:\Users\YourName\.ssh\config</code>.</div>
+        <div class="lang-ko">SSH 클라이언트 설정 파일은 Linux 및 macOS에서 <code>~/.ssh/config</code>에 위치합니다. 호스트별 옵션(별칭, 사용자 이름, 포트, 키 경로 등)을 설정하여 <code>ssh -i ~/.ssh/id_rsa ubuntu@192.168.1.100 -p 2222</code> 대신 <code>ssh prod</code>처럼 간단히 접속할 수 있습니다. Windows(OpenSSH)에서는 <code>C:\Users\사용자명\.ssh\config</code>에 위치합니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>When should I use ProxyJump in my SSH config?</span></div>
+          <div class="lang-ko"><span>SSH config에서 ProxyJump를 언제 사용해야 하나요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">Use <code>ProxyJump</code> when your target server is behind a firewall or private network and can only be reached via a bastion/jump host. Set the bastion's alias in the ProxyJump field, and SSH will automatically tunnel through it. Example: <code>ProxyJump jumphost</code> — where <code>jumphost</code> is another entry in your config. You can chain multiple hops with comma separation.</div>
+        <div class="lang-ko">대상 서버가 방화벽이나 사설 네트워크 뒤에 있어 배스천/점프 호스트를 통해서만 접근 가능할 때 <code>ProxyJump</code>를 사용하세요. ProxyJump 필드에 배스천 별칭을 입력하면 SSH가 자동으로 터널을 통해 접속합니다. 예: <code>ProxyJump jumphost</code> — <code>jumphost</code>는 설정의 다른 항목입니다. 쉼표로 구분하여 여러 홉을 연결할 수도 있습니다.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>What does ForwardAgent do and is it safe to enable?</span></div>
+          <div class="lang-ko"><span>ForwardAgent는 무엇이며 활성화해도 안전한가요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en"><code>ForwardAgent yes</code> allows the remote server to use your local SSH keys — useful when you need to <code>git pull</code> or hop to another server from the remote without copying your private key there. However, it carries risk: a compromised remote host with root access could abuse your agent socket. Only enable it for trusted hosts, and consider <code>ProxyJump</code> as a safer alternative for multi-hop SSH.</div>
+        <div class="lang-ko"><code>ForwardAgent yes</code>는 원격 서버가 로컬 SSH 키를 사용할 수 있게 합니다. 개인 키를 복사하지 않고 원격에서 <code>git pull</code>이나 다른 서버로 이동할 때 유용합니다. 하지만 위험이 있습니다: 루트 접근 권한을 가진 손상된 원격 호스트가 에이전트 소켓을 악용할 수 있습니다. 신뢰할 수 있는 호스트에만 활성화하고, 멀티 홉 SSH에는 더 안전한 <code>ProxyJump</code>를 고려하세요.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>What is ServerAliveInterval and why do SSH sessions time out?</span></div>
+          <div class="lang-ko"><span>ServerAliveInterval이란 무엇이며 SSH 세션이 왜 타임아웃되나요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">Many firewalls and NAT routers silently drop idle TCP connections after a timeout (often 5–15 minutes). <code>ServerAliveInterval 60</code> tells your SSH client to send a keepalive packet every 60 seconds, preventing the connection from being dropped. Pair it with <code>ServerAliveCountMax 3</code> (added manually) to disconnect cleanly if 3 keepalives go unanswered.</div>
+        <div class="lang-ko">많은 방화벽과 NAT 라우터가 일정 시간(보통 5~15분) 후 유휴 TCP 연결을 자동으로 끊습니다. <code>ServerAliveInterval 60</code>은 SSH 클라이언트가 60초마다 킵얼라이브 패킷을 보내 연결이 끊기지 않도록 합니다. 킵얼라이브가 3번 응답 없으면 깔끔하게 연결을 종료하려면 <code>ServerAliveCountMax 3</code>을 수동으로 추가하세요.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <div>
+          <div class="lang-en"><span>Does this tool send my server details anywhere?</span></div>
+          <div class="lang-ko"><span>이 도구가 서버 정보를 어딘가로 전송하나요?</span></div>
+        </div>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="lang-en">No. Everything runs entirely in your browser using JavaScript. Your IP addresses, hostnames, usernames, and key paths are never transmitted to any server. Close the tab and the data is gone.</div>
+        <div class="lang-ko">아니요. 모든 처리는 JavaScript를 사용하여 브라우저 내에서만 이루어집니다. IP 주소, 호스트명, 사용자 이름, 키 경로는 어떤 서버로도 전송되지 않습니다. 탭을 닫으면 데이터는 사라집니다.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Related -->
+  <section class="related">
+    <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+      <div>
+        <p class="related-label">stackfreeks.com</p>
+        <div class="lang-en">
+          <p class="related-title">SSH hardening guides &amp; VPS setup tutorials on stackfreeks.com →</p>
+        </div>
+        <div class="lang-ko">
+          <p class="related-title">stackfreeks.com에서 SSH 보안 강화 가이드 &amp; VPS 설정 튜토리얼 보기 →</p>
+        </div>
+      </div>
+      <span class="related-arrow">→</span>
+    </a>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="vultr-inner">
+      <div>
+        <p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
+        <p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
+        <p class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="vultr-cta" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        panel_form:    'Configure Host Entry',
+        panel_hosts:   'Added Hosts',
+        label_alias:   'Host Alias *',
+        label_hostname:'HostName *',
+        label_user:    'User',
+        label_port:    'Port',
+        label_identity:'IdentityFile',
+        label_alive:   'ServerAliveInterval (seconds)',
+        label_proxyjump:'ProxyJump',
+        label_forward: 'ForwardAgent',
+        label_stricthost: 'StrictHostKeyChecking',
+        label_output:  '~/.ssh/config',
+        btn_add:       '+ Add Host',
+        btn_copy:      'Copy',
+        btn_download:  'Download',
+        btn_remove:    'Remove',
+        err_required:  'Host Alias and HostName are required.',
+        ph_alias:      'myserver',
+        ph_hostname:   '192.168.1.100 or example.com',
+        ph_user:       'ubuntu',
+        ph_port:       '22 (default)',
+        ph_identity:   '~/.ssh/id_rsa',
+        ph_alive:      '60',
+        ph_proxyjump:  'jumphost',
+      },
+      ko: {
+        panel_form:    '호스트 항목 설정',
+        panel_hosts:   '추가된 호스트',
+        label_alias:   'Host 별칭 *',
+        label_hostname:'HostName *',
+        label_user:    '사용자',
+        label_port:    '포트',
+        label_identity:'IdentityFile',
+        label_alive:   'ServerAliveInterval (초)',
+        label_proxyjump:'ProxyJump',
+        label_forward: 'ForwardAgent',
+        label_stricthost: 'StrictHostKeyChecking',
+        label_output:  '~/.ssh/config',
+        btn_add:       '+ 호스트 추가',
+        btn_copy:      '복사',
+        btn_download:  '다운로드',
+        btn_remove:    '삭제',
+        err_required:  'Host 별칭과 HostName은 필수입니다.',
+        ph_alias:      'myserver',
+        ph_hostname:   '192.168.1.100 또는 example.com',
+        ph_user:       'ubuntu',
+        ph_port:       '22 (기본값)',
+        ph_identity:   '~/.ssh/id_rsa',
+        ph_alive:      '60',
+        ph_proxyjump:  'jumphost',
+      }
+    };
+  </script>
+  <script>
+    // ─── State ────────────────────────────────────────────
+    let hosts = [];
+
+    // ─── Add host ─────────────────────────────────────────
+    function addHost() {
+      const alias    = document.getElementById('inp-alias').value.trim();
+      const hostname = document.getElementById('inp-hostname').value.trim();
+      const errEl    = document.getElementById('form-error');
+
+      if (!alias || !hostname) {
+        errEl.classList.add('visible');
+        return;
+      }
+      errEl.classList.remove('visible');
+
+      const host = {
+        alias,
+        hostname,
+        user:                 document.getElementById('inp-user').value.trim(),
+        port:                 document.getElementById('inp-port').value.trim(),
+        identityFile:         document.getElementById('inp-identity').value.trim(),
+        serverAliveInterval:  document.getElementById('inp-alive').value.trim(),
+        proxyJump:            document.getElementById('inp-proxyjump').value.trim(),
+        forwardAgent:         document.getElementById('chk-forward').checked,
+        strictHostKeyChecking:document.getElementById('sel-strict').value,
+      };
+
+      hosts.push(host);
+      clearForm();
+      renderHostList();
+      renderConfig();
+    }
+
+    // ─── Clear form ───────────────────────────────────────
+    function clearForm() {
+      ['inp-alias','inp-hostname','inp-user','inp-port','inp-identity','inp-alive','inp-proxyjump'].forEach(function(id) {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('chk-forward').checked = false;
+      document.getElementById('sel-strict').value = '';
+    }
+
+    // ─── Remove host ──────────────────────────────────────
+    function removeHost(index) {
+      hosts.splice(index, 1);
+      renderHostList();
+      renderConfig();
+    }
+
+    // ─── Render host list ─────────────────────────────────
+    function renderHostList() {
+      const listEl  = document.getElementById('host-list');
+      const emptyEl = document.getElementById('host-list-empty');
+      const lang    = document.documentElement.lang;
+
+      listEl.innerHTML = '';
+
+      if (hosts.length === 0) {
+        emptyEl.style.display = 'block';
+        return;
+      }
+      emptyEl.style.display = 'none';
+
+      const removeLabel = (window.SF_PAGE_I18N || {})[lang === 'ko' ? 'ko' : 'en']
+        ? (window.SF_PAGE_I18N[lang === 'ko' ? 'ko' : 'en'].btn_remove || 'Remove')
+        : 'Remove';
+
+      hosts.forEach(function(host, i) {
+        const li = document.createElement('li');
+        li.className = 'host-item';
+        li.innerHTML =
+          '<div class="host-item-info">' +
+            '<span class="host-alias">' + escHtml(host.alias) + '</span>' +
+            '<span class="host-hostname">' + escHtml(host.hostname) + (host.user ? ' · ' + escHtml(host.user) : '') + '</span>' +
+          '</div>' +
+          '<button class="btn-remove" onclick="removeHost(' + i + ')">' + removeLabel + '</button>';
+        listEl.appendChild(li);
+      });
+    }
+
+    // ─── Generate config string ───────────────────────────
+    function generateConfig() {
+      if (hosts.length === 0) return null;
+
+      return hosts.map(function(host) {
+        const lines = [];
+        lines.push('Host ' + host.alias);
+        lines.push('    HostName ' + host.hostname);
+        if (host.user)                 lines.push('    User ' + host.user);
+        if (host.port)                 lines.push('    Port ' + host.port);
+        if (host.identityFile)         lines.push('    IdentityFile ' + host.identityFile);
+        if (host.serverAliveInterval)  lines.push('    ServerAliveInterval ' + host.serverAliveInterval);
+        if (host.proxyJump)            lines.push('    ProxyJump ' + host.proxyJump);
+        if (host.forwardAgent)         lines.push('    ForwardAgent yes');
+        if (host.strictHostKeyChecking) lines.push('    StrictHostKeyChecking ' + host.strictHostKeyChecking);
+        return lines.join('\n');
+      }).join('\n\n');
+    }
+
+    // ─── Render config output ─────────────────────────────
+    function renderConfig() {
+      const el     = document.getElementById('output-config');
+      const config = generateConfig();
+      const lang   = document.documentElement.lang;
+
+      if (!config) {
+        el.className   = 'output-code placeholder';
+        el.textContent = lang === 'ko'
+          ? '호스트 항목을 추가하면 설정이 생성됩니다…'
+          : 'Add a host entry to generate your config…';
+        return;
+      }
+
+      el.className   = 'output-code';
+      el.textContent = config;
+    }
+
+    // ─── Copy ─────────────────────────────────────────────
+    function copyConfig() {
+      const el = document.getElementById('output-config');
+      if (el.classList.contains('placeholder')) return;
+      navigator.clipboard.writeText(el.textContent).then(function() {
+        const btn  = document.getElementById('btn-copy');
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        btn.style.color = 'var(--success)';
+        setTimeout(function() {
+          btn.textContent = orig;
+          btn.style.color = '';
+        }, 1500);
+      });
+    }
+
+    // ─── Download ─────────────────────────────────────────
+    function downloadConfig() {
+      const el = document.getElementById('output-config');
+      if (el.classList.contains('placeholder')) return;
+      const blob = new Blob([el.textContent], { type: 'text/plain' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'ssh_config';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ─── FAQ ──────────────────────────────────────────────
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      item.classList.toggle('open');
+      btn.querySelector('.faq-icon').textContent = item.classList.contains('open') ? '−' : '+';
+    }
+
+    // ─── HTML escape ──────────────────────────────────────
+    function escHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ─── Language change hook ─────────────────────────────
+    document.addEventListener('sfLangChanged', function() {
+      renderHostList();
+      renderConfig();
+    });
+
+    // ─── Allow Enter key on form fields to add host ───────
+    document.querySelectorAll('.form-panel input').forEach(function(inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); addHost(); }
+      });
+    });
+
+    // ─── Init ─────────────────────────────────────────────
+    renderConfig();
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+</body>
+</html>
