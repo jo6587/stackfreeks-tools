@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Object Storage Cost Calculator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Compare monthly object storage costs across AWS S3, Backblaze B2, Cloudflare R2, Vultr, Wasabi, and DigitalOcean Spaces. Find the cheapest plan instantly." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/object-storage-calculator/" />
+  <meta property="og:title" content="Object Storage Cost Calculator | StackFreeks Tools" />
+  <meta property="og:description" content="Compare monthly object storage costs across AWS S3, Backblaze B2, Cloudflare R2, Vultr, Wasabi, and DigitalOcean Spaces." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/object-storage-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,11,0.85);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+    .hero-desc { font-size: 0.95rem; color: var(--text-2); max-width: 580px; }
+
+    .tool-section { padding: 32px 0; }
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .card-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 20px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-2);
+      margin-bottom: 8px;
+    }
+    .label-value {
+      font-weight: 500;
+      color: var(--text-1);
+      font-variant-numeric: tabular-nums;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+    input[type="number"] {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    input[type="number"]:focus { border-color: var(--border-2); }
+
+    .results-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .results-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .results-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .provider-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+    .provider-row:last-child { border-bottom: none; }
+    .provider-row:hover { background: var(--surface-2); }
+    .provider-row.vultr-row { background: rgba(99,102,241,0.04); }
+    .provider-row.vultr-row:hover { background: rgba(99,102,241,0.08); }
+
+    .provider-name-wrap { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .provider-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .provider-name { font-size: 13px; font-weight: 500; color: var(--text-1); }
+    .provider-note { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+
+    .provider-cost { font-size: 12px; color: var(--text-2); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .provider-total {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      min-width: 72px;
+      white-space: nowrap;
+    }
+    .provider-badge { min-width: 76px; text-align: right; }
+
+    .badge-best {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--success);
+      background: var(--success-bg);
+      border-radius: 20px;
+      padding: 2px 8px;
+    }
+    .badge-vultr {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--accent);
+      background: rgba(99,102,241,0.1);
+      border-radius: 20px;
+      padding: 2px 8px;
+    }
+
+    /* Guide */
+    .guide { padding: 0 0 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { padding: 0 0 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
+    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+    /* Related */
+    .related { padding: 0 0 48px; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* Vultr banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font);
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--text-3); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .tool-grid { grid-template-columns: 1fr; }
+      .provider-row { grid-template-columns: 1fr auto; gap: 8px; }
+      .provider-cost { display: none; }
+      .provider-badge { display: none; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      nav { padding: 0 16px; }
+      .container { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">
+      <div class="logo-mark"></div>
+      StackFreeks Tools
+    </a>
+    <div class="nav-actions">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+  </nav>
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <section class="hero">
+    <div class="container">
+      <div class="lang-en">
+        <p class="eyebrow">Storage &amp; Cloud</p>
+        <h1>Object Storage Cost Calculator</h1>
+        <p class="hero-desc">Compare monthly costs across AWS S3, Backblaze B2, Cloudflare R2, Vultr Object Storage, Wasabi, and DigitalOcean Spaces — based on your actual usage.</p>
+      </div>
+      <div class="lang-ko">
+        <p class="eyebrow">스토리지 &amp; 클라우드</p>
+        <h1>오브젝트 스토리지 비용 계산기</h1>
+        <p class="hero-desc">AWS S3, Backblaze B2, Cloudflare R2, Vultr, Wasabi, DigitalOcean Spaces의 월간 비용을 실제 사용량 기준으로 즉시 비교합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="tool-section">
+      <div class="container">
+        <div class="tool-grid">
+
+          <!-- Inputs -->
+          <div class="card">
+            <p class="card-label" data-i18n="input_label">Your Usage</p>
+
+            <div class="form-group">
+              <div class="field-label">
+                <span data-i18n="storage_label">Storage</span>
+                <span class="label-value" id="storageDisplay">100 GB</span>
+              </div>
+              <input type="range" id="storageSlider" min="1" max="10000" value="100" step="1" oninput="syncStorage('slider')">
+              <input type="number" id="storageNum" min="1" max="999999" value="100" placeholder="GB" oninput="syncStorage('num')">
+            </div>
+
+            <div class="form-group">
+              <div class="field-label">
+                <span data-i18n="egress_label">Monthly Egress</span>
+                <span class="label-value" id="egressDisplay">50 GB</span>
+              </div>
+              <input type="range" id="egressSlider" min="0" max="10000" value="50" step="1" oninput="syncEgress('slider')">
+              <input type="number" id="egressNum" min="0" max="999999" value="50" placeholder="GB" oninput="syncEgress('num')">
+            </div>
+          </div>
+
+          <!-- Results -->
+          <div class="results-card">
+            <div class="results-header">
+              <span class="results-title" data-i18n="results_label">Monthly Cost Comparison</span>
+            </div>
+            <div id="providerList"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- How to use -->
+    <section class="guide">
+      <div class="container">
+        <div class="lang-en">
+          <p class="guide-title">How to use</p>
+          <div class="guide-grid">
+            <div class="guide-card">
+              <p class="guide-step">Step 1</p>
+              <h3>Set storage amount</h3>
+              <p>Drag the slider or type the total GB you plan to store each month.</p>
+            </div>
+            <div class="guide-card">
+              <p class="guide-step">Step 2</p>
+              <h3>Set monthly egress</h3>
+              <p>Enter how much data users will download from your buckets per month.</p>
+            </div>
+            <div class="guide-card">
+              <p class="guide-step">Step 3</p>
+              <h3>Compare providers</h3>
+              <p>Results rank from cheapest to most expensive and update instantly.</p>
+            </div>
+            <div class="guide-card">
+              <p class="guide-step">Step 4</p>
+              <h3>Choose your plan</h3>
+              <p>Click any provider name to open their pricing page and sign up.</p>
+            </div>
+          </div>
+        </div>
+        <div class="lang-ko">
+          <p class="guide-title">사용 방법</p>
+          <div class="guide-grid">
+            <div class="guide-card">
+              <p class="guide-step">Step 1</p>
+              <h3>스토리지 용량 설정</h3>
+              <p>슬라이더를 조절하거나 월간 저장할 GB를 직접 입력합니다.</p>
+            </div>
+            <div class="guide-card">
+              <p class="guide-step">Step 2</p>
+              <h3>월 이그레스 설정</h3>
+              <p>사용자가 매월 버킷에서 다운로드할 데이터 양을 입력합니다.</p>
+            </div>
+            <div class="guide-card">
+              <p class="guide-step">Step 3</p>
+              <h3>제공사 비교</h3>
+              <p>가장 저렴한 순서로 즉시 결과가 업데이트됩니다.</p>
+            </div>
+            <div class="guide-card">
+              <p class="guide-step">Step 4</p>
+              <h3>플랜 선택</h3>
+              <p>제공사 이름을 클릭해 요금 페이지를 방문하고 가입하세요.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+      <div class="container">
+        <div class="lang-en">
+          <p class="faq-title">Frequently Asked Questions</p>
+          <div class="faq-item">
+            <p class="faq-q">What is egress in object storage pricing?</p>
+            <p class="faq-a">Egress (data transfer out) is the fee charged when users download files from your storage bucket to the internet. AWS S3 charges $0.09/GB egress — on a 1TB/month download workload that alone adds up to $92/mo. Cloudflare R2 and Wasabi offer zero egress fees, making them dramatically cheaper for read-heavy workloads.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">Is Cloudflare R2 really free for egress?</p>
+            <p class="faq-a">Yes — R2 egress to the public internet is always free. You pay only for storage ($0.015/GB/month, first 10 GB free) and API requests (Class A writes at $4.50/million, Class B reads at $0.36/million). For assets served through Cloudflare CDN, R2 is one of the most cost-efficient choices available.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">When should I choose Vultr Object Storage?</p>
+            <p class="faq-a">Vultr Object Storage shines when you already run workloads on Vultr VPS instances. Internal traffic between Vultr services avoids cross-provider egress entirely. At $0.01/GB storage and $0.01/GB egress with an S3-compatible API, it integrates with any existing S3 SDK without code changes.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">When does Backblaze B2 beat AWS S3?</p>
+            <p class="faq-a">Almost always for storage-heavy use cases. B2 charges $0.006/GB — roughly 4× cheaper than S3's $0.023/GB. It also includes free egress equal to 3× your monthly stored data. Paired with Cloudflare CDN (free via the Bandwidth Alliance), B2 effectively becomes zero-egress as well.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">Does Wasabi really charge zero for egress?</p>
+            <p class="faq-a">Wasabi's egress is free as long as your total data downloaded per month does not exceed your total stored data. If you download more than you store, the excess is billed at $0.04/GB. For typical storage-heavy workloads (backups, archives, media), Wasabi's $0.0059/GB storage with no egress is extremely competitive.</p>
+          </div>
+        </div>
+        <div class="lang-ko">
+          <p class="faq-title">자주 묻는 질문</p>
+          <div class="faq-item">
+            <p class="faq-q">오브젝트 스토리지에서 이그레스(egress)란 무엇인가요?</p>
+            <p class="faq-a">이그레스(데이터 전송 아웃)는 사용자가 버킷에서 인터넷으로 파일을 다운로드할 때 발생하는 비용입니다. AWS S3는 $0.09/GB를 청구하며, 1TB/월 다운로드 시 이그레스만 $92가 됩니다. Cloudflare R2와 Wasabi는 이그레스가 무료이므로 읽기가 많은 워크로드에서 훨씬 저렴합니다.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">Cloudflare R2의 이그레스는 정말 무료인가요?</p>
+            <p class="faq-a">네, R2의 공개 인터넷 이그레스는 항상 무료입니다. 스토리지($0.015/GB/월, 처음 10GB 무료)와 API 요청(쓰기 $4.50/백만, 읽기 $0.36/백만)에만 비용이 발생합니다. Cloudflare CDN을 통해 파일을 제공하면 가장 비용 효율적인 선택 중 하나입니다.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">Vultr Object Storage는 언제 선택하나요?</p>
+            <p class="faq-a">Vultr VPS 인스턴스에서 이미 워크로드를 실행 중이라면 Vultr Object Storage가 최적입니다. Vultr 서비스 간 내부 트래픽은 크로스 프로바이더 이그레스가 없으며, S3 호환 API로 기존 SDK를 코드 수정 없이 그대로 사용할 수 있습니다.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">Backblaze B2가 AWS S3보다 저렴한 경우는?</p>
+            <p class="faq-a">스토리지 집약적 워크로드에서는 거의 항상 저렴합니다. B2는 $0.006/GB로 S3의 $0.023/GB보다 약 4배 저렴하며, 월간 저장 용량의 3배를 무료 이그레스로 제공합니다. Cloudflare CDN과 결합하면(Bandwidth Alliance 무료) 사실상 이그레스 비용 없이 사용할 수 있습니다.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">Wasabi는 정말 이그레스가 무료인가요?</p>
+            <p class="faq-a">Wasabi의 이그레스는 월간 다운로드 총량이 저장 데이터를 초과하지 않는 경우 무료입니다. 초과분은 $0.04/GB로 청구됩니다. 백업·아카이브·미디어 등 스토리지 집약적 워크로드에서는 $0.0059/GB의 낮은 스토리지 요금과 무료 이그레스가 매우 경쟁력 있습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Content -->
+    <section class="related">
+      <div class="container">
+        <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+        <div class="related-grid">
+          <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+            <span class="related-tag">Storage</span>
+            <p class="related-title">More cloud storage guides on stackfreeks.com →</p>
+            <span class="related-arrow">→</span>
+          </a>
+          <a href="/tools/vps-cost-calculator/" class="related-card">
+            <span class="related-tag">VPS</span>
+            <p class="related-title">VPS Cost Calculator — Compare Vultr, Hetzner &amp; DigitalOcean</p>
+            <span class="related-arrow">→</span>
+          </a>
+          <a href="/tools/vps-bandwidth-calculator/" class="related-card">
+            <span class="related-tag">Bandwidth</span>
+            <p class="related-title">VPS Bandwidth Calculator — Estimate data transfer costs</p>
+            <span class="related-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vultr Banner -->
+    <section class="vultr-banner">
+      <div class="container banner-inner">
+        <div>
+          <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+          <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+          <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+        </div>
+        <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+           rel="nofollow sponsored" target="_blank"
+           data-i18n="vultr_cta">Claim your credit →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+        <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com →</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.SF_PAGE_I18N = {
+      en: {
+        input_label: 'Your Usage',
+        storage_label: 'Storage',
+        egress_label: 'Monthly Egress',
+        results_label: 'Monthly Cost Comparison'
+      },
+      ko: {
+        input_label: '사용량 입력',
+        storage_label: '스토리지',
+        egress_label: '월간 이그레스',
+        results_label: '월간 비용 비교'
+      }
+    };
+  </script>
+  <script src="/shared/i18n.js"></script>
+
+  <script>
+    const PROVIDERS = [
+      {
+        id: 'wasabi',
+        name: 'Wasabi',
+        dot: '#3DB55F',
+        note: 'Free egress up to stored amount',
+        url: 'https://wasabi.com/cloud-storage-pricing/',
+        calc(s, e) {
+          const storage = s * 0.0059;
+          // egress free if e <= s, charge $0.04/GB overage
+          const egress = e > s ? (e - s) * 0.04 : 0;
+          return { storage, egress };
+        }
+      },
+      {
+        id: 'backblaze-b2',
+        name: 'Backblaze B2',
+        dot: '#E63E2D',
+        note: '3× monthly storage free egress',
+        url: 'https://www.backblaze.com/b2/cloud-storage-pricing.html',
+        calc(s, e) {
+          const storage = Math.max(0, s - 10) * 0.006;
+          const freeEgress = Math.min(s * 3, e);
+          const egress = Math.max(0, e - freeEgress) * 0.01;
+          return { storage, egress };
+        }
+      },
+      {
+        id: 'cloudflare-r2',
+        name: 'Cloudflare R2',
+        dot: '#F48120',
+        note: 'Zero egress fees always',
+        url: 'https://developers.cloudflare.com/r2/pricing/',
+        calc(s, e) {
+          const storage = Math.max(0, s - 10) * 0.015;
+          return { storage, egress: 0 };
+        }
+      },
+      {
+        id: 'vultr',
+        name: 'Vultr Object Storage',
+        dot: '#6366f1',
+        note: 'S3-compatible · multi-region',
+        url: 'https://www.vultr.com/?ref=9907834-9J',
+        isVultr: true,
+        calc(s, e) {
+          return { storage: s * 0.01, egress: e * 0.01 };
+        }
+      },
+      {
+        id: 'do-spaces',
+        name: 'DigitalOcean Spaces',
+        dot: '#0080FF',
+        note: '$5/mo: 250 GB + 1 TB egress included',
+        url: 'https://www.digitalocean.com/pricing/spaces-object-storage',
+        calc(s, e) {
+          const base = 5;
+          const storageExtra = Math.max(0, s - 250) * 0.02;
+          const egressExtra = Math.max(0, e - 1024) * 0.01;
+          return { storage: base + storageExtra, egress: egressExtra };
+        }
+      },
+      {
+        id: 'aws-s3',
+        name: 'AWS S3',
+        dot: '#FF9900',
+        note: 'Standard · us-east-1',
+        url: 'https://aws.amazon.com/s3/pricing/',
+        calc(s, e) {
+          return { storage: s * 0.023, egress: e * 0.09 };
+        }
+      }
+    ];
+
+    function fmt(n) {
+      if (n < 0.005) return '$0.00';
+      if (n >= 1000) return '$' + Math.round(n).toLocaleString();
+      return '$' + n.toFixed(2);
+    }
+
+    function getValues() {
+      const s = Math.max(0, parseFloat(document.getElementById('storageNum').value) || 0);
+      const e = Math.max(0, parseFloat(document.getElementById('egressNum').value) || 0);
+      return { s, e };
+    }
+
+    function syncStorage(src) {
+      const sl = document.getElementById('storageSlider');
+      const sn = document.getElementById('storageNum');
+      if (src === 'slider') sn.value = sl.value;
+      else sl.value = Math.min(parseFloat(sn.value) || 0, 10000);
+      render();
+    }
+
+    function syncEgress(src) {
+      const el = document.getElementById('egressSlider');
+      const en = document.getElementById('egressNum');
+      if (src === 'slider') en.value = el.value;
+      else el.value = Math.min(parseFloat(en.value) || 0, 10000);
+      render();
+    }
+
+    function render() {
+      const { s, e } = getValues();
+      document.getElementById('storageDisplay').textContent = (s || 0).toLocaleString() + ' GB';
+      document.getElementById('egressDisplay').textContent = (e || 0).toLocaleString() + ' GB';
+
+      const results = PROVIDERS.map(p => {
+        const { storage, egress } = p.calc(s, e);
+        return { ...p, storageCost: storage, egressCost: egress, total: storage + egress };
+      }).sort((a, b) => a.total - b.total);
+
+      const minTotal = results[0].total;
+
+      document.getElementById('providerList').innerHTML = results.map(p => {
+        const isBest = Math.abs(p.total - minTotal) < 0.001;
+        const badge = p.isVultr
+          ? `<span class="badge-vultr">Vultr</span>`
+          : isBest
+          ? `<span class="badge-best">Best value</span>`
+          : '';
+        const nameLink = `<a href="${p.url}" target="_blank" rel="noopener nofollow" style="color:var(--text-1);text-decoration:none;" class="provider-name">${p.name}</a>`;
+        return `
+          <div class="provider-row${p.isVultr ? ' vultr-row' : ''}">
+            <div class="provider-name-wrap">
+              <div class="provider-dot" style="background:${p.dot}"></div>
+              <div>
+                ${nameLink}
+                <div class="provider-note">${p.note}</div>
+              </div>
+            </div>
+            <div class="provider-cost">
+              <div>Storage: ${fmt(p.storageCost)}</div>
+              <div>Egress: ${fmt(p.egressCost)}</div>
+            </div>
+            <div class="provider-total">${fmt(p.total)}<span style="font-size:11px;color:var(--text-3);font-weight:400">/mo</span></div>
+            <div class="provider-badge">${badge}</div>
+          </div>`;
+      }).join('');
+    }
+
+    render();
+  </script>
+
+</body>
+</html>
