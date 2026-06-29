@@ -258,10 +258,13 @@
     /* FAQ */
     .faq { padding: 0 0 48px; }
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
-    .faq-a { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
 
     /* Related */
     .related { padding: 0 0 48px; }
@@ -455,47 +458,47 @@
         <div class="lang-en">
           <p class="faq-title">Frequently Asked Questions</p>
           <div class="faq-item">
-            <p class="faq-q">What is egress in object storage pricing?</p>
-            <p class="faq-a">Egress (data transfer out) is the fee charged when users download files from your storage bucket to the internet. AWS S3 charges $0.09/GB egress — on a 1TB/month download workload that alone adds up to $92/mo. Cloudflare R2 and Wasabi offer zero egress fees, making them dramatically cheaper for read-heavy workloads.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>What is egress in object storage pricing?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">Egress (data transfer out) is the fee charged when users download files from your storage bucket to the internet. AWS S3 charges $0.09/GB egress — on a 1TB/month download workload that alone adds up to $92/mo. Cloudflare R2 and Wasabi offer zero egress fees, making them dramatically cheaper for read-heavy workloads.</div>
           </div>
           <div class="faq-item">
-            <p class="faq-q">Is Cloudflare R2 really free for egress?</p>
-            <p class="faq-a">Yes — R2 egress to the public internet is always free. You pay only for storage ($0.015/GB/month, first 10 GB free) and API requests (Class A writes at $4.50/million, Class B reads at $0.36/million). For assets served through Cloudflare CDN, R2 is one of the most cost-efficient choices available.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>Is Cloudflare R2 really free for egress?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">Yes — R2 egress to the public internet is always free. You pay only for storage ($0.015/GB/month, first 10 GB free) and API requests (Class A writes at $4.50/million, Class B reads at $0.36/million). For assets served through Cloudflare CDN, R2 is one of the most cost-efficient choices available.</div>
           </div>
           <div class="faq-item">
-            <p class="faq-q">When should I choose Vultr Object Storage?</p>
-            <p class="faq-a">Vultr Object Storage shines when you already run workloads on Vultr VPS instances. Internal traffic between Vultr services avoids cross-provider egress entirely. At $0.01/GB storage and $0.01/GB egress with an S3-compatible API, it integrates with any existing S3 SDK without code changes.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>When should I choose Vultr Object Storage?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">Vultr Object Storage shines when you already run workloads on Vultr VPS instances. Internal traffic between Vultr services avoids cross-provider egress entirely. At $0.01/GB storage and $0.01/GB egress with an S3-compatible API, it integrates with any existing S3 SDK without code changes.</div>
           </div>
           <div class="faq-item">
-            <p class="faq-q">When does Backblaze B2 beat AWS S3?</p>
-            <p class="faq-a">Almost always for storage-heavy use cases. B2 charges $0.006/GB — roughly 4× cheaper than S3's $0.023/GB. It also includes free egress equal to 3× your monthly stored data. Paired with Cloudflare CDN (free via the Bandwidth Alliance), B2 effectively becomes zero-egress as well.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>When does Backblaze B2 beat AWS S3?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">Almost always for storage-heavy use cases. B2 charges $0.006/GB — roughly 4× cheaper than S3's $0.023/GB. It also includes free egress equal to 3× your monthly stored data. Paired with Cloudflare CDN (free via the Bandwidth Alliance), B2 effectively becomes zero-egress as well.</div>
           </div>
           <div class="faq-item">
-            <p class="faq-q">Does Wasabi really charge zero for egress?</p>
-            <p class="faq-a">Wasabi's egress is free as long as your total data downloaded per month does not exceed your total stored data. If you download more than you store, the excess is billed at $0.04/GB. For typical storage-heavy workloads (backups, archives, media), Wasabi's $0.0059/GB storage with no egress is extremely competitive.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>Does Wasabi really charge zero for egress?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">Wasabi's egress is free as long as your total data downloaded per month does not exceed your total stored data. If you download more than you store, the excess is billed at $0.04/GB. For typical storage-heavy workloads (backups, archives, media), Wasabi's $0.0059/GB storage with no egress is extremely competitive.</div>
           </div>
         </div>
         <div class="lang-ko">
           <p class="faq-title">자주 묻는 질문</p>
           <div class="faq-item">
-            <p class="faq-q">오브젝트 스토리지에서 이그레스(egress)란 무엇인가요?</p>
-            <p class="faq-a">이그레스(데이터 전송 아웃)는 사용자가 버킷에서 인터넷으로 파일을 다운로드할 때 발생하는 비용입니다. AWS S3는 $0.09/GB를 청구하며, 1TB/월 다운로드 시 이그레스만 $92가 됩니다. Cloudflare R2와 Wasabi는 이그레스가 무료이므로 읽기가 많은 워크로드에서 훨씬 저렴합니다.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>오브젝트 스토리지에서 이그레스(egress)란 무엇인가요?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">이그레스(데이터 전송 아웃)는 사용자가 버킷에서 인터넷으로 파일을 다운로드할 때 발생하는 비용입니다. AWS S3는 $0.09/GB를 청구하며, 1TB/월 다운로드 시 이그레스만 $92가 됩니다. Cloudflare R2와 Wasabi는 이그레스가 무료이므로 읽기가 많은 워크로드에서 훨씬 저렴합니다.</div>
           </div>
           <div class="faq-item">
-            <p class="faq-q">Cloudflare R2의 이그레스는 정말 무료인가요?</p>
-            <p class="faq-a">네, R2의 공개 인터넷 이그레스는 항상 무료입니다. 스토리지($0.015/GB/월, 처음 10GB 무료)와 API 요청(쓰기 $4.50/백만, 읽기 $0.36/백만)에만 비용이 발생합니다. Cloudflare CDN을 통해 파일을 제공하면 가장 비용 효율적인 선택 중 하나입니다.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>Cloudflare R2의 이그레스는 정말 무료인가요?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">네, R2의 공개 인터넷 이그레스는 항상 무료입니다. 스토리지($0.015/GB/월, 처음 10GB 무료)와 API 요청(쓰기 $4.50/백만, 읽기 $0.36/백만)에만 비용이 발생합니다. Cloudflare CDN을 통해 파일을 제공하면 가장 비용 효율적인 선택 중 하나입니다.</div>
           </div>
           <div class="faq-item">
-            <p class="faq-q">Vultr Object Storage는 언제 선택하나요?</p>
-            <p class="faq-a">Vultr VPS 인스턴스에서 이미 워크로드를 실행 중이라면 Vultr Object Storage가 최적입니다. Vultr 서비스 간 내부 트래픽은 크로스 프로바이더 이그레스가 없으며, S3 호환 API로 기존 SDK를 코드 수정 없이 그대로 사용할 수 있습니다.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>Vultr Object Storage는 언제 선택하나요?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">Vultr VPS 인스턴스에서 이미 워크로드를 실행 중이라면 Vultr Object Storage가 최적입니다. Vultr 서비스 간 내부 트래픽은 크로스 프로바이더 이그레스가 없으며, S3 호환 API로 기존 SDK를 코드 수정 없이 그대로 사용할 수 있습니다.</div>
           </div>
           <div class="faq-item">
-            <p class="faq-q">Backblaze B2가 AWS S3보다 저렴한 경우는?</p>
-            <p class="faq-a">스토리지 집약적 워크로드에서는 거의 항상 저렴합니다. B2는 $0.006/GB로 S3의 $0.023/GB보다 약 4배 저렴하며, 월간 저장 용량의 3배를 무료 이그레스로 제공합니다. Cloudflare CDN과 결합하면(Bandwidth Alliance 무료) 사실상 이그레스 비용 없이 사용할 수 있습니다.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>Backblaze B2가 AWS S3보다 저렴한 경우는?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">스토리지 집약적 워크로드에서는 거의 항상 저렴합니다. B2는 $0.006/GB로 S3의 $0.023/GB보다 약 4배 저렴하며, 월간 저장 용량의 3배를 무료 이그레스로 제공합니다. Cloudflare CDN과 결합하면(Bandwidth Alliance 무료) 사실상 이그레스 비용 없이 사용할 수 있습니다.</div>
           </div>
           <div class="faq-item">
-            <p class="faq-q">Wasabi는 정말 이그레스가 무료인가요?</p>
-            <p class="faq-a">Wasabi의 이그레스는 월간 다운로드 총량이 저장 데이터를 초과하지 않는 경우 무료입니다. 초과분은 $0.04/GB로 청구됩니다. 백업·아카이브·미디어 등 스토리지 집약적 워크로드에서는 $0.0059/GB의 낮은 스토리지 요금과 무료 이그레스가 매우 경쟁력 있습니다.</p>
+            <button class="faq-q" onclick="toggleFaq(this)"><span>Wasabi는 정말 이그레스가 무료인가요?</span><span class="faq-icon">+</span></button>
+            <div class="faq-a">Wasabi의 이그레스는 월간 다운로드 총량이 저장 데이터를 초과하지 않는 경우 무료입니다. 초과분은 $0.04/GB로 청구됩니다. 백업·아카이브·미디어 등 스토리지 집약적 워크로드에서는 $0.0059/GB의 낮은 스토리지 요금과 무료 이그레스가 매우 경쟁력 있습니다.</div>
           </div>
         </div>
       </div>
@@ -714,6 +717,10 @@
     }
 
     render();
+
+    function toggleFaq(btn) {
+      btn.closest('.faq-item').classList.toggle('open');
+    }
   </script>
 
 </body>
