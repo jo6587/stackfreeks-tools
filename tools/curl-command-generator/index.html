@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>curl Command Generator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Build curl commands visually. Set method, headers, auth &amp; body — get a ready-to-run curl command. Perfect for REST APIs and VPS testing." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/curl-command-generator/" />
+  <meta property="og:title" content="curl Command Generator | StackFreeks Tools" />
+  <meta property="og:description" content="Build curl commands instantly. Pick method, headers, auth, and body — get a ready-to-paste curl command." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/curl-command-generator/" />
+  <!-- ADSENSE_SLOT_TOP -->
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --accent-fg: #ffffff;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    .container { max-width: 840px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    .navbar {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,11,0.85);
+    }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+    }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    /* Tool layout */
+    main { padding: 32px 0; }
+    .tool-stack { display: flex; flex-direction: column; gap: 12px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .card-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+
+    /* Method + URL row */
+    .method-url-row { display: flex; gap: 10px; align-items: flex-end; }
+    .method-wrap { flex-shrink: 0; }
+    .url-wrap { flex: 1; }
+
+    /* Form */
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+    input, select, textarea {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--border-2); }
+    input::placeholder, textarea::placeholder { color: var(--text-3); }
+    textarea { resize: vertical; min-height: 90px; font-family: var(--font-mono); line-height: 1.5; }
+    select { cursor: pointer; }
+
+    /* Method badge colours */
+    #methodSelect { font-weight: 600; letter-spacing: 0.02em; }
+
+    /* Inline 2-col grid for headers/auth */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* Headers list */
+    .headers-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+    .header-row { display: flex; gap: 8px; align-items: center; }
+    .header-row input { flex: 1; }
+    .btn-remove {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-3);
+      font-size: 16px;
+      line-height: 1;
+      padding: 4px 9px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: color 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-remove:hover { color: var(--danger); border-color: var(--danger); }
+    .btn-add {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-size: 12px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-add:hover { border-color: var(--border-2); color: var(--text-1); }
+
+    /* Options row */
+    .options-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--text-2);
+      cursor: pointer;
+      user-select: none;
+    }
+    .checkbox-label input[type="checkbox"] {
+      width: 15px; height: 15px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Output */
+    .output-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+    .cmd-block {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--text-1);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-all;
+      position: relative;
+      min-height: 64px;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text-3);
+      font-size: 11px;
+      padding: 3px 8px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .copy-btn:hover { color: var(--text-2); border-color: var(--border-2); }
+    .output-meta { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+    .meta-item { font-size: 11px; color: var(--text-3); }
+    .meta-item span { color: var(--text-2); font-weight: 500; }
+
+    /* Guide */
+    .guide { max-width: 840px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 840px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q {
+      width: 100%; background: none; border: none; text-align: left;
+      padding: 16px 20px; font-family: var(--font); font-size: 14px;
+      font-weight: 600; color: var(--text-1); cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related */
+    .related { padding: 40px 0; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px; text-decoration: none;
+      display: flex; flex-direction: column; gap: 6px; transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* Vultr banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font);
+      text-decoration: none; display: inline-block; white-space: nowrap; transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .two-col { grid-template-columns: 1fr; }
+      .method-url-row { flex-direction: column; }
+      .method-wrap { width: 100%; }
+      .container { padding: 0 16px; }
+      .guide { padding: 0 16px 32px; }
+      .faq { padding: 0 16px 32px; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+      .options-row { flex-direction: column; gap: 8px; }
+    }
+    @media (max-width: 640px) {
+      .cmd-block { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark"></div>
+      StackFreeks Tools
+    </a>
+    <div class="nav-actions">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ADSENSE_SLOT_TOP -->
+
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow">Developer Utility</p>
+      <h1>curl Command Generator</h1>
+      <p class="hero-desc">Build a ready-to-run curl command — pick method, add headers, auth, and body. No memorising flags.</p>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow">개발자 유틸리티</p>
+      <h1>curl 명령어 생성기</h1>
+      <p class="hero-desc">메서드, 헤더, 인증, 바디를 설정하고 즉시 실행 가능한 curl 명령어를 생성하세요.</p>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="container">
+    <div class="tool-stack">
+
+      <!-- Request Config -->
+      <div class="card">
+        <p class="card-label" id="lbl-request">Request</p>
+
+        <!-- Method + URL -->
+        <div class="form-group">
+          <div class="method-url-row">
+            <div class="method-wrap">
+              <label id="lbl-method">Method</label>
+              <select id="methodSelect" onchange="generate()" style="width:130px;">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="PATCH">PATCH</option>
+                <option value="DELETE">DELETE</option>
+                <option value="HEAD">HEAD</option>
+                <option value="OPTIONS">OPTIONS</option>
+              </select>
+            </div>
+            <div class="url-wrap">
+              <label id="lbl-url">URL</label>
+              <input type="url" id="urlInput" placeholder="https://api.example.com/v1/users" oninput="generate()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Auth -->
+        <div class="two-col">
+          <div class="form-group">
+            <label id="lbl-auth">Authentication</label>
+            <select id="authType" onchange="onAuthChange()" >
+              <option value="none" id="opt-auth-none">None</option>
+              <option value="bearer" id="opt-auth-bearer">Bearer Token</option>
+              <option value="basic" id="opt-auth-basic">Basic Auth</option>
+              <option value="apikey" id="opt-auth-apikey">API Key Header</option>
+            </select>
+          </div>
+          <div class="form-group" id="authValueGroup">
+            <label id="lbl-auth-value">Token / Key</label>
+            <input type="text" id="authValue" placeholder="your-token-here" oninput="generate()" />
+          </div>
+        </div>
+
+        <!-- Basic auth extra field -->
+        <div class="form-group" id="basicPassGroup" style="display:none;">
+          <label id="lbl-auth-pass">Password</label>
+          <input type="text" id="basicPass" placeholder="password" oninput="generate()" />
+        </div>
+
+        <!-- API key header name -->
+        <div class="form-group" id="apikeyNameGroup" style="display:none;">
+          <label id="lbl-apikey-name">Header Name</label>
+          <input type="text" id="apikeyName" placeholder="X-API-Key" value="X-API-Key" oninput="generate()" />
+        </div>
+
+      </div>
+
+      <!-- Headers -->
+      <div class="card">
+        <p class="card-label" id="lbl-headers">Headers</p>
+        <div class="headers-list" id="headersList"></div>
+        <button class="btn-add" onclick="addHeader()" id="btn-add-header">+ Add Header</button>
+      </div>
+
+      <!-- Body -->
+      <div class="card" id="bodyCard">
+        <p class="card-label" id="lbl-body">Request Body</p>
+        <div class="form-group">
+          <label id="lbl-content-type">Content-Type</label>
+          <select id="contentType" onchange="generate()">
+            <option value="application/json" id="opt-ct-json">application/json</option>
+            <option value="application/x-www-form-urlencoded" id="opt-ct-form">application/x-www-form-urlencoded</option>
+            <option value="text/plain" id="opt-ct-text">text/plain</option>
+            <option value="none" id="opt-ct-none">— none —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label id="lbl-body-data">Body Data</label>
+          <textarea id="bodyData" placeholder='{"key": "value"}' oninput="generate()"></textarea>
+        </div>
+      </div>
+
+      <!-- Options -->
+      <div class="card">
+        <p class="card-label" id="lbl-options">Options</p>
+        <div class="options-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="optFollowRedirects" onchange="generate()" checked />
+            <span id="lbl-follow-redirects">Follow redirects (-L)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="optVerbose" onchange="generate()" />
+            <span id="lbl-verbose">Verbose (-v)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="optSilent" onchange="generate()" />
+            <span id="lbl-silent">Silent (-s)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="optInsecure" onchange="generate()" />
+            <span id="lbl-insecure">Insecure / skip TLS (-k)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="optCompressed" onchange="generate()" checked />
+            <span id="lbl-compressed">Accept compressed (--compressed)</span>
+          </label>
+        </div>
+        <div class="form-group" style="margin-top:14px;max-width:200px;">
+          <label id="lbl-timeout">Timeout (seconds, 0 = none)</label>
+          <input type="number" id="timeoutVal" value="0" min="0" oninput="generate()" />
+        </div>
+      </div>
+
+      <!-- Output -->
+      <div class="output-card">
+        <p class="card-label" id="lbl-output">Generated Command</p>
+        <div style="position:relative;">
+          <pre class="cmd-block" id="cmdOutput">curl https://api.example.com/v1/users \
+  -L \
+  --compressed</pre>
+          <button class="copy-btn" onclick="copyCmd()" id="btn-copy">Copy</button>
+        </div>
+        <div class="output-meta">
+          <p class="meta-item" id="lbl-meta-method">Method: <span id="metaMethod">GET</span></p>
+          <p class="meta-item" id="lbl-meta-flags">Flags: <span id="metaFlags">2</span></p>
+          <p class="meta-item" id="lbl-meta-headers">Headers: <span id="metaHeaders">0</span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- How to Use -->
+<section class="guide">
+  <div class="lang-en">
+    <p class="guide-title">How to Use</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <p class="guide-step">STEP 1</p>
+        <h3>Set method &amp; URL</h3>
+        <p>Pick your HTTP method (GET, POST, PUT…) and paste your endpoint URL. The command updates live.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 2</p>
+        <h3>Add auth &amp; headers</h3>
+        <p>Choose Bearer Token, Basic Auth, or an API key header. Add any custom headers like Accept or Cache-Control.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 3</p>
+        <h3>Set the body</h3>
+        <p>For POST/PUT/PATCH, paste your JSON or form data. The Content-Type header is added automatically.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 4</p>
+        <h3>Copy &amp; run</h3>
+        <p>Hit Copy and paste the curl command into your terminal. Works on macOS, Linux, and Windows (Git Bash / WSL).</p>
+      </div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <p class="guide-title">사용 방법</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <p class="guide-step">STEP 1</p>
+        <h3>메서드 &amp; URL 설정</h3>
+        <p>HTTP 메서드(GET, POST, PUT 등)를 선택하고 엔드포인트 URL을 입력하세요. 명령어가 실시간으로 업데이트됩니다.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 2</p>
+        <h3>인증 &amp; 헤더 추가</h3>
+        <p>Bearer Token, Basic Auth, 또는 API 키 헤더를 선택하고 필요한 커스텀 헤더를 추가하세요.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 3</p>
+        <h3>바디 설정</h3>
+        <p>POST/PUT/PATCH 요청에 JSON 또는 폼 데이터를 입력하세요. Content-Type 헤더가 자동으로 추가됩니다.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 4</p>
+        <h3>복사 &amp; 실행</h3>
+        <p>Copy 버튼을 누르고 터미널에 붙여넣으세요. macOS, Linux, Windows(Git Bash / WSL) 모두 동작합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="lang-en">
+    <p class="faq-title">Frequently Asked Questions</p>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I send a POST request with JSON using curl?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Select POST as the method, paste your JSON in the Body field, and set Content-Type to <code>application/json</code>. The generator will add <code>-H "Content-Type: application/json"</code> and <code>-d '{"key":"value"}'</code> automatically.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What is the -L flag in curl?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">The <code>-L</code> flag tells curl to follow HTTP redirects (301, 302, etc.). Without it, curl stops at the redirect response and doesn't fetch the final destination. It's enabled by default in this generator.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I test an API on my VPS with curl?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">curl is pre-installed on most Linux VPS distributions. SSH into your server and run the generated command directly. For APIs deployed on the same VPS, you can use <code>localhost</code> or <code>127.0.0.1</code> as the host to avoid network round-trips.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I add a Bearer token to a curl request?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Select "Bearer Token" from the Auth dropdown and paste your token. The generator adds <code>-H "Authorization: Bearer YOUR_TOKEN"</code> to the command. Alternatively, select "API Key Header" to set a custom header name like <code>X-API-Key</code>.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>When should I use -k (insecure) in curl?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">The <code>-k</code> flag skips TLS certificate verification. Only use it in development environments with self-signed certs — never in production scripts, as it disables the main protection against man-in-the-middle attacks. For staging VPS environments, install a valid certificate (e.g. Let's Encrypt) instead.</div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <p class="faq-title">자주 묻는 질문</p>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>curl로 JSON POST 요청을 보내는 방법은?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">메서드를 POST로 선택하고 Body 필드에 JSON을 입력한 뒤 Content-Type을 <code>application/json</code>으로 설정하세요. 생성기가 <code>-H "Content-Type: application/json"</code>과 <code>-d '{"key":"value"}'</code>를 자동으로 추가합니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>curl의 -L 플래그는 무엇인가요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a"><code>-L</code> 플래그는 HTTP 리다이렉트(301, 302 등)를 자동으로 따라가도록 합니다. 없으면 curl이 리다이렉트 응답에서 멈춥니다. 이 생성기에서는 기본으로 활성화되어 있습니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>VPS에서 curl로 API를 테스트하려면?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">curl은 대부분의 Linux VPS 배포판에 기본 설치되어 있습니다. 서버에 SSH로 접속한 뒤 생성된 명령어를 바로 실행하세요. 동일 VPS에 배포된 API는 <code>localhost</code> 또는 <code>127.0.0.1</code>을 호스트로 사용하면 네트워크 왕복 없이 빠르게 테스트할 수 있습니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>curl 요청에 Bearer 토큰을 추가하는 방법은?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">인증 드롭다운에서 "Bearer Token"을 선택하고 토큰을 붙여넣으세요. 생성기가 <code>-H "Authorization: Bearer 토큰"</code>을 명령어에 추가합니다. API 키 헤더가 필요하면 "API Key Header"를 선택해 헤더 이름을 지정할 수 있습니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>-k(insecure)는 언제 사용해야 하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a"><code>-k</code> 플래그는 TLS 인증서 검증을 건너뜁니다. 자체 서명 인증서를 사용하는 개발 환경에서만 사용하고, 프로덕션 스크립트에는 절대 사용하지 마세요. 스테이징 VPS에는 Let's Encrypt 같은 유효한 인증서를 설치하는 것을 권장합니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Related -->
+<section class="related">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+      <div class="related-grid">
+        <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+          <span class="related-tag">VPS</span>
+          <p class="related-title">VPS &amp; Server Guides on stackfreeks.com</p>
+          <span class="related-arrow">→</span>
+        </a>
+        <a href="/tools/nginx-config-generator/" class="related-card">
+          <span class="related-tag">Tool</span>
+          <p class="related-title">nginx Config Generator</p>
+          <span class="related-arrow">→</span>
+        </a>
+        <a href="/tools/jwt-decoder/" class="related-card">
+          <span class="related-tag">Tool</span>
+          <p class="related-title">JWT Decoder — Inspect token claims</p>
+          <span class="related-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow" style="margin-bottom:12px;">관련 가이드</p>
+      <div class="related-grid">
+        <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+          <span class="related-tag">VPS</span>
+          <p class="related-title">stackfreeks.com VPS &amp; 서버 가이드</p>
+          <span class="related-arrow">→</span>
+        </a>
+        <a href="/tools/nginx-config-generator/" class="related-card">
+          <span class="related-tag">도구</span>
+          <p class="related-title">nginx 설정 생성기</p>
+          <span class="related-arrow">→</span>
+        </a>
+        <a href="/tools/jwt-decoder/" class="related-card">
+          <span class="related-tag">도구</span>
+          <p class="related-title">JWT 디코더 — 토큰 클레임 확인</p>
+          <span class="related-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Vultr Banner -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">$100 free credit for new accounts</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank"
+       data-i18n="vultr_cta">Try Vultr →</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    'lbl-request':        'Request',
+    'lbl-method':         'Method',
+    'lbl-url':            'URL',
+    'lbl-auth':           'Authentication',
+    'opt-auth-none':      'None',
+    'opt-auth-bearer':    'Bearer Token',
+    'opt-auth-basic':     'Basic Auth',
+    'opt-auth-apikey':    'API Key Header',
+    'lbl-auth-value':     'Token / Key',
+    'lbl-auth-pass':      'Password',
+    'lbl-apikey-name':    'Header Name',
+    'lbl-headers':        'Headers',
+    'btn-add-header':     '+ Add Header',
+    'lbl-body':           'Request Body',
+    'lbl-content-type':   'Content-Type',
+    'opt-ct-json':        'application/json',
+    'opt-ct-form':        'application/x-www-form-urlencoded',
+    'opt-ct-text':        'text/plain',
+    'opt-ct-none':        '— none —',
+    'lbl-body-data':      'Body Data',
+    'lbl-options':        'Options',
+    'lbl-follow-redirects':'Follow redirects (-L)',
+    'lbl-verbose':        'Verbose (-v)',
+    'lbl-silent':         'Silent (-s)',
+    'lbl-insecure':       'Insecure / skip TLS (-k)',
+    'lbl-compressed':     'Accept compressed (--compressed)',
+    'lbl-timeout':        'Timeout (seconds, 0 = none)',
+    'lbl-output':         'Generated Command',
+    'lbl-meta-method':    'Method:',
+    'lbl-meta-flags':     'Flags:',
+    'lbl-meta-headers':   'Headers:',
+    'btn-copy':           'Copy',
+  },
+  ko: {
+    'lbl-request':        '요청',
+    'lbl-method':         '메서드',
+    'lbl-url':            'URL',
+    'lbl-auth':           '인증',
+    'opt-auth-none':      '없음',
+    'opt-auth-bearer':    'Bearer 토큰',
+    'opt-auth-basic':     'Basic 인증',
+    'opt-auth-apikey':    'API 키 헤더',
+    'lbl-auth-value':     '토큰 / 키',
+    'lbl-auth-pass':      '비밀번호',
+    'lbl-apikey-name':    '헤더 이름',
+    'lbl-headers':        '헤더',
+    'btn-add-header':     '+ 헤더 추가',
+    'lbl-body':           '요청 바디',
+    'lbl-content-type':   'Content-Type',
+    'opt-ct-json':        'application/json',
+    'opt-ct-form':        'application/x-www-form-urlencoded',
+    'opt-ct-text':        'text/plain',
+    'opt-ct-none':        '— 없음 —',
+    'lbl-body-data':      '바디 데이터',
+    'lbl-options':        '옵션',
+    'lbl-follow-redirects':'리다이렉트 따라가기 (-L)',
+    'lbl-verbose':        '상세 출력 (-v)',
+    'lbl-silent':         '자동 모드 (-s)',
+    'lbl-insecure':       'TLS 검증 건너뛰기 (-k)',
+    'lbl-compressed':     '압축 응답 허용 (--compressed)',
+    'lbl-timeout':        '타임아웃 (초, 0 = 없음)',
+    'lbl-output':         '생성된 명령어',
+    'lbl-meta-method':    '메서드:',
+    'lbl-meta-flags':     '플래그:',
+    'lbl-meta-headers':   '헤더:',
+    'btn-copy':           '복사',
+  }
+};
+</script>
+<script src="/shared/i18n.js"></script>
+
+<script>
+// Methods that typically have a body
+const BODY_METHODS = new Set(['POST', 'PUT', 'PATCH']);
+
+function q(id) { return document.getElementById(id); }
+
+function shell_escape(s) {
+  // Single-quote escape for shell: replace ' with '\''
+  return "'" + s.replace(/'/g, "'\\''") + "'";
+}
+
+function addHeader(k, v) {
+  const list = q('headersList');
+  const row = document.createElement('div');
+  row.className = 'header-row';
+  row.innerHTML = `
+    <input type="text" placeholder="Header-Name" value="${k||''}" oninput="generate()" class="header-key" />
+    <input type="text" placeholder="value" value="${v||''}" oninput="generate()" class="header-val" />
+    <button class="btn-remove" onclick="this.parentElement.remove(); generate()">×</button>
+  `;
+  list.appendChild(row);
+  generate();
+}
+
+function onAuthChange() {
+  const auth = q('authType').value;
+  q('authValueGroup').style.display = auth === 'none' ? 'none' : '';
+  q('basicPassGroup').style.display = auth === 'basic' ? '' : 'none';
+  q('apikeyNameGroup').style.display = auth === 'apikey' ? '' : 'none';
+  const lbl = q('lbl-auth-value');
+  if (auth === 'basic') lbl.textContent = 'Username';
+  else if (auth === 'apikey') lbl.textContent = 'API Key Value';
+  else lbl.textContent = 'Token / Key';
+  generate();
+}
+
+function generate() {
+  const method  = q('methodSelect').value;
+  const url     = q('urlInput').value.trim() || 'https://api.example.com/v1/users';
+  const auth    = q('authType').value;
+  const authVal = q('authValue').value.trim();
+  const bodyMethod = BODY_METHODS.has(method);
+
+  const parts = ['curl'];
+
+  // Method (omit if GET — curl default)
+  if (method !== 'GET') parts.push(`-X ${method}`);
+
+  // URL
+  parts.push(shell_escape(url));
+
+  // Flags
+  if (q('optFollowRedirects').checked) parts.push('-L');
+  if (q('optVerbose').checked)         parts.push('-v');
+  if (q('optSilent').checked)          parts.push('-s');
+  if (q('optInsecure').checked)        parts.push('-k');
+  if (q('optCompressed').checked)      parts.push('--compressed');
+  const timeout = parseInt(q('timeoutVal').value, 10);
+  if (timeout > 0)                     parts.push(`--max-time ${timeout}`);
+
+  // Auth header
+  const headers = [];
+  if (auth === 'bearer' && authVal)  headers.push(`Authorization: Bearer ${authVal}`);
+  if (auth === 'apikey' && authVal)  headers.push(`${q('apikeyName').value.trim() || 'X-API-Key'}: ${authVal}`);
+  if (auth === 'basic' && authVal) {
+    const pass = q('basicPass').value;
+    parts.push(`-u ${shell_escape(authVal + ':' + pass)}`);
+  }
+
+  // Custom headers from the headers list
+  document.querySelectorAll('.header-row').forEach(row => {
+    const k = row.querySelector('.header-key').value.trim();
+    const v = row.querySelector('.header-val').value.trim();
+    if (k) headers.push(`${k}: ${v}`);
+  });
+
+  // Body
+  let bodyStr = '';
+  if (bodyMethod) {
+    const ct = q('contentType').value;
+    const data = q('bodyData').value.trim();
+    if (ct !== 'none') headers.push(`Content-Type: ${ct}`);
+    if (data) bodyStr = data;
+  }
+
+  // Emit headers
+  headers.forEach(h => parts.push(`-H ${shell_escape(h)}`));
+
+  // Emit body
+  if (bodyStr) parts.push(`-d ${shell_escape(bodyStr)}`);
+
+  // Build multiline output (backslash-continuation)
+  const cmd = parts.join(' \\\n  ');
+  q('cmdOutput').textContent = cmd;
+
+  // Show/hide body card
+  q('bodyCard').style.display = bodyMethod ? '' : 'none';
+
+  // Meta
+  q('metaMethod').textContent  = method;
+  q('metaFlags').textContent   = parts.filter(p => p.startsWith('-')).length;
+  q('metaHeaders').textContent = headers.length;
+}
+
+function copyCmd() {
+  const text = q('cmdOutput').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = q('btn-copy');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied';
+    setTimeout(() => { btn.textContent = orig; }, 1500);
+  });
+}
+
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+
+// Init
+onAuthChange();
+generate();
+</script>
+
+</body>
+</html>
