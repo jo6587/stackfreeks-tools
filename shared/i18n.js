@@ -99,40 +99,38 @@ const SF_I18N = {
 (function () {
   var CW_URL = 'https://www.cloudways.com/en/?id=2181503';
 
-  var CW_CSS = [
-    '.cw-banner{border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);padding:28px 0}',
-    '.cw-inner{max-width:860px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:24px}',
-    '.cw-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#60a5fa;margin-bottom:4px}',
-    '.cw-title{font-size:14px;font-weight:500;color:#fafafa;margin:0 0 2px}',
-    '.cw-sub{font-size:13px;color:#a1a1aa}',
-    '.btn-cw{background:#2563eb;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:500;text-decoration:none;display:inline-block;white-space:nowrap;transition:opacity 0.15s}',
-    '.btn-cw:hover{opacity:0.85}',
-    '@media(max-width:768px){.cw-inner{flex-direction:column;align-items:flex-start}.btn-cw{align-self:stretch;text-align:center}}'
-  ].join('');
-
   function injectCloudwaysBanner() {
     var vultrBanner = document.querySelector('.vultr-banner');
     if (!vultrBanner) return;
 
-    var t = Object.assign({}, SF_I18N[window.sfLang ? window.sfLang.current : 'en'], (window.SF_PAGE_I18N || {})[window.sfLang ? window.sfLang.current : 'en']);
+    var lang = window.sfLang ? window.sfLang.current : 'en';
+    var t = Object.assign({}, SF_I18N[lang], (window.SF_PAGE_I18N || {})[lang]);
 
-    var banner = document.createElement('section');
+    // Clone Vultr banner exactly — guarantees identical layout/padding/widths
+    var banner = vultrBanner.cloneNode(true);
     banner.className = 'cw-banner';
-    banner.innerHTML = [
-      '<div class="cw-inner">',
-        '<div>',
-          '<p class="cw-label" data-i18n="cw_label">' + (t.cw_label || 'Sponsor') + '</p>',
-          '<p class="cw-title" data-i18n="cw_title">' + (t.cw_title || 'Deploy WordPress & PHP apps faster') + '</p>',
-          '<p class="cw-sub" data-i18n="cw_sub">' + (t.cw_sub || '3-day free trial, no credit card required — plus 30% off your first 3 months') + '</p>',
-        '</div>',
-        '<a href="' + CW_URL + '" class="btn-cw" rel="nofollow sponsored" target="_blank" data-i18n="cw_cta">' + (t.cw_cta || 'Start free trial →') + '</a>',
-      '</div>'
-    ].join('');
+
+    // Remap data-i18n keys vultr_* → cw_* and update text
+    banner.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.dataset.i18n.replace('vultr_', 'cw_');
+      el.dataset.i18n = key;
+      if (t[key]) el.textContent = t[key];
+    });
+
+    // Point affiliate link to Cloudways
+    var link = banner.querySelector('a[rel*="sponsored"]');
+    if (link) link.href = CW_URL;
 
     vultrBanner.insertAdjacentElement('afterend', banner);
 
+    // Override green → blue for Cloudways
     var style = document.createElement('style');
-    style.textContent = CW_CSS;
+    style.textContent = [
+      '.cw-banner .vultr-inner{border-color:rgba(37,99,235,0.25);background:rgba(37,99,235,0.05)}',
+      '.cw-banner .vultr-label,.cw-banner .eyebrow{color:#60a5fa}',
+      '.cw-banner .vultr-cta,.cw-banner .btn-vultr{background:#2563eb;color:#fff}',
+      '.cw-banner .vultr-cta:hover,.cw-banner .btn-vultr:hover{opacity:0.85;color:#fff}'
+    ].join('');
     document.head.appendChild(style);
   }
 
