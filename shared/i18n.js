@@ -106,9 +106,9 @@ const SF_I18N = {
     var lang = window.sfLang ? window.sfLang.current : 'en';
     var t = Object.assign({}, SF_I18N[lang], (window.SF_PAGE_I18N || {})[lang]);
 
-    // Clone Vultr banner exactly — guarantees identical layout/padding/widths
+    // Clone Vultr banner exactly — keep vultr-banner class so page CSS (padding/margin) applies
     var banner = vultrBanner.cloneNode(true);
-    banner.className = 'cw-banner';
+    banner.className = 'vultr-banner cw-banner';
 
     // Remap data-i18n keys vultr_* → cw_* and update text
     banner.querySelectorAll('[data-i18n]').forEach(function (el) {
