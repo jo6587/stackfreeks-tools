@@ -15,3 +15,6 @@ Thumbs.db
 # Env / secrets
 .env
 .env.*
+
+# Affiliate tracking URLs
+affiliate-links.json
