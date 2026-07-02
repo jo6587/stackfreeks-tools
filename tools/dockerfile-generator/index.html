@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dockerfile Generator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Dockerfile generator for Node.js, Python, Go, PHP, Ruby and Java. Multi-stage build, non-root user, .dockerignore included. Free, browser-based." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/dockerfile-generator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/dockerfile-generator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/dockerfile-generator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/dockerfile-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Dockerfile Generator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Generate a production-ready Dockerfile for Node.js, Python, Go, PHP, Ruby, or Java in seconds. Multi-stage build, .dockerignore included." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/dockerfile-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool layout */
+    .tool-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Form panel */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .field select,
+    .field input {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      padding: 8px 12px;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+    .field select:focus,
+    .field input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .field select option { background: #18181b; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Checkboxes */
+    .check-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .check-item span {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .btn-generate {
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      cursor: pointer;
+      width: 100%;
+      transition: opacity 0.15s;
+      margin-top: 4px;
+    }
+    .btn-generate:hover { opacity: 0.85; }
+
+    /* Output panel */
+    .output-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .output-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .output-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      letter-spacing: 0.02em;
+    }
+
+    .btn-copy {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-copy.copied { border-color: var(--success); color: var(--success); }
+
+    .output-code {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-1);
+      white-space: pre;
+      overflow-x: auto;
+      min-height: 80px;
+    }
+
+    /* Syntax colors */
+    .dk-comment { color: #52525b; }
+    .dk-keyword { color: #818cf8; }
+    .dk-string { color: #86efac; }
+    .dk-cmd { color: #fbbf24; }
+
+    .placeholder-msg {
+      color: var(--text-3);
+      font-family: var(--font);
+      font-size: 14px;
+      font-style: italic;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    /* Guide */
+    .guide { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related */
+    .related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-1);
+      font-size: 13px;
+      font-weight: 500;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); opacity: 1; }
+    .related-card-icon { font-size: 20px; }
+
+    /* Vultr banner */
+    .vultr-banner {
+      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(34,197,94,0.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px;
+      margin-bottom: 0;
+    }
+
+    .banner-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .btn-vultr {
+      background: var(--success);
+      border: none;
+      border-radius: var(--radius);
+      color: #000;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; color: #000; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      .tool-wrap { grid-template-columns: 1fr; padding: 0 16px 40px; }
+      .field-row { grid-template-columns: 1fr; }
+      .guide { padding: 0 16px 36px; }
+      .faq { padding: 0 16px 36px; }
+      .related { padding: 0 16px 36px; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>Dockerfile Generator</h1>
+      <p>Generate a production-ready Dockerfile for Node.js, Python, Go, PHP, Ruby, or Java — with multi-stage build, non-root user, and .dockerignore in seconds.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>Dockerfile 생성기</h1>
+      <p>Node.js, Python, Go, PHP, Ruby, Java용 프로덕션 Dockerfile을 즉시 생성 — 멀티 스테이지 빌드, 비루트 사용자, .dockerignore 포함.</p>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <section class="tool-wrap">
+
+    <!-- Form panel -->
+    <div class="form-panel">
+
+      <div class="field">
+        <label data-i18n="df_runtime">Runtime</label>
+        <select id="runtime" onchange="onRuntimeChange()">
+          <option value="node">Node.js</option>
+          <option value="python">Python</option>
+          <option value="go">Go</option>
+          <option value="php">PHP</option>
+          <option value="ruby">Ruby</option>
+          <option value="java">Java (Maven)</option>
+          <option value="static">Static (nginx)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label data-i18n="df_version">Version</label>
+        <select id="version"></select>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label data-i18n="df_port">Port</label>
+          <input type="number" id="port" value="3000" min="1" max="65535" />
+        </div>
+        <div class="field">
+          <label data-i18n="df_workdir">Work Dir</label>
+          <input type="text" id="workdir" value="/app" />
+        </div>
+      </div>
+
+      <div class="field" id="install-field">
+        <label data-i18n="df_install_cmd">Install Command</label>
+        <input type="text" id="install-cmd" value="npm ci --omit=dev" />
+      </div>
+
+      <div class="field" id="start-field">
+        <label data-i18n="df_start_cmd">Start Command</label>
+        <input type="text" id="start-cmd" value="node server.js" />
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="df_options">Options</p>
+
+      <div class="check-list">
+        <label class="check-item">
+          <input type="checkbox" id="opt-multistage" />
+          <span data-i18n="df_opt_multi">Multi-stage build</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="opt-nonroot" checked />
+          <span data-i18n="df_opt_nonroot">Non-root user (node / appuser)</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="opt-healthcheck" />
+          <span data-i18n="df_opt_health">Add HEALTHCHECK</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="opt-dockerignore" checked />
+          <span data-i18n="df_opt_ignore">Generate .dockerignore</span>
+        </label>
+      </div>
+
+      <button class="btn-generate" onclick="generate()" data-i18n="df_generate">Generate Dockerfile</button>
+
+    </div>
+
+    <!-- Output panel -->
+    <div class="output-panel">
+
+      <div class="output-block">
+        <div class="output-header">
+          <span class="output-title">Dockerfile</span>
+          <button class="btn-copy" id="copy-df" onclick="copyText('dockerfile-out', 'copy-df')" data-i18n="copy_btn">Copy</button>
+        </div>
+        <div id="dockerfile-out" class="output-code">
+          <div class="placeholder-msg" data-i18n="df_placeholder">Configure options and click "Generate Dockerfile"</div>
+        </div>
+      </div>
+
+      <div class="output-block" id="ignore-block" style="display:none">
+        <div class="output-header">
+          <span class="output-title">.dockerignore</span>
+          <button class="btn-copy" id="copy-ig" onclick="copyText('dockerignore-out', 'copy-ig')" data-i18n="copy_btn">Copy</button>
+        </div>
+        <div id="dockerignore-out" class="output-code"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Guide -->
+  <section class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to Use</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>Pick your runtime</h3>
+          <p>Select the language and version your app runs on. The tool sets sensible defaults for port, install command, and start command.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>Adjust the commands</h3>
+          <p>Override the install and start commands to match your project. For Node.js: <code style="color:var(--accent)">npm ci</code> vs <code style="color:var(--accent)">yarn install --frozen-lockfile</code>.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>Enable options</h3>
+          <p>Multi-stage reduces final image size. Non-root user is a security best practice. HEALTHCHECK lets Docker restart unhealthy containers automatically.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>Copy and deploy</h3>
+          <p>Paste the Dockerfile into your project root. Also copy the .dockerignore to keep your images lean. Then <code style="color:var(--accent)">docker build -t myapp .</code></p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>런타임 선택</h3>
+          <p>앱이 사용하는 언어와 버전을 선택하세요. 포트, 설치 명령어, 시작 명령어는 자동으로 설정됩니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>명령어 조정</h3>
+          <p>프로젝트에 맞게 설치·시작 명령어를 수정하세요. Node.js의 경우 <code style="color:var(--accent)">npm ci</code>와 <code style="color:var(--accent)">yarn install --frozen-lockfile</code> 중 선택.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>옵션 설정</h3>
+          <p>멀티 스테이지 빌드는 최종 이미지 크기를 줄입니다. 비루트 사용자는 보안 모범 사례입니다. HEALTHCHECK는 비정상 컨테이너를 자동 재시작합니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>복사 후 배포</h3>
+          <p>Dockerfile을 프로젝트 루트에 붙여넣으세요. .dockerignore도 복사해 이미지를 가볍게 유지하세요. 그 다음 <code style="color:var(--accent)">docker build -t myapp .</code></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <p class="faq-title">Frequently Asked Questions</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is a multi-stage Dockerfile and when should I use it?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Multi-stage builds use multiple FROM statements. The first stage compiles or installs everything; the final stage only copies the production artifacts. This can reduce your Docker image size by 50–90%, which matters for faster pulls, less storage, and a smaller attack surface. Use it whenever you have a build step — TypeScript, Go binaries, Maven JARs, etc.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why run containers as a non-root user?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">By default, processes inside a Docker container run as root, which means a container escape bug gives an attacker full root on the host. Creating a dedicated user (like <code style="color:var(--accent)">node</code> or <code style="color:var(--accent)">appuser</code>) with no shell or sudo access limits the blast radius of any exploit.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What should I put in .dockerignore?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Exclude anything you don't need in the image: <code style="color:var(--accent)">node_modules</code> (reinstalled during build), <code style="color:var(--accent)">.git</code>, test files, local .env files, CI configs, and editor configs. A lean build context means faster <code style="color:var(--accent)">docker build</code> times and smaller images.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between CMD and ENTRYPOINT?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">ENTRYPOINT sets the executable; CMD sets its default arguments. If you only use CMD, users can override it entirely. If you combine ENTRYPOINT with CMD, users can override the arguments but not the main process. For most apps <code style="color:var(--accent)">CMD ["node", "server.js"]</code> works fine. Use ENTRYPOINT when the container should always run a specific binary.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Which base image tag should I use — latest, slim, or alpine?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">slim</code> images remove most dev tools to save ~100 MB. <code style="color:var(--accent)">alpine</code> is even smaller but uses musl libc, which can break native Node addons or Python C extensions. For production, <code style="color:var(--accent)">node:20-slim</code> or <code style="color:var(--accent)">python:3.12-slim</code> is the practical sweet spot. Pin to a specific version (not <code style="color:var(--accent)">latest</code>) so builds are reproducible.</div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>멀티 스테이지 Dockerfile이란? 언제 써야 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">멀티 스테이지 빌드는 여러 FROM 구문을 사용합니다. 첫 번째 단계에서 컴파일·설치하고, 최종 단계에서 프로덕션 결과물만 복사합니다. 이미지 크기를 50~90% 줄일 수 있어 빠른 풀, 적은 스토리지, 좁은 공격 표면이 됩니다. TypeScript, Go 바이너리, Maven JAR 등 빌드 단계가 있는 경우 반드시 사용하세요.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>컨테이너를 비루트 사용자로 실행해야 하는 이유는?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">기본적으로 Docker 컨테이너 내 프로세스는 root로 실행됩니다. 컨테이너 탈출 취약점이 있으면 공격자에게 호스트 루트 권한이 넘어갑니다. 셸이나 sudo 접근 권한이 없는 전용 사용자(node, appuser 등)를 만들면 피해를 최소화할 수 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>.dockerignore에 뭘 넣어야 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">이미지에 불필요한 파일을 제외하세요: node_modules(빌드 중 재설치), .git, 테스트 파일, 로컬 .env, CI 설정, 에디터 설정 등. 빌드 컨텍스트가 작을수록 docker build 속도가 빠르고 이미지 크기도 줄어듭니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>CMD와 ENTRYPOINT의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">ENTRYPOINT는 실행 파일을 지정하고, CMD는 기본 인수를 설정합니다. CMD만 사용하면 사용자가 전체 명령을 재정의할 수 있습니다. ENTRYPOINT와 CMD를 함께 쓰면 인수만 재정의됩니다. 대부분 앱에는 CMD ["node", "server.js"]로 충분합니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>베이스 이미지 태그는 latest, slim, alpine 중 뭘 써야 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">slim은 개발 도구를 제거해 약 100 MB를 절약합니다. alpine은 더 작지만 musl libc를 사용해 Node 네이티브 애드온이나 Python C 확장이 깨질 수 있습니다. 프로덕션에서는 node:20-slim 또는 python:3.12-slim이 실용적입니다. 재현 가능한 빌드를 위해 latest 대신 특정 버전을 고정하세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related tools -->
+  <section class="related">
+    <div class="lang-en">
+      <p class="related-title">Related Tools</p>
+      <div class="related-grid">
+        <a href="/tools/docker-ram-calculator/" class="related-card">
+          <span class="related-card-icon">🐳</span>
+          Docker RAM Calculator
+        </a>
+        <a href="/tools/nginx-config-generator/" class="related-card">
+          <span class="related-card-icon">⚙️</span>
+          Nginx Config Generator
+        </a>
+        <a href="/tools/linux-swap-calculator/" class="related-card">
+          <span class="related-card-icon">💾</span>
+          Linux Swap Calculator
+        </a>
+        <a href="/tools/firewall-rule-builder/" class="related-card">
+          <span class="related-card-icon">🔥</span>
+          Firewall Rule Builder
+        </a>
+        <a href="https://stackfreeks.com" target="_blank" rel="noopener" class="related-card">
+          <span class="related-card-icon">📖</span>
+          Docker guides on stackfreeks.com →
+        </a>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="related-title">관련 툴</p>
+      <div class="related-grid">
+        <a href="/tools/docker-ram-calculator/" class="related-card">
+          <span class="related-card-icon">🐳</span>
+          Docker RAM 계산기
+        </a>
+        <a href="/tools/nginx-config-generator/" class="related-card">
+          <span class="related-card-icon">⚙️</span>
+          Nginx 설정 생성기
+        </a>
+        <a href="/tools/linux-swap-calculator/" class="related-card">
+          <span class="related-card-icon">💾</span>
+          리눅스 스왑 계산기
+        </a>
+        <a href="/tools/firewall-rule-builder/" class="related-card">
+          <span class="related-card-icon">🔥</span>
+          방화벽 규칙 생성기
+        </a>
+        <a href="https://stackfreeks.com" target="_blank" rel="noopener" class="related-card">
+          <span class="related-card-icon">📖</span>
+          Docker 가이드 — stackfreeks.com →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Deploy your Docker app on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+         rel="nofollow sponsored" target="_blank"
+         data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    // i18n page-specific keys (must be before i18n.js)
+    window.SF_PAGE_I18N = {
+      en: {
+        df_runtime: 'Runtime',
+        df_version: 'Version',
+        df_port: 'Port',
+        df_workdir: 'Work Dir',
+        df_install_cmd: 'Install Command',
+        df_start_cmd: 'Start Command',
+        df_options: 'Options',
+        df_opt_multi: 'Multi-stage build',
+        df_opt_nonroot: 'Non-root user (node / appuser)',
+        df_opt_health: 'Add HEALTHCHECK',
+        df_opt_ignore: 'Generate .dockerignore',
+        df_generate: 'Generate Dockerfile',
+        df_placeholder: 'Configure options and click "Generate Dockerfile"',
+        copy_btn: 'Copy',
+      },
+      ko: {
+        df_runtime: '런타임',
+        df_version: '버전',
+        df_port: '포트',
+        df_workdir: '작업 디렉터리',
+        df_install_cmd: '설치 명령어',
+        df_start_cmd: '시작 명령어',
+        df_options: '옵션',
+        df_opt_multi: '멀티 스테이지 빌드',
+        df_opt_nonroot: '비루트 사용자 (node / appuser)',
+        df_opt_health: 'HEALTHCHECK 추가',
+        df_opt_ignore: '.dockerignore 생성',
+        df_generate: 'Dockerfile 생성',
+        df_placeholder: '옵션 설정 후 "Dockerfile 생성" 클릭',
+        copy_btn: '복사',
+      }
+    };
+
+    // Runtime config matrix
+    const RUNTIMES = {
+      node: {
+        versions: ['22-slim','20-slim','18-slim','22-alpine','20-alpine'],
+        port: 3000,
+        install: 'npm ci --omit=dev',
+        start: 'node server.js',
+        user: 'node',
+        image: 'node',
+        buildStage: {
+          install: 'npm ci',
+          build: 'npm run build',
+        },
+        dockerignore: `node_modules\nnpm-debug.log\n.git\n.env\n.env.*\ndist\ncoverage\n.DS_Store\n*.test.*\n*.spec.*\n__tests__\n.github\n.vscode\n`,
+      },
+      python: {
+        versions: ['3.12-slim','3.11-slim','3.10-slim','3.12-alpine','3.11-alpine'],
+        port: 8000,
+        install: 'pip install --no-cache-dir -r requirements.txt',
+        start: 'python app.py',
+        user: 'appuser',
+        image: 'python',
+        buildStage: null,
+        dockerignore: `__pycache__\n*.pyc\n*.pyo\n.git\n.env\n.venv\nvenv\n.DS_Store\ntests\n*.test.py\n.github\n.vscode\ndist\nbuild\n`,
+      },
+      go: {
+        versions: ['1.22-alpine','1.21-alpine','1.22','1.21'],
+        port: 8080,
+        install: 'go mod download',
+        start: './app',
+        user: 'appuser',
+        image: 'golang',
+        buildStage: {
+          install: 'go mod download',
+          build: 'CGO_ENABLED=0 GOOS=linux go build -o app .',
+        },
+        dockerignore: `.git\n.env\n*.test.go\n_test.go\n.DS_Store\n.github\n.vscode\n`,
+      },
+      php: {
+        versions: ['8.3-fpm-alpine','8.2-fpm-alpine','8.3-cli-alpine','8.2-cli-alpine'],
+        port: 9000,
+        install: 'composer install --no-dev --optimize-autoloader',
+        start: 'php-fpm',
+        user: 'www-data',
+        image: 'php',
+        buildStage: null,
+        dockerignore: `.git\n.env\nvendor\n.DS_Store\ntests\n.github\n.vscode\nstorage/logs\n`,
+      },
+      ruby: {
+        versions: ['3.3-slim','3.2-slim','3.3-alpine','3.2-alpine'],
+        port: 3000,
+        install: 'bundle install --without development test',
+        start: 'bundle exec ruby app.rb',
+        user: 'appuser',
+        image: 'ruby',
+        buildStage: null,
+        dockerignore: `.git\n.env\n.bundle\nvendor/bundle\nspec\ntest\n.DS_Store\n.github\n.vscode\n`,
+      },
+      java: {
+        versions: ['21-jdk-slim','17-jdk-slim','21-jre-slim','17-jre-slim'],
+        port: 8080,
+        install: 'mvn package -DskipTests',
+        start: 'java -jar target/*.jar',
+        user: 'appuser',
+        image: 'eclipse-temurin',
+        buildStage: {
+          install: 'mvn dependency:go-offline',
+          build: 'mvn package -DskipTests',
+        },
+        dockerignore: `.git\n.env\ntarget\n*.iml\n.mvn\n.github\n.vscode\n.DS_Store\n`,
+      },
+      static: {
+        versions: ['1.27-alpine','1.26-alpine','1.25-alpine'],
+        port: 80,
+        install: null,
+        start: null,
+        user: null,
+        image: 'nginx',
+        buildStage: null,
+        dockerignore: `.git\n.env\nnode_modules\n.DS_Store\n.github\n.vscode\n*.md\n`,
+      },
+    };
+
+    function onRuntimeChange() {
+      const rt = document.getElementById('runtime').value;
+      const cfg = RUNTIMES[rt];
+      const verSel = document.getElementById('version');
+      verSel.innerHTML = cfg.versions.map(v => `<option value="${v}">${v}</option>`).join('');
+      document.getElementById('port').value = cfg.port;
+      if (cfg.install !== null) {
+        document.getElementById('install-cmd').value = cfg.install;
+        document.getElementById('install-field').style.display = '';
+      } else {
+        document.getElementById('install-field').style.display = 'none';
+      }
+      if (cfg.start !== null) {
+        document.getElementById('start-cmd').value = cfg.start;
+        document.getElementById('start-field').style.display = '';
+      } else {
+        document.getElementById('start-field').style.display = 'none';
+      }
+      // multi-stage only makes sense for runtimes that have a build step
+      document.getElementById('opt-multistage').disabled = !cfg.buildStage;
+      if (!cfg.buildStage) document.getElementById('opt-multistage').checked = false;
+    }
+
+    function generate() {
+      const rt = document.getElementById('runtime').value;
+      const ver = document.getElementById('version').value;
+      const port = document.getElementById('port').value;
+      const workdir = document.getElementById('workdir').value.trim() || '/app';
+      const installCmd = document.getElementById('install-cmd').value.trim();
+      const startCmd = document.getElementById('start-cmd').value.trim();
+      const multiStage = document.getElementById('opt-multistage').checked;
+      const nonRoot = document.getElementById('opt-nonroot').checked;
+      const healthcheck = document.getElementById('opt-healthcheck').checked;
+      const genIgnore = document.getElementById('opt-dockerignore').checked;
+
+      const cfg = RUNTIMES[rt];
+      let df = '';
+
+      if (rt === 'static') {
+        df = buildStaticDockerfile(ver, workdir);
+      } else if (multiStage && cfg.buildStage) {
+        df = buildMultiStageDockerfile(rt, ver, cfg, workdir, installCmd, startCmd, port, nonRoot, healthcheck);
+      } else {
+        df = buildSingleStageDockerfile(rt, ver, cfg, workdir, installCmd, startCmd, port, nonRoot, healthcheck);
+      }
+
+      const outEl = document.getElementById('dockerfile-out');
+      outEl.innerHTML = syntaxHighlight(df);
+      outEl._raw = df;
+
+      if (genIgnore) {
+        const ignEl = document.getElementById('dockerignore-out');
+        ignEl.textContent = cfg.dockerignore.trim();
+        ignEl._raw = cfg.dockerignore.trim();
+        document.getElementById('ignore-block').style.display = '';
+      } else {
+        document.getElementById('ignore-block').style.display = 'none';
+      }
+
+      // reset copy buttons
+      resetCopy('copy-df');
+      resetCopy('copy-ig');
+    }
+
+    function buildSingleStageDockerfile(rt, ver, cfg, workdir, installCmd, startCmd, port, nonRoot, healthcheck) {
+      const img = `${cfg.image}:${ver}`;
+      let lines = [];
+      lines.push(`# ${rt.charAt(0).toUpperCase() + rt.slice(1)} — single-stage`);
+      lines.push(`FROM ${img}`);
+      lines.push('');
+      lines.push(`WORKDIR ${workdir}`);
+      lines.push('');
+      lines.push('# Copy dependency manifests first for layer caching');
+      if (rt === 'node') {
+        lines.push('COPY package*.json ./');
+      } else if (rt === 'python') {
+        lines.push('COPY requirements.txt ./');
+      } else if (rt === 'go') {
+        lines.push('COPY go.mod go.sum ./');
+      } else if (rt === 'php') {
+        lines.push('COPY composer.json composer.lock ./');
+      } else if (rt === 'ruby') {
+        lines.push('COPY Gemfile Gemfile.lock ./');
+      } else if (rt === 'java') {
+        lines.push('COPY pom.xml ./');
+      }
+      lines.push(`RUN ${installCmd}`);
+      lines.push('');
+      lines.push('COPY . .');
+      lines.push('');
+      if (nonRoot && cfg.user) {
+        if (rt === 'node') {
+          lines.push('# Drop to built-in non-root user');
+          lines.push(`USER ${cfg.user}`);
+        } else {
+          lines.push('# Create and switch to non-root user');
+          lines.push(`RUN addgroup --system appgroup && adduser --system --ingroup appgroup ${cfg.user}`);
+          lines.push(`USER ${cfg.user}`);
+        }
+        lines.push('');
+      }
+      lines.push(`EXPOSE ${port}`);
+      if (healthcheck) {
+        lines.push('');
+        lines.push(`HEALTHCHECK --interval=30s --timeout=5s --retries=3 \\`);
+        lines.push(`  CMD wget -qO- http://localhost:${port}/health || exit 1`);
+      }
+      lines.push('');
+      const cmdParts = startCmd.split(/\s+/);
+      lines.push(`CMD [${cmdParts.map(p => `"${p}"`).join(', ')}]`);
+      return lines.join('\n');
+    }
+
+    function buildMultiStageDockerfile(rt, ver, cfg, workdir, installCmd, startCmd, port, nonRoot, healthcheck) {
+      const img = `${cfg.image}:${ver}`;
+      let lines = [];
+
+      // Builder stage
+      lines.push(`# ${rt.charAt(0).toUpperCase() + rt.slice(1)} — multi-stage (builder → runner)`);
+      lines.push(`FROM ${img} AS builder`);
+      lines.push('');
+      lines.push(`WORKDIR ${workdir}`);
+      lines.push('');
+      lines.push('# Install all deps (including dev) for build');
+      if (rt === 'node') {
+        lines.push('COPY package*.json ./');
+        lines.push(`RUN ${cfg.buildStage.install}`);
+        lines.push('');
+        lines.push('COPY . .');
+        lines.push(`RUN ${cfg.buildStage.build}`);
+      } else if (rt === 'java') {
+        lines.push('COPY pom.xml ./');
+        lines.push(`RUN ${cfg.buildStage.install}`);
+        lines.push('');
+        lines.push('COPY src ./src');
+        lines.push(`RUN ${cfg.buildStage.build}`);
+      } else if (rt === 'go') {
+        lines.push('COPY go.mod go.sum ./');
+        lines.push(`RUN ${cfg.buildStage.install}`);
+        lines.push('');
+        lines.push('COPY . .');
+        lines.push(`RUN ${cfg.buildStage.build}`);
+      }
+
+      lines.push('');
+
+      // Runner stage — use slim/distroless
+      let runnerImg = img;
+      if (rt === 'go') runnerImg = 'gcr.io/distroless/static:nonroot';
+      if (rt === 'java') runnerImg = `eclipse-temurin:${ver.replace('jdk', 'jre')}`;
+
+      lines.push('# --- Production image ---');
+      lines.push(`FROM ${runnerImg} AS runner`);
+      lines.push('');
+      lines.push(`WORKDIR ${workdir}`);
+      lines.push('');
+
+      if (nonRoot && cfg.user && rt !== 'go') {
+        if (rt === 'node') {
+          lines.push(`USER ${cfg.user}`);
+          lines.push('');
+        } else {
+          lines.push(`RUN addgroup --system appgroup && adduser --system --ingroup appgroup ${cfg.user}`);
+          lines.push(`USER ${cfg.user}`);
+          lines.push('');
+        }
+      }
+
+      lines.push('# Copy only production artifacts');
+      if (rt === 'node') {
+        lines.push(`COPY --from=builder ${workdir}/dist ./dist`);
+        lines.push(`COPY --from=builder ${workdir}/node_modules ./node_modules`);
+        lines.push(`COPY --from=builder ${workdir}/package.json ./`);
+      } else if (rt === 'java') {
+        lines.push(`COPY --from=builder ${workdir}/target/*.jar app.jar`);
+      } else if (rt === 'go') {
+        lines.push(`COPY --from=builder ${workdir}/app ./app`);
+      }
+      lines.push('');
+      lines.push(`EXPOSE ${port}`);
+      if (healthcheck) {
+        lines.push('');
+        if (rt === 'go') {
+          lines.push(`HEALTHCHECK --interval=30s --timeout=5s --retries=3 \\`);
+          lines.push(`  CMD ["/app", "-health"]`);
+        } else {
+          lines.push(`HEALTHCHECK --interval=30s --timeout=5s --retries=3 \\`);
+          lines.push(`  CMD wget -qO- http://localhost:${port}/health || exit 1`);
+        }
+      }
+      lines.push('');
+      if (rt === 'java') {
+        lines.push('CMD ["java", "-jar", "app.jar"]');
+      } else {
+        const cmdParts = startCmd.split(/\s+/);
+        lines.push(`CMD [${cmdParts.map(p => `"${p}"`).join(', ')}]`);
+      }
+      return lines.join('\n');
+    }
+
+    function buildStaticDockerfile(ver, workdir) {
+      return [
+        '# Static site served by nginx',
+        `FROM node:20-alpine AS builder`,
+        '',
+        `WORKDIR ${workdir}`,
+        '',
+        'COPY package*.json ./',
+        'RUN npm ci',
+        '',
+        'COPY . .',
+        'RUN npm run build',
+        '',
+        '# --- Production image ---',
+        `FROM nginx:${ver}`,
+        '',
+        '# Remove default config',
+        'RUN rm /etc/nginx/conf.d/default.conf',
+        '',
+        '# Copy built assets',
+        `COPY --from=builder ${workdir}/dist /usr/share/nginx/html`,
+        '',
+        '# Optional: custom nginx config',
+        '# COPY nginx.conf /etc/nginx/conf.d/default.conf',
+        '',
+        'EXPOSE 80',
+        '',
+        'CMD ["nginx", "-g", "daemon off;"]',
+      ].join('\n');
+    }
+
+    // Simple syntax highlight (no external lib)
+    function syntaxHighlight(code) {
+      return code
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/^(#.*)$/gm, '<span class="dk-comment">$1</span>')
+        .replace(/^(FROM|WORKDIR|COPY|RUN|EXPOSE|CMD|USER|ENV|ARG|ENTRYPOINT|HEALTHCHECK|LABEL)(\s)/gm,
+          '<span class="dk-keyword">$1</span>$2')
+        .replace(/(&quot;[^&]*&quot;)/g, '<span class="dk-string">$1</span>');
+    }
+
+    function copyText(elId, btnId) {
+      const el = document.getElementById(elId);
+      const text = el._raw || el.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById(btnId);
+        btn.textContent = '✓ Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function resetCopy(btnId) {
+      const btn = document.getElementById(btnId);
+      if (btn) { btn.textContent = 'Copy'; btn.classList.remove('copied'); }
+    }
+
+    function toggleFaq(btn) {
+      btn.closest('.faq-item').classList.toggle('open');
+    }
+
+    // Init
+    onRuntimeChange();
+  </script>
+
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>
