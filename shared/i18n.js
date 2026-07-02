@@ -18,7 +18,7 @@ const SF_I18N = {
     vultr_cta: 'Claim your credit →',
     // Cloudways banner
     cw_label: 'Sponsor',
-    cw_title: 'Deploy WordPress & PHP apps faster',
+    cw_title: 'Get started on Cloudways',
     cw_sub: '3-day free trial, no credit card required — plus 30% off your first 3 months',
     cw_cta: 'Start free trial →',
     // Footer
@@ -34,7 +34,7 @@ const SF_I18N = {
     vultr_cta: '크레딧 받기 →',
     // Cloudways banner
     cw_label: '스폰서',
-    cw_title: 'WordPress & PHP 앱을 더 빠르게 배포하세요',
+    cw_title: 'Cloudways로 시작하세요',
     cw_sub: '신용카드 없이 3일 무료 체험 — 첫 3개월 30% 할인',
     cw_cta: '무료 체험 시작 →',
     // Footer
