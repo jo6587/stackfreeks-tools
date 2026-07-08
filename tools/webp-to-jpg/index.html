@@ -431,9 +431,24 @@
     @media (max-width: 400px) {
       .results-grid { grid-template-columns: 1fr; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/webp-to-jpg/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/webp-to-jpg/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/webp-to-jpg/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"WebP to JPG Converter","description":"Convert WebP images to JPG free online. Batch convert multiple files, adjust quality, no account needed. Works entirely in your browser.","url":"https://tools.stackfreeks.com/tools/webp-to-jpg/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a WebP file and why can't I open it everywhere?","acceptedAnswer":{"@type":"Answer","text":"WebP is a modern image format developed by Google, offering smaller file sizes than JPEG or PNG at similar quality. However, older apps, email clients, and some operating systems still don't support WebP natively — that's why converting to JPG ensures universal compatibility."}},{"@type":"Question","name":"How do I convert WebP to JPG without losing quality?","acceptedAnswer":{"@type":"Answer","text":"Use a quality setting of 90–100% to minimize visible loss. Since JPEG is a lossy format, some quality reduction is inevitable, but at 92% the difference is barely noticeable for most images. This tool lets you dial in the exact quality you need."}},{"@type":"Question","name":"Why does my WebP file look different after converting to JPG?","acceptedAnswer":{"@type":"Answer","text":"WebP can store transparency (alpha channel), which JPEG does not support. Transparent areas will be filled with white background during conversion. If your WebP has a transparent background, expect white where the transparency was."}},{"@type":"Question","name":"Can I convert multiple WebP files to JPG at once for free?","acceptedAnswer":{"@type":"Answer","text":"Yes — this tool supports batch conversion with no limits. Simply select multiple .webp files at once (or drag them all into the drop zone), and each one will be converted instantly. Then use \"Download All\" to grab them all in one click."}},{"@type":"Question","name":"Does converting WebP to JPG reduce file size?","acceptedAnswer":{"@type":"Answer","text":"It depends. WebP is generally more efficient than JPEG, so converting to JPG at high quality can actually increase file size. At lower quality settings (70–85%), the JPG may be smaller but with more visible compression artifacts. The size comparison shown for each file helps you decide the best quality setting."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -638,6 +653,16 @@
   </div>
 
   <!-- 9. Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/svg-to-png/" class="sf-related-card"><span>🎨</span>SVG to PNG Converter</a>
+      <a href="/tools/exif-remover/" class="sf-related-card"><span>🧹</span>EXIF Data Remover</a>
+      <a href="/tools/image-compressor/" class="sf-related-card"><span>🗜️</span>Image Compressor</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-inner">
       <nav class="footer-links" aria-label="Footer">

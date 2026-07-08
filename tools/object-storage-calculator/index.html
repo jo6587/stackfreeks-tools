@@ -324,7 +324,22 @@
       nav { padding: 0 16px; }
       .container { padding: 0 16px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Object Storage Cost Calculator","description":"Compare monthly object storage costs across AWS S3, Backblaze B2, Cloudflare R2, Vultr, Wasabi, and DigitalOcean Spaces. Find the cheapest plan instantly.","url":"https://tools.stackfreeks.com/tools/object-storage-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is egress in object storage pricing?","acceptedAnswer":{"@type":"Answer","text":"Egress (data transfer out) is the fee charged when users download files from your storage bucket to the internet. AWS S3 charges $0.09/GB egress — on a 1TB/month download workload that alone adds up to $92/mo. Cloudflare R2 and Wasabi offer zero egress fees, making them dramatically cheaper for read-heavy workloads."}},{"@type":"Question","name":"Is Cloudflare R2 really free for egress?","acceptedAnswer":{"@type":"Answer","text":"Yes — R2 egress to the public internet is always free. You pay only for storage ($0.015/GB/month, first 10 GB free) and API requests (Class A writes at $4.50/million, Class B reads at $0.36/million). For assets served through Cloudflare CDN, R2 is one of the most cost-efficient choices available."}},{"@type":"Question","name":"When should I choose Vultr Object Storage?","acceptedAnswer":{"@type":"Answer","text":"Vultr Object Storage shines when you already run workloads on Vultr VPS instances. Internal traffic between Vultr services avoids cross-provider egress entirely. At $0.01/GB storage and $0.01/GB egress with an S3-compatible API, it integrates with any existing S3 SDK without code changes."}},{"@type":"Question","name":"When does Backblaze B2 beat AWS S3?","acceptedAnswer":{"@type":"Answer","text":"Almost always for storage-heavy use cases. B2 charges $0.006/GB — roughly 4× cheaper than S3's $0.023/GB. It also includes free egress equal to 3× your monthly stored data. Paired with Cloudflare CDN (free via the Bandwidth Alliance), B2 effectively becomes zero-egress as well."}},{"@type":"Question","name":"Does Wasabi really charge zero for egress?","acceptedAnswer":{"@type":"Answer","text":"Wasabi's egress is free as long as your total data downloaded per month does not exceed your total stored data. If you download more than you store, the excess is billed at $0.04/GB. For typical storage-heavy workloads (backups, archives, media), Wasabi's $0.0059/GB storage with no egress is extremely competitive."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -529,7 +544,17 @@
     </section>
 
     <!-- Vultr Banner -->
-    <section class="vultr-banner">
+    <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/vps-cost-calculator/" class="sf-related-card"><span>💰</span>VPS Cost Calculator</a>
+      <a href="/tools/vps-bandwidth-calculator/" class="sf-related-card"><span>📶</span>VPS Bandwidth Calculator</a>
+      <a href="/tools/server-spec-recommender/" class="sf-related-card"><span>🖥️</span>Server Spec Recommender</a>
+    </div>
+  </section>
+
+  <section class="vultr-banner">
       <div class="container banner-inner">
         <div>
           <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>

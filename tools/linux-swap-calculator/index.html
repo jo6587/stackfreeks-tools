@@ -349,7 +349,22 @@
     @media (max-width: 640px) {
       .cmd-block { font-size: 11px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Linux Swap Size Calculator","description":"Calculate the recommended Linux swap size for your VPS or server. Instant results based on RAM, use case, and hibernation support — with ready-to-run commands.","url":"https://tools.stackfreeks.com/tools/linux-swap-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much swap does a 2GB VPS need?","acceptedAnswer":{"@type":"Answer","text":"For a 2 GB RAM VPS running a general server workload, 2 GB of swap is the standard recommendation. This equals 1x RAM, which follows the modern guideline for servers with 2–8 GB RAM. If you run memory-intensive applications or want hibernation support, increase to 4 GB."}},{"@type":"Question","name":"Do I need swap if I have enough RAM?","acceptedAnswer":{"@type":"Answer","text":"Yes — even with plenty of RAM, a small swap (1–2 GB minimum) is recommended on Linux servers. The kernel uses swap to move idle memory pages out, freeing RAM for active processes. Without swap, the OOM killer will terminate processes when RAM runs out instead of gracefully swapping."}},{"@type":"Question","name":"Swap file vs swap partition — which is better?","acceptedAnswer":{"@type":"Answer","text":"Swap files are more flexible: you can resize or delete them without repartitioning. Swap partitions are marginally faster on traditional HDDs, but on modern SSDs and cloud VPS storage the difference is negligible. For most cloud VPS users, a swap file is the better choice."}},{"@type":"Question","name":"What is swappiness and what value should I use?","acceptedAnswer":{"@type":"Answer","text":"Swappiness (0–100) controls how aggressively the kernel moves memory pages to swap. A value of 60 is the Linux default, good for desktops. For servers, 10 reduces unnecessary swapping and keeps data in RAM longer — improving responsiveness under normal load. Database servers often use 1–5 to minimise swap use entirely."}},{"@type":"Question","name":"Does swap slow down my VPS?","acceptedAnswer":{"@type":"Answer","text":"Swap is much slower than RAM — especially on HDDs. On cloud VPS storage (NVMe/SSD) it's faster but still a significant bottleneck. Swap is a safety net, not a performance feature. If your server is hitting swap regularly, it's a signal to upgrade your VPS plan to one with more RAM."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -634,7 +649,17 @@
 </section>
 
 <!-- Vultr Banner -->
-<section class="vultr-banner">
+<!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/nginx-config-generator/" class="sf-related-card"><span>⚙️</span>Nginx Config Generator</a>
+      <a href="/tools/ssh-config-generator/" class="sf-related-card"><span>🔑</span>SSH Config Generator</a>
+      <a href="/tools/firewall-rule-builder/" class="sf-related-card"><span>🔥</span>Firewall Rule Builder</a>
+    </div>
+  </section>
+
+  <section class="vultr-banner">
   <div class="container banner-inner">
     <div>
       <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>

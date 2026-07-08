@@ -7,9 +7,9 @@
   <meta name="description" content="Free lorem ipsum generator. Generate placeholder text by words, sentences, or paragraphs in seconds. Classic filler text for designers and developers." />
   <meta property="og:title" content="Lorem Ipsum Generator — Free Online Tool | StackFreeks" />
   <meta property="og:description" content="Generate lorem ipsum placeholder text instantly. Choose words, sentences, or paragraphs. Free, no signup required." />
-  <meta property="og:url" content="https://tools.stackfreeks.com/lorem-ipsum/" />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/lorem-ipsum/" />
   <meta property="og:type" content="website" />
-  <link rel="canonical" href="https://tools.stackfreeks.com/lorem-ipsum/" />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/lorem-ipsum/" />
 
   <!-- AdSense slot — insert code here after approval -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
@@ -432,9 +432,24 @@
       .vultr-inner { gap: 12px; }
       .footer-inner { flex-direction: column; text-align: center; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/lorem-ipsum/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/lorem-ipsum/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/lorem-ipsum/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Lorem Ipsum Generator","description":"Free lorem ipsum generator. Generate placeholder text by words, sentences, or paragraphs in seconds. Classic filler text for designers and developers.","url":"https://tools.stackfreeks.com/tools/lorem-ipsum/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Lorem Ipsum?","acceptedAnswer":{"@type":"Answer","text":"Lorem ipsum is the industry-standard placeholder text used in design and typesetting since the 1500s. It is derived from Cicero's philosophical work \"de Finibus Bonorum et Malorum\" and has been used to fill space in layouts ever since the advent of desktop publishing."}},{"@type":"Question","name":"Is it real Latin?","acceptedAnswer":{"@type":"Answer","text":"Not exactly. Lorem ipsum is scrambled Latin — it looks like natural text but is not grammatically correct. This is intentional: readers cannot extract meaning from the words, so they focus on layout and typography rather than content."}},{"@type":"Question","name":"Why use Lorem Ipsum instead of real text?","acceptedAnswer":{"@type":"Answer","text":"Using real text during design reviews can distract reviewers who start reading the content instead of evaluating the layout. Placeholder text like lorem ipsum keeps the visual focus on spacing, hierarchy, and typography without the noise of actual meaning."}},{"@type":"Question","name":"Can I customize the output?","acceptedAnswer":{"@type":"Answer","text":"Yes! You can choose between words, sentences, and paragraphs, and set the exact count you need. You can also toggle whether the text starts with the classic \"Lorem ipsum dolor sit amet…\" opening. All generation happens in your browser — nothing is sent to a server."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -648,6 +663,16 @@
   </section>
 
   <!-- VULTR BANNER -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/diff-checker/" class="sf-related-card"><span>🔍</span>Diff Checker</a>
+      <a href="/tools/markdown-previewer/" class="sf-related-card"><span>📖</span>Markdown Previewer</a>
+      <a href="/tools/regex-tester/" class="sf-related-card"><span>🎯</span>Regex Tester</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>

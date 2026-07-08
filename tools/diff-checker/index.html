@@ -540,9 +540,24 @@
       .main-wrap { padding: 20px 16px 0; }
       .hero { padding: 32px 16px 24px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/diff-checker/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/diff-checker/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/diff-checker/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Diff Checker","description":"Compare two texts side by side and highlight differences. Free online diff checker — no account, no file size limit, works in your browser instantly.","url":"https://tools.stackfreeks.com/tools/diff-checker/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a diff checker?","acceptedAnswer":{"@type":"Answer","text":"A diff checker compares two pieces of text line by line and highlights what has been added, removed, or left unchanged. It's commonly used to review changes in code, documents, configuration files, or any text-based content."}},{"@type":"Question","name":"Does this tool support file uploads?","acceptedAnswer":{"@type":"Answer","text":"Not yet — paste text directly into the panels. For most use cases (code, config, prose) this is the fastest workflow. File upload support may be added in a future update."}},{"@type":"Question","name":"Is my text stored or sent anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens entirely in your browser using JavaScript. Nothing is sent to any server. Your text never leaves your device."}},{"@type":"Question","name":"How do I compare code?","acceptedAnswer":{"@type":"Answer","text":"Paste code from your editor into the Original panel, paste the updated version into the Changed panel, and click Compare. The diff is line-based, so it works with any programming language without any special configuration."}},{"@type":"Question","name":"What is the difference between unified and side-by-side diff?","acceptedAnswer":{"@type":"Answer","text":"Side-by-side shows the original and changed text in two columns so you can read both simultaneously. Unified diff combines both into a single column, prefixing removed lines with − and added lines with +. Unified is the format used by git diff."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -820,7 +835,17 @@
 </section>
 
 <!-- ── Vultr banner ── -->
-<section class="vultr-banner">
+<!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/markdown-previewer/" class="sf-related-card"><span>📖</span>Markdown Previewer</a>
+      <a href="/tools/regex-tester/" class="sf-related-card"><span>🎯</span>Regex Tester</a>
+      <a href="/tools/word-counter/" class="sf-related-card"><span>📝</span>Word Counter</a>
+    </div>
+  </section>
+
+  <section class="vultr-banner">
   <div class="banner-inner">
     <div>
       <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>

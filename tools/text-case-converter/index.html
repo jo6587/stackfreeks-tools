@@ -403,9 +403,24 @@
       .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
       .footer-links { justify-content: center; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/text-case-converter/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/text-case-converter/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/text-case-converter/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Text Case Converter","description":"Convert text between uppercase, lowercase, title case, camelCase, snake_case, and more. Free online text case converter — instant, no account required.","url":"https://tools.stackfreeks.com/tools/text-case-converter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is camelCase?","acceptedAnswer":{"@type":"Answer","text":"camelCase is a naming convention where the first word is all lowercase and each subsequent word starts with a capital letter, with no spaces or punctuation — e.g. myVariableName . It is widely used in JavaScript, Java, and many other programming languages for variable and function names."}},{"@type":"Question","name":"What is snake_case used for?","acceptedAnswer":{"@type":"Answer","text":"snake_case separates words with underscores and keeps all letters lowercase — e.g. my_variable_name . It is the conventional style for Python variables and functions, Ruby methods, and SQL column names, as well as file names in many projects."}},{"@type":"Question","name":"What is the difference between Title Case and Sentence case?","acceptedAnswer":{"@type":"Answer","text":"Title Case capitalizes the first letter of every word — e.g. The Quick Brown Fox . Sentence case only capitalizes the very first letter of each sentence (after a period or at the start of the text) — e.g. The quick brown fox . Title Case is common for headings; Sentence case follows normal prose rules."}},{"@type":"Question","name":"Can I convert code variable names?","acceptedAnswer":{"@type":"Answer","text":"Yes. The converter intelligently splits on spaces, underscores, hyphens, and camelCase boundaries, so you can paste an existing variable like myVariableName or my_variable_name and convert it to any other format in one click."}},{"@type":"Question","name":"Is my text sent to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All conversion logic runs entirely in your browser using JavaScript. Your text never leaves your device — no network requests are made, no data is stored or logged anywhere."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -630,6 +645,16 @@
   </section>
 
   <!-- 7. Vultr banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/lorem-ipsum/" class="sf-related-card"><span>📄</span>Lorem Ipsum Generator</a>
+      <a href="/tools/diff-checker/" class="sf-related-card"><span>🔍</span>Diff Checker</a>
+      <a href="/tools/markdown-previewer/" class="sf-related-card"><span>📖</span>Markdown Previewer</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="container banner-inner">
       <div>

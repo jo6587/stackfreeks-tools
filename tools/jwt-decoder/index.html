@@ -604,9 +604,24 @@
       .expiry-header { flex-direction: column; align-items: flex-start; }
       .claims-table td { padding: 8px 12px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/jwt-decoder/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/jwt-decoder/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/jwt-decoder/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"JWT Decoder","description":"Decode and inspect JWT tokens instantly. View header, payload, and expiry in a clean interface. Free online JWT decoder — no account, works in your browser.","url":"https://tools.stackfreeks.com/tools/jwt-decoder/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a JWT token?","acceptedAnswer":{"@type":"Answer","text":"A JSON Web Token (JWT) is a compact, URL-safe token format defined in RFC 7519 . It consists of three base64url-encoded parts separated by dots: header.payload.signature . The header describes the signing algorithm, the payload carries claims (user data, expiry, etc.), and the signature ensures the token hasn't been tampered with."}},{"@type":"Question","name":"Is my JWT token safe to paste here?","acceptedAnswer":{"@type":"Answer","text":"Yes. All decoding happens entirely in your browser using JavaScript — nothing is transmitted to any server. You can verify this by checking the browser's Network tab while using the tool. That said, avoid sharing production tokens with sensitive data in untrusted environments as a general security practice."}},{"@type":"Question","name":"Why isn't the signature verified?","acceptedAnswer":{"@type":"Answer","text":"JWT signature verification requires the secret key (for HMAC algorithms like HS256) or the public key (for asymmetric algorithms like RS256). These keys are never included in the token itself, and your browser has no way to obtain them. Verification must happen server-side where the key is securely stored."}},{"@type":"Question","name":"What is the exp claim?","acceptedAnswer":{"@type":"Answer","text":"The exp (Expiration Time) claim specifies when the token expires, as a Unix timestamp (seconds since January 1, 1970 UTC). Servers should reject tokens with an exp in the past. This tool converts the value to a human-readable date and shows whether the token is currently valid or expired."}},{"@type":"Question","name":"How do I decode a JWT in code?","acceptedAnswer":{"@type":"Answer","text":"In JavaScript: JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))) . In Node.js use the jsonwebtoken library. In Python use PyJWT . In Go use golang-jwt/jwt . Remember that decoding is not the same as verification — always verify tokens server-side before trusting their contents."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -878,6 +893,16 @@
   </section>
 
   <!-- Vultr banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/uuid-generator/" class="sf-related-card"><span>🆔</span>UUID Generator</a>
+      <a href="/tools/base-converter/" class="sf-related-card"><span>🔢</span>Number Base Converter</a>
+      <a href="/tools/json-formatter/" class="sf-related-card"><span>📋</span>JSON Formatter & Validator</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="banner-inner">
       <div>

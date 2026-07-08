@@ -487,9 +487,24 @@
       .vultr-cta { align-self: stretch; text-align: center; }
       .footer-links { gap: 14px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/url-encoder/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/url-encoder/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/url-encoder/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"URL Encoder / Decoder","description":"Encode or decode URLs and query strings instantly. Free online URL encoder/decoder — supports percent-encoding, component encoding, and full URL encoding. No account required.","url":"https://tools.stackfreeks.com/tools/url-encoder/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is URL encoding?","acceptedAnswer":{"@type":"Answer","text":"URL encoding (also called percent-encoding) converts special characters into a format that can be safely transmitted in a URL. Each character is replaced with a \"%\" followed by its two-digit hexadecimal representation — for example, a space becomes %20 and \"&\" becomes %26 . This is necessary because URLs can only contain a limited set of ASCII characters."}},{"@type":"Question","name":"What's the difference between encodeURI and encodeURIComponent?","acceptedAnswer":{"@type":"Answer","text":"encodeURI is designed for full URLs — it encodes most special characters but leaves the ones that have structural meaning in a URL intact (like :// ? & = # / ). encodeURIComponent is meant for individual query parameter values — it encodes everything except letters, digits, and - _ . ! ~ * ' ( ) . Use encodeURIComponent when encoding a value that will appear inside a query string."}},{"@type":"Question","name":"Why does a space become %20?","acceptedAnswer":{"@type":"Answer","text":"The ASCII code for a space character is 32, which is 0x20 in hexadecimal. Percent-encoding simply takes the hexadecimal byte value of a character and prefixes it with \"%\". Some older systems encode spaces as \"+\" (used in HTML form submissions), but the modern standard is %20 ."}},{"@type":"Question","name":"When do I need to encode a URL?","acceptedAnswer":{"@type":"Answer","text":"You need to encode a URL whenever it contains characters that are not allowed in a URL or that have a special meaning you want to suppress. Common situations include: passing a URL as a query parameter, building dynamic links in JavaScript, writing API requests programmatically, or embedding special characters like spaces, ampersands, or hash signs in query string values."}},{"@type":"Question","name":"Can I encode special characters in query parameters?","acceptedAnswer":{"@type":"Answer","text":"Yes — that is exactly what Encode Component is for. For example, if you want to pass an email address as a query value, use encodeURIComponent(\"user@example.com\") to get user%40example.com . Always encode individual values with encodeURIComponent , not the entire URL."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -730,6 +745,16 @@
   </section>
 
   <!-- Vultr Banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/hash-generator/" class="sf-related-card"><span>#️⃣</span>Hash Generator</a>
+      <a href="/tools/jwt-decoder/" class="sf-related-card"><span>🎫</span>JWT Decoder</a>
+      <a href="/tools/uuid-generator/" class="sf-related-card"><span>🆔</span>UUID Generator</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <div>

@@ -426,9 +426,24 @@
       .vultr-inner { flex-direction: column; align-items: flex-start; }
       .footer-inner { flex-direction: column; align-items: center; text-align: center; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/color-converter/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/color-converter/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/color-converter/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Color Converter","description":"Convert colors between HEX, RGB, and HSL instantly. Live three-way sync, color picker, preset palette, and one-click copy for each format.","url":"https://tools.stackfreeks.com/tools/color-converter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What's the difference between HEX, RGB, and HSL?","acceptedAnswer":{"@type":"Answer","text":"HEX is a hexadecimal notation widely used in CSS (e.g. #ff0000 ). RGB specifies the red, green, and blue channels as numbers from 0 to 255. HSL stands for Hue, Saturation, and Lightness — it's more intuitive for designers because you can shift the hue or adjust brightness independently."}},{"@type":"Question","name":"Why use HSL over HEX or RGB?","acceptedAnswer":{"@type":"Answer","text":"HSL is easier to reason about. Want a lighter shade? Increase L. Want a more muted tone? Lower S. Shifting the hue to a complementary color is as simple as adding 180 to H — without touching saturation or lightness at all."}},{"@type":"Question","name":"Does this tool support alpha / opacity?","acceptedAnswer":{"@type":"Answer","text":"Not currently. This tool handles fully opaque RGB colors only. Support for RGBA and HSLA formats is planned for a future update."}},{"@type":"Question","name":"Are the conversions exact?","acceptedAnswer":{"@type":"Answer","text":"HEX ↔ RGB conversion is lossless. HSL values may have minor rounding differences due to floating-point math, but the visual result is identical. Converting from HEX → HSL → HEX will reproduce the original HEX within 1 rounding step."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -636,6 +651,16 @@
   </div>
 
   <!-- Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/px-rem-converter/" class="sf-related-card"><span>📐</span>PX to REM Converter</a>
+      <a href="/tools/css-filter-previewer/" class="sf-related-card"><span>🪄</span>CSS Filter Previewer</a>
+      <a href="/tools/og-meta-generator/" class="sf-related-card"><span>🏷️</span>Open Graph Meta Tag Generator</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-inner">
       <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>

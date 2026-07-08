@@ -453,9 +453,24 @@
     @media (max-width: 400px) {
       .results-grid { grid-template-columns: 1fr; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/exif-remover/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/exif-remover/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/exif-remover/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"EXIF Data Remover","description":"Remove EXIF data, GPS location, and camera metadata from photos free online. Works in your browser — no upload to server needed.","url":"https://tools.stackfreeks.com/tools/exif-remover/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is EXIF data and why should I remove it?","acceptedAnswer":{"@type":"Answer","text":"EXIF (Exchangeable Image File Format) data is metadata embedded in photo files by cameras and smartphones. It can include your precise GPS coordinates, the exact date and time a photo was taken, your device model, and even software details. Removing it protects your privacy — especially important before posting photos online, since the GPS data can reveal your home address or daily routines."}},{"@type":"Question","name":"Does removing EXIF data affect image quality?","acceptedAnswer":{"@type":"Answer","text":"For PNG images, there is zero quality loss — the pixel data is unchanged. For JPEG images, this tool re-encodes at 95% quality, which is visually indistinguishable from the original but results in a slightly smaller file. You will not notice any visible degradation."}},{"@type":"Question","name":"How do I remove GPS location from a photo before posting online?","acceptedAnswer":{"@type":"Answer","text":"Simply drag your photo into the drop zone above and click Download. The output file will have no GPS coordinates. This works for photos taken on iPhones, Android phones, and digital cameras. Social media platforms like Instagram partially strip EXIF, but relying on them is risky — remove it yourself first for guaranteed privacy."}},{"@type":"Question","name":"Can I remove EXIF data from multiple photos at once for free?","acceptedAnswer":{"@type":"Answer","text":"Yes — this tool supports batch processing at no cost. Select multiple files using the file picker (Ctrl+click or Cmd+click) or drag a selection of photos into the drop zone. Use the \"Download All\" button that appears when two or more files are processed to save them all in one click."}},{"@type":"Question","name":"Is it safe to share photos with EXIF data on social media?","acceptedAnswer":{"@type":"Answer","text":"It depends on the platform, but it is best practice to strip EXIF before uploading. While Facebook and Instagram do remove most EXIF on upload, some platforms do not. More importantly, GPS metadata embedded in photos shared directly via messaging apps (WhatsApp, email, AirDrop) is preserved and can expose your exact location to anyone who receives the file."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -656,6 +671,16 @@
   </div>
 
   <!-- 9. Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/image-compressor/" class="sf-related-card"><span>🗜️</span>Image Compressor</a>
+      <a href="/tools/qr-code-generator/" class="sf-related-card"><span>📱</span>QR Code Generator</a>
+      <a href="/tools/heic-to-jpg/" class="sf-related-card"><span>📷</span>HEIC to JPG Converter</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-links">
       <a href="/about/">About</a>

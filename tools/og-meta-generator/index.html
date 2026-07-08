@@ -646,9 +646,24 @@
       .tool-wrap { padding: 0 16px 48px; }
       .hero h1 { font-size: 22px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/og-meta-generator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/og-meta-generator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/og-meta-generator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Open Graph Meta Tag Generator","description":"Generate Open Graph and Twitter Card meta tags for any webpage. Preview how your page looks on Google, Facebook, and Twitter. Free online meta tag generator, no account required.","url":"https://tools.stackfreeks.com/tools/og-meta-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What are Open Graph meta tags?","acceptedAnswer":{"@type":"Answer","text":"Open Graph (OG) meta tags are HTML snippets placed in a page's <head> that control how the page appears when shared on social media platforms like Facebook, LinkedIn, and Slack. They define the title, description, and image shown in link preview cards."}},{"@type":"Question","name":"What size should my OG image be?","acceptedAnswer":{"@type":"Answer","text":"The recommended OG image size is 1200 × 630 pixels (roughly 1.91:1 ratio). This works well across Facebook, Twitter (summary_large_image), and LinkedIn. For Twitter's \"summary\" card type, a 1:1 square image (at least 144 × 144 px) is used instead."}},{"@type":"Question","name":"Why isn't my OG image showing on Facebook?","acceptedAnswer":{"@type":"Answer","text":"Facebook caches OG data aggressively. After updating your meta tags, use the Facebook Sharing Debugger to force a cache refresh. Also ensure your image URL is publicly accessible and the server returns the correct Content-Type header."}},{"@type":"Question","name":"What is a Twitter Card?","acceptedAnswer":{"@type":"Answer","text":"Twitter Cards are Twitter's equivalent of OG tags — they control how your link looks when shared in a tweet. The most popular type is \"summary_large_image,\" which shows a large image with the title and description below. You must add Twitter Card meta tags separately from OG tags."}},{"@type":"Question","name":"Do meta tags affect SEO?","acceptedAnswer":{"@type":"Answer","text":"The <title> and <meta name=\"description\"> tags directly affect how your page appears in Google search results and can influence click-through rates. OG and Twitter Card tags don't directly influence rankings, but better social previews can drive more traffic and indirect SEO signals."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -970,7 +985,17 @@
 </div>
 
 <!-- Footer -->
-<footer>
+<!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/color-converter/" class="sf-related-card"><span>🌈</span>Color Converter</a>
+      <a href="/tools/px-rem-converter/" class="sf-related-card"><span>📐</span>PX to REM Converter</a>
+      <a href="/tools/css-filter-previewer/" class="sf-related-card"><span>🪄</span>CSS Filter Previewer</a>
+    </div>
+  </section>
+
+  <footer>
   <div class="footer-links">
     <a href="/about/">About</a>
     <a href="/privacy/">Privacy</a>

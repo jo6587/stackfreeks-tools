@@ -494,9 +494,24 @@
     .footer a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
     .footer a:hover { color: var(--text-2); opacity: 1; }
     .footer-links { display: flex; gap: 16px; align-items: center; }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/chmod-calculator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/chmod-calculator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/chmod-calculator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Chmod Calculator","description":"Calculate Linux file permissions with an interactive chmod calculator. Convert between symbolic (rwxrwxrwx), octal (755), and numeric formats instantly. Free, no account required.","url":"https://tools.stackfreeks.com/tools/chmod-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does chmod 755 mean?","acceptedAnswer":{"@type":"Answer","text":"chmod 755 sets Owner: read+write+execute (7), Group: read+execute (5), Others: read+execute (5). It is the standard permission for executables and directories that should be publicly readable but only writable by the owner."}},{"@type":"Question","name":"What is the difference between 644 and 755?","acceptedAnswer":{"@type":"Answer","text":"644 is for regular files — the owner can read and write, while group and others can only read. 755 adds execute permission, making it suitable for scripts, binaries, and directories (which require execute permission to be traversed)."}},{"@type":"Question","name":"What is the sticky bit?","acceptedAnswer":{"@type":"Answer","text":"The sticky bit (octal 1000, shown as t in the symbolic notation) restricts file deletion inside a directory to the file's owner only. It is commonly used on shared directories like /tmp to prevent users from deleting each other's files."}},{"@type":"Question","name":"How do I apply permissions recursively?","acceptedAnswer":{"@type":"Answer","text":"Enable the Recursive (-R) toggle above the command preview. This adds the -R flag so chmod -R 755 dirname applies the permission to the directory and all its contents. Use with caution — recursive chmod can break files that need different permissions."}},{"@type":"Question","name":"What permissions should SSH keys have?","acceptedAnswer":{"@type":"Answer","text":"Private SSH keys ( ~/.ssh/id_rsa ) must be 600 (owner read+write only). The ~/.ssh/ directory should be 700 . Public keys ( authorized_keys ) should be 644 . SSH will refuse to use a private key that is accessible by group or others."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -820,6 +835,16 @@
   </section>
 
   <!-- ── Vultr Banner ── -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/cron-builder/" class="sf-related-card"><span>⏰</span>Cron Expression Builder</a>
+      <a href="/tools/htpasswd-generator/" class="sf-related-card"><span>🔒</span>Htpasswd Generator</a>
+      <a href="/tools/subnet-calculator/" class="sf-related-card"><span>🧮</span>IP Subnet Calculator</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="container banner-inner">
       <div>

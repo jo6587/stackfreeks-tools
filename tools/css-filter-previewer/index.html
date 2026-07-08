@@ -453,7 +453,22 @@
       .footer-inner { flex-direction: column; align-items: center; text-align: center; }
       .related-card { flex-direction: column; align-items: flex-start; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"CSS Filter Previewer","description":"Preview and generate CSS filter effects in real-time. Adjust blur, brightness, contrast, saturation and more — copy the code instantly.","url":"https://tools.stackfreeks.com/tools/css-filter-previewer/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the CSS filter property?","acceptedAnswer":{"@type":"Answer","text":"The CSS filter property applies visual effects to an element — like blur, brightness adjustment, grayscale conversion, and more — directly in the browser without any image editing. It works on images, videos, backgrounds, and any HTML element."}},{"@type":"Question","name":"Why does the output only include some filter functions?","acceptedAnswer":{"@type":"Answer","text":"The tool omits filter functions that are at their default value (e.g. brightness(100%) and contrast(100%) have no visual effect). Only changed values are included to keep the generated CSS minimal and clean. If nothing is changed, it shows filter: none; ."}},{"@type":"Question","name":"What browsers support CSS filters?","acceptedAnswer":{"@type":"Answer","text":"CSS filters are supported in all modern browsers: Chrome, Firefox, Safari, Edge, and Opera. Global browser support is above 96%. No vendor prefix is needed for the standard filter property today."}},{"@type":"Question","name":"Can I apply CSS filters to background images?","acceptedAnswer":{"@type":"Answer","text":"Yes, but filter applies to the entire element including children. To filter only the background, use a pseudo-element ( ::before ) with the background and apply filter to that pseudo-element instead. Alternatively, CSS backdrop-filter applies effects to the area behind an element."}},{"@type":"Question","name":"Does using multiple filters affect performance?","acceptedAnswer":{"@type":"Answer","text":"CSS filters are GPU-accelerated in modern browsers, so they are generally fast. However, applying heavy filters (especially blur ) to large elements or animating them continuously can be expensive. For animations, prefer will-change: filter to hint the browser to promote the element to its own compositor layer."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -808,6 +823,16 @@
   </div>
 
   <!-- 9. Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/og-meta-generator/" class="sf-related-card"><span>🏷️</span>Open Graph Meta Tag Generator</a>
+      <a href="/tools/color-converter/" class="sf-related-card"><span>🌈</span>Color Converter</a>
+      <a href="/tools/px-rem-converter/" class="sf-related-card"><span>📐</span>PX to REM Converter</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-inner">
       <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>

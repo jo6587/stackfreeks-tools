@@ -584,9 +584,24 @@
       .footer-links { gap: 14px; }
       .now-dates { grid-template-columns: 1fr; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/timestamp-converter/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/timestamp-converter/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/timestamp-converter/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Unix Timestamp Converter","description":"Convert Unix timestamps to dates and back. See current epoch time live. Free online tool — no account needed, works in your browser.","url":"https://tools.stackfreeks.com/tools/timestamp-converter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a Unix timestamp?","acceptedAnswer":{"@type":"Answer","text":"A Unix timestamp (also called epoch time) is the number of seconds that have elapsed since January 1, 1970, 00:00:00 UTC — known as the Unix epoch. It is a single integer that represents any point in time unambiguously, regardless of timezone or locale. For example, the timestamp 1719100800 refers to June 23, 2024, 00:00:00 UTC."}},{"@type":"Question","name":"What is the current Unix timestamp?","acceptedAnswer":{"@type":"Answer","text":"The current Unix timestamp is shown live at the top of this page, updating every second. You can also get it in any language: JavaScript: Math.floor(Date.now() / 1000) , Python: import time; int(time.time()) , Bash: date +%s ."}},{"@type":"Question","name":"How do I convert a Unix timestamp to a readable date in JavaScript?","acceptedAnswer":{"@type":"Answer","text":"Use new Date(timestamp * 1000) to create a Date object from a seconds-based timestamp (multiply by 1000 to convert to milliseconds). Then call .toLocaleString() for local time, .toUTCString() for UTC, or .toISOString() for the ISO 8601 format. For example: new Date(1719100800 * 1000).toISOString() returns \"2024-06-23T00:00:00.000Z\" ."}},{"@type":"Question","name":"What's the difference between Unix timestamp in seconds vs milliseconds?","acceptedAnswer":{"@type":"Answer","text":"The standard Unix timestamp counts seconds (a 10-digit number in 2024, e.g. 1719100800 ). Many programming environments — including JavaScript's Date.now() — use milliseconds instead (a 13-digit number, e.g. 1719100800000 ). This converter auto-detects the unit: if the value is greater than 10,000,000,000 (1e10), it treats it as milliseconds."}},{"@type":"Question","name":"What is epoch time and why do developers use it?","acceptedAnswer":{"@type":"Answer","text":"Epoch time is another name for Unix time / Unix timestamp. Developers prefer it because it is a simple integer — easy to store in a database, compare, sort, and do arithmetic on. It has no timezone ambiguity, no daylight saving time complications, and is universally supported across programming languages, operating systems, and databases."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -851,6 +866,16 @@
   </section>
 
   <!-- Vultr Banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/password-generator/" class="sf-related-card"><span>🗝️</span>Password Generator</a>
+      <a href="/tools/base64-encoder/" class="sf-related-card"><span>🔤</span>Base64 Encoder / Decoder</a>
+      <a href="/tools/image-to-base64/" class="sf-related-card"><span>🖼️</span>Image to Base64 Encoder</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="banner-inner">
       <div>

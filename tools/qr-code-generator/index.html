@@ -470,9 +470,24 @@
       max-width: 860px;
       margin: 0 auto 48px;
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/qr-code-generator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/qr-code-generator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/qr-code-generator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"QR Code Generator","description":"Generate QR codes free online — no watermark, no account required. Customize colors, size, and error correction. Download PNG or SVG.","url":"https://tools.stackfreeks.com/tools/qr-code-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is error correction level and which should I choose?","acceptedAnswer":{"@type":"Answer","text":"Error correction allows a QR code to be read even when partially damaged or covered. Level L recovers 7% of data — good for clean digital screens. Level M (15%) is the default and suits most use cases. Level Q (25%) is ideal for QR codes on surfaces that may get scratched. Level H (30%) is best for logos overlaid on the QR code, but produces a denser, larger code."}},{"@type":"Question","name":"Can I create a QR code for free without watermarks?","acceptedAnswer":{"@type":"Answer","text":"Yes — completely. This tool generates QR codes entirely in your browser using open-source libraries. There are no watermarks, no subscriptions, no account required, and no usage limits. The downloaded PNG and SVG files are clean and ready to use."}},{"@type":"Question","name":"What's the best QR code size for printing?","acceptedAnswer":{"@type":"Answer","text":"For most printed materials, choose Large (1024px) to ensure the highest resolution output. As a rule of thumb, a QR code should be at least 2 cm × 2 cm when printed, and the scanning distance should be no more than 10× the code's width. For billboards or large posters, export as SVG and scale to any size without quality loss."}},{"@type":"Question","name":"Can I change the color of my QR code?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the Foreground color picker to change the module (dot) color, and the Background color picker for the quiet zone. Make sure there is sufficient contrast between the two colors — scanners need at least a 4:1 contrast ratio to reliably decode the code. Avoid reversing dark/light if the background becomes too close to the foreground."}},{"@type":"Question","name":"How do I create a QR code for a website URL?","acceptedAnswer":{"@type":"Answer","text":"Paste your full URL (including https://) into the input box. The QR code generates instantly. We recommend using HTTPS URLs and keeping them as short as possible — shorter URLs produce simpler, more scannable codes. You can also use a URL shortener before generating the QR code to reduce density."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -710,6 +725,16 @@
   </div>
 
   <!-- 9. Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/heic-to-jpg/" class="sf-related-card"><span>📷</span>HEIC to JPG Converter</a>
+      <a href="/tools/webp-to-jpg/" class="sf-related-card"><span>🌄</span>WebP to JPG Converter</a>
+      <a href="/tools/svg-to-png/" class="sf-related-card"><span>🎨</span>SVG to PNG Converter</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-links">
       <a href="/about/">About</a>

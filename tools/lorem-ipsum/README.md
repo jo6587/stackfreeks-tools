@@ -2,7 +2,7 @@
 
 A free, browser-based lorem ipsum placeholder text generator built for [StackFreeks Tools](https://tools.stackfreeks.com).
 
-**Live:** https://tools.stackfreeks.com/lorem-ipsum/
+**Live:** https://tools.stackfreeks.com/tools/lorem-ipsum/
 
 ## Features
 

@@ -456,9 +456,24 @@
       .base-slider { width: 100%; }
       .hero { padding: 36px 24px 28px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/px-rem-converter/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/px-rem-converter/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/px-rem-converter/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"PX to REM Converter","description":"Instantly convert px to rem and rem to px with a live preview. Adjust the root font size and get a reference table of common values. Free, no signup.","url":"https://tools.stackfreeks.com/tools/px-rem-converter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is rem?","acceptedAnswer":{"@type":"Answer","text":"\"Root em\" — a CSS unit relative to the font size of the root <html> element. Browsers default to 16px, so 1rem = 16px out of the box."}},{"@type":"Question","name":"Why use rem instead of px?","acceptedAnswer":{"@type":"Answer","text":"rem scales with the user's browser font settings, making your UI more accessible. It also makes global font scaling easy — change one root value and everything adjusts proportionally."}},{"@type":"Question","name":"What's the default base font size?","acceptedAnswer":{"@type":"Answer","text":"Browsers default to 16px. However, many projects set html { font-size: 62.5%; } to make 1rem = 10px for easier mental math. Always check your project's CSS reset or global styles."}},{"@type":"Question","name":"Can I use this for other CSS units?","acceptedAnswer":{"@type":"Answer","text":"This tool focuses on px ↔ rem conversion only. For other unit conversions (em, vw, pt, etc.) keep an eye on our other tools at StackFreeks Tools."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -693,6 +708,16 @@
   </section>
 
   <!-- Vultr banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/css-filter-previewer/" class="sf-related-card"><span>🪄</span>CSS Filter Previewer</a>
+      <a href="/tools/og-meta-generator/" class="sf-related-card"><span>🏷️</span>Open Graph Meta Tag Generator</a>
+      <a href="/tools/color-converter/" class="sf-related-card"><span>🌈</span>Color Converter</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>

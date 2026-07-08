@@ -524,9 +524,24 @@
     html[lang="en"] .lang-en { display: block; }
     html[lang="ko"] .lang-ko { display: block; }
     html:not([lang]) .lang-en { display: block; }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/word-counter/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/word-counter/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/word-counter/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Word Counter","description":"Count words, characters, sentences, and paragraphs instantly. Free online word counter with reading time estimate — no account required.","url":"https://tools.stackfreeks.com/tools/word-counter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does the word counter count words?","acceptedAnswer":{"@type":"Answer","text":"Words are counted by splitting text on whitespace (spaces, tabs, and newlines) and filtering out empty tokens. Hyphenated words like \"state-of-the-art\" are counted as one word."}},{"@type":"Question","name":"Is my text saved anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens entirely in your browser. Your text is never sent to any server, stored in a database, or logged anywhere. It disappears when you close the tab."}},{"@type":"Question","name":"What counts as a sentence?","acceptedAnswer":{"@type":"Answer","text":"A sentence is counted each time the text contains a period (.), exclamation mark (!), or question mark (?) followed by a space or end of text. Abbreviations and decimals may occasionally affect the count."}},{"@type":"Question","name":"How is reading time calculated?","acceptedAnswer":{"@type":"Answer","text":"Reading time is calculated at 200 words per minute, a widely cited average for online reading comprehension. For texts under 40 words, it displays \"&#60; 1 min\" instead of a fractional minute count."}},{"@type":"Question","name":"Can I use this for SEO content length checks?","acceptedAnswer":{"@type":"Answer","text":"Yes. The word counter is useful for hitting target lengths — blog posts often target 1,000–2,500 words for SEO. The keyword density panel also helps you check if you've used your target keyword at a healthy frequency (1–2%)."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -738,6 +753,16 @@
   </div>
 
   <!-- Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/text-case-converter/" class="sf-related-card"><span>🔡</span>Text Case Converter</a>
+      <a href="/tools/lorem-ipsum/" class="sf-related-card"><span>📄</span>Lorem Ipsum Generator</a>
+      <a href="/tools/diff-checker/" class="sf-related-card"><span>🔍</span>Diff Checker</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-links">
       <a href="/about/">About</a>

@@ -21,6 +21,8 @@ const SF_I18N = {
     cw_title: 'Get started on Cloudways',
     cw_sub: '3-day free trial, no credit card required — plus 30% off your first 3 months',
     cw_cta: 'Start free trial →',
+    // Related tools
+    related_title: 'Related Tools',
     // Footer
     footer_copy: '© 2026 StackFreeks',
   },
@@ -37,6 +39,8 @@ const SF_I18N = {
     cw_title: 'Cloudways로 시작하세요',
     cw_sub: '신용카드 없이 3일 무료 체험 — 첫 3개월 30% 할인',
     cw_cta: '무료 체험 시작 →',
+    // Related tools
+    related_title: '관련 툴',
     // Footer
     footer_copy: '© 2026 StackFreeks',
   }

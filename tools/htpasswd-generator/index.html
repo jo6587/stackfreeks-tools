@@ -563,9 +563,24 @@
     }
     .remove-user-btn:hover { color: var(--error); }
     .user-row-block .form-group:last-child { margin-bottom: 0; }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/htpasswd-generator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/htpasswd-generator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/htpasswd-generator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Htpasswd Generator","description":"Generate .htpasswd file entries for Apache and Nginx basic auth. Free online htpasswd generator — bcrypt, MD5, SHA1, and plain formats. Client-side only, no server.","url":"https://tools.stackfreeks.com/tools/htpasswd-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is an .htpasswd file?","acceptedAnswer":{"@type":"Answer","text":"An .htpasswd file is a flat text file that stores username and hashed password pairs, one per line. Apache and Nginx use it to enforce HTTP Basic Authentication — prompting visitors for a username and password before serving protected content."}},{"@type":"Question","name":"Which hash format should I use?","acceptedAnswer":{"@type":"Answer","text":"bcrypt is the best choice for new setups. It's slow by design (making brute-force attacks impractical) and is supported by Apache 2.4+ and Nginx via the auth_basic module with a bcrypt-capable PAM backend. MD5-APR ( $apr1$ ) is widely supported but weaker. SHA1 is legacy and should be avoided on new deployments. Plain text is never acceptable in production."}},{"@type":"Question","name":"Is bcrypt safe for .htpasswd?","acceptedAnswer":{"@type":"Answer","text":"Yes. bcrypt at cost factor 10 requires roughly 100ms per hash check, making automated credential-stuffing attacks extremely slow. Apache 2.4+ supports bcrypt natively via AuthType Basic + AuthUserFile . Note: Nginx does not natively verify bcrypt hashes — you need a bcrypt-capable PAM module or a reverse-proxy auth solution."}},{"@type":"Question","name":"How do I use .htpasswd with Nginx?","acceptedAnswer":{"@type":"Answer","text":"Add these directives to your Nginx server or location block: auth_basic \"Protected Area\"; auth_basic_user_file /etc/nginx/.htpasswd; Nginx supports MD5-APR and SHA1 natively. For bcrypt support, install the libnginx-mod-http-auth-pam package and configure PAM."}},{"@type":"Question","name":"Is my password sent to a server?","acceptedAnswer":{"@type":"Answer","text":"No. This tool runs entirely in your browser. All hashing is performed client-side using JavaScript — bcrypt via the bcryptjs library, SHA1 via the Web Crypto API, and MD5-APR via a self-contained pure-JS implementation. No data is transmitted anywhere."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -863,7 +878,17 @@
 </section>
 
 <!-- ── Vultr banner ── -->
-<section class="vultr-banner">
+<!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/subnet-calculator/" class="sf-related-card"><span>🧮</span>IP Subnet Calculator</a>
+      <a href="/tools/docker-ram-calculator/" class="sf-related-card"><span>🐳</span>Docker RAM Calculator</a>
+      <a href="/tools/dockerfile-generator/" class="sf-related-card"><span>📦</span>Dockerfile Generator</a>
+    </div>
+  </section>
+
+  <section class="vultr-banner">
   <div class="container banner-inner">
     <div>
       <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>

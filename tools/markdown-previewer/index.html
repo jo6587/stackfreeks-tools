@@ -499,9 +499,24 @@
       .toolbar { gap: 2px; }
       .tb-btn { padding: 4px 6px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/markdown-previewer/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/markdown-previewer/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/markdown-previewer/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Markdown Previewer","description":"Live Markdown preview tool with split-pane editor, quick-insert toolbar, HTML export, and dark theme. No install needed — runs entirely in your browser.","url":"https://tools.stackfreeks.com/tools/markdown-previewer/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What Markdown features are supported?","acceptedAnswer":{"@type":"Answer","text":"GFM (GitHub Flavored Markdown) — headings, bold, italic, lists, links, images, tables, code blocks, blockquotes, and horizontal rules."}},{"@type":"Question","name":"Does it support syntax highlighting?","acceptedAnswer":{"@type":"Answer","text":"Not currently — code blocks render clearly but without language-specific color highlighting."}},{"@type":"Question","name":"Can I paste from a file?","acceptedAnswer":{"@type":"Answer","text":"Yes — open your .md file in any text editor, select all, and paste directly into the left editor panel."}},{"@type":"Question","name":"Is my content saved?","acceptedAnswer":{"@type":"Answer","text":"No — content lives in your browser only while the tab is open. Nothing is sent to a server. Copy your work before closing."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -688,7 +703,17 @@
 </section>
 
 <!-- ── Vultr banner ── -->
-<section class="vultr-banner">
+<!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/regex-tester/" class="sf-related-card"><span>🎯</span>Regex Tester</a>
+      <a href="/tools/word-counter/" class="sf-related-card"><span>📝</span>Word Counter</a>
+      <a href="/tools/text-case-converter/" class="sf-related-card"><span>🔡</span>Text Case Converter</a>
+    </div>
+  </section>
+
+  <section class="vultr-banner">
   <div class="vultr-inner">
     <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
     <div class="vultr-text">

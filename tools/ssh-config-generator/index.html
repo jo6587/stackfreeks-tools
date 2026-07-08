@@ -674,7 +674,22 @@
       .related-card { flex-direction: column; align-items: flex-start; }
       .footer-links { gap: 14px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"SSH Config Generator","description":"Generate a ready-to-paste ~/.ssh/config file by filling in a simple form — no manual SSH config syntax lookup needed.","url":"https://tools.stackfreeks.com/tools/ssh-config-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the SSH config file and where does it live?","acceptedAnswer":{"@type":"Answer","text":"The SSH client config file is located at ~/.ssh/config on Linux and macOS. It lets you set per-host options — aliases, usernames, ports, key paths — so you can type ssh prod instead of ssh -i ~/.ssh/id_rsa ubuntu@192.168.1.100 -p 2222 . On Windows (OpenSSH), the path is C:\\Users\\YourName\\.ssh\\config ."}},{"@type":"Question","name":"When should I use ProxyJump in my SSH config?","acceptedAnswer":{"@type":"Answer","text":"Use ProxyJump when your target server is behind a firewall or private network and can only be reached via a bastion/jump host. Set the bastion's alias in the ProxyJump field, and SSH will automatically tunnel through it. Example: ProxyJump jumphost — where jumphost is another entry in your config. You can chain multiple hops with comma separation."}},{"@type":"Question","name":"What does ForwardAgent do and is it safe to enable?","acceptedAnswer":{"@type":"Answer","text":"ForwardAgent yes allows the remote server to use your local SSH keys — useful when you need to git pull or hop to another server from the remote without copying your private key there. However, it carries risk: a compromised remote host with root access could abuse your agent socket. Only enable it for trusted hosts, and consider ProxyJump as a safer alternative for multi-hop SSH."}},{"@type":"Question","name":"What is ServerAliveInterval and why do SSH sessions time out?","acceptedAnswer":{"@type":"Answer","text":"Many firewalls and NAT routers silently drop idle TCP connections after a timeout (often 5–15 minutes). ServerAliveInterval 60 tells your SSH client to send a keepalive packet every 60 seconds, preventing the connection from being dropped. Pair it with ServerAliveCountMax 3 (added manually) to disconnect cleanly if 3 keepalives go unanswered."}},{"@type":"Question","name":"Does this tool send my server details anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Everything runs entirely in your browser using JavaScript. Your IP addresses, hostnames, usernames, and key paths are never transmitted to any server. Close the tab and the data is gone."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -966,6 +981,16 @@
   </section>
 
   <!-- Vultr Banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/firewall-rule-builder/" class="sf-related-card"><span>🔥</span>Firewall Rule Builder</a>
+      <a href="/tools/curl-command-generator/" class="sf-related-card"><span>🌐</span>curl Command Generator</a>
+      <a href="/tools/chmod-calculator/" class="sf-related-card"><span>🔐</span>Chmod Calculator</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <div>

@@ -424,9 +424,24 @@
       .related { padding: 0 16px 40px; }
       .results-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/heic-to-jpg/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/heic-to-jpg/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/heic-to-jpg/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"HEIC to JPG Converter","description":"Convert HEIC photos to JPG free online. No upload to server — works entirely in your browser. Supports batch conversion of multiple HEIC files.","url":"https://tools.stackfreeks.com/tools/heic-to-jpg/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a HEIC file?","acceptedAnswer":{"@type":"Answer","text":"HEIC (High Efficiency Image Container) is the default photo format used by iPhones since iOS 11. It uses the HEIF standard to store images at roughly half the file size of JPG while maintaining similar visual quality. Apple adopted it to save storage on devices, but the format is not universally supported outside the Apple ecosystem."}},{"@type":"Question","name":"Why can't I open HEIC files on Windows or Android?","acceptedAnswer":{"@type":"Answer","text":"Windows and Android do not natively support the HEIC format. On Windows 10/11 you can install the optional \"HEIC Image Extensions\" codec from the Microsoft Store, but many apps still don't recognize the format. On Android, most gallery apps simply don't support HEIC. Converting HEIC to JPG is the most reliable way to ensure broad compatibility across all platforms and devices."}},{"@type":"Question","name":"Does converting HEIC to JPG reduce quality?","acceptedAnswer":{"@type":"Answer","text":"There is a small, often imperceptible quality loss when converting HEIC to JPG, because JPG uses lossy compression. At the default 92% quality setting in this tool, the output is visually nearly identical to the original HEIC. You can increase the quality slider to 100% for a lossless-looking output, though the file size will be larger. HEIC files converted at 92% quality typically produce JPGs that are 10–30% larger in file size than the original HEIC."}},{"@type":"Question","name":"Is this HEIC converter free with no file size limit?","acceptedAnswer":{"@type":"Answer","text":"Yes. This tool is completely free and there is no file size limit. Since conversion runs entirely in your browser using the heic2any library, the only limit is the available memory in your device. You can convert large RAW-quality HEIC photos from any iPhone model without restrictions and without creating an account."}},{"@type":"Question","name":"Can I convert multiple HEIC files at once?","acceptedAnswer":{"@type":"Answer","text":"Yes. Click the drop zone and select multiple files at once (hold Shift or Cmd/Ctrl to multi-select), or drag a batch of HEIC files onto the drop zone. Each file is converted in parallel and displays its own preview card. Once all conversions are done, the \"Download All\" button appears for one-click batch export."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -614,6 +629,16 @@
   </aside>
 
   <!-- 9. Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/webp-to-jpg/" class="sf-related-card"><span>🌄</span>WebP to JPG Converter</a>
+      <a href="/tools/svg-to-png/" class="sf-related-card"><span>🎨</span>SVG to PNG Converter</a>
+      <a href="/tools/exif-remover/" class="sf-related-card"><span>🧹</span>EXIF Data Remover</a>
+    </div>
+  </section>
+
   <footer class="footer">
     <nav class="footer-links">
       <a href="/about/">About</a>

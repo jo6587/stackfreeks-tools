@@ -478,9 +478,24 @@
       .controls { gap: 12px; }
       .results-grid { grid-template-columns: 1fr; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/svg-to-png/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/svg-to-png/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/svg-to-png/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"SVG to PNG Converter","description":"Convert SVG to PNG at 1x, 2x, or 4x resolution. Export with transparent or white background. Free, no account, works in your browser.","url":"https://tools.stackfreeks.com/tools/svg-to-png/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I convert an SVG to PNG without losing quality?","acceptedAnswer":{"@type":"Answer","text":"SVG is a vector format, so it scales losslessly at any size. This tool renders your SVG onto an HTML5 Canvas at your chosen resolution — using 2x or 4x scale ensures the exported PNG looks sharp even on high-density displays. The conversion happens entirely in your browser using the Canvas API, preserving all colors, gradients, and shapes exactly."}},{"@type":"Question","name":"What resolution should I use when converting SVG to PNG?","acceptedAnswer":{"@type":"Answer","text":"For standard web use, 1x matches the SVG's native viewBox dimensions. For retina and HiDPI screens (most modern phones and laptops), choose 2x — it doubles each dimension, giving 4× more pixels. For high-quality print or marketing materials, use 4x. For example, a 100×100 SVG exported at 4x becomes a 400×400 PNG — more than enough for most print contexts at 150 DPI."}},{"@type":"Question","name":"Can I convert SVG to transparent PNG?","acceptedAnswer":{"@type":"Answer","text":"Yes — Transparent is the default background option. The Canvas is not filled with any color, so all areas outside your SVG artwork remain fully transparent (alpha = 0). This is ideal for icons you plan to place over colored backgrounds in apps, websites, or design tools like Figma. Toggle to White background if you need an opaque export for email or document use."}},{"@type":"Question","name":"Why does my SVG look blurry when exported as PNG?","acceptedAnswer":{"@type":"Answer","text":"Blurriness usually happens when the SVG is exported at too small a resolution and then displayed at a larger size. Try increasing the scale to 2x or 4x before downloading. Another cause is missing width/height or viewBox attributes in the SVG source — this tool defaults to 512×512 in that case, but you can edit the SVG file to add explicit dimensions for better results."}},{"@type":"Question","name":"What's the difference between SVG and PNG? When should I use each?","acceptedAnswer":{"@type":"Answer","text":"SVG (Scalable Vector Graphics) is resolution-independent — it's defined by math, not pixels, so it looks crisp at any size. Use SVG for logos, icons, and illustrations in web and UI contexts where you control the environment. PNG (Portable Network Graphics) is a raster format — fixed pixels with lossless compression and transparency support. Use PNG when you need broad compatibility: app stores (Apple, Google Play), email clients, Microsoft Office documents, or any platform that doesn't support SVG."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -683,6 +698,16 @@
   </div>
 
   <!-- 9. Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/exif-remover/" class="sf-related-card"><span>🧹</span>EXIF Data Remover</a>
+      <a href="/tools/image-compressor/" class="sf-related-card"><span>🗜️</span>Image Compressor</a>
+      <a href="/tools/qr-code-generator/" class="sf-related-card"><span>📱</span>QR Code Generator</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-links">
       <a href="/about/">About</a>

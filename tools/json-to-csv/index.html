@@ -361,9 +361,24 @@
       footer { padding: 20px 16px; }
       .tabs { flex-wrap: wrap; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/json-to-csv/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/json-to-csv/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/json-to-csv/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"JSON to CSV Converter","description":"Convert JSON arrays to CSV online for free. Also convert CSV back to JSON. No account required, works entirely in your browser.","url":"https://tools.stackfreeks.com/tools/json-to-csv/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What JSON format does this converter support?","acceptedAnswer":{"@type":"Answer","text":"This tool supports a JSON array of objects — the most common format for data export and APIs. Each object in the array becomes one row in the CSV. The keys of the first object are used as the header row. Flat objects work best; nested objects are serialized as a JSON string in the CSV cell."}},{"@type":"Question","name":"How do I convert a JSON file to CSV for Excel?","acceptedAnswer":{"@type":"Answer","text":"Paste your JSON into the \"JSON → CSV\" tab and click Convert. Then click \"Download .csv\". Open Excel, go to File → Open, select the downloaded file, and Excel will import it automatically. Make sure your JSON is an array of flat objects for the best compatibility with Excel columns."}},{"@type":"Question","name":"What happens to nested JSON objects when converting to CSV?","acceptedAnswer":{"@type":"Answer","text":"CSV is a flat format, so nested objects and sub-arrays cannot be represented as separate columns. This converter handles them gracefully: nested objects are serialized with JSON.stringify(), and array values are joined with a semicolon. You can always split these cells further in Excel or a script after importing."}},{"@type":"Question","name":"Can this tool handle large JSON files?","acceptedAnswer":{"@type":"Answer","text":"Yes — because everything runs client-side in your browser, your data never leaves your machine. Performance depends on your device, but most modern browsers handle tens of thousands of rows without issues. For very large files (100k+ rows), consider splitting them first or using a command-line tool like jq."}},{"@type":"Question","name":"Is there a free way to convert CSV back to JSON online?","acceptedAnswer":{"@type":"Answer","text":"Yes — just switch to the \"CSV → JSON\" tab on this page. Paste your CSV (with a header row), click Convert, and the tool outputs a formatted JSON array. Quoted fields containing commas are handled correctly. Download the result as a .json file or copy it directly to your clipboard."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -575,6 +590,16 @@
   </div>
 
   <!-- 9. Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/timestamp-converter/" class="sf-related-card"><span>🕐</span>Unix Timestamp Converter</a>
+      <a href="/tools/password-generator/" class="sf-related-card"><span>🗝️</span>Password Generator</a>
+      <a href="/tools/base64-encoder/" class="sf-related-card"><span>🔤</span>Base64 Encoder / Decoder</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-links">
       <a href="/about/">About</a>

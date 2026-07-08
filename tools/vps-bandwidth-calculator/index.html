@@ -590,9 +590,24 @@
       .related-card { flex-direction: column; align-items: flex-start; }
       .footer-links { gap: 14px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"VPS Bandwidth Calculator","description":"Calculate your VPS bandwidth usage and overage costs for Vultr, Hetzner, and DigitalOcean. Estimate from monthly visitors or enter GB directly.","url":"https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What happens when I exceed my VPS bandwidth limit?","acceptedAnswer":{"@type":"Answer","text":"It depends on the provider. Vultr and DigitalOcean charge overage at $0.01 per GB above the included amount — so a 100 GB overage costs $1. Hetzner either charges €1 per TB overage or throttles your speed to 1 Mbps once the limit is hit, depending on your plan. Some providers may suspend your server if you go significantly over."}},{"@type":"Question","name":"How do I find out my actual VPS bandwidth usage?","acceptedAnswer":{"@type":"Answer","text":"Log in to your provider's control panel. Vultr shows bandwidth usage in the server detail page under \"Bandwidth.\" DigitalOcean shows it in the Droplet's \"Graphs\" tab. Hetzner displays it in the server overview. You can also check from within your server using tools like vnstat (Linux) for ongoing monitoring."}},{"@type":"Question","name":"Why does Hetzner include so much more bandwidth than Vultr or DigitalOcean?","acceptedAnswer":{"@type":"Answer","text":"Hetzner's European data centers benefit from much lower transit costs compared to US-based providers. Their entry plans include 20 TB of traffic, making them an excellent choice for bandwidth-heavy applications like media streaming, large file downloads, or high-traffic websites — especially for European audiences."}},{"@type":"Question","name":"Does inbound traffic (uploads to my server) count against my bandwidth limit?","acceptedAnswer":{"@type":"Answer","text":"Generally no. All three providers (Vultr, Hetzner, DigitalOcean) count only outbound (egress) traffic against your monthly allowance. Incoming traffic — file uploads, git pushes, database backups — is typically free and unlimited. This calculator estimates your outbound usage only."}},{"@type":"Question","name":"How accurate is the \"By Website\" bandwidth estimate?","acceptedAnswer":{"@type":"Answer","text":"The estimate uses the formula: visitors × pages per visit × average page size . It gives a reasonable ballpark but actual usage varies — some visitors bounce after one page, crawlers and bots add extra traffic, and media-heavy pages can be much larger. Use it as a starting estimate and monitor real usage once your site is live."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -807,6 +822,16 @@
   </section>
 
   <!-- Vultr Banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/server-spec-recommender/" class="sf-related-card"><span>🖥️</span>Server Spec Recommender</a>
+      <a href="/tools/vps-migration-checklist/" class="sf-related-card"><span>✅</span>VPS Migration Checklist</a>
+      <a href="/tools/game-server-cost-calculator/" class="sf-related-card"><span>🎮</span>Game Server Cost Calculator</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <div>

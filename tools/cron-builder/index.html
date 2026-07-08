@@ -653,9 +653,24 @@
     @media (max-width: 480px) {
       .fields-grid { grid-template-columns: 1fr; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/cron-builder/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/cron-builder/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/cron-builder/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Cron Expression Builder","description":"Build and validate cron expressions with a visual editor. See the next 5 run times instantly. Supports standard cron syntax for Linux, VPS, and server schedulers.","url":"https://tools.stackfreeks.com/tools/cron-builder/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is cron syntax and how do the 5 fields work?","acceptedAnswer":{"@type":"Answer","text":"A standard cron expression has 5 fields separated by spaces: minute hour day-of-month month day-of-week . Each field can be a specific number, a wildcard * (meaning \"every\"), a step value */n (every n units), a list 1,5,10 , or a range 1-5 . For example, 30 9 * * 1-5 runs at 9:30 AM every weekday."}},{"@type":"Question","name":"What is the difference between day-of-month and day-of-week?","acceptedAnswer":{"@type":"Answer","text":"Day-of-month (field 3) targets specific dates in a month — like the 1st or 15th. Day-of-week (field 5) targets specific weekdays — like Monday (1) or Friday (5). If both are set to non-wildcard values, most cron implementations run the job when either condition is true (OR logic). To avoid confusion, it's common practice to set one to * and only use the other."}},{"@type":"Question","name":"How do I run a cron job on a VPS or Linux server?","acceptedAnswer":{"@type":"Answer","text":"SSH into your server and run crontab -e to open the cron editor. Add a line with your expression followed by the command to run, for example: 0 2 * * * /home/user/backup.sh . Save and exit — cron will start scheduling immediately. You can verify active jobs with crontab -l . Make sure your script has execute permissions ( chmod +x script.sh ) and uses absolute paths for commands."}},{"@type":"Question","name":"Does cron use UTC or my server's local timezone?","acceptedAnswer":{"@type":"Answer","text":"By default, cron uses the system timezone of your server — which may be UTC, especially on cloud VPS instances. You can check with timedatectl or date . To set a specific timezone for a crontab, add CRON_TZ=America/New_York at the top of your crontab file (supported by most modern cron implementations). This tool shows run times in your browser's local timezone, not your server's timezone."}},{"@type":"Question","name":"What are the most common cron mistakes to avoid?","acceptedAnswer":{"@type":"Answer","text":"1. Wrong timezone — your server likely runs UTC; schedule accordingly. 2. Relative paths — always use absolute paths like /usr/bin/python3 instead of just python3 . 3. Missing execute permission — run chmod +x yourscript.sh . 4. No output logging — redirect output to a log file: command >> /var/log/myjob.log 2&&1 . 5. Forgetting the newline — crontab files must end with a newline or the last entry may be ignored."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -951,6 +966,16 @@
   </section>
 
   <!-- Vultr Banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/htpasswd-generator/" class="sf-related-card"><span>🔒</span>Htpasswd Generator</a>
+      <a href="/tools/subnet-calculator/" class="sf-related-card"><span>🧮</span>IP Subnet Calculator</a>
+      <a href="/tools/docker-ram-calculator/" class="sf-related-card"><span>🐳</span>Docker RAM Calculator</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <div>

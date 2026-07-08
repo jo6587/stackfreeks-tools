@@ -704,7 +704,22 @@
 
       .footer-links { gap: 14px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Game Server Cost Calculator","description":"Estimate your game server hosting cost by player count. Supports Minecraft, Valheim, Rust, ARK, CS2 and more. Find the right Vultr VPS plan instantly.","url":"https://tools.stackfreeks.com/tools/game-server-cost-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much RAM does a Minecraft server need?","acceptedAnswer":{"@type":"Answer","text":"A Minecraft Java server typically needs about 512 MB of RAM per 10 players as a baseline, plus 1–2 GB for the JVM itself. For a 20-player server without mods, expect 2–3 GB total. With plugins or mods, plan for at least 4 GB."}},{"@type":"Question","name":"Is Vultr good for game server hosting?","acceptedAnswer":{"@type":"Answer","text":"Yes. Vultr offers high-frequency compute instances with NVMe SSDs and data centers worldwide, making it a solid choice for game servers. The Cloud Compute plans are great for small-to-medium game servers, while High Frequency plans suit demanding games like Rust or ARK."}},{"@type":"Question","name":"Why does Rust need so much RAM?","acceptedAnswer":{"@type":"Answer","text":"Rust has a large open-world map and complex server-side physics simulation. The world state, entity tracking, and procedural terrain data all consume significant RAM. A 50-player Rust server can easily use 12–16 GB of RAM, making it one of the most resource-intensive games to host."}},{"@type":"Question","name":"Do I need dedicated CPU cores for a game server?","acceptedAnswer":{"@type":"Answer","text":"Most game servers are single-threaded for core logic, so raw single-core performance matters more than core count. However, more vCPUs help with background tasks, OS overhead, and multi-threaded mods. The calculator recommends 1 core per 20 players as a practical baseline."}},{"@type":"Question","name":"How accurate are these estimates?","acceptedAnswer":{"@type":"Answer","text":"These are community-based estimates for typical gameplay. Actual RAM usage varies with map size, installed mods, tick rate, and player behavior. We recommend starting with the \"one up\" plan from the recommendation to have headroom, then downsizing if resources allow."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -964,7 +979,7 @@
     <div class="lang-ko"><h2 class="section-title">관련 가이드</h2></div>
 
     <div class="guides-grid">
-      <a href="https://stackfreeks.com/vps-comparison/" class="guide-card" target="_blank" rel="noopener">
+      <a href="https://stackfreeks.com/" class="guide-card" target="_blank" rel="noopener">
         <span class="guide-icon">📊</span>
         <div class="guide-info">
           <div class="lang-en">
@@ -977,7 +992,7 @@
           </div>
         </div>
       </a>
-      <a href="https://stackfreeks.com/game-server-hosting-guide/" class="guide-card" target="_blank" rel="noopener">
+      <a href="https://stackfreeks.com/" class="guide-card" target="_blank" rel="noopener">
         <span class="guide-icon">🎮</span>
         <div class="guide-info">
           <div class="lang-en">
@@ -1020,6 +1035,16 @@
   </section>
 
   <!-- Vultr Banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/sla-uptime-calculator/" class="sf-related-card"><span>⏱️</span>SLA Uptime Calculator</a>
+      <a href="/tools/object-storage-calculator/" class="sf-related-card"><span>🗄️</span>Object Storage Cost Calculator</a>
+      <a href="/tools/vps-cost-calculator/" class="sf-related-card"><span>💰</span>VPS Cost Calculator</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="container banner-inner">
       <div>

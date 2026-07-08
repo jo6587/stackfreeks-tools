@@ -312,7 +312,22 @@
     @media (max-width: 640px) {
       .cmd-block { font-size: 11px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"curl Command Generator","description":"Build curl commands visually. Set method, headers, auth & body — get a ready-to-run curl command. Perfect for REST APIs and VPS testing.","url":"https://tools.stackfreeks.com/tools/curl-command-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I send a POST request with JSON using curl?","acceptedAnswer":{"@type":"Answer","text":"Select POST as the method, paste your JSON in the Body field, and set Content-Type to application/json . The generator will add -H \"Content-Type: application/json\" and -d '{\"key\":\"value\"}' automatically."}},{"@type":"Question","name":"What is the -L flag in curl?","acceptedAnswer":{"@type":"Answer","text":"The -L flag tells curl to follow HTTP redirects (301, 302, etc.). Without it, curl stops at the redirect response and doesn't fetch the final destination. It's enabled by default in this generator."}},{"@type":"Question","name":"How do I test an API on my VPS with curl?","acceptedAnswer":{"@type":"Answer","text":"curl is pre-installed on most Linux VPS distributions. SSH into your server and run the generated command directly. For APIs deployed on the same VPS, you can use localhost or 127.0.0.1 as the host to avoid network round-trips."}},{"@type":"Question","name":"How do I add a Bearer token to a curl request?","acceptedAnswer":{"@type":"Answer","text":"Select \"Bearer Token\" from the Auth dropdown and paste your token. The generator adds -H \"Authorization: Bearer YOUR_TOKEN\" to the command. Alternatively, select \"API Key Header\" to set a custom header name like X-API-Key ."}},{"@type":"Question","name":"When should I use -k (insecure) in curl?","acceptedAnswer":{"@type":"Answer","text":"The -k flag skips TLS certificate verification. Only use it in development environments with self-signed certs — never in production scripts, as it disables the main protection against man-in-the-middle attacks. For staging VPS environments, install a valid certificate (e.g. Let's Encrypt) instead."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -634,7 +649,17 @@
 </section>
 
 <!-- Vultr Banner -->
-<section class="vultr-banner">
+<!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/chmod-calculator/" class="sf-related-card"><span>🔐</span>Chmod Calculator</a>
+      <a href="/tools/cron-builder/" class="sf-related-card"><span>⏰</span>Cron Expression Builder</a>
+      <a href="/tools/htpasswd-generator/" class="sf-related-card"><span>🔒</span>Htpasswd Generator</a>
+    </div>
+  </section>
+
+  <section class="vultr-banner">
   <div class="container banner-inner">
     <div>
       <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>

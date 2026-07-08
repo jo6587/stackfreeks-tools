@@ -396,9 +396,24 @@
     .lang-ko { display: none; }
     html[lang="ko"] .lang-en { display: none; }
     html[lang="ko"] .lang-ko { display: block; }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/json-formatter/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/json-formatter/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/json-formatter/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"JSON Formatter & Validator","description":"Format, beautify, and validate JSON online for free. Instant syntax highlighting, minify support. No account needed, works in your browser.","url":"https://tools.stackfreeks.com/tools/json-formatter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is JSON formatting and why does it matter?","acceptedAnswer":{"@type":"Answer","text":"JSON (JavaScript Object Notation) formatting adds consistent indentation and line breaks to make data human-readable. Raw or minified JSON is valid but nearly impossible to read or debug. A formatter restructures it visually so you can quickly understand the data hierarchy, spot missing commas, and find mismatched brackets."}},{"@type":"Question","name":"How do I validate JSON online for free?","acceptedAnswer":{"@type":"Answer","text":"Paste your JSON into the input panel above and click Validate . This tool uses the browser's native JSON.parse() to check your data. If valid, you'll see a green confirmation banner with key and depth counts. If invalid, the exact error message and character position are shown so you can pinpoint the issue immediately."}},{"@type":"Question","name":"What is the difference between Format and Minify?","acceptedAnswer":{"@type":"Answer","text":"Format (Beautify) expands your JSON with indentation and newlines, making it easy to read. Minify does the opposite — it strips all whitespace to produce the smallest possible string. Formatted JSON is ideal for debugging and reading; minified JSON is better for API responses and config files where every byte counts."}},{"@type":"Question","name":"How do I fix a JSON syntax error?","acceptedAnswer":{"@type":"Answer","text":"Common JSON errors include: missing or extra commas, unquoted keys (JSON requires double-quoted keys), single-quoted strings (only double quotes are valid), trailing commas after the last item, and using undefined or NaN as values. Click Validate to see the error position, then correct the issue in the input panel."}},{"@type":"Question","name":"Can I use this JSON formatter for large files?","acceptedAnswer":{"@type":"Answer","text":"Yes — everything runs entirely in your browser using JavaScript's built-in JSON parser, so there's no upload limit and your data never leaves your machine. For very large files (over a few MB), syntax highlighting may be slower since the DOM is rebuilt on each format. The output is still correct; you may just notice a brief delay."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -584,6 +599,16 @@
   </div>
 
   <!-- Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/json-to-csv/" class="sf-related-card"><span>📊</span>JSON to CSV Converter</a>
+      <a href="/tools/timestamp-converter/" class="sf-related-card"><span>🕐</span>Unix Timestamp Converter</a>
+      <a href="/tools/password-generator/" class="sf-related-card"><span>🗝️</span>Password Generator</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-inner">
       <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>

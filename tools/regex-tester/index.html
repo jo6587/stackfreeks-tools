@@ -539,9 +539,24 @@
       .vultr-inner { flex-direction: column; align-items: flex-start; }
       .footer-inner { justify-content: center; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/regex-tester/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/regex-tester/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/regex-tester/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Regex Tester","description":"Test and debug regular expressions instantly in your browser. Live match highlighting, flag toggles, capture group viewer, and a regex cheat sheet — no signup needed.","url":"https://tools.stackfreeks.com/tools/regex-tester/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What regex flavor does this use?","acceptedAnswer":{"@type":"Answer","text":"JavaScript's built-in RegExp — fully compatible with JavaScript, Node.js, and most modern engines (V8, SpiderMonkey). If you're writing regex for another language, minor syntax differences may apply."}},{"@type":"Question","name":"What does the g flag do?","acceptedAnswer":{"@type":"Answer","text":"Global — makes the engine find all matches in the test string instead of stopping at the first one. Without g , only the first match is returned and highlighted."}},{"@type":"Question","name":"What does the s flag do?","acceptedAnswer":{"@type":"Answer","text":"Dotall — makes . match newline characters ( \\n ) too. Without s , a dot only matches characters on the same line. Introduced in ES2018, supported in all modern browsers."}},{"@type":"Question","name":"Can I use capture groups?","acceptedAnswer":{"@type":"Answer","text":"Yes — use parentheses like (\\w+) to define capture groups. Each match card in the results panel shows the matched text plus any captured groups in order."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -813,6 +828,16 @@
   </section>
 
   <!-- 9. Vultr affiliate banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/word-counter/" class="sf-related-card"><span>📝</span>Word Counter</a>
+      <a href="/tools/text-case-converter/" class="sf-related-card"><span>🔡</span>Text Case Converter</a>
+      <a href="/tools/lorem-ipsum/" class="sf-related-card"><span>📄</span>Lorem Ipsum Generator</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>

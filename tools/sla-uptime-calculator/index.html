@@ -555,7 +555,22 @@
       .footer-links { gap: 14px; }
       .vultr-banner { padding: 24px 16px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"SLA Uptime Calculator","description":"Calculate allowed downtime for any SLA percentage. See yearly, monthly, weekly and daily downtime budgets for 99.9%, 99.99%, and five nines SLAs.","url":"https://tools.stackfreeks.com/tools/sla-uptime-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does \"nines\" mean in SLA uptime?","acceptedAnswer":{"@type":"Answer","text":"\"Nines\" refers to how many 9s appear in the uptime percentage. Two Nines = 99% uptime (allows ~87.6 h/year downtime). Three Nines = 99.9% (~8.77 h/year). Four Nines = 99.99% (~52.6 min/year). Five Nines = 99.999% (~5.26 min/year). Each additional nine reduces the allowed downtime by roughly a factor of 10."}},{"@type":"Question","name":"How is the downtime budget calculated?","acceptedAnswer":{"@type":"Answer","text":"The formula is: downtime = (1 − SLA/100) × period in seconds . Periods used are: year = 365.25 days, month = 30.44 days (average), week = 7 days, day = 24 hours. For example, at 99.9% SLA: (1 − 0.999) × 365.25 × 86400 ≈ 31,557 seconds ≈ 8 hours 45 minutes 57 seconds per year."}},{"@type":"Question","name":"Is an SLA guarantee the same as actual uptime?","acceptedAnswer":{"@type":"Answer","text":"No. An SLA is a contractual commitment — a floor, not a ceiling. Cloud providers often achieve much higher actual uptime than their stated SLA. The SLA defines the threshold below which you are entitled to service credits or penalties. Always read the fine print: many SLAs exclude planned maintenance, force majeure, and issues caused by the customer."}},{"@type":"Question","name":"What SLA should I require from a VPS or cloud provider?","acceptedAnswer":{"@type":"Answer","text":"For most production workloads, 99.9% (Three Nines, ~8.77 h/year) is the baseline. High-traffic e-commerce or financial applications typically require 99.99% (~52.6 min/year). Mission-critical systems that cannot tolerate even minutes of downtime annually aim for 99.999% (Five Nines). Remember: achieving higher nines requires redundant infrastructure (load balancers, multi-region, hot standbys) — not just a better SLA contract."}},{"@type":"Question","name":"How do composite SLAs work across multiple services?","acceptedAnswer":{"@type":"Answer","text":"When your system depends on multiple independent services, the composite uptime is the product of all individual uptimes. For example, if Service A has 99.9% uptime and Service B has 99.9% uptime, your composite SLA is 99.9% × 99.9% = 99.8%. This means adding dependencies degrades overall availability — a strong argument for keeping architectures simple and using redundancy at each layer."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -846,6 +861,16 @@
   </section>
 
   <!-- Vultr Banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/object-storage-calculator/" class="sf-related-card"><span>🗄️</span>Object Storage Cost Calculator</a>
+      <a href="/tools/vps-cost-calculator/" class="sf-related-card"><span>💰</span>VPS Cost Calculator</a>
+      <a href="/tools/vps-bandwidth-calculator/" class="sf-related-card"><span>📶</span>VPS Bandwidth Calculator</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="banner-inner">
       <div>

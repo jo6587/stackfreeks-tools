@@ -488,9 +488,24 @@
       .related-card { flex-direction: column; align-items: flex-start; }
       .footer-links { gap: 14px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/vps-cost-calculator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/vps-cost-calculator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/vps-cost-calculator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"VPS Cost Calculator","description":"Compare monthly VPS costs across Vultr, Hetzner, and DigitalOcean. Filter by RAM and CPU to find the best-value plan instantly.","url":"https://tools.stackfreeks.com/tools/vps-cost-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a VPS?","acceptedAnswer":{"@type":"Answer","text":"A Virtual Private Server (VPS) is a virtualized server you rent from a cloud provider. Unlike shared hosting, you get dedicated CPU and RAM resources. VPS plans are ideal for running web apps, APIs, databases, game servers, or any always-on workload."}},{"@type":"Question","name":"Why is Hetzner so much cheaper than Vultr or DigitalOcean?","acceptedAnswer":{"@type":"Answer","text":"Hetzner operates primarily from data centers in Europe (Germany, Finland) and the US. Their lower operating costs and data center locations let them offer significantly lower prices. The trade-off: fewer regions and slightly longer latency for users in Asia or South America."}},{"@type":"Question","name":"How much RAM do I actually need?","acceptedAnswer":{"@type":"Answer","text":"1 GB is enough for a lightweight static site or small Node.js/Python app. 2–4 GB covers most production web apps and small databases (MySQL, PostgreSQL). 8 GB+ is recommended for self-hosted tools, larger databases, or running multiple services on one server."}},{"@type":"Question","name":"Is storage (SSD) included in the monthly price?","acceptedAnswer":{"@type":"Answer","text":"Yes — all plans listed include local NVMe/SSD storage at no extra cost. However, if you need additional block storage or object storage (like S3), providers charge separately for that."}},{"@type":"Question","name":"Are these prices up to date?","acceptedAnswer":{"@type":"Answer","text":"Prices are manually maintained and reflect approximate costs as of mid-2025. Cloud providers change pricing occasionally. Always verify on the provider's pricing page before purchasing."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -671,6 +686,16 @@
   </section>
 
   <!-- Vultr Banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/vps-bandwidth-calculator/" class="sf-related-card"><span>📶</span>VPS Bandwidth Calculator</a>
+      <a href="/tools/server-spec-recommender/" class="sf-related-card"><span>🖥️</span>Server Spec Recommender</a>
+      <a href="/tools/vps-migration-checklist/" class="sf-related-card"><span>✅</span>VPS Migration Checklist</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <div>

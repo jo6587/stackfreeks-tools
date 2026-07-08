@@ -563,9 +563,24 @@
       .pw-display { font-size: 16px; }
       .btn-row { flex-wrap: wrap; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/password-generator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/password-generator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/password-generator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Password Generator","description":"Generate strong random passwords free. Customize length and character types. Generated in your browser — never stored or sent anywhere.","url":"https://tools.stackfreeks.com/tools/password-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How long should a strong password be?","acceptedAnswer":{"@type":"Answer","text":"Security experts recommend at least 16 characters for a strong password. Shorter passwords (under 12 characters) can be cracked much faster with modern hardware. For critical accounts like banking or email, aim for 20+ characters."}},{"@type":"Question","name":"Is this password generator safe to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. All passwords are generated entirely in your browser using the crypto.getRandomValues() Web Crypto API — a cryptographically secure random number generator. No data is ever sent to a server, logged, or stored. You can even use this tool offline."}},{"@type":"Question","name":"What characters should a strong password include?","acceptedAnswer":{"@type":"Answer","text":"A strong password should include all four character types: uppercase letters (A–Z), lowercase letters (a–z), digits (0–9), and special symbols (!@#$%^&*). Combining all four character sets dramatically increases the number of possible combinations, making brute-force attacks infeasible."}},{"@type":"Question","name":"What is the most secure random password generator?","acceptedAnswer":{"@type":"Answer","text":"The most secure generators use cryptographically secure pseudorandom number generators (CSPRNG) — which is exactly what this tool uses ( crypto.getRandomValues() ). Avoid password generators that rely on Math.random() , as it is not cryptographically secure."}},{"@type":"Question","name":"Should I use a password manager?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. Password managers like Bitwarden, 1Password, or KeePass let you store unique, strong passwords for every account without memorizing them. Since you only need to remember one master password, you can use long, complex passwords everywhere else."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -785,6 +800,16 @@
   </div>
 
   <!-- 9. Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/base64-encoder/" class="sf-related-card"><span>🔤</span>Base64 Encoder / Decoder</a>
+      <a href="/tools/image-to-base64/" class="sf-related-card"><span>🖼️</span>Image to Base64 Encoder</a>
+      <a href="/tools/url-encoder/" class="sf-related-card"><span>🔗</span>URL Encoder / Decoder</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-links">

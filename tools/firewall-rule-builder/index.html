@@ -565,7 +565,22 @@
       .related-card { flex-direction: column; align-items: flex-start; }
       .footer-links { gap: 14px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Firewall Rule Builder","description":"Generate iptables and ufw firewall rules instantly. Visual rule builder for Linux servers — no syntax memorization needed. Free online tool.","url":"https://tools.stackfreeks.com/tools/firewall-rule-builder/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between iptables and ufw?","acceptedAnswer":{"@type":"Answer","text":"iptables is the low-level Linux kernel firewall tool — it gives you full control but requires knowing its exact syntax. ufw (Uncomplicated Firewall) is a frontend that simplifies common firewall tasks. For most Ubuntu VPS setups, ufw is recommended; for advanced scenarios like NAT, packet marking, or FORWARD chains, use iptables directly."}},{"@type":"Question","name":"Are these rules persistent across reboots?","acceptedAnswer":{"@type":"Answer","text":"ufw rules are persistent by default — they survive reboots. iptables rules are NOT persistent by default and will be lost after a reboot. To persist iptables rules on Debian/Ubuntu, install iptables-persistent and run netfilter-persistent save . On RHEL/CentOS, use service iptables save ."}},{"@type":"Question","name":"What is the difference between DROP and REJECT?","acceptedAnswer":{"@type":"Answer","text":"DROP silently discards packets — the sender gets no response and must wait for a timeout. This is good for hiding that a port/service even exists. REJECT sends back an error response (TCP RST or ICMP unreachable) immediately, so the sender knows the connection was refused. REJECT gives a better user experience for internal networks; DROP is preferred for blocking external attackers."}},{"@type":"Question","name":"How do I allow a port range (e.g. 8000–8090)?","acceptedAnswer":{"@type":"Answer","text":"Enter a colon-separated range in the Port field: 8000:8090 . This generates --dport 8000:8090 for iptables or 8000:8090 for ufw. Both tools support port ranges natively. Note that for ufw, you must also specify a protocol (tcp or udp) when using port ranges — this tool does that automatically."}},{"@type":"Question","name":"Does this tool send my data to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All rule generation happens entirely in your browser using JavaScript. Nothing you type is sent to any server. Your IP addresses and network configuration stay private."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -857,6 +872,16 @@
   </section>
 
   <!-- Vultr Banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/curl-command-generator/" class="sf-related-card"><span>🌐</span>curl Command Generator</a>
+      <a href="/tools/chmod-calculator/" class="sf-related-card"><span>🔐</span>Chmod Calculator</a>
+      <a href="/tools/cron-builder/" class="sf-related-card"><span>⏰</span>Cron Expression Builder</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <div>

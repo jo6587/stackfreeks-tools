@@ -495,9 +495,24 @@
       .vultr-inner { flex-direction: column; align-items: flex-start; }
       .result-table td:first-child { width: 45%; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/subnet-calculator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/subnet-calculator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/subnet-calculator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"IP Subnet Calculator","description":"Calculate IP subnet details from CIDR notation. Get network address, broadcast, host range, subnet mask, and usable hosts. Free online subnet calculator, no account required.","url":"https://tools.stackfreeks.com/tools/subnet-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is CIDR notation?","acceptedAnswer":{"@type":"Answer","text":"CIDR (Classless Inter-Domain Routing) notation represents an IP address and its associated network mask. Written as 192.168.1.0/24 , the number after the slash indicates how many bits are the network portion. A /24 means the first 24 bits identify the network, leaving 8 bits for host addresses (256 total, 254 usable)."}},{"@type":"Question","name":"What is the difference between network address and broadcast address?","acceptedAnswer":{"@type":"Answer","text":"The network address is the first address in a subnet (all host bits set to 0) and identifies the subnet itself — it cannot be assigned to a host. The broadcast address is the last address (all host bits set to 1) and is used to send data to every device in the subnet simultaneously. All addresses in between are usable host addresses."}},{"@type":"Question","name":"How many hosts does a /24 subnet have?","acceptedAnswer":{"@type":"Answer","text":"A /24 subnet has 256 total addresses (2 8 = 256). Subtracting the network address and broadcast address gives 254 usable host addresses . This is the most common subnet for home and office LANs. A /25 gives 126 hosts, /23 gives 510 hosts."}},{"@type":"Question","name":"What are private IP address ranges?","acceptedAnswer":{"@type":"Answer","text":"RFC 1918 defines three private IPv4 ranges not routed on the public Internet: 10.0.0.0/8 (Class A — 16 million addresses), 172.16.0.0/12 (Class B — ~1 million addresses), and 192.168.0.0/16 (Class C — 65,536 addresses). These are widely used in home networks, corporate intranets, and VPS private networking."}},{"@type":"Question","name":"How do I choose a subnet size for my VPS network?","acceptedAnswer":{"@type":"Answer","text":"For a small VPS project with a handful of servers, a /28 (14 hosts) or /29 (6 hosts) is usually enough. For a growing infrastructure or Kubernetes cluster, consider /24 (254 hosts) or larger. On Vultr, you can create private networks with a custom CIDR range for free — assign each VPS a static private IP within that range for secure inter-server communication."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -717,7 +732,17 @@
 </div>
 
 <!-- FOOTER -->
-<footer>
+<!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/docker-ram-calculator/" class="sf-related-card"><span>🐳</span>Docker RAM Calculator</a>
+      <a href="/tools/dockerfile-generator/" class="sf-related-card"><span>📦</span>Dockerfile Generator</a>
+      <a href="/tools/linux-swap-calculator/" class="sf-related-card"><span>💾</span>Linux Swap Size Calculator</a>
+    </div>
+  </section>
+
+  <footer>
   <div class="footer-links">
     <a href="/about/">About</a>
     <a href="/privacy/">Privacy</a>

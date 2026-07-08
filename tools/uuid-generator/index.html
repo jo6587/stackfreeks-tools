@@ -482,9 +482,24 @@
       .uuid-display { font-size: 13px; }
       .nav-inner { padding: 0 16px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/uuid-generator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/uuid-generator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/uuid-generator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"UUID Generator","description":"Generate random UUID v4 online. Bulk generate up to 100 UUIDs, copy with one click. Runs entirely in your browser — nothing is sent to a server.","url":"https://tools.stackfreeks.com/tools/uuid-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a UUID?","acceptedAnswer":{"@type":"Answer","text":"UUID stands for Universally Unique Identifier . It's a 128-bit label defined by RFC 4122 (and updated by RFC 9562) used to uniquely identify information in computer systems without a central authority. UUIDs are commonly used as primary keys in databases, identifiers in APIs, and correlation IDs in logging."}},{"@type":"Question","name":"What makes UUID v4 different from other versions?","acceptedAnswer":{"@type":"Answer","text":"UUID v4 is randomly generated — 122 of its 128 bits come from a cryptographically secure random source ( crypto.randomUUID() ). Other versions use different strategies: v1 encodes a timestamp + MAC address, v3 and v5 use MD5/SHA-1 hashes of a namespace + name, and v7 (newer) uses a Unix timestamp prefix for sortability. For most use cases where you just need a unique ID without ordering requirements, v4 is the simplest and most common choice."}},{"@type":"Question","name":"Are UUID v4 values safe to use as database primary keys?","acceptedAnswer":{"@type":"Answer","text":"Yes. The collision probability is astronomically low — approximately 1 in 5.3 × 10³⁶ for any two given UUIDs. In practice, you would need to generate about 2.7 × 10¹⁸ UUIDs before the probability of a single collision exceeds 50%. Note that UUID v4's random ordering can cause index fragmentation in B-tree databases at very high insert rates; if that's a concern, consider UUID v7 which is time-ordered."}},{"@type":"Question","name":"Does this tool send my UUIDs to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is generated entirely in your browser using the built-in crypto.randomUUID() Web API. No data is sent to any server. You can even disconnect from the internet and the tool will continue to work."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -665,6 +680,16 @@
   </section>
 
   <!-- 6. Vultr affiliate banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/base-converter/" class="sf-related-card"><span>🔢</span>Number Base Converter</a>
+      <a href="/tools/json-formatter/" class="sf-related-card"><span>📋</span>JSON Formatter & Validator</a>
+      <a href="/tools/json-to-csv/" class="sf-related-card"><span>📊</span>JSON to CSV Converter</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>

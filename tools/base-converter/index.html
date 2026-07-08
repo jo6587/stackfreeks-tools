@@ -480,9 +480,24 @@
       .faq { padding: 0 16px 40px; }
       .vultr-inner { flex-direction: column; align-items: flex-start; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/base-converter/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/base-converter/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/base-converter/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Number Base Converter","description":"Instantly convert numbers between Binary, Octal, Decimal, and Hexadecimal. Live four-way conversion with copy buttons and bit-length analysis.","url":"https://tools.stackfreeks.com/tools/base-converter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What number bases does this tool support?","acceptedAnswer":{"@type":"Answer","text":"Binary (Base 2), Octal (Base 8), Decimal (Base 10), and Hexadecimal (Base 16). These are the four most common bases in computer science and programming."}},{"@type":"Question","name":"Does it support negative numbers?","acceptedAnswer":{"@type":"Answer","text":"No — only non-negative integers are supported. Typing a minus sign ( - ) will trigger an error. For negative numbers, consider two's complement representation."}},{"@type":"Question","name":"What is the maximum number I can convert?","acceptedAnswer":{"@type":"Answer","text":"There is no hard limit enforced by the tool, but JavaScript's number type is accurate up to 2 53 − 1 (9,007,199,254,740,991). Very large numbers beyond this may lose precision."}},{"@type":"Question","name":"Why is hexadecimal always shown in uppercase?","acceptedAnswer":{"@type":"Answer","text":"Uppercase hex (e.g. 0xFF ) is the dominant convention in programming, debuggers, and hardware documentation. It's easier to distinguish letters from numbers at a glance."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -744,6 +759,16 @@
   </section>
 
   <!-- Vultr affiliate banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/json-formatter/" class="sf-related-card"><span>📋</span>JSON Formatter & Validator</a>
+      <a href="/tools/json-to-csv/" class="sf-related-card"><span>📊</span>JSON to CSV Converter</a>
+      <a href="/tools/timestamp-converter/" class="sf-related-card"><span>🕐</span>Unix Timestamp Converter</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="vultr-inner">
       <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>

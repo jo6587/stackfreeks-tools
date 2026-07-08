@@ -500,9 +500,24 @@
       }
       .hash-output { font-size: 11px; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/hash-generator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/hash-generator/" />
   <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/hash-generator/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Hash Generator","description":"Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files. Free online hash generator — works in your browser, no upload, no account.","url":"https://tools.stackfreeks.com/tools/hash-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a hash and what is it used for?","acceptedAnswer":{"@type":"Answer","text":"A cryptographic hash function takes any input (text or file) and produces a fixed-length string called a hash or digest. Hashes are used to verify file integrity, store passwords securely, create checksums, and sign data digitally. Even a tiny change in the input produces a completely different hash."}},{"@type":"Question","name":"Which hash algorithm should I use?","acceptedAnswer":{"@type":"Answer","text":"Use SHA-256 for most modern use cases — it's the industry standard for checksums, code signing, and data integrity. Use SHA-512 when you need extra security margins. Avoid MD5 and SHA-1 for security-critical applications; they are cryptographically broken, but still useful for non-security checksums and legacy compatibility."}},{"@type":"Question","name":"Is SHA-256 more secure than MD5?","acceptedAnswer":{"@type":"Answer","text":"Yes, significantly. MD5 was shown to be vulnerable to collision attacks in 2004, and SHA-1 was officially deprecated in 2017. SHA-256 and SHA-512 (part of the SHA-2 family) have no known practical attacks and are recommended by NIST for all security-sensitive work."}},{"@type":"Question","name":"Can I reverse a hash to get the original text?","acceptedAnswer":{"@type":"Answer","text":"No. Hash functions are one-way — there is no algorithm to reverse them. However, for short or common inputs (like simple passwords), attackers can use rainbow tables or brute-force to guess the input. This is why passwords should always be salted before hashing."}},{"@type":"Question","name":"Is my data sent to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All hashing happens entirely inside your browser. Your text and files never leave your device. SHA-1, SHA-256, and SHA-512 use the browser's built-in Web Crypto API; MD5 uses the spark-md5 library loaded from a CDN — only the library code is downloaded, not your data."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -743,6 +758,16 @@
   </div>
 
   <!-- Footer -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/jwt-decoder/" class="sf-related-card"><span>🎫</span>JWT Decoder</a>
+      <a href="/tools/uuid-generator/" class="sf-related-card"><span>🆔</span>UUID Generator</a>
+      <a href="/tools/base-converter/" class="sf-related-card"><span>🔢</span>Number Base Converter</a>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-links">
       <a href="/about/">About</a>

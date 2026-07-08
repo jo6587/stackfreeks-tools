@@ -654,7 +654,22 @@
         padding-right: 16px;
       }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Image to Base64 Encoder","description":"Convert images to Base64 strings instantly. Generate Data URLs, HTML img tags, or CSS background-image code — free, browser-only, no upload.","url":"https://tools.stackfreeks.com/tools/image-to-base64/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is my image uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything runs entirely in your browser using the FileReader API. Your image never leaves your device."}},{"@type":"Question","name":"What is a Data URL and when should I use it?","acceptedAnswer":{"@type":"Answer","text":"A Data URL embeds the image directly in your HTML or CSS as a data:image/...;base64,... string. It is useful for small icons, logos, or images that need to be bundled without a separate HTTP request. Avoid it for large images as it bloats page size."}},{"@type":"Question","name":"Why is the Base64 string larger than the original file?","acceptedAnswer":{"@type":"Answer","text":"Base64 encoding converts every 3 bytes of binary data into 4 ASCII characters, which increases the size by approximately 33%."}},{"@type":"Question","name":"What file formats are supported?","acceptedAnswer":{"@type":"Answer","text":"JPG, PNG, GIF, WebP, SVG, and ICO. Any image format your browser can read will work, since encoding is done with the browser's native FileReader API."}},{"@type":"Question","name":"What is the recommended max image size for inline Base64?","acceptedAnswer":{"@type":"Answer","text":"Generally keep images under 10–20 KB for inline use. This tool shows a warning for images over 100 KB, as large inline images significantly increase page weight and may hurt performance."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -913,6 +928,16 @@
   </div>
 
   <!-- 8. Vultr affiliate banner -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/url-encoder/" class="sf-related-card"><span>🔗</span>URL Encoder / Decoder</a>
+      <a href="/tools/hash-generator/" class="sf-related-card"><span>#️⃣</span>Hash Generator</a>
+      <a href="/tools/jwt-decoder/" class="sf-related-card"><span>🎫</span>JWT Decoder</a>
+    </div>
+  </section>
+
   <section class="vultr-banner">
     <div class="banner-inner">
       <div>

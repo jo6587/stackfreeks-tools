@@ -404,7 +404,22 @@
       .btn-vultr { width: 100%; text-align: center; }
       .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
     }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 0 16px 36px; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Docker RAM Calculator","description":"Estimate RAM requirements for your Docker containers and get a VPS plan recommendation. Add containers, set replicas, and find the right server size instantly.","url":"https://tools.stackfreeks.com/tools/docker-ram-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are the RAM values accurate for every use case?","acceptedAnswer":{"@type":"Answer","text":"The values are typical idle/low-load estimates for common images. Real usage depends on your workload, configuration, and data volume. Use this calculator as a starting baseline — add 20–40 % headroom for production workloads."}},{"@type":"Question","name":"Why is OS overhead fixed at 512 MB?","acceptedAnswer":{"@type":"Answer","text":"A minimal Linux distribution (Ubuntu Server, Debian, etc.) typically uses 200–400 MB of RAM at rest. The 512 MB figure accounts for the kernel, system daemons (sshd, cron, journald), and some headroom for OS-level I/O buffers."}},{"@type":"Question","name":"What does Docker overhead include?","acceptedAnswer":{"@type":"Answer","text":"The 256 MB Docker overhead covers the dockerd daemon, containerd, the overlay2 filesystem layer, and internal Docker networking. This is a conservative estimate — on a busy host it may be higher."}},{"@type":"Question","name":"Why does the recommended RAM round up to a power of 2?","acceptedAnswer":{"@type":"Answer","text":"Cloud VPS plans (including Vultr) come in 1, 2, 4, 8, 16, and 32 GB tiers. Rounding up to the nearest power of 2 ensures the calculator always maps cleanly to an available plan, giving you the minimum plan that fits your workload plus buffer."}},{"@type":"Question","name":"Can I use this for Docker Swarm or Kubernetes?","acceptedAnswer":{"@type":"Answer","text":"Yes — the replica field directly maps to Docker Swarm replicas or Kubernetes pod counts on a single node. For multi-node clusters, calculate the per-node RAM by distributing replicas across nodes first, then use this tool for each node's footprint."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -702,7 +717,17 @@
 </section>
 
 <!-- 8. Vultr banner -->
-<section class="vultr-banner">
+<!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/dockerfile-generator/" class="sf-related-card"><span>📦</span>Dockerfile Generator</a>
+      <a href="/tools/linux-swap-calculator/" class="sf-related-card"><span>💾</span>Linux Swap Size Calculator</a>
+      <a href="/tools/nginx-config-generator/" class="sf-related-card"><span>⚙️</span>Nginx Config Generator</a>
+    </div>
+  </section>
+
+  <section class="vultr-banner">
   <div class="container banner-inner">
     <div>
       <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
