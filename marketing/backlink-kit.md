@@ -5,7 +5,9 @@
 
 ## 1. Product Hunt (효과 최대 — 화·수·목 발행 추천)
 
-- [ ] https://www.producthunt.com/posts/new
+- [x] 예약 완료: **2026-07-09 (목) 12:01 AM PDT** = 한국시간 목요일 오후 4:01
+- [x] maker comment 등록 완료
+- [ ] 발행 당일 댓글 답변 (목 저녁 / 금 오전 확인)
 
 **Name**: StackFreeks Tools
 **Tagline** (60자 이내): `45 free browser-based tools for developers and sysadmins`
@@ -60,6 +62,7 @@
 - [ ] **AlternativeTo** — https://alternativeto.net/manage-item/ — 주요 툴 5개 개별 등록
       (vps-cost-calculator, game-server-cost-calculator, docker-ram-calculator,
        cron-builder, subnet-calculator)
+      ⚠️ 계정 생성 후 7일 제한 — **2026-07-15 이후 제출 가능** (계정은 2026-07-08 생성됨)
 - [ ] **SaaSHub** — https://www.saashub.com/submit
 - [ ] **Uneed** — https://www.uneed.best/submit-a-tool
 - [ ] **Fazier** — https://fazier.com/submit
