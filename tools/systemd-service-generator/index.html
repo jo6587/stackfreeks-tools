@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Systemd Service Generator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Free systemd service file generator. Build a .service unit file with ExecStart, restart policy, env vars and Node.js/Python/Go/Java presets. No signup." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/systemd-service-generator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/systemd-service-generator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/systemd-service-generator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/systemd-service-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Systemd Service Generator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Create a systemd .service unit file in seconds — ExecStart, restart policy, environment variables, and install commands included." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/systemd-service-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool layout */
+    .tool-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Form panel */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .field select,
+    .field input[type="text"],
+    .field input[type="number"] {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 8px 12px;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+    .field select { font-family: var(--font); font-size: 14px; }
+    .field select:focus,
+    .field input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .field select option { background: #18181b; }
+    .field input::placeholder { color: var(--text-3); }
+
+    .field-hint {
+      font-size: 11px;
+      color: var(--text-3);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Presets */
+    .preset-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .btn-preset {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 7px 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-preset:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Env var rows */
+    .env-list { display: flex; flex-direction: column; gap: 8px; }
+    .env-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 28px;
+      gap: 8px;
+      align-items: center;
+    }
+    .env-row input {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 7px 10px;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+    .env-row input:focus { outline: none; border-color: var(--accent); }
+    .env-row input::placeholder { color: var(--text-3); }
+    .btn-env-del {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-3);
+      font-size: 14px;
+      height: 28px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-env-del:hover { border-color: #ef4444; color: #ef4444; }
+    .btn-env-add {
+      background: none;
+      border: 1px dashed var(--border-2);
+      border-radius: var(--radius);
+      color: var(--text-3);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-env-add:hover { border-color: var(--accent); color: var(--accent); }
+
+    .btn-generate {
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      cursor: pointer;
+      width: 100%;
+      transition: opacity 0.15s;
+      margin-top: 4px;
+    }
+    .btn-generate:hover { opacity: 0.85; }
+
+    /* Output panel */
+    .output-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .output-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+
+    .output-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      letter-spacing: 0.02em;
+    }
+
+    .output-actions { display: flex; gap: 8px; }
+
+    .btn-copy {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-copy.copied { border-color: var(--success); color: var(--success); }
+
+    .output-code {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-1);
+      white-space: pre;
+      overflow-x: auto;
+      min-height: 80px;
+    }
+
+    /* Syntax colors */
+    .sd-comment { color: #52525b; }
+    .sd-section { color: #818cf8; }
+    .sd-key { color: #fbbf24; }
+    .sd-cmd { color: #86efac; }
+
+    .placeholder-msg {
+      color: var(--text-3);
+      font-family: var(--font);
+      font-size: 14px;
+      font-style: italic;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    /* Guide */
+    .guide { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related tools */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    /* Vultr banner */
+    .vultr-banner {
+      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(34,197,94,0.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px;
+      margin-bottom: 0;
+    }
+
+    .banner-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .btn-vultr {
+      background: var(--success);
+      border: none;
+      border-radius: var(--radius);
+      color: #000;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; color: #000; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      .tool-wrap { grid-template-columns: 1fr; padding: 0 16px 40px; }
+      .guide { padding: 0 16px 36px; }
+      .faq { padding: 0 16px 36px; }
+      .sf-related { padding: 0 16px 36px; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Systemd Service Generator","description":"Free systemd service file generator. Build a .service unit file with ExecStart, restart policy, env vars and Node.js/Python/Go/Java presets. No signup.","url":"https://tools.stackfreeks.com/tools/systemd-service-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between Type=simple and Type=forking?","acceptedAnswer":{"@type":"Answer","text":"Type=simple (the default) assumes the process in ExecStart stays in the foreground — systemd considers the service started as soon as the process is spawned. Type=forking is for classic daemons that fork into the background and exit the parent process; systemd waits for the fork and usually needs a PIDFile= to track the child. Modern apps (Node.js, Python, Go, Java) almost always run in the foreground, so use simple. Only use forking for legacy daemons like some builds of nginx or older init-style scripts."}},{"@type":"Question","name":"Should I use Restart=always or Restart=on-failure?","acceptedAnswer":{"@type":"Answer","text":"Restart=on-failure restarts the service only when it exits with a non-zero code, is killed by a signal, or times out — a clean exit (code 0) stays stopped. Restart=always restarts it no matter how it exited, including clean exits and manual kills of the process. For web apps and APIs that should never be down, always is the safer choice; for batch-style or one-shot workloads, on-failure avoids restart loops after intentional exits. Pair either with RestartSec=5 so crash loops do not hammer the CPU."}},{"@type":"Question","name":"How do I view logs for my systemd service?","acceptedAnswer":{"@type":"Answer","text":"Use journalctl. To follow logs live: sudo journalctl -u myapp -f. To see the last 100 lines: sudo journalctl -u myapp -n 100. To filter by time: sudo journalctl -u myapp --since \"1 hour ago\". Anything your app writes to stdout/stderr is captured automatically by the journal — no log file configuration needed, which is one big reason to run apps in the foreground under Type=simple."}},{"@type":"Question","name":"What is the difference between a system service and a user service?","acceptedAnswer":{"@type":"Answer","text":"A system service lives in /etc/systemd/system/, is managed with sudo systemctl, starts at boot, and can run as any user via the User= directive. A user service lives in ~/.config/systemd/user/, is managed with systemctl --user (no sudo), and by default only runs while that user is logged in — unless you enable lingering with loginctl enable-linger username. For production apps on a VPS, use a system service with User= set to an unprivileged account; user services suit per-user tools on desktops or shared hosts."}},{"@type":"Question","name":"How do I make my systemd service start automatically at boot?","acceptedAnswer":{"@type":"Answer","text":"Make sure the unit file has an [Install] section with WantedBy=multi-user.target, then run: sudo systemctl daemon-reload followed by sudo systemctl enable --now myapp. The enable command creates a symlink in multi-user.target.wants so the service starts at every boot, and --now also starts it immediately. Verify with systemctl is-enabled myapp — it should print enabled."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>Systemd Service Generator</h1>
+      <p>Create a complete <code style="color:var(--accent)">.service</code> unit file for your app — ExecStart, restart policy, environment variables, and ready-to-run install commands. Presets for Node.js, Python, Go, and Java.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>Systemd 서비스 생성기</h1>
+      <p>앱을 위한 <code style="color:var(--accent)">.service</code> 유닛 파일을 즉시 생성 — ExecStart, 재시작 정책, 환경변수, 설치·적용 명령어 포함. Node.js, Python, Go, Java 프리셋 제공.</p>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <section class="tool-wrap">
+
+    <!-- Form panel -->
+    <div class="form-panel">
+
+      <p class="section-label" data-i18n="sdg_presets">Presets</p>
+      <div class="preset-row">
+        <button class="btn-preset" onclick="applyPreset('node')">Node.js app</button>
+        <button class="btn-preset" onclick="applyPreset('python')">Python app</button>
+        <button class="btn-preset" onclick="applyPreset('go')">Go binary</button>
+        <button class="btn-preset" onclick="applyPreset('java')">Java jar</button>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="sdg_service">Service</p>
+
+      <div class="field">
+        <label data-i18n="sdg_name">Service Name</label>
+        <input type="text" id="svc-name" value="myapp" spellcheck="false" placeholder="myapp" />
+        <span class="field-hint" data-i18n="sdg_name_hint">Becomes [name].service — lowercase, no spaces</span>
+      </div>
+
+      <div class="field">
+        <label data-i18n="sdg_desc">Description</label>
+        <input type="text" id="svc-desc" value="My application" spellcheck="false" />
+      </div>
+
+      <div class="field">
+        <label>ExecStart</label>
+        <input type="text" id="svc-exec" value="/usr/bin/node /var/www/myapp/server.js" spellcheck="false" />
+        <span class="field-hint" data-i18n="sdg_exec_hint">Absolute path to the binary + arguments</span>
+      </div>
+
+      <div class="field">
+        <label>WorkingDirectory</label>
+        <input type="text" id="svc-wd" value="/var/www/myapp" spellcheck="false" placeholder="(optional)" />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>User</label>
+          <input type="text" id="svc-user" value="www-data" spellcheck="false" placeholder="(optional)" />
+        </div>
+        <div class="field">
+          <label>Group</label>
+          <input type="text" id="svc-group" value="" spellcheck="false" placeholder="(optional)" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label data-i18n="sdg_type">Service Type</label>
+        <select id="svc-type">
+          <option value="simple" selected>simple (foreground process)</option>
+          <option value="forking">forking (daemonizes itself)</option>
+          <option value="oneshot">oneshot (runs once and exits)</option>
+          <option value="notify">notify (sd_notify support)</option>
+        </select>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="sdg_restart_sec">Restart Policy</p>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Restart</label>
+          <select id="svc-restart">
+            <option value="no">no</option>
+            <option value="on-failure">on-failure</option>
+            <option value="always" selected>always</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>RestartSec</label>
+          <input type="number" id="svc-restartsec" value="5" min="0" max="600" />
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="sdg_env">Environment Variables</p>
+
+      <div class="env-list" id="env-list">
+        <div class="env-row">
+          <input type="text" class="env-key" value="NODE_ENV" placeholder="KEY" spellcheck="false" />
+          <input type="text" class="env-val" value="production" placeholder="value" spellcheck="false" />
+          <button class="btn-env-del" onclick="removeEnv(this)" aria-label="Remove">×</button>
+        </div>
+      </div>
+      <button class="btn-env-add" onclick="addEnv()" data-i18n="sdg_env_add">+ Add variable</button>
+
+      <div class="field">
+        <label>EnvironmentFile</label>
+        <input type="text" id="svc-envfile" value="" spellcheck="false" placeholder="/etc/myapp/env (optional)" />
+        <span class="field-hint" data-i18n="sdg_envfile_hint">Optional — path to a KEY=value file</span>
+      </div>
+
+      <button class="btn-generate" onclick="generate()" data-i18n="sdg_generate">Generate .service file</button>
+
+    </div>
+
+    <!-- Output panel -->
+    <div class="output-panel">
+
+      <div class="output-block">
+        <div class="output-header">
+          <span class="output-title" id="unit-filename">myapp.service</span>
+          <div class="output-actions">
+            <button class="btn-copy" id="copy-unit" onclick="copyText('unit-out', 'copy-unit')" data-i18n="copy_btn">Copy</button>
+            <button class="btn-copy" id="dl-unit" onclick="downloadUnit()" data-i18n="download_btn">Download</button>
+          </div>
+        </div>
+        <div id="unit-out" class="output-code">
+          <div class="placeholder-msg" data-i18n="sdg_placeholder">Fill the form (or pick a preset) and click "Generate .service file"</div>
+        </div>
+      </div>
+
+      <div class="output-block" id="cmd-block" style="display:none">
+        <div class="output-header">
+          <span class="output-title" data-i18n="sdg_cmd_title">Install &amp; manage commands</span>
+          <div class="output-actions">
+            <button class="btn-copy" id="copy-cmd" onclick="copyText('cmd-out', 'copy-cmd')" data-i18n="copy_btn">Copy</button>
+          </div>
+        </div>
+        <div id="cmd-out" class="output-code"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Guide -->
+  <section class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to Use</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>Pick a preset or fill the form</h3>
+          <p>Click a preset (Node.js, Python, Go, Java) to auto-fill sensible defaults, then adjust the service name, <code style="color:var(--accent)">ExecStart</code> path, and working directory to match your app.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>Set the run policy</h3>
+          <p>Choose the service type (<code style="color:var(--accent)">simple</code> for almost every modern app), the restart policy, and the user your app should run as — never root for a web app.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>Add environment variables</h3>
+          <p>Add KEY=value pairs like NODE_ENV=production or PORT=3000, or point EnvironmentFile at a secrets file kept outside the unit — handy for API keys.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>Install and enable</h3>
+          <p>Save the file to <code style="color:var(--accent)">/etc/systemd/system/</code>, then run the generated commands: daemon-reload, <code style="color:var(--accent)">enable --now</code>, and follow logs with journalctl.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>프리셋 선택 또는 직접 입력</h3>
+          <p>프리셋(Node.js, Python, Go, Java)을 클릭하면 기본값이 자동 입력됩니다. 서비스 이름, <code style="color:var(--accent)">ExecStart</code> 경로, 작업 디렉터리를 앱에 맞게 수정하세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>실행 정책 설정</h3>
+          <p>서비스 타입(요즘 앱은 대부분 <code style="color:var(--accent)">simple</code>), 재시작 정책, 실행 계정을 선택하세요 — 웹 앱은 절대 root로 실행하지 마세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>환경변수 추가</h3>
+          <p>NODE_ENV=production, PORT=3000 같은 KEY=value 쌍을 추가하거나, EnvironmentFile로 유닛 밖의 시크릿 파일을 지정하세요 — API 키 관리에 유용합니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>설치 및 활성화</h3>
+          <p>파일을 <code style="color:var(--accent)">/etc/systemd/system/</code>에 저장하고 생성된 명령어를 실행하세요: daemon-reload, <code style="color:var(--accent)">enable --now</code>, journalctl로 로그 확인.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <p class="faq-title">Frequently Asked Questions</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between Type=simple and Type=forking?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">Type=simple</code> (the default) assumes the process in ExecStart stays in the foreground — systemd considers the service started as soon as the process is spawned. <code style="color:var(--accent)">Type=forking</code> is for classic daemons that fork into the background and exit the parent process; systemd waits for the fork and usually needs a <code style="color:var(--accent)">PIDFile=</code> to track the child. Modern apps (Node.js, Python, Go, Java) almost always run in the foreground, so use simple. Only use forking for legacy daemons like some builds of nginx or older init-style scripts.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Should I use Restart=always or Restart=on-failure?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">Restart=on-failure</code> restarts the service only when it exits with a non-zero code, is killed by a signal, or times out — a clean exit (code 0) stays stopped. <code style="color:var(--accent)">Restart=always</code> restarts it no matter how it exited, including clean exits and manual kills of the process. For web apps and APIs that should never be down, always is the safer choice; for batch-style or one-shot workloads, on-failure avoids restart loops after intentional exits. Pair either with <code style="color:var(--accent)">RestartSec=5</code> so crash loops do not hammer the CPU.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I view logs for my systemd service?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Use journalctl. To follow logs live: <code style="color:var(--accent)">sudo journalctl -u myapp -f</code>. To see the last 100 lines: <code style="color:var(--accent)">sudo journalctl -u myapp -n 100</code>. To filter by time: <code style="color:var(--accent)">sudo journalctl -u myapp --since "1 hour ago"</code>. Anything your app writes to stdout/stderr is captured automatically by the journal — no log file configuration needed, which is one big reason to run apps in the foreground under Type=simple.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between a system service and a user service?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">A system service lives in <code style="color:var(--accent)">/etc/systemd/system/</code>, is managed with sudo systemctl, starts at boot, and can run as any user via the <code style="color:var(--accent)">User=</code> directive. A user service lives in <code style="color:var(--accent)">~/.config/systemd/user/</code>, is managed with <code style="color:var(--accent)">systemctl --user</code> (no sudo), and by default only runs while that user is logged in — unless you enable lingering with <code style="color:var(--accent)">loginctl enable-linger username</code>. For production apps on a VPS, use a system service with User= set to an unprivileged account; user services suit per-user tools on desktops or shared hosts.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I make my systemd service start automatically at boot?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Make sure the unit file has an [Install] section with <code style="color:var(--accent)">WantedBy=multi-user.target</code>, then run: <code style="color:var(--accent)">sudo systemctl daemon-reload</code> followed by <code style="color:var(--accent)">sudo systemctl enable --now myapp</code>. The enable command creates a symlink in multi-user.target.wants so the service starts at every boot, and --now also starts it immediately. Verify with <code style="color:var(--accent)">systemctl is-enabled myapp</code> — it should print enabled.</div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Type=simple과 Type=forking의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">Type=simple</code>(기본값)은 ExecStart의 프로세스가 포그라운드에 머문다고 가정합니다 — 프로세스가 실행되는 순간 서비스가 시작된 것으로 간주합니다. <code style="color:var(--accent)">Type=forking</code>은 백그라운드로 fork한 뒤 부모 프로세스가 종료되는 전통적인 데몬용이며, 보통 <code style="color:var(--accent)">PIDFile=</code>이 필요합니다. Node.js, Python, Go, Java 같은 현대 앱은 거의 모두 포그라운드로 실행되므로 simple을 사용하세요.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Restart=always와 Restart=on-failure 중 뭘 써야 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">Restart=on-failure</code>는 비정상 종료(0이 아닌 종료 코드, 시그널 종료, 타임아웃)일 때만 재시작하고, 정상 종료(코드 0)는 그대로 둡니다. <code style="color:var(--accent)">Restart=always</code>는 종료 방식과 무관하게 항상 재시작합니다. 절대 죽으면 안 되는 웹 앱·API에는 always가 안전하고, 배치성 작업에는 on-failure가 재시작 루프를 방지합니다. 어느 쪽이든 <code style="color:var(--accent)">RestartSec=5</code>와 함께 사용해 크래시 루프가 CPU를 점유하지 않게 하세요.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>서비스 로그는 어떻게 보나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">journalctl을 사용하세요. 실시간 로그: <code style="color:var(--accent)">sudo journalctl -u myapp -f</code>. 마지막 100줄: <code style="color:var(--accent)">sudo journalctl -u myapp -n 100</code>. 시간 필터: <code style="color:var(--accent)">sudo journalctl -u myapp --since "1 hour ago"</code>. 앱이 stdout/stderr로 출력하는 내용은 저널이 자동으로 수집하므로 로그 파일 설정이 필요 없습니다 — 앱을 포그라운드(Type=simple)로 실행하는 큰 이유 중 하나입니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>시스템 서비스와 유저 서비스의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">시스템 서비스는 <code style="color:var(--accent)">/etc/systemd/system/</code>에 위치하고 sudo systemctl로 관리하며 부팅 시 시작되고, <code style="color:var(--accent)">User=</code> 지시자로 임의 계정으로 실행할 수 있습니다. 유저 서비스는 <code style="color:var(--accent)">~/.config/systemd/user/</code>에 위치하고 <code style="color:var(--accent)">systemctl --user</code>(sudo 불필요)로 관리하며, 기본적으로 로그인 중에만 실행됩니다 — <code style="color:var(--accent)">loginctl enable-linger</code>로 상시 실행 가능. VPS 프로덕션 앱은 비특권 계정을 User=로 지정한 시스템 서비스를 사용하세요.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>부팅 시 서비스를 자동 시작하려면 어떻게 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">유닛 파일에 <code style="color:var(--accent)">WantedBy=multi-user.target</code>이 포함된 [Install] 섹션이 있는지 확인한 뒤, <code style="color:var(--accent)">sudo systemctl daemon-reload</code> 후 <code style="color:var(--accent)">sudo systemctl enable --now myapp</code>을 실행하세요. enable은 multi-user.target.wants에 심볼릭 링크를 만들어 매 부팅마다 시작되게 하고, --now는 즉시 시작합니다. <code style="color:var(--accent)">systemctl is-enabled myapp</code>으로 확인하세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/cron-builder/" class="sf-related-card"><span>⏰</span>Cron Expression Builder</a>
+      <a href="/tools/nginx-config-generator/" class="sf-related-card"><span>⚙️</span>Nginx Config Generator</a>
+      <a href="/tools/ssh-config-generator/" class="sf-related-card"><span>🔑</span>SSH Config Generator</a>
+      <a href="https://stackfreeks.com/deploy-nodejs-vultr-vps/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Deploy Node.js on a Vultr VPS</a>
+    </div>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Run your service on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+         rel="nofollow sponsored" target="_blank"
+         data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    // i18n page-specific keys (must be before i18n.js)
+    window.SF_PAGE_I18N = {
+      en: {
+        sdg_presets: 'Presets',
+        sdg_service: 'Service',
+        sdg_name: 'Service Name',
+        sdg_name_hint: 'Becomes [name].service — lowercase, no spaces',
+        sdg_desc: 'Description',
+        sdg_exec_hint: 'Absolute path to the binary + arguments',
+        sdg_type: 'Service Type',
+        sdg_restart_sec: 'Restart Policy',
+        sdg_env: 'Environment Variables',
+        sdg_env_add: '+ Add variable',
+        sdg_envfile_hint: 'Optional — path to a KEY=value file',
+        sdg_generate: 'Generate .service file',
+        sdg_placeholder: 'Fill the form (or pick a preset) and click "Generate .service file"',
+        sdg_cmd_title: 'Install & manage commands',
+        copy_btn: 'Copy',
+        download_btn: 'Download',
+      },
+      ko: {
+        sdg_presets: '프리셋',
+        sdg_service: '서비스',
+        sdg_name: '서비스 이름',
+        sdg_name_hint: '[이름].service 파일명이 됩니다 — 소문자, 공백 없이',
+        sdg_desc: '설명',
+        sdg_exec_hint: '실행 파일 절대 경로 + 인자',
+        sdg_type: '서비스 타입',
+        sdg_restart_sec: '재시작 정책',
+        sdg_env: '환경변수',
+        sdg_env_add: '+ 변수 추가',
+        sdg_envfile_hint: '선택 — KEY=value 파일 경로',
+        sdg_generate: '.service 파일 생성',
+        sdg_placeholder: '폼을 채우거나 프리셋 선택 후 ".service 파일 생성" 클릭',
+        sdg_cmd_title: '설치 · 관리 명령어',
+        copy_btn: '복사',
+        download_btn: '다운로드',
+      }
+    };
+
+    // Presets: auto-fill common stacks
+    const PRESETS = {
+      node: {
+        name: 'node-app', desc: 'Node.js application',
+        exec: '/usr/bin/node /var/www/myapp/server.js', wd: '/var/www/myapp',
+        user: 'www-data', group: '', type: 'simple', restart: 'always', restartsec: 5,
+        env: [['NODE_ENV', 'production'], ['PORT', '3000']], envfile: '',
+      },
+      python: {
+        name: 'python-app', desc: 'Python application',
+        exec: '/usr/bin/python3 /opt/myapp/app.py', wd: '/opt/myapp',
+        user: 'appuser', group: '', type: 'simple', restart: 'on-failure', restartsec: 5,
+        env: [['PYTHONUNBUFFERED', '1']], envfile: '',
+      },
+      go: {
+        name: 'go-app', desc: 'Go application',
+        exec: '/opt/myapp/myapp', wd: '/opt/myapp',
+        user: 'appuser', group: '', type: 'simple', restart: 'always', restartsec: 5,
+        env: [], envfile: '',
+      },
+      java: {
+        name: 'java-app', desc: 'Java application',
+        exec: '/usr/bin/java -Xms256m -Xmx512m -jar /opt/myapp/app.jar', wd: '/opt/myapp',
+        user: 'appuser', group: '', type: 'simple', restart: 'on-failure', restartsec: 10,
+        env: [['JAVA_OPTS', '-Dfile.encoding=UTF-8']], envfile: '',
+      },
+    };
+
+    function applyPreset(key) {
+      const p = PRESETS[key];
+      document.getElementById('svc-name').value = p.name;
+      document.getElementById('svc-desc').value = p.desc;
+      document.getElementById('svc-exec').value = p.exec;
+      document.getElementById('svc-wd').value = p.wd;
+      document.getElementById('svc-user').value = p.user;
+      document.getElementById('svc-group').value = p.group;
+      document.getElementById('svc-type').value = p.type;
+      document.getElementById('svc-restart').value = p.restart;
+      document.getElementById('svc-restartsec').value = p.restartsec;
+      document.getElementById('svc-envfile').value = p.envfile;
+      // Rebuild env rows
+      const list = document.getElementById('env-list');
+      list.innerHTML = '';
+      if (p.env.length === 0) addEnv();
+      p.env.forEach(([k, v]) => addEnv(k, v));
+      generate();
+    }
+
+    function addEnv(key, val) {
+      const row = document.createElement('div');
+      row.className = 'env-row';
+      row.innerHTML =
+        '<input type="text" class="env-key" placeholder="KEY" spellcheck="false" />' +
+        '<input type="text" class="env-val" placeholder="value" spellcheck="false" />' +
+        '<button class="btn-env-del" onclick="removeEnv(this)" aria-label="Remove">×</button>';
+      row.querySelector('.env-key').value = key || '';
+      row.querySelector('.env-val').value = val || '';
+      document.getElementById('env-list').appendChild(row);
+    }
+
+    function removeEnv(btn) {
+      btn.closest('.env-row').remove();
+    }
+
+    // Sanitize the service name: lowercase-safe unit filename
+    function cleanName() {
+      const raw = document.getElementById('svc-name').value.trim();
+      return (raw.replace(/\.service$/i, '').replace(/[^A-Za-z0-9._@-]+/g, '-') || 'myapp');
+    }
+
+    function generate() {
+      const name = cleanName();
+      const desc = document.getElementById('svc-desc').value.trim() || name;
+      const exec = document.getElementById('svc-exec').value.trim();
+      const wd = document.getElementById('svc-wd').value.trim();
+      const user = document.getElementById('svc-user').value.trim();
+      const group = document.getElementById('svc-group').value.trim();
+      const type = document.getElementById('svc-type').value;
+      const restart = document.getElementById('svc-restart').value;
+      const restartsec = document.getElementById('svc-restartsec').value;
+      const envfile = document.getElementById('svc-envfile').value.trim();
+
+      const outEl = document.getElementById('unit-out');
+      if (!exec) {
+        outEl.innerHTML = '<div class="placeholder-msg">ExecStart is required — enter the command that starts your app.</div>';
+        outEl._raw = '';
+        document.getElementById('cmd-block').style.display = 'none';
+        return;
+      }
+
+      // Collect KEY=value env pairs (skip empty keys)
+      const envPairs = [];
+      document.querySelectorAll('#env-list .env-row').forEach(row => {
+        const k = row.querySelector('.env-key').value.trim();
+        const v = row.querySelector('.env-val').value.trim();
+        if (k) envPairs.push(k + '=' + v);
+      });
+
+      // Build the unit file
+      const lines = [];
+      lines.push('# /etc/systemd/system/' + name + '.service');
+      lines.push('# Generated by tools.stackfreeks.com/tools/systemd-service-generator/');
+      lines.push('');
+      lines.push('[Unit]');
+      lines.push('Description=' + desc);
+      lines.push('# Start after the network is up');
+      lines.push('After=network.target');
+      lines.push('');
+      lines.push('[Service]');
+      lines.push('Type=' + type);
+      if (user) lines.push('User=' + user);
+      if (group) lines.push('Group=' + group);
+      if (wd) lines.push('WorkingDirectory=' + wd);
+      if (envfile) lines.push('EnvironmentFile=' + envfile);
+      envPairs.forEach(p => lines.push('Environment=' + JSON.stringify(p)));
+      lines.push('ExecStart=' + exec);
+      if (restart !== 'no') {
+        lines.push('Restart=' + restart);
+        lines.push('RestartSec=' + (restartsec || '5'));
+      }
+      lines.push('# Send stdout/stderr to the journal (view with journalctl -u ' + name + ')');
+      lines.push('StandardOutput=journal');
+      lines.push('StandardError=journal');
+      lines.push('');
+      lines.push('[Install]');
+      lines.push('WantedBy=multi-user.target');
+
+      const unit = lines.join('\n');
+      outEl.innerHTML = syntaxHighlight(unit);
+      outEl._raw = unit;
+      document.getElementById('unit-filename').textContent = name + '.service';
+
+      // Build install & manage commands
+      const cmds = [
+        '# 1. Save the unit file',
+        'sudo nano /etc/systemd/system/' + name + '.service',
+        '',
+        '# 2. Reload systemd so it sees the new unit',
+        'sudo systemctl daemon-reload',
+        '',
+        '# 3. Start now and enable at boot',
+        'sudo systemctl enable --now ' + name,
+        '',
+        '# 4. Check status and follow logs',
+        'sudo systemctl status ' + name,
+        'sudo journalctl -u ' + name + ' -f',
+      ].join('\n');
+
+      const cmdEl = document.getElementById('cmd-out');
+      cmdEl.innerHTML = syntaxHighlight(cmds);
+      cmdEl._raw = cmds;
+      document.getElementById('cmd-block').style.display = '';
+
+      resetCopy('copy-unit');
+      resetCopy('copy-cmd');
+    }
+
+    // Simple ini/shell syntax highlight (no external lib)
+    function syntaxHighlight(code) {
+      return code
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/^(#.*)$/gm, '<span class="sd-comment">$1</span>')
+        .replace(/^(\[[^\]]+\])$/gm, '<span class="sd-section">$1</span>')
+        .replace(/^([A-Za-z][A-Za-z0-9]*)(=)/gm, '<span class="sd-key">$1</span>$2')
+        .replace(/^(sudo .*)$/gm, '<span class="sd-cmd">$1</span>');
+    }
+
+    function copyText(elId, btnId) {
+      const el = document.getElementById(elId);
+      const text = el._raw || el.textContent;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById(btnId);
+        btn.textContent = '✓ Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function downloadUnit() {
+      const el = document.getElementById('unit-out');
+      if (!el._raw) { generate(); }
+      const text = document.getElementById('unit-out')._raw;
+      if (!text) return;
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = cleanName() + '.service';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+
+    function resetCopy(btnId) {
+      const btn = document.getElementById(btnId);
+      if (btn) { btn.textContent = 'Copy'; btn.classList.remove('copied'); }
+    }
+
+    function toggleFaq(btn) {
+      btn.closest('.faq-item').classList.toggle('open');
+    }
+  </script>
+
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>

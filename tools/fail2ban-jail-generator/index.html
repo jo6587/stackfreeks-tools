@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fail2ban Jail Generator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Fail2ban jail.local generator for SSH, Nginx, Apache, Postfix and WordPress. Set bantime, maxretry, ignoreip — copy or download. No signup." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/fail2ban-jail-generator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/fail2ban-jail-generator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/fail2ban-jail-generator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/fail2ban-jail-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Fail2ban Jail Generator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Generate a complete fail2ban jail.local config for SSH, Nginx, Apache, Postfix and WordPress — with install and restart commands included." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/fail2ban-jail-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool layout */
+    .tool-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Form panel */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .field select,
+    .field input[type="text"] {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      padding: 8px 12px;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+    .field select:focus,
+    .field input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .field select option { background: #18181b; }
+
+    .field-hint {
+      font-size: 11px;
+      color: var(--text-3);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Checkboxes */
+    .check-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .check-item span {
+      font-size: 13px;
+      color: var(--text-2);
+      font-family: var(--font-mono);
+    }
+
+    .check-item small {
+      font-size: 11px;
+      color: var(--text-3);
+      font-family: var(--font);
+      margin-left: auto;
+      text-align: right;
+    }
+
+    /* Slider */
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slider-row input[type="range"] {
+      flex: 1;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .slider-val {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-1);
+      min-width: 24px;
+      text-align: center;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2px 8px;
+    }
+
+    .btn-generate {
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      cursor: pointer;
+      width: 100%;
+      transition: opacity 0.15s;
+      margin-top: 4px;
+    }
+    .btn-generate:hover { opacity: 0.85; }
+
+    /* Output panel */
+    .output-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .output-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+
+    .output-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      letter-spacing: 0.02em;
+    }
+
+    .output-actions { display: flex; gap: 8px; }
+
+    .btn-copy {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-copy.copied { border-color: var(--success); color: var(--success); }
+
+    .output-code {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-1);
+      white-space: pre;
+      overflow-x: auto;
+      min-height: 80px;
+    }
+
+    /* Syntax colors */
+    .f2b-comment { color: #52525b; }
+    .f2b-section { color: #818cf8; }
+    .f2b-key { color: #fbbf24; }
+    .f2b-cmd { color: #86efac; }
+
+    .placeholder-msg {
+      color: var(--text-3);
+      font-family: var(--font);
+      font-size: 14px;
+      font-style: italic;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    /* Guide */
+    .guide { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related tools */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    /* Vultr banner */
+    .vultr-banner {
+      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(34,197,94,0.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px;
+      margin-bottom: 0;
+    }
+
+    .banner-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .btn-vultr {
+      background: var(--success);
+      border: none;
+      border-radius: var(--radius);
+      color: #000;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; color: #000; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      .tool-wrap { grid-template-columns: 1fr; padding: 0 16px 40px; }
+      .guide { padding: 0 16px 36px; }
+      .faq { padding: 0 16px 36px; }
+      .sf-related { padding: 0 16px 36px; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Fail2ban Jail Generator","description":"Fail2ban jail.local generator for SSH, Nginx, Apache, Postfix and WordPress. Set bantime, maxretry, ignoreip — copy or download. No signup.","url":"https://tools.stackfreeks.com/tools/fail2ban-jail-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the recommended bantime for fail2ban?","acceptedAnswer":{"@type":"Answer","text":"For most VPS setups, a bantime of 1 hour (1h) is a solid default — long enough to stop brute-force scripts, short enough to forgive a mistyped password. High-value servers often use 24h or 1w. A permanent ban (bantime = -1) is aggressive: use it only together with a correct ignoreip so you never lock yourself out."}},{"@type":"Question","name":"What does maxretry mean in a fail2ban jail?","acceptedAnswer":{"@type":"Answer","text":"maxretry is the number of failed attempts allowed within the findtime window before fail2ban bans the IP. maxretry = 3 with findtime = 10m means: 3 failed logins within 10 minutes triggers a ban. Lower values are stricter; 3–5 is the common range for SSH."}},{"@type":"Question","name":"How do I stop fail2ban from banning my own IP?","acceptedAnswer":{"@type":"Answer","text":"Add your IP or subnet to the ignoreip line in the [DEFAULT] section of jail.local, e.g. ignoreip = 127.0.0.1/8 ::1 203.0.113.42. Fail2ban never bans addresses in this list. If you have a dynamic home IP, whitelist your ISP's subnet or use a VPN with a fixed exit IP."}},{"@type":"Question","name":"Can I use fail2ban together with ufw or iptables?","acceptedAnswer":{"@type":"Answer","text":"Yes. Fail2ban inserts its own ban rules on top of your existing firewall — by default via iptables (or nftables on newer distros). On Ubuntu with ufw enabled, fail2ban works out of the box; you can also set banaction = ufw in jail.local to have bans managed as ufw rules. They complement each other: ufw sets your static policy, fail2ban adds dynamic bans."}},{"@type":"Question","name":"How do I unban an IP address in fail2ban?","acceptedAnswer":{"@type":"Answer","text":"Run: sudo fail2ban-client set sshd unbanip 203.0.113.42 — replace sshd with the jail name and use the real IP. To list currently banned IPs, run sudo fail2ban-client status sshd. On fail2ban 0.10+ you can also unban an IP from every jail at once with sudo fail2ban-client unban 203.0.113.42."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>Fail2ban Jail Generator</h1>
+      <p>Generate a complete <code style="color:var(--accent)">jail.local</code> config for SSH, Nginx, Apache, Postfix, vsftpd, and WordPress — with bantime, maxretry, ignoreip, and ready-to-run install commands.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>Fail2ban Jail 생성기</h1>
+      <p>SSH, Nginx, Apache, Postfix, vsftpd, WordPress용 <code style="color:var(--accent)">jail.local</code> 설정을 즉시 생성 — bantime, maxretry, ignoreip 및 설치·적용 명령어 포함.</p>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <section class="tool-wrap">
+
+    <!-- Form panel -->
+    <div class="form-panel">
+
+      <p class="section-label" data-i18n="f2b_services">Services to Protect</p>
+      <div class="check-list">
+        <label class="check-item">
+          <input type="checkbox" id="svc-sshd" checked />
+          <span>sshd</span><small data-i18n="f2b_svc_sshd">SSH login</small>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="svc-nginx-http-auth" />
+          <span>nginx-http-auth</span><small data-i18n="f2b_svc_nginx_auth">Nginx basic auth</small>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="svc-nginx-limit-req" />
+          <span>nginx-limit-req</span><small data-i18n="f2b_svc_nginx_limit">Nginx rate limit</small>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="svc-nginx-botsearch" />
+          <span>nginx-botsearch</span><small data-i18n="f2b_svc_nginx_bot">Bot scanners</small>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="svc-apache-auth" />
+          <span>apache-auth</span><small data-i18n="f2b_svc_apache">Apache basic auth</small>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="svc-postfix" />
+          <span>postfix</span><small data-i18n="f2b_svc_postfix">Mail server</small>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="svc-vsftpd" />
+          <span>vsftpd</span><small data-i18n="f2b_svc_vsftpd">FTP server</small>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="svc-wordpress" />
+          <span>wordpress</span><small data-i18n="f2b_svc_wp">WP login (plugin)</small>
+        </label>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="f2b_common">Common Settings</p>
+
+      <div class="field">
+        <label data-i18n="f2b_maxretry">Max Retry</label>
+        <div class="slider-row">
+          <input type="range" id="maxretry" min="1" max="10" value="3" oninput="document.getElementById('maxretry-val').textContent = this.value" />
+          <span class="slider-val" id="maxretry-val">3</span>
+        </div>
+        <span class="field-hint" data-i18n="f2b_maxretry_hint">Failed attempts before ban</span>
+      </div>
+
+      <div class="field">
+        <label data-i18n="f2b_bantime">Ban Time</label>
+        <select id="bantime">
+          <option value="10m">10 minutes</option>
+          <option value="1h" selected>1 hour</option>
+          <option value="24h">24 hours</option>
+          <option value="1w">1 week</option>
+          <option value="-1">Permanent</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label data-i18n="f2b_findtime">Find Time</label>
+        <select id="findtime">
+          <option value="5m">5 minutes</option>
+          <option value="10m" selected>10 minutes</option>
+          <option value="30m">30 minutes</option>
+          <option value="1h">1 hour</option>
+        </select>
+        <span class="field-hint" data-i18n="f2b_findtime_hint">Window in which retries are counted</span>
+      </div>
+
+      <div class="field">
+        <label data-i18n="f2b_ignoreip">Ignore IPs (whitelist)</label>
+        <input type="text" id="ignoreip" value="127.0.0.1/8 ::1" spellcheck="false" />
+        <span class="field-hint" data-i18n="f2b_ignoreip_hint">Space-separated IPs or CIDR — add your own IP!</span>
+      </div>
+
+      <button class="btn-generate" onclick="generate()" data-i18n="f2b_generate">Generate jail.local</button>
+
+    </div>
+
+    <!-- Output panel -->
+    <div class="output-panel">
+
+      <div class="output-block">
+        <div class="output-header">
+          <span class="output-title">/etc/fail2ban/jail.local</span>
+          <div class="output-actions">
+            <button class="btn-copy" id="copy-jail" onclick="copyText('jail-out', 'copy-jail')" data-i18n="copy_btn">Copy</button>
+            <button class="btn-copy" id="dl-jail" onclick="downloadJail()" data-i18n="download_btn">Download</button>
+          </div>
+        </div>
+        <div id="jail-out" class="output-code">
+          <div class="placeholder-msg" data-i18n="f2b_placeholder">Select services and click "Generate jail.local"</div>
+        </div>
+      </div>
+
+      <div class="output-block" id="cmd-block" style="display:none">
+        <div class="output-header">
+          <span class="output-title" data-i18n="f2b_cmd_title">Install &amp; apply commands</span>
+          <div class="output-actions">
+            <button class="btn-copy" id="copy-cmd" onclick="copyText('cmd-out', 'copy-cmd')" data-i18n="copy_btn">Copy</button>
+          </div>
+        </div>
+        <div id="cmd-out" class="output-code"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Guide -->
+  <section class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to Use</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>Pick services to protect</h3>
+          <p>Check the daemons running on your server — <code style="color:var(--accent)">sshd</code> is the minimum for any VPS. Add the Nginx or Apache jails if you serve websites, and postfix/vsftpd for mail or FTP.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>Tune the ban policy</h3>
+          <p>Set maxretry (failed attempts allowed), bantime (how long an IP stays banned), and findtime (the counting window). Defaults of 3 / 1h / 10m work well for most servers.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>Whitelist your own IP</h3>
+          <p>Add your home or office IP to ignoreip so fail2ban can never lock you out — especially important if you choose a permanent ban time.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>Install and apply</h3>
+          <p>Copy or download the file to <code style="color:var(--accent)">/etc/fail2ban/jail.local</code>, then run the generated commands: install fail2ban, restart the service, and verify with <code style="color:var(--accent)">fail2ban-client status</code>.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>보호할 서비스 선택</h3>
+          <p>서버에서 실행 중인 데몬을 체크하세요 — 모든 VPS에서 <code style="color:var(--accent)">sshd</code>는 필수입니다. 웹사이트를 운영하면 Nginx/Apache jail을, 메일·FTP는 postfix/vsftpd를 추가하세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>차단 정책 조정</h3>
+          <p>maxretry(허용 실패 횟수), bantime(차단 유지 시간), findtime(집계 시간 창)을 설정하세요. 기본값 3 / 1h / 10m이 대부분의 서버에 적합합니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>내 IP 화이트리스트</h3>
+          <p>집이나 사무실 IP를 ignoreip에 추가해 스스로 차단되는 일을 방지하세요 — 영구 차단을 선택했다면 특히 중요합니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>설치 후 적용</h3>
+          <p>생성된 파일을 <code style="color:var(--accent)">/etc/fail2ban/jail.local</code>에 저장하고 명령어를 실행하세요: fail2ban 설치, 서비스 재시작, <code style="color:var(--accent)">fail2ban-client status</code>로 확인.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <p class="faq-title">Frequently Asked Questions</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the recommended bantime for fail2ban?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">For most VPS setups, a bantime of 1 hour (<code style="color:var(--accent)">1h</code>) is a solid default — long enough to stop brute-force scripts, short enough to forgive a mistyped password. High-value servers often use 24h or 1w. A permanent ban (<code style="color:var(--accent)">bantime = -1</code>) is aggressive: use it only together with a correct ignoreip so you never lock yourself out.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What does maxretry mean in a fail2ban jail?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">maxretry is the number of failed attempts allowed within the findtime window before fail2ban bans the IP. <code style="color:var(--accent)">maxretry = 3</code> with <code style="color:var(--accent)">findtime = 10m</code> means: 3 failed logins within 10 minutes triggers a ban. Lower values are stricter; 3–5 is the common range for SSH.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I stop fail2ban from banning my own IP?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Add your IP or subnet to the <code style="color:var(--accent)">ignoreip</code> line in the [DEFAULT] section of jail.local, e.g. <code style="color:var(--accent)">ignoreip = 127.0.0.1/8 ::1 203.0.113.42</code>. Fail2ban never bans addresses in this list. If you have a dynamic home IP, whitelist your ISP's subnet or use a VPN with a fixed exit IP.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I use fail2ban together with ufw or iptables?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes. Fail2ban inserts its own ban rules on top of your existing firewall — by default via iptables (or nftables on newer distros). On Ubuntu with ufw enabled, fail2ban works out of the box; you can also set <code style="color:var(--accent)">banaction = ufw</code> in jail.local to have bans managed as ufw rules. They complement each other: ufw sets your static policy, fail2ban adds dynamic bans.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I unban an IP address in fail2ban?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Run: <code style="color:var(--accent)">sudo fail2ban-client set sshd unbanip 203.0.113.42</code> — replace sshd with the jail name and use the real IP. To list currently banned IPs, run <code style="color:var(--accent)">sudo fail2ban-client status sshd</code>. On fail2ban 0.10+ you can also unban an IP from every jail at once with <code style="color:var(--accent)">sudo fail2ban-client unban 203.0.113.42</code>.</div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>fail2ban bantime 추천값은 얼마인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">대부분의 VPS에는 1시간(<code style="color:var(--accent)">1h</code>)이 무난한 기본값입니다 — 브루트포스 스크립트를 막기에 충분하고, 비밀번호 오타 정도는 용서할 만큼 짧습니다. 중요한 서버는 24h 또는 1w를 많이 사용합니다. 영구 차단(<code style="color:var(--accent)">bantime = -1</code>)은 공격적이므로 반드시 ignoreip를 올바르게 설정한 뒤 사용하세요.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>fail2ban jail에서 maxretry는 무슨 뜻인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">maxretry는 findtime 시간 창 안에서 허용되는 실패 횟수입니다. <code style="color:var(--accent)">maxretry = 3</code>, <code style="color:var(--accent)">findtime = 10m</code>이면 10분 안에 3번 로그인 실패 시 해당 IP가 차단됩니다. 값이 낮을수록 엄격하며 SSH에는 3~5가 일반적입니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>내 IP가 차단되지 않게 하려면 어떻게 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">jail.local의 [DEFAULT] 섹션 <code style="color:var(--accent)">ignoreip</code>에 내 IP나 서브넷을 추가하세요. 예: <code style="color:var(--accent)">ignoreip = 127.0.0.1/8 ::1 203.0.113.42</code>. 이 목록의 주소는 절대 차단되지 않습니다. 유동 IP라면 ISP 서브넷을 등록하거나 고정 IP VPN을 사용하세요.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>fail2ban을 ufw나 iptables와 같이 써도 되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">네. fail2ban은 기존 방화벽 위에 자체 차단 규칙을 추가합니다 — 기본은 iptables(최신 배포판은 nftables)입니다. ufw가 켜진 Ubuntu에서도 바로 동작하며, <code style="color:var(--accent)">banaction = ufw</code>로 설정하면 차단이 ufw 규칙으로 관리됩니다. ufw는 고정 정책, fail2ban은 동적 차단으로 서로 보완합니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>차단된 IP는 어떻게 해제(unban)하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">sudo fail2ban-client set sshd unbanip 203.0.113.42</code> 를 실행하세요 (jail 이름과 IP는 실제 값으로 교체). 현재 차단 목록은 <code style="color:var(--accent)">sudo fail2ban-client status sshd</code>로 확인합니다. fail2ban 0.10+에서는 <code style="color:var(--accent)">sudo fail2ban-client unban [IP]</code>로 모든 jail에서 한 번에 해제할 수 있습니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/firewall-rule-builder/" class="sf-related-card"><span>🔥</span>Firewall Rule Builder</a>
+      <a href="/tools/ssh-config-generator/" class="sf-related-card"><span>🔑</span>SSH Config Generator</a>
+      <a href="/tools/htpasswd-generator/" class="sf-related-card"><span>🔒</span>Htpasswd Generator</a>
+      <a href="https://stackfreeks.com/vultr-firewall-setup/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Vultr Firewall Setup Guide</a>
+    </div>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Secure your server on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+         rel="nofollow sponsored" target="_blank"
+         data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    // i18n page-specific keys (must be before i18n.js)
+    window.SF_PAGE_I18N = {
+      en: {
+        f2b_services: 'Services to Protect',
+        f2b_svc_sshd: 'SSH login',
+        f2b_svc_nginx_auth: 'Nginx basic auth',
+        f2b_svc_nginx_limit: 'Nginx rate limit',
+        f2b_svc_nginx_bot: 'Bot scanners',
+        f2b_svc_apache: 'Apache basic auth',
+        f2b_svc_postfix: 'Mail server',
+        f2b_svc_vsftpd: 'FTP server',
+        f2b_svc_wp: 'WP login (plugin)',
+        f2b_common: 'Common Settings',
+        f2b_maxretry: 'Max Retry',
+        f2b_maxretry_hint: 'Failed attempts before ban',
+        f2b_bantime: 'Ban Time',
+        f2b_findtime: 'Find Time',
+        f2b_findtime_hint: 'Window in which retries are counted',
+        f2b_ignoreip: 'Ignore IPs (whitelist)',
+        f2b_ignoreip_hint: 'Space-separated IPs or CIDR — add your own IP!',
+        f2b_generate: 'Generate jail.local',
+        f2b_placeholder: 'Select services and click "Generate jail.local"',
+        f2b_cmd_title: 'Install & apply commands',
+        copy_btn: 'Copy',
+        download_btn: 'Download',
+      },
+      ko: {
+        f2b_services: '보호할 서비스',
+        f2b_svc_sshd: 'SSH 로그인',
+        f2b_svc_nginx_auth: 'Nginx 기본 인증',
+        f2b_svc_nginx_limit: 'Nginx 속도 제한',
+        f2b_svc_nginx_bot: '봇 스캐너',
+        f2b_svc_apache: 'Apache 기본 인증',
+        f2b_svc_postfix: '메일 서버',
+        f2b_svc_vsftpd: 'FTP 서버',
+        f2b_svc_wp: 'WP 로그인 (플러그인)',
+        f2b_common: '공통 설정',
+        f2b_maxretry: '최대 재시도',
+        f2b_maxretry_hint: '차단 전 허용 실패 횟수',
+        f2b_bantime: '차단 시간',
+        f2b_findtime: '집계 시간',
+        f2b_findtime_hint: '실패 횟수를 집계하는 시간 창',
+        f2b_ignoreip: '예외 IP (화이트리스트)',
+        f2b_ignoreip_hint: '공백으로 구분된 IP/CIDR — 내 IP를 꼭 추가하세요!',
+        f2b_generate: 'jail.local 생성',
+        f2b_placeholder: '서비스 선택 후 "jail.local 생성" 클릭',
+        f2b_cmd_title: '설치 · 적용 명령어',
+        copy_btn: '복사',
+        download_btn: '다운로드',
+      }
+    };
+
+    // Per-service jail definitions: extra lines beyond enabled = true
+    const SERVICES = {
+      'sshd': {
+        comment: 'SSH brute-force protection',
+        lines: ['port    = ssh', 'logpath = %(sshd_log)s', 'backend = %(sshd_backend)s'],
+      },
+      'nginx-http-auth': {
+        comment: 'Nginx basic-auth failures',
+        lines: ['port    = http,https', 'logpath = %(nginx_error_log)s'],
+      },
+      'nginx-limit-req': {
+        comment: 'Requires limit_req_zone in nginx.conf',
+        lines: ['port    = http,https', 'logpath = %(nginx_error_log)s'],
+      },
+      'nginx-botsearch': {
+        comment: 'Bots probing for exploitable paths',
+        lines: ['port    = http,https', 'logpath = %(nginx_error_log)s'],
+      },
+      'apache-auth': {
+        comment: 'Apache basic-auth failures',
+        lines: ['port    = http,https', 'logpath = %(apache_error_log)s'],
+      },
+      'postfix': {
+        comment: 'Postfix SMTP abuse',
+        lines: ['mode    = more', 'port    = smtp,465,submission', 'logpath = %(postfix_log)s', 'backend = %(postfix_backend)s'],
+      },
+      'vsftpd': {
+        comment: 'vsftpd FTP login failures',
+        lines: ['port    = ftp,ftp-data,ftps,ftps-data', 'logpath = %(vsftpd_log)s'],
+      },
+      'wordpress': {
+        comment: 'Requires the WP fail2ban plugin (writes to syslog)',
+        lines: ['filter  = wordpress', 'port    = http,https', 'logpath = /var/log/auth.log'],
+      },
+    };
+
+    function selectedServices() {
+      return Object.keys(SERVICES).filter(s => document.getElementById('svc-' + s).checked);
+    }
+
+    function generate() {
+      const services = selectedServices();
+      const outEl = document.getElementById('jail-out');
+
+      if (services.length === 0) {
+        outEl.innerHTML = '<div class="placeholder-msg">Select at least one service to protect.</div>';
+        outEl._raw = '';
+        document.getElementById('cmd-block').style.display = 'none';
+        return;
+      }
+
+      const maxretry = document.getElementById('maxretry').value;
+      const bantime = document.getElementById('bantime').value;
+      const findtime = document.getElementById('findtime').value;
+      const ignoreip = document.getElementById('ignoreip').value.trim() || '127.0.0.1/8 ::1';
+
+      // Build jail.local content
+      const lines = [];
+      lines.push('# /etc/fail2ban/jail.local');
+      lines.push('# Generated by tools.stackfreeks.com/tools/fail2ban-jail-generator/');
+      lines.push('# Never edit jail.conf directly — it is overwritten on upgrade.');
+      lines.push('');
+      lines.push('[DEFAULT]');
+      lines.push('# IPs that are never banned (add your own IP!)');
+      lines.push('ignoreip = ' + ignoreip);
+      lines.push('# How long an IP stays banned' + (bantime === '-1' ? ' (-1 = permanent)' : ''));
+      lines.push('bantime  = ' + bantime);
+      lines.push('# Window in which failures are counted');
+      lines.push('findtime = ' + findtime);
+      lines.push('# Failures allowed before a ban');
+      lines.push('maxretry = ' + maxretry);
+
+      services.forEach(svc => {
+        const def = SERVICES[svc];
+        lines.push('');
+        lines.push('# ' + def.comment);
+        lines.push('[' + svc + ']');
+        lines.push('enabled = true');
+        def.lines.forEach(l => lines.push(l));
+      });
+
+      const jail = lines.join('\n');
+      outEl.innerHTML = syntaxHighlight(jail);
+      outEl._raw = jail;
+
+      // Build install & apply commands
+      const firstJail = services[0];
+      const cmds = [
+        '# 1. Install fail2ban (Debian / Ubuntu)',
+        'sudo apt update && sudo apt install -y fail2ban',
+        '',
+        '# 2. Save the config above as:',
+        'sudo nano /etc/fail2ban/jail.local',
+        '',
+        '# 3. Restart fail2ban to apply',
+        'sudo systemctl enable --now fail2ban',
+        'sudo systemctl restart fail2ban',
+        '',
+        '# 4. Verify jails are running',
+        'sudo fail2ban-client status',
+        'sudo fail2ban-client status ' + firstJail,
+      ].join('\n');
+
+      const cmdEl = document.getElementById('cmd-out');
+      cmdEl.innerHTML = syntaxHighlight(cmds);
+      cmdEl._raw = cmds;
+      document.getElementById('cmd-block').style.display = '';
+
+      resetCopy('copy-jail');
+      resetCopy('copy-cmd');
+    }
+
+    // Simple ini/shell syntax highlight (no external lib)
+    function syntaxHighlight(code) {
+      return code
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/^(#.*)$/gm, '<span class="f2b-comment">$1</span>')
+        .replace(/^(\[[^\]]+\])$/gm, '<span class="f2b-section">$1</span>')
+        .replace(/^([a-z]+)(\s*=)/gm, '<span class="f2b-key">$1</span>$2')
+        .replace(/^(sudo .*)$/gm, '<span class="f2b-cmd">$1</span>');
+    }
+
+    function copyText(elId, btnId) {
+      const el = document.getElementById(elId);
+      const text = el._raw || el.textContent;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById(btnId);
+        btn.textContent = '✓ Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function downloadJail() {
+      const el = document.getElementById('jail-out');
+      if (!el._raw) { generate(); }
+      const text = document.getElementById('jail-out')._raw;
+      if (!text) return;
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'jail.local';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+
+    function resetCopy(btnId) {
+      const btn = document.getElementById(btnId);
+      if (btn) { btn.textContent = 'Copy'; btn.classList.remove('copied'); }
+    }
+
+    function toggleFaq(btn) {
+      btn.closest('.faq-item').classList.toggle('open');
+    }
+  </script>
+
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>
