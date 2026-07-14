@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PM2 Ecosystem Config Generator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Free PM2 ecosystem.config.js generator — instances, cluster/fork mode, env vars &amp; max_memory_restart. Express, Next.js, NestJS presets. No signup." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/pm2-ecosystem-generator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/pm2-ecosystem-generator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/pm2-ecosystem-generator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/pm2-ecosystem-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="PM2 Ecosystem Config Generator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Build a ready-to-use PM2 ecosystem.config.js — instances, cluster/fork mode, env vars, watch, max_memory_restart, and deploy commands included." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/pm2-ecosystem-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool layout */
+    .tool-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Form panel */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .field select,
+    .field input[type="text"],
+    .field input[type="number"] {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 8px 12px;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+    .field select { font-family: var(--font); font-size: 14px; }
+    .field select:focus,
+    .field input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .field select option { background: #18181b; }
+    .field input::placeholder { color: var(--text-3); }
+
+    .field-hint {
+      font-size: 11px;
+      color: var(--text-3);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .instances-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .toggle-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .toggle-row label {
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--text-2);
+      cursor: pointer;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Presets */
+    .preset-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .btn-preset {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 7px 8px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-preset:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Env var rows */
+    .env-list { display: flex; flex-direction: column; gap: 8px; }
+    .env-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 28px;
+      gap: 8px;
+      align-items: center;
+    }
+    .env-row input {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 7px 10px;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+    .env-row input:focus { outline: none; border-color: var(--accent); }
+    .env-row input::placeholder { color: var(--text-3); }
+    .btn-env-del {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-3);
+      font-size: 14px;
+      height: 28px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-env-del:hover { border-color: #ef4444; color: #ef4444; }
+    .btn-env-add {
+      background: none;
+      border: 1px dashed var(--border-2);
+      border-radius: var(--radius);
+      color: var(--text-3);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-env-add:hover { border-color: var(--accent); color: var(--accent); }
+
+    .btn-generate {
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      cursor: pointer;
+      width: 100%;
+      transition: opacity 0.15s;
+      margin-top: 4px;
+    }
+    .btn-generate:hover { opacity: 0.85; }
+
+    /* Output panel */
+    .output-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .output-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+
+    .output-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      letter-spacing: 0.02em;
+    }
+
+    .output-actions { display: flex; gap: 8px; }
+
+    .btn-copy {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-copy.copied { border-color: var(--success); color: var(--success); }
+
+    .output-code {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-1);
+      white-space: pre;
+      overflow-x: auto;
+      min-height: 80px;
+    }
+
+    /* Syntax colors */
+    .sd-comment { color: #52525b; }
+    .sd-section { color: #818cf8; }
+    .sd-key { color: #fbbf24; }
+    .sd-string { color: #86efac; }
+    .sd-cmd { color: #86efac; }
+
+    .placeholder-msg {
+      color: var(--text-3);
+      font-family: var(--font);
+      font-size: 14px;
+      font-style: italic;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    /* Guide */
+    .guide { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related tools */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    /* Vultr banner */
+    .vultr-banner {
+      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(34,197,94,0.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px;
+      margin-bottom: 0;
+    }
+
+    .banner-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .btn-vultr {
+      background: var(--success);
+      border: none;
+      border-radius: var(--radius);
+      color: #000;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; color: #000; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      .tool-wrap { grid-template-columns: 1fr; padding: 0 16px 40px; }
+      .preset-row { grid-template-columns: 1fr; }
+      .guide { padding: 0 16px 36px; }
+      .faq { padding: 0 16px 36px; }
+      .sf-related { padding: 0 16px 36px; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"PM2 Ecosystem Config Generator","description":"Free PM2 ecosystem.config.js generator. Set app name, script, instances, cluster/fork mode, env vars, watch mode and max_memory_restart, with Express/Next.js/NestJS presets. No signup.","url":"https://tools.stackfreeks.com/tools/pm2-ecosystem-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between PM2 fork mode and cluster mode?","acceptedAnswer":{"@type":"Answer","text":"Fork mode runs a single instance of your app as one Node.js process — simple and predictable, but it can only use one CPU core and has no built-in load balancing. Cluster mode spawns multiple instances behind PM2's internal load balancer, using the Node.js cluster module to share a single port across processes — ideal for HTTP APIs that need to use every CPU core. Fork mode suits background workers, cron jobs, or apps that already manage their own concurrency; cluster mode is the default choice for stateless web servers."}},{"@type":"Question","name":"What does setting instances to \"max\" do in PM2?","acceptedAnswer":{"@type":"Answer","text":"instances: \"max\" tells PM2 to detect the number of CPU cores on the host and spawn that many cluster instances automatically, so the same ecosystem.config.js scales correctly whether you deploy to a 2-core or 16-core VPS. You can also use instances: -1 to use all cores minus one, leaving headroom for other services, or a fixed number like 2 for predictable memory usage. \"max\" only applies in cluster mode — fork mode always runs a single instance."}},{"@type":"Question","name":"Why do I need to run pm2 save and pm2 startup?","acceptedAnswer":{"@type":"Answer","text":"pm2 save writes the current process list to PM2's dump file so it can be restored later. pm2 startup generates and configures a system init script (systemd, upstart, etc.) that resurrects your saved process list on server reboot. Without both steps, PM2 forgets your apps after a restart or a crash-and-reboot cycle — running only pm2 start ecosystem.config.js keeps the app alive for the current session but does not survive a reboot."}},{"@type":"Question","name":"What is a good max_memory_restart value?","acceptedAnswer":{"@type":"Answer","text":"A common starting point is 300-500M for small Node.js APIs and 500M-1G for apps with in-memory caching or larger dependency trees. Set it comfortably above your app's normal steady-state memory usage, which you can check with pm2 monit, so it only triggers on real leaks rather than everyday garbage-collection spikes. Leave it unset while you are still profiling memory usage — adding a restart threshold too early can mask a leak instead of surfacing it."}},{"@type":"Question","name":"Should I enable watch mode in production?","acceptedAnswer":{"@type":"Answer","text":"No — watch mode restarts your app whenever a file in the working directory changes, which is useful in local development but risky in production. Log files, uploaded content, or a deployment script writing new files can trigger unexpected restarts and drop in-flight requests. In production, keep watch set to false and restart deliberately after each deploy — use pm2 reload ecosystem.config.js for zero-downtime restarts in cluster mode."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>PM2 Ecosystem Config Generator</h1>
+      <p>Build a complete <code style="color:var(--accent)">ecosystem.config.js</code> for PM2 — instances, cluster/fork mode, environment variables, watch mode, and max_memory_restart. Presets for Express, Next.js, and NestJS.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>PM2 Ecosystem Config 생성기</h1>
+      <p>PM2용 <code style="color:var(--accent)">ecosystem.config.js</code>를 즉시 생성 — 인스턴스 수, cluster/fork 모드, 환경변수, watch 모드, max_memory_restart 포함. Express, Next.js, NestJS 프리셋 제공.</p>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <section class="tool-wrap">
+
+    <!-- Form panel -->
+    <div class="form-panel">
+
+      <p class="section-label" data-i18n="pm2_presets">Presets</p>
+      <div class="preset-row">
+        <button class="btn-preset" onclick="applyPreset('express')">Express API</button>
+        <button class="btn-preset" onclick="applyPreset('nextjs')">Next.js</button>
+        <button class="btn-preset" onclick="applyPreset('nestjs')">NestJS</button>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="pm2_app">App</p>
+
+      <div class="field">
+        <label data-i18n="pm2_name">App Name</label>
+        <input type="text" id="app-name" value="myapp" spellcheck="false" placeholder="myapp" />
+        <span class="field-hint" data-i18n="pm2_name_hint">Shown in pm2 list, pm2 logs and pm2 monit</span>
+      </div>
+
+      <div class="field">
+        <label data-i18n="pm2_script">Script Path</label>
+        <input type="text" id="app-script" value="index.js" spellcheck="false" placeholder="index.js" />
+        <span class="field-hint" data-i18n="pm2_script_hint">Path relative to ecosystem.config.js</span>
+      </div>
+
+      <div class="field">
+        <label data-i18n="pm2_instances">Instances</label>
+        <div class="instances-row">
+          <input type="number" id="app-instances" value="1" min="1" max="64" />
+          <div class="toggle-row">
+            <input type="checkbox" id="app-instances-max" onchange="toggleMaxInstances()" />
+            <label for="app-instances-max" data-i18n="pm2_instances_max">max (all CPU cores)</label>
+          </div>
+        </div>
+        <span class="field-hint" data-i18n="pm2_instances_hint">Only used in cluster mode</span>
+      </div>
+
+      <div class="field">
+        <label data-i18n="pm2_mode">exec_mode</label>
+        <select id="app-mode">
+          <option value="fork" selected>fork (single process)</option>
+          <option value="cluster">cluster (multi-core load balancing)</option>
+        </select>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="pm2_env">Environment Variables</p>
+
+      <div class="env-list" id="env-list">
+        <div class="env-row">
+          <input type="text" class="env-key" value="NODE_ENV" placeholder="KEY" spellcheck="false" />
+          <input type="text" class="env-val" value="production" placeholder="value" spellcheck="false" />
+          <button class="btn-env-del" onclick="removeEnv(this)" aria-label="Remove">×</button>
+        </div>
+        <div class="env-row">
+          <input type="text" class="env-key" value="PORT" placeholder="KEY" spellcheck="false" />
+          <input type="text" class="env-val" value="3000" placeholder="value" spellcheck="false" />
+          <button class="btn-env-del" onclick="removeEnv(this)" aria-label="Remove">×</button>
+        </div>
+      </div>
+      <button class="btn-env-add" onclick="addEnv()" data-i18n="pm2_env_add">+ Add variable</button>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="pm2_advanced">Advanced</p>
+
+      <div class="toggle-row">
+        <input type="checkbox" id="app-watch" />
+        <label for="app-watch" data-i18n="pm2_watch">watch — restart on file changes</label>
+      </div>
+
+      <div class="toggle-row">
+        <input type="checkbox" id="app-autorestart" checked />
+        <label for="app-autorestart" data-i18n="pm2_autorestart">autorestart — restart on crash</label>
+      </div>
+
+      <div class="field">
+        <label data-i18n="pm2_maxmem">max_memory_restart</label>
+        <input type="text" id="app-maxmem" value="" spellcheck="false" placeholder="500M (optional)" />
+        <span class="field-hint" data-i18n="pm2_maxmem_hint">Restarts the app if it exceeds this memory usage</span>
+      </div>
+
+      <button class="btn-generate" onclick="generate()" data-i18n="pm2_generate">Generate ecosystem.config.js</button>
+
+    </div>
+
+    <!-- Output panel -->
+    <div class="output-panel">
+
+      <div class="output-block">
+        <div class="output-header">
+          <span class="output-title">ecosystem.config.js</span>
+          <div class="output-actions">
+            <button class="btn-copy" id="copy-config" onclick="copyText('config-out', 'copy-config')" data-i18n="copy_btn">Copy</button>
+            <button class="btn-copy" id="dl-config" onclick="downloadConfig()" data-i18n="download_btn">Download</button>
+          </div>
+        </div>
+        <div id="config-out" class="output-code">
+          <div class="placeholder-msg" data-i18n="pm2_placeholder">Fill the form (or pick a preset) and click "Generate ecosystem.config.js"</div>
+        </div>
+      </div>
+
+      <div class="output-block" id="cmd-block" style="display:none">
+        <div class="output-header">
+          <span class="output-title" data-i18n="pm2_cmd_title">Deploy &amp; manage commands</span>
+          <div class="output-actions">
+            <button class="btn-copy" id="copy-cmd" onclick="copyText('cmd-out', 'copy-cmd')" data-i18n="copy_btn">Copy</button>
+          </div>
+        </div>
+        <div id="cmd-out" class="output-code"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Guide -->
+  <section class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to Use</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>Pick a preset or fill the form</h3>
+          <p>Click a preset (Express API, Next.js, NestJS) to auto-fill sensible defaults, then adjust the app name and <code style="color:var(--accent)">script</code> path to match your project.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>Choose instances and mode</h3>
+          <p>Pick <code style="color:var(--accent)">cluster</code> mode with "max" instances to use every CPU core for a stateless API, or <code style="color:var(--accent)">fork</code> mode with 1 instance for background workers.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>Add environment variables</h3>
+          <p>Add KEY=value pairs like NODE_ENV=production or PORT=3000, set a <code style="color:var(--accent)">max_memory_restart</code> safety net, and keep watch mode off in production.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>Generate and deploy</h3>
+          <p>Copy or download the file, run <code style="color:var(--accent)">pm2 start ecosystem.config.js</code>, then <code style="color:var(--accent)">pm2 save</code> and <code style="color:var(--accent)">pm2 startup</code> so it survives a reboot.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>프리셋 선택 또는 직접 입력</h3>
+          <p>프리셋(Express API, Next.js, NestJS)을 클릭하면 기본값이 자동 입력됩니다. 앱 이름과 <code style="color:var(--accent)">script</code> 경로를 프로젝트에 맞게 수정하세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>인스턴스 수와 모드 선택</h3>
+          <p>상태 없는 API는 <code style="color:var(--accent)">cluster</code> 모드 + "max" 인스턴스로 모든 CPU 코어를 활용하고, 백그라운드 워커는 <code style="color:var(--accent)">fork</code> 모드 + 인스턴스 1개를 사용하세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>환경변수 추가</h3>
+          <p>NODE_ENV=production, PORT=3000 같은 KEY=value 쌍을 추가하고, <code style="color:var(--accent)">max_memory_restart</code> 안전장치를 설정하며, 프로덕션에서는 watch 모드를 꺼두세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>생성 및 배포</h3>
+          <p>파일을 복사·다운로드한 뒤 <code style="color:var(--accent)">pm2 start ecosystem.config.js</code>를 실행하고, <code style="color:var(--accent)">pm2 save</code>와 <code style="color:var(--accent)">pm2 startup</code>으로 재부팅 후에도 유지되게 하세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <p class="faq-title">Frequently Asked Questions</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between PM2 fork mode and cluster mode?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Fork mode runs a single instance of your app as one Node.js process — simple and predictable, but it can only use one CPU core and has no built-in load balancing. Cluster mode spawns multiple instances behind PM2's internal load balancer, using the Node.js cluster module to share a single port across processes — ideal for HTTP APIs that need to use every CPU core. Fork mode suits background workers, cron jobs, or apps that already manage their own concurrency; cluster mode is the default choice for stateless web servers.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What does setting instances to "max" do in PM2?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">instances: "max"</code> tells PM2 to detect the number of CPU cores on the host and spawn that many cluster instances automatically, so the same ecosystem.config.js scales correctly whether you deploy to a 2-core or 16-core VPS. You can also use <code style="color:var(--accent)">instances: -1</code> to use all cores minus one, leaving headroom for other services, or a fixed number like 2 for predictable memory usage. "max" only applies in cluster mode — fork mode always runs a single instance.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why do I need to run pm2 save and pm2 startup?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">pm2 save</code> writes the current process list to PM2's dump file so it can be restored later. <code style="color:var(--accent)">pm2 startup</code> generates and configures a system init script (systemd, upstart, etc.) that resurrects your saved process list on server reboot. Without both steps, PM2 forgets your apps after a restart or a crash-and-reboot cycle — running only <code style="color:var(--accent)">pm2 start ecosystem.config.js</code> keeps the app alive for the current session but does not survive a reboot.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is a good max_memory_restart value?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">A common starting point is 300-500M for small Node.js APIs and 500M-1G for apps with in-memory caching or larger dependency trees. Set it comfortably above your app's normal steady-state memory usage, which you can check with <code style="color:var(--accent)">pm2 monit</code>, so it only triggers on real leaks rather than everyday garbage-collection spikes. Leave it unset while you are still profiling memory usage — adding a restart threshold too early can mask a leak instead of surfacing it.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Should I enable watch mode in production?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">No — watch mode restarts your app whenever a file in the working directory changes, which is useful in local development but risky in production. Log files, uploaded content, or a deployment script writing new files can trigger unexpected restarts and drop in-flight requests. In production, keep <code style="color:var(--accent)">watch: false</code> and restart deliberately after each deploy — use <code style="color:var(--accent)">pm2 reload ecosystem.config.js</code> for zero-downtime restarts in cluster mode.</div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>PM2 fork 모드와 cluster 모드의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">fork 모드는 앱을 하나의 Node.js 프로세스로 단일 실행합니다 — 단순하고 예측 가능하지만 CPU 코어 1개만 사용하고 내장 로드밸런싱이 없습니다. cluster 모드는 PM2의 내부 로드밸런서 뒤에서 여러 인스턴스를 실행하며 Node.js cluster 모듈로 하나의 포트를 여러 프로세스가 공유합니다 — 모든 CPU 코어를 활용해야 하는 HTTP API에 적합합니다. 백그라운드 워커나 크론 작업, 자체적으로 동시성을 관리하는 앱에는 fork 모드가 적합하고, 상태 없는 웹 서버에는 cluster 모드가 기본 선택입니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>PM2에서 instances를 "max"로 설정하면 어떻게 되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">instances: "max"</code>는 PM2가 호스트의 CPU 코어 수를 감지해 그만큼 cluster 인스턴스를 자동으로 생성하게 합니다 — 같은 ecosystem.config.js로 2코어 VPS와 16코어 VPS 모두에 맞게 확장됩니다. 다른 서비스를 위한 여유를 남기려면 <code style="color:var(--accent)">instances: -1</code>(전체 코어 수-1)을 쓰거나, 메모리 사용량을 예측 가능하게 하려면 2 같은 고정 숫자를 쓸 수 있습니다. "max"는 cluster 모드에서만 적용되며 fork 모드는 항상 인스턴스 1개로 실행됩니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>pm2 save와 pm2 startup은 왜 실행해야 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code style="color:var(--accent)">pm2 save</code>는 현재 프로세스 목록을 PM2의 덤프 파일에 저장해 나중에 복원할 수 있게 합니다. <code style="color:var(--accent)">pm2 startup</code>은 서버 재부팅 시 저장된 프로세스 목록을 되살리는 시스템 초기화 스크립트(systemd, upstart 등)를 생성·등록합니다. 두 단계를 모두 하지 않으면 재시작이나 재부팅 후 PM2가 앱을 기억하지 못합니다 — <code style="color:var(--accent)">pm2 start ecosystem.config.js</code>만 실행하면 현재 세션에서는 유지되지만 재부팅에서는 살아남지 못합니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>max_memory_restart는 어느 정도 값이 적당한가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">작은 Node.js API는 300-500M, 인메모리 캐싱이나 의존성이 많은 앱은 500M-1G 정도가 일반적인 시작점입니다. <code style="color:var(--accent)">pm2 monit</code>으로 확인한 앱의 평상시 메모리 사용량보다 충분히 높게 설정해, 일상적인 가비지 컬렉션 스파이크가 아니라 실제 메모리 누수일 때만 재시작되게 하세요. 메모리 사용량을 아직 파악 중이라면 값을 비워두는 것이 좋습니다 — 재시작 임계값을 너무 일찍 설정하면 누수를 드러내는 대신 가려버릴 수 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>프로덕션에서 watch 모드를 사용해도 되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">아니요 — watch 모드는 작업 디렉터리의 파일이 변경될 때마다 앱을 재시작하는데, 로컬 개발에는 유용하지만 프로덕션에서는 위험합니다. 로그 파일, 업로드된 콘텐츠, 배포 스크립트가 새 파일을 쓰는 것만으로도 예기치 않은 재시작이 발생해 진행 중인 요청이 끊길 수 있습니다. 프로덕션에서는 <code style="color:var(--accent)">watch: false</code>를 유지하고 배포 후에는 의도적으로 재시작하세요 — cluster 모드에서 무중단 재시작을 하려면 <code style="color:var(--accent)">pm2 reload ecosystem.config.js</code>를 사용하세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/systemd-service-generator/" class="sf-related-card"><span>⚡</span>Systemd Service Generator</a>
+      <a href="/tools/cron-builder/" class="sf-related-card"><span>⏰</span>Cron Expression Builder</a>
+      <a href="/tools/nginx-config-generator/" class="sf-related-card"><span>⚙️</span>Nginx Config Generator</a>
+      <a href="https://stackfreeks.com/deploy-nodejs-vultr-vps/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Deploy Node.js on a Vultr VPS</a>
+    </div>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Run your Node.js app on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+         rel="nofollow sponsored" target="_blank"
+         data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    // i18n page-specific keys (must be before i18n.js)
+    window.SF_PAGE_I18N = {
+      en: {
+        pm2_presets: 'Presets',
+        pm2_app: 'App',
+        pm2_name: 'App Name',
+        pm2_name_hint: 'Shown in pm2 list, pm2 logs and pm2 monit',
+        pm2_script: 'Script Path',
+        pm2_script_hint: 'Path relative to ecosystem.config.js',
+        pm2_instances: 'Instances',
+        pm2_instances_max: 'max (all CPU cores)',
+        pm2_instances_hint: 'Only used in cluster mode',
+        pm2_mode: 'exec_mode',
+        pm2_env: 'Environment Variables',
+        pm2_env_add: '+ Add variable',
+        pm2_advanced: 'Advanced',
+        pm2_watch: 'watch — restart on file changes',
+        pm2_autorestart: 'autorestart — restart on crash',
+        pm2_maxmem: 'max_memory_restart',
+        pm2_maxmem_hint: 'Restarts the app if it exceeds this memory usage',
+        pm2_generate: 'Generate ecosystem.config.js',
+        pm2_placeholder: 'Fill the form (or pick a preset) and click "Generate ecosystem.config.js"',
+        pm2_cmd_title: 'Deploy & manage commands',
+        copy_btn: 'Copy',
+        download_btn: 'Download',
+      },
+      ko: {
+        pm2_presets: '프리셋',
+        pm2_app: '앱',
+        pm2_name: '앱 이름',
+        pm2_name_hint: 'pm2 list, pm2 logs, pm2 monit에 표시됩니다',
+        pm2_script: '스크립트 경로',
+        pm2_script_hint: 'ecosystem.config.js 기준 상대 경로',
+        pm2_instances: '인스턴스 수',
+        pm2_instances_max: 'max (전체 CPU 코어)',
+        pm2_instances_hint: 'cluster 모드에서만 사용됩니다',
+        pm2_mode: 'exec_mode',
+        pm2_env: '환경변수',
+        pm2_env_add: '+ 변수 추가',
+        pm2_advanced: '고급 설정',
+        pm2_watch: 'watch — 파일 변경 시 재시작',
+        pm2_autorestart: 'autorestart — 크래시 시 재시작',
+        pm2_maxmem: 'max_memory_restart',
+        pm2_maxmem_hint: '이 메모리 사용량을 초과하면 앱을 재시작합니다',
+        pm2_generate: 'ecosystem.config.js 생성',
+        pm2_placeholder: '폼을 채우거나 프리셋 선택 후 "ecosystem.config.js 생성" 클릭',
+        pm2_cmd_title: '배포 · 관리 명령어',
+        copy_btn: '복사',
+        download_btn: '다운로드',
+      }
+    };
+
+    // Presets: auto-fill common Node.js stacks
+    const PRESETS = {
+      express: {
+        name: 'express-api', script: 'server.js',
+        instances: 2, instancesMax: false, mode: 'cluster',
+        watch: false, autorestart: true, maxmem: '500M',
+        env: [['NODE_ENV', 'production'], ['PORT', '3000']],
+      },
+      nextjs: {
+        name: 'nextjs-app', script: 'node_modules/next/dist/bin/next',
+        instances: 1, instancesMax: true, mode: 'cluster',
+        watch: false, autorestart: true, maxmem: '500M',
+        env: [['NODE_ENV', 'production'], ['PORT', '3000']],
+      },
+      nestjs: {
+        name: 'nestjs-api', script: 'dist/main.js',
+        instances: 1, instancesMax: true, mode: 'cluster',
+        watch: false, autorestart: true, maxmem: '500M',
+        env: [['NODE_ENV', 'production'], ['PORT', '3000']],
+      },
+    };
+
+    function applyPreset(key) {
+      const p = PRESETS[key];
+      document.getElementById('app-name').value = p.name;
+      document.getElementById('app-script').value = p.script;
+      document.getElementById('app-instances').value = p.instances;
+      document.getElementById('app-instances-max').checked = p.instancesMax;
+      document.getElementById('app-mode').value = p.mode;
+      document.getElementById('app-watch').checked = p.watch;
+      document.getElementById('app-autorestart').checked = p.autorestart;
+      document.getElementById('app-maxmem').value = p.maxmem;
+      toggleMaxInstances();
+      // Rebuild env rows
+      const list = document.getElementById('env-list');
+      list.innerHTML = '';
+      if (p.env.length === 0) addEnv();
+      p.env.forEach(([k, v]) => addEnv(k, v));
+      generate();
+    }
+
+    function toggleMaxInstances() {
+      const isMax = document.getElementById('app-instances-max').checked;
+      document.getElementById('app-instances').disabled = isMax;
+    }
+
+    function addEnv(key, val) {
+      const row = document.createElement('div');
+      row.className = 'env-row';
+      row.innerHTML =
+        '<input type="text" class="env-key" placeholder="KEY" spellcheck="false" />' +
+        '<input type="text" class="env-val" placeholder="value" spellcheck="false" />' +
+        '<button class="btn-env-del" onclick="removeEnv(this)" aria-label="Remove">×</button>';
+      row.querySelector('.env-key').value = key || '';
+      row.querySelector('.env-val').value = val || '';
+      document.getElementById('env-list').appendChild(row);
+    }
+
+    function removeEnv(btn) {
+      btn.closest('.env-row').remove();
+    }
+
+    function generate() {
+      const name = document.getElementById('app-name').value.trim() || 'app';
+      const script = document.getElementById('app-script').value.trim();
+      const isMax = document.getElementById('app-instances-max').checked;
+      const instancesNum = parseInt(document.getElementById('app-instances').value, 10) || 1;
+      const mode = document.getElementById('app-mode').value;
+      const watch = document.getElementById('app-watch').checked;
+      const autorestart = document.getElementById('app-autorestart').checked;
+      const maxmem = document.getElementById('app-maxmem').value.trim();
+
+      const outEl = document.getElementById('config-out');
+      if (!script) {
+        outEl.innerHTML = '<div class="placeholder-msg">Script path is required — enter the entry file that starts your app.</div>';
+        outEl._raw = '';
+        document.getElementById('cmd-block').style.display = 'none';
+        return;
+      }
+
+      // Collect KEY=value env pairs (skip empty keys)
+      const envPairs = [];
+      document.querySelectorAll('#env-list .env-row').forEach(row => {
+        const k = row.querySelector('.env-key').value.trim();
+        const v = row.querySelector('.env-val').value.trim();
+        if (k) envPairs.push([k, v]);
+      });
+
+      const instancesVal = isMax ? '"max"' : instancesNum;
+
+      // Build the ecosystem.config.js file
+      const lines = [];
+      lines.push('// ecosystem.config.js');
+      lines.push('// Generated by tools.stackfreeks.com/tools/pm2-ecosystem-generator/');
+      lines.push('module.exports = {');
+      lines.push('  apps: [');
+      lines.push('    {');
+      lines.push('      name: ' + JSON.stringify(name) + ',');
+      lines.push('      script: ' + JSON.stringify(script) + ',');
+      lines.push('      instances: ' + instancesVal + ',');
+      lines.push('      exec_mode: ' + JSON.stringify(mode) + ',');
+      lines.push('      watch: ' + watch + ',');
+      if (maxmem) lines.push('      max_memory_restart: ' + JSON.stringify(maxmem) + ',');
+      lines.push('      autorestart: ' + autorestart + ',');
+      if (envPairs.length > 0) {
+        lines.push('      env: {');
+        envPairs.forEach(([k, v], i) => {
+          const comma = i < envPairs.length - 1 ? ',' : '';
+          lines.push('        ' + k + ': ' + JSON.stringify(v) + comma);
+        });
+        lines.push('      }');
+      } else {
+        lines.push('      env: {}');
+      }
+      lines.push('    }');
+      lines.push('  ]');
+      lines.push('};');
+
+      const config = lines.join('\n');
+      outEl.innerHTML = syntaxHighlight(config);
+      outEl._raw = config;
+
+      // Build deploy & manage commands
+      const cmds = [
+        '# 1. Start the app from the ecosystem file',
+        'pm2 start ecosystem.config.js',
+        '',
+        '# 2. Save the process list so it survives a reboot',
+        'pm2 save',
+        '',
+        '# 3. Generate & enable the startup script (run once per server)',
+        'pm2 startup',
+        '',
+        '# 4. Follow logs and monitor resource usage',
+        'pm2 logs ' + name,
+        'pm2 monit',
+      ].join('\n');
+
+      const cmdEl = document.getElementById('cmd-out');
+      cmdEl.innerHTML = syntaxHighlight(cmds);
+      cmdEl._raw = cmds;
+      document.getElementById('cmd-block').style.display = '';
+
+      resetCopy('copy-config');
+      resetCopy('copy-cmd');
+    }
+
+    // Simple JS/shell syntax highlight (no external lib)
+    function syntaxHighlight(code) {
+      return code
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/^(\/\/.*|#.*)$/gm, '<span class="sd-comment">$1</span>')
+        .replace(/^(\s*)([A-Za-z_][A-Za-z0-9_]*)(:)/gm, '$1<span class="sd-key">$2</span>$3')
+        .replace(/(&quot;[^&]*?&quot;)/g, '<span class="sd-string">$1</span>')
+        .replace(/^(pm2 .*)$/gm, '<span class="sd-cmd">$1</span>');
+    }
+
+    function copyText(elId, btnId) {
+      const el = document.getElementById(elId);
+      const text = el._raw || el.textContent;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById(btnId);
+        btn.textContent = '✓ Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function downloadConfig() {
+      const el = document.getElementById('config-out');
+      if (!el._raw) { generate(); }
+      const text = document.getElementById('config-out')._raw;
+      if (!text) return;
+      const blob = new Blob([text], { type: 'text/javascript' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ecosystem.config.js';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+
+    function resetCopy(btnId) {
+      const btn = document.getElementById(btnId);
+      if (btn) { btn.textContent = 'Copy'; btn.classList.remove('copied'); }
+    }
+
+    function toggleFaq(btn) {
+      btn.closest('.faq-item').classList.toggle('open');
+    }
+  </script>
+
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>
