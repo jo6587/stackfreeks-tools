@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MySQL Backup Script Generator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Free mysqldump backup script generator — gzip compression, retention cleanup, rsync transfer &amp; cron presets. Copy-paste bash script. No signup." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/mysql-backup-script-generator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/mysql-backup-script-generator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/mysql-backup-script-generator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/mysql-backup-script-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="MySQL Backup Script Generator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Build a ready-to-use MySQL/MariaDB mysqldump backup script — gzip, retention cleanup, rsync remote transfer, timestamped filenames and cron presets." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/mysql-backup-script-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Tool layout */
+    .tool-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Form panel */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .field select,
+    .field input[type="text"],
+    .field input[type="number"] {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 8px 12px;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+    .field select:focus,
+    .field input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .field input::placeholder { color: var(--text-3); }
+
+    .field-hint {
+      font-size: 11px;
+      color: var(--text-3);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .toggle-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .toggle-row label {
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--text-2);
+      cursor: pointer;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Remote fields */
+    #remote-fields {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Cron presets */
+    .preset-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .btn-preset {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 7px 6px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-preset:hover { border-color: var(--accent); color: var(--accent); }
+
+    .btn-generate {
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      cursor: pointer;
+      width: 100%;
+      transition: opacity 0.15s;
+      margin-top: 4px;
+    }
+    .btn-generate:hover { opacity: 0.85; }
+
+    /* Output panel */
+    .output-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .output-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+
+    .output-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      letter-spacing: 0.02em;
+    }
+
+    .output-actions { display: flex; gap: 8px; }
+
+    .btn-copy {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-copy.copied { border-color: var(--success); color: var(--success); }
+
+    .output-code {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-1);
+      white-space: pre;
+      overflow-x: auto;
+      min-height: 80px;
+    }
+
+    /* Syntax colors */
+    .sd-comment { color: #52525b; }
+    .sd-key { color: #fbbf24; }
+    .sd-string { color: #86efac; }
+    .sd-cmd { color: #818cf8; }
+
+    .placeholder-msg {
+      color: var(--text-3);
+      font-family: var(--font);
+      font-size: 14px;
+      font-style: italic;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    /* Guide */
+    .guide { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related tools */
+    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    /* Vultr banner */
+    .vultr-banner {
+      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(34,197,94,0.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px;
+      margin-bottom: 0;
+    }
+
+    .banner-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .btn-vultr {
+      background: var(--success);
+      border: none;
+      border-radius: var(--radius);
+      color: #000;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; color: #000; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      .tool-wrap { grid-template-columns: 1fr; padding: 0 16px 40px; }
+      .preset-row { grid-template-columns: 1fr; }
+      .guide { padding: 0 16px 36px; }
+      .faq { padding: 0 16px 36px; }
+      .sf-related { padding: 0 16px 36px; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"MySQL Backup Script Generator","description":"Free MySQL/MariaDB mysqldump backup script generator. Set database name, user, backup directory, gzip compression, retention cleanup, rsync remote transfer and cron schedule presets. No signup.","url":"https://tools.stackfreeks.com/tools/mysql-backup-script-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I avoid hardcoding the MySQL password in the backup script?","acceptedAnswer":{"@type":"Answer","text":"Never put a plaintext password directly in the script or on the mysqldump command line, since it becomes visible to anyone who reads the file or runs ps aux during the dump. Instead, create a ~/.my.cnf file with a [client] section containing user and password, then run chmod 600 ~/.my.cnf so only that account can read it — mysqldump picks up these credentials automatically. An alternative is a dedicated backup MySQL user with SELECT, LOCK TABLES and SHOW VIEW privileges only, further limiting the damage if credentials ever leak."}},{"@type":"Question","name":"How do I restore a MySQL backup created with this script?","acceptedAnswer":{"@type":"Answer","text":"For a gzip-compressed dump, run gunzip -c backup_file.sql.gz | mysql -u root -p database_name to decompress and pipe the SQL directly into the target database. For an uncompressed .sql file, use mysql -u root -p database_name < backup_file.sql instead. Always restore into a freshly created or empty database first when testing, and confirm the dump completed successfully (no truncated file) before relying on it — periodically test-restoring backups is the only way to know they actually work."}},{"@type":"Question","name":"Why is transferring backups to a remote server important?","acceptedAnswer":{"@type":"Answer","text":"A backup stored only on the same VPS as the live database is not a real disaster-recovery plan — if the server is compromised, the disk fails, or the provider account is suspended, the backups disappear along with the data they were meant to protect. Copying dumps off-box with rsync (or to object storage) to a separate host, provider, or region means a single point of failure cannot take out both your database and its backups at the same time. This is often called the 3-2-1 rule: at least 3 copies, on 2 different types of storage, with 1 copy off-site."}},{"@type":"Question","name":"How many days of backups should I keep?","acceptedAnswer":{"@type":"Answer","text":"A common baseline is 7 daily backups for quick recent-history recovery, but the right number depends on your recovery point objective and how quickly you would notice data corruption or accidental deletion. Sites with slow-to-detect issues (e.g. a bad migration discovered weeks later) benefit from a tiered approach: keep daily backups for 7-14 days, plus a few weekly or monthly snapshots retained longer. Balance this against available disk space — the retention_days setting in this generator only controls local cleanup via find -mtime, so remote or object-storage copies can follow a separate, longer retention policy."}},{"@type":"Question","name":"mysqldump is slow on my large database — what are the alternatives?","acceptedAnswer":{"@type":"Answer","text":"mysqldump is single-threaded and reads every row through SQL, so on databases in the tens or hundreds of gigabytes it can take hours and place heavy load on the server. mydumper is a drop-in alternative that dumps tables in parallel across multiple threads, cutting backup time significantly. For very large or high-write databases, physical/hot backup tools like Percona XtraBackup (MySQL/MariaDB) copy the underlying data files directly with minimal locking, and cloud-VPS snapshot features (LVM or provider-level disk snapshots) can capture a consistent point-in-time image almost instantly. mysqldump remains the simplest and most portable option for small-to-medium databases where a few minutes of extra load is acceptable."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="/" class="logo">StackFreeks Tools</a>
+      <div class="nav-sep"></div>
+      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+    </div>
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="lang-en">
+      <h1>MySQL Backup Script Generator</h1>
+      <p>Build a ready-to-use <code style="color:var(--accent)">mysqldump</code> backup script for MySQL/MariaDB — gzip compression, retention cleanup, optional rsync remote transfer, timestamped filenames and cron schedule presets.</p>
+    </div>
+    <div class="lang-ko">
+      <h1>MySQL 백업 스크립트 생성기</h1>
+      <p>MySQL/MariaDB용 <code style="color:var(--accent)">mysqldump</code> 백업 스크립트를 즉시 생성 — gzip 압축, 보관 기간 자동 정리, rsync 원격 전송, 타임스탬프 파일명, 크론 스케줄 프리셋 지원.</p>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <section class="tool-wrap">
+
+    <!-- Form panel -->
+    <div class="form-panel">
+
+      <p class="section-label" data-i18n="my_db">Database</p>
+
+      <div class="field">
+        <label data-i18n="my_dbname">Database Name</label>
+        <input type="text" id="db-name" value="mydb" spellcheck="false" placeholder="mydb" />
+      </div>
+
+      <div class="field">
+        <label data-i18n="my_dbuser">Database User</label>
+        <input type="text" id="db-user" value="dbuser" spellcheck="false" placeholder="dbuser" />
+        <span class="field-hint" data-i18n="my_dbuser_hint">Credentials are read from ~/.my.cnf, not stored in this script</span>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="my_backup_opts">Backup Options</p>
+
+      <div class="field">
+        <label data-i18n="my_backupdir">Backup Directory</label>
+        <input type="text" id="backup-dir" value="/var/backups/mysql" spellcheck="false" placeholder="/var/backups/mysql" />
+      </div>
+
+      <div class="toggle-row">
+        <input type="checkbox" id="opt-gzip" checked />
+        <label for="opt-gzip" data-i18n="my_gzip">Compress with gzip</label>
+      </div>
+
+      <div class="toggle-row">
+        <input type="checkbox" id="opt-timestamp" checked />
+        <label for="opt-timestamp" data-i18n="my_timestamp">Include timestamp in filename (YYYY-MM-DD_HHMMSS)</label>
+      </div>
+
+      <div class="field">
+        <label data-i18n="my_retention">Retention (days)</label>
+        <input type="number" id="opt-retention" value="7" min="1" max="365" />
+        <span class="field-hint" data-i18n="my_retention_hint">Older local backups are auto-deleted after this many days</span>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="my_remote">Remote Transfer (optional)</p>
+
+      <div class="toggle-row">
+        <input type="checkbox" id="opt-remote" onchange="toggleRemote()" />
+        <label for="opt-remote" data-i18n="my_remote_enable">Transfer backup to a remote host via rsync</label>
+      </div>
+
+      <div id="remote-fields">
+        <div class="field">
+          <label data-i18n="my_remote_host">Remote Host</label>
+          <input type="text" id="remote-host" spellcheck="false" placeholder="user@backup-host.example.com" />
+        </div>
+        <div class="field">
+          <label data-i18n="my_remote_path">Remote Path</label>
+          <input type="text" id="remote-path" spellcheck="false" placeholder="/home/user/mysql-backups" />
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p class="section-label" data-i18n="my_cron">Cron Schedule</p>
+
+      <div class="preset-row">
+        <button class="btn-preset" onclick="applyCronPreset('daily')" data-i18n="my_cron_daily">Daily 2 AM</button>
+        <button class="btn-preset" onclick="applyCronPreset('sixhour')" data-i18n="my_cron_sixhour">Every 6h</button>
+        <button class="btn-preset" onclick="applyCronPreset('weekly')" data-i18n="my_cron_weekly">Weekly Sun 3 AM</button>
+      </div>
+
+      <div class="field">
+        <label data-i18n="my_cron_expr">Crontab Expression</label>
+        <input type="text" id="cron-expr" value="0 2 * * *" spellcheck="false" placeholder="0 2 * * *" />
+      </div>
+
+      <button class="btn-generate" onclick="generate()" data-i18n="my_generate">Generate backup.sh</button>
+
+    </div>
+
+    <!-- Output panel -->
+    <div class="output-panel">
+
+      <div class="output-block">
+        <div class="output-header">
+          <span class="output-title">backup.sh</span>
+          <div class="output-actions">
+            <button class="btn-copy" id="copy-script" onclick="copyText('script-out', 'copy-script')" data-i18n="copy_btn">Copy</button>
+            <button class="btn-copy" id="dl-script" onclick="downloadScript()" data-i18n="download_btn">Download</button>
+          </div>
+        </div>
+        <div id="script-out" class="output-code">
+          <div class="placeholder-msg" data-i18n="my_placeholder">Fill the form (or pick a cron preset) and click "Generate backup.sh"</div>
+        </div>
+      </div>
+
+      <div class="output-block" id="install-block" style="display:none">
+        <div class="output-header">
+          <span class="output-title" data-i18n="my_install_title">Install &amp; cron setup</span>
+          <div class="output-actions">
+            <button class="btn-copy" id="copy-install" onclick="copyText('install-out', 'copy-install')" data-i18n="copy_btn">Copy</button>
+          </div>
+        </div>
+        <div id="install-out" class="output-code"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Guide -->
+  <section class="guide">
+    <div class="lang-en">
+      <p class="guide-title">How to Use</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>Set database &amp; backup options</h3>
+          <p>Enter the database name, MySQL user, and where backups should be stored. Keep gzip and timestamped filenames on for smaller, non-overwriting backups.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>Add remote transfer (optional)</h3>
+          <p>Enable rsync transfer and enter a <code style="color:var(--accent)">user@host</code> and remote path so backups leave the VPS — critical for real disaster recovery.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>Pick a cron schedule</h3>
+          <p>Click a preset — daily 2 AM, every 6 hours, or weekly Sunday 3 AM — or type your own crontab expression.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>Generate, install &amp; schedule</h3>
+          <p>Copy or download <code style="color:var(--accent)">backup.sh</code>, follow the install instructions to save it as <code style="color:var(--accent)">/usr/local/bin/backup-db.sh</code>, chmod +x, and add the generated crontab line.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="guide-title">사용 방법</p>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <p class="guide-step">STEP 1</p>
+          <h3>DB 및 백업 옵션 설정</h3>
+          <p>데이터베이스 이름, MySQL 사용자, 백업 저장 위치를 입력하세요. gzip 압축과 타임스탬프 파일명을 켜두면 더 작고 덮어쓰지 않는 백업을 얻을 수 있습니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 2</p>
+          <h3>원격 전송 추가 (선택)</h3>
+          <p>rsync 전송을 켜고 <code style="color:var(--accent)">user@host</code>와 원격 경로를 입력하면 백업이 VPS 밖으로 전송됩니다 — 실제 재해 복구에 필수입니다.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 3</p>
+          <h3>크론 스케줄 선택</h3>
+          <p>프리셋(매일 새벽 2시, 매 6시간, 매주 일요일 새벽 3시)을 클릭하거나 직접 crontab 표현식을 입력하세요.</p>
+        </div>
+        <div class="guide-card">
+          <p class="guide-step">STEP 4</p>
+          <h3>생성, 설치 및 스케줄 등록</h3>
+          <p><code style="color:var(--accent)">backup.sh</code>를 복사·다운로드한 뒤, 설치 안내에 따라 <code style="color:var(--accent)">/usr/local/bin/backup-db.sh</code>로 저장, chmod +x, 생성된 crontab 라인을 등록하세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="lang-en">
+      <p class="faq-title">Frequently Asked Questions</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I avoid hardcoding the MySQL password in the backup script?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Never put a plaintext password directly in the script or on the mysqldump command line, since it becomes visible to anyone who reads the file or runs ps aux during the dump. Instead, create a <code style="color:var(--accent)">~/.my.cnf</code> file with a <code style="color:var(--accent)">[client]</code> section containing user and password, then run <code style="color:var(--accent)">chmod 600 ~/.my.cnf</code> so only that account can read it — mysqldump picks up these credentials automatically. An alternative is a dedicated backup MySQL user with SELECT, LOCK TABLES and SHOW VIEW privileges only, further limiting the damage if credentials ever leak.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I restore a MySQL backup created with this script?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">For a gzip-compressed dump, run <code style="color:var(--accent)">gunzip -c backup_file.sql.gz | mysql -u root -p database_name</code> to decompress and pipe the SQL directly into the target database. For an uncompressed .sql file, use <code style="color:var(--accent)">mysql -u root -p database_name &lt; backup_file.sql</code> instead. Always restore into a freshly created or empty database first when testing, and confirm the dump completed successfully (no truncated file) before relying on it — periodically test-restoring backups is the only way to know they actually work.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why is transferring backups to a remote server important?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">A backup stored only on the same VPS as the live database is not a real disaster-recovery plan — if the server is compromised, the disk fails, or the provider account is suspended, the backups disappear along with the data they were meant to protect. Copying dumps off-box with rsync (or to object storage) to a separate host, provider, or region means a single point of failure cannot take out both your database and its backups at the same time. This is often called the 3-2-1 rule: at least 3 copies, on 2 different types of storage, with 1 copy off-site.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How many days of backups should I keep?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">A common baseline is 7 daily backups for quick recent-history recovery, but the right number depends on your recovery point objective and how quickly you would notice data corruption or accidental deletion. Sites with slow-to-detect issues (e.g. a bad migration discovered weeks later) benefit from a tiered approach: keep daily backups for 7-14 days, plus a few weekly or monthly snapshots retained longer. Balance this against available disk space — the retention_days setting in this generator only controls local cleanup via <code style="color:var(--accent)">find -mtime</code>, so remote or object-storage copies can follow a separate, longer retention policy.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>mysqldump is slow on my large database — what are the alternatives?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">mysqldump is single-threaded and reads every row through SQL, so on databases in the tens or hundreds of gigabytes it can take hours and place heavy load on the server. <code style="color:var(--accent)">mydumper</code> is a drop-in alternative that dumps tables in parallel across multiple threads, cutting backup time significantly. For very large or high-write databases, physical/hot backup tools like Percona XtraBackup (MySQL/MariaDB) copy the underlying data files directly with minimal locking, and cloud-VPS snapshot features (LVM or provider-level disk snapshots) can capture a consistent point-in-time image almost instantly. mysqldump remains the simplest and most portable option for small-to-medium databases where a few minutes of extra load is acceptable.</div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>스크립트에 MySQL 비밀번호를 직접 넣지 않으려면 어떻게 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">스크립트나 mysqldump 명령줄에 평문 비밀번호를 직접 넣지 마세요 — 파일을 읽거나 덤프 중 ps aux를 실행하는 누구에게나 노출됩니다. 대신 <code style="color:var(--accent)">~/.my.cnf</code> 파일에 <code style="color:var(--accent)">[client]</code> 섹션으로 user와 password를 넣고 <code style="color:var(--accent)">chmod 600 ~/.my.cnf</code>로 권한을 제한하면 mysqldump가 자동으로 이 값을 읽습니다. SELECT, LOCK TABLES, SHOW VIEW 권한만 가진 전용 백업 계정을 쓰면 자격증명이 유출되어도 피해를 줄일 수 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>이 스크립트로 만든 백업을 복원하려면 어떻게 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">gzip으로 압축된 덤프는 <code style="color:var(--accent)">gunzip -c backup_file.sql.gz | mysql -u root -p database_name</code>로 압축을 풀며 바로 대상 DB에 주입할 수 있습니다. 압축하지 않은 .sql 파일은 <code style="color:var(--accent)">mysql -u root -p database_name &lt; backup_file.sql</code>을 사용하세요. 테스트할 때는 항상 새로 만든 빈 데이터베이스에 먼저 복원하고, 덤프가 잘리지 않고 완전히 끝났는지 확인한 뒤 신뢰하세요 — 주기적으로 실제 복원 테스트를 해보는 것만이 백업이 실제로 작동하는지 아는 유일한 방법입니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>백업을 원격 서버로 전송하는 것이 왜 중요한가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">실제 DB와 같은 VPS에만 저장된 백업은 진정한 재해 복구 계획이 아닙니다 — 서버가 침해되거나, 디스크가 고장 나거나, 제공업체 계정이 정지되면 백업이 지키려던 데이터와 함께 사라집니다. rsync로 덤프를 다른 호스트·제공업체·리전으로 전송하면(또는 오브젝트 스토리지에 저장) 하나의 장애 지점이 DB와 백업을 동시에 무너뜨릴 수 없습니다. 이를 흔히 3-2-1 규칙이라 부릅니다 — 최소 3개 사본, 2가지 다른 저장 매체, 1개는 오프사이트.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>백업 보관 기간은 며칠로 설정해야 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">일반적인 기준은 빠른 최근 복구를 위한 7일치 일일 백업이지만, 적절한 기간은 복구 시점 목표(RPO)와 데이터 손상·실수 삭제를 얼마나 빨리 알아차리는지에 달려 있습니다. 문제 발견이 느린 사이트(예: 몇 주 뒤 발견되는 잘못된 마이그레이션)는 일일 백업 7-14일 + 주간·월간 스냅샷을 더 오래 보관하는 계층형 전략이 유리합니다. 사용 가능한 디스크 공간과 균형을 맞추세요 — 이 생성기의 retention_days는 <code style="color:var(--accent)">find -mtime</code>를 통한 로컬 정리만 제어하므로, 원격이나 오브젝트 스토리지 사본은 별도의 더 긴 보관 정책을 따를 수 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>대용량 DB에서 mysqldump가 느릴 때 대안은 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">mysqldump는 단일 스레드로 SQL을 통해 모든 행을 읽기 때문에 수십~수백 기가바이트 규모 DB에서는 몇 시간이 걸리고 서버에 큰 부하를 줄 수 있습니다. <code style="color:var(--accent)">mydumper</code>는 여러 스레드로 테이블을 병렬 덤프하는 대체 도구로 백업 시간을 크게 줄여줍니다. 매우 크거나 쓰기가 많은 DB에는 Percona XtraBackup(MySQL/MariaDB) 같은 물리적·핫 백업 도구가 최소한의 잠금으로 데이터 파일을 직접 복사하며, 클라우드 VPS의 스냅샷 기능(LVM 또는 제공업체 디스크 스냅샷)은 거의 즉시 일관된 시점 이미지를 캡처할 수 있습니다. 몇 분의 추가 부하가 허용되는 중소 규모 DB에는 mysqldump가 여전히 가장 단순하고 이식성 좋은 선택입니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related tools -->
+  <section class="sf-related">
+    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+    <div class="sf-related-grid">
+      <a href="/tools/cron-builder/" class="sf-related-card"><span>⏰</span>Cron Expression Builder</a>
+      <a href="/tools/systemd-service-generator/" class="sf-related-card"><span>⚡</span>Systemd Service Generator</a>
+      <a href="/tools/htpasswd-generator/" class="sf-related-card"><span>🔒</span>Htpasswd Generator</a>
+      <a href="https://stackfreeks.com/deploy-wordpress-on-vultr-vps-full-step-by-step-guide-2026/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Deploy WordPress on a Vultr VPS</a>
+    </div>
+  </section>
+
+  <!-- Vultr Banner -->
+  <section class="vultr-banner">
+    <div class="banner-inner">
+      <div>
+        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+        <p class="banner-title" data-i18n="vultr_title">Run your MySQL database on Vultr</p>
+        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+      </div>
+      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+         rel="nofollow sponsored" target="_blank"
+         data-i18n="vultr_cta">Claim your credit →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+    </div>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
+  </footer>
+
+  <script>
+    // i18n page-specific keys (must be before i18n.js)
+    window.SF_PAGE_I18N = {
+      en: {
+        my_db: 'Database',
+        my_dbname: 'Database Name',
+        my_dbuser: 'Database User',
+        my_dbuser_hint: 'Credentials are read from ~/.my.cnf, not stored in this script',
+        my_backup_opts: 'Backup Options',
+        my_backupdir: 'Backup Directory',
+        my_gzip: 'Compress with gzip',
+        my_timestamp: 'Include timestamp in filename (YYYY-MM-DD_HHMMSS)',
+        my_retention: 'Retention (days)',
+        my_retention_hint: 'Older local backups are auto-deleted after this many days',
+        my_remote: 'Remote Transfer (optional)',
+        my_remote_enable: 'Transfer backup to a remote host via rsync',
+        my_remote_host: 'Remote Host',
+        my_remote_path: 'Remote Path',
+        my_cron: 'Cron Schedule',
+        my_cron_daily: 'Daily 2 AM',
+        my_cron_sixhour: 'Every 6h',
+        my_cron_weekly: 'Weekly Sun 3 AM',
+        my_cron_expr: 'Crontab Expression',
+        my_generate: 'Generate backup.sh',
+        my_placeholder: 'Fill the form (or pick a cron preset) and click "Generate backup.sh"',
+        my_install_title: 'Install & cron setup',
+        copy_btn: 'Copy',
+        download_btn: 'Download',
+      },
+      ko: {
+        my_db: '데이터베이스',
+        my_dbname: 'DB 이름',
+        my_dbuser: 'DB 사용자',
+        my_dbuser_hint: '자격증명은 ~/.my.cnf에서 읽으며 스크립트에 저장되지 않습니다',
+        my_backup_opts: '백업 옵션',
+        my_backupdir: '백업 저장 디렉터리',
+        my_gzip: 'gzip으로 압축',
+        my_timestamp: '파일명에 타임스탬프 포함 (YYYY-MM-DD_HHMMSS)',
+        my_retention: '보관 기간 (일)',
+        my_retention_hint: '이 일수가 지난 로컬 백업은 자동 삭제됩니다',
+        my_remote: '원격 전송 (선택)',
+        my_remote_enable: 'rsync로 원격 호스트에 백업 전송',
+        my_remote_host: '원격 호스트',
+        my_remote_path: '원격 경로',
+        my_cron: '크론 스케줄',
+        my_cron_daily: '매일 새벽 2시',
+        my_cron_sixhour: '매 6시간',
+        my_cron_weekly: '매주 일 새벽 3시',
+        my_cron_expr: 'Crontab 표현식',
+        my_generate: 'backup.sh 생성',
+        my_placeholder: '폼을 채우거나 크론 프리셋 선택 후 "backup.sh 생성" 클릭',
+        my_install_title: '설치 및 크론 설정',
+        copy_btn: '복사',
+        download_btn: '다운로드',
+      }
+    };
+
+    function toggleRemote() {
+      const enabled = document.getElementById('opt-remote').checked;
+      document.getElementById('remote-fields').style.display = enabled ? 'flex' : 'none';
+    }
+
+    const CRON_PRESETS = {
+      daily: '0 2 * * *',
+      sixhour: '0 */6 * * *',
+      weekly: '0 3 * * 0',
+    };
+
+    function applyCronPreset(key) {
+      document.getElementById('cron-expr').value = CRON_PRESETS[key];
+      generate();
+    }
+
+    function generate() {
+      const dbName = document.getElementById('db-name').value.trim() || 'mydb';
+      const dbUser = document.getElementById('db-user').value.trim() || 'dbuser';
+      const backupDir = document.getElementById('backup-dir').value.trim() || '/var/backups/mysql';
+      const useGzip = document.getElementById('opt-gzip').checked;
+      const useTimestamp = document.getElementById('opt-timestamp').checked;
+      const retention = parseInt(document.getElementById('opt-retention').value, 10) || 7;
+      const remoteEnabled = document.getElementById('opt-remote').checked;
+      const remoteHost = document.getElementById('remote-host').value.trim() || 'user@backup-host.example.com';
+      const remotePath = document.getElementById('remote-path').value.trim() || '/home/user/mysql-backups';
+      const cronExpr = document.getElementById('cron-expr').value.trim() || '0 2 * * *';
+
+      const ext = useGzip ? '.sql.gz' : '.sql';
+
+      const lines = [];
+      lines.push('#!/usr/bin/env bash');
+      lines.push('# backup.sh — Generated by tools.stackfreeks.com/tools/mysql-backup-script-generator/');
+      lines.push('set -euo pipefail');
+      lines.push('');
+      lines.push('# ==== Configuration ====');
+      lines.push('DB_NAME="' + dbName + '"');
+      lines.push('DB_USER="' + dbUser + '"');
+      lines.push('BACKUP_DIR="' + backupDir + '"');
+      lines.push('RETENTION_DAYS=' + retention);
+      lines.push('');
+
+      if (useTimestamp) {
+        lines.push('TIMESTAMP=$(date +"%Y-%m-%d_%H%M%S")');
+        lines.push('BACKUP_FILE="${BACKUP_DIR}/${DB_NAME}_${TIMESTAMP}' + ext + '"');
+      } else {
+        lines.push('BACKUP_FILE="${BACKUP_DIR}/${DB_NAME}' + ext + '"');
+      }
+      lines.push('');
+
+      lines.push('mkdir -p "$BACKUP_DIR"');
+      lines.push('');
+      lines.push('# ==== Dump the database ====');
+      lines.push('# Credentials come from ~/.my.cnf (see install instructions) — never hardcode a password here.');
+      if (useGzip) {
+        lines.push('mysqldump --user="$DB_USER" --single-transaction --quick --lock-tables=false "$DB_NAME" | gzip > "$BACKUP_FILE"');
+      } else {
+        lines.push('mysqldump --user="$DB_USER" --single-transaction --quick --lock-tables=false "$DB_NAME" > "$BACKUP_FILE"');
+      }
+      lines.push('');
+      lines.push('echo "Backup created: $BACKUP_FILE"');
+
+      if (remoteEnabled) {
+        lines.push('');
+        lines.push('# ==== Remote transfer (rsync) ====');
+        lines.push('REMOTE_HOST="' + remoteHost + '"');
+        lines.push('REMOTE_PATH="' + remotePath + '"');
+        lines.push('rsync -avz "$BACKUP_FILE" "${REMOTE_HOST}:${REMOTE_PATH}/"');
+        lines.push('echo "Backup transferred to ${REMOTE_HOST}:${REMOTE_PATH}/"');
+      }
+
+      lines.push('');
+      lines.push('# ==== Remove local backups older than RETENTION_DAYS ====');
+      lines.push('find "$BACKUP_DIR" -type f -name "${DB_NAME}*.sql*" -mtime +${RETENTION_DAYS} -delete');
+      lines.push('echo "Removed local backups older than ${RETENTION_DAYS} days."');
+
+      const script = lines.join('\n');
+      const outEl = document.getElementById('script-out');
+      outEl.innerHTML = syntaxHighlight(script);
+      outEl._raw = script;
+
+      // Build install instructions
+      const instLines = [];
+      instLines.push('# 1. Save the script');
+      instLines.push('sudo nano /usr/local/bin/backup-db.sh');
+      instLines.push('# paste the generated backup.sh content above, then save and exit');
+      instLines.push('');
+      instLines.push('# 2. Make it executable');
+      instLines.push('sudo chmod +x /usr/local/bin/backup-db.sh');
+      instLines.push('');
+      instLines.push('# 3. Add to crontab (run: crontab -e)');
+      instLines.push(cronExpr + ' /usr/local/bin/backup-db.sh >> /var/log/mysql-backup.log 2>&1');
+      instLines.push('');
+      instLines.push('# 4. Store MySQL credentials safely — do NOT hardcode a password in the script');
+      instLines.push('#    Option A (recommended): ~/.my.cnf, readable only by this user');
+      instLines.push('#    [client]');
+      instLines.push('#    user=' + dbUser);
+      instLines.push('#    password=your-password-here');
+      instLines.push('#');
+      instLines.push('#    chmod 600 ~/.my.cnf');
+      instLines.push('#');
+      instLines.push('#    Option B: environment variable read at runtime (less safe — visible in process list)');
+      instLines.push('#    export MYSQL_PWD="your-password-here"');
+
+      const install = instLines.join('\n');
+      const instEl = document.getElementById('install-out');
+      instEl.innerHTML = syntaxHighlight(install);
+      instEl._raw = install;
+      document.getElementById('install-block').style.display = '';
+
+      resetCopy('copy-script');
+      resetCopy('copy-install');
+    }
+
+    // Simple bash syntax highlight (no external lib)
+    function syntaxHighlight(code) {
+      return code
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/^(\s*#.*)$/gm, '<span class="sd-comment">$1</span>')
+        .replace(/^([A-Z_][A-Z0-9_]*)(=)/gm, '<span class="sd-key">$1</span>$2')
+        .replace(/(&quot;[^&]*?&quot;)/g, '<span class="sd-string">$1</span>')
+        .replace(/^(mysqldump|rsync|gzip|find|mkdir|sudo|echo|chmod).*/gm, function(m) {
+          return '<span class="sd-cmd">' + m + '</span>';
+        });
+    }
+
+    function copyText(elId, btnId) {
+      const el = document.getElementById(elId);
+      const text = el._raw || el.textContent;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById(btnId);
+        btn.textContent = '✓ Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function downloadScript() {
+      const el = document.getElementById('script-out');
+      if (!el._raw) { generate(); }
+      const text = document.getElementById('script-out')._raw;
+      if (!text) return;
+      const blob = new Blob([text], { type: 'text/x-sh' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'backup.sh';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+
+    function resetCopy(btnId) {
+      const btn = document.getElementById(btnId);
+      if (btn) { btn.textContent = 'Copy'; btn.classList.remove('copied'); }
+    }
+
+    function toggleFaq(btn) {
+      btn.closest('.faq-item').classList.toggle('open');
+    }
+  </script>
+
+  <script src="/shared/i18n.js"></script>
+</body>
+</html>
