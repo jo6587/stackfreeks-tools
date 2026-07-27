@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redis Memory Estimator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Estimate Redis memory usage from key count, data type, and value size. See MB/GB needed plus a matching Vultr plan. No signup required." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/redis-memory-estimator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/redis-memory-estimator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/redis-memory-estimator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/redis-memory-estimator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Redis Memory Estimator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Estimate Redis memory usage from key count, data type, and value size. See MB/GB needed plus a matching Vultr plan. No signup required." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/redis-memory-estimator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Redis Memory Estimator | StackFreeks Tools" />
+  <meta name="twitter:description" content="Estimate Redis memory usage from key count, data type, and value size. See MB/GB needed plus a matching Vultr plan." />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 8px; }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    /* Main layout */
+    main { padding: 32px 0 48px; }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; } }
+
+    /* Card */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+    .card + .card { margin-top: 12px; }
+    .card-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 16px;
+    }
+
+    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+
+    input, select {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 9px 12px;
+      font-size: 13px; font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus { border-color: var(--border-2); }
+    input::placeholder { color: var(--text-3); }
+    input[type="number"] { -moz-appearance: textfield; }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+    }
+
+    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+
+    /* Results */
+    .total-row {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .total-label { font-size: 12px; color: var(--text-2); margin-bottom: 4px; }
+    .total-val { font-size: 2.2rem; font-weight: 500; letter-spacing: -0.04em; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .total-unit { font-size: 14px; color: var(--text-3); margin-left: 4px; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .summary-cell { background: var(--surface-2); padding: 14px 16px; }
+    .summary-label { font-size: 11px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .summary-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .summary-val.accent { color: var(--accent); }
+
+    .plan-box {
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+    .plan-box-label { font-size: 11px; font-weight: 500; color: var(--success); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .plan-box-title { font-size: 1rem; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .plan-box-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
+
+    .btn-vultr-plan {
+      background: var(--success);
+      color: #fff; border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      text-decoration: none; display: inline-block;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr-plan:hover { opacity: 0.85; }
+
+    .disclaimer {
+      font-size: 11px; color: var(--text-3);
+      margin-top: 14px; line-height: 1.6;
+      padding-top: 14px; border-top: 1px solid var(--border);
+    }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related */
+    .related { padding: 40px 0; border-top: 1px solid var(--border); }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px;
+      text-decoration: none; display: flex;
+      flex-direction: column; gap: 6px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Redis Memory Estimator","description":"Estimate Redis memory usage from key count, data type, and value size. See the total in MB/GB and get a matching Vultr VPS or managed database plan.","url":"https://tools.stackfreeks.com/tools/redis-memory-estimator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How accurate is this Redis memory estimate?","acceptedAnswer":{"@type":"Answer","text":"This is an approximation based on published Redis internals (SDS strings, dictEntry, robj headers, quicklist/skiplist nodes) and typical jemalloc allocation overhead. Actual usage varies by Redis version, key/value encoding thresholds (listpack vs hashtable, for example), and allocator fragmentation. Treat the result as a solid starting budget, not an exact figure — always verify with INFO memory or MEMORY USAGE on real data before sizing production."}},{"@type":"Question","name":"Why does Redis need more memory than the raw data size?","acceptedAnswer":{"@type":"Answer","text":"Every key carries fixed overhead beyond your actual bytes: a dictionary entry pointer, a Redis object (robj) header, and — for string values — SDS (Simple Dynamic String) header bytes. Collection types add further per-element overhead for hash table buckets, list nodes, or skiplist pointers. The memory allocator (jemalloc) also rounds allocations up to fixed size classes, typically adding another 10 percent or so on top."}},{"@type":"Question","name":"Why do hashes, sets, and sorted sets have different overhead than strings?","acceptedAnswer":{"@type":"Answer","text":"Collection types store each field or member as a separate internal entry. Hashes and sets use hash table buckets per field/member, while sorted sets additionally maintain a skiplist with multiple forward pointers per member for fast range queries. That extra bookkeeping is why sorted sets typically carry the highest per-element overhead of the common Redis data types."}},{"@type":"Question","name":"Does this account for Redis replication or AOF/RDB persistence?","acceptedAnswer":{"@type":"Answer","text":"No. This calculator only estimates the in-memory dataset size on a single primary node. Replicas each hold a full copy of the dataset in their own memory, and RDB/AOF persistence writes to disk, not RAM — although fork()-based RDB snapshotting can temporarily increase memory usage during the save. Budget separately for replicas and for a safety margin during background saves."}},{"@type":"Question","name":"How much memory should I add for growth and headroom?","acceptedAnswer":{"@type":"Answer","text":"A common rule of thumb is to provision for at least 1.5x to 2x your current estimated dataset size. This leaves room for key growth, temporary memory spikes during RDB snapshotting, and Redis' own maxmemory eviction policies not kicking in prematurely. That's why this tool recommends rounding up to the next Vultr plan tier rather than the exact byte count."}}]}
+  </script>
+
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<!-- 1. Nav -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+  <div class="nav-right">
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  </div>
+</nav>
+
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+
+<!-- 3. Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow">Redis &amp; VPS</p>
+      <h1>Redis Memory Estimator</h1>
+      <p class="hero-desc">Enter your key count and data type, and instantly see how much RAM Redis needs — with a matched Vultr plan.</p>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow">Redis &amp; VPS</p>
+      <h1>Redis 메모리 예상 계산기</h1>
+      <p class="hero-desc">키 개수와 데이터 타입을 입력하면 Redis에 필요한 메모리 용량과 적합한 Vultr 플랜을 즉시 확인할 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Tool body -->
+<main>
+  <div class="container">
+    <div class="tool-grid">
+
+      <!-- Input card -->
+      <div class="card">
+        <p class="card-label" data-i18n="tool_input_label">Dataset</p>
+
+        <div class="form-group">
+          <label data-i18n="tool_keycount_lbl">Number of keys</label>
+          <input type="number" id="keyCount" value="1000000" min="0" step="1000" oninput="recalc()" />
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_type_lbl">Data type</label>
+          <select id="dataType" onchange="onTypeChange()">
+            <option value="string">String</option>
+            <option value="hash">Hash</option>
+            <option value="list">List</option>
+            <option value="set">Set</option>
+            <option value="zset">Sorted Set (ZSet)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_keylen_lbl">Avg key name length (bytes)</label>
+          <input type="number" id="keyNameLen" value="20" min="1" step="1" oninput="recalc()" />
+        </div>
+
+        <div class="form-group">
+          <label id="valSizeLbl" data-i18n="tool_valsize_string_lbl">Avg value size (bytes)</label>
+          <input type="number" id="valSize" value="100" min="0" step="1" oninput="recalc()" />
+        </div>
+
+        <div class="form-group" id="elementsGroup" style="display:none;">
+          <label id="elementsLbl" data-i18n="tool_elements_lbl">Avg fields/members per key</label>
+          <input type="number" id="elements" value="5" min="1" step="1" oninput="recalc()" />
+          <p class="hint" data-i18n="tool_elements_hint">Fields per hash, items per list, members per set/sorted set.</p>
+        </div>
+
+        <p class="hint" data-i18n="tool_input_hint">Overhead figures are approximate published values — actual usage varies by Redis version and encoding.</p>
+      </div>
+
+      <!-- Results card -->
+      <div class="card">
+        <p class="card-label" data-i18n="tool_results_label">Memory Estimate</p>
+
+        <div class="total-row">
+          <div class="total-label" data-i18n="tool_total_label">Estimated Redis memory</div>
+          <div>
+            <span class="total-val" id="totalVal">0</span>
+            <span class="total-unit" id="totalUnit">MB</span>
+          </div>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-cell">
+            <div class="summary-label" data-i18n="tool_breakdown_raw">Raw key/value bytes</div>
+            <div class="summary-val" id="sumRaw">0 MB</div>
+          </div>
+          <div class="summary-cell">
+            <div class="summary-label" data-i18n="tool_breakdown_overhead">Redis overhead</div>
+            <div class="summary-val" id="sumOverhead">0 MB</div>
+          </div>
+          <div class="summary-cell">
+            <div class="summary-label" data-i18n="tool_breakdown_alloc">Allocator rounding (~10%)</div>
+            <div class="summary-val" id="sumAlloc">0 MB</div>
+          </div>
+          <div class="summary-cell">
+            <div class="summary-label" data-i18n="tool_breakdown_perkey">Avg bytes / key</div>
+            <div class="summary-val accent" id="sumPerKey">0 B</div>
+          </div>
+        </div>
+
+        <div class="plan-box">
+          <div class="plan-box-label" data-i18n="tool_plan_label">Suggested Vultr Plan</div>
+          <div class="plan-box-title" id="planTitle">1 GB Cloud Compute</div>
+          <div class="plan-box-desc" id="planDesc" data-i18n="tool_plan_desc">Rounded up for headroom — Redis also needs RAM for fork()-based snapshots and connection buffers.</div>
+          <a href="https://www.vultr.com/?ref=9907834-9J"
+             class="btn-vultr-plan"
+             rel="nofollow sponsored"
+             target="_blank"
+             data-i18n="tool_vultr_cta">Get this plan on Vultr →</a>
+        </div>
+
+        <p class="disclaimer" data-i18n="tool_disclaimer">Estimate only. Real Redis memory usage depends on your Redis version, key/value encoding (listpack vs. hashtable/skiplist), fragmentation, and workload. Always verify with <code>INFO memory</code> on representative data before sizing production.</p>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- About / SEO copy -->
+<section class="about-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>About this Redis memory calculator</h2>
+      <p>Redis stores every value in RAM, so knowing how much memory your dataset needs before you deploy is critical for choosing the right VPS or managed database plan — and for avoiding surprise evictions or out-of-memory errors in production. This Redis memory calculator estimates total memory usage from your key count, data type, and average value size, using published approximations for Redis's internal per-key and per-element overhead (dictEntry, robj headers, SDS strings, hash table buckets, skiplist nodes) plus a typical jemalloc allocation rounding factor.</p>
+      <p>It's useful for backend engineers sizing a cache layer, session store, or leaderboard before launch, DevOps teams right-sizing a Vultr VPS or Vultr Managed Database for Redis/Valkey, and anyone who has asked "how much memory does Redis need for 1 million keys?" The tool covers the five core Redis data types — String, Hash, List, Set, and Sorted Set — since each has meaningfully different per-key and per-element memory overhead.</p>
+    </div>
+    <div class="lang-ko">
+      <h2>Redis 메모리 계산기 소개</h2>
+      <p>Redis는 모든 값을 메모리(RAM)에 저장하기 때문에, 배포 전에 데이터셋에 필요한 메모리 용량을 파악하는 것이 적절한 VPS·매니지드 데이터베이스 플랜을 고르고 운영 중 예기치 못한 축출(eviction)이나 메모리 부족 오류를 피하는 데 중요합니다. 이 계산기는 키 개수, 데이터 타입, 평균 값 크기를 입력받아 Redis 내부 오버헤드(dictEntry, robj 헤더, SDS 문자열, 해시 테이블 버킷, 스킵리스트 노드)와 jemalloc 할당 반올림 계수를 반영한 근사치를 계산합니다.</p>
+      <p>캐시 레이어, 세션 스토어, 리더보드를 배포 전에 산정하는 백엔드 엔지니어, Vultr VPS나 Vultr Managed Database(Redis/Valkey)를 적정 사이즈로 구성하려는 DevOps 팀, "Redis에서 키 100만 개에 메모리가 얼마나 필요한가"를 궁금해하는 모든 사람에게 유용합니다. String, Hash, List, Set, Sorted Set 5가지 핵심 데이터 타입을 지원하며, 타입별로 오버헤드가 다르게 계산됩니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. How-to section -->
+<section class="guide-section">
+  <div class="container">
+
+    <div class="lang-en">
+      <h2>How to use this calculator</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">Enter your key count</div>
+          <div class="guide-desc">Type the total number of Redis keys you expect to store — e.g. 1,000,000 for a session cache.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">Pick a data type</div>
+          <div class="guide-desc">Choose String, Hash, List, Set, or Sorted Set. Each has different per-key and per-element overhead.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">Set average sizes</div>
+          <div class="guide-desc">Enter your average key name length and value size in bytes. For collections, also set fields/members per key.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">Get your plan</div>
+          <div class="guide-desc">The estimate rounds up to the nearest Vultr plan tier for headroom. Click through to provision it instantly.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <h2>계산기 사용 방법</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">키 개수 입력</div>
+          <div class="guide-desc">저장할 Redis 키의 총 개수를 입력하세요 — 예: 세션 캐시라면 1,000,000.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">데이터 타입 선택</div>
+          <div class="guide-desc">String, Hash, List, Set, Sorted Set 중 선택하세요. 타입마다 오버헤드가 다릅니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">평균 크기 설정</div>
+          <div class="guide-desc">평균 키 이름 길이와 값 크기(바이트)를 입력하세요. 컬렉션 타입은 키당 필드/멤버 수도 설정합니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">플랜 확인</div>
+          <div class="guide-desc">여유분을 위해 가장 가까운 상위 Vultr 플랜으로 올림 계산됩니다. 클릭하면 바로 서버를 프로비저닝할 수 있습니다.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 6. FAQ -->
+<section class="faq-section">
+  <div class="container">
+
+    <div class="lang-en">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>How accurate is this Redis memory estimate?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">This is an approximation based on published Redis internals (SDS strings, dictEntry, robj headers, quicklist/skiplist nodes) and typical jemalloc allocation overhead. Actual usage varies by Redis version, key/value encoding thresholds (listpack vs hashtable, for example), and allocator fragmentation. Treat the result as a solid starting budget, not an exact figure — always verify with INFO memory or MEMORY USAGE on real data before sizing production.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Why does Redis need more memory than the raw data size?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Every key carries fixed overhead beyond your actual bytes: a dictionary entry pointer, a Redis object (robj) header, and — for string values — SDS (Simple Dynamic String) header bytes. Collection types add further per-element overhead for hash table buckets, list nodes, or skiplist pointers. The memory allocator (jemalloc) also rounds allocations up to fixed size classes, typically adding another 10 percent or so on top.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Why do hashes, sets, and sorted sets have different overhead than strings?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Collection types store each field or member as a separate internal entry. Hashes and sets use hash table buckets per field/member, while sorted sets additionally maintain a skiplist with multiple forward pointers per member for fast range queries. That extra bookkeeping is why sorted sets typically carry the highest per-element overhead of the common Redis data types.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Does this account for Redis replication or AOF/RDB persistence?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">No. This calculator only estimates the in-memory dataset size on a single primary node. Replicas each hold a full copy of the dataset in their own memory, and RDB/AOF persistence writes to disk, not RAM — although fork()-based RDB snapshotting can temporarily increase memory usage during the save. Budget separately for replicas and for a safety margin during background saves.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>How much memory should I add for growth and headroom?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">A common rule of thumb is to provision for at least 1.5x to 2x your current estimated dataset size. This leaves room for key growth, temporary memory spikes during RDB snapshotting, and Redis' own maxmemory eviction policies not kicking in prematurely. That's why this tool recommends rounding up to the next Vultr plan tier rather than the exact byte count.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>이 Redis 메모리 예측은 얼마나 정확한가요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">이 계산은 Redis 내부 구조(SDS 문자열, dictEntry, robj 헤더, quicklist/skiplist 노드)에 대한 공개된 자료와 일반적인 jemalloc 할당 오버헤드를 기반으로 한 근사치입니다. 실제 사용량은 Redis 버전, 키/값 인코딩 임계값(listpack vs hashtable 등), 할당자 단편화에 따라 달라집니다. 이 값은 정확한 수치가 아닌 초기 예산으로 활용하고, 프로덕션 사이징 전에는 실제 데이터로 INFO memory 또는 MEMORY USAGE로 반드시 검증하세요.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>왜 Redis는 원본 데이터 크기보다 더 많은 메모리가 필요한가요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">모든 키는 실제 데이터 바이트 외에 고정 오버헤드를 갖습니다: 딕셔너리 엔트리 포인터, Redis 객체(robj) 헤더, 그리고 문자열 값의 경우 SDS(Simple Dynamic String) 헤더 바이트입니다. 컬렉션 타입은 해시 테이블 버킷, 리스트 노드, 스킵리스트 포인터 등 요소별 추가 오버헤드를 갖습니다. 메모리 할당자(jemalloc)도 할당을 고정 크기 단위로 반올림하여 보통 10% 정도를 추가로 사용합니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>해시, 셋, 소티드 셋은 왜 문자열과 오버헤드가 다른가요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">컬렉션 타입은 각 필드·멤버를 별도의 내부 엔트리로 저장합니다. 해시와 셋은 필드/멤버당 해시 테이블 버킷을 사용하고, 소티드 셋은 빠른 범위 조회를 위해 멤버당 여러 개의 포워드 포인터를 갖는 스킵리스트를 추가로 유지합니다. 이러한 추가 관리 구조 때문에 소티드 셋은 일반적인 Redis 데이터 타입 중 요소당 오버헤드가 가장 높습니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Redis 복제나 AOF/RDB 영속성도 반영되나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">아니요. 이 계산기는 단일 프라이머리 노드의 인메모리 데이터셋 크기만 추정합니다. 복제본은 각각 자신의 메모리에 전체 데이터셋 사본을 보관하며, RDB/AOF 영속성은 RAM이 아닌 디스크에 기록됩니다 — 다만 fork() 기반 RDB 스냅샷 저장 중에는 일시적으로 메모리 사용량이 증가할 수 있습니다. 복제본과 백그라운드 저장 중 여유분은 별도로 산정하세요.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>여유분(헤드룸)은 얼마나 추가해야 하나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">일반적으로 현재 예상 데이터셋 크기의 1.5배~2배를 확보하는 것이 권장됩니다. 이는 키 증가, RDB 스냅샷 저장 중 일시적 메모리 급증, Redis의 maxmemory 축출 정책이 너무 일찍 발동하지 않도록 여유를 두기 위함입니다. 이 도구가 정확한 바이트 수치 대신 다음 Vultr 플랜 단계로 올림 계산하는 이유이기도 합니다.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 7. Related content -->
+<section class="related">
+  <div class="container">
+    <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+    <div class="related-grid">
+      <a href="https://stackfreeks.com/vultr-managed-database-review/" class="related-card" target="_blank" rel="noopener">
+        <span class="related-tag">Database</span>
+        <p class="related-title">Vultr Managed Database Review</p>
+        <span class="related-arrow">→</span>
+      </a>
+      <a href="/tools/vps-cost-calculator/" class="related-card">
+        <span class="related-tag">VPS</span>
+        <p class="related-title">VPS Cost Calculator</p>
+        <span class="related-arrow">→</span>
+      </a>
+      <a href="/tools/docker-ram-calculator/" class="related-card">
+        <span class="related-tag">Docker</span>
+        <p class="related-title">Docker RAM Calculator</p>
+        <span class="related-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+  <div class="sf-related-grid">
+    <a href="/tools/docker-ram-calculator/" class="sf-related-card"><span>🐳</span>Docker RAM Calculator</a>
+    <a href="/tools/server-spec-recommender/" class="sf-related-card"><span>🖥️</span>Server Spec Recommender</a>
+    <a href="/tools/vps-cost-calculator/" class="sf-related-card"><span>💰</span>VPS Cost Calculator</a>
+    <a href="https://stackfreeks.com/vultr-managed-database-review/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Vultr Managed Database Review</a>
+  </div>
+</section>
+
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank"
+       data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- 9. Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    tool_input_label: "Dataset",
+    tool_keycount_lbl: "Number of keys",
+    tool_type_lbl: "Data type",
+    tool_keylen_lbl: "Avg key name length (bytes)",
+    tool_valsize_string_lbl: "Avg value size (bytes)",
+    tool_valsize_elem_lbl: "Avg field/member size (bytes)",
+    tool_elements_lbl: "Avg fields/members per key",
+    tool_elements_hint: "Fields per hash, items per list, members per set/sorted set.",
+    tool_input_hint: "Overhead figures are approximate published values — actual usage varies by Redis version and encoding.",
+    tool_results_label: "Memory Estimate",
+    tool_total_label: "Estimated Redis memory",
+    tool_breakdown_raw: "Raw key/value bytes",
+    tool_breakdown_overhead: "Redis overhead",
+    tool_breakdown_alloc: "Allocator rounding (~10%)",
+    tool_breakdown_perkey: "Avg bytes / key",
+    tool_plan_label: "Suggested Vultr Plan",
+    tool_plan_desc: "Rounded up for headroom — Redis also needs RAM for fork()-based snapshots and connection buffers.",
+    tool_vultr_cta: "Get this plan on Vultr →",
+    tool_disclaimer: "Estimate only. Real Redis memory usage depends on your Redis version, key/value encoding (listpack vs. hashtable/skiplist), fragmentation, and workload. Always verify with INFO memory on representative data before sizing production.",
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
+  },
+  ko: {
+    tool_input_label: "데이터셋",
+    tool_keycount_lbl: "키 개수",
+    tool_type_lbl: "데이터 타입",
+    tool_keylen_lbl: "평균 키 이름 길이 (바이트)",
+    tool_valsize_string_lbl: "평균 값 크기 (바이트)",
+    tool_valsize_elem_lbl: "평균 필드/멤버 크기 (바이트)",
+    tool_elements_lbl: "키당 평균 필드/멤버 수",
+    tool_elements_hint: "해시의 필드, 리스트의 항목, 셋/소티드 셋의 멤버 수.",
+    tool_input_hint: "오버헤드 수치는 공개된 근사값입니다 — 실제 사용량은 Redis 버전과 인코딩에 따라 다릅니다.",
+    tool_results_label: "메모리 예상",
+    tool_total_label: "예상 Redis 메모리",
+    tool_breakdown_raw: "원본 키/값 바이트",
+    tool_breakdown_overhead: "Redis 오버헤드",
+    tool_breakdown_alloc: "할당자 반올림 (~10%)",
+    tool_breakdown_perkey: "키당 평균 바이트",
+    tool_plan_label: "추천 Vultr 플랜",
+    tool_plan_desc: "여유분을 위해 올림 계산되었습니다 — Redis는 fork() 기반 스냅샷과 연결 버퍼에도 메모리가 필요합니다.",
+    tool_vultr_cta: "Vultr에서 이 플랜 선택 →",
+    tool_disclaimer: "참고용 예상치입니다. 실제 Redis 메모리 사용량은 Redis 버전, 키/값 인코딩(listpack vs. hashtable/skiplist), 단편화, 워크로드에 따라 달라집니다. 프로덕션 사이징 전 실제 데이터로 INFO memory를 통해 반드시 확인하세요.",
+    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
+  }
+};
+</script>
+
+<script>
+// ── Per-type overhead (approximate, based on published Redis/jemalloc internals) ──
+// keyOverhead: dictEntry + robj header + small-object bookkeeping, per key
+// elemOverhead: additional per-field/member bookkeeping for collection types
+//   (hash table bucket for Hash/Set, quicklist node for List, skiplist node for ZSet)
+const TYPE_INFO = {
+  string: { label: 'String',     keyOverhead: 90, elemOverhead: 0,  hasElements: false },
+  hash:   { label: 'Hash',       keyOverhead: 64, elemOverhead: 65, hasElements: true  },
+  list:   { label: 'List',       keyOverhead: 64, elemOverhead: 55, hasElements: true  },
+  set:    { label: 'Set',        keyOverhead: 64, elemOverhead: 60, hasElements: true  },
+  zset:   { label: 'Sorted Set', keyOverhead: 64, elemOverhead: 90, hasElements: true  },
+};
+
+// jemalloc rounds allocations up to fixed size classes — ~10% typical overhead
+const ALLOC_OVERHEAD_FACTOR = 0.10;
+
+// Vultr Cloud Compute tiers (RAM GB / vCPU / price)
+const PLANS = [
+  { ram: 1,  cpu: 1, price: '$6/mo'   },
+  { ram: 2,  cpu: 1, price: '$12/mo'  },
+  { ram: 4,  cpu: 2, price: '$24/mo'  },
+  { ram: 8,  cpu: 4, price: '$48/mo'  },
+  { ram: 16, cpu: 6, price: '$96/mo'  },
+  { ram: 32, cpu: 8, price: '$192/mo' },
+  { ram: 64, cpu: 16,price: '$384/mo' },
+];
+
+function onTypeChange() {
+  const type = document.getElementById('dataType').value;
+  const info = TYPE_INFO[type];
+  document.getElementById('elementsGroup').style.display = info.hasElements ? '' : 'none';
+  const lbl = document.getElementById('valSizeLbl');
+  if (info.hasElements) {
+    lbl.textContent = 'Avg field/member size (bytes)';
+    lbl.setAttribute('data-i18n', 'tool_valsize_elem_lbl');
+  } else {
+    lbl.textContent = 'Avg value size (bytes)';
+    lbl.setAttribute('data-i18n', 'tool_valsize_string_lbl');
+  }
+  if (window.sfLang && typeof sfLang.apply === 'function') sfLang.apply();
+  recalc();
+}
+
+function fmtBytes(bytes) {
+  if (bytes >= 1024 * 1024 * 1024) return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+  if (bytes >= 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  if (bytes >= 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return Math.round(bytes) + ' B';
+}
+
+function roundUpPlan(mb) {
+  const gb = mb / 1024;
+  for (const p of PLANS) { if (p.ram >= gb) return p; }
+  return PLANS[PLANS.length - 1];
+}
+
+function recalc() {
+  const keyCount   = Math.max(0, parseInt(document.getElementById('keyCount').value, 10) || 0);
+  const type       = document.getElementById('dataType').value;
+  const info       = TYPE_INFO[type];
+  const keyNameLen = Math.max(0, parseFloat(document.getElementById('keyNameLen').value) || 0);
+  const valSize    = Math.max(0, parseFloat(document.getElementById('valSize').value) || 0);
+  const elements   = info.hasElements ? Math.max(1, parseInt(document.getElementById('elements').value, 10) || 1) : 1;
+
+  // Raw bytes: the actual key name + value/element payload
+  let rawPerKey;
+  let overheadPerKey;
+  if (!info.hasElements) {
+    rawPerKey = keyNameLen + valSize;
+    overheadPerKey = info.keyOverhead;
+  } else {
+    rawPerKey = keyNameLen + (elements * valSize);
+    overheadPerKey = info.keyOverhead + (elements * info.elemOverhead);
+  }
+
+  const rawTotal      = rawPerKey * keyCount;
+  const overheadTotal = overheadPerKey * keyCount;
+  const subtotal      = rawTotal + overheadTotal;
+  const allocTotal     = subtotal * ALLOC_OVERHEAD_FACTOR;
+  const grandTotal     = subtotal + allocTotal;
+
+  // Update total display
+  const totalMb = grandTotal / (1024 * 1024);
+  const totalGb = totalMb / 1024;
+  let dispVal, dispUnit;
+  if (totalGb >= 1) { dispVal = totalGb.toFixed(2); dispUnit = 'GB'; }
+  else { dispVal = totalMb.toFixed(1); dispUnit = 'MB'; }
+  document.getElementById('totalVal').textContent = dispVal;
+  document.getElementById('totalUnit').textContent = dispUnit;
+
+  document.getElementById('sumRaw').textContent      = fmtBytes(rawTotal);
+  document.getElementById('sumOverhead').textContent = fmtBytes(overheadTotal);
+  document.getElementById('sumAlloc').textContent     = fmtBytes(allocTotal);
+  document.getElementById('sumPerKey').textContent    = keyCount > 0 ? fmtBytes(grandTotal / keyCount) : '0 B';
+
+  // Suggested Vultr plan
+  const plan = roundUpPlan(totalMb);
+  document.getElementById('planTitle').textContent = plan.ram + ' GB Cloud Compute (' + plan.cpu + ' vCPU, ' + plan.price + ')';
+}
+
+// FAQ accordion
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  item.classList.toggle('open');
+}
+
+// Init
+onTypeChange();
+</script>
+
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>
