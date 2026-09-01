@@ -610,46 +610,46 @@
     <div class="lang-en">
       <div class="faq-title">Frequently Asked Questions</div>
       <div class="faq-item">
-        <div class="faq-q">What is EXIF data and why should I remove it?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is EXIF data and why should I remove it?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">EXIF (Exchangeable Image File Format) data is metadata embedded in photo files by cameras and smartphones. It can include your precise GPS coordinates, the exact date and time a photo was taken, your device model, and even software details. Removing it protects your privacy — especially important before posting photos online, since the GPS data can reveal your home address or daily routines.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Does removing EXIF data affect image quality?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Does removing EXIF data affect image quality?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">For PNG images, there is zero quality loss — the pixel data is unchanged. For JPEG images, this tool re-encodes at 95% quality, which is visually indistinguishable from the original but results in a slightly smaller file. You will not notice any visible degradation.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">How do I remove GPS location from a photo before posting online?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I remove GPS location from a photo before posting online?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Simply drag your photo into the drop zone above and click Download. The output file will have no GPS coordinates. This works for photos taken on iPhones, Android phones, and digital cameras. Social media platforms like Instagram partially strip EXIF, but relying on them is risky — remove it yourself first for guaranteed privacy.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Can I remove EXIF data from multiple photos at once for free?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I remove EXIF data from multiple photos at once for free?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Yes — this tool supports batch processing at no cost. Select multiple files using the file picker (Ctrl+click or Cmd+click) or drag a selection of photos into the drop zone. Use the "Download All" button that appears when two or more files are processed to save them all in one click.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Is it safe to share photos with EXIF data on social media?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Is it safe to share photos with EXIF data on social media?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">It depends on the platform, but it is best practice to strip EXIF before uploading. While Facebook and Instagram do remove most EXIF on upload, some platforms do not. More importantly, GPS metadata embedded in photos shared directly via messaging apps (WhatsApp, email, AirDrop) is preserved and can expose your exact location to anyone who receives the file.</div>
       </div>
     </div>
     <div class="lang-ko">
       <div class="faq-title">자주 묻는 질문</div>
       <div class="faq-item">
-        <div class="faq-q">EXIF 데이터란 무엇이며 왜 제거해야 하나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>EXIF 데이터란 무엇이며 왜 제거해야 하나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">EXIF(Exchangeable Image File Format) 데이터는 카메라와 스마트폰이 사진 파일에 내장하는 메타데이터입니다. 정확한 GPS 좌표, 촬영 날짜와 시간, 기기 모델, 소프트웨어 정보 등이 포함될 수 있습니다. 특히 사진을 온라인에 게시하기 전에 제거하면 프라이버시를 보호할 수 있으며, GPS 데이터가 집 주소나 일상 경로를 노출할 수 있습니다.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">EXIF 데이터를 제거하면 이미지 품질에 영향이 있나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>EXIF 데이터를 제거하면 이미지 품질에 영향이 있나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">PNG 이미지는 화질 손실이 전혀 없으며 픽셀 데이터가 그대로 유지됩니다. JPEG 이미지는 95% 품질로 재인코딩되어 원본과 시각적으로 구별할 수 없지만 파일 크기가 약간 줄어들 수 있습니다. 눈에 보이는 화질 저하는 없습니다.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">온라인에 게시하기 전에 사진에서 GPS 위치를 제거하는 방법은?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>온라인에 게시하기 전에 사진에서 GPS 위치를 제거하는 방법은?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">위의 드롭 존에 사진을 드래그하고 다운로드를 클릭하세요. 출력 파일에는 GPS 좌표가 없습니다. iPhone, 안드로이드 폰, 디지털 카메라로 찍은 사진 모두 지원됩니다. 인스타그램 같은 SNS는 일부 EXIF를 제거하지만 완전하지 않으므로 직접 제거하는 것이 안전합니다.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">여러 사진의 EXIF 데이터를 한 번에 무료로 제거할 수 있나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>여러 사진의 EXIF 데이터를 한 번에 무료로 제거할 수 있나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">네, 이 도구는 무료로 일괄 처리를 지원합니다. 파일 선택기에서 Ctrl+클릭(Mac: Cmd+클릭)으로 여러 파일을 선택하거나 드롭 존으로 여러 사진을 드래그하세요. 2개 이상 파일 처리 시 나타나는 "모두 다운로드" 버튼으로 한 번에 저장할 수 있습니다.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">EXIF 데이터가 있는 사진을 SNS에 공유하는 것은 안전한가요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>EXIF 데이터가 있는 사진을 SNS에 공유하는 것은 안전한가요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">플랫폼에 따라 다르지만, 업로드 전에 EXIF를 제거하는 것이 좋습니다. 페이스북과 인스타그램은 업로드 시 대부분의 EXIF를 제거하지만 일부 플랫폼은 그렇지 않습니다. 더 중요한 것은, 카카오톡·이메일·에어드롭 등으로 직접 공유하면 GPS 메타데이터가 그대로 전달되어 수신자가 정확한 위치를 알 수 있습니다.</div>
       </div>
     </div>

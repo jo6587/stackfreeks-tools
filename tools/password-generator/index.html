@@ -729,27 +729,27 @@
       <div class="faq-title">Frequently Asked Questions</div>
 
       <div class="faq-item">
-        <div class="faq-q">How long should a strong password be?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How long should a strong password be?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Security experts recommend at least 16 characters for a strong password. Shorter passwords (under 12 characters) can be cracked much faster with modern hardware. For critical accounts like banking or email, aim for 20+ characters.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Is this password generator safe to use?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Is this password generator safe to use?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Yes. All passwords are generated entirely in your browser using the <code>crypto.getRandomValues()</code> Web Crypto API — a cryptographically secure random number generator. No data is ever sent to a server, logged, or stored. You can even use this tool offline.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">What characters should a strong password include?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What characters should a strong password include?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">A strong password should include all four character types: uppercase letters (A–Z), lowercase letters (a–z), digits (0–9), and special symbols (!@#$%^&amp;*). Combining all four character sets dramatically increases the number of possible combinations, making brute-force attacks infeasible.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">What is the most secure random password generator?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the most secure random password generator?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">The most secure generators use cryptographically secure pseudorandom number generators (CSPRNG) — which is exactly what this tool uses (<code>crypto.getRandomValues()</code>). Avoid password generators that rely on <code>Math.random()</code>, as it is not cryptographically secure.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Should I use a password manager?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Should I use a password manager?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Absolutely. Password managers like Bitwarden, 1Password, or KeePass let you store unique, strong passwords for every account without memorizing them. Since you only need to remember one master password, you can use long, complex passwords everywhere else.</div>
       </div>
     </div>
@@ -758,27 +758,27 @@
       <div class="faq-title">자주 묻는 질문</div>
 
       <div class="faq-item">
-        <div class="faq-q">강력한 비밀번호는 얼마나 길어야 하나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>강력한 비밀번호는 얼마나 길어야 하나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">보안 전문가들은 강력한 비밀번호로 최소 16자를 권장합니다. 12자 미만의 짧은 비밀번호는 현대 하드웨어로 훨씬 빠르게 해독될 수 있습니다. 은행이나 이메일 같은 중요한 계정은 20자 이상을 목표로 하세요.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">이 비밀번호 생성기는 안전한가요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>이 비밀번호 생성기는 안전한가요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">네. 모든 비밀번호는 암호학적으로 안전한 난수 생성기인 <code>crypto.getRandomValues()</code> Web Crypto API를 사용하여 브라우저에서만 생성됩니다. 데이터는 서버로 전송되거나 기록·저장되지 않습니다. 오프라인에서도 사용 가능합니다.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">강력한 비밀번호에는 어떤 문자가 포함되어야 하나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>강력한 비밀번호에는 어떤 문자가 포함되어야 하나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">강력한 비밀번호는 대문자(A–Z), 소문자(a–z), 숫자(0–9), 특수기호(!@#$%^&amp;*)의 네 가지 문자 유형을 모두 포함해야 합니다. 모든 문자 집합을 조합하면 가능한 조합 수가 크게 늘어나 무차별 대입 공격이 사실상 불가능해집니다.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">가장 안전한 랜덤 비밀번호 생성기는?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>가장 안전한 랜덤 비밀번호 생성기는?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">가장 안전한 생성기는 암호학적으로 안전한 의사난수 생성기(CSPRNG)를 사용합니다. 이 도구가 바로 그렇습니다(<code>crypto.getRandomValues()</code>). <code>Math.random()</code>에 의존하는 생성기는 암호학적으로 안전하지 않으므로 피하세요.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">비밀번호 관리자를 사용해야 하나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>비밀번호 관리자를 사용해야 하나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">물론입니다. Bitwarden, 1Password, KeePass 같은 비밀번호 관리자를 사용하면 모든 계정에 고유하고 강력한 비밀번호를 외울 필요 없이 저장할 수 있습니다. 마스터 비밀번호 하나만 기억하면 되므로 다른 곳에서는 길고 복잡한 비밀번호를 자유롭게 사용할 수 있습니다.</div>
       </div>
     </div>

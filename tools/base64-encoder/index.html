@@ -615,46 +615,46 @@
   <div class="lang-en">
     <div class="faq-title">FAQ</div>
     <div class="faq-item">
-      <div class="faq-q">What is Base64 encoding and what is it used for?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What is Base64 encoding and what is it used for?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">Base64 is a binary-to-text encoding scheme that represents binary data using 64 printable ASCII characters. It is widely used to embed images in HTML/CSS (as data URLs), transmit binary data in JSON APIs, encode email attachments (MIME), and store binary data in environments that only support text.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">How do I encode an image to Base64 online?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I encode an image to Base64 online?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">Switch to the "File → Base64" tab, then drag and drop your image file onto the upload area or click to browse. The tool instantly converts it to a Base64 data URL. You can toggle between the full <code style="font-size:12px">data:image/...;base64,</code> prefix and the raw Base64-only string.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">How do I decode a Base64 string back to a file?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I decode a Base64 string back to a file?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">Go to the "Base64 → File" tab, paste your Base64 string (with or without the data URL prefix), choose the file type if not auto-detected, and click "Download File". Your browser will prompt you to save the decoded file.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Does Base64 encoding make data secure?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Does Base64 encoding make data secure?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">No. Base64 is an encoding scheme, not encryption. Anyone can decode a Base64 string without a key. Do not use Base64 to protect sensitive data — use proper encryption (AES, RSA, etc.) instead. Base64 is only for encoding, not security.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Why is Base64 encoded data longer than the original?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Why is Base64 encoded data longer than the original?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">Base64 encodes every 3 bytes of binary data as 4 ASCII characters, which means the output is approximately 33% larger than the input. This overhead is the trade-off for representing arbitrary binary data as safe, printable text characters.</div>
     </div>
   </div>
   <div class="lang-ko">
     <div class="faq-title">자주 묻는 질문</div>
     <div class="faq-item">
-      <div class="faq-q">Base64 인코딩이란 무엇이고 어떤 용도로 사용되나요?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Base64 인코딩이란 무엇이고 어떤 용도로 사용되나요?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">Base64는 바이너리 데이터를 64개의 출력 가능한 ASCII 문자로 표현하는 인코딩 방식입니다. HTML/CSS에 이미지 삽입(데이터 URL), JSON API에서 바이너리 데이터 전송, 이메일 첨부 파일 인코딩(MIME), 텍스트만 지원하는 환경에서 바이너리 데이터 저장 등에 널리 사용됩니다.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">이미지를 온라인으로 Base64로 인코딩하는 방법은?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>이미지를 온라인으로 Base64로 인코딩하는 방법은?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">"파일 → Base64" 탭으로 전환한 후, 이미지 파일을 업로드 영역에 드래그 앤 드롭하거나 클릭해서 파일을 선택하세요. 도구가 즉시 Base64 데이터 URL로 변환합니다. 전체 <code style="font-size:12px">data:image/...;base64,</code> 접두사 포함 여부를 토글로 선택할 수 있습니다.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Base64 문자열을 파일로 다시 디코딩하는 방법은?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Base64 문자열을 파일로 다시 디코딩하는 방법은?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">"Base64 → 파일" 탭으로 이동하여 Base64 문자열을 붙여넣고(데이터 URL 접두사 포함 여부 무관), 파일 유형이 자동 감지되지 않으면 선택한 후 "파일 다운로드"를 클릭하세요. 브라우저가 디코딩된 파일을 저장하도록 안내합니다.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Base64 인코딩으로 데이터를 보안처리할 수 있나요?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Base64 인코딩으로 데이터를 보안처리할 수 있나요?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">아니요. Base64는 인코딩 방식이지 암호화가 아닙니다. 누구든지 키 없이 Base64 문자열을 디코딩할 수 있습니다. 민감한 데이터 보호에는 Base64를 사용하지 말고 적절한 암호화(AES, RSA 등)를 사용하세요.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Base64로 인코딩된 데이터가 원본보다 크기가 더 큰 이유는?</div>
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Base64로 인코딩된 데이터가 원본보다 크기가 더 큰 이유는?</span><span class="faq-icon">+</span></button>
       <div class="faq-a">Base64는 바이너리 데이터 3바이트를 ASCII 문자 4개로 인코딩하기 때문에 출력이 입력보다 약 33% 더 큽니다. 이것은 임의의 바이너리 데이터를 안전한 출력 가능 텍스트 문자로 표현하기 위한 트레이드오프입니다.</div>
     </div>
   </div>

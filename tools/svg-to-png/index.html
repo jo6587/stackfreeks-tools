@@ -627,27 +627,27 @@
       <div class="faq-title">Frequently Asked Questions</div>
 
       <div class="faq-item">
-        <div class="faq-q">How do I convert an SVG to PNG without losing quality?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I convert an SVG to PNG without losing quality?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">SVG is a vector format, so it scales losslessly at any size. This tool renders your SVG onto an HTML5 Canvas at your chosen resolution — using 2x or 4x scale ensures the exported PNG looks sharp even on high-density displays. The conversion happens entirely in your browser using the Canvas API, preserving all colors, gradients, and shapes exactly.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">What resolution should I use when converting SVG to PNG?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What resolution should I use when converting SVG to PNG?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">For standard web use, 1x matches the SVG's native viewBox dimensions. For retina and HiDPI screens (most modern phones and laptops), choose 2x — it doubles each dimension, giving 4× more pixels. For high-quality print or marketing materials, use 4x. For example, a 100×100 SVG exported at 4x becomes a 400×400 PNG — more than enough for most print contexts at 150 DPI.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Can I convert SVG to transparent PNG?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I convert SVG to transparent PNG?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Yes — Transparent is the default background option. The Canvas is not filled with any color, so all areas outside your SVG artwork remain fully transparent (alpha = 0). This is ideal for icons you plan to place over colored backgrounds in apps, websites, or design tools like Figma. Toggle to White background if you need an opaque export for email or document use.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Why does my SVG look blurry when exported as PNG?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why does my SVG look blurry when exported as PNG?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Blurriness usually happens when the SVG is exported at too small a resolution and then displayed at a larger size. Try increasing the scale to 2x or 4x before downloading. Another cause is missing width/height or viewBox attributes in the SVG source — this tool defaults to 512×512 in that case, but you can edit the SVG file to add explicit dimensions for better results.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">What's the difference between SVG and PNG? When should I use each?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between SVG and PNG? When should I use each?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">SVG (Scalable Vector Graphics) is resolution-independent — it's defined by math, not pixels, so it looks crisp at any size. Use SVG for logos, icons, and illustrations in web and UI contexts where you control the environment. PNG (Portable Network Graphics) is a raster format — fixed pixels with lossless compression and transparency support. Use PNG when you need broad compatibility: app stores (Apple, Google Play), email clients, Microsoft Office documents, or any platform that doesn't support SVG.</div>
       </div>
     </div>
@@ -656,27 +656,27 @@
       <div class="faq-title">자주 묻는 질문</div>
 
       <div class="faq-item">
-        <div class="faq-q">화질 손상 없이 SVG를 PNG로 변환하려면 어떻게 하나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>화질 손상 없이 SVG를 PNG로 변환하려면 어떻게 하나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">SVG는 벡터 형식이기 때문에 어떤 크기에서도 손실 없이 확대됩니다. 이 도구는 HTML5 Canvas를 사용해 선택한 해상도로 SVG를 렌더링합니다. 2x 또는 4x 배율을 사용하면 고밀도 디스플레이에서도 선명한 PNG를 얻을 수 있습니다. 변환은 Canvas API를 통해 브라우저에서 완전히 처리됩니다.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">SVG를 PNG로 변환할 때 어떤 해상도를 사용해야 하나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>SVG를 PNG로 변환할 때 어떤 해상도를 사용해야 하나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">일반 웹 사용에는 1x(SVG 기본 viewBox 크기)가 적합합니다. 레티나 및 HiDPI 화면(대부분의 최신 폰/노트북)에는 2x를 선택하세요. 고품질 인쇄물이나 마케팅 자료에는 4x를 사용합니다. 예를 들어 100×100 SVG를 4x로 내보내면 400×400 PNG가 됩니다.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">SVG를 투명 PNG로 변환할 수 있나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>SVG를 투명 PNG로 변환할 수 있나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">네 — 기본 배경 옵션이 투명입니다. Canvas가 색으로 채워지지 않아 SVG 아트워크 밖의 영역이 완전히 투명(알파=0)하게 유지됩니다. 앱, 웹사이트, Figma 등에서 색상 배경 위에 아이콘을 배치할 때 이상적입니다. 이메일이나 문서용이라면 흰색 배경으로 전환하세요.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">SVG를 PNG로 내보냈는데 흐릿하게 보이는 이유는 무엇인가요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>SVG를 PNG로 내보냈는데 흐릿하게 보이는 이유는 무엇인가요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">대부분 SVG를 너무 작은 해상도로 내보낸 후 더 크게 표시하기 때문입니다. 배율을 2x 또는 4x로 올려 다시 다운로드해 보세요. 또 다른 원인은 SVG 소스에 width/height 또는 viewBox 속성이 없는 경우입니다. 이 경우 기본값 512×512로 처리되며, SVG 파일에 명시적 크기를 추가하면 더 나은 결과를 얻을 수 있습니다.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">SVG와 PNG의 차이점은 무엇인가요? 각각 언제 써야 하나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>SVG와 PNG의 차이점은 무엇인가요? 각각 언제 써야 하나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">SVG(확장 가능한 벡터 그래픽)는 해상도 독립적입니다 — 픽셀이 아닌 수학으로 정의되어 어떤 크기에서도 선명합니다. 웹 및 UI 환경에서 로고, 아이콘, 일러스트에 사용하세요. PNG(휴대용 네트워크 그래픽)는 래스터 형식으로 손실 없는 압축과 투명도를 지원합니다. 앱 스토어(Apple, Google Play), 이메일 클라이언트, Microsoft Office 문서처럼 SVG를 지원하지 않는 플랫폼에서 사용하세요.</div>
       </div>
     </div>

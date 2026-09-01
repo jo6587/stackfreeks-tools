@@ -786,44 +786,44 @@
 
     <div class="faq-item">
       <div class="lang-en">
-        <div class="faq-q">What regex flavor does this use?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What regex flavor does this use?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">JavaScript's built-in <code>RegExp</code> — fully compatible with JavaScript, Node.js, and most modern engines (V8, SpiderMonkey). If you're writing regex for another language, minor syntax differences may apply.</div>
       </div>
       <div class="lang-ko">
-        <div class="faq-q">어떤 정규식 엔진을 사용하나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>어떤 정규식 엔진을 사용하나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">자바스크립트 내장 <code>RegExp</code>를 사용합니다. JavaScript, Node.js 및 대부분의 현대 엔진(V8, SpiderMonkey)과 완전 호환됩니다. 다른 언어용 정규식 작성 시 소소한 문법 차이가 있을 수 있습니다.</div>
       </div>
     </div>
 
     <div class="faq-item">
       <div class="lang-en">
-        <div class="faq-q">What does the <code>g</code> flag do?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What does the <code>g</code> flag do?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Global — makes the engine find <em>all</em> matches in the test string instead of stopping at the first one. Without <code>g</code>, only the first match is returned and highlighted.</div>
       </div>
       <div class="lang-ko">
-        <div class="faq-q"><code>g</code> 플래그는 무엇인가요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span><code>g</code> 플래그는 무엇인가요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">글로벌(Global) — 첫 번째 매치에서 멈추지 않고 테스트 문자열에서 <em>모든</em> 매치를 찾습니다. <code>g</code>가 없으면 첫 번째 매치만 반환되고 하이라이트됩니다.</div>
       </div>
     </div>
 
     <div class="faq-item">
       <div class="lang-en">
-        <div class="faq-q">What does the <code>s</code> flag do?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What does the <code>s</code> flag do?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Dotall — makes <code>.</code> match newline characters (<code>\n</code>) too. Without <code>s</code>, a dot only matches characters on the same line. Introduced in ES2018, supported in all modern browsers.</div>
       </div>
       <div class="lang-ko">
-        <div class="faq-q"><code>s</code> 플래그는 무엇인가요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span><code>s</code> 플래그는 무엇인가요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">닷올(Dotall) — <code>.</code>이 줄바꿈 문자(<code>\n</code>)까지 일치하게 합니다. <code>s</code>가 없으면 점(.)은 같은 줄의 문자만 일치합니다. ES2018에서 도입되었으며 모든 현대 브라우저에서 지원됩니다.</div>
       </div>
     </div>
 
     <div class="faq-item">
       <div class="lang-en">
-        <div class="faq-q">Can I use capture groups?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I use capture groups?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Yes — use parentheses like <code>(\w+)</code> to define capture groups. Each match card in the results panel shows the matched text plus any captured groups in order.</div>
       </div>
       <div class="lang-ko">
-        <div class="faq-q">캡처 그룹을 사용할 수 있나요?</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>캡처 그룹을 사용할 수 있나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">네 — <code>(\w+)</code>처럼 괄호를 사용해 캡처 그룹을 정의하세요. 결과 패널의 각 매치 카드에서 매치된 텍스트와 함께 캡처 그룹이 순서대로 표시됩니다.</div>
       </div>
     </div>
