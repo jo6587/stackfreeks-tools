@@ -31,8 +31,9 @@
 
 ## 2. Hacker News — Show HN (사이트 전체 말고 니치 툴 하나로)
 
-- [ ] https://news.ycombinator.com/submit
-      ⚠️ 신규 계정 글쓰기 제한 걸림 (2026-07-08) — 며칠 후 자동 해제, **다음 주 제출** (원래 계획대로)
+- [x] 제출 완료 (2026-07-20) — game-server-cost-calculator, 킷의 제목/URL/첫 댓글 그대로 사용
+      → 몇 시간~하루 안에 코멘트/투표 반응 있으면 답변 챙길 것. 반응 저조해도 정상(Show HN 대부분 그럼).
+      몇 주 뒤 docker-ram-calculator 또는 mysql-backup-script-generator로 한 번 더 시도 가능.
 
 **Title**: `Show HN: Game server cost calculator – VPS cost by player count`
 **URL**: `https://tools.stackfreeks.com/tools/game-server-cost-calculator/`
@@ -47,8 +48,8 @@
 
 ## 3. dev.to 글 (가입만 하면 발행 가능, 트래픽+링크)
 
-- [ ] https://dev.to/new
-      (프로필 완성 요구 — 이름 + 한 줄 bio만 채우면 됨. 급하지 않음)
+- [x] 발행 완료 (2026-07-11) — 초안: `marketing/devto-draft.md`
+      → 댓글 달리면 답장 챙길 것. 댓글로 들어온 툴 아이디어는 tool-picker 입력으로 활용
 
 **Title**: `I built 45 free static dev tools with no backend — lessons learned`
 **개요** (본문은 빌드 스토리로 4~6문단):
@@ -63,9 +64,30 @@
 
 - [ ] **AlternativeTo** — https://alternativeto.net/manage-item/ — 주요 툴 5개 개별 등록
       (vps-cost-calculator, game-server-cost-calculator, docker-ram-calculator,
-       cron-builder, subnet-calculator)
-      ⚠️ 계정 생성 후 7일 제한 — **2026-07-15 이후 제출 가능** (계정은 2026-07-08 생성됨)
-- [ ] **SaaSHub** — https://www.saashub.com/submit
+       cron-builder, subnet-calculator) — 7일 제한 해제됨(7/15 이후), 등록 진행 중
+      각 툴 등록 시 사용할 카피(Full description + Tags)는 아래 참조.
+
+**Full description (복사용):**
+
+| 툴 | Full description |
+|---|---|
+| vps-cost-calculator | A free browser-based calculator that compares monthly VPS hosting costs across Vultr, Hetzner, and DigitalOcean. Enter your specs — RAM, CPU, storage, bandwidth — and get an instant side-by-side price breakdown, so you can pick the cheapest provider for your workload without opening five pricing pages. No signup, no account, runs entirely in your browser. Part of StackFreeks Tools, a collection of free static developer and sysadmin utilities. |
+| game-server-cost-calculator | A free tool that estimates VPS hosting costs for game servers by player count. Pick your game (Minecraft, Valheim, Rust, ARK, CS2, and more), enter the number of players, and get a recommended VPS spec plus monthly cost across major providers — no more guessing RAM or over/under-provisioning your server. No signup, no account, runs entirely in your browser. Part of StackFreeks Tools, a collection of free static developer and sysadmin utilities. |
+| docker-ram-calculator | A free browser-based calculator that helps you size Docker container memory limits before picking a VPS plan. Enter your VPS RAM and container count (app, database, proxy, etc.), and it calculates a sensible `--memory` allocation for each one — so you avoid OOM kills without wasting RAM on oversized limits. No signup, no account, runs entirely in your browser. Part of StackFreeks Tools, a collection of free static developer and sysadmin utilities. |
+| cron-builder | A free visual builder for cron expressions. Pick a schedule using dropdowns or presets (every 5 minutes, daily at 2am, every Sunday, etc.) and get the correct cron syntax instantly, plus a human-readable explanation and a preview of the next run times — no more counting asterisks or double-checking syntax against a cheat sheet. No signup, no account, runs entirely in your browser. Part of StackFreeks Tools, a collection of free static developer and sysadmin utilities. |
+| subnet-calculator | A free subnet calculator for IPv4 networks. Enter an IP address and CIDR notation (or subnet mask) and instantly get the network address, broadcast address, usable host range, and total host count — useful for firewall rules, VPC configuration, and general network planning. No signup, no account, runs entirely in your browser. Part of StackFreeks Tools, a collection of free static developer and sysadmin utilities. |
+
+**Tags (쉼표 구분, 복사용):**
+
+| 툴 | Tags |
+|---|---|
+| vps-cost-calculator | vps, hosting, cloud hosting, pricing calculator, cost calculator, vultr, hetzner, digitalocean, server, sysadmin |
+| game-server-cost-calculator | game server, minecraft, hosting, vps, cost calculator, gaming |
+| docker-ram-calculator | docker, containers, devops, memory, sysadmin, vps |
+| cron-builder | cron, scheduling, linux, sysadmin, devops, developer tools |
+| subnet-calculator | networking, ip address, subnet, sysadmin, cidr, devops |
+- [x] **SaaSHub** — 등록·검증 완료 (2026-07-12, ACTIVE). 분기마다 재검증 필요 —
+      다음 검증: 2026년 10월경 (Manage → Verify 클릭만 하면 됨)
 - [x] **Uneed** — 제출 완료 (2026-07-08). 무료 큐 대기 — **2026년 12월경 게시 예정**.
       유료 스킵 있지만 불필요, 그냥 기다리면 됨
 - [ ] **Fazier** — https://fazier.com/submit — 배지는 홈 푸터에 배포 완료
