@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PostgreSQL Config Generator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="postgresql config / postgresql.conf tuning generator (pgtune alternative) — free, runs in your browser, no signup required." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/postgresql-config-generator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/postgresql-config-generator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/postgresql-config-generator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/postgresql-config-generator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="PostgreSQL Config Generator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="postgresql.conf tuning generator (pgtune alternative). Enter RAM, CPU and workload, get a tuned config plus a matching Vultr plan." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/postgresql-config-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PostgreSQL Config Generator | StackFreeks Tools" />
+  <meta name="twitter:description" content="postgresql.conf tuning generator (pgtune alternative). Enter RAM, CPU and workload, get a tuned config." />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "SFMono-Regular", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    /* Main layout */
+    main { padding: 32px 0 48px; }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; } }
+
+    /* Card */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+    .card-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 16px;
+    }
+
+    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+
+    input, select {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 9px 12px;
+      font-size: 13px; font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus { border-color: var(--border-2); }
+    input[type="number"] { -moz-appearance: textfield; }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+    }
+
+    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+
+    /* Config output */
+    .conf-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .btn-copy {
+      background: var(--surface-2); color: var(--text-1);
+      border: 1px solid var(--border-2); border-radius: var(--radius);
+      padding: 5px 12px; font-size: 12px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .conf-output {
+      background: #0d0d0e;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--text-2);
+      white-space: pre;
+      overflow-x: auto;
+      max-height: 460px;
+      overflow-y: auto;
+    }
+
+    .plan-box {
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-top: 16px;
+    }
+    .plan-box-label { font-size: 11px; font-weight: 500; color: var(--success); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .plan-box-title { font-size: 1rem; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .plan-box-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
+    .btn-vultr-plan {
+      background: var(--success);
+      color: #fff; border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      text-decoration: none; display: inline-block;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr-plan:hover { opacity: 0.85; }
+
+    .disclaimer {
+      font-size: 11px; color: var(--text-3);
+      margin-top: 14px; line-height: 1.6;
+      padding-top: 14px; border-top: 1px solid var(--border);
+    }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related */
+    .related { padding: 40px 0; border-top: 1px solid var(--border); }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px;
+      text-decoration: none; display: flex;
+      flex-direction: column; gap: 6px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* Related tools (auto-injected style parity) */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"PostgreSQL Config Generator","description":"Generate a tuned postgresql.conf from your RAM, CPU cores, storage type, PostgreSQL version and workload. A free PGTune alternative that runs in your browser.","url":"https://tools.stackfreeks.com/tools/postgresql-config-generator/","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I tune postgresql.conf?","acceptedAnswer":{"@type":"Answer","text":"Start from your hardware: set shared_buffers to about 25% of RAM, effective_cache_size to about 75% of RAM, and derive work_mem from (RAM minus shared_buffers) divided by (max_connections times 3) and a parallelism factor. Then adjust for your workload type and storage, restart PostgreSQL for the settings that need it, and re-check pg_stat_statements and temp file counts under real load. This generator ports the well-known PGTune formulas so you get a sensible baseline in one step."}},{"@type":"Question","name":"What should shared_buffers be?","acceptedAnswer":{"@type":"Answer","text":"For web, OLTP, mixed and data-warehouse workloads, shared_buffers is set to roughly 25% of total RAM. On a desktop or development machine it is much smaller, around 1/16 of RAM. Going far above 25% rarely helps because PostgreSQL also relies on the operating system page cache, which effective_cache_size describes to the planner. On a 4 GB server that means about 1 GB of shared_buffers."}},{"@type":"Question","name":"Is there a free PGTune alternative?","acceptedAnswer":{"@type":"Answer","text":"Yes. This PostgreSQL Config Generator is a free, browser-based PGTune alternative. It implements the same published formulas for shared_buffers, effective_cache_size, work_mem, maintenance_work_mem, WAL sizing, checkpoint_completion_target, planner cost constants and parallel worker settings, and it also suggests a matching Vultr plan for the RAM you entered. Nothing is uploaded and no signup is required."}},{"@type":"Question","name":"How much work_mem should I set?","acceptedAnswer":{"@type":"Answer","text":"work_mem is per sort or hash operation per connection, so it is derived from available memory and connection count: (RAM minus shared_buffers) divided by (max_connections times 3), then divided by the parallel workers per gather and a workload divisor (1 for web and OLTP, 2 for mixed and data warehouse, 6 for desktop). Setting it too high can exhaust RAM when many connections sort at once, so keep max_connections realistic and use a connection pooler."}},{"@type":"Question","name":"What are the best PostgreSQL settings for a VPS?","acceptedAnswer":{"@type":"Answer","text":"On a small VPS the priorities are: shared_buffers near 25% of RAM, effective_cache_size near 75%, a modest work_mem so concurrent queries do not exhaust memory, random_page_cost of 1.1 because VPS storage is SSD or NVMe, effective_io_concurrency around 200, and checkpoint_completion_target of 0.9 to smooth write spikes. Keep max_connections low and run PgBouncer. Enter your VPS specs above to generate the exact values."}}]}
+  </script>
+
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<!-- 1. Nav -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+  <div class="nav-right">
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  </div>
+</nav>
+
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+
+<!-- 3. Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow">PostgreSQL &amp; VPS</p>
+      <h1>PostgreSQL Config Generator</h1>
+      <p class="hero-desc">Enter your RAM, CPU cores and workload, and get a tuned postgresql.conf — a free PGTune alternative that runs in your browser.</p>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow">PostgreSQL &amp; VPS</p>
+      <h1>PostgreSQL 설정 생성기</h1>
+      <p class="hero-desc">RAM, CPU 코어 수, 워크로드를 입력하면 튜닝된 postgresql.conf를 즉시 생성합니다. 브라우저에서 동작하는 무료 PGTune 대안입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Tool body -->
+<main>
+  <div class="container">
+    <!-- ADSENSE_SLOT_IN_TOOL -->
+    <div class="tool-grid">
+
+      <!-- Input card -->
+      <div class="card">
+        <p class="card-label" data-i18n="tool_input_label">Server &amp; Workload</p>
+
+        <div class="form-group">
+          <label data-i18n="tool_ram_lbl">Total RAM (GB)</label>
+          <input type="number" id="ram" value="4" min="0.5" step="0.5" oninput="recalc()" />
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_cpu_lbl">CPU cores (vCPU)</label>
+          <input type="number" id="cpu" value="2" min="1" step="1" oninput="recalc()" />
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_storage_lbl">Storage type</label>
+          <select id="storage" onchange="recalc()">
+            <option value="ssd">SSD / NVMe</option>
+            <option value="hdd">HDD</option>
+            <option value="san">Network / SAN</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_version_lbl">PostgreSQL version</label>
+          <select id="pgver" onchange="recalc()">
+            <option value="17">17</option>
+            <option value="16" selected>16</option>
+            <option value="15">15</option>
+            <option value="14">14</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_workload_lbl">Workload type</label>
+          <select id="workload" onchange="onWorkloadChange()">
+            <option value="web">Web application</option>
+            <option value="oltp">OLTP (transactional)</option>
+            <option value="dw">Data warehouse</option>
+            <option value="desktop">Desktop / development</option>
+            <option value="mixed">Mixed</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_conn_lbl">Max connections</label>
+          <input type="number" id="conn" value="200" min="10" step="10" oninput="connTouched=true;recalc()" />
+          <p class="hint" data-i18n="tool_conn_hint">Leave the workload default unless you know your real peak. Use a pooler like PgBouncer for high counts.</p>
+        </div>
+      </div>
+
+      <!-- Results card -->
+      <div class="card">
+        <div class="conf-head">
+          <p class="card-label" style="margin-bottom:0;" data-i18n="tool_results_label">postgresql.conf</p>
+          <button class="btn-copy" id="copyBtn" onclick="copyConf()" data-i18n="tool_copy_btn">Copy</button>
+        </div>
+
+        <pre class="conf-output" id="confOut">…</pre>
+
+        <div class="plan-box">
+          <div class="plan-box-label" data-i18n="tool_plan_label">Matched Vultr Plan</div>
+          <div class="plan-box-title" id="planTitle">—</div>
+          <div class="plan-box-desc" id="planDesc" data-i18n="tool_plan_desc">Matches the RAM you entered — available as a Vultr Cloud Compute VPS or a Vultr Managed Database for PostgreSQL.</div>
+          <a href="https://www.vultr.com/?ref=9907834-9J"
+             class="btn-vultr-plan"
+             rel="nofollow sponsored"
+             target="_blank"
+             data-i18n="tool_vultr_cta">Get this plan on Vultr →</a>
+        </div>
+
+        <p class="disclaimer" data-i18n="tool_disclaimer">Baseline only. Ported from the published PGTune formulas. Verify against pg_stat_statements, temp file counts and checkpoint frequency under real load, and restart PostgreSQL for settings that require it (shared_buffers, wal_buffers, max_connections).</p>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- About / SEO copy -->
+<section class="about-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>About this PostgreSQL config generator</h2>
+      <p>PostgreSQL ships with conservative defaults that assume a shared machine with very little memory — <code>shared_buffers</code> of 128 MB, <code>work_mem</code> of 4 MB, and planner cost constants tuned for spinning disks. On a modern VPS or dedicated database server those defaults leave most of your RAM unused and force queries to spill sorts and hashes to disk. This tool generates a tuned <code>postgresql.conf</code> snippet from six inputs: total RAM, CPU cores, storage type, PostgreSQL version, workload type, and expected maximum connections.</p>
+      <p>It ports the well-known PGTune formulas: <code>shared_buffers</code> at 25% of RAM (1/16 for desktop use), <code>effective_cache_size</code> at 75% of RAM, <code>work_mem</code> derived from available memory divided by connection count and a parallelism factor, <code>maintenance_work_mem</code> at 1/16 of RAM capped at 2 GB, <code>wal_buffers</code> at 3% of shared_buffers capped at 16 MB, workload-specific <code>min_wal_size</code> / <code>max_wal_size</code>, <code>checkpoint_completion_target</code> of 0.9, <code>default_statistics_target</code> of 100 (500 for data warehouses), <code>random_page_cost</code> of 1.1 for SSD/NVMe or 4 for HDD, <code>effective_io_concurrency</code>, and parallel worker settings when you have 4 or more cores. It is useful for developers deploying Postgres to a Vultr VPS, DevOps engineers sizing a managed database, and anyone comparing their current config against a known-good baseline.</p>
+    </div>
+    <div class="lang-ko">
+      <h2>PostgreSQL 설정 생성기 소개</h2>
+      <p>PostgreSQL의 기본 설정은 메모리가 거의 없는 공유 서버를 가정한 보수적인 값입니다 — <code>shared_buffers</code> 128MB, <code>work_mem</code> 4MB, 그리고 HDD 기준의 플래너 비용 상수입니다. 최신 VPS나 전용 DB 서버에서는 이 기본값이 대부분의 RAM을 놀리고, 정렬·해시 연산을 디스크로 넘기게 만듭니다. 이 도구는 총 RAM, CPU 코어 수, 스토리지 타입, PostgreSQL 버전, 워크로드 유형, 예상 최대 커넥션 수 6가지 입력으로 튜닝된 <code>postgresql.conf</code> 스니펫을 생성합니다.</p>
+      <p>잘 알려진 PGTune 공식을 그대로 이식했습니다: <code>shared_buffers</code>는 RAM의 25%(데스크톱은 1/16), <code>effective_cache_size</code>는 RAM의 75%, <code>work_mem</code>은 가용 메모리를 커넥션 수와 병렬도 계수로 나눈 값, <code>maintenance_work_mem</code>은 RAM의 1/16(최대 2GB), <code>wal_buffers</code>는 shared_buffers의 3%(최대 16MB), 워크로드별 <code>min_wal_size</code> / <code>max_wal_size</code>, <code>checkpoint_completion_target</code> 0.9, <code>default_statistics_target</code> 100(데이터 웨어하우스는 500), SSD/NVMe는 <code>random_page_cost</code> 1.1(HDD는 4), <code>effective_io_concurrency</code>, 그리고 코어가 4개 이상일 때 병렬 워커 설정입니다. Vultr VPS에 Postgres를 배포하는 개발자, 매니지드 데이터베이스 사이징을 하는 DevOps 엔지니어, 현재 설정을 검증하려는 모두에게 유용합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. How-to section -->
+<section class="guide-section">
+  <div class="container">
+
+    <div class="lang-en">
+      <h2>How to use this generator</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">Enter your hardware</div>
+          <div class="guide-desc">Total RAM in GB, vCPU count, and the storage type — SSD/NVMe for almost every VPS, HDD only for old spinning disks.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">Pick version and workload</div>
+          <div class="guide-desc">Choose your PostgreSQL major version and whether the server is a web app, OLTP, data warehouse, desktop, or mixed.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">Set max connections</div>
+          <div class="guide-desc">Keep the workload default unless you know your real peak. High counts should go through PgBouncer, not raw Postgres.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">Copy the config</div>
+          <div class="guide-desc">Click Copy, paste the values into postgresql.conf (or ALTER SYSTEM), and restart Postgres for shared_buffers to take effect.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <h2>생성기 사용 방법</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">하드웨어 입력</div>
+          <div class="guide-desc">총 RAM(GB), vCPU 수, 스토리지 타입을 입력하세요 — 대부분의 VPS는 SSD/NVMe, HDD는 구형 디스크만 해당됩니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">버전과 워크로드 선택</div>
+          <div class="guide-desc">PostgreSQL 메이저 버전과 서버 유형(웹 앱, OLTP, 데이터 웨어하우스, 데스크톱, 혼합)을 고르세요.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">최대 커넥션 설정</div>
+          <div class="guide-desc">실제 피크를 모른다면 워크로드 기본값을 유지하세요. 높은 커넥션은 raw Postgres가 아니라 PgBouncer로 처리해야 합니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">설정 복사</div>
+          <div class="guide-desc">Copy를 눌러 postgresql.conf(또는 ALTER SYSTEM)에 붙여넣고, shared_buffers 적용을 위해 Postgres를 재시작하세요.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 6. FAQ -->
+<section class="faq-section">
+  <div class="container">
+
+    <div class="lang-en">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>How do I tune postgresql.conf?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Start from your hardware: set shared_buffers to about 25% of RAM, effective_cache_size to about 75% of RAM, and derive work_mem from (RAM minus shared_buffers) divided by (max_connections times 3) and a parallelism factor. Then adjust for your workload type and storage, restart PostgreSQL for the settings that need it, and re-check pg_stat_statements and temp file counts under real load. This generator ports the well-known PGTune formulas so you get a sensible baseline in one step.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>What should shared_buffers be?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">For web, OLTP, mixed and data-warehouse workloads, shared_buffers is set to roughly 25% of total RAM. On a desktop or development machine it is much smaller, around 1/16 of RAM. Going far above 25% rarely helps because PostgreSQL also relies on the operating system page cache, which effective_cache_size describes to the planner. On a 4 GB server that means about 1 GB of shared_buffers.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Is there a free PGTune alternative?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes. This PostgreSQL Config Generator is a free, browser-based PGTune alternative. It implements the same published formulas for shared_buffers, effective_cache_size, work_mem, maintenance_work_mem, WAL sizing, checkpoint_completion_target, planner cost constants and parallel worker settings, and it also suggests a matching Vultr plan for the RAM you entered. Nothing is uploaded and no signup is required.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>How much work_mem should I set?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">work_mem is per sort or hash operation per connection, so it is derived from available memory and connection count: (RAM minus shared_buffers) divided by (max_connections times 3), then divided by the parallel workers per gather and a workload divisor (1 for web and OLTP, 2 for mixed and data warehouse, 6 for desktop). Setting it too high can exhaust RAM when many connections sort at once, so keep max_connections realistic and use a connection pooler.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>What are the best PostgreSQL settings for a VPS?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">On a small VPS the priorities are: shared_buffers near 25% of RAM, effective_cache_size near 75%, a modest work_mem so concurrent queries do not exhaust memory, random_page_cost of 1.1 because VPS storage is SSD or NVMe, effective_io_concurrency around 200, and checkpoint_completion_target of 0.9 to smooth write spikes. Keep max_connections low and run PgBouncer. Enter your VPS specs above to generate the exact values.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>postgresql.conf는 어떻게 튜닝하나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">하드웨어에서 시작하세요: shared_buffers를 RAM의 약 25%, effective_cache_size를 RAM의 약 75%로 설정하고, work_mem은 (RAM - shared_buffers)를 (max_connections × 3)과 병렬도 계수로 나눠 계산합니다. 그다음 워크로드 유형과 스토리지에 맞게 조정하고, 필요한 설정은 PostgreSQL을 재시작한 뒤 실제 부하에서 pg_stat_statements와 임시 파일 수를 다시 확인하세요. 이 생성기는 잘 알려진 PGTune 공식을 이식해 한 번에 합리적인 기준값을 제공합니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>shared_buffers는 얼마로 설정해야 하나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">웹, OLTP, 혼합, 데이터 웨어하우스 워크로드에서는 shared_buffers를 총 RAM의 약 25%로 설정합니다. 데스크톱·개발 환경에서는 RAM의 약 1/16로 훨씬 작습니다. 25%를 크게 넘겨도 도움이 되는 경우는 드문데, PostgreSQL이 OS 페이지 캐시에도 의존하며 이를 플래너에 알려주는 값이 effective_cache_size이기 때문입니다. 4GB 서버라면 약 1GB입니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>무료 PGTune 대안이 있나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">네. 이 PostgreSQL 설정 생성기가 무료 브라우저 기반 PGTune 대안입니다. shared_buffers, effective_cache_size, work_mem, maintenance_work_mem, WAL 사이징, checkpoint_completion_target, 플래너 비용 상수, 병렬 워커 설정에 대해 동일한 공개 공식을 구현하며, 입력한 RAM에 맞는 Vultr 플랜도 추천합니다. 업로드되는 데이터는 없고 가입도 필요 없습니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>work_mem은 얼마로 설정해야 하나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">work_mem은 커넥션당, 정렬·해시 연산당 적용되므로 가용 메모리와 커넥션 수에서 유도합니다: (RAM - shared_buffers)를 (max_connections × 3)으로 나눈 뒤, gather당 병렬 워커 수와 워크로드 제수(웹·OLTP는 1, 혼합·데이터 웨어하우스는 2, 데스크톱은 6)로 다시 나눕니다. 너무 크게 잡으면 많은 커넥션이 동시에 정렬할 때 RAM이 고갈되므로 max_connections를 현실적으로 유지하고 커넥션 풀러를 사용하세요.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>VPS에 가장 좋은 PostgreSQL 설정은?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">작은 VPS에서 우선순위는: shared_buffers를 RAM의 25% 근처로, effective_cache_size를 75% 근처로, 동시 쿼리가 메모리를 고갈시키지 않도록 적당한 work_mem, VPS 스토리지가 SSD/NVMe이므로 random_page_cost 1.1, effective_io_concurrency 약 200, 쓰기 급증을 완화하는 checkpoint_completion_target 0.9입니다. max_connections는 낮게 유지하고 PgBouncer를 사용하세요. 위에 VPS 사양을 입력하면 정확한 값이 생성됩니다.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 7. Related content -->
+<section class="related">
+  <div class="container">
+    <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+    <div class="related-grid">
+      <a href="https://stackfreeks.com/postgresql-vultr-vps/" class="related-card" target="_blank" rel="noopener">
+        <span class="related-tag">PostgreSQL</span>
+        <p class="related-title">Running PostgreSQL on a Vultr VPS</p>
+        <span class="related-arrow">→</span>
+      </a>
+      <a href="/tools/managed-database-cost-calculator/" class="related-card">
+        <span class="related-tag">Database</span>
+        <p class="related-title">Managed Database Cost Calculator</p>
+        <span class="related-arrow">→</span>
+      </a>
+      <a href="/tools/redis-memory-estimator/" class="related-card">
+        <span class="related-tag">Redis</span>
+        <p class="related-title">Redis Memory Estimator</p>
+        <span class="related-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+  <div class="sf-related-grid">
+    <a href="/tools/redis-memory-estimator/" class="sf-related-card"><span>🧮</span>Redis Memory Estimator</a>
+    <a href="/tools/managed-database-cost-calculator/" class="sf-related-card"><span>📊</span>Managed Database Cost Calculator</a>
+    <a href="/tools/server-spec-recommender/" class="sf-related-card"><span>🖥️</span>Server Spec Recommender</a>
+    <a href="https://stackfreeks.com/postgresql-vultr-vps/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>PostgreSQL on a Vultr VPS</a>
+  </div>
+</section>
+
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank"
+       data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- 9. Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    tool_input_label: "Server & Workload",
+    tool_ram_lbl: "Total RAM (GB)",
+    tool_cpu_lbl: "CPU cores (vCPU)",
+    tool_storage_lbl: "Storage type",
+    tool_version_lbl: "PostgreSQL version",
+    tool_workload_lbl: "Workload type",
+    tool_conn_lbl: "Max connections",
+    tool_conn_hint: "Leave the workload default unless you know your real peak. Use a pooler like PgBouncer for high counts.",
+    tool_results_label: "postgresql.conf",
+    tool_copy_btn: "Copy",
+    tool_plan_label: "Matched Vultr Plan",
+    tool_plan_desc: "Matches the RAM you entered — available as a Vultr Cloud Compute VPS or a Vultr Managed Database for PostgreSQL.",
+    tool_vultr_cta: "Get this plan on Vultr →",
+    tool_disclaimer: "Baseline only. Ported from the published PGTune formulas. Verify against pg_stat_statements, temp file counts and checkpoint frequency under real load, and restart PostgreSQL for settings that require it (shared_buffers, wal_buffers, max_connections).",
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
+  },
+  ko: {
+    tool_input_label: "서버 & 워크로드",
+    tool_ram_lbl: "총 RAM (GB)",
+    tool_cpu_lbl: "CPU 코어 (vCPU)",
+    tool_storage_lbl: "스토리지 타입",
+    tool_version_lbl: "PostgreSQL 버전",
+    tool_workload_lbl: "워크로드 유형",
+    tool_conn_lbl: "최대 커넥션 수",
+    tool_conn_hint: "실제 피크를 모른다면 워크로드 기본값을 유지하세요. 높은 커넥션은 PgBouncer 같은 풀러를 사용하세요.",
+    tool_results_label: "postgresql.conf",
+    tool_copy_btn: "복사",
+    tool_plan_label: "매칭된 Vultr 플랜",
+    tool_plan_desc: "입력한 RAM에 맞는 플랜입니다 — Vultr Cloud Compute VPS 또는 PostgreSQL용 Vultr Managed Database로 사용할 수 있습니다.",
+    tool_vultr_cta: "Vultr에서 이 플랜 선택 →",
+    tool_disclaimer: "기준값일 뿐입니다. 공개된 PGTune 공식을 이식했습니다. 실제 부하에서 pg_stat_statements, 임시 파일 수, 체크포인트 빈도로 검증하고, 재시작이 필요한 설정(shared_buffers, wal_buffers, max_connections)은 PostgreSQL을 재시작하세요.",
+    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
+  }
+};
+</script>
+
+<script>
+// ── PostgreSQL Config Generator ──────────────────────────────────────────────
+// ponytail: ports the published PGTune formulas; per-workload constants tunable
+//
+// All memory math is done in kB (PostgreSQL's native unit for these settings).
+
+// Per-workload constants (mirrors PGTune's workload profiles)
+const WORKLOADS = {
+  web:     { conn: 200, sharedDiv: 4,  cacheFrac: 0.75, workMemDiv: 1, stats: 100, minWalKb: 1  * 1024 * 1024, maxWalKb: 4  * 1024 * 1024 },
+  oltp:    { conn: 300, sharedDiv: 4,  cacheFrac: 0.75, workMemDiv: 1, stats: 100, minWalKb: 2  * 1024 * 1024, maxWalKb: 8  * 1024 * 1024 },
+  dw:      { conn: 40,  sharedDiv: 4,  cacheFrac: 0.75, workMemDiv: 2, stats: 500, minWalKb: 4  * 1024 * 1024, maxWalKb: 16 * 1024 * 1024 },
+  desktop: { conn: 20,  sharedDiv: 16, cacheFrac: 0.25, workMemDiv: 6, stats: 100, minWalKb: 100 * 1024,       maxWalKb: 2  * 1024 * 1024 },
+  mixed:   { conn: 100, sharedDiv: 4,  cacheFrac: 0.75, workMemDiv: 2, stats: 100, minWalKb: 1  * 1024 * 1024, maxWalKb: 4  * 1024 * 1024 },
+};
+
+// Storage profiles: random_page_cost + effective_io_concurrency (PGTune values)
+const STORAGE = {
+  ssd: { rpc: 1.1, ioc: 200, label: "SSD / NVMe" },
+  hdd: { rpc: 4.0, ioc: 2,   label: "HDD" },
+  san: { rpc: 1.1, ioc: 300, label: "Network / SAN" },
+};
+
+// Vultr plans (RAM GB / vCPU / approx monthly price) — for the matched-plan box
+const PLANS = [
+  { ram: 1,   cpu: 1,  price: "$6/mo"    },
+  { ram: 2,   cpu: 1,  price: "$12/mo"   },
+  { ram: 4,   cpu: 2,  price: "$24/mo"   },
+  { ram: 8,   cpu: 4,  price: "$48/mo"   },
+  { ram: 16,  cpu: 6,  price: "$96/mo"   },
+  { ram: 32,  cpu: 8,  price: "$192/mo"  },
+  { ram: 64,  cpu: 16, price: "$384/mo"  },
+  { ram: 128, cpu: 24, price: "$768/mo"  },
+];
+
+let connTouched = false;
+
+function onWorkloadChange() {
+  // Prefill max_connections with the workload default until the user edits it
+  if (!connTouched) {
+    document.getElementById("conn").value = WORKLOADS[document.getElementById("workload").value].conn;
+  }
+  recalc();
+}
+
+// Format a kB value the way postgresql.conf expects (kB / MB / GB)
+function pgUnit(kb) {
+  const MB = 1024, GB = 1024 * 1024;
+  if (kb >= GB && kb % GB === 0) return (kb / GB) + "GB";
+  if (kb >= MB && kb % MB === 0) return (kb / MB) + "MB";
+  if (kb >= MB) return Math.round(kb / MB) + "MB";
+  return Math.max(1, Math.round(kb)) + "kB";
+}
+
+function matchPlan(ramGb) {
+  for (const p of PLANS) { if (p.ram >= ramGb) return p; }
+  return PLANS[PLANS.length - 1];
+}
+
+function recalc() {
+  const ramGb    = Math.max(0.5, parseFloat(document.getElementById("ram").value) || 0.5);
+  const cpu      = Math.max(1, parseInt(document.getElementById("cpu").value, 10) || 1);
+  const storeKey = document.getElementById("storage").value;
+  const pgver    = parseInt(document.getElementById("pgver").value, 10);
+  const wlKey    = document.getElementById("workload").value;
+  const conn     = Math.max(10, parseInt(document.getElementById("conn").value, 10) || 10);
+
+  const wl    = WORKLOADS[wlKey];
+  const store = STORAGE[storeKey];
+  const ramKb = Math.round(ramGb * 1024 * 1024);
+
+  // shared_buffers = 25% of RAM for server workloads, 1/16 for desktop
+  const sharedBuffersKb = Math.floor(ramKb / wl.sharedDiv);
+
+  // effective_cache_size = ~75% of RAM (25% for desktop) — planner hint, not allocated
+  const effectiveCacheKb = Math.floor(ramKb * wl.cacheFrac);
+
+  // maintenance_work_mem = RAM / 16, capped at 2GB
+  const maintenanceKb = Math.min(Math.floor(ramKb / 16), 2 * 1024 * 1024);
+
+  // Parallelism: PGTune only adds parallel workers when there are 4+ cores
+  let workersPerGather = 0;
+  let parallelLines = [];
+  if (cpu >= 4) {
+    workersPerGather = Math.max(1, Math.floor(cpu / 2));
+    parallelLines.push("max_worker_processes = " + cpu + "                    # one per vCPU (background + parallel query pool)");
+    parallelLines.push("max_parallel_workers_per_gather = " + workersPerGather + "        # ~half the vCPUs per parallel query");
+    parallelLines.push("max_parallel_workers = " + cpu + "                     # total parallel workers across all queries");
+    if (pgver >= 11) {
+      parallelLines.push("max_parallel_maintenance_workers = " + workersPerGather + "     # parallel index builds / VACUUM");
+    }
+  }
+
+  // work_mem = (RAM - shared_buffers) / (max_connections * 3) / parallelFactor / workloadDiv
+  const parallelFactor = workersPerGather > 0 ? workersPerGather : 1;
+  let workMemKb = Math.floor((ramKb - sharedBuffersKb) / (conn * 3) / parallelFactor / wl.workMemDiv);
+  if (workMemKb < 64) workMemKb = 64; // PostgreSQL minimum
+
+  // wal_buffers = 3% of shared_buffers, capped at 16MB (and rounded up near the cap)
+  let walBuffersKb = Math.round(sharedBuffersKb * 0.03);
+  if (walBuffersKb > 16 * 1024) walBuffersKb = 16 * 1024;
+  if (walBuffersKb > 14 * 1024 && walBuffersKb < 16 * 1024) walBuffersKb = 16 * 1024;
+  if (walBuffersKb < 32) walBuffersKb = 32;
+
+  const plan = matchPlan(ramGb);
+
+  // ── Build the postgresql.conf snippet ──
+  const lines = [];
+  lines.push("# ── postgresql.conf — generated by StackFreeks PostgreSQL Config Generator ──");
+  lines.push("# Input: " + ramGb + " GB RAM / " + cpu + " vCPU / " + store.label +
+             " / PostgreSQL " + pgver + " / " + wlKey + " / " + conn + " connections");
+  lines.push("# Ported from the published PGTune formulas. Review before applying to production.");
+  lines.push("");
+  lines.push("max_connections = " + conn + "                       # keep realistic; front with PgBouncer for more");
+  lines.push("shared_buffers = " + pgUnit(sharedBuffersKb) + "                     # RAM / " + wl.sharedDiv + " (PostgreSQL's own page cache)");
+  lines.push("effective_cache_size = " + pgUnit(effectiveCacheKb) + "               # ~" + Math.round(wl.cacheFrac * 100) + "% of RAM — planner estimate of OS + PG cache");
+  lines.push("maintenance_work_mem = " + pgUnit(maintenanceKb) + "               # RAM / 16, capped at 2GB (VACUUM, CREATE INDEX)");
+  lines.push("work_mem = " + pgUnit(workMemKb) + "                          # (RAM - shared_buffers) / (max_connections * 3) / " + parallelFactor + " / " + wl.workMemDiv + " (per sort/hash)");
+  lines.push("wal_buffers = " + pgUnit(walBuffersKb) + "                       # 3% of shared_buffers, capped at 16MB");
+  lines.push("min_wal_size = " + pgUnit(wl.minWalKb) + "                      # workload floor for WAL recycling");
+  lines.push("max_wal_size = " + pgUnit(wl.maxWalKb) + "                      # workload ceiling before a forced checkpoint");
+  lines.push("checkpoint_completion_target = 0.9           # spread checkpoint writes over the interval");
+  lines.push("default_statistics_target = " + wl.stats + "             # 100 default, 500 for data-warehouse plans");
+  lines.push("random_page_cost = " + store.rpc + "                     # " + (store.rpc <= 1.1 ? "SSD/NVMe/SAN — random ~ sequential" : "HDD — random I/O is expensive"));
+  lines.push("effective_io_concurrency = " + store.ioc + "             # concurrent I/O requests the storage can handle");
+  if (parallelLines.length) {
+    lines.push("");
+    lines.push("# ── parallel query (>= 4 vCPU) ──");
+    lines.push.apply(lines, parallelLines);
+  } else {
+    lines.push("");
+    lines.push("# parallel query tuning skipped — needs 4+ vCPU (defaults are fine below that)");
+  }
+  if (ramKb >= 32 * 1024 * 1024) {
+    lines.push("");
+    lines.push("huge_pages = try                             # >= 32GB RAM — reduces page-table overhead");
+  }
+
+  document.getElementById("confOut").textContent = lines.join("\n");
+
+  // Matched Vultr plan box
+  document.getElementById("planTitle").textContent =
+    plan.ram + " GB / " + plan.cpu + " vCPU (" + plan.price + ")" +
+    (plan.ram > ramGb ? " — next tier up for headroom" : "");
+}
+
+function copyConf() {
+  const text = document.getElementById("confOut").textContent;
+  const btn = document.getElementById("copyBtn");
+  const done = function () {
+    const label = btn.textContent;
+    btn.textContent = "Copied ✓";
+    setTimeout(function () { btn.textContent = label; }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(function () {
+      fallbackCopy(text); done();
+    });
+  } else {
+    fallbackCopy(text); done();
+  }
+}
+function fallbackCopy(text) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest(".faq-item").classList.toggle("open");
+}
+
+// Init
+recalc();
+</script>
+
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

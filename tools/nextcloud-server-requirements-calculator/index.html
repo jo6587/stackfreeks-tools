@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nextcloud Server Requirements Calculator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Nextcloud server requirements calculator: estimate hardware, RAM, CPU, storage and PHP-FPM workers by user count. No signup." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/nextcloud-server-requirements-calculator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/nextcloud-server-requirements-calculator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/nextcloud-server-requirements-calculator/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/nextcloud-server-requirements-calculator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nextcloud Server Requirements Calculator — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Estimate Nextcloud hardware: RAM, CPU, storage, PHP-FPM workers, Redis and a matching Vultr plan by user count." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/nextcloud-server-requirements-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Nextcloud Server Requirements Calculator | StackFreeks Tools" />
+  <meta name="twitter:description" content="Estimate Nextcloud RAM, CPU, storage and PHP-FPM workers by user count, plus a matching Vultr plan." />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 8px; }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    /* Main layout */
+    main { padding: 32px 0 48px; }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; } }
+
+    /* Card */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+    .card + .card { margin-top: 12px; }
+    .card-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 16px;
+    }
+
+    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+
+    input, select {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 9px 12px;
+      font-size: 13px; font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus { border-color: var(--border-2); }
+    input::placeholder { color: var(--text-3); }
+    input[type="number"] { -moz-appearance: textfield; }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+    input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+    }
+
+    .check-row { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+    .check-row input { width: auto; }
+    .check-row label { margin: 0; font-size: 13px; color: var(--text-1); }
+
+    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+
+    /* Results */
+    .total-row {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .total-label { font-size: 12px; color: var(--text-2); margin-bottom: 4px; }
+    .total-val { font-size: 2.2rem; font-weight: 500; letter-spacing: -0.04em; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .total-unit { font-size: 14px; color: var(--text-3); margin-left: 4px; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .summary-cell { background: var(--surface-2); padding: 14px 16px; }
+    .summary-label { font-size: 11px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .summary-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .summary-val.accent { color: var(--accent); }
+
+    .rec-list { list-style: none; margin: 0 0 16px; padding: 0; }
+    .rec-list li { display: flex; align-items: baseline; gap: 8px; font-size: 13px; color: var(--text-2); padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .rec-list li:last-child { border-bottom: none; }
+    .rec-list .rec-yes { color: var(--success); font-weight: 500; }
+    .rec-list .rec-no { color: var(--text-3); }
+
+    .plan-box {
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+    .plan-box-label { font-size: 11px; font-weight: 500; color: var(--success); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .plan-box-title { font-size: 1rem; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .plan-box-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
+
+    .btn-vultr-plan {
+      background: var(--success);
+      color: #fff; border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      text-decoration: none; display: inline-block;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr-plan:hover { opacity: 0.85; }
+
+    .disclaimer {
+      font-size: 11px; color: var(--text-3);
+      margin-top: 14px; line-height: 1.6;
+      padding-top: 14px; border-top: 1px solid var(--border);
+    }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related */
+    .related { padding: 40px 0; border-top: 1px solid var(--border); }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px;
+      text-decoration: none; display: flex;
+      flex-direction: column; gap: 6px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Nextcloud Server Requirements Calculator","description":"Estimate Nextcloud server hardware requirements — vCPU, RAM, storage with overhead, PHP-FPM worker count, and whether to add Redis or a dedicated database — from user count, concurrency, and workload profile, with a matching Vultr plan.","url":"https://tools.stackfreeks.com/tools/nextcloud-server-requirements-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What are the Nextcloud system requirements?","acceptedAnswer":{"@type":"Answer","text":"For a minimal single-user install Nextcloud needs about 512 MB of RAM, one CPU core, a supported PHP version (8.1 or newer for current releases), a web server (Apache or Nginx), and a database (MariaDB, MySQL, or PostgreSQL; SQLite only for testing). Real deployments need much more: the project's own guidance suggests roughly 2-4 GB RAM for fewer than 10 users, 8-16 GB for 10-100 users, and 32 GB or more beyond that, plus a memory cache such as APCu and Redis for file locking. This calculator sizes CPU and RAM from concurrent PHP requests rather than raw user count, which is the metric that actually drives load."}},{"@type":"Question","name":"How much RAM does Nextcloud need?","acceptedAnswer":{"@type":"Answer","text":"Nextcloud itself can start in around 512 MB, but each PHP-FPM worker handling a request typically uses 128 MB at minimum and 512 MB is a safe recommended ceiling, so RAM scales with how many requests you serve at once. A rough guide: 2-4 GB for a home or small-team server under 10 users, 8-16 GB for 10-100 users, and 32 GB or more for 100+ users or media-heavy workloads with preview generation and full-text search. Add memory for Redis and, if co-located, the database. This tool adds up the OS baseline, PHP workers, cache, and optional services, then rounds up to the next Vultr plan for headroom."}},{"@type":"Question","name":"What are the Nextcloud requirements for 50 users?","acceptedAnswer":{"@type":"Answer","text":"Fifty users on an office and groupware workload land in the middle of the 10-100 user band, which published guidance puts at roughly 8-16 GB RAM and 4 or more vCPUs. With around 10% peak concurrency that is about 5 concurrent users, so you would run roughly 8-16 PHP-FPM workers, enable APCu plus Redis for transactional file locking, and keep the database on the same host unless the workload is heavy. Storage depends on your quota per user: 50 users at 20 GB each is 1 TB of raw data, and you should budget about 30% on top for file versions, trash, and thumbnails."}},{"@type":"Question","name":"Does Nextcloud need Redis?","acceptedAnswer":{"@type":"Answer","text":"Redis is not strictly required for a single-user install, but it is strongly recommended for anything with concurrent users. Nextcloud uses Redis for transactional file locking, which prevents file corruption when multiple clients sync the same file, and as a fast local memory cache alongside APCu. Once you have more than a handful of simultaneous users or run the desktop and mobile sync clients at scale, running without Redis leads to locking errors and slow dashboards. This calculator recommends adding Redis once estimated concurrent PHP requests exceed a low threshold or the user count passes about 20."}},{"@type":"Question","name":"Can I self-host Nextcloud on a VPS?","acceptedAnswer":{"@type":"Answer","text":"Yes. A VPS is one of the most common ways to self-host Nextcloud. A small instance with 2 GB RAM and 1-2 vCPUs comfortably runs a personal or small-team server, while larger plans with 8 GB or more handle dozens of users. The main constraints are RAM for PHP workers, disk space for user files plus roughly 30% overhead, and enough bandwidth for sync traffic. Providers like Vultr let you resize the plan as your user base grows, and block storage can be attached separately so data does not have to live on the boot disk."}}]}
+  </script>
+
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<!-- 1. Nav -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+  <div class="nav-right">
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  </div>
+</nav>
+
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+
+<!-- 3. Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow">Nextcloud &amp; VPS</p>
+      <h1>Nextcloud Server Requirements Calculator</h1>
+      <p class="hero-desc">Enter your user count, concurrency, and workload — get recommended vCPU, RAM, storage, PHP-FPM workers, and a matching Vultr plan.</p>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow">Nextcloud &amp; VPS</p>
+      <h1>Nextcloud 서버 요구사항 계산기</h1>
+      <p class="hero-desc">사용자 수, 동시 접속자, 워크로드를 입력하면 권장 vCPU, RAM, 스토리지, PHP-FPM 워커 수와 적합한 Vultr 플랜을 알려줍니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Tool body -->
+<main>
+  <div class="container">
+    <div class="tool-grid">
+
+      <!-- Input card -->
+      <div class="card">
+        <p class="card-label" data-i18n="tool_input_label">Deployment</p>
+
+        <div class="form-group">
+          <label data-i18n="tool_users_lbl">Number of users</label>
+          <input type="number" id="users" value="50" min="1" step="1" oninput="recalc()" />
+        </div>
+
+        <div class="check-row">
+          <input type="checkbox" id="autoConc" checked onchange="onAutoConc()" />
+          <label for="autoConc" data-i18n="tool_autoconc_lbl">Auto concurrency (~10% of users)</label>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_conc_lbl">Expected concurrent users</label>
+          <input type="number" id="concUsers" value="5" min="1" step="1" oninput="recalc()" disabled />
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_storage_lbl">Avg storage per user (GB)</label>
+          <input type="number" id="storagePerUser" value="20" min="0" step="1" oninput="recalc()" />
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="tool_workload_lbl">Workload profile</label>
+          <select id="workload" onchange="recalc()">
+            <option value="light" data-i18n="tool_workload_light">Light file sync</option>
+            <option value="office" selected data-i18n="tool_workload_office">Office + groupware</option>
+            <option value="media" data-i18n="tool_workload_media">Media + heavy apps</option>
+          </select>
+        </div>
+
+        <div class="check-row">
+          <input type="checkbox" id="preview" onchange="recalc()" />
+          <label for="preview" data-i18n="tool_preview_lbl">Enable preview generation (Preview Generator)</label>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="fts" onchange="recalc()" />
+          <label for="fts" data-i18n="tool_fts_lbl">Enable full-text search</label>
+        </div>
+
+        <p class="hint" data-i18n="tool_input_hint">Sizing is keyed to peak concurrent PHP requests, not raw user count. Figures are a heuristic based on published Nextcloud sizing guidance.</p>
+      </div>
+
+      <!-- Results card -->
+      <div class="card">
+        <p class="card-label" data-i18n="tool_results_label">Recommended Server</p>
+
+        <div class="total-row">
+          <div class="total-label" data-i18n="tool_total_label">Recommended RAM</div>
+          <div>
+            <span class="total-val" id="totalVal">0</span>
+            <span class="total-unit" id="totalUnit">GB</span>
+          </div>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-cell">
+            <div class="summary-label" data-i18n="tool_sum_cpu">vCPU</div>
+            <div class="summary-val" id="sumCpu">2</div>
+          </div>
+          <div class="summary-cell">
+            <div class="summary-label" data-i18n="tool_sum_workers">PHP-FPM workers</div>
+            <div class="summary-val" id="sumWorkers">8</div>
+          </div>
+          <div class="summary-cell">
+            <div class="summary-label" data-i18n="tool_sum_storage">Total storage (with overhead)</div>
+            <div class="summary-val accent" id="sumStorage">0 GB</div>
+          </div>
+          <div class="summary-cell">
+            <div class="summary-label" data-i18n="tool_sum_conc">Peak concurrent requests</div>
+            <div class="summary-val" id="sumConc">0</div>
+          </div>
+        </div>
+
+        <ul class="rec-list">
+          <li><span data-i18n="tool_rec_redis">Add Redis (memory cache + file locking)</span> <span id="recRedis" class="rec-yes">Yes</span></li>
+          <li><span data-i18n="tool_rec_db">Dedicated database host</span> <span id="recDb" class="rec-no">No</span></li>
+        </ul>
+
+        <div class="plan-box">
+          <div class="plan-box-label" data-i18n="tool_plan_label">Suggested Vultr Plan</div>
+          <div class="plan-box-title" id="planTitle">4 GB Cloud Compute</div>
+          <div class="plan-box-desc" id="planDesc" data-i18n="tool_plan_desc">Rounded up on both RAM and vCPU for headroom — Nextcloud also needs memory for background jobs (cron), sync bursts, and preview workers.</div>
+          <a href="https://www.vultr.com/?ref=9907834-9J"
+             class="btn-vultr-plan"
+             rel="nofollow sponsored"
+             target="_blank"
+             data-i18n="tool_vultr_cta">Get this plan on Vultr →</a>
+        </div>
+
+        <p class="disclaimer" data-i18n="tool_disclaimer">Estimate only. Actual Nextcloud requirements depend on your PHP-FPM tuning, sync client count, app selection, database engine, and whether object/block storage is external. Load test with your real user pattern before committing to production.</p>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- About / SEO copy -->
+<section class="about-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>About this Nextcloud server requirements calculator</h2>
+      <p>Nextcloud performance is driven by how many PHP requests the server handles at the same time, not by how many user accounts exist. A server with 500 users where only 20 sync at peak behaves very differently from one with 100 users who are all active in the web UI at once. This calculator estimates hardware requirements — vCPU, RAM in GB, total storage in GB including overhead, PHP-FPM worker count, and whether you should add Redis and a dedicated database — from your user count, expected concurrency, average storage quota, and workload profile.</p>
+      <p>The heuristic anchors to published Nextcloud sizing guidance: roughly 128 MB minimum and 512 MB recommended RAM per PHP process, about 2-4 GB total RAM for fewer than 10 users, 8-16 GB for 10-100 users, and 32 GB or more beyond 100 users or for media-heavy deployments. It is useful for anyone planning to self-host Nextcloud on a VPS, sizing a family or small-business file server, or right-sizing a Vultr instance before migrating off Dropbox or Google Drive. All constants are tunable in one clearly commented object in the page source.</p>
+    </div>
+    <div class="lang-ko">
+      <h2>Nextcloud 서버 요구사항 계산기 소개</h2>
+      <p>Nextcloud 성능은 등록된 사용자 계정 수가 아니라 서버가 동시에 처리하는 PHP 요청 수에 좌우됩니다. 사용자 500명 중 피크에 20명만 동기화하는 서버는, 사용자 100명이 모두 웹 UI에서 활동하는 서버와 완전히 다르게 동작합니다. 이 계산기는 사용자 수, 예상 동시 접속자, 평균 스토리지 할당량, 워크로드 프로필을 입력받아 하드웨어 요구사항 — vCPU, RAM(GB), 오버헤드 포함 총 스토리지(GB), PHP-FPM 워커 수, Redis 및 전용 데이터베이스 추가 여부 — 를 추정합니다.</p>
+      <p>이 휴리스틱은 공개된 Nextcloud 사이징 가이드를 기준으로 합니다: PHP 프로세스당 최소 약 128MB, 권장 512MB RAM, 사용자 10명 미만은 총 2-4GB RAM, 10-100명은 8-16GB, 100명 초과 또는 미디어 중심 배포는 32GB 이상. VPS에 Nextcloud를 셀프호스팅하려는 사람, 가정·소기업 파일 서버를 산정하는 사람, Dropbox나 Google Drive에서 이전하기 전에 Vultr 인스턴스를 적정 사이즈로 맞추려는 사람에게 유용합니다. 모든 상수는 페이지 소스의 주석 처리된 객체 하나에서 조정할 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. How-to section -->
+<section class="guide-section">
+  <div class="container">
+
+    <div class="lang-en">
+      <h2>How to use this calculator</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">Enter user count</div>
+          <div class="guide-desc">Type the total number of Nextcloud accounts you plan to host.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">Set concurrency</div>
+          <div class="guide-desc">Leave "Auto" on to assume ~10% of users active at peak, or uncheck it and enter your own concurrent-user figure.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">Pick workload &amp; storage</div>
+          <div class="guide-desc">Choose light sync, office plus groupware, or media plus heavy apps, set the average GB per user, and toggle preview generation or full-text search.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">Read the recommendation</div>
+          <div class="guide-desc">Get vCPU, RAM, storage with overhead, PHP-FPM workers, Redis and dedicated-DB advice, plus a Vultr plan rounded up for headroom.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <h2>계산기 사용 방법</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">사용자 수 입력</div>
+          <div class="guide-desc">호스팅할 Nextcloud 계정의 총 개수를 입력하세요.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">동시 접속 설정</div>
+          <div class="guide-desc">"자동"을 켜두면 피크에 사용자의 약 10%가 활동한다고 가정하고, 끄면 직접 동시 접속자 수를 입력합니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">워크로드 &amp; 스토리지 선택</div>
+          <div class="guide-desc">가벼운 동기화, 오피스+그룹웨어, 미디어+무거운 앱 중 선택하고, 사용자당 평균 GB를 설정한 뒤 미리보기 생성이나 전문 검색을 켜세요.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">추천 결과 확인</div>
+          <div class="guide-desc">vCPU, RAM, 오버헤드 포함 스토리지, PHP-FPM 워커 수, Redis·전용 DB 권장 여부와 여유분을 반영한 Vultr 플랜을 확인하세요.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 6. FAQ -->
+<section class="faq-section">
+  <div class="container">
+
+    <div class="lang-en">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>What are the Nextcloud system requirements?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">For a minimal single-user install Nextcloud needs about 512 MB of RAM, one CPU core, a supported PHP version (8.1 or newer for current releases), a web server (Apache or Nginx), and a database (MariaDB, MySQL, or PostgreSQL; SQLite only for testing). Real deployments need much more: the project's own guidance suggests roughly 2-4 GB RAM for fewer than 10 users, 8-16 GB for 10-100 users, and 32 GB or more beyond that, plus a memory cache such as APCu and Redis for file locking. This calculator sizes CPU and RAM from concurrent PHP requests rather than raw user count, which is the metric that actually drives load.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>How much RAM does Nextcloud need?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Nextcloud itself can start in around 512 MB, but each PHP-FPM worker handling a request typically uses 128 MB at minimum and 512 MB is a safe recommended ceiling, so RAM scales with how many requests you serve at once. A rough guide: 2-4 GB for a home or small-team server under 10 users, 8-16 GB for 10-100 users, and 32 GB or more for 100+ users or media-heavy workloads with preview generation and full-text search. Add memory for Redis and, if co-located, the database. This tool adds up the OS baseline, PHP workers, cache, and optional services, then rounds up to the next Vultr plan for headroom.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>What are the Nextcloud requirements for 50 users?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Fifty users on an office and groupware workload land in the middle of the 10-100 user band, which published guidance puts at roughly 8-16 GB RAM and 4 or more vCPUs. With around 10% peak concurrency that is about 5 concurrent users, so you would run roughly 8-16 PHP-FPM workers, enable APCu plus Redis for transactional file locking, and keep the database on the same host unless the workload is heavy. Storage depends on your quota per user: 50 users at 20 GB each is 1 TB of raw data, and you should budget about 30% on top for file versions, trash, and thumbnails.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Does Nextcloud need Redis?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Redis is not strictly required for a single-user install, but it is strongly recommended for anything with concurrent users. Nextcloud uses Redis for transactional file locking, which prevents file corruption when multiple clients sync the same file, and as a fast local memory cache alongside APCu. Once you have more than a handful of simultaneous users or run the desktop and mobile sync clients at scale, running without Redis leads to locking errors and slow dashboards. This calculator recommends adding Redis once estimated concurrent PHP requests exceed a low threshold or the user count passes about 20.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Can I self-host Nextcloud on a VPS?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes. A VPS is one of the most common ways to self-host Nextcloud. A small instance with 2 GB RAM and 1-2 vCPUs comfortably runs a personal or small-team server, while larger plans with 8 GB or more handle dozens of users. The main constraints are RAM for PHP workers, disk space for user files plus roughly 30% overhead, and enough bandwidth for sync traffic. Providers like Vultr let you resize the plan as your user base grows, and block storage can be attached separately so data does not have to live on the boot disk.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Nextcloud 시스템 요구사항은 무엇인가요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">최소 단일 사용자 설치의 경우 Nextcloud는 약 512MB RAM, CPU 1코어, 지원되는 PHP 버전(현재 릴리스는 8.1 이상), 웹 서버(Apache 또는 Nginx), 데이터베이스(MariaDB, MySQL 또는 PostgreSQL, SQLite는 테스트용만)가 필요합니다. 실제 배포에는 훨씬 더 많은 자원이 필요합니다. 공식 가이드는 사용자 10명 미만은 약 2-4GB RAM, 10-100명은 8-16GB, 그 이상은 32GB 이상을 권장하며, APCu 같은 메모리 캐시와 파일 잠금용 Redis도 필요합니다. 이 계산기는 원시 사용자 수가 아니라 실제 부하를 유발하는 동시 PHP 요청 수를 기준으로 CPU와 RAM을 산정합니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Nextcloud는 RAM이 얼마나 필요한가요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Nextcloud 자체는 약 512MB로 시작할 수 있지만, 요청을 처리하는 각 PHP-FPM 워커는 보통 최소 128MB를 사용하고 512MB가 안전한 권장 상한이므로, RAM은 동시에 처리하는 요청 수에 따라 증가합니다. 대략적인 기준: 사용자 10명 미만의 가정·소규모 팀 서버는 2-4GB, 10-100명은 8-16GB, 100명 이상이거나 미리보기 생성·전문 검색이 있는 미디어 중심 워크로드는 32GB 이상. Redis와, 같은 호스트에 있다면 데이터베이스용 메모리도 추가하세요. 이 도구는 OS 기본값, PHP 워커, 캐시, 선택적 서비스를 합산한 뒤 여유분을 위해 다음 Vultr 플랜으로 올림합니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>사용자 50명에 대한 Nextcloud 요구사항은?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">오피스·그룹웨어 워크로드의 사용자 50명은 10-100명 구간의 중간에 해당하며, 공식 가이드는 이를 약 8-16GB RAM과 4개 이상의 vCPU로 봅니다. 피크 동시 접속률 약 10%면 동시 사용자 약 5명이므로, PHP-FPM 워커 약 8-16개를 실행하고 트랜잭션 파일 잠금을 위해 APCu와 Redis를 활성화하며, 워크로드가 무겁지 않은 한 데이터베이스는 같은 호스트에 두면 됩니다. 스토리지는 사용자당 할당량에 따라 다릅니다: 사용자 50명 × 20GB는 원시 데이터 1TB이며, 파일 버전·휴지통·썸네일을 위해 약 30%를 추가로 확보해야 합니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Nextcloud에 Redis가 필요한가요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">단일 사용자 설치에는 Redis가 반드시 필요하지는 않지만, 동시 사용자가 있는 경우에는 강력히 권장됩니다. Nextcloud는 여러 클라이언트가 같은 파일을 동기화할 때 파일 손상을 방지하는 트랜잭션 파일 잠금에 Redis를 사용하고, APCu와 함께 빠른 로컬 메모리 캐시로도 사용합니다. 동시 사용자가 몇 명을 넘거나 데스크톱·모바일 동기화 클라이언트를 대규모로 운영하면, Redis 없이는 잠금 오류와 느린 대시보드가 발생합니다. 이 계산기는 예상 동시 PHP 요청이 낮은 임계값을 넘거나 사용자 수가 약 20명을 넘으면 Redis 추가를 권장합니다.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>VPS에서 Nextcloud를 셀프호스팅할 수 있나요?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">네. VPS는 Nextcloud를 셀프호스팅하는 가장 일반적인 방법 중 하나입니다. RAM 2GB, vCPU 1-2개의 작은 인스턴스는 개인·소규모 팀 서버를 무리 없이 실행하고, RAM 8GB 이상의 큰 플랜은 수십 명의 사용자를 처리합니다. 주요 제약은 PHP 워커용 RAM, 사용자 파일과 약 30% 오버헤드를 위한 디스크 공간, 동기화 트래픽을 위한 충분한 대역폭입니다. Vultr 같은 제공업체는 사용자가 늘면 플랜을 리사이즈할 수 있고, 블록 스토리지를 별도로 연결해 데이터를 부팅 디스크에 두지 않을 수 있습니다.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 7. Related content -->
+<section class="related">
+  <div class="container">
+    <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+    <div class="related-grid">
+      <a href="https://stackfreeks.com/best-cheap-vps-2026/" class="related-card" target="_blank" rel="noopener">
+        <span class="related-tag">VPS</span>
+        <p class="related-title">Best Cheap VPS 2026</p>
+        <span class="related-arrow">→</span>
+      </a>
+      <a href="/tools/server-spec-recommender/" class="related-card">
+        <span class="related-tag">Server</span>
+        <p class="related-title">Server Spec Recommender</p>
+        <span class="related-arrow">→</span>
+      </a>
+      <a href="/tools/vps-cost-calculator/" class="related-card">
+        <span class="related-tag">VPS</span>
+        <p class="related-title">VPS Cost Calculator</p>
+        <span class="related-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+  <div class="sf-related-grid">
+    <a href="/tools/server-spec-recommender/" class="sf-related-card"><span>🖥️</span>Server Spec Recommender</a>
+    <a href="/tools/docker-ram-calculator/" class="sf-related-card"><span>🐳</span>Docker RAM Calculator</a>
+    <a href="/tools/vps-cost-calculator/" class="sf-related-card"><span>💰</span>VPS Cost Calculator</a>
+    <a href="https://stackfreeks.com/best-cheap-vps-2026/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Best Cheap VPS 2026</a>
+  </div>
+</section>
+
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank"
+       data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- 9. Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    tool_input_label: "Deployment",
+    tool_users_lbl: "Number of users",
+    tool_autoconc_lbl: "Auto concurrency (~10% of users)",
+    tool_conc_lbl: "Expected concurrent users",
+    tool_storage_lbl: "Avg storage per user (GB)",
+    tool_workload_lbl: "Workload profile",
+    tool_workload_light: "Light file sync",
+    tool_workload_office: "Office + groupware",
+    tool_workload_media: "Media + heavy apps",
+    tool_preview_lbl: "Enable preview generation (Preview Generator)",
+    tool_fts_lbl: "Enable full-text search",
+    tool_input_hint: "Sizing is keyed to peak concurrent PHP requests, not raw user count. Figures are a heuristic based on published Nextcloud sizing guidance.",
+    tool_results_label: "Recommended Server",
+    tool_total_label: "Recommended RAM",
+    tool_sum_cpu: "vCPU",
+    tool_sum_workers: "PHP-FPM workers",
+    tool_sum_storage: "Total storage (with overhead)",
+    tool_sum_conc: "Peak concurrent requests",
+    tool_rec_redis: "Add Redis (memory cache + file locking)",
+    tool_rec_db: "Dedicated database host",
+    tool_plan_label: "Suggested Vultr Plan",
+    tool_plan_desc: "Rounded up on both RAM and vCPU for headroom — Nextcloud also needs memory for background jobs (cron), sync bursts, and preview workers.",
+    tool_vultr_cta: "Get this plan on Vultr →",
+    tool_disclaimer: "Estimate only. Actual Nextcloud requirements depend on your PHP-FPM tuning, sync client count, app selection, database engine, and whether object/block storage is external. Load test with your real user pattern before committing to production.",
+    yes: "Yes",
+    no: "No",
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
+  },
+  ko: {
+    tool_input_label: "배포 규모",
+    tool_users_lbl: "사용자 수",
+    tool_autoconc_lbl: "자동 동시 접속 (사용자의 약 10%)",
+    tool_conc_lbl: "예상 동시 접속자",
+    tool_storage_lbl: "사용자당 평균 스토리지 (GB)",
+    tool_workload_lbl: "워크로드 프로필",
+    tool_workload_light: "가벼운 파일 동기화",
+    tool_workload_office: "오피스 + 그룹웨어",
+    tool_workload_media: "미디어 + 무거운 앱",
+    tool_preview_lbl: "미리보기 생성 활성화 (Preview Generator)",
+    tool_fts_lbl: "전문 검색(full-text search) 활성화",
+    tool_input_hint: "사이징은 원시 사용자 수가 아니라 피크 동시 PHP 요청 수를 기준으로 합니다. 수치는 공개된 Nextcloud 사이징 가이드 기반 휴리스틱입니다.",
+    tool_results_label: "추천 서버",
+    tool_total_label: "권장 RAM",
+    tool_sum_cpu: "vCPU",
+    tool_sum_workers: "PHP-FPM 워커",
+    tool_sum_storage: "총 스토리지 (오버헤드 포함)",
+    tool_sum_conc: "피크 동시 요청",
+    tool_rec_redis: "Redis 추가 (메모리 캐시 + 파일 잠금)",
+    tool_rec_db: "전용 데이터베이스 호스트",
+    tool_plan_label: "추천 Vultr 플랜",
+    tool_plan_desc: "여유분을 위해 RAM과 vCPU 모두 올림했습니다 — Nextcloud는 백그라운드 작업(cron), 동기화 급증, 미리보기 워커에도 메모리가 필요합니다.",
+    tool_vultr_cta: "Vultr에서 이 플랜 선택 →",
+    tool_disclaimer: "참고용 예상치입니다. 실제 Nextcloud 요구사항은 PHP-FPM 튜닝, 동기화 클라이언트 수, 앱 구성, 데이터베이스 엔진, 오브젝트/블록 스토리지의 외부 여부에 따라 달라집니다. 프로덕션 적용 전 실제 사용자 패턴으로 부하 테스트를 하세요.",
+    yes: "예",
+    no: "아니요",
+    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
+  }
+};
+</script>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// ponytail: heuristic based on published Nextcloud sizing guidance (docs +
+// community "hardware requirements" / "system requirements" pages). All numbers
+// below are deliberately conservative round figures and are meant to be tuned —
+// change this one object, nothing else, to re-calibrate the whole calculator.
+// Anchor points baked in:
+//   - PHP process RAM: 128 MB minimum / 512 MB recommended per request
+//   - < 10 users  -> ~2-4 GB RAM
+//   - 10-100 users -> ~8-16 GB RAM
+//   - 100+ users  -> 32 GB+ RAM
+// ─────────────────────────────────────────────────────────────────────────────
+const NC = {
+  autoConcurrentRatio: 0.10,   // peak active share of total users when "Auto" is on
+
+  // Fraction of concurrent users holding an ACTIVE PHP request at peak, by workload.
+  // Light sync clients poll infrequently; office/groupware users hit the web UI more;
+  // media + heavy apps (Talk, Office, Photos) keep requests open longest.
+  phpRequestFactor: { light: 0.5, office: 0.8, media: 1.0 },
+
+  minPhpWorkers: 4,            // never provision fewer than this
+  workersPerVcpu: 4,          // PHP-FPM workers comfortably served per vCPU
+
+  // RAM per PHP-FPM worker (MB). 128 = documented min, 512 = documented ceiling.
+  // Tuned per workload between those bounds.
+  ramPerWorkerMb: { light: 96, office: 176, media: 320 },
+
+  baseOsMb: 512,              // OS + web server + PHP opcache + APCu baseline
+  redisMb: 256,              // Redis instance when recommended
+  previewRamMb: 512,        // preview / imaginary generation headroom
+  ftsRamMb: 640,           // full-text search backend (OpenSearch/Elasticsearch)
+  dbRamPerUserMb: 6,      // co-located database allowance, per user
+
+  redisConcurrentThreshold: 3,  // recommend Redis once active PHP requests exceed this
+  redisUserThreshold: 20,      // ...or once user count exceeds this
+  dedicatedDbUsers: 100,      // recommend a separate DB host at/above this user count
+  dedicatedDbMediaUsers: 50, // ...or media workload at/above this
+
+  // Storage overhead multipliers on top of raw (users * GB/user)
+  storageOverhead: 1.30,        // file versions + trash + metadata + thumbnails
+  previewStorageExtra: 0.15,    // additional when Preview Generator is enabled
+
+  // RAM floor (GB) by user band and workload — keeps small numbers realistic
+  ramFloorGb: [
+    { maxUsers: 10,       light: 2,  office: 3,  media: 4  },
+    { maxUsers: 100,      light: 6,  office: 8,  media: 12 },
+    { maxUsers: Infinity, light: 16, office: 24, media: 32 },
+  ],
+
+  // Vultr plans (RAM GB / vCPU / price). Round UP to the first plan that satisfies
+  // both the RAM and the vCPU recommendation.
+  plans: [
+    { ram: 1,  cpu: 1,  price: "$6/mo"   },
+    { ram: 2,  cpu: 1,  price: "$12/mo"  },
+    { ram: 4,  cpu: 2,  price: "$24/mo"  },
+    { ram: 8,  cpu: 4,  price: "$48/mo"  },
+    { ram: 16, cpu: 6,  price: "$96/mo"  },
+    { ram: 32, cpu: 8,  price: "$192/mo" },
+    { ram: 64, cpu: 16, price: "$384/mo" },
+    { ram: 96, cpu: 24, price: "$576/mo" },
+  ],
+};
+
+function t(key) {
+  const lang = (window.sfLang && sfLang.current) || 'en';
+  return (window.SF_PAGE_I18N[lang] && window.SF_PAGE_I18N[lang][key]) || key;
+}
+
+function num(id, min) {
+  const v = parseFloat(document.getElementById(id).value);
+  return isNaN(v) ? min : Math.max(min, v);
+}
+
+function ramFloor(users, workload) {
+  for (const band of NC.ramFloorGb) {
+    if (users <= band.maxUsers) return band[workload];
+  }
+  return 32;
+}
+
+function onAutoConc() {
+  const auto = document.getElementById('autoConc').checked;
+  document.getElementById('concUsers').disabled = auto;
+  recalc();
+}
+
+function recalc() {
+  const users    = Math.round(num('users', 1));
+  const workload = document.getElementById('workload').value;
+  const gbPerUser = num('storagePerUser', 0);
+  const preview  = document.getElementById('preview').checked;
+  const fts      = document.getElementById('fts').checked;
+  const auto     = document.getElementById('autoConc').checked;
+
+  // ── Concurrency ──
+  let concurrent;
+  if (auto) {
+    concurrent = Math.max(1, Math.ceil(users * NC.autoConcurrentRatio));
+    document.getElementById('concUsers').value = concurrent;
+  } else {
+    concurrent = Math.round(num('concUsers', 1));
+  }
+
+  // ── Concurrent PHP requests -> workers -> vCPU ──
+  const activePhp = concurrent * NC.phpRequestFactor[workload];
+  let phpWorkers  = Math.max(NC.minPhpWorkers, Math.ceil(activePhp));
+  let vcpu        = Math.max(1, Math.ceil(phpWorkers / NC.workersPerVcpu));
+  if (fts) vcpu += 1; // search indexing is CPU-hungry
+
+  // ── Redis / dedicated DB recommendations ──
+  const recRedis = activePhp > NC.redisConcurrentThreshold || users >= NC.redisUserThreshold;
+  const recDb    = users >= NC.dedicatedDbUsers ||
+                   (workload === 'media' && users >= NC.dedicatedDbMediaUsers);
+
+  // ── RAM buildup (MB) ──
+  let ramMb = NC.baseOsMb;
+  ramMb += phpWorkers * NC.ramPerWorkerMb[workload];
+  if (recRedis) ramMb += NC.redisMb;
+  if (preview)  ramMb += NC.previewRamMb;
+  if (fts)      ramMb += NC.ftsRamMb;
+  if (!recDb)   ramMb += users * NC.dbRamPerUserMb; // DB lives on this box
+
+  let ramGb = ramMb / 1024;
+  ramGb = Math.max(ramGb, ramFloor(users, workload)); // apply sizing-guide floor
+  const ramGbDisplay = Math.ceil(ramGb);
+
+  // ── Storage ──
+  const overheadMult = NC.storageOverhead + (preview ? NC.previewStorageExtra : 0);
+  const storageGb = Math.ceil(users * gbPerUser * overheadMult);
+
+  // ── Match a Vultr plan (round up on RAM AND vCPU) ──
+  let plan = NC.plans.find(p => p.ram >= ramGbDisplay && p.cpu >= vcpu)
+             || NC.plans[NC.plans.length - 1];
+
+  // ── Render ──
+  document.getElementById('totalVal').textContent = ramGbDisplay;
+  document.getElementById('totalUnit').textContent = 'GB';
+  document.getElementById('sumCpu').textContent = vcpu;
+  document.getElementById('sumWorkers').textContent = phpWorkers;
+  document.getElementById('sumStorage').textContent =
+    storageGb >= 1024 ? (storageGb / 1024).toFixed(2) + ' TB' : storageGb + ' GB';
+  document.getElementById('sumConc').textContent = Math.max(1, Math.ceil(activePhp));
+
+  const rRedis = document.getElementById('recRedis');
+  rRedis.textContent = recRedis ? t('yes') : t('no');
+  rRedis.className = recRedis ? 'rec-yes' : 'rec-no';
+  const rDb = document.getElementById('recDb');
+  rDb.textContent = recDb ? t('yes') : t('no');
+  rDb.className = recDb ? 'rec-yes' : 'rec-no';
+
+  document.getElementById('planTitle').textContent =
+    plan.ram + ' GB Cloud Compute (' + plan.cpu + ' vCPU, ' + plan.price + ')';
+}
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.parentElement.classList.toggle('open');
+}
+
+// Re-render localized Yes/No when language changes
+document.addEventListener('sfLangChanged', recalc);
+
+// Init
+onAutoConc();
+</script>
+
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>
