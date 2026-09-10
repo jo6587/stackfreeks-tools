@@ -10,6 +10,12 @@
 <title>해시 생성기 &mdash; 무료 온라인 도구 | StackFreeks</title>
 <meta content="텍스트나 파일에서 MD5, SHA-1, SHA-256, SHA-512 해시를 즉시 생성" name="description">
 <link href="https://tools.stackfreeks.com/tools/hash-generator/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/hash-generator/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/hash-generator/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/hash-generator/" hreflang="x-default" rel="alternate">
+  
+
+
 <!-- Open Graph -->
 <meta content="해시 생성기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
 <meta content="텍스트나 파일에서 MD5, SHA-1, SHA-256, SHA-512 해시를 즉시 생성" property="og:description">
@@ -506,13 +512,7 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-  </style> <link href="https://tools.stackfreeks.com/tools/hash-generator/" hreflang="en" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/hash-generator/ko/" hreflang="ko" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/hash-generator/" hreflang="x-default" rel="alternate">
-  
-
-
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Hash Generator", "description": "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files. Free online hash generator — works in your browser, no upload, no account.", "url": "https://tools.stackfreeks.com/tools/hash-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/hash-generator/ko/"}}</script>
+  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Hash Generator", "description": "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files. Free online hash generator — works in your browser, no upload, no account.", "url": "https://tools.stackfreeks.com/tools/hash-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/hash-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "해시란 무엇이고 어떻게 사용되나요?", "acceptedAnswer": {"@type": "Answer", "text": "암호화 해시 함수는 어떤 입력(텍스트나 파일)이든 받아서 고정 길이 문자열(해시 또는 다이제스트)을 생성합니다. 해시는 파일 무결성 검증, 비밀번호 안전 저장, 체크섬 생성, 디지털 서명 등에 사용됩니다. 입력에 아주 작은 변화가 있어도 완전히 다른 해시가 생성됩니다."}}, {"@type": "Question", "name": "어떤 해시 알고리즘을 사용해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "대부분의 현대적 용도에는 SHA-256 을 사용하세요 — 체크섬, 코드 서명, 데이터 무결성의 업계 표준입니다. 추가적인 보안 여유가 필요하면 SHA-512 를 사용하세요. 보안이 중요한 용도에는 MD5 와 SHA-1 을 피하세요; 암호학적으로 취약하지만 비보안 체크섬이나 레거시 호환성에는 여전히 유용합니다."}}, {"@type": "Question", "name": "SHA-256이 MD5보다 더 안전한가요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 훨씬 안전합니다. MD5는 2004년에 충돌 공격에 취약한 것으로 밝혀졌고, SHA-1은 2017년에 공식 폐기되었습니다. SHA-256과 SHA-512(SHA-2 패밀리)는 알려진 실용적 공격이 없으며 NIST에서 모든 보안 민감 작업에 권장합니다."}}, {"@type": "Question", "name": "해시를 역산해서 원본 텍스트를 얻을 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 해시 함수는 단방향으로, 역산하는 알고리즘은 존재하지 않습니다. 그러나 짧거나 일반적인 입력(단순 비밀번호 등)의 경우 공격자가 레인보우 테이블이나 무차별 대입으로 입력을 추측할 수 있습니다. 그래서 비밀번호는 해시 전에 항상 솔트(salt)를 추가해야 합니다."}}, {"@type": "Question", "name": "내 데이터가 서버로 전송되나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 모든 해시 연산은 브라우저 내에서만 처리됩니다. 텍스트와 파일은 절대 기기를 벗어나지 않습니다. SHA-1, SHA-256, SHA-512는 브라우저 내장 Web Crypto API를 사용하고, MD5는 CDN에서 로드되는 spark-md5 라이브러리를 사용합니다 — 라이브러리 코드만 다운로드되며, 여러분의 데이터는 전송되지 않습니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>

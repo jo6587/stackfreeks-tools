@@ -59,7 +59,11 @@ const SF_I18N = {
     localStorage.getItem('sf-lang') ||
     (navigator.language.startsWith('ko') ? 'ko' : 'en');
 
+  let applying = false;
+
   function applyLang() {
+    if (applying) return;
+    applying = true;
     // Merge shared + page-specific translations
     const t = Object.assign({}, SF_I18N[lang], (window.SF_PAGE_I18N || {})[lang]);
 
@@ -84,7 +88,41 @@ const SF_I18N = {
 
     // Update html[lang] attribute for accessibility / SEO
     document.documentElement.lang = lang === 'ko' ? 'ko' : 'en';
+
+    applying = false;
   }
+
+  // Some tools inject <span class="lang-en">…</span><span class="lang-ko">…</span>
+  // (and [data-i18n] nodes) into the DOM via innerHTML AFTER applyLang() has run.
+  // Re-apply the show/hide + text logic for nodes added later. Debounced with rAF,
+  // and guarded by the `applying` flag so our own .hidden/.textContent writes
+  // (which mutate the DOM) don't retrigger the observer into a loop.
+  (function () {
+    var scheduled = false;
+    function schedule() {
+      if (scheduled || applying) return;
+      scheduled = true;
+      requestAnimationFrame(function () { scheduled = false; applyLang(); });
+    }
+    function relevant(node) {
+      // Only element nodes that carry (or contain) language markup. This skips the
+      // text nodes our own textContent writes produce, so we never loop.
+      if (node.nodeType !== 1) return false;
+      if (node.matches && node.matches('.lang-en, .lang-ko, [data-i18n], [data-i18n-placeholder]')) return true;
+      return !!(node.querySelector && node.querySelector('.lang-en, .lang-ko, [data-i18n], [data-i18n-placeholder]'));
+    }
+    var obs = new MutationObserver(function (mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        var added = mutations[i].addedNodes || [];
+        for (var j = 0; j < added.length; j++) {
+          if (relevant(added[j])) { schedule(); return; }
+        }
+      }
+    });
+    function start() { obs.observe(document.body, { childList: true, subtree: true }); }
+    if (document.body) start();
+    else document.addEventListener('DOMContentLoaded', start);
+  })();
 
   window.sfLang = {
     get current() { return lang; },

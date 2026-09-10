@@ -686,7 +686,7 @@
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "SSH Config Generator", "description": "Generate a ready-to-paste ~/.ssh/config file by filling in a simple form — no manual SSH config syntax lookup needed.", "url": "https://tools.stackfreeks.com/tools/ssh-config-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/ssh-config-generator/ko/"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the SSH config file and where does it live?", "acceptedAnswer": {"@type": "Answer", "text": "The SSH client config file is located at ~/.ssh/config on Linux and macOS. It lets you set per-host options — aliases, usernames, ports, key paths — so you can type ssh prod instead of ssh -i ~/.ssh/id_rsa ubuntu@192.168.1.100 -p 2222 . On Windows (OpenSSH), the path is C:\\Users\\YourName\\.ssh\\config ."}}, {"@type": "Question", "name": "When should I use ProxyJump in my SSH config?", "acceptedAnswer": {"@type": "Answer", "text": "Use ProxyJump when your target server is behind a firewall or private network and can only be reached via a bastion/jump host. Set the bastion's alias in the ProxyJump field, and SSH will automatically tunnel through it. Example: ProxyJump jumphost — where jumphost is another entry in your config. You can chain multiple hops with comma separation."}}, {"@type": "Question", "name": "What does ForwardAgent do and is it safe to enable?", "acceptedAnswer": {"@type": "Answer", "text": "ForwardAgent yes allows the remote server to use your local SSH keys — useful when you need to git pull or hop to another server from the remote without copying your private key there. However, it carries risk: a compromised remote host with root access could abuse your agent socket. Only enable it for trusted hosts, and consider ProxyJump as a safer alternative for multi-hop SSH."}}, {"@type": "Question", "name": "What is ServerAliveInterval and why do SSH sessions time out?", "acceptedAnswer": {"@type": "Answer", "text": "Many firewalls and NAT routers silently drop idle TCP connections after a timeout (often 5–15 minutes). ServerAliveInterval 60 tells your SSH client to send a keepalive packet every 60 seconds, preventing the connection from being dropped. Pair it with ServerAliveCountMax 3 (added manually) to disconnect cleanly if 3 keepalives go unanswered."}}, {"@type": "Question", "name": "Does this tool send my server details anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. Everything runs entirely in your browser using JavaScript. Your IP addresses, hostnames, usernames, and key paths are never transmitted to any server. Close the tab and the data is gone."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "SSH config 파일이란 무엇이며 어디에 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "SSH 클라이언트 설정 파일은 Linux 및 macOS에서 ~/.ssh/config 에 위치합니다. 호스트별 옵션(별칭, 사용자 이름, 포트, 키 경로 등)을 설정하여 ssh -i ~/.ssh/id_rsa ubuntu@192.168.1.100 -p 2222 대신 ssh prod 처럼 간단히 접속할 수 있습니다. Windows(OpenSSH)에서는 C:\\Users\\사용자명\\.ssh\\config 에 위치합니다."}}, {"@type": "Question", "name": "SSH config에서 ProxyJump를 언제 사용해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "대상 서버가 방화벽이나 사설 네트워크 뒤에 있어 배스천/점프 호스트를 통해서만 접근 가능할 때 ProxyJump 를 사용하세요. ProxyJump 필드에 배스천 별칭을 입력하면 SSH가 자동으로 터널을 통해 접속합니다. 예: ProxyJump jumphost — jumphost 는 설정의 다른 항목입니다. 쉼표로 구분하여 여러 홉을 연결할 수도 있습니다."}}, {"@type": "Question", "name": "ForwardAgent는 무엇이며 활성화해도 안전한가요?", "acceptedAnswer": {"@type": "Answer", "text": "ForwardAgent yes 는 원격 서버가 로컬 SSH 키를 사용할 수 있게 합니다. 개인 키를 복사하지 않고 원격에서 git pull 이나 다른 서버로 이동할 때 유용합니다. 하지만 위험이 있습니다: 루트 접근 권한을 가진 손상된 원격 호스트가 에이전트 소켓을 악용할 수 있습니다. 신뢰할 수 있는 호스트에만 활성화하고, 멀티 홉 SSH에는 더 안전한 ProxyJump 를 고려하세요."}}, {"@type": "Question", "name": "ServerAliveInterval이란 무엇이며 SSH 세션이 왜 타임아웃되나요?", "acceptedAnswer": {"@type": "Answer", "text": "많은 방화벽과 NAT 라우터가 일정 시간(보통 5~15분) 후 유휴 TCP 연결을 자동으로 끊습니다. ServerAliveInterval 60 은 SSH 클라이언트가 60초마다 킵얼라이브 패킷을 보내 연결이 끊기지 않도록 합니다. 킵얼라이브가 3번 응답 없으면 깔끔하게 연결을 종료하려면 ServerAliveCountMax 3 을 수동으로 추가하세요."}}, {"@type": "Question", "name": "이 도구가 서버 정보를 어딘가로 전송하나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 모든 처리는 JavaScript를 사용하여 브라우저 내에서만 이루어집니다. IP 주소, 호스트명, 사용자 이름, 키 경로는 어떤 서버로도 전송되지 않습니다. 탭을 닫으면 데이터는 사라집니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -831,70 +831,27 @@
 
 <div class="lang-ko">
 <p class="section-title">자주 묻는 질문</p>
+<div class="faq-list">
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>SSH config 파일이란 무엇이며 어디에 있나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">SSH 클라이언트 설정 파일은 Linux 및 macOS에서 <code>~/.ssh/config</code>에 위치합니다. 호스트별 옵션(별칭, 사용자 이름, 포트, 키 경로 등)을 설정하여 <code>ssh -i ~/.ssh/id_rsa ubuntu@192.168.1.100 -p 2222</code> 대신 <code>ssh prod</code>처럼 간단히 접속할 수 있습니다. Windows(OpenSSH)에서는 <code>C:\Users\사용자명\.ssh\config</code>에 위치합니다.</div>
 </div>
 <div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)">
-<div>
-
-<div class="lang-ko"><span>SSH config 파일이란 무엇이며 어디에 있나요?</span></div>
-</div>
-<span class="faq-icon">+</span>
-</button>
-<div class="faq-a">
-
-<div class="lang-ko">SSH 클라이언트 설정 파일은 Linux 및 macOS에서 <code>~/.ssh/config</code>에 위치합니다. 호스트별 옵션(별칭, 사용자 이름, 포트, 키 경로 등)을 설정하여 <code>ssh -i ~/.ssh/id_rsa ubuntu@192.168.1.100 -p 2222</code> 대신 <code>ssh prod</code>처럼 간단히 접속할 수 있습니다. Windows(OpenSSH)에서는 <code>C:\Users\사용자명\.ssh\config</code>에 위치합니다.</div>
-</div>
+<button class="faq-q" onclick="toggleFaq(this)"><span>SSH config에서 ProxyJump를 언제 사용해야 하나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">대상 서버가 방화벽이나 사설 네트워크 뒤에 있어 배스천/점프 호스트를 통해서만 접근 가능할 때 <code>ProxyJump</code>를 사용하세요. ProxyJump 필드에 배스천 별칭을 입력하면 SSH가 자동으로 터널을 통해 접속합니다. 예: <code>ProxyJump jumphost</code> &mdash; <code>jumphost</code>는 설정의 다른 항목입니다. 쉼표로 구분하여 여러 홉을 연결할 수도 있습니다.</div>
 </div>
 <div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)">
-<div>
-
-<div class="lang-ko"><span>SSH config에서 ProxyJump를 언제 사용해야 하나요?</span></div>
-</div>
-<span class="faq-icon">+</span>
-</button>
-<div class="faq-a">
-
-<div class="lang-ko">대상 서버가 방화벽이나 사설 네트워크 뒤에 있어 배스천/점프 호스트를 통해서만 접근 가능할 때 <code>ProxyJump</code>를 사용하세요. ProxyJump 필드에 배스천 별칭을 입력하면 SSH가 자동으로 터널을 통해 접속합니다. 예: <code>ProxyJump jumphost</code> &mdash; <code>jumphost</code>는 설정의 다른 항목입니다. 쉼표로 구분하여 여러 홉을 연결할 수도 있습니다.</div>
-</div>
+<button class="faq-q" onclick="toggleFaq(this)"><span>ForwardAgent는 무엇이며 활성화해도 안전한가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a"><code>ForwardAgent yes</code>는 원격 서버가 로컬 SSH 키를 사용할 수 있게 합니다. 개인 키를 복사하지 않고 원격에서 <code>git pull</code>이나 다른 서버로 이동할 때 유용합니다. 하지만 위험이 있습니다: 루트 접근 권한을 가진 손상된 원격 호스트가 에이전트 소켓을 악용할 수 있습니다. 신뢰할 수 있는 호스트에만 활성화하고, 멀티 홉 SSH에는 더 안전한 <code>ProxyJump</code>를 고려하세요.</div>
 </div>
 <div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)">
-<div>
-
-<div class="lang-ko"><span>ForwardAgent는 무엇이며 활성화해도 안전한가요?</span></div>
-</div>
-<span class="faq-icon">+</span>
-</button>
-<div class="faq-a">
-
-<div class="lang-ko"><code>ForwardAgent yes</code>는 원격 서버가 로컬 SSH 키를 사용할 수 있게 합니다. 개인 키를 복사하지 않고 원격에서 <code>git pull</code>이나 다른 서버로 이동할 때 유용합니다. 하지만 위험이 있습니다: 루트 접근 권한을 가진 손상된 원격 호스트가 에이전트 소켓을 악용할 수 있습니다. 신뢰할 수 있는 호스트에만 활성화하고, 멀티 홉 SSH에는 더 안전한 <code>ProxyJump</code>를 고려하세요.</div>
-</div>
+<button class="faq-q" onclick="toggleFaq(this)"><span>ServerAliveInterval이란 무엇이며 SSH 세션이 왜 타임아웃되나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">많은 방화벽과 NAT 라우터가 일정 시간(보통 5~15분) 후 유휴 TCP 연결을 자동으로 끊습니다. <code>ServerAliveInterval 60</code>은 SSH 클라이언트가 60초마다 킵얼라이브 패킷을 보내 연결이 끊기지 않도록 합니다. 킵얼라이브가 3번 응답 없으면 깔끔하게 연결을 종료하려면 <code>ServerAliveCountMax 3</code>을 수동으로 추가하세요.</div>
 </div>
 <div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)">
-<div>
-
-<div class="lang-ko"><span>ServerAliveInterval이란 무엇이며 SSH 세션이 왜 타임아웃되나요?</span></div>
+<button class="faq-q" onclick="toggleFaq(this)"><span>이 도구가 서버 정보를 어딘가로 전송하나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">아니요. 모든 처리는 JavaScript를 사용하여 브라우저 내에서만 이루어집니다. IP 주소, 호스트명, 사용자 이름, 키 경로는 어떤 서버로도 전송되지 않습니다. 탭을 닫으면 데이터는 사라집니다.</div>
 </div>
-<span class="faq-icon">+</span>
-</button>
-<div class="faq-a">
-
-<div class="lang-ko">많은 방화벽과 NAT 라우터가 일정 시간(보통 5~15분) 후 유휴 TCP 연결을 자동으로 끊습니다. <code>ServerAliveInterval 60</code>은 SSH 클라이언트가 60초마다 킵얼라이브 패킷을 보내 연결이 끊기지 않도록 합니다. 킵얼라이브가 3번 응답 없으면 깔끔하게 연결을 종료하려면 <code>ServerAliveCountMax 3</code>을 수동으로 추가하세요.</div>
-</div>
-</div>
-<div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)">
-<div>
-
-<div class="lang-ko"><span>이 도구가 서버 정보를 어딘가로 전송하나요?</span></div>
-</div>
-<span class="faq-icon">+</span>
-</button>
-<div class="faq-a">
-
-<div class="lang-ko">아니요. 모든 처리는 JavaScript를 사용하여 브라우저 내에서만 이루어집니다. IP 주소, 호스트명, 사용자 이름, 키 경로는 어떤 서버로도 전송되지 않습니다. 탭을 닫으면 데이터는 사라집니다.</div>
 </div>
 </div>
 </section>

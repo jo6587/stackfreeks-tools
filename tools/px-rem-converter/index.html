@@ -662,52 +662,49 @@
 
   <!-- FAQ -->
   <section class="faq">
-    <p class="faq-title">FAQ</p>
-
-    <div class="faq-item">
-      <div class="lang-en">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>What is rem?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">"Root em" — a CSS unit relative to the font size of the root <code>&lt;html&gt;</code> element. Browsers default to 16px, so <code>1rem = 16px</code> out of the box.</div>
-      </div>
-      <div class="lang-ko" hidden>
-        <button class="faq-q" onclick="toggleFaq(this)"><span>rem이란 무엇인가요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">"Root em"의 약자로, 루트 <code>&lt;html&gt;</code> 요소의 폰트 크기를 기준으로 하는 CSS 단위입니다. 브라우저 기본값은 16px이므로 기본적으로 <code>1rem = 16px</code>입니다.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="lang-en">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>Why use rem instead of px?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">rem scales with the user's browser font settings, making your UI more accessible. It also makes global font scaling easy — change one root value and everything adjusts proportionally.</div>
-      </div>
-      <div class="lang-ko" hidden>
-        <button class="faq-q" onclick="toggleFaq(this)"><span>px 대신 rem을 쓰는 이유가 뭔가요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">rem은 사용자의 브라우저 폰트 설정에 따라 확장되어 접근성이 향상됩니다. 또한 전체적인 폰트 크기 조정이 쉬워 루트 값 하나만 변경하면 모든 요소가 비례적으로 조정됩니다.</div>
+    <div class="lang-en">
+      <p class="faq-title">FAQ</p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is rem?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">"Root em" — a CSS unit relative to the font size of the root <code>&lt;html&gt;</code> element. Browsers default to 16px, so <code>1rem = 16px</code> out of the box.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Why use rem instead of px?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">rem scales with the user's browser font settings, making your UI more accessible. It also makes global font scaling easy — change one root value and everything adjusts proportionally.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What's the default base font size?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Browsers default to 16px. However, many projects set <code>html { font-size: 62.5%; }</code> to make <code>1rem = 10px</code> for easier mental math. Always check your project's CSS reset or global styles.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Can I use this for other CSS units?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">This tool focuses on px ↔ rem conversion only. For other unit conversions (em, vw, pt, etc.) keep an eye on our other tools at StackFreeks Tools.</div>
+        </div>
       </div>
     </div>
 
-    <div class="faq-item">
-      <div class="lang-en">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>What's the default base font size?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">Browsers default to 16px. However, many projects set <code>html { font-size: 62.5%; }</code> to make <code>1rem = 10px</code> for easier mental math. Always check your project's CSS reset or global styles.</div>
-      </div>
-      <div class="lang-ko" hidden>
-        <button class="faq-q" onclick="toggleFaq(this)"><span>기본 루트 폰트 크기는 얼마인가요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">브라우저 기본값은 16px입니다. 하지만 많은 프로젝트에서 <code>html { font-size: 62.5%; }</code>를 설정해 <code>1rem = 10px</code>로 계산을 편하게 만듭니다. 프로젝트의 CSS 리셋이나 전역 스타일을 확인하세요.</div>
+    <div class="lang-ko">
+      <p class="faq-title">자주 묻는 질문</p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>rem이란 무엇인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">"Root em"의 약자로, 루트 <code>&lt;html&gt;</code> 요소의 폰트 크기를 기준으로 하는 CSS 단위입니다. 브라우저 기본값은 16px이므로 기본적으로 <code>1rem = 16px</code>입니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>px 대신 rem을 쓰는 이유가 뭔가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">rem은 사용자의 브라우저 폰트 설정에 따라 확장되어 접근성이 향상됩니다. 또한 전체적인 폰트 크기 조정이 쉬워 루트 값 하나만 변경하면 모든 요소가 비례적으로 조정됩니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>기본 루트 폰트 크기는 얼마인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">브라우저 기본값은 16px입니다. 하지만 많은 프로젝트에서 <code>html { font-size: 62.5%; }</code>를 설정해 <code>1rem = 10px</code>로 계산을 편하게 만듭니다. 프로젝트의 CSS 리셋이나 전역 스타일을 확인하세요.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>다른 CSS 단위도 변환할 수 있나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">이 도구는 px ↔ rem 변환만 지원합니다. em, vw, pt 등 다른 단위 변환은 StackFreeks Tools의 다른 도구를 확인해 주세요.</div>
+        </div>
       </div>
     </div>
-
-    <div class="faq-item">
-      <div class="lang-en">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I use this for other CSS units?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">This tool focuses on px ↔ rem conversion only. For other unit conversions (em, vw, pt, etc.) keep an eye on our other tools at StackFreeks Tools.</div>
-      </div>
-      <div class="lang-ko" hidden>
-        <button class="faq-q" onclick="toggleFaq(this)"><span>다른 CSS 단위도 변환할 수 있나요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">이 도구는 px ↔ rem 변환만 지원합니다. em, vw, pt 등 다른 단위 변환은 StackFreeks Tools의 다른 도구를 확인해 주세요.</div>
-      </div>
-    </div>
-
   </section>
 
   <!-- Vultr banner -->

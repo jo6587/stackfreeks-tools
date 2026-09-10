@@ -10,6 +10,12 @@
 <title>Unix 타임스탬프 변환기 &mdash; 무료 온라인 도구 | StackFreeks</title>
 <meta content="Unix 타임스탬프를 날짜로, 날짜를 타임스탬프로 변환. 현재 Epoch 시간을 실시간으로 확인." name="description">
 <link href="https://tools.stackfreeks.com/tools/timestamp-converter/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/timestamp-converter/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/timestamp-converter/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/timestamp-converter/" hreflang="x-default" rel="alternate">
+  
+
+
 <!-- Open Graph -->
 <meta content="Unix 타임스탬프 변환기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
 <meta content="Unix 타임스탬프를 날짜로, 날짜를 타임스탬프로 변환. 현재 Epoch 시간을 실시간으로 확인." property="og:description">
@@ -591,13 +597,7 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-  </style> <link href="https://tools.stackfreeks.com/tools/timestamp-converter/" hreflang="en" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/timestamp-converter/ko/" hreflang="ko" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/timestamp-converter/" hreflang="x-default" rel="alternate">
-  
-
-
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Unix Timestamp Converter", "description": "Convert Unix timestamps to dates and back. See current epoch time live. Free online tool — no account needed, works in your browser.", "url": "https://tools.stackfreeks.com/tools/timestamp-converter/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/timestamp-converter/ko/"}}</script>
+  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Unix Timestamp Converter", "description": "Convert Unix timestamps to dates and back. See current epoch time live. Free online tool — no account needed, works in your browser.", "url": "https://tools.stackfreeks.com/tools/timestamp-converter/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/timestamp-converter/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Unix 타임스탬프란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "Unix 타임스탬프(Epoch 시간이라고도 함)는 1970년 1월 1일 00:00:00 UTC(Unix Epoch)부터 경과한 초(秒) 수입니다. 타임존이나 로케일과 무관하게 특정 시각을 하나의 정수로 표현합니다. 예를 들어 1719100800 은 2024년 6월 23일 00:00:00 UTC를 가리킵니다."}}, {"@type": "Question", "name": "현재 Unix 타임스탬프는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "이 페이지 상단 카드에서 현재 Unix 타임스탬프를 실시간으로 확인할 수 있습니다. 코드로 얻으려면: JavaScript: Math.floor(Date.now() / 1000) , Python: import time; int(time.time()) , Bash: date +%s ."}}, {"@type": "Question", "name": "JavaScript에서 Unix 타임스탬프를 날짜로 변환하는 방법은?", "acceptedAnswer": {"@type": "Answer", "text": "초 단위 타임스탬프에 1000을 곱한 뒤 new Date(timestamp * 1000) 으로 Date 객체를 만드세요. 그런 다음 .toLocaleString() 으로 현지 시간, .toUTCString() 으로 UTC, .toISOString() 으로 ISO 8601 형식을 얻을 수 있습니다."}}, {"@type": "Question", "name": "초 단위 타임스탬프와 밀리초 단위 타임스탬프의 차이는?", "acceptedAnswer": {"@type": "Answer", "text": "표준 Unix 타임스탬프는 초 단위(2024년 기준 10자리, 예: 1719100800 )입니다. JavaScript의 Date.now() 등 많은 환경에서는 밀리초 단위(13자리, 예: 1719100800000 )를 사용합니다. 이 변환기는 10,000,000,000(1e10) 초과 여부로 단위를 자동 감지합니다."}}, {"@type": "Question", "name": "Epoch 시간이란 무엇이고 왜 개발자들이 사용하나요?", "acceptedAnswer": {"@type": "Answer", "text": "Epoch 시간은 Unix 타임스탬프의 다른 이름입니다. 단순한 정수이기 때문에 데이터베이스 저장, 비교, 정렬, 산술 연산이 쉽습니다. 타임존이나 일광 절약 시간(DST)의 복잡함 없이 모든 프로그래밍 언어, OS, 데이터베이스에서 범용적으로 지원됩니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>

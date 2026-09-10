@@ -902,76 +902,55 @@
 
   <!-- FAQ -->
   <section class="section">
-    <div class="lang-en"><h2 class="section-title">Frequently Asked Questions</h2></div>
-    <div class="lang-ko"><h2 class="section-title">자주 묻는 질문</h2></div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>How much RAM does a Minecraft server need?</span></div>
-          <div class="lang-ko"><span>마인크래프트 서버는 RAM이 얼마나 필요한가요?</span></div>
+    <div class="lang-en">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How much RAM does a Minecraft server need?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">A Minecraft Java server typically needs about 512 MB of RAM per 10 players as a baseline, plus 1–2 GB for the JVM itself. For a 20-player server without mods, expect 2–3 GB total. With plugins or mods, plan for at least 4 GB.</div>
         </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">A Minecraft Java server typically needs about 512 MB of RAM per 10 players as a baseline, plus 1–2 GB for the JVM itself. For a 20-player server without mods, expect 2–3 GB total. With plugins or mods, plan for at least 4 GB.</div>
-        <div class="lang-ko">마인크래프트 Java 서버는 기본적으로 플레이어 10명당 약 512MB RAM이 필요하고, JVM 자체에 1~2GB가 추가됩니다. 모드 없이 20명이라면 총 2~3GB, 플러그인/모드가 있다면 최소 4GB를 권장합니다.</div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Is Vultr good for game server hosting?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Yes. Vultr offers high-frequency compute instances with NVMe SSDs and data centers worldwide, making it a solid choice for game servers. The Cloud Compute plans are great for small-to-medium game servers, while High Frequency plans suit demanding games like Rust or ARK.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Why does Rust need so much RAM?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Rust has a large open-world map and complex server-side physics simulation. The world state, entity tracking, and procedural terrain data all consume significant RAM. A 50-player Rust server can easily use 12–16 GB of RAM, making it one of the most resource-intensive games to host.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Do I need dedicated CPU cores for a game server?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Most game servers are single-threaded for core logic, so raw single-core performance matters more than core count. However, more vCPUs help with background tasks, OS overhead, and multi-threaded mods. The calculator recommends 1 core per 20 players as a practical baseline.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How accurate are these estimates?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">These are community-based estimates for typical gameplay. Actual RAM usage varies with map size, installed mods, tick rate, and player behavior. We recommend starting with the "one up" plan from the recommendation to have headroom, then downsizing if resources allow.</div>
+        </div>
       </div>
     </div>
 
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>Is Vultr good for game server hosting?</span></div>
-          <div class="lang-ko"><span>Vultr는 게임 서버 호스팅에 적합한가요?</span></div>
+    <div class="lang-ko">
+      <h2 class="section-title">자주 묻는 질문</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>마인크래프트 서버는 RAM이 얼마나 필요한가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">마인크래프트 Java 서버는 기본적으로 플레이어 10명당 약 512MB RAM이 필요하고, JVM 자체에 1~2GB가 추가됩니다. 모드 없이 20명이라면 총 2~3GB, 플러그인/모드가 있다면 최소 4GB를 권장합니다.</div>
         </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">Yes. Vultr offers high-frequency compute instances with NVMe SSDs and data centers worldwide, making it a solid choice for game servers. The Cloud Compute plans are great for small-to-medium game servers, while High Frequency plans suit demanding games like Rust or ARK.</div>
-        <div class="lang-ko">네. Vultr는 NVMe SSD와 전세계 데이터센터를 갖춘 고성능 컴퓨트 인스턴스를 제공해 게임 서버에 적합합니다. Cloud Compute 플랜은 소-중규모 게임 서버에, 고주파 플랜은 Rust나 ARK 같은 요구사항이 큰 게임에 적합합니다.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>Why does Rust need so much RAM?</span></div>
-          <div class="lang-ko"><span>Rust 서버는 왜 RAM이 그렇게 많이 필요한가요?</span></div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Vultr는 게임 서버 호스팅에 적합한가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">네. Vultr는 NVMe SSD와 전세계 데이터센터를 갖춘 고성능 컴퓨트 인스턴스를 제공해 게임 서버에 적합합니다. Cloud Compute 플랜은 소-중규모 게임 서버에, 고주파 플랜은 Rust나 ARK 같은 요구사항이 큰 게임에 적합합니다.</div>
         </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">Rust has a large open-world map and complex server-side physics simulation. The world state, entity tracking, and procedural terrain data all consume significant RAM. A 50-player Rust server can easily use 12–16 GB of RAM, making it one of the most resource-intensive games to host.</div>
-        <div class="lang-ko">Rust는 광대한 오픈월드 맵과 복잡한 서버 측 물리 시뮬레이션을 사용합니다. 월드 상태, 엔티티 추적, 절차적 지형 데이터가 모두 RAM을 많이 소모합니다. 50명 Rust 서버는 쉽게 12~16GB RAM을 사용하며, 가장 자원 집약적인 게임 중 하나입니다.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>Do I need dedicated CPU cores for a game server?</span></div>
-          <div class="lang-ko"><span>게임 서버에는 전용 CPU 코어가 필요한가요?</span></div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Rust 서버는 왜 RAM이 그렇게 많이 필요한가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Rust는 광대한 오픈월드 맵과 복잡한 서버 측 물리 시뮬레이션을 사용합니다. 월드 상태, 엔티티 추적, 절차적 지형 데이터가 모두 RAM을 많이 소모합니다. 50명 Rust 서버는 쉽게 12~16GB RAM을 사용하며, 가장 자원 집약적인 게임 중 하나입니다.</div>
         </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">Most game servers are single-threaded for core logic, so raw single-core performance matters more than core count. However, more vCPUs help with background tasks, OS overhead, and multi-threaded mods. The calculator recommends 1 core per 20 players as a practical baseline.</div>
-        <div class="lang-ko">대부분의 게임 서버는 핵심 로직이 싱글스레드로 동작하므로 코어 수보다 단일 코어 성능이 중요합니다. 그러나 백그라운드 작업, OS 오버헤드, 멀티스레드 모드에는 더 많은 vCPU가 도움이 됩니다. 이 계산기는 플레이어 20명당 1코어를 실용적 기준으로 권장합니다.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>How accurate are these estimates?</span></div>
-          <div class="lang-ko"><span>이 추정치는 얼마나 정확한가요?</span></div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>게임 서버에는 전용 CPU 코어가 필요한가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">대부분의 게임 서버는 핵심 로직이 싱글스레드로 동작하므로 코어 수보다 단일 코어 성능이 중요합니다. 그러나 백그라운드 작업, OS 오버헤드, 멀티스레드 모드에는 더 많은 vCPU가 도움이 됩니다. 이 계산기는 플레이어 20명당 1코어를 실용적 기준으로 권장합니다.</div>
         </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">These are community-based estimates for typical gameplay. Actual RAM usage varies with map size, installed mods, tick rate, and player behavior. We recommend starting with the "one up" plan from the recommendation to have headroom, then downsizing if resources allow.</div>
-        <div class="lang-ko">이 추정치는 일반적인 게임플레이 기반의 커뮤니티 경험치입니다. 실제 RAM 사용량은 맵 크기, 설치된 모드, 틱레이트, 플레이어 행동에 따라 달라집니다. 여유를 두기 위해 추천 플랜보다 한 단계 높은 플랜으로 시작하고, 여유가 생기면 다운그레이드하는 것을 권장합니다.</div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>이 추정치는 얼마나 정확한가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">이 추정치는 일반적인 게임플레이 기반의 커뮤니티 경험치입니다. 실제 RAM 사용량은 맵 크기, 설치된 모드, 틱레이트, 플레이어 행동에 따라 달라집니다. 여유를 두기 위해 추천 플랜보다 한 단계 높은 플랜으로 시작하고, 여유가 생기면 다운그레이드하는 것을 권장합니다.</div>
+        </div>
       </div>
     </div>
   </section>

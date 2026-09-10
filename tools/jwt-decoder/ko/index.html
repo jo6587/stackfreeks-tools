@@ -10,6 +10,12 @@
 <title>JWT 디코더 &mdash; 무료 온라인 도구 | StackFreeks</title>
 <meta content="보안 & 인증" name="description">
 <link href="https://tools.stackfreeks.com/tools/jwt-decoder/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/jwt-decoder/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/jwt-decoder/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/jwt-decoder/" hreflang="x-default" rel="alternate">
+  
+
+
 <!-- Open Graph -->
 <meta content="JWT 디코더 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
 <meta content="보안 & 인증" property="og:description">
@@ -611,13 +617,7 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-  </style> <link href="https://tools.stackfreeks.com/tools/jwt-decoder/" hreflang="en" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/jwt-decoder/ko/" hreflang="ko" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/jwt-decoder/" hreflang="x-default" rel="alternate">
-  
-
-
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "JWT Decoder", "description": "Decode and inspect JWT tokens instantly. View header, payload, and expiry in a clean interface. Free online JWT decoder — no account, works in your browser.", "url": "https://tools.stackfreeks.com/tools/jwt-decoder/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/jwt-decoder/ko/"}}</script>
+  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "JWT Decoder", "description": "Decode and inspect JWT tokens instantly. View header, payload, and expiry in a clean interface. Free online JWT decoder — no account, works in your browser.", "url": "https://tools.stackfreeks.com/tools/jwt-decoder/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/jwt-decoder/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "JWT 토큰이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "JSON Web Token(JWT)은 RFC 7519 에 정의된 컴팩트하고 URL-safe한 토큰 형식입니다. 점(.)으로 구분된 세 개의 base64url 인코딩 부분( header.payload.signature )으로 구성됩니다. 헤더는 서명 알고리즘을, 페이로드는 클레임(사용자 데이터, 만료 시간 등)을, 시그니처는 토큰 무결성을 보장합니다."}}, {"@type": "Question", "name": "JWT 토큰을 여기에 붙여넣어도 안전한가요?", "acceptedAnswer": {"@type": "Answer", "text": "네. 모든 디코딩은 브라우저 내 JavaScript로만 처리되며 어떤 서버에도 전송되지 않습니다. 브라우저 네트워크 탭에서 직접 확인하실 수 있습니다. 다만 일반적인 보안 원칙으로, 민감한 정보가 담긴 프로덕션 토큰은 신뢰할 수 없는 환경에서 공유하지 않는 것이 좋습니다."}}, {"@type": "Question", "name": "왜 서명을 검증하지 않나요?", "acceptedAnswer": {"@type": "Answer", "text": "JWT 서명 검증에는 비밀 키(HS256 등 HMAC 알고리즘) 또는 공개 키(RS256 등 비대칭 알고리즘)가 필요합니다. 이 키는 토큰 자체에 포함되지 않으며 브라우저에서는 접근할 수 없습니다. 검증은 키가 안전하게 보관된 서버 측에서 수행해야 합니다."}}, {"@type": "Question", "name": "exp 클레임이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "exp (Expiration Time) 클레임은 토큰의 만료 시각을 Unix 타임스탬프(1970년 1월 1일 UTC 기준 초)로 나타냅니다. 서버는 exp 가 과거인 토큰을 거부해야 합니다. 이 도구는 값을 사람이 읽기 쉬운 날짜로 변환하고 현재 유효 여부를 표시합니다."}}, {"@type": "Question", "name": "코드에서 JWT를 어떻게 디코딩하나요?", "acceptedAnswer": {"@type": "Answer", "text": "JavaScript: JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))) . Node.js는 jsonwebtoken 라이브러리를, Python은 PyJWT 를, Go는 golang-jwt/jwt 를 사용하세요. 디코딩은 검증과 다릅니다 — 토큰의 내용을 신뢰하기 전에 반드시 서버 측에서 검증하세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>

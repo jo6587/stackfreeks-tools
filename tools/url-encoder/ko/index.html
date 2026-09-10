@@ -10,6 +10,12 @@
 <title>URL 인코더 / 디코더 &mdash; 무료 온라인 도구 | StackFreeks</title>
 <meta content="URL과 쿼리 파라미터를 퍼센트 인코딩하거나 디코딩 &mdash; 즉시, 브라우저에서 바로." name="description">
 <link href="https://tools.stackfreeks.com/tools/url-encoder/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/url-encoder/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/url-encoder/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/url-encoder/" hreflang="x-default" rel="alternate">
+  
+
+
 <!-- Open Graph -->
 <meta content="URL 인코더 / 디코더 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
 <meta content="URL과 쿼리 파라미터를 퍼센트 인코딩하거나 디코딩 &mdash; 즉시, 브라우저에서 바로." property="og:description">
@@ -494,13 +500,7 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-  </style> <link href="https://tools.stackfreeks.com/tools/url-encoder/" hreflang="en" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/url-encoder/ko/" hreflang="ko" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/url-encoder/" hreflang="x-default" rel="alternate">
-  
-
-
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "URL Encoder / Decoder", "description": "Encode or decode URLs and query strings instantly. Free online URL encoder/decoder — supports percent-encoding, component encoding, and full URL encoding. No account required.", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/"}}</script>
+  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "URL Encoder / Decoder", "description": "Encode or decode URLs and query strings instantly. Free online URL encoder/decoder — supports percent-encoding, component encoding, and full URL encoding. No account required.", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "URL 인코딩이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 \"%\" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 %20 이 되고 \"&\"는 %26 이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다."}}, {"@type": "Question", "name": "encodeURI와 encodeURIComponent의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "encodeURI 는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: :// ? & = # / )는 그대로 두고 나머지만 인코딩합니다. encodeURIComponent 는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, - _ . ! ~ * ' ( ) 를 제외한 모든 것을 인코딩합니다."}}, {"@type": "Question", "name": "왜 공백이 %20이 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 \"%\"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 \"+\"로 표현하기도 하지만, 현대 표준은 %20 을 사용합니다."}}, {"@type": "Question", "name": "URL 인코딩이 필요한 경우는 언제인가요?", "acceptedAnswer": {"@type": "Answer", "text": "URL에 허용되지 않거나 특별한 의미를 가진 문자가 포함될 때마다 인코딩이 필요합니다. 예를 들면: URL을 쿼리 파라미터로 전달할 때, JavaScript에서 동적 링크를 만들 때, API 요청을 프로그래밍 방식으로 작성할 때, 쿼리 문자열 값에 공백, 앰퍼샌드, 해시 기호 등을 포함할 때입니다."}}, {"@type": "Question", "name": "쿼리 파라미터에 특수 문자를 인코딩할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 바로 Encode Component 가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 encodeURIComponent(\"user@example.com\") 을 사용하면 user%40example.com 이 됩니다. 개별 값에는 항상 encodeURIComponent 를 사용하세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>

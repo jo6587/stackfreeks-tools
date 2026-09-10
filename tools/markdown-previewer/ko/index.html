@@ -10,6 +10,12 @@
 <title>마크다운 미리보기 &mdash; 무료 온라인 도구 | StackFreeks</title>
 <meta content="왼쪽에 마크다운을 작성하면 오른쪽에 실시간으로 렌더링됩니다. HTML 출력을 복사하거나 툴바로 서식을 빠르게 삽입하세요." name="description">
 <link href="https://tools.stackfreeks.com/tools/markdown-previewer/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/markdown-previewer/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/markdown-previewer/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/markdown-previewer/" hreflang="x-default" rel="alternate">
+  
+
+
 <!-- Open Graph -->
 <meta content="마크다운 미리보기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
 <meta content="왼쪽에 마크다운을 작성하면 오른쪽에 실시간으로 렌더링됩니다. HTML 출력을 복사하거나 툴바로 서식을 빠르게 삽입하세요." property="og:description">
@@ -506,14 +512,8 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-  </style> <link href="https://tools.stackfreeks.com/tools/markdown-previewer/" hreflang="en" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/markdown-previewer/ko/" hreflang="ko" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/markdown-previewer/" hreflang="x-default" rel="alternate">
-  
-
-
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Markdown Previewer", "description": "Live Markdown preview tool with split-pane editor, quick-insert toolbar, HTML export, and dark theme. No install needed — runs entirely in your browser.", "url": "https://tools.stackfreeks.com/tools/markdown-previewer/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/markdown-previewer/ko/"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What Markdown features are supported?", "acceptedAnswer": {"@type": "Answer", "text": "GFM (GitHub Flavored Markdown) — headings, bold, italic, lists, links, images, tables, code blocks, blockquotes, and horizontal rules."}}, {"@type": "Question", "name": "Does it support syntax highlighting?", "acceptedAnswer": {"@type": "Answer", "text": "Not currently — code blocks render clearly but without language-specific color highlighting."}}, {"@type": "Question", "name": "Can I paste from a file?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — open your .md file in any text editor, select all, and paste directly into the left editor panel."}}, {"@type": "Question", "name": "Is my content saved?", "acceptedAnswer": {"@type": "Answer", "text": "No — content lives in your browser only while the tab is open. Nothing is sent to a server. Copy your work before closing."}}]}</script>
+  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Markdown Previewer", "description": "Live Markdown preview tool with split-pane editor, quick-insert toolbar, HTML export, and dark theme. No install needed — runs entirely in your browser.", "url": "https://tools.stackfreeks.com/tools/markdown-previewer/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/markdown-previewer/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "어떤 마크다운 기능이 지원되나요?", "acceptedAnswer": {"@type": "Answer", "text": "GFM(GitHub Flavored Markdown)을 지원합니다 — 제목, 굵게, 기울임, 목록, 링크, 이미지, 표, 코드 블록, 인용구, 수평선 등이 포함됩니다."}}, {"@type": "Question", "name": "코드 구문 강조(Syntax Highlighting)를 지원하나요?", "acceptedAnswer": {"@type": "Answer", "text": "현재는 지원하지 않습니다. 코드 블록은 렌더링되지만 언어별 색상 강조는 없습니다."}}, {"@type": "Question", "name": "파일에서 붙여넣기 할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네 — .md 파일을 텍스트 에디터에서 열고, 전체 선택 후 왼쪽 에디터에 붙여넣기 하면 됩니다."}}, {"@type": "Question", "name": "작성한 내용이 저장되나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요 — 내용은 탭이 열려 있는 동안 브라우저에만 존재합니다. 서버로 전송되지 않으며, 닫기 전에 복사해 두세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -620,48 +620,26 @@
 </section>
 <!-- ── FAQ ── -->
 <section class="faq">
-<div class="faq-title">
 
-<span class="lang-ko">자주 묻는 질문</span>
+<div class="lang-ko">
+<div class="faq-title">자주 묻는 질문</div>
+<div class="faq-list">
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>어떤 마크다운 기능이 지원되나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">GFM(GitHub Flavored Markdown)을 지원합니다 &mdash; 제목, 굵게, 기울임, 목록, 링크, 이미지, 표, 코드 블록, 인용구, 수평선 등이 포함됩니다.</div>
 </div>
 <div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)"><span>
-
-<span class="lang-ko">어떤 마크다운 기능이 지원되나요?</span>
-</span><span class="faq-icon">+</span></button>
-<div class="faq-a">
-
-<span class="lang-ko">GFM(GitHub Flavored Markdown)을 지원합니다 &mdash; 제목, 굵게, 기울임, 목록, 링크, 이미지, 표, 코드 블록, 인용구, 수평선 등이 포함됩니다.</span>
-</div>
+<button class="faq-q" onclick="toggleFaq(this)"><span>코드 구문 강조(Syntax Highlighting)를 지원하나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">현재는 지원하지 않습니다. 코드 블록은 렌더링되지만 언어별 색상 강조는 없습니다.</div>
 </div>
 <div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)"><span>
-
-<span class="lang-ko">코드 구문 강조(Syntax Highlighting)를 지원하나요?</span>
-</span><span class="faq-icon">+</span></button>
-<div class="faq-a">
-
-<span class="lang-ko">현재는 지원하지 않습니다. 코드 블록은 렌더링되지만 언어별 색상 강조는 없습니다.</span>
-</div>
+<button class="faq-q" onclick="toggleFaq(this)"><span>파일에서 붙여넣기 할 수 있나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">네 &mdash; .md 파일을 텍스트 에디터에서 열고, 전체 선택 후 왼쪽 에디터에 붙여넣기 하면 됩니다.</div>
 </div>
 <div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)"><span>
-
-<span class="lang-ko">파일에서 붙여넣기 할 수 있나요?</span>
-</span><span class="faq-icon">+</span></button>
-<div class="faq-a">
-
-<span class="lang-ko">네 &mdash; .md 파일을 텍스트 에디터에서 열고, 전체 선택 후 왼쪽 에디터에 붙여넣기 하면 됩니다.</span>
+<button class="faq-q" onclick="toggleFaq(this)"><span>작성한 내용이 저장되나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">아니요 &mdash; 내용은 탭이 열려 있는 동안 브라우저에만 존재합니다. 서버로 전송되지 않으며, 닫기 전에 복사해 두세요.</div>
 </div>
-</div>
-<div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)"><span>
-
-<span class="lang-ko">작성한 내용이 저장되나요?</span>
-</span><span class="faq-icon">+</span></button>
-<div class="faq-a">
-
-<span class="lang-ko">아니요 &mdash; 내용은 탭이 열려 있는 동안 브라우저에만 존재합니다. 서버로 전송되지 않으며, 닫기 전에 복사해 두세요.</span>
 </div>
 </div>
 </section>

@@ -780,81 +780,55 @@
   <section class="faq">
     <div class="lang-en">
       <p class="section-title">Frequently Asked Questions</p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Why can't I use PHP-FPM and Proxy Pass at the same time?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">PHP-FPM and Proxy Pass both handle the <code>location /</code> block differently — PHP-FPM uses FastCGI to pass PHP files to a PHP process, while Proxy Pass forwards all requests to an upstream server (e.g. Node.js, Python). Combining them on the same <code>location /</code> would create a conflict. If you need both, configure them under separate location blocks and edit the output manually.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I get an SSL certificate with Let's Encrypt?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Install <code>certbot</code> and the nginx plugin: <code>apt install certbot python3-certbot-nginx</code>. Then run <code>certbot --nginx -d example.com -d www.example.com</code>. Certbot will obtain the certificate and update your nginx config automatically. The generated config uses the expected Let's Encrypt paths at <code>/etc/letsencrypt/live/[domain]/</code>.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Where do I put the nginx config file on my server?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Save the file to <code>/etc/nginx/sites-available/example.com</code>. Then create a symlink: <code>ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/</code>. Test the config with <code>nginx -t</code>, then reload: <code>systemctl reload nginx</code>. On some setups (e.g. CentOS), configs go directly in <code>/etc/nginx/conf.d/</code> instead.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What PHP-FPM socket path should I use?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">The default socket path for PHP 8.1 on Ubuntu/Debian is <code>/run/php/php8.1-fpm.sock</code> — that's what this tool generates. If you're running a different PHP version (e.g. 8.2, 7.4), change the version number in the config. You can verify the actual socket path with <code>ls /run/php/</code> on your server.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Does this tool send my config data to a server?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">No. All config generation happens entirely in your browser with JavaScript. Nothing you type is transmitted anywhere. Your domain names and server paths stay completely private.</div>
+        </div>
+      </div>
     </div>
+
     <div class="lang-ko">
       <p class="section-title">자주 묻는 질문</p>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>Why can't I use PHP-FPM and Proxy Pass at the same time?</span></div>
-          <div class="lang-ko"><span>PHP-FPM과 프록시 패스를 동시에 사용할 수 없는 이유가 뭔가요?</span></div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>PHP-FPM과 프록시 패스를 동시에 사용할 수 없는 이유가 뭔가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">PHP-FPM과 프록시 패스는 모두 <code>location /</code> 블록을 다르게 처리합니다. PHP-FPM은 FastCGI를 사용해 PHP 파일을 PHP 프로세스에 전달하고, 프록시 패스는 모든 요청을 업스트림 서버(Node.js, Python 등)로 전달합니다. 동일한 <code>location /</code>에서 둘 다 사용하면 충돌이 발생합니다. 둘 다 필요하다면 별도의 location 블록을 사용하고 설정을 직접 수정하세요.</div>
         </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">PHP-FPM and Proxy Pass both handle the <code>location /</code> block differently — PHP-FPM uses FastCGI to pass PHP files to a PHP process, while Proxy Pass forwards all requests to an upstream server (e.g. Node.js, Python). Combining them on the same <code>location /</code> would create a conflict. If you need both, configure them under separate location blocks and edit the output manually.</div>
-        <div class="lang-ko">PHP-FPM과 프록시 패스는 모두 <code>location /</code> 블록을 다르게 처리합니다. PHP-FPM은 FastCGI를 사용해 PHP 파일을 PHP 프로세스에 전달하고, 프록시 패스는 모든 요청을 업스트림 서버(Node.js, Python 등)로 전달합니다. 동일한 <code>location /</code>에서 둘 다 사용하면 충돌이 발생합니다. 둘 다 필요하다면 별도의 location 블록을 사용하고 설정을 직접 수정하세요.</div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Let's Encrypt로 SSL 인증서를 발급받으려면 어떻게 하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><code>certbot</code>와 nginx 플러그인을 설치하세요: <code>apt install certbot python3-certbot-nginx</code>. 그 다음 <code>certbot --nginx -d example.com -d www.example.com</code>을 실행하세요. Certbot이 인증서를 발급받고 nginx 설정을 자동으로 업데이트합니다. 생성된 설정은 <code>/etc/letsencrypt/live/[domain]/</code>의 표준 Let's Encrypt 경로를 사용합니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>서버에서 nginx 설정 파일을 어디에 저장해야 하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">파일을 <code>/etc/nginx/sites-available/example.com</code>에 저장하세요. 그런 다음 심볼릭 링크를 만드세요: <code>ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/</code>. <code>nginx -t</code>로 설정을 테스트한 후 리로드하세요: <code>systemctl reload nginx</code>. CentOS 등 일부 환경에서는 <code>/etc/nginx/conf.d/</code>에 직접 저장합니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>PHP-FPM 소켓 경로는 어떻게 정해야 하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Ubuntu/Debian에서 PHP 8.1의 기본 소켓 경로는 <code>/run/php/php8.1-fpm.sock</code>입니다 — 이 도구가 생성하는 경로입니다. PHP 버전이 다른 경우(예: 8.2, 7.4) 설정에서 버전 번호를 변경하세요. 서버에서 <code>ls /run/php/</code>로 실제 소켓 경로를 확인할 수 있습니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>이 도구가 설정 데이터를 서버로 전송하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">아니요. 모든 설정 생성은 JavaScript를 사용하여 브라우저 내에서만 처리됩니다. 입력한 내용은 어디에도 전송되지 않습니다. 도메인 이름과 서버 경로는 완전히 비공개로 유지됩니다.</div>
+        </div>
       </div>
     </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>How do I get an SSL certificate with Let's Encrypt?</span></div>
-          <div class="lang-ko"><span>Let's Encrypt로 SSL 인증서를 발급받으려면 어떻게 하나요?</span></div>
-        </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">Install <code>certbot</code> and the nginx plugin: <code>apt install certbot python3-certbot-nginx</code>. Then run <code>certbot --nginx -d example.com -d www.example.com</code>. Certbot will obtain the certificate and update your nginx config automatically. The generated config uses the expected Let's Encrypt paths at <code>/etc/letsencrypt/live/[domain]/</code>.</div>
-        <div class="lang-ko"><code>certbot</code>와 nginx 플러그인을 설치하세요: <code>apt install certbot python3-certbot-nginx</code>. 그 다음 <code>certbot --nginx -d example.com -d www.example.com</code>을 실행하세요. Certbot이 인증서를 발급받고 nginx 설정을 자동으로 업데이트합니다. 생성된 설정은 <code>/etc/letsencrypt/live/[domain]/</code>의 표준 Let's Encrypt 경로를 사용합니다.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>Where do I put the nginx config file on my server?</span></div>
-          <div class="lang-ko"><span>서버에서 nginx 설정 파일을 어디에 저장해야 하나요?</span></div>
-        </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">Save the file to <code>/etc/nginx/sites-available/example.com</code>. Then create a symlink: <code>ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/</code>. Test the config with <code>nginx -t</code>, then reload: <code>systemctl reload nginx</code>. On some setups (e.g. CentOS), configs go directly in <code>/etc/nginx/conf.d/</code> instead.</div>
-        <div class="lang-ko">파일을 <code>/etc/nginx/sites-available/example.com</code>에 저장하세요. 그런 다음 심볼릭 링크를 만드세요: <code>ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/</code>. <code>nginx -t</code>로 설정을 테스트한 후 리로드하세요: <code>systemctl reload nginx</code>. CentOS 등 일부 환경에서는 <code>/etc/nginx/conf.d/</code>에 직접 저장합니다.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>What PHP-FPM socket path should I use?</span></div>
-          <div class="lang-ko"><span>PHP-FPM 소켓 경로는 어떻게 정해야 하나요?</span></div>
-        </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">The default socket path for PHP 8.1 on Ubuntu/Debian is <code>/run/php/php8.1-fpm.sock</code> — that's what this tool generates. If you're running a different PHP version (e.g. 8.2, 7.4), change the version number in the config. You can verify the actual socket path with <code>ls /run/php/</code> on your server.</div>
-        <div class="lang-ko">Ubuntu/Debian에서 PHP 8.1의 기본 소켓 경로는 <code>/run/php/php8.1-fpm.sock</code>입니다 — 이 도구가 생성하는 경로입니다. PHP 버전이 다른 경우(예: 8.2, 7.4) 설정에서 버전 번호를 변경하세요. 서버에서 <code>ls /run/php/</code>로 실제 소켓 경로를 확인할 수 있습니다.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>Does this tool send my config data to a server?</span></div>
-          <div class="lang-ko"><span>이 도구가 설정 데이터를 서버로 전송하나요?</span></div>
-        </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">No. All config generation happens entirely in your browser with JavaScript. Nothing you type is transmitted anywhere. Your domain names and server paths stay completely private.</div>
-        <div class="lang-ko">아니요. 모든 설정 생성은 JavaScript를 사용하여 브라우저 내에서만 처리됩니다. 입력한 내용은 어디에도 전송되지 않습니다. 도메인 이름과 서버 경로는 완전히 비공개로 유지됩니다.</div>
-      </div>
-    </div>
-
   </section>
 
   <!-- Related -->

@@ -781,81 +781,55 @@
   <section class="faq">
     <div class="lang-en">
       <p class="section-title">Frequently Asked Questions</p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between iptables and ufw?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">iptables is the low-level Linux kernel firewall tool — it gives you full control but requires knowing its exact syntax. ufw (Uncomplicated Firewall) is a frontend that simplifies common firewall tasks. For most Ubuntu VPS setups, ufw is recommended; for advanced scenarios like NAT, packet marking, or FORWARD chains, use iptables directly.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Are these rules persistent across reboots?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">ufw rules are persistent by default — they survive reboots. iptables rules are NOT persistent by default and will be lost after a reboot. To persist iptables rules on Debian/Ubuntu, install <code>iptables-persistent</code> and run <code>netfilter-persistent save</code>. On RHEL/CentOS, use <code>service iptables save</code>.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between DROP and REJECT?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">DROP silently discards packets — the sender gets no response and must wait for a timeout. This is good for hiding that a port/service even exists. REJECT sends back an error response (TCP RST or ICMP unreachable) immediately, so the sender knows the connection was refused. REJECT gives a better user experience for internal networks; DROP is preferred for blocking external attackers.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I allow a port range (e.g. 8000–8090)?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Enter a colon-separated range in the Port field: <code>8000:8090</code>. This generates <code>--dport 8000:8090</code> for iptables or <code>8000:8090</code> for ufw. Both tools support port ranges natively. Note that for ufw, you must also specify a protocol (tcp or udp) when using port ranges — this tool does that automatically.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Does this tool send my data to a server?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">No. All rule generation happens entirely in your browser using JavaScript. Nothing you type is sent to any server. Your IP addresses and network configuration stay private.</div>
+        </div>
+      </div>
     </div>
+
     <div class="lang-ko">
       <p class="section-title">자주 묻는 질문</p>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>What is the difference between iptables and ufw?</span></div>
-          <div class="lang-ko"><span>iptables와 ufw의 차이점은 무엇인가요?</span></div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>iptables와 ufw의 차이점은 무엇인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">iptables는 리눅스 커널의 저수준 방화벽 도구로, 완전한 제어가 가능하지만 정확한 문법 숙지가 필요합니다. ufw(Uncomplicated Firewall)는 일반적인 방화벽 작업을 단순화한 프론트엔드입니다. Ubuntu VPS 설정에는 ufw를 권장하며, NAT·패킷 마킹·FORWARD 체인 등 고급 시나리오에서는 iptables를 직접 사용하세요.</div>
         </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">iptables is the low-level Linux kernel firewall tool — it gives you full control but requires knowing its exact syntax. ufw (Uncomplicated Firewall) is a frontend that simplifies common firewall tasks. For most Ubuntu VPS setups, ufw is recommended; for advanced scenarios like NAT, packet marking, or FORWARD chains, use iptables directly.</div>
-        <div class="lang-ko">iptables는 리눅스 커널의 저수준 방화벽 도구로, 완전한 제어가 가능하지만 정확한 문법 숙지가 필요합니다. ufw(Uncomplicated Firewall)는 일반적인 방화벽 작업을 단순화한 프론트엔드입니다. Ubuntu VPS 설정에는 ufw를 권장하며, NAT·패킷 마킹·FORWARD 체인 등 고급 시나리오에서는 iptables를 직접 사용하세요.</div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>이 규칙들은 재부팅 후에도 유지되나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">ufw 규칙은 기본적으로 영구 적용되어 재부팅 후에도 유지됩니다. iptables 규칙은 기본적으로 영구 적용되지 않으며 재부팅 시 초기화됩니다. Debian/Ubuntu에서는 <code>iptables-persistent</code>를 설치하고 <code>netfilter-persistent save</code>를 실행하세요. RHEL/CentOS에서는 <code>service iptables save</code>를 사용하세요.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>DROP과 REJECT의 차이점은 무엇인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">DROP은 패킷을 조용히 버립니다 — 발신자는 응답을 받지 못하고 타임아웃을 기다려야 합니다. 포트나 서비스의 존재 자체를 숨기는 데 유용합니다. REJECT는 즉시 오류 응답(TCP RST 또는 ICMP unreachable)을 전송하므로 발신자가 연결이 거부되었음을 즉시 알 수 있습니다. 내부 네트워크에는 REJECT, 외부 공격자 차단에는 DROP을 권장합니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>포트 범위(예: 8000–8090)는 어떻게 허용하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">포트 필드에 콜론으로 구분된 범위를 입력하세요: <code>8000:8090</code>. iptables에는 <code>--dport 8000:8090</code>으로, ufw에는 <code>8000:8090</code>으로 생성됩니다. 두 도구 모두 포트 범위를 기본 지원합니다. ufw의 경우 포트 범위 사용 시 프로토콜(tcp 또는 udp)을 반드시 지정해야 하며, 이 도구가 자동으로 처리합니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>이 도구가 내 데이터를 서버로 전송하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">아니요. 모든 규칙 생성은 JavaScript를 사용하여 브라우저 내에서만 처리됩니다. 입력한 내용은 어떤 서버에도 전송되지 않습니다. IP 주소와 네트워크 구성 정보는 완전히 비공개로 유지됩니다.</div>
+        </div>
       </div>
     </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>Are these rules persistent across reboots?</span></div>
-          <div class="lang-ko"><span>이 규칙들은 재부팅 후에도 유지되나요?</span></div>
-        </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">ufw rules are persistent by default — they survive reboots. iptables rules are NOT persistent by default and will be lost after a reboot. To persist iptables rules on Debian/Ubuntu, install <code>iptables-persistent</code> and run <code>netfilter-persistent save</code>. On RHEL/CentOS, use <code>service iptables save</code>.</div>
-        <div class="lang-ko">ufw 규칙은 기본적으로 영구 적용되어 재부팅 후에도 유지됩니다. iptables 규칙은 기본적으로 영구 적용되지 않으며 재부팅 시 초기화됩니다. Debian/Ubuntu에서는 <code>iptables-persistent</code>를 설치하고 <code>netfilter-persistent save</code>를 실행하세요. RHEL/CentOS에서는 <code>service iptables save</code>를 사용하세요.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>What is the difference between DROP and REJECT?</span></div>
-          <div class="lang-ko"><span>DROP과 REJECT의 차이점은 무엇인가요?</span></div>
-        </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">DROP silently discards packets — the sender gets no response and must wait for a timeout. This is good for hiding that a port/service even exists. REJECT sends back an error response (TCP RST or ICMP unreachable) immediately, so the sender knows the connection was refused. REJECT gives a better user experience for internal networks; DROP is preferred for blocking external attackers.</div>
-        <div class="lang-ko">DROP은 패킷을 조용히 버립니다 — 발신자는 응답을 받지 못하고 타임아웃을 기다려야 합니다. 포트나 서비스의 존재 자체를 숨기는 데 유용합니다. REJECT는 즉시 오류 응답(TCP RST 또는 ICMP unreachable)을 전송하므로 발신자가 연결이 거부되었음을 즉시 알 수 있습니다. 내부 네트워크에는 REJECT, 외부 공격자 차단에는 DROP을 권장합니다.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>How do I allow a port range (e.g. 8000–8090)?</span></div>
-          <div class="lang-ko"><span>포트 범위(예: 8000–8090)는 어떻게 허용하나요?</span></div>
-        </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">Enter a colon-separated range in the Port field: <code>8000:8090</code>. This generates <code>--dport 8000:8090</code> for iptables or <code>8000:8090</code> for ufw. Both tools support port ranges natively. Note that for ufw, you must also specify a protocol (tcp or udp) when using port ranges — this tool does that automatically.</div>
-        <div class="lang-ko">포트 필드에 콜론으로 구분된 범위를 입력하세요: <code>8000:8090</code>. iptables에는 <code>--dport 8000:8090</code>으로, ufw에는 <code>8000:8090</code>으로 생성됩니다. 두 도구 모두 포트 범위를 기본 지원합니다. ufw의 경우 포트 범위 사용 시 프로토콜(tcp 또는 udp)을 반드시 지정해야 하며, 이 도구가 자동으로 처리합니다.</div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <div>
-          <div class="lang-en"><span>Does this tool send my data to a server?</span></div>
-          <div class="lang-ko"><span>이 도구가 내 데이터를 서버로 전송하나요?</span></div>
-        </div>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">
-        <div class="lang-en">No. All rule generation happens entirely in your browser using JavaScript. Nothing you type is sent to any server. Your IP addresses and network configuration stay private.</div>
-        <div class="lang-ko">아니요. 모든 규칙 생성은 JavaScript를 사용하여 브라우저 내에서만 처리됩니다. 입력한 내용은 어떤 서버에도 전송되지 않습니다. IP 주소와 네트워크 구성 정보는 완전히 비공개로 유지됩니다.</div>
-      </div>
-    </div>
-
   </section>
 
   <!-- Related -->

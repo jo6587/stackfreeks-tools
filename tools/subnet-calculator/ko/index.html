@@ -10,6 +10,12 @@
 <title>IP 서브넷 계산기 &mdash; 무료 온라인 도구 | StackFreeks</title>
 <meta content="CIDR 표기법으로 네트워크 주소, 브로드캐스트, 호스트 범위를 즉시 계산" name="description">
 <link href="https://tools.stackfreeks.com/tools/subnet-calculator/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/subnet-calculator/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/subnet-calculator/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/subnet-calculator/" hreflang="x-default" rel="alternate">
+  
+
+
 <!-- Open Graph -->
 <meta content="IP 서브넷 계산기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
 <meta content="CIDR 표기법으로 네트워크 주소, 브로드캐스트, 호스트 범위를 즉시 계산" property="og:description">
@@ -502,13 +508,7 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-  </style> <link href="https://tools.stackfreeks.com/tools/subnet-calculator/" hreflang="en" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/subnet-calculator/ko/" hreflang="ko" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/subnet-calculator/" hreflang="x-default" rel="alternate">
-  
-
-
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "IP Subnet Calculator", "description": "Calculate IP subnet details from CIDR notation. Get network address, broadcast, host range, subnet mask, and usable hosts. Free online subnet calculator, no account required.", "url": "https://tools.stackfreeks.com/tools/subnet-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/subnet-calculator/ko/"}}</script>
+  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "IP Subnet Calculator", "description": "Calculate IP subnet details from CIDR notation. Get network address, broadcast, host range, subnet mask, and usable hosts. Free online subnet calculator, no account required.", "url": "https://tools.stackfreeks.com/tools/subnet-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/subnet-calculator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "CIDR 표기법이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "CIDR(Classless Inter-Domain Routing)은 IP 주소와 네트워크 마스크를 함께 표현하는 방식입니다. 192.168.1.0/24 에서 슬래시 뒤의 숫자는 네트워크 부분의 비트 수를 나타냅니다. /24 는 첫 24비트가 네트워크를 식별하고, 나머지 8비트가 호스트 주소에 사용됩니다(총 256개, 사용 가능 254개)."}}, {"@type": "Question", "name": "네트워크 주소와 브로드캐스트 주소의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "네트워크 주소 는 서브넷의 첫 번째 주소(호스트 비트 전부 0)로, 서브넷 자체를 식별하며 호스트에 할당할 수 없습니다. 브로드캐스트 주소 는 마지막 주소(호스트 비트 전부 1)로, 서브넷 내 모든 장치에 동시에 데이터를 전송할 때 사용합니다. 그 사이의 모든 주소가 사용 가능한 호스트 주소입니다."}}, {"@type": "Question", "name": "/24 서브넷에는 몇 개의 호스트가 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "/24 서브넷은 총 256개의 주소(2 8 = 256)를 가집니다. 네트워크 주소와 브로드캐스트 주소를 제외하면 254개의 호스트 주소 를 사용할 수 있습니다. 가정이나 사무실 LAN에서 가장 흔히 쓰이는 서브넷입니다."}}, {"@type": "Question", "name": "사설 IP 주소 범위란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "RFC 1918은 공인 인터넷에서 라우팅되지 않는 세 가지 사설 IPv4 범위를 정의합니다: 10.0.0.0/8 (클래스 A — 1,600만 개), 172.16.0.0/12 (클래스 B — 약 100만 개), 192.168.0.0/16 (클래스 C — 65,536개). 가정 네트워크, 기업 인트라넷, VPS 사설 네트워크에 널리 사용됩니다."}}, {"@type": "Question", "name": "VPS 네트워크에 적합한 서브넷 크기는 어떻게 선택하나요?", "acceptedAnswer": {"@type": "Answer", "text": "서버 수가 적은 소규모 VPS 프로젝트는 /28 (14개 호스트) 또는 /29 (6개 호스트)로 충분합니다. 성장하는 인프라나 Kubernetes 클러스터는 /24 (254개 호스트) 이상을 고려하세요. Vultr에서는 커스텀 CIDR 범위의 사설 네트워크를 무료로 만들 수 있어 서버 간 안전한 통신에 활용할 수 있습니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>

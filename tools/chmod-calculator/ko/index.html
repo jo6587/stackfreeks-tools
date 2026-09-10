@@ -8,6 +8,12 @@
 <title>Chmod 계산기 &mdash; 무료 온라인 도구 | StackFreeks</title>
 <meta content="Linux & 서버" name="description">
 <link href="https://tools.stackfreeks.com/tools/chmod-calculator/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/chmod-calculator/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/chmod-calculator/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/chmod-calculator/" hreflang="x-default" rel="alternate">
+  
+
+
 <link href="/stackfreeks_icon.png" rel="icon" type="image/png">
 <link href="/stackfreeks_icon.png" rel="apple-touch-icon">
 <!-- Open Graph -->
@@ -501,13 +507,7 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-  </style> <link href="https://tools.stackfreeks.com/tools/chmod-calculator/" hreflang="en" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/chmod-calculator/ko/" hreflang="ko" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/chmod-calculator/" hreflang="x-default" rel="alternate">
-  
-
-
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Chmod Calculator", "description": "Calculate Linux file permissions with an interactive chmod calculator. Convert between symbolic (rwxrwxrwx), octal (755), and numeric formats instantly. Free, no account required.", "url": "https://tools.stackfreeks.com/tools/chmod-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/chmod-calculator/ko/"}}</script>
+  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Chmod Calculator", "description": "Calculate Linux file permissions with an interactive chmod calculator. Convert between symbolic (rwxrwxrwx), octal (755), and numeric formats instantly. Free, no account required.", "url": "https://tools.stackfreeks.com/tools/chmod-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/chmod-calculator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "chmod 755는 무엇을 의미하나요?", "acceptedAnswer": {"@type": "Answer", "text": "chmod 755 는 Owner: 읽기+쓰기+실행(7), Group: 읽기+실행(5), Others: 읽기+실행(5)을 설정합니다. 실행 파일과 디렉터리에 사용하는 표준 권한으로, 소유자만 쓸 수 있고 나머지는 읽고 실행할 수 있습니다."}}, {"@type": "Question", "name": "644와 755의 차이점은 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "644 는 일반 파일에 사용합니다 — 소유자는 읽기·쓰기, 그룹과 기타는 읽기만 가능합니다. 755 는 실행 권한이 추가되어 스크립트, 바이너리, 디렉터리(탐색에 실행 권한 필요)에 적합합니다."}}, {"@type": "Question", "name": "스티키 비트(Sticky bit)란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "스티키 비트(8진수 1000, 심볼릭 t )는 디렉터리 내 파일을 소유자만 삭제할 수 있도록 제한합니다. /tmp 처럼 여러 사용자가 공유하는 디렉터리에서 서로의 파일을 삭제하지 못하게 할 때 사용합니다."}}, {"@type": "Question", "name": "권한을 재귀적으로 적용하려면 어떻게 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "명령어 미리보기 위의 Recursive (-R) 토글을 활성화하면 -R 플래그가 추가됩니다. chmod -R 755 dirname 처럼 디렉터리와 모든 하위 파일에 권한이 적용됩니다. 파일별로 다른 권한이 필요한 경우 주의해서 사용하세요."}}, {"@type": "Question", "name": "SSH 키에는 어떤 권한이 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "SSH 개인 키( ~/.ssh/id_rsa )는 반드시 600 (소유자 읽기+쓰기만)이어야 합니다. ~/.ssh/ 디렉터리는 700 , 공개 키( authorized_keys )는 644 로 설정하세요. 그룹이나 기타에 접근 권한이 있는 개인 키는 SSH가 사용을 거부합니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>

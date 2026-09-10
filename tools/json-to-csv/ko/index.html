@@ -10,6 +10,12 @@
 <title>JSON &harr; CSV 변환기 &mdash; 무료 온라인 도구 | StackFreeks</title>
 <meta content="JSON 배열을 CSV로, CSV를 JSON으로 즉시 변환. 무료, 브라우저에서 작동." name="description">
 <link href="https://tools.stackfreeks.com/tools/json-to-csv/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/json-to-csv/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/json-to-csv/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/json-to-csv/" hreflang="x-default" rel="alternate">
+  
+
+
 <!-- Open Graph -->
 <meta content="JSON &harr; CSV 변환기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
 <meta content="JSON 배열을 CSV로, CSV를 JSON으로 즉시 변환. 무료, 브라우저에서 작동." property="og:description">
@@ -368,13 +374,7 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-  </style> <link href="https://tools.stackfreeks.com/tools/json-to-csv/" hreflang="en" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/json-to-csv/ko/" hreflang="ko" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/json-to-csv/" hreflang="x-default" rel="alternate">
-  
-
-
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "JSON to CSV Converter", "description": "Convert JSON arrays to CSV online for free. Also convert CSV back to JSON. No account required, works entirely in your browser.", "url": "https://tools.stackfreeks.com/tools/json-to-csv/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/json-to-csv/ko/"}}</script>
+  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "JSON to CSV Converter", "description": "Convert JSON arrays to CSV online for free. Also convert CSV back to JSON. No account required, works entirely in your browser.", "url": "https://tools.stackfreeks.com/tools/json-to-csv/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/json-to-csv/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "어떤 JSON 형식을 지원하나요?", "acceptedAnswer": {"@type": "Answer", "text": "이 툴은 객체 배열 형태의 JSON을 지원합니다. 배열 안의 각 객체가 CSV의 한 행이 됩니다. 첫 번째 객체의 키가 헤더 행으로 사용됩니다. 평면(flat) 객체가 가장 잘 작동하며, 중첩 객체는 CSV 셀 안에 JSON 문자열로 직렬화됩니다."}}, {"@type": "Question", "name": "JSON 파일을 Excel용 CSV로 변환하는 방법은?", "acceptedAnswer": {"@type": "Answer", "text": "JSON을 \"JSON → CSV\" 탭에 붙여넣고 변환 버튼을 클릭하세요. 그 다음 \"다운로드 .csv\"를 클릭합니다. Excel에서 파일 → 열기로 다운로드한 파일을 선택하면 자동으로 가져옵니다. Excel 열 호환성을 위해 JSON이 평면 객체 배열인지 확인하세요."}}, {"@type": "Question", "name": "중첩된 JSON 객체는 CSV로 어떻게 변환되나요?", "acceptedAnswer": {"@type": "Answer", "text": "CSV는 평면 형식이므로 중첩 객체와 하위 배열을 별도 열로 표현할 수 없습니다. 이 변환기는 중첩 객체를 JSON.stringify()로 직렬화하고, 배열 값은 세미콜론으로 연결합니다. 가져온 후 Excel이나 스크립트에서 해당 셀을 추가로 분리할 수 있습니다."}}, {"@type": "Question", "name": "큰 JSON 파일도 처리할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네 — 모든 처리가 브라우저에서 클라이언트 측으로 실행되므로 데이터가 서버로 전송되지 않습니다. 성능은 기기에 따라 다르지만 대부분의 최신 브라우저는 수만 행도 문제없이 처리합니다. 100만 행 이상의 매우 큰 파일은 먼저 분할하거나 jq 같은 커맨드라인 도구를 사용하는 것을 권장합니다."}}, {"@type": "Question", "name": "CSV를 JSON으로 무료로 다시 변환할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네 — 이 페이지에서 \"CSV → JSON\" 탭으로 전환하세요. 헤더 행이 있는 CSV를 붙여넣고 변환 버튼을 클릭하면 형식화된 JSON 배열이 출력됩니다. 쉼표를 포함한 인용 필드도 올바르게 처리됩니다. 결과를 .json 파일로 다운로드하거나 클립보드로 복사할 수 있습니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>

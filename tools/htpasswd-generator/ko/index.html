@@ -8,6 +8,12 @@
 <title>.htpasswd 생성기 &mdash; 무료 온라인 도구 | StackFreeks</title>
 <meta content="서버 보안" name="description">
 <link href="https://tools.stackfreeks.com/tools/htpasswd-generator/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/htpasswd-generator/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/htpasswd-generator/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/htpasswd-generator/" hreflang="x-default" rel="alternate">
+  
+
+
 <link href="/stackfreeks_icon.png" rel="icon" type="image/png">
 <link href="/stackfreeks_icon.png" rel="apple-touch-icon">
 <!-- Open Graph -->
@@ -569,13 +575,7 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-  </style> <link href="https://tools.stackfreeks.com/tools/htpasswd-generator/" hreflang="en" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/htpasswd-generator/ko/" hreflang="ko" rel="alternate">
-  <link href="https://tools.stackfreeks.com/tools/htpasswd-generator/" hreflang="x-default" rel="alternate">
-  
-
-
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Htpasswd Generator", "description": "Generate .htpasswd file entries for Apache and Nginx basic auth. Free online htpasswd generator — bcrypt, MD5, SHA1, and plain formats. Client-side only, no server.", "url": "https://tools.stackfreeks.com/tools/htpasswd-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/htpasswd-generator/ko/"}}</script>
+  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Htpasswd Generator", "description": "Generate .htpasswd file entries for Apache and Nginx basic auth. Free online htpasswd generator — bcrypt, MD5, SHA1, and plain formats. Client-side only, no server.", "url": "https://tools.stackfreeks.com/tools/htpasswd-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/htpasswd-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": ".htpasswd 파일이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": ".htpasswd 파일은 사용자명과 해시된 비밀번호 쌍을 한 줄씩 저장하는 텍스트 파일입니다. Apache와 Nginx는 이 파일을 사용해 HTTP 기본 인증(Basic Auth)을 적용하며, 보호된 콘텐츠에 접근하기 전에 방문자에게 사용자명과 비밀번호를 요구합니다."}}, {"@type": "Question", "name": "어떤 해시 형식을 사용해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "새 설정에는 bcrypt 가 가장 좋은 선택입니다. 설계상 느리게 동작해 무차별 대입 공격을 실용적으로 불가능하게 만들며, Apache 2.4+와 Nginx(bcrypt 지원 PAM 백엔드)에서 지원됩니다. MD5-APR( $apr1$ )은 광범위하게 지원되지만 보안이 약합니다. SHA1은 레거시 형식으로 새 환경에는 피하세요. 평문은 프로덕션에서 절대 사용하면 안 됩니다."}}, {"@type": "Question", "name": "bcrypt는 .htpasswd에 안전한가요?", "acceptedAnswer": {"@type": "Answer", "text": "네. 비용 인자(cost factor) 10의 bcrypt는 해시 검증에 약 100ms가 소요되어 자동화된 크리덴셜 스터핑 공격을 극도로 느리게 만듭니다. Apache 2.4+는 AuthType Basic + AuthUserFile 조합으로 bcrypt를 기본 지원합니다. 단, Nginx는 기본적으로 bcrypt 해시를 검증하지 않으므로 bcrypt 지원 PAM 모듈이나 리버스 프록시 인증 솔루션이 필요합니다."}}, {"@type": "Question", "name": "Nginx에서 .htpasswd를 어떻게 사용하나요?", "acceptedAnswer": {"@type": "Answer", "text": "Nginx server 또는 location 블록에 다음 지시어를 추가하세요: auth_basic \"Protected Area\"; auth_basic_user_file /etc/nginx/.htpasswd; Nginx는 MD5-APR과 SHA1을 기본 지원합니다. bcrypt 지원이 필요하면 libnginx-mod-http-auth-pam 패키지를 설치하고 PAM을 설정하세요."}}, {"@type": "Question", "name": "비밀번호가 서버로 전송되나요?", "acceptedAnswer": {"@type": "Answer", "text": "아닙니다. 이 도구는 완전히 브라우저 내에서 실행됩니다. 모든 해싱은 JavaScript를 통해 클라이언트 측에서 처리됩니다 — bcrypt는 bcryptjs 라이브러리, SHA1은 Web Crypto API, MD5-APR은 순수 JS 구현을 사용합니다. 어떠한 데이터도 전송되지 않습니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
