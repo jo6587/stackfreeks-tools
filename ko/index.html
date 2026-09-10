@@ -113,42 +113,74 @@
       padding: 28px 24px 64px;
     }
 
-    /* Category anchor nav */
-    .cat-nav-wrap {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-    }
-    .cat-nav {
-      display: flex;
-      gap: 4px;
-      max-width: 720px;
+    /* Category tile grid */
+    .cat-tiles-section {
+      max-width: 840px;
       margin: 0 auto;
-      padding: 10px 24px;
-      overflow-x: auto;
-      scrollbar-width: none;
+      padding: 40px 24px;
     }
-    .cat-nav::-webkit-scrollbar { display: none; }
-    .cat-nav a {
-      flex-shrink: 0;
-      white-space: nowrap;
-      font-size: 12px;
-      color: var(--text-2);
-      padding: 4px 10px;
-      border: 1px solid transparent;
-      border-radius: var(--radius);
-      transition: border-color 0.15s, color 0.15s;
+    .cat-tiles-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      margin-bottom: 16px;
+      text-align: center;
     }
-    .cat-nav a:hover {
-      border-color: var(--border-2);
+    .cat-tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .cat-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      min-height: 96px;
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
       color: var(--text-1);
+      transition: border-color 0.15s;
+    }
+    .cat-tile:hover {
+      border-color: var(--border-2);
       opacity: 1;
+    }
+    .cat-tile-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .cat-tile:hover .cat-tile-icon {
+      border-color: var(--accent);
+      background: rgba(99,102,241,0.08);
+    }
+    .cat-tile-name {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+    }
+    .cat-tile-count {
+      display: block;
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 3px;
     }
 
     .tools-cat {
-      scroll-margin-top: 60px;
+      scroll-margin-top: 20px;
     }
     .tools-cat + .tools-cat {
       margin-top: 40px;
@@ -258,6 +290,14 @@
       .hero p { font-size: 14px; }
       .tools-section { padding: 0 16px 48px; }
       .footer-links { gap: 14px; }
+      .cat-tiles-section { padding: 28px 16px; }
+    }
+    @media (max-width: 640px) {
+      .cat-tiles {
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
+      }
+      .cat-tile { padding: 16px; min-height: 0; }
+      .cat-tile-icon { width: 40px; height: 40px; font-size: 20px; }
     }
   </style>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
@@ -277,16 +317,47 @@
 <p>이미지 변환, 데이터 처리 등 일상에서 쓰는 브라우저 툴 모음. 계정이나 설치 없이 바로 사용하세요.</p>
 </div>
 </section>
-<!-- Category anchor nav -->
-<div class="cat-nav-wrap">
-<div aria-label="Tool categories" class="cat-nav" role="navigation">
-<a data-i18n="cat_vps_server" href="#vps-server">VPS & Server</a>
-<a data-i18n="cat_devops" href="#devops-config">DevOps & Config Generators</a>
-<a data-i18n="cat_converters" href="#converters">Converters & Encoders</a>
-<a data-i18n="cat_text_code" href="#text-code">Text & Code</a>
-<a data-i18n="cat_image" href="#image">Image Tools</a>
-</div>
-</div>
+<!-- Category tile grid -->
+<section class="cat-tiles-section">
+<p class="cat-tiles-eyebrow" data-i18n="cat_browse">Browse by category</p>
+<nav aria-label="Tool categories" class="cat-tiles">
+<a class="cat-tile" href="#vps-server">
+<span class="cat-tile-icon">🖥️</span>
+<span>
+<span class="cat-tile-name" data-i18n="cat_vps_server">VPS & Server</span>
+<span class="cat-tile-count">15 tools</span>
+</span>
+</a>
+<a class="cat-tile" href="#devops-config">
+<span class="cat-tile-icon">⚙️</span>
+<span>
+<span class="cat-tile-name" data-i18n="cat_devops">DevOps & Config Generators</span>
+<span class="cat-tile-count">13 tools</span>
+</span>
+</a>
+<a class="cat-tile" href="#converters">
+<span class="cat-tile-icon">🔄</span>
+<span>
+<span class="cat-tile-name" data-i18n="cat_converters">Converters & Encoders</span>
+<span class="cat-tile-count">13 tools</span>
+</span>
+</a>
+<a class="cat-tile" href="#text-code">
+<span class="cat-tile-icon">📝</span>
+<span>
+<span class="cat-tile-name" data-i18n="cat_text_code">Text & Code</span>
+<span class="cat-tile-count">7 tools</span>
+</span>
+</a>
+<a class="cat-tile" href="#image">
+<span class="cat-tile-icon">🖼️</span>
+<span>
+<span class="cat-tile-name" data-i18n="cat_image">Image Tools</span>
+<span class="cat-tile-count">8 tools</span>
+</span>
+</a>
+</nav>
+</section>
 <!-- Tools Grid -->
 <section class="tools-section">
 <section class="tools-cat" id="vps-server">
@@ -965,14 +1036,16 @@
         cat_devops: 'DevOps & Config Generators',
         cat_converters: 'Converters & Encoders',
         cat_text_code: 'Text & Code',
-        cat_image: 'Image Tools'
+        cat_image: 'Image Tools',
+        cat_browse: 'Browse by category'
       },
       ko: {
         cat_vps_server: 'VPS & 서버',
         cat_devops: 'DevOps & 설정 생성기',
         cat_converters: '변환 & 인코딩',
         cat_text_code: '텍스트 & 코드',
-        cat_image: '이미지 도구'
+        cat_image: '이미지 도구',
+        cat_browse: '카테고리별 보기'
       }
     };
   </script>
