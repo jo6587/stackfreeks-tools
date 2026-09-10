@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>에임 트레이너 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="재미 & 테스트" name="description">
+<link href="https://tools.stackfreeks.com/tools/aim-trainer/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/aim-trainer/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/aim-trainer/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/aim-trainer/" hreflang="x-default" rel="alternate">
+  
+
+
+<!-- Open Graph -->
+<meta content="에임 트레이너 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="재미 & 테스트" property="og:description">
+<meta content="https://tools.stackfreeks.com/tools/aim-trainer/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<!-- Twitter -->
+<meta content="summary" name="twitter:card">
+<meta content="에임 트레이너 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
+<meta content="재미 & 테스트" name="twitter:description">
+<!-- ADSENSE_SLOT_TOP -->
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    main { padding: 32px 0 48px; }
+
+    /* Game */
+    .count-picker { display: flex; gap: 8px; justify-content: center; margin-bottom: 14px; }
+    .count-btn {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-2); border-radius: var(--radius);
+      padding: 6px 16px; font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .count-btn:hover { border-color: var(--border-2); color: var(--text-1); }
+    .count-btn.active { border-color: var(--accent); color: var(--text-1); }
+    .count-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+
+    .playarea {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      min-height: 360px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      cursor: crosshair;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .target {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(99,102,241,0.18), inset 0 0 0 6px rgba(255,255,255,0.14);
+      cursor: pointer;
+    }
+    .pa-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; gap: 8px;
+      padding: 32px 24px;
+      color: var(--text-1);
+    }
+    .pa-overlay[hidden] { display: none; }
+    .stage-big { font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; }
+    .stage-sub { font-size: 0.9rem; color: var(--text-2); max-width: 420px; }
+
+    .progress { margin-top: 14px; font-size: 12px; color: var(--text-3); text-align: center; letter-spacing: 0.04em; }
+    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); text-align: center; }
+
+    /* Result panel */
+    .result-panel { text-align: center; }
+    .result-avg { font-size: 3rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+    .result-avg span { font-size: 1rem; color: var(--text-3); font-weight: 400; }
+    .result-band { margin-top: 4px; font-size: 0.95rem; font-weight: 500; color: var(--success); }
+    .result-context { margin-top: 10px; font-size: 13px; color: var(--text-2); max-width: 440px; margin-left: auto; margin-right: auto; }
+    .result-stats { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+    .stat-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; min-width: 96px; }
+    .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+    .stat-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
+
+    .btn {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); padding: 10px 22px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); margin-top: 18px;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.88; }
+
+    .caveat { margin-top: 14px; font-size: 11px; color: var(--text-3); line-height: 1.6; max-width: 620px; margin-left: auto; margin-right: auto; text-align: center; }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related tools */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .playarea { min-height: 320px; }
+      .pa-overlay { padding: 28px 16px; }
+      .stage-big { font-size: 1.6rem; }
+      .result-avg { font-size: 2.4rem; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Aim Trainer", "description": "Free online aim trainer. Click targets as fast as you can across 10, 30 or 50 spawns to measure your average milliseconds per target, accuracy and total time, and see how your mouse aim compares.", "url": "https://tools.stackfreeks.com/tools/aim-trainer/ko/", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/aim-trainer/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "좋은 에임 트레이너 점수는 어느 정도인가요?", "acceptedAnswer": {"@type": "Answer", "text": "타겟 클릭 방식 에임 트레이너에서는 타겟당 평균 시간이 핵심 지표입니다. 높은 정확도로 타겟당 600ms 미만이면 캐주얼 플레이어 기준 좋은 결과입니다. 일반 FPS 플레이어는 대략 450~550ms, 경쟁 플레이어는 정확도 90% 이상을 유지하며 400ms에 근접하는 경우가 많습니다. 속도만이 목표는 아닙니다. 놓친 클릭이 많은 빠른 평균보다 깔끔하게 명중한 조금 느린 평균이 낫습니다."}}, {"@type": "Question", "name": "에임과 마우스 정확도를 어떻게 개선하나요?", "acceptedAnswer": {"@type": "Answer", "text": "한 번에 길게 하기보다 매일 짧게 연습하고, 측정 전 워밍업하세요. 크로스헤어를 크게 움직일 때 마우스패드 대부분을 쓰도록 감도를 낮추세요. 대부분 360도 회전당 30~50cm에서 가장 잘 조준합니다. 큰 마우스패드와 일관된 책상 세팅을 쓰고, 큰 플릭은 팔꿈치, 작은 보정은 손목으로 하세요. 타겟을 지나쳐 휘두르지 말고 정확히 멈추는 데 집중하며 정확도가 속도를 이끌게 하세요."}}, {"@type": "Question", "name": "타겟당 몇 ms가 좋은 건가요?", "acceptedAnswer": {"@type": "Answer", "text": "이 트레이너에서는 타겟당 600ms 미만이면 좋고, 450~550ms면 우수하며, 꾸준히 400ms 미만이면 경쟁 FPS 플레이어 수준으로 탁월합니다. 800ms를 넘으면 보통 감도가 너무 높거나 낮고, 그립이 불안정하거나, 타겟이 나타난 곳을 보지 않고 다음 타겟을 찾고 있다는 뜻입니다. 화면 크기와 주사율도 수십 ms 정도 결과를 바꿉니다."}}, {"@type": "Question", "name": "DPI나 감도가 에임에 중요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "실효 감도가 중요하며 DPI 자체는 그렇지 않습니다. 중요한 것은 360도 회전당 센티미터이며, 이는 DPI에 게임 또는 앱 내 감도를 곱한 값입니다. 감도가 너무 높으면 작은 보정이 예민하고 불안정해지고, 너무 낮으면 마우스패드가 부족해집니다. 편안한 실효 감도를 정해 모든 게임과 트레이너에서 동일하게 유지하고, 근육 기억이 자리 잡도록 거의 바꾸지 마세요."}}, {"@type": "Question", "name": "온라인 에임 트레이너가 Aim Lab이나 Kovaak's만큼 좋은가요?", "acceptedAnswer": {"@type": "Answer", "text": "이런 브라우저 에임 트레이너는 빠른 워밍업, 클릭 속도와 정확도라는 단순 지표를 시간에 따라 추적하는 것, 새 마우스나 감도 테스트에 좋습니다. Aim Lab이나 Kovaak's 같은 전용 앱은 트래킹, 플리킹, 타겟 전환, 상세 분석을 제공하는데 가벼운 웹 툴에는 없습니다. 빠른 매일 반복은 온라인 트레이너를, 체계적인 훈련과 진행 그래프가 필요할 때는 데스크톱 앱을 사용하세요."}}]}</script>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- 1. Nav -->
+<nav>
+<a class="logo" href="/ko/">
+<div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+<div class="nav-right">
+<a class="lang-toggle" href="https://tools.stackfreeks.com/tools/aim-trainer/">English</a>
+<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+</div>
+</nav>
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+<!-- 3. Hero -->
+<section class="hero">
+<div class="container">
+
+<div class="lang-ko">
+<p class="eyebrow">재미 & 테스트</p>
+<h1>에임 트레이너</h1>
+<p class="hero-desc">타겟을 최대한 빠르게 클릭하세요. 10, 30, 50개 중 선택한 뒤 타겟당 평균 밀리초, 정확도, 총 소요 시간을 확인하세요.</p>
+</div>
+</div>
+</section>
+<!-- 4. Tool body -->
+<main>
+<div class="container">
+<div class="count-picker" id="countPicker">
+<button class="count-btn active" data-count="10" type="button">10</button>
+<button class="count-btn" data-count="30" type="button">30</button>
+<button class="count-btn" data-count="50" type="button">50</button>
+</div>
+<div class="playarea" id="area">
+<div class="pa-overlay" id="overlay">
+<div class="stage-big" id="ovBig">Aim Trainer</div>
+<div class="stage-sub" id="ovSub">Click Start, then hit every target as fast as you can.</div>
+<button class="btn" id="startBtn" type="button">Start</button>
+<div class="yourbest" hidden id="yourBest"></div>
+</div>
+</div>
+<div class="progress" id="progress">0 / 10</div>
+<p class="caveat" data-i18n="caveat">Targets spawn at random positions and your time per target includes display and input latency, so treat the score as a relative benchmark for warm-ups and comparing setups, not a lab measurement.</p>
+</div>
+</main>
+<!-- About / SEO copy -->
+<section class="about-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>에임 트레이너 소개</h2>
+<p>이 에임 트레이너는 "점 클릭" 방식의 고전적인 정확도 테스트의 브라우저 버전입니다. 시작하면 플레이 영역 안 무작위 위치에 원형 타겟이 나타납니다. 클릭하거나 탭하면 즉시 다른 곳에 다시 생성됩니다. 타이머는 첫 명중에서 시작해 마지막 타겟을 제거하면 멈추며, 핵심 점수는 타겟당 평균 시간(밀리초)입니다. 총 시간, 놓친 횟수, 정확도도 함께 표시되어 정확도를 속도와 맞바꾸고 있는지 확인할 수 있습니다.</p>
+<p>매일 짧은 워밍업과 새 마우스, 감도, 마우스패드 테스트에 적합합니다. 빠른 확인은 10개, 제대로 된 지구력 테스트는 30~50개를 선택하세요. 타겟 개수별 최고 평균 기록은 브라우저에 저장되어 갱신을 노릴 수 있습니다. 모든 처리는 클라이언트에서 이루어지고 가입이 필요 없으며, 데스크톱 마우스와 모바일 터치 모두에서 작동합니다.</p>
+</div>
+</div>
+</section>
+<!-- 5. How-to section -->
+<section class="guide-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>에임 트레이너 사용 방법</h2>
+<div class="guide-grid">
+<div class="guide-card">
+<div class="guide-step">Step 1</div>
+<div class="guide-title">타겟 개수 선택</div>
+<div class="guide-desc">빠른 확인은 10개, 지구력 테스트는 30~50개를 선택하세요. 기본값은 10개입니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 2</div>
+<div class="guide-title">시작</div>
+<div class="guide-desc">Start를 누르세요. 첫 타겟이 무작위 위치에 나타납니다. 타이머는 첫 명중 순간 시작됩니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 3</div>
+<div class="guide-title">모든 타겟 제거</div>
+<div class="guide-desc">타겟을 최대한 빠르게 클릭하세요. 명중할 때마다 새 타겟이 생성됩니다. 빗나간 클릭은 정확도에 반영됩니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 4</div>
+<div class="guide-title">결과 확인</div>
+<div class="guide-desc">타겟당 평균 ms, 총 시간, 놓친 횟수, 정확도를 확인하세요. Try again으로 초기화하고 저장된 최고 기록에 도전하세요.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FAQ -->
+<section class="faq-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>자주 묻는 질문</h2>
+<div class="faq-list">
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>좋은 에임 트레이너 점수는 어느 정도인가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">타겟 클릭 방식 에임 트레이너에서는 타겟당 평균 시간이 핵심 지표입니다. 높은 정확도로 타겟당 600ms 미만이면 캐주얼 플레이어 기준 좋은 결과입니다. 일반 FPS 플레이어는 대략 450~550ms, 경쟁 플레이어는 정확도 90% 이상을 유지하며 400ms에 근접하는 경우가 많습니다. 속도만이 목표는 아닙니다. 놓친 클릭이 많은 빠른 평균보다 깔끔하게 명중한 조금 느린 평균이 낫습니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>에임과 마우스 정확도를 어떻게 개선하나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">한 번에 길게 하기보다 매일 짧게 연습하고, 측정 전 워밍업하세요. 크로스헤어를 크게 움직일 때 마우스패드 대부분을 쓰도록 감도를 낮추세요. 대부분 360도 회전당 30~50cm에서 가장 잘 조준합니다. 큰 마우스패드와 일관된 책상 세팅을 쓰고, 큰 플릭은 팔꿈치, 작은 보정은 손목으로 하세요. 타겟을 지나쳐 휘두르지 말고 정확히 멈추는 데 집중하며 정확도가 속도를 이끌게 하세요.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>타겟당 몇 ms가 좋은 건가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">이 트레이너에서는 타겟당 600ms 미만이면 좋고, 450~550ms면 우수하며, 꾸준히 400ms 미만이면 경쟁 FPS 플레이어 수준으로 탁월합니다. 800ms를 넘으면 보통 감도가 너무 높거나 낮고, 그립이 불안정하거나, 타겟이 나타난 곳을 보지 않고 다음 타겟을 찾고 있다는 뜻입니다. 화면 크기와 주사율도 수십 ms 정도 결과를 바꿉니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>DPI나 감도가 에임에 중요한가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">실효 감도가 중요하며 DPI 자체는 그렇지 않습니다. 중요한 것은 360도 회전당 센티미터이며, 이는 DPI에 게임 또는 앱 내 감도를 곱한 값입니다. 감도가 너무 높으면 작은 보정이 예민하고 불안정해지고, 너무 낮으면 마우스패드가 부족해집니다. 편안한 실효 감도를 정해 모든 게임과 트레이너에서 동일하게 유지하고, 근육 기억이 자리 잡도록 거의 바꾸지 마세요.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>온라인 에임 트레이너가 Aim Lab이나 Kovaak's만큼 좋은가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">이런 브라우저 에임 트레이너는 빠른 워밍업, 클릭 속도와 정확도라는 단순 지표를 시간에 따라 추적하는 것, 새 마우스나 감도 테스트에 좋습니다. Aim Lab이나 Kovaak's 같은 전용 앱은 트래킹, 플리킹, 타겟 전환, 상세 분석을 제공하는데 가벼운 웹 툴에는 없습니다. 빠른 매일 반복은 온라인 트레이너를, 체계적인 훈련과 진행 그래프가 필요할 때는 데스크톱 앱을 사용하세요.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+<div class="sf-related-grid">
+<a class="sf-related-card" href="/tools/reaction-time-test/ko/"><span>⚡</span>Reaction Time Test</a>
+<a class="sf-related-card" href="/tools/click-speed-test/ko/"><span>🖱️</span>Click Speed Test</a>
+<a class="sf-related-card" href="/tools/keyboard-tester/ko/"><span>🎹</span>Keyboard Tester</a>
+</div>
+</section>
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+<div class="container banner-inner">
+<div>
+<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+</div>
+<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+</div>
+</section>
+<!-- 9. Footer -->
+<footer class="footer">
+<div class="container footer-inner">
+<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+</div>
+</div>
+</footer>
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    caveat: "Targets spawn at random positions and your time per target includes display and input latency, so treat the score as a relative benchmark for warm-ups and comparing setups, not a lab measurement.",
+    ov_idle_big: "Aim Trainer",
+    ov_idle_sub: "Click Start, then hit every target as fast as you can.",
+    btn_start: "Start",
+    progress_tpl: "{done} / {total}",
+    result_context: "Sub-600 ms/target with clean hits is solid; competitive FPS players hit around 400 ms.",
+    stat_total: "Total time",
+    stat_misses: "Misses",
+    stat_accuracy: "Accuracy",
+    stat_avg: "Avg/target",
+    btn_retry: "Try again",
+    best_tpl: "Your best ({count}): {v} ms",
+    band_elite: "Elite aim",
+    band_strong: "Strong aim",
+    band_solid: "Solid aim",
+    band_casual: "Casual — keep practising",
+    band_slow: "Slow — check sensitivity and grip",
+    ms: "ms",
+    avg_unit: "ms/target"
+  },
+  ko: {
+    caveat: "타겟은 무작위 위치에 생성되고 타겟당 시간에는 디스플레이·입력 지연이 포함되므로, 실험실 측정이 아닌 워밍업과 세팅 비교용 상대 지표로 보세요.",
+    ov_idle_big: "에임 트레이너",
+    ov_idle_sub: "Start를 누른 뒤 모든 타겟을 최대한 빠르게 맞히세요.",
+    btn_start: "시작",
+    progress_tpl: "{done} / {total}",
+    result_context: "깔끔한 명중으로 타겟당 600ms 미만이면 우수하며, 경쟁 FPS 플레이어는 약 400ms를 기록합니다.",
+    stat_total: "총 시간",
+    stat_misses: "놓침",
+    stat_accuracy: "정확도",
+    stat_avg: "타겟당 평균",
+    btn_retry: "다시 시도",
+    best_tpl: "최고 기록 ({count}개): {v} ms",
+    band_elite: "엘리트 에임",
+    band_strong: "강한 에임",
+    band_solid: "견고한 에임",
+    band_casual: "캐주얼 — 계속 연습하세요",
+    band_slow: "느림 — 감도와 그립 확인",
+    ms: "ms",
+    avg_unit: "ms/타겟"
+  }
+};
+</script>
+<script>
+(function () {
+  // ── Aim Trainer game ──
+  // ponytail: misses are counted only for pointerdowns that land inside the play
+  // area but not on the target. Target spawn is naive uniform-random within the
+  // area bounds (minus the target radius) and may occasionally land near the
+  // previous target — no min-distance repulsion. Good enough for a warm-up score.
+  var COUNTS = [10, 30, 50];
+
+  var area = document.getElementById('area');
+  var overlay = document.getElementById('overlay');
+  var ovBig = document.getElementById('ovBig');
+  var ovSub = document.getElementById('ovSub');
+  var startBtn = document.getElementById('startBtn');
+  var yourBestEl = document.getElementById('yourBest');
+  var progressEl = document.getElementById('progress');
+  var picker = document.getElementById('countPicker');
+
+  var target = null;
+  var count = 10;
+  var hits = 0;
+  var misses = 0;
+  var startT = 0;
+  var playing = false;
+
+  function t(key) {
+    var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && window.sfLang.current) || 'en';
+    var dict = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang]) || window.SF_PAGE_I18N.en;
+    return dict[key] != null ? dict[key] : window.SF_PAGE_I18N.en[key];
+  }
+
+  function bestKey() { return 'aim-best-' + count; }
+
+  function updateProgress() {
+    progressEl.textContent = t('progress_tpl')
+      .replace('{done}', playing ? hits : 0)
+      .replace('{total}', count);
+  }
+
+  function showBest() {
+    try {
+      var b = localStorage.getItem(bestKey());
+      if (b) {
+        yourBestEl.hidden = false;
+        yourBestEl.textContent = t('best_tpl').replace('{count}', count).replace('{v}', b);
+      } else {
+        yourBestEl.hidden = true;
+        yourBestEl.textContent = '';
+      }
+    } catch (e) { /* localStorage unavailable */ }
+  }
+
+  function targetSize() {
+    // responsive: 44–64px, scaled to area width so it stays tappable on mobile
+    return Math.max(44, Math.min(64, Math.round(area.clientWidth * 0.13)));
+  }
+
+  function spawnTarget() {
+    if (target) { target.remove(); target = null; }
+    var size = targetSize();
+    var maxX = Math.max(0, area.clientWidth - size);
+    var maxY = Math.max(0, area.clientHeight - size);
+    var x = Math.random() * maxX;
+    var y = Math.random() * maxY;
+    var el = document.createElement('div');
+    el.className = 'target';
+    el.style.width = size + 'px';
+    el.style.height = size + 'px';
+    el.style.left = Math.round(x) + 'px';
+    el.style.top = Math.round(y) + 'px';
+    area.appendChild(el);
+    target = el;
+  }
+
+  function start() {
+    hits = 0;
+    misses = 0;
+    startT = 0;
+    playing = true;
+    overlay.hidden = true;
+    updateProgress();
+    spawnTarget();
+  }
+
+  function hit() {
+    if (hits === 0) startT = performance.now();
+    hits++;
+    updateProgress();
+    if (hits >= count) {
+      finish();
+    } else {
+      spawnTarget();
+    }
+  }
+
+  function band(avg) {
+    if (avg < 400) return 'band_elite';
+    if (avg < 500) return 'band_strong';
+    if (avg < 650) return 'band_solid';
+    if (avg < 850) return 'band_casual';
+    return 'band_slow';
+  }
+
+  function finish() {
+    playing = false;
+    var total = Math.round(performance.now() - startT);
+    var avg = Math.round(total / count);
+    var totalClicks = hits + misses;
+    var accuracy = totalClicks > 0 ? Math.round((hits / totalClicks) * 100) : 100;
+    if (target) { target.remove(); target = null; }
+
+    var newBest = false;
+    try {
+      var prev = parseInt(localStorage.getItem(bestKey()), 10);
+      if (!prev || avg < prev) { localStorage.setItem(bestKey(), String(avg)); newBest = true; }
+    } catch (e) { /* ignore */ }
+
+    updateProgress();
+
+    overlay.hidden = false;
+    overlay.innerHTML =
+      '<div class="result-panel">' +
+        '<div class="result-avg">' + avg + ' <span>' + t('avg_unit') + '</span></div>' +
+        '<div class="result-band">' + t(band(avg)) + (newBest ? ' 🏆' : '') + '</div>' +
+        '<div class="result-context">' + t('result_context') + '</div>' +
+        '<div class="result-stats">' +
+          '<div class="stat-cell"><div class="stat-label">' + t('stat_total') + '</div><div class="stat-val">' + (total / 1000).toFixed(1) + ' s</div></div>' +
+          '<div class="stat-cell"><div class="stat-label">' + t('stat_misses') + '</div><div class="stat-val">' + misses + '</div></div>' +
+          '<div class="stat-cell"><div class="stat-label">' + t('stat_accuracy') + '</div><div class="stat-val">' + accuracy + '%</div></div>' +
+        '</div>' +
+        '<button class="btn" id="retryBtn" type="button">' + t('btn_retry') + '</button>' +
+        '<div class="yourbest" id="yourBest"></div>' +
+      '</div>';
+    yourBestEl = document.getElementById('yourBest');
+    showBest();
+    document.getElementById('retryBtn').addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      reset();
+    });
+  }
+
+  function reset() {
+    playing = false;
+    hits = 0;
+    misses = 0;
+    if (target) { target.remove(); target = null; }
+    overlay.hidden = false;
+    overlay.innerHTML =
+      '<div class="stage-big" id="ovBig">' + t('ov_idle_big') + '</div>' +
+      '<div class="stage-sub" id="ovSub">' + t('ov_idle_sub') + '</div>' +
+      '<button class="btn" id="startBtn" type="button">' + t('btn_start') + '</button>' +
+      '<div class="yourbest" id="yourBest" hidden></div>';
+    ovBig = document.getElementById('ovBig');
+    ovSub = document.getElementById('ovSub');
+    startBtn = document.getElementById('startBtn');
+    yourBestEl = document.getElementById('yourBest');
+    startBtn.addEventListener('click', start);
+    updateProgress();
+    showBest();
+  }
+
+  area.addEventListener('pointerdown', function (e) {
+    if (!playing) return;
+    e.preventDefault();
+    if (target && e.target === target) {
+      hit();
+    } else {
+      misses++;
+    }
+  });
+
+  picker.addEventListener('click', function (e) {
+    var btn = e.target.closest('.count-btn');
+    if (!btn || playing) return;
+    var c = parseInt(btn.dataset.count, 10);
+    if (COUNTS.indexOf(c) === -1) return;
+    count = c;
+    picker.querySelectorAll('.count-btn').forEach(function (b) {
+      b.classList.toggle('active', b === btn);
+    });
+    updateProgress();
+    showBest();
+  });
+
+  startBtn.addEventListener('click', start);
+
+  // Render the idle overlay from the i18n dict so the KO prerendered page
+  // (data-force-lang="ko") shows Korean instead of the static English markup.
+  reset();
+
+  document.addEventListener('sfLangChanged', function () {
+    if (!playing) reset();
+    else updateProgress();
+  });
+})();
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+</script>
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

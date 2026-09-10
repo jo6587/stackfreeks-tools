@@ -464,7 +464,7 @@ window.SF_PAGE_I18N = {
   var attempt = 0;
 
   function t(key) {
-    var lang = (window.sfLang && window.sfLang.current) || 'en';
+    var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && window.sfLang.current) || 'en';
     var dict = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang]) || window.SF_PAGE_I18N.en;
     return dict[key] != null ? dict[key] : window.SF_PAGE_I18N.en[key];
   }

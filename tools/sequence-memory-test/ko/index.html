@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>순서 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="재미 & 테스트" name="description">
+<link href="https://tools.stackfreeks.com/tools/sequence-memory-test/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/sequence-memory-test/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/sequence-memory-test/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/sequence-memory-test/" hreflang="x-default" rel="alternate">
+  
+
+
+<!-- Open Graph -->
+<meta content="순서 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="재미 & 테스트" property="og:description">
+<meta content="https://tools.stackfreeks.com/tools/sequence-memory-test/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<!-- Twitter -->
+<meta content="summary" name="twitter:card">
+<meta content="순서 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
+<meta content="재미 & 테스트" name="twitter:description">
+<!-- ADSENSE_SLOT_TOP -->
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    main { padding: 32px 0 48px; }
+
+    /* Game */
+    .game-wrap { max-width: 380px; margin: 0 auto; text-align: center; }
+    .grid {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+    }
+    .tile {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.08s, transform 0.08s, border-color 0.08s;
+    }
+    .grid.locked .tile { cursor: default; }
+    .tile.flash {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .tile.tap {
+      background: var(--border-2);
+      transform: scale(0.97);
+    }
+    .tile.wrong {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
+
+    .status { margin-top: 18px; min-height: 24px; font-size: 14px; color: var(--text-1); font-weight: 500; }
+    .status-sub { margin-top: 4px; font-size: 12px; color: var(--text-3); }
+    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); }
+
+    /* Result panel */
+    .result-panel { margin-top: 18px; }
+    .result-level { font-size: 3rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+    .result-level span { font-size: 1rem; color: var(--text-3); font-weight: 400; }
+    .result-context { margin-top: 10px; font-size: 13px; color: var(--text-2); max-width: 440px; margin-left: auto; margin-right: auto; }
+
+    .btn {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); padding: 10px 22px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); margin-top: 18px;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.88; }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related tools */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .game-wrap { max-width: 320px; }
+      .result-level { font-size: 2.4rem; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Sequence Memory Test", "description": "Free online sequence memory test. Watch a pattern of tiles flash on a 3x3 grid, then repeat it back. Each level adds one more tile, and the test measures how long a sequence you can remember.", "url": "https://tools.stackfreeks.com/tools/sequence-memory-test/ko/", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/sequence-memory-test/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "순서 기억력 점수는 어느 정도면 좋은가요?", "acceptedAnswer": {"@type": "Answer", "text": "3x3 격자 순서 기억력 테스트에서 레벨 8~9에 도달하면 좋은 결과이고, 레벨 10 이상이면 대부분의 사람보다 앞선 수준입니다. 평균 점수는 약 6으로, 인간의 단기 기억이 약 7개 항목을 담는다는 고전적 연구와 일치합니다. 레벨 12를 넘기는 경우는 드물며, 보통 타일 하나하나가 아니라 패턴을 묶어서(청킹) 또는 공간적 전략으로 기억하는 사람들입니다."}}, {"@type": "Question", "name": "순서 기억력 테스트는 무엇을 측정하나요?", "acceptedAnswer": {"@type": "Answer", "text": "시공간 작업 기억을 측정합니다. 즉 위치의 순서를 몇 초간 머릿속에 유지했다가 정확한 순서로 재현하는 능력입니다. 레벨마다 타일이 하나씩 늘어나므로, 한 번에 활성 상태로 유지할 수 있는 최대 항목 수인 기억 폭도 함께 측정합니다. 숫자를 사용하는 디짓 스팬 테스트의 공간 버전이라고 볼 수 있습니다."}}, {"@type": "Question", "name": "공간·작업 기억력을 어떻게 개선하나요?", "acceptedAnswer": {"@type": "Answer", "text": "단기적으로는 연습이 도움이 되고, 전략은 더 큰 도움이 됩니다. 순서를 개별 타일의 목록이 아니라 하나의 모양이나 경로로 바꾸고, 타일을 2~3개 단위로 묶으며, 반짝일 때 위치를 소리 내어 말해보세요. 테스트 외적으로는 규칙적인 유산소 운동, 충분한 수면, 듀얼 n-back 같은 훈련이 작은 전이 효과를 보입니다. 큰 영구적 향상은 기대하지 마세요. 대부분의 개선은 과제에 한정됩니다."}}, {"@type": "Question", "name": "평균 순서 기억력 점수는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "이 방식의 테스트를 대규모로 측정하면 평균 점수는 약 6입니다. 즉 대부분의 사람이 여섯 타일 순서 근처에서 실패합니다. 점수는 대체로 정규분포를 이루며, 많은 사람이 5~8 사이에 위치하고, 소수는 4를 넘기기 어려우며, 소수는 10 이상에 도달합니다. 피로, 주의 산만, 재생 속도에 따라 개인 결과가 세션마다 한두 레벨씩 달라집니다."}}, {"@type": "Question", "name": "이것은 코르시 블록 테스트와 같은 건가요?", "acceptedAnswer": {"@type": "Answer", "text": "밀접하게 관련됩니다. 임상 신경심리학에서 쓰이는 코르시 블록 태핑 테스트는 검사자가 불규칙하게 배열된 블록을 순서대로 두드리면 참가자가 이를 따라 하며, 평균 폭은 약 5입니다. 이 온라인 버전은 규칙적인 3x3 격자, 자동 재생, 계속 길어지는 순서를 사용하므로, 검증된 임상 도구가 아니라 같은 아이디어를 가볍게 각색한 것입니다."}}]}</script>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- 1. Nav -->
+<nav>
+<a class="logo" href="/ko/">
+<div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+<div class="nav-right">
+<a class="lang-toggle" href="https://tools.stackfreeks.com/tools/sequence-memory-test/">English</a>
+<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+</div>
+</nav>
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+<!-- 3. Hero -->
+<section class="hero">
+<div class="container">
+
+<div class="lang-ko">
+<p class="eyebrow">재미 & 테스트</p>
+<h1>순서 기억력 테스트</h1>
+<p class="hero-desc">타일이 반짝이는 순서를 본 뒤 그대로 따라 눌러보세요. 레벨이 오를 때마다 기억할 타일이 하나씩 늘어납니다. 당신의 시각 기억력이 얼마나 긴 순서를 담을 수 있는지 확인하세요.</p>
+</div>
+</div>
+</section>
+<!-- 4. Tool body -->
+<main>
+<div class="container">
+<div class="game-wrap">
+<div aria-label="Sequence memory grid" class="grid locked" id="grid">
+<div class="tile" data-i="0"></div>
+<div class="tile" data-i="1"></div>
+<div class="tile" data-i="2"></div>
+<div class="tile" data-i="3"></div>
+<div class="tile" data-i="4"></div>
+<div class="tile" data-i="5"></div>
+<div class="tile" data-i="6"></div>
+<div class="tile" data-i="7"></div>
+<div class="tile" data-i="8"></div>
+</div>
+<div aria-live="polite" class="status" data-i18n="st_start" id="status">Level 1 &mdash; press Start to begin</div>
+<div class="status-sub" id="statusSub"></div>
+<div class="yourbest" hidden id="yourBest"></div>
+<button class="btn" data-i18n="btn_start" id="actionBtn" type="button">Start</button>
+</div>
+</div>
+</main>
+<!-- About / SEO copy -->
+<section class="about-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>순서 기억력 테스트 소개</h2>
+<p>이 순서 기억력 테스트는 Human Benchmark로 유명해진 "패턴 기억하기" 게임입니다. 3&times;3 타일 격자가 표시되고, 매 라운드마다 현재 순서가 재생되어 타일이 하나씩 차례로 켜진 뒤, 끝에 무작위 타일이 하나 추가됩니다. 즉 레벨마다 패턴이 정확히 한 칸씩 길어집니다. 같은 순서로 타일을 클릭하거나 탭하면 다음 레벨로 넘어가고, 하나라도 틀리면 도달한 레벨에서 게임이 끝납니다.</p>
+<p>점수는 실수하기 전까지 재현한 순서의 길이입니다. 평균 점수는 약 6으로, 잘 알려진 단기 기억 한계 "7 &plusmn; 2"와 일치합니다. 페이지는 즉시 로드되고 마우스와 터치 모두 지원하며, 최고 레벨은 브라우저에 로컬로 저장되고 서버로 아무것도 전송하지 않습니다.</p>
+</div>
+</div>
+</section>
+<!-- 5. How-to section -->
+<section class="guide-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>순서 기억력 테스트 사용 방법</h2>
+<div class="guide-grid">
+<div class="guide-card">
+<div class="guide-step">Step 1</div>
+<div class="guide-title">시작 누르기</div>
+<div class="guide-desc">격자가 잠기고 첫 타일이 반짝입니다. 순서가 재생되는 동안에는 입력이 비활성화되니 잘 보세요.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 2</div>
+<div class="guide-title">패턴 관찰</div>
+<div class="guide-desc">매 라운드 전체 순서가 처음부터 다시 재생되고, 끝에 새 타일이 하나 추가됩니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 3</div>
+<div class="guide-title">그대로 따라 누르기</div>
+<div class="guide-desc">같은 순서로 타일을 클릭하거나 탭하세요. 누를 때마다 잠깐 반짝여 진행 상황을 알 수 있습니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 4</div>
+<div class="guide-title">레벨 상승 또는 재시도</div>
+<div class="guide-desc">전체 순서를 맞히면 레벨이 오릅니다. 하나라도 틀리면 게임이 끝나며, 다시 시도를 눌러 레벨 1부터 재시작합니다.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FAQ -->
+<section class="faq-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>자주 묻는 질문</h2>
+<div class="faq-list">
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>순서 기억력 점수는 어느 정도면 좋은가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">3x3 격자 순서 기억력 테스트에서 레벨 8~9에 도달하면 좋은 결과이고, 레벨 10 이상이면 대부분의 사람보다 앞선 수준입니다. 평균 점수는 약 6으로, 인간의 단기 기억이 약 7개 항목을 담는다는 고전적 연구와 일치합니다. 레벨 12를 넘기는 경우는 드물며, 보통 타일 하나하나가 아니라 패턴을 묶어서(청킹) 또는 공간적 전략으로 기억하는 사람들입니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>순서 기억력 테스트는 무엇을 측정하나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">시공간 작업 기억을 측정합니다. 즉 위치의 순서를 몇 초간 머릿속에 유지했다가 정확한 순서로 재현하는 능력입니다. 레벨마다 타일이 하나씩 늘어나므로, 한 번에 활성 상태로 유지할 수 있는 최대 항목 수인 기억 폭도 함께 측정합니다. 숫자를 사용하는 디짓 스팬 테스트의 공간 버전이라고 볼 수 있습니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>공간&middot;작업 기억력을 어떻게 개선하나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">단기적으로는 연습이 도움이 되고, 전략은 더 큰 도움이 됩니다. 순서를 개별 타일의 목록이 아니라 하나의 모양이나 경로로 바꾸고, 타일을 2~3개 단위로 묶으며, 반짝일 때 위치를 소리 내어 말해보세요. 테스트 외적으로는 규칙적인 유산소 운동, 충분한 수면, 듀얼 n-back 같은 훈련이 작은 전이 효과를 보입니다. 큰 영구적 향상은 기대하지 마세요. 대부분의 개선은 과제에 한정됩니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>평균 순서 기억력 점수는 얼마인가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">이 방식의 테스트를 대규모로 측정하면 평균 점수는 약 6입니다. 즉 대부분의 사람이 여섯 타일 순서 근처에서 실패합니다. 점수는 대체로 정규분포를 이루며, 많은 사람이 5~8 사이에 위치하고, 소수는 4를 넘기기 어려우며, 소수는 10 이상에 도달합니다. 피로, 주의 산만, 재생 속도에 따라 개인 결과가 세션마다 한두 레벨씩 달라집니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>이것은 코르시 블록 테스트와 같은 건가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">밀접하게 관련됩니다. 임상 신경심리학에서 쓰이는 코르시 블록 태핑 테스트는 검사자가 불규칙하게 배열된 블록을 순서대로 두드리면 참가자가 이를 따라 하며, 평균 폭은 약 5입니다. 이 온라인 버전은 규칙적인 3x3 격자, 자동 재생, 계속 길어지는 순서를 사용하므로, 검증된 임상 도구가 아니라 같은 아이디어를 가볍게 각색한 것입니다.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Related content -->
+<section class="sf-related">
+<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+<div class="sf-related-grid">
+<a class="sf-related-card" href="/tools/number-memory-test/ko/"><span>🔢</span>Number Memory Test</a>
+<a class="sf-related-card" href="/tools/verbal-memory-test/ko/"><span>📖</span>Verbal Memory Test</a>
+<a class="sf-related-card" href="/tools/reaction-time-test/ko/"><span>⚡</span>Reaction Time Test</a>
+</div>
+</section>
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+<div class="container banner-inner">
+<div>
+<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+</div>
+<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+</div>
+</section>
+<!-- 9. Footer -->
+<footer class="footer">
+<div class="container footer-inner">
+<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+</div>
+</div>
+</footer>
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    st_start: "Level 1 — press Start to begin",
+    st_watch: "Watch the sequence…",
+    st_your_turn: "Your turn — repeat the pattern",
+    st_correct: "Correct! Get ready for level {n}…",
+    st_gameover: "Game over",
+    btn_start: "Start",
+    btn_retry: "Try again",
+    sub_level_tpl: "Level {n} · {c} tiles",
+    result_level_word: "Level",
+    result_context: "The average score is 6. Level 8+ is strong; level 10+ beats most players.",
+    your_best_tpl: "Your best: level {n}",
+    new_best: "New best!"
+  },
+  ko: {
+    st_start: "레벨 1 — 시작을 누르세요",
+    st_watch: "순서를 보세요…",
+    st_your_turn: "당신 차례 — 패턴을 따라 누르세요",
+    st_correct: "정답! 레벨 {n} 준비…",
+    st_gameover: "게임 오버",
+    btn_start: "시작",
+    btn_retry: "다시 시도",
+    sub_level_tpl: "레벨 {n} · 타일 {c}개",
+    result_level_word: "레벨",
+    result_context: "평균 점수는 6입니다. 레벨 8 이상이면 우수하고, 레벨 10 이상이면 대부분을 앞섭니다.",
+    your_best_tpl: "최고 기록: 레벨 {n}",
+    new_best: "최고 기록 경신!"
+  }
+};
+</script>
+<script>
+(function () {
+  // ── Sequence Memory Test game ──
+  // ponytail: playback timing constants. Tunable — no need to make them configurable UI.
+  // FLASH_ON  = how long a tile stays lit during playback
+  // FLASH_GAP = dark gap between two tiles in the sequence
+  // START_DELAY = pause after "watch" before the first tile lights
+  var FLASH_ON = 450, FLASH_GAP = 180, START_DELAY = 600;
+  var TAP_FLASH = 160;        // player's own tap feedback
+  var NEXT_ROUND_DELAY = 900; // pause on "correct" before next playback
+  var GRID_SIZE = 9;
+
+  var gridEl = document.getElementById('grid');
+  var tiles = Array.prototype.slice.call(gridEl.querySelectorAll('.tile'));
+  var statusEl = document.getElementById('status');
+  var statusSubEl = document.getElementById('statusSub');
+  var yourBestEl = document.getElementById('yourBest');
+  var actionBtn = document.getElementById('actionBtn');
+
+  var sequence = [];
+  var inputPos = 0;
+  var level = 0;
+  var phase = 'idle';        // idle | playback | input | over
+  var timers = [];
+
+  function t(key) {
+    var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && window.sfLang.current) || 'en';
+    var dict = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang]) || window.SF_PAGE_I18N.en;
+    return dict[key] != null ? dict[key] : window.SF_PAGE_I18N.en[key];
+  }
+
+  function later(fn, ms) { var id = setTimeout(fn, ms); timers.push(id); return id; }
+  function clearTimers() {
+    for (var i = 0; i < timers.length; i++) clearTimeout(timers[i]);
+    timers = [];
+  }
+  function clearTileClasses() {
+    for (var i = 0; i < tiles.length; i++) tiles[i].classList.remove('flash', 'tap', 'wrong');
+  }
+
+  function setSub() {
+    if (phase === 'input' || phase === 'playback') {
+      statusSubEl.textContent = t('sub_level_tpl')
+        .replace('{n}', level).replace('{c}', sequence.length);
+    } else {
+      statusSubEl.textContent = '';
+    }
+  }
+
+  function showBest() {
+    try {
+      var b = localStorage.getItem('seqmem-best');
+      if (b) {
+        yourBestEl.hidden = false;
+        yourBestEl.textContent = t('your_best_tpl').replace('{n}', b);
+      } else {
+        yourBestEl.hidden = true;
+      }
+    } catch (e) { /* localStorage unavailable */ }
+  }
+
+  function nextLevel() {
+    level++;
+    // add one new random tile to the end of the sequence
+    sequence.push(Math.floor(Math.random() * GRID_SIZE));
+    playback();
+  }
+
+  function playback() {
+    phase = 'playback';
+    inputPos = 0;
+    gridEl.classList.add('locked');
+    clearTimers();
+    clearTileClasses();
+    statusEl.textContent = t('st_watch');
+    setSub();
+
+    var delay = START_DELAY;
+    sequence.forEach(function (tileIndex) {
+      later(function () { tiles[tileIndex].classList.add('flash'); }, delay);
+      later(function () { tiles[tileIndex].classList.remove('flash'); }, delay + FLASH_ON);
+      delay += FLASH_ON + FLASH_GAP;
+    });
+
+    later(function () {
+      phase = 'input';
+      gridEl.classList.remove('locked');
+      statusEl.textContent = t('st_your_turn');
+      setSub();
+    }, delay);
+  }
+
+  function handleTap(tileIndex, el) {
+    if (phase !== 'input') return;
+
+    // brief feedback flash on the player's own tap
+    el.classList.add('tap');
+    setTimeout(function () { el.classList.remove('tap'); }, TAP_FLASH);
+
+    if (tileIndex === sequence[inputPos]) {
+      inputPos++;
+      if (inputPos === sequence.length) {
+        // full sequence reproduced correctly
+        phase = 'playback';
+        gridEl.classList.add('locked');
+        statusEl.textContent = t('st_correct').replace('{n}', level + 1);
+        statusSubEl.textContent = '';
+        clearTimers();
+        later(nextLevel, NEXT_ROUND_DELAY);
+      }
+    } else {
+      gameOver(el);
+    }
+  }
+
+  function gameOver(wrongEl) {
+    phase = 'over';
+    clearTimers();
+    gridEl.classList.add('locked');
+    if (wrongEl) {
+      wrongEl.classList.add('wrong');
+      setTimeout(function () { wrongEl.classList.remove('wrong'); }, 500);
+    }
+
+    // score = sequence length reached (i.e. level, since sequence grows 1 per level)
+    var score = level;
+    var isBest = false;
+    try {
+      var prev = parseInt(localStorage.getItem('seqmem-best'), 10);
+      if (!prev || score > prev) { localStorage.setItem('seqmem-best', String(score)); isBest = true; }
+    } catch (e) { /* ignore */ }
+
+    statusEl.textContent = t('st_gameover');
+    statusSubEl.innerHTML =
+      '<span style="display:block;font-size:2.4rem;font-weight:600;color:var(--text-1);margin-top:10px;line-height:1.1">' +
+        t('result_level_word') + ' ' + score +
+      '</span>' +
+      (isBest ? '<span style="display:block;color:var(--success);font-weight:600;margin-top:4px">' + t('new_best') + ' 🏆</span>' : '') +
+      '<span style="display:block;margin-top:8px;color:var(--text-2)">' + t('result_context') + '</span>';
+
+    actionBtn.hidden = false;
+    actionBtn.textContent = t('btn_retry');
+    showBest();
+  }
+
+  function startGame() {
+    clearTimers();
+    clearTileClasses();
+    sequence = [];
+    inputPos = 0;
+    level = 0;
+    actionBtn.hidden = true;
+    nextLevel();
+  }
+
+  // wire tiles — pointerdown covers mouse + touch
+  tiles.forEach(function (el) {
+    var idx = parseInt(el.getAttribute('data-i'), 10);
+    el.addEventListener('pointerdown', function (e) {
+      e.preventDefault();
+      handleTap(idx, el);
+    });
+  });
+
+  actionBtn.addEventListener('click', function () { startGame(); });
+
+  // re-render language-dependent text on toggle
+  document.addEventListener('sfLangChanged', function () {
+    if (phase === 'idle') statusEl.textContent = t('st_start');
+    else if (phase === 'playback') statusEl.textContent = t('st_watch');
+    else if (phase === 'input') statusEl.textContent = t('st_your_turn');
+    if (phase === 'idle' || phase === 'over') {
+      actionBtn.textContent = phase === 'over' ? t('btn_retry') : t('btn_start');
+    }
+    setSub();
+    showBest();
+  });
+
+  // init
+  showBest();
+})();
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+</script>
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

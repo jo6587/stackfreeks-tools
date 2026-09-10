@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verbal Memory Test — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Free verbal memory test — how many words can you remember? Mark each word SEEN or NEW. Three lives, no signup, runs in your browser." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/verbal-memory-test/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/verbal-memory-test/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/verbal-memory-test/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/verbal-memory-test/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Verbal Memory Test — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="See how many words you can remember. Mark each word SEEN or NEW, keep 3 lives, and push your working memory as far as it goes." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/verbal-memory-test/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Verbal Memory Test | StackFreeks Tools" />
+  <meta name="twitter:description" content="See how many words you can remember. Mark each word SEEN or NEW, keep 3 lives, push your working memory." />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    main { padding: 32px 0 48px; }
+
+    /* Game */
+    .stage {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      width: 100%;
+      min-height: 340px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+      padding: 32px 24px;
+    }
+    .stage-word {
+      font-size: 2.6rem; font-weight: 600; letter-spacing: -0.02em;
+      color: var(--text-1); word-break: break-word;
+    }
+    .lives { font-size: 1.1rem; letter-spacing: 0.15em; color: var(--danger); min-height: 1.4em; }
+    .scoreline { font-size: 12px; color: var(--text-3); letter-spacing: 0.04em; }
+
+    .choices { display: flex; gap: 12px; justify-content: center; margin-top: 22px; flex-wrap: wrap; }
+    .choice-btn {
+      background: var(--surface); color: var(--text-1);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius); padding: 16px 34px;
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      font-family: var(--font); min-width: 150px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .choice-btn:hover { border-color: var(--accent); background: var(--surface-2); }
+    .choice-btn small { display: block; font-size: 10px; font-weight: 400; color: var(--text-3); margin-top: 4px; letter-spacing: 0.04em; }
+
+    .stage-flash { font-size: 0.95rem; font-weight: 500; min-height: 1.4em; }
+    .stage-flash.ok { color: var(--success); }
+    .stage-flash.bad { color: var(--danger); }
+
+    .progress { margin-top: 14px; font-size: 12px; color: var(--text-3); text-align: center; letter-spacing: 0.04em; }
+    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); text-align: center; }
+
+    /* Result panel */
+    .result-panel { text-align: center; }
+    .result-avg { font-size: 3rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+    .result-avg span { font-size: 1rem; color: var(--text-3); font-weight: 400; }
+    .result-band { margin-top: 4px; font-size: 0.95rem; font-weight: 500; color: var(--success); }
+    .result-context { margin-top: 10px; font-size: 13px; color: var(--text-2); max-width: 440px; margin-left: auto; margin-right: auto; }
+
+    .btn {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); padding: 12px 26px;
+      font-size: 14px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); margin-top: 20px;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.88; }
+
+    .caveat { margin-top: 14px; font-size: 11px; color: var(--text-3); line-height: 1.6; max-width: 620px; margin-left: auto; margin-right: auto; text-align: center; }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related tools */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .stage { min-height: 320px; padding: 28px 16px; }
+      .stage-word { font-size: 2rem; }
+      .choices { gap: 10px; }
+      .choice-btn { flex: 1 1 45%; min-width: 0; padding: 18px 12px; }
+      .result-avg { font-size: 2.4rem; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Verbal Memory Test","description":"Free online verbal memory test. Words appear one at a time and you mark each one SEEN or NEW; you have three lives and your score is how many words you correctly remember before running out.","url":"https://tools.stackfreeks.com/tools/verbal-memory-test/","applicationCategory":"GameApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a good verbal memory score?","acceptedAnswer":{"@type":"Answer","text":"On this style of test a score in the 40s is around average for adults. Reaching 50 to 70 is a solid result, and scores above 70 or 80 usually mean you are using a deliberate strategy such as chunking words into groups or noticing patterns in which words repeat. Because the word pool is limited, very high scores also depend on stamina and focus rather than raw memory alone."}},{"@type":"Question","name":"What does the verbal memory test measure?","acceptedAnswer":{"@type":"Answer","text":"It measures verbal working memory and recognition memory: your ability to hold a growing list of words in mind and quickly decide whether a new word is one you have already seen. It also taps sustained attention, because a single lapse late in the game ends the run. It is not a full clinical memory assessment, but it is a reasonable proxy for how well you keep verbal information active over several minutes."}},{"@type":"Question","name":"What is the average verbal memory score?","acceptedAnswer":{"@type":"Answer","text":"For casual players the average is roughly 40 correct answers. Most people land somewhere between 25 and 55. Scores drift up with practice as you learn to pace yourself and adopt a memory strategy, and they drop when you are tired, distracted, or rushing your answers. Treat any single result as a rough snapshot and compare your own scores over time rather than against other people."}},{"@type":"Question","name":"How can I improve my verbal or working memory?","acceptedAnswer":{"@type":"Answer","text":"Practice helps in the short term: slow down, read each word deliberately, and group words into small clusters instead of trying to memorize a flat list. Over the longer term, sleep, aerobic exercise, and reducing divided attention (fewer notifications, single-tasking) support working memory more than brain-training apps do. Reading regularly and learning new vocabulary also keep verbal recall sharp."}},{"@type":"Question","name":"Why does the verbal memory test use English words?","acceptedAnswer":{"@type":"Answer","text":"The standard version of this test, popularized by Human Benchmark, uses a fixed pool of common English words so that scores are comparable between players. We keep the English word list for the same reason, and because swapping languages would change word length and familiarity and make results incomparable. Non-native English speakers can still take the test; recognizing whether a word has appeared before does not require knowing its meaning."}}]}
+  </script>
+
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<!-- 1. Nav -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+  <div class="nav-right">
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  </div>
+</nav>
+
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+
+<!-- 3. Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow">Fun &amp; Tests</p>
+      <h1>Verbal Memory Test</h1>
+      <p class="hero-desc">Words appear one at a time. Mark each one SEEN if you have seen it before in this run, or NEW if it is the first time. You have three lives — how many words can you remember?</p>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow">재미 &amp; 테스트</p>
+      <h1>언어 기억력 테스트</h1>
+      <p class="hero-desc">단어가 하나씩 나타납니다. 이번 판에서 이미 본 단어면 SEEN, 처음 보는 단어면 NEW를 누르세요. 생명은 3개입니다. 단어는 모두 영어입니다 — 뜻을 몰라도 "전에 나왔는지"만 판단하면 됩니다. 몇 개나 기억할 수 있나요?</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Tool body -->
+<main>
+  <div class="container">
+    <div id="stage" class="stage">
+      <div class="lives" id="lives">&#9829;&#9829;&#9829;</div>
+      <div class="stage-word" id="word">Verbal Memory Test</div>
+      <div class="stage-flash" id="flash"></div>
+      <div class="choices" id="choices">
+        <button class="choice-btn" id="btnStart" type="button" data-i18n="btn_start">Start</button>
+      </div>
+      <div class="scoreline" id="scoreline"></div>
+    </div>
+    <div class="progress" id="progress" data-i18n="hint_keys">Shortcuts: NEW = Left arrow or K &nbsp;·&nbsp; SEEN = Right arrow or L</div>
+    <div class="yourbest" id="yourBest" hidden></div>
+    <p class="caveat" data-i18n="caveat">The word pool is a fixed list of about 250 common English words, so once you have seen most of them the game leans on focus and stamina as much as raw memory. Treat your score as a relative benchmark, not a clinical measurement.</p>
+  </div>
+</main>
+
+<!-- About / SEO copy -->
+<section class="about-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>About this verbal memory test</h2>
+      <p>This verbal memory test is the classic "how many words can you remember" challenge popularized by Human Benchmark. One word is shown at a time. Early on almost everything is new, so you press NEW and the word is quietly added to your growing "seen" list. As the run goes on, words start to repeat and you have to recognize them and press SEEN. Every correct answer adds a point; every wrong answer — a repeat you called NEW, or a fresh word you called SEEN — costs one of your three lives. When all three are gone the game ends and shows your score.</p>
+      <p>The tool keeps the whole seen list in memory using a JavaScript Set, picks the next word with a simple heuristic that shows repeats more often as your seen list grows, and stores your best score in your browser with localStorage so nothing is sent anywhere. It works with a mouse, touch, or the keyboard, needs no signup, and runs entirely client-side. An average casual score is around 40; consistently clearing 60 is strong and usually means you are chunking words or tracking patterns rather than memorizing a flat list.</p>
+    </div>
+    <div class="lang-ko">
+      <h2>언어 기억력 테스트 소개</h2>
+      <p>이 언어 기억력 테스트는 Human Benchmark로 널리 알려진 "몇 개의 단어를 기억할 수 있는가" 챌린지입니다. 한 번에 한 단어가 표시됩니다. 초반에는 대부분 처음 보는 단어이므로 NEW를 누르고, 그 단어는 "본 단어" 목록에 조용히 추가됩니다. 판이 진행되면 단어가 반복되기 시작하고, 그것을 알아보고 SEEN을 눌러야 합니다. 정답마다 1점씩 올라가고, 오답(반복된 단어를 NEW로, 새 단어를 SEEN으로)마다 생명 3개 중 하나를 잃습니다. 3개가 모두 사라지면 게임이 끝나고 점수가 표시됩니다.</p>
+      <p>단어 목록은 영어로 고정되어 있습니다. 이것이 이 테스트의 표준 방식이며, KO 사용자도 단어의 뜻을 알 필요 없이 "전에 나왔는지"만 판단하면 됩니다. 툴은 본 단어 전체를 JavaScript Set에 저장하고, 목록이 커질수록 반복 단어를 더 자주 보여주는 간단한 휴리스틱으로 다음 단어를 고르며, 최고 점수는 localStorage로 브라우저에만 저장합니다. 마우스·터치·키보드 모두 지원하고 가입이 필요 없으며 전부 브라우저에서 실행됩니다. 평균은 약 40점, 꾸준히 60점을 넘기면 우수한 편입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. How-to section -->
+<section class="guide-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>How to use this verbal memory test</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">Start the run</div>
+          <div class="guide-desc">Press Start. A single word appears in the centre of the box with your three lives shown above it.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">Judge each word</div>
+          <div class="guide-desc">Press NEW if this is the first time the word has appeared this run, or SEEN if it has shown up before. Use the buttons, or Left/K for NEW and Right/L for SEEN.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">Protect your lives</div>
+          <div class="guide-desc">Every correct call scores a point. A wrong call loses a life. The game keeps going until all three lives are gone.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">Read your score</div>
+          <div class="guide-desc">At zero lives you see your score, how it compares (average is around 40; over 60 is strong), and your saved best. Press Try again to start a fresh run.</div>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2>언어 기억력 테스트 사용 방법</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">판 시작</div>
+          <div class="guide-desc">Start를 누르세요. 박스 중앙에 단어 하나가 나타나고 위에 생명 3개가 표시됩니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">각 단어 판단</div>
+          <div class="guide-desc">이번 판에서 처음 보는 단어면 NEW, 전에 나온 적 있으면 SEEN을 누르세요. 버튼을 쓰거나, NEW는 왼쪽 화살표·K, SEEN은 오른쪽 화살표·L.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">생명 지키기</div>
+          <div class="guide-desc">정답마다 1점. 오답마다 생명 하나. 생명 3개가 모두 사라질 때까지 계속됩니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">결과 확인</div>
+          <div class="guide-desc">생명이 0이 되면 점수, 비교(평균 약 40, 60 이상이면 우수), 저장된 최고 기록이 표시됩니다. Try again으로 새 판을 시작하세요.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is a good verbal memory score?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">On this style of test a score in the 40s is around average for adults. Reaching 50 to 70 is a solid result, and scores above 70 or 80 usually mean you are using a deliberate strategy such as chunking words into groups or noticing patterns in which words repeat. Because the word pool is limited, very high scores also depend on stamina and focus rather than raw memory alone.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What does the verbal memory test measure?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">It measures verbal working memory and recognition memory: your ability to hold a growing list of words in mind and quickly decide whether a new word is one you have already seen. It also taps sustained attention, because a single lapse late in the game ends the run. It is not a full clinical memory assessment, but it is a reasonable proxy for how well you keep verbal information active over several minutes.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is the average verbal memory score?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">For casual players the average is roughly 40 correct answers. Most people land somewhere between 25 and 55. Scores drift up with practice as you learn to pace yourself and adopt a memory strategy, and they drop when you are tired, distracted, or rushing your answers. Treat any single result as a rough snapshot and compare your own scores over time rather than against other people.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How can I improve my verbal or working memory?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Practice helps in the short term: slow down, read each word deliberately, and group words into small clusters instead of trying to memorize a flat list. Over the longer term, sleep, aerobic exercise, and reducing divided attention (fewer notifications, single-tasking) support working memory more than brain-training apps do. Reading regularly and learning new vocabulary also keep verbal recall sharp.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Why does the verbal memory test use English words?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">The standard version of this test, popularized by Human Benchmark, uses a fixed pool of common English words so that scores are comparable between players. We keep the English word list for the same reason, and because swapping languages would change word length and familiarity and make results incomparable. Non-native English speakers can still take the test; recognizing whether a word has appeared before does not require knowing its meaning.</div>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>좋은 언어 기억력 점수는 어느 정도인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">이 방식의 테스트에서는 40점대가 성인 평균 정도입니다. 50~70점이면 좋은 결과이고, 70~80점 이상이면 보통 단어를 그룹으로 묶거나 반복 패턴을 파악하는 등의 전략을 쓰고 있는 것입니다. 단어 풀이 한정되어 있어 아주 높은 점수는 순수한 기억력보다 집중력과 지구력에도 좌우됩니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>언어 기억력 테스트는 무엇을 측정하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">언어 작업기억과 재인기억을 측정합니다. 점점 늘어나는 단어 목록을 머릿속에 유지하면서 새 단어가 이미 본 것인지 빠르게 판단하는 능력입니다. 후반의 한 번의 실수로 판이 끝나므로 지속적 주의력도 함께 측정합니다. 임상 기억 검사는 아니지만 몇 분간 언어 정보를 얼마나 잘 유지하는지에 대한 합리적인 지표입니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>평균 언어 기억력 점수는 얼마인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">가벼운 플레이어의 평균은 약 40개 정답입니다. 대부분 25~55점 사이입니다. 페이스 조절과 기억 전략을 익히면 점수가 올라가고, 피곤하거나 산만하거나 서두르면 떨어집니다. 한 번의 결과는 대략적인 스냅샷으로 보고, 남과 비교하기보다 자신의 점수 변화를 추적하세요.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>언어·작업기억을 어떻게 개선하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">단기적으로는 연습이 도움이 됩니다. 속도를 늦추고 각 단어를 꼼꼼히 읽으며, 평평한 목록을 통째로 외우기보다 작은 묶음으로 그룹화하세요. 장기적으로는 뇌 훈련 앱보다 수면, 유산소 운동, 분산 주의 줄이기(알림 줄이기, 한 번에 한 가지)가 작업기억에 더 효과적입니다. 꾸준한 독서와 새 어휘 학습도 언어 회상력을 유지해 줍니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>테스트가 왜 영어 단어를 사용하나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Human Benchmark로 알려진 이 테스트의 표준 버전은 점수를 서로 비교할 수 있도록 고정된 common 영어 단어 풀을 사용합니다. 저희도 같은 이유로 영어 단어 목록을 유지하며, 언어를 바꾸면 단어 길이와 친숙도가 달라져 결과를 비교할 수 없게 됩니다. 영어가 모국어가 아니어도 테스트할 수 있습니다. 단어가 전에 나왔는지 알아보는 데는 뜻을 알 필요가 없습니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+  <div class="sf-related-grid">
+    <a href="/tools/number-memory-test/" class="sf-related-card"><span>🔢</span>Number Memory Test</a>
+    <a href="/tools/sequence-memory-test/" class="sf-related-card"><span>🧩</span>Sequence Memory Test</a>
+    <a href="/tools/reaction-time-test/" class="sf-related-card"><span>⚡</span>Reaction Time Test</a>
+  </div>
+</section>
+
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank"
+       data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- 9. Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    caveat: "The word pool is a fixed list of about 250 common English words, so once you have seen most of them the game leans on focus and stamina as much as raw memory. Treat your score as a relative benchmark, not a clinical measurement.",
+    hint_keys: "Shortcuts: NEW = Left arrow or K · SEEN = Right arrow or L",
+    btn_start: "Start",
+    btn_new: "NEW",
+    btn_seen: "SEEN",
+    btn_new_sub: "← / K — first time",
+    btn_seen_sub: "→ / L — seen before",
+    btn_retry: "Try again",
+    idle_word: "Verbal Memory Test",
+    flash_correct: "Correct",
+    flash_wrong: "Wrong — lost a life",
+    score_tpl: "Score: {n}",
+    result_label: "Words remembered",
+    result_context: "Average is around 40; over 60 is strong.",
+    your_best_tpl: "Your best: {n}",
+    new_best: "New best! 🏆"
+  },
+  ko: {
+    caveat: "단어 풀은 약 250개의 흔한 영어 단어로 고정되어 있어, 대부분을 본 뒤에는 순수 기억력만큼이나 집중력과 지구력이 관건이 됩니다. 점수는 임상 측정이 아닌 상대적 벤치마크로 보세요.",
+    hint_keys: "단축키: NEW = 왼쪽 화살표 또는 K · SEEN = 오른쪽 화살표 또는 L",
+    btn_start: "시작",
+    btn_new: "NEW",
+    btn_seen: "SEEN",
+    btn_new_sub: "← / K — 처음",
+    btn_seen_sub: "→ / L — 본 적 있음",
+    btn_retry: "다시 시도",
+    idle_word: "언어 기억력 테스트",
+    flash_correct: "정답",
+    flash_wrong: "오답 — 생명 감소",
+    score_tpl: "점수: {n}",
+    result_label: "기억한 단어",
+    result_context: "평균은 약 40개, 60개 이상이면 우수합니다.",
+    your_best_tpl: "최고 기록: {n}",
+    new_best: "최고 기록 갱신! 🏆"
+  }
+};
+</script>
+
+<script>
+(function () {
+  // ── Verbal Memory Test game ──
+  // Human Benchmark style: a word shows, player marks it SEEN or NEW.
+  // ponytail: the seen-vs-new probability is a plain heuristic — it ramps from
+  // ~30% to ~60% as the seen list grows (see pRepeat()). It is not tuned against
+  // real play data; adjust the two endpoints / ramp length if it feels off.
+  // Word list is English only by design — that's the standard test; KO players
+  // still judge English words (noted in the KO copy).
+  var WORDS = ["time","year","people","way","day","man","thing","woman","life","child","world","school","state","family","student","group","country","problem","hand","part","place","case","week","company","system","program","question","work","government","number","night","point","home","water","room","mother","area","money","story","fact","month","lot","right","study","book","eye","job","word","business","issue","side","kind","head","house","service","friend","father","power","hour","game","line","end","member","law","car","city","community","name","president","team","minute","idea","body","information","back","parent","face","others","level","office","door","health","person","art","war","history","party","result","change","morning","reason","research","girl","guy","moment","air","teacher","force","education","foot","boy","age","policy","music","market","sense","nation","plan","college","interest","death","course","experience","effect","use","class","control","care","field","development","role","effort","rate","heart","drug","show","leader","light","voice","wife","police","mind","price","report","decision","son","view","relationship","town","road","arm","difference","value","building","action","model","season","society","tax","director","position","player","record","paper","space","ground","form","event","official","matter","center","couple","site","project","activity","star","table","need","court","product","goal","skill","week","step","language","doctor","stone","river","tree","summer","winter","mountain","garden","window","picture","dream","letter","phone","street","music","bridge","forest","island","ocean","desert","valley","cloud","storm","thunder","shadow","mirror","candle","engine","machine","bottle","basket","pocket","ticket","market","corner","planet","rocket","circle","square","triangle","diamond","copper","silver","golden","purple","orange","yellow","silent","gentle","clever","brave","calm","proud","fresh","sharp","smooth","heavy","empty","quiet","early","final","future","common","simple","modern","ancient","future","narrow","broad"];
+
+  var stage = document.getElementById('stage');
+  var wordEl = document.getElementById('word');
+  var livesEl = document.getElementById('lives');
+  var flashEl = document.getElementById('flash');
+  var choicesEl = document.getElementById('choices');
+  var scoreEl = document.getElementById('scoreline');
+  var progressEl = document.getElementById('progress');
+  var yourBestEl = document.getElementById('yourBest');
+
+  var HEART = '♥';
+  var state = 'idle';   // idle | playing | over
+  var pool = [];        // words not yet introduced
+  var seenList = [];     // words the player has been shown (for weighted pick)
+  var seen = new Set();
+  var current = '';
+  var currentIsNew = true;
+  var lives = 3;
+  var score = 0;
+
+  function t(key) {
+    var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && window.sfLang.current) || 'en';
+    var dict = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang]) || window.SF_PAGE_I18N.en;
+    return dict[key] != null ? dict[key] : window.SF_PAGE_I18N.en[key];
+  }
+
+  function renderLives() {
+    livesEl.textContent = lives > 0 ? new Array(lives + 1).join(HEART + ' ').trim() : '';
+  }
+
+  function renderScore() {
+    scoreEl.textContent = state === 'playing' ? t('score_tpl').replace('{n}', score) : '';
+  }
+
+  function showBest() {
+    try {
+      var b = localStorage.getItem('verbmem-best');
+      if (b) {
+        yourBestEl.hidden = false;
+        yourBestEl.textContent = t('your_best_tpl').replace('{n}', b);
+      }
+    } catch (e) { /* localStorage unavailable */ }
+  }
+
+  // ponytail: repeat probability ramps 0.30 -> 0.60 over the first ~40 seen words.
+  function pRepeat() {
+    var ramp = Math.min(seenList.length / 40, 1);
+    return 0.30 + ramp * 0.30;
+  }
+
+  function nextWord() {
+    flashEl.textContent = '';
+    flashEl.className = 'stage-flash';
+    var repeat = seenList.length > 0 && (pool.length === 0 || Math.random() < pRepeat());
+    if (repeat) {
+      current = seenList[Math.floor(Math.random() * seenList.length)];
+      currentIsNew = false;
+    } else {
+      var i = Math.floor(Math.random() * pool.length);
+      current = pool.splice(i, 1)[0];
+      currentIsNew = true;
+    }
+    wordEl.textContent = current;
+  }
+
+  function answer(saidNew) {
+    if (state !== 'playing') return;
+    var correct = saidNew ? currentIsNew : !currentIsNew;
+    if (correct) {
+      score++;
+      flashEl.textContent = t('flash_correct');
+      flashEl.className = 'stage-flash ok';
+    } else {
+      lives--;
+      flashEl.textContent = t('flash_wrong');
+      flashEl.className = 'stage-flash bad';
+      renderLives();
+    }
+    // A shown word is always "seen" from here on.
+    if (currentIsNew && !seen.has(current)) { seen.add(current); seenList.push(current); }
+    renderScore();
+    if (lives <= 0) { gameOver(); return; }
+    nextWord();
+  }
+
+  function buildChoices() {
+    choicesEl.innerHTML =
+      '<button class="choice-btn" id="btnNew" type="button">' + t('btn_new') +
+        '<small>' + t('btn_new_sub') + '</small></button>' +
+      '<button class="choice-btn" id="btnSeen" type="button">' + t('btn_seen') +
+        '<small>' + t('btn_seen_sub') + '</small></button>';
+    document.getElementById('btnNew').addEventListener('click', function () { answer(true); });
+    document.getElementById('btnSeen').addEventListener('click', function () { answer(false); });
+  }
+
+  function start() {
+    pool = Array.from(new Set(WORDS)); // dedupe any repeats in the source list
+    seenList = [];
+    seen = new Set();
+    lives = 3;
+    score = 0;
+    state = 'playing';
+    stage.className = 'stage';
+    renderLives();
+    renderScore();
+    buildChoices();
+    nextWord();
+  }
+
+  function gameOver() {
+    state = 'over';
+    var final = score;
+    var newBest = false;
+    try {
+      var prev = parseInt(localStorage.getItem('verbmem-best'), 10);
+      if (!prev || final > prev) { localStorage.setItem('verbmem-best', String(final)); newBest = true; }
+    } catch (e) { /* ignore */ }
+
+    wordEl.textContent = '';
+    livesEl.textContent = '';
+    flashEl.textContent = '';
+    flashEl.className = 'stage-flash';
+    scoreEl.textContent = '';
+    choicesEl.innerHTML =
+      '<div class="result-panel">' +
+        '<div class="result-avg">' + final + ' <span>' + t('result_label') + '</span></div>' +
+        (newBest ? '<div class="result-band">' + t('new_best') + '</div>' : '') +
+        '<div class="result-context">' + t('result_context') + '</div>' +
+        '<button class="btn" id="btnRetry" type="button">' + t('btn_retry') + '</button>' +
+      '</div>';
+    document.getElementById('btnRetry').addEventListener('click', start);
+    showBest();
+  }
+
+  document.getElementById('btnStart').addEventListener('click', start);
+
+  document.addEventListener('keydown', function (e) {
+    if (state !== 'playing') return;
+    if (e.key === 'ArrowLeft' || e.key === 'k' || e.key === 'K') { e.preventDefault(); answer(true); }
+    else if (e.key === 'ArrowRight' || e.key === 'l' || e.key === 'L') { e.preventDefault(); answer(false); }
+  });
+
+  // Re-render language-dependent text on toggle
+  document.addEventListener('sfLangChanged', function () {
+    if (state === 'idle') { wordEl.textContent = t('idle_word'); }
+    else if (state === 'playing') { buildChoices(); renderScore(); }
+    showBest();
+  });
+
+  // init
+  wordEl.textContent = t('idle_word');
+  showBest();
+})();
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+</script>
+
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

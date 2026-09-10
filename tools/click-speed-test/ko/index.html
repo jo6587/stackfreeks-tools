@@ -491,7 +491,7 @@ var bestLine  = document.getElementById('bestLine');
 var durationRow = document.getElementById('durationRow');
 
 function t(key) {
-  var lang = (window.sfLang && sfLang.current) || 'en';
+  var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && sfLang.current) || 'en';
   var p = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang]) || {};
   return p[key] != null ? p[key] : (window.SF_PAGE_I18N.en[key] || key);
 }
@@ -511,7 +511,7 @@ function writeBest(cps) {
 
 function showBestLine() {
   var b = readBest();
-  var lang = (window.sfLang && sfLang.current) || 'en';
+  var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && sfLang.current) || 'en';
   if (b == null) { bestLine.textContent = ''; return; }
   bestLine.textContent = lang === 'ko'
     ? '내 최고 기록 (' + duration + '초): ' + b.toFixed(2) + ' CPS'
@@ -519,7 +519,7 @@ function showBestLine() {
 }
 
 function rankFor(cps) {
-  var lang = (window.sfLang && sfLang.current) || 'en';
+  var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && sfLang.current) || 'en';
   for (var i = 0; i < RANKS_EN.length; i++) {
     if (cps >= RANKS_EN[i].min) {
       var en = RANKS_EN[i].label;
@@ -563,7 +563,7 @@ function endGame() {
   timeLeftEl.textContent = '0.0';
 
   var cps = clicks / duration;
-  var lang = (window.sfLang && sfLang.current) || 'en';
+  var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && sfLang.current) || 'en';
 
   // Result view: CPS is load-bearing, so write it directly (drop data-i18n)
   padBig.removeAttribute('data-i18n');
@@ -590,7 +590,7 @@ function startGame() {
   pad.classList.remove('done');
   padBig.removeAttribute('data-i18n');
   padSub.removeAttribute('data-i18n');
-  var lang = (window.sfLang && sfLang.current) || 'en';
+  var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && sfLang.current) || 'en';
   padBig.textContent = lang === 'ko' ? '계속 클릭!' : 'Keep clicking!';
   padSub.textContent = '';
   tickId = setInterval(tick, 100);

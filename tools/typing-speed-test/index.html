@@ -932,6 +932,12 @@ const wrap = document.getElementById('typingWrap');
 const langSelect = document.getElementById('langSelect');
 const results = document.getElementById('results');
 
+// Emit a bilingual span pair; i18n.js applyLang() + its MutationObserver show
+// the right one on both the EN page and the prerendered KO page.
+function bi(en, ko) {
+  return '<span class="lang-en">' + en + '</span><span class="lang-ko">' + ko + '</span>';
+}
+
 let target = '';
 let startTime = null;
 let timerId = null;
@@ -1058,11 +1064,13 @@ function finish() {
   let bestMsg;
   if (m.wpm > prevBest) {
     writeBest(m.wpm);
-    bestMsg = 'New best for ' + lang + ': ' + m.wpm + ' WPM';
+    bestMsg = bi('New best for ' + lang + ': ' + m.wpm + ' WPM',
+                 lang + ' 최고 기록 경신: ' + m.wpm + ' WPM');
   } else {
-    bestMsg = 'Best for ' + lang + ': ' + prevBest + ' WPM';
+    bestMsg = bi('Best for ' + lang + ': ' + prevBest + ' WPM',
+                 lang + ' 최고 기록: ' + prevBest + ' WPM');
   }
-  document.getElementById('resBest').textContent = bestMsg;
+  document.getElementById('resBest').innerHTML = bestMsg;
   results.hidden = false;
 }
 

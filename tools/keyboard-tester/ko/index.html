@@ -555,7 +555,7 @@ const heldSince = {};            // code -> timestamp of current keydown
 let active = false;
 
 function t(key) {
-  const l = (window.sfLang && sfLang.current) || 'en';
+  const l = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && sfLang.current) || 'en';
   const tbl = window.SF_PAGE_I18N || {};
   return (tbl[l] && tbl[l][key]) || (tbl.en && tbl.en[key]) || key;
 }

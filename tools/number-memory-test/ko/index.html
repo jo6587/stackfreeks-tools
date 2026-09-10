@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>숫자 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="재미 & 테스트" name="description">
+<link href="https://tools.stackfreeks.com/tools/number-memory-test/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/number-memory-test/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/number-memory-test/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/number-memory-test/" hreflang="x-default" rel="alternate">
+  
+
+
+<!-- Open Graph -->
+<meta content="숫자 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="재미 & 테스트" property="og:description">
+<meta content="https://tools.stackfreeks.com/tools/number-memory-test/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<!-- Twitter -->
+<meta content="summary" name="twitter:card">
+<meta content="숫자 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
+<meta content="재미 & 테스트" name="twitter:description">
+<!-- ADSENSE_SLOT_TOP -->
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    main { padding: 32px 0 48px; }
+
+    /* Game */
+    .stage {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      width: 100%;
+      min-height: 340px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 14px;
+      padding: 32px 24px;
+    }
+    .stage-level { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); }
+    .stage-number {
+      font-size: clamp(1.8rem, 7vw, 3.4rem);
+      font-weight: 600; letter-spacing: 0.06em;
+      color: var(--text-1);
+      font-variant-numeric: tabular-nums;
+      word-break: break-all;
+    }
+    .stage-hint { font-size: 0.9rem; color: var(--text-2); max-width: 420px; }
+
+    .countbar-track { width: 100%; max-width: 360px; height: 6px; border-radius: 999px; background: var(--surface); overflow: hidden; }
+    .countbar-fill { height: 100%; width: 100%; background: var(--accent); border-radius: 999px; }
+
+    .answer-input {
+      width: 100%; max-width: 320px;
+      background: var(--surface); border: 1px solid var(--border-2);
+      border-radius: var(--radius); color: var(--text-1);
+      font-family: var(--font); font-size: 1.4rem; font-weight: 600;
+      letter-spacing: 0.08em; text-align: center;
+      padding: 12px 14px; font-variant-numeric: tabular-nums;
+      outline: none;
+    }
+    .answer-input:focus { border-color: var(--accent); }
+
+    .btn {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); padding: 10px 22px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font);
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.88; }
+    .btn-ghost { background: transparent; border: 1px solid var(--border-2); color: var(--text-2); }
+
+    .start-big { font-size: 1.6rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.02em; }
+
+    /* Game over */
+    .over-title { font-size: 1.9rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.02em; }
+    .over-title span { color: var(--accent); }
+    .over-compare { display: flex; gap: 10px; justify-content: center; margin-top: 4px; flex-wrap: wrap; }
+    .over-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; min-width: 120px; }
+    .over-cell.bad { border-color: rgba(239,68,68,0.4); }
+    .over-cell.good { border-color: rgba(34,197,94,0.4); }
+    .over-cell-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+    .over-cell-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; word-break: break-all; }
+    .over-context { margin-top: 6px; font-size: 13px; color: var(--text-2); max-width: 440px; }
+
+    .progress { margin-top: 14px; font-size: 12px; color: var(--text-3); text-align: center; letter-spacing: 0.04em; }
+    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); text-align: center; }
+    .caveat { margin-top: 14px; font-size: 11px; color: var(--text-3); line-height: 1.6; max-width: 620px; margin-left: auto; margin-right: auto; text-align: center; }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related tools */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .stage { min-height: 320px; padding: 28px 16px; }
+      .over-title { font-size: 1.5rem; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Number Memory Test", "description": "Free online number memory test. A number appears on screen for a few seconds, then you type it back from memory. Each level adds one more digit, so you can see exactly how many digits you can remember.", "url": "https://tools.stackfreeks.com/tools/number-memory-test/ko/", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/number-memory-test/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "보통 사람은 몇 자리 숫자를 기억할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "대부분의 성인은 단기 기억에 약 7자리를 담을 수 있으며, 그래서 이 테스트의 평균 점수도 레벨 7 부근입니다. 1956년 조지 밀러의 논문에 나온 고전적 수치는 7 ± 2로, 대략 5~9자리는 완전히 정상 범위입니다. 레벨 8~9면 평균 이상이고, 레벨 10을 넘으면 순수 단기 기억이 아니라 청킹 같은 기억법을 쓰고 있을 가능성이 큽니다."}}, {"@type": "Question", "name": "좋은 숫자 기억력 점수는 어느 정도인가요?", "acceptedAnswer": {"@type": "Answer", "text": "이 테스트에서 레벨 7은 평균, 레벨 8~9는 좋음, 레벨 10 이상은 매우 우수합니다. 도달한 레벨은 마지막으로 성공한 레벨에서 정확히 기억한 자릿수와 같습니다. 점수는 피로, 산만함, 스트레스로 낮아지고 연습으로 올라가므로, 한 번의 결과는 고정된 능력치가 아니라 스냅숏으로 보세요."}}, {"@type": "Question", "name": "밀러의 법칙과 매직 넘버 7은 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "밀러의 법칙은 심리학자 조지 A. 밀러가 1956년에 관찰한 것으로, 보통 사람이 작업 기억에 담을 수 있는 항목 수가 약 7 ± 2라는 내용입니다. 그는 이를 \"매직 넘버 7\"이라 불렀습니다. 이후 연구는 서로 무관한 항목의 실제 한계가 약 4개 청크에 가깝고, 7자리 결과는 숫자를 소리로 되뇔 수 있어야 성립한다고 봅니다. 그래도 인터페이스와 전화번호 설계의 유용한 경험칙으로 남아 있습니다."}}, {"@type": "Question", "name": "청킹으로 숫자 기억력을 어떻게 높이나요?", "acceptedAnswer": {"@type": "Answer", "text": "청킹은 낱개의 숫자를 더 크고 의미 있는 단위로 묶는 것입니다. 4 1 9 2 8 3을 여섯 개로 외우는 대신 419, 283 두 덩어리로 저장하거나 연도, 나이, 지역번호에 연결합니다. 소리 내어 되뇌기, 시각화, 숫자를 단어로 바꾸는 메이저 시스템 모두 숫자 폭을 7 이상으로 끌어올립니다. 이런 테스트를 꾸준히 연습해도 점진적으로 향상됩니다."}}, {"@type": "Question", "name": "숫자 기억력은 IQ와 관련이 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "약한 상관관계가 있습니다. 숫자 폭은 작업 기억의 한 요소이고, 작업 기억 용량은 유동 지능과 상관이 있으며 WAIS 같은 IQ 검사에도 포함됩니다. 하지만 일대일 관계와는 거리가 멉니다: 동기, 주의력, 연습, 언어, 기억 전략 사용 여부가 모두 점수에 영향을 줍니다. 한 번의 숫자 기억력 결과는 전반적 지능에 대해 알려주는 바가 거의 없습니다."}}]}</script>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- 1. Nav -->
+<nav>
+<a class="logo" href="/ko/">
+<div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+<div class="nav-right">
+<a class="lang-toggle" href="https://tools.stackfreeks.com/tools/number-memory-test/">English</a>
+<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+</div>
+</nav>
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+<!-- 3. Hero -->
+<section class="hero">
+<div class="container">
+
+<div class="lang-ko">
+<p class="eyebrow">재미 & 테스트</p>
+<h1>숫자 기억력 테스트</h1>
+<p class="hero-desc">숫자가 화면에 잠깐 나타난 뒤, 기억해서 다시 입력하세요. 레벨이 오를 때마다 자릿수가 하나씩 늘어납니다 &mdash; 당신은 몇 자리까지 기억할 수 있나요?</p>
+</div>
+</div>
+</section>
+<!-- 4. Tool body -->
+<main>
+<div class="container">
+<div class="stage" id="stage"></div>
+<div class="progress" id="progress"></div>
+<div class="yourbest" hidden id="yourBest"></div>
+<p class="caveat" data-i18n="caveat">This measures digit span &mdash; the digits you can hold in short-term memory right now. Tiredness, distraction, and stress lower it; practice and chunking raise it. Treat one run as a snapshot.</p>
+</div>
+</main>
+<!-- About / SEO copy -->
+<section class="about-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>숫자 기억력 테스트 소개</h2>
+<p>이 숫자 기억력 테스트는 숫자를 몇 초간 보여준 뒤 감추고, 그것을 다시 입력하도록 합니다. 레벨 1은 한 자리 숫자이며, 레벨을 하나 통과할 때마다 자릿수가 하나씩 늘어나 레벨 N은 N자리 숫자입니다. 정확히 맞히면 다음 레벨로 넘어가고, 한 자리라도 틀리면 게임이 끝납니다. 도달한 레벨이 곧 당신의 숫자 폭(digit span) &mdash; 단기 기억에 담을 수 있었던 자릿수입니다. WAIS 지능 검사의 숫자 외우기 소검사와 같은 원리입니다.</p>
+<p>성인 평균은 약 레벨 7로, 1956년 심리학자 조지 밀러가 말한 "매직 넘버 7 &plusmn; 2"와 일치합니다. 높은 레벨일수록 숫자가 더 오래 표시되어(<code>2000&nbsp;+&nbsp;레벨&nbsp;&times;&nbsp;1000</code>&nbsp;ms, 조정 가능) 읽는 속도가 병목이 되지 않도록 했습니다. 최고 레벨은 <code>localStorage</code>로 브라우저에 저장됩니다. 모든 처리는 브라우저에서만 이루어지며, 데이터는 기기를 벗어나지 않습니다.</p>
+</div>
+</div>
+</section>
+<!-- 5. How-to section -->
+<section class="guide-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>숫자 기억력 테스트 사용 방법</h2>
+<div class="guide-grid">
+<div class="guide-card">
+<div class="guide-step">Step 1</div>
+<div class="guide-title">테스트 시작</div>
+<div class="guide-desc">시작 버튼을 누르세요. 한 자리 숫자와 함께 표시 시간을 나타내는 줄어드는 막대가 나옵니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 2</div>
+<div class="guide-title">숫자 외우기</div>
+<div class="guide-desc">숫자를 읽고 머릿속에 담으세요. 높은 레벨일수록 더 오래 표시되니, 자릿수를 그룹으로 묶어 외우세요.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 3</div>
+<div class="guide-title">다시 입력</div>
+<div class="guide-desc">숫자가 사라지면 입력창이 나타납니다. 기억한 숫자를 입력하고 Enter 또는 제출을 누르세요.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 4</div>
+<div class="guide-title">레벨 올리기</div>
+<div class="guide-desc">정답이면 자릿수가 하나 늘고 레벨이 올라갑니다. 한 자리라도 틀리면 게임이 끝나고 도달 레벨이 표시됩니다.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FAQ -->
+<section class="faq-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>자주 묻는 질문</h2>
+<div class="faq-list">
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>보통 사람은 몇 자리 숫자를 기억할 수 있나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">대부분의 성인은 단기 기억에 약 7자리를 담을 수 있으며, 그래서 이 테스트의 평균 점수도 레벨 7 부근입니다. 1956년 조지 밀러의 논문에 나온 고전적 수치는 7 &plusmn; 2로, 대략 5~9자리는 완전히 정상 범위입니다. 레벨 8~9면 평균 이상이고, 레벨 10을 넘으면 순수 단기 기억이 아니라 청킹 같은 기억법을 쓰고 있을 가능성이 큽니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>좋은 숫자 기억력 점수는 어느 정도인가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">이 테스트에서 레벨 7은 평균, 레벨 8~9는 좋음, 레벨 10 이상은 매우 우수합니다. 도달한 레벨은 마지막으로 성공한 레벨에서 정확히 기억한 자릿수와 같습니다. 점수는 피로, 산만함, 스트레스로 낮아지고 연습으로 올라가므로, 한 번의 결과는 고정된 능력치가 아니라 스냅숏으로 보세요.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>밀러의 법칙과 매직 넘버 7은 무엇인가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">밀러의 법칙은 심리학자 조지 A. 밀러가 1956년에 관찰한 것으로, 보통 사람이 작업 기억에 담을 수 있는 항목 수가 약 7 &plusmn; 2라는 내용입니다. 그는 이를 "매직 넘버 7"이라 불렀습니다. 이후 연구는 서로 무관한 항목의 실제 한계가 약 4개 청크에 가깝고, 7자리 결과는 숫자를 소리로 되뇔 수 있어야 성립한다고 봅니다. 그래도 인터페이스와 전화번호 설계의 유용한 경험칙으로 남아 있습니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>청킹으로 숫자 기억력을 어떻게 높이나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">청킹은 낱개의 숫자를 더 크고 의미 있는 단위로 묶는 것입니다. 4 1 9 2 8 3을 여섯 개로 외우는 대신 419, 283 두 덩어리로 저장하거나 연도, 나이, 지역번호에 연결합니다. 소리 내어 되뇌기, 시각화, 숫자를 단어로 바꾸는 메이저 시스템 모두 숫자 폭을 7 이상으로 끌어올립니다. 이런 테스트를 꾸준히 연습해도 점진적으로 향상됩니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>숫자 기억력은 IQ와 관련이 있나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">약한 상관관계가 있습니다. 숫자 폭은 작업 기억의 한 요소이고, 작업 기억 용량은 유동 지능과 상관이 있으며 WAIS 같은 IQ 검사에도 포함됩니다. 하지만 일대일 관계와는 거리가 멉니다: 동기, 주의력, 연습, 언어, 기억 전략 사용 여부가 모두 점수에 영향을 줍니다. 한 번의 숫자 기억력 결과는 전반적 지능에 대해 알려주는 바가 거의 없습니다.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+<div class="sf-related-grid">
+<a class="sf-related-card" href="/tools/sequence-memory-test/ko/"><span>🔢</span>Sequence Memory Test</a>
+<a class="sf-related-card" href="/tools/verbal-memory-test/ko/"><span>📖</span>Verbal Memory Test</a>
+<a class="sf-related-card" href="/tools/reaction-time-test/ko/"><span>⚡</span>Reaction Time Test</a>
+</div>
+</section>
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+<div class="container banner-inner">
+<div>
+<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+</div>
+<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+</div>
+</section>
+<!-- 9. Footer -->
+<footer class="footer">
+<div class="container footer-inner">
+<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+</div>
+</div>
+</footer>
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    caveat: "This measures digit span — the digits you can hold in short-term memory right now. Tiredness, distraction, and stress lower it; practice and chunking raise it. Treat one run as a snapshot.",
+    start_big: "Number Memory Test",
+    start_hint: "A number will appear. Memorise it, then type it back when it disappears.",
+    start_btn: "Start",
+    show_level: "Level {n} — memorise this",
+    recall_level: "Level {n}",
+    recall_hint: "Type the number you just saw.",
+    input_ph: "Your answer",
+    submit_btn: "Submit",
+    progress_tpl: "Level {n} · {d} digits",
+    progress_start: "Level 1 · 1 digit",
+    your_best_tpl: "Your best: level {n}",
+    over_title: "You reached level <span>{n}</span>",
+    over_sub: "You remembered {n} digits.",
+    over_number: "The number",
+    over_you: "You typed",
+    over_context: "The average person remembers about 7 digits — Miller's Law (7 ± 2). Practice and chunking push it higher.",
+    over_new_best: "New best! 🏆",
+    retry_btn: "Try again",
+    empty_dash: "(nothing)"
+  },
+  ko: {
+    caveat: "이것은 숫자 폭(digit span) — 지금 단기 기억에 담을 수 있는 자릿수를 측정합니다. 피로, 산만함, 스트레스는 낮추고 연습과 청킹은 높입니다. 한 번의 결과는 스냅숏으로 보세요.",
+    start_big: "숫자 기억력 테스트",
+    start_hint: "숫자가 나타납니다. 외운 뒤 사라지면 다시 입력하세요.",
+    start_btn: "시작",
+    show_level: "레벨 {n} — 외우세요",
+    recall_level: "레벨 {n}",
+    recall_hint: "방금 본 숫자를 입력하세요.",
+    input_ph: "정답 입력",
+    submit_btn: "제출",
+    progress_tpl: "레벨 {n} · {d}자리",
+    progress_start: "레벨 1 · 1자리",
+    your_best_tpl: "최고 기록: 레벨 {n}",
+    over_title: "레벨 <span>{n}</span> 도달",
+    over_sub: "{n}자리를 기억했습니다.",
+    over_number: "정답 숫자",
+    over_you: "입력한 숫자",
+    over_context: "보통 사람은 약 7자리를 기억합니다 — 밀러의 법칙 (7 ± 2). 연습과 청킹으로 더 높일 수 있습니다.",
+    over_new_best: "최고 기록 경신! 🏆",
+    retry_btn: "다시 시도",
+    empty_dash: "(입력 없음)"
+  }
+};
+</script>
+<script>
+(function () {
+  // ── Number Memory Test ──
+  // Human Benchmark style: show an N-digit number for a countdown, hide it,
+  // then the player types it back. Right -> level+1 (one more digit). Wrong -> game over.
+  var stage = document.getElementById('stage');
+  var progressEl = document.getElementById('progress');
+  var yourBestEl = document.getElementById('yourBest');
+
+  var BEST_KEY = 'nummem-best';
+  var state = 'idle';        // idle | showing | recall | over
+  var level = 1;
+  var currentNumber = '';
+  var showTimer = null;
+
+  function t(key) {
+    var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && window.sfLang.current) || 'en';
+    var dict = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang]) || window.SF_PAGE_I18N.en;
+    return dict[key] != null ? dict[key] : window.SF_PAGE_I18N.en[key];
+  }
+
+  function clearShowTimer() {
+    if (showTimer !== null) { clearTimeout(showTimer); showTimer = null; }
+  }
+
+  // ponytail: Math.random is fine for a memory game — no security need for a CSPRNG here.
+  function makeNumber(digits) {
+    var s = String(1 + Math.floor(Math.random() * 9)); // first digit 1-9 so length is exact
+    for (var i = 1; i < digits; i++) s += String(Math.floor(Math.random() * 10));
+    return s;
+  }
+
+  function getBest() {
+    try {
+      var b = parseInt(localStorage.getItem(BEST_KEY), 10);
+      return isNaN(b) ? 0 : b;
+    } catch (e) { return 0; }
+  }
+
+  function showBest() {
+    var b = getBest();
+    if (b > 0) {
+      yourBestEl.hidden = false;
+      yourBestEl.textContent = t('your_best_tpl').replace('{n}', b);
+    } else {
+      yourBestEl.hidden = true;
+    }
+  }
+
+  function updateProgress() {
+    if (state === 'over') { progressEl.textContent = ''; return; }
+    progressEl.textContent = t('progress_tpl')
+      .replace('{n}', level)
+      .replace('{d}', level);
+  }
+
+  function renderIdle() {
+    state = 'idle';
+    level = 1;
+    currentNumber = '';
+    clearShowTimer();
+    stage.innerHTML =
+      '<div class="start-big">' + t('start_big') + '</div>' +
+      '<div class="stage-hint">' + t('start_hint') + '</div>' +
+      '<button class="btn" id="startBtn" type="button">' + t('start_btn') + '</button>';
+    document.getElementById('startBtn').addEventListener('click', startLevel);
+    updateProgress();
+  }
+
+  function startLevel() {
+    state = 'showing';
+    currentNumber = makeNumber(level);
+    // ponytail: tunable display time — classic HB grows the window with level.
+    var showMs = 2000 + level * 1000;
+
+    stage.innerHTML =
+      '<div class="stage-level">' + t('show_level').replace('{n}', level) + '</div>' +
+      '<div class="stage-number" id="numDisplay">' + currentNumber + '</div>' +
+      '<div class="countbar-track"><div class="countbar-fill" id="countFill"></div></div>';
+    updateProgress();
+
+    var fill = document.getElementById('countFill');
+    // trigger the shrink animation on the next frame
+    requestAnimationFrame(function () {
+      fill.style.transition = 'width ' + showMs + 'ms linear';
+      fill.style.width = '0%';
+    });
+
+    clearShowTimer();
+    showTimer = setTimeout(function () {
+      showTimer = null;
+      renderRecall();
+    }, showMs);
+  }
+
+  function renderRecall() {
+    state = 'recall';
+    stage.innerHTML =
+      '<div class="stage-level">' + t('recall_level').replace('{n}', level) + '</div>' +
+      '<div class="stage-hint">' + t('recall_hint') + '</div>' +
+      '<input class="answer-input" id="answerInput" type="text" inputmode="numeric" ' +
+        'autocomplete="off" autocapitalize="off" spellcheck="false" ' +
+        'aria-label="' + t('input_ph') + '" placeholder="' + t('input_ph') + '" />' +
+      '<button class="btn" id="submitBtn" type="button">' + t('submit_btn') + '</button>';
+    updateProgress();
+
+    var input = document.getElementById('answerInput');
+    var submitBtn = document.getElementById('submitBtn');
+    input.focus();
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); submitAnswer(); }
+    });
+    submitBtn.addEventListener('click', submitAnswer);
+  }
+
+  function submitAnswer() {
+    if (state !== 'recall') return;
+    var input = document.getElementById('answerInput');
+    if (!input) return;
+    var guess = input.value.replace(/\s+/g, '');
+    if (guess === currentNumber) {
+      level++;
+      startLevel();
+    } else {
+      gameOver(guess);
+    }
+  }
+
+  function gameOver(guess) {
+    state = 'over';
+    clearShowTimer();
+    var reached = level; // digits remembered = last successful level = level - 1 clears; player "reached" this level
+    // reached level N means: cleared up to N-1, failed on N. Digit span = N-1... but HB reports the level you got to.
+    // We report the count of digits you last got right, which is level-1, unless level===1 (failed at 1 -> reached 0? show 1 attempt).
+    var score = level - 1;
+    if (score < 1) score = 0;
+
+    var best = getBest();
+    var newBest = false;
+    if (score > best) {
+      try { localStorage.setItem(BEST_KEY, String(score)); newBest = true; } catch (e) { /* ignore */ }
+    }
+
+    var shownGuess = guess && guess.length ? guess : t('empty_dash');
+    stage.innerHTML =
+      '<div class="over-title">' + t('over_title').replace('{n}', score) + '</div>' +
+      '<div class="stage-hint">' + t('over_sub').replace('{n}', score) + (newBest ? ' · ' + t('over_new_best') : '') + '</div>' +
+      '<div class="over-compare">' +
+        '<div class="over-cell good"><div class="over-cell-label">' + t('over_number') + '</div><div class="over-cell-val">' + currentNumber + '</div></div>' +
+        '<div class="over-cell bad"><div class="over-cell-label">' + t('over_you') + '</div><div class="over-cell-val">' + shownGuess + '</div></div>' +
+      '</div>' +
+      '<div class="over-context">' + t('over_context') + '</div>' +
+      '<button class="btn" id="retryBtn" type="button">' + t('retry_btn') + '</button>';
+    document.getElementById('retryBtn').addEventListener('click', renderIdle);
+    updateProgress();
+    showBest();
+  }
+
+  // init
+  renderIdle();
+  showBest();
+  document.addEventListener('sfLangChanged', function () {
+    // Re-render whatever static screen is showing; leave an in-progress number alone.
+    if (state === 'idle') renderIdle();
+    else if (state === 'over') { /* keep result but refresh best label */ showBest(); }
+    updateProgress();
+  });
+})();
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+</script>
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>
