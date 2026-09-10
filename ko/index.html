@@ -106,6 +106,53 @@
       color: var(--text-2);
     }
 
+    /* Search */
+    .tool-search {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .tool-search-field {
+      position: relative;
+    }
+    .tool-search-field::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      width: 15px;
+      height: 15px;
+      transform: translateY(-50%);
+      border: 1.5px solid var(--text-3);
+      border-radius: 50%;
+      box-shadow: 6px 6px 0 -3px var(--text-3);
+      pointer-events: none;
+    }
+    #toolSearch {
+      width: 100%;
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--text-1);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px 10px 38px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    #toolSearch::placeholder { color: var(--text-3); }
+    #toolSearch:focus { border-color: var(--border-2); }
+    #toolSearch::-webkit-search-cancel-button { cursor: pointer; }
+    .tool-search-empty {
+      max-width: 720px;
+      margin: 24px auto 0;
+      padding: 0 24px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-2);
+    }
+    .tool-search-query { color: var(--text-1); }
+
     /* Tools section */
     .tools-section {
       max-width: 720px;
@@ -317,6 +364,16 @@
 <p>이미지 변환, 데이터 처리 등 일상에서 쓰는 브라우저 툴 모음. 계정이나 설치 없이 바로 사용하세요.</p>
 </div>
 </section>
+<!-- Search -->
+<section class="tool-search">
+<div class="tool-search-field">
+<input aria-label="Search tools" autocomplete="off" data-i18n-placeholder="search_ph" id="toolSearch" placeholder="Search tools&hellip;" spellcheck="false" type="search">
+</div>
+</section>
+<p class="tool-search-empty" hidden>
+
+<span class="lang-ko">&ldquo;<span class="tool-search-query"></span>&rdquo;와(과) 일치하는 툴이 없습니다.</span>
+</p>
 <!-- Category tile grid -->
 <section class="cat-tiles-section">
 <p class="cat-tiles-eyebrow" data-i18n="cat_browse">Browse by category</p>
@@ -1037,7 +1094,8 @@
         cat_converters: 'Converters & Encoders',
         cat_text_code: 'Text & Code',
         cat_image: 'Image Tools',
-        cat_browse: 'Browse by category'
+        cat_browse: 'Browse by category',
+        search_ph: 'Search tools…'
       },
       ko: {
         cat_vps_server: 'VPS & 서버',
@@ -1045,9 +1103,90 @@
         cat_converters: '변환 & 인코딩',
         cat_text_code: '텍스트 & 코드',
         cat_image: '이미지 도구',
-        cat_browse: '카테고리별 보기'
+        cat_browse: '카테고리별 보기',
+        search_ph: '툴 검색…'
       }
     };
+  </script>
+<script>
+    (function () {
+      document.addEventListener('DOMContentLoaded', function () {
+        var input = document.getElementById('toolSearch');
+        if (!input) return;
+
+        var cats = Array.prototype.slice.call(document.querySelectorAll('.tools-cat'));
+        var catTiles = document.querySelector('.cat-tiles-section');
+        var emptyMsg = document.querySelector('.tool-search-empty');
+        var queryEchoes = emptyMsg ? emptyMsg.querySelectorAll('.tool-search-query') : [];
+
+        // Store original per-section totals + card lists.
+        var groups = cats.map(function (cat) {
+          var countEl = cat.querySelector('.tools-cat-count');
+          return {
+            section: cat,
+            countEl: countEl,
+            total: countEl ? countEl.textContent.trim() : '',
+            cards: Array.prototype.slice.call(cat.querySelectorAll('.tool-card'))
+          };
+        });
+
+        function reset() {
+          groups.forEach(function (g) {
+            g.section.hidden = false;
+            g.cards.forEach(function (c) { c.hidden = false; });
+            if (g.countEl) g.countEl.textContent = g.total;
+          });
+          if (catTiles) catTiles.hidden = false;
+          if (emptyMsg) emptyMsg.hidden = true;
+        }
+
+        function filter() {
+          var q = input.value.trim().toLowerCase();
+          if (!q) { reset(); return; }
+
+          var terms = q.split(/\s+/);
+          var anyVisible = false;
+
+          groups.forEach(function (g) {
+            var visible = 0;
+            g.cards.forEach(function (card) {
+              var text = card.textContent.toLowerCase();
+              var match = terms.every(function (t) { return text.indexOf(t) !== -1; });
+              card.hidden = !match;
+              if (match) visible++;
+            });
+            g.section.hidden = visible === 0;
+            if (g.countEl) g.countEl.textContent = String(visible);
+            if (visible > 0) anyVisible = true;
+          });
+
+          if (catTiles) catTiles.hidden = true;
+          if (emptyMsg) {
+            emptyMsg.hidden = anyVisible;
+            for (var i = 0; i < queryEchoes.length; i++) queryEchoes[i].textContent = input.value.trim();
+          }
+        }
+
+        input.addEventListener('input', filter);
+
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            input.value = '';
+            reset();
+            input.blur();
+          }
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== '/') return;
+          var el = document.activeElement;
+          var tag = el && el.tagName ? el.tagName.toLowerCase() : '';
+          if (tag === 'input' || tag === 'textarea' || (el && el.isContentEditable)) return;
+          e.preventDefault();
+          input.focus();
+        });
+      });
+    })();
   </script>
 <script src="/shared/i18n.js"></script>
 </body>
