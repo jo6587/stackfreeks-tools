@@ -135,7 +135,13 @@ const SF_I18N = {
     }
   };
 
-  document.addEventListener('DOMContentLoaded', applyLang);
+  document.addEventListener('DOMContentLoaded', function () {
+    applyLang();
+    // Tools whose game/result scripts run before this may have rendered dynamic
+    // text in the default language. Fire one sfLangChanged so their listeners
+    // re-render against the resolved language (localStorage / data-force-lang).
+    document.dispatchEvent(new CustomEvent('sfLangChanged', { detail: { lang: lang } }));
+  });
 })();
 
 // Inject Cloudways banner after .vultr-banner on every page
