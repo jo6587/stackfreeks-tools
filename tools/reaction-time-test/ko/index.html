@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>반응 속도 테스트 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="재미 & 테스트" name="description">
+<link href="https://tools.stackfreeks.com/tools/reaction-time-test/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/reaction-time-test/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/reaction-time-test/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/reaction-time-test/" hreflang="x-default" rel="alternate">
+  
+
+
+<!-- Open Graph -->
+<meta content="반응 속도 테스트 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="재미 & 테스트" property="og:description">
+<meta content="https://tools.stackfreeks.com/tools/reaction-time-test/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<!-- Twitter -->
+<meta content="summary" name="twitter:card">
+<meta content="반응 속도 테스트 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
+<meta content="재미 & 테스트" name="twitter:description">
+<!-- ADSENSE_SLOT_TOP -->
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    main { padding: 32px 0 48px; }
+
+    /* Game */
+    .stage {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      width: 100%;
+      min-height: 340px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+      padding: 32px 24px;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .stage.wait   { background: var(--danger); color: #fff; }
+    .stage.go     { background: var(--success); color: #05230f; }
+    .stage.result { background: var(--surface-2); cursor: default; }
+    .stage-big { font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; }
+    .stage-sub { font-size: 0.9rem; opacity: 0.9; max-width: 420px; }
+    .stage .stage-sub { color: inherit; }
+
+    .progress { margin-top: 14px; font-size: 12px; color: var(--text-3); text-align: center; letter-spacing: 0.04em; }
+    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); text-align: center; }
+
+    /* Result panel */
+    .result-panel { text-align: center; }
+    .result-avg { font-size: 3rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+    .result-avg span { font-size: 1rem; color: var(--text-3); font-weight: 400; }
+    .result-band { margin-top: 4px; font-size: 0.95rem; font-weight: 500; color: var(--success); }
+    .result-context { margin-top: 10px; font-size: 13px; color: var(--text-2); max-width: 440px; margin-left: auto; margin-right: auto; }
+    .result-stats { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+    .stat-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; min-width: 110px; }
+    .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+    .stat-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .attempts-list { margin-top: 12px; font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+    .btn {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); padding: 10px 22px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); margin-top: 18px;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.88; }
+
+    .caveat { margin-top: 14px; font-size: 11px; color: var(--text-3); line-height: 1.6; max-width: 620px; margin-left: auto; margin-right: auto; text-align: center; }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related tools */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .stage { min-height: 320px; padding: 28px 16px; }
+      .stage-big { font-size: 1.6rem; }
+      .result-avg { font-size: 2.4rem; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Reaction Time Test", "description": "Free online reaction time test. Click when the box turns green across 5 attempts to measure your average visual reaction time in milliseconds and see how your reflexes compare.", "url": "https://tools.stackfreeks.com/tools/reaction-time-test/ko/", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/reaction-time-test/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "좋은 반응 속도는 어느 정도인가요?", "acceptedAnswer": {"@type": "Answer", "text": "이런 단순 시각 반응 속도 테스트에서는 성인 기준 약 200~270ms면 좋은 편입니다. 인간 평균은 약 273ms입니다. 200ms 미만은 훈련된 게이머나 운동선수 수준으로 매우 우수하며, 300ms 이상도 특히 노트북 트랙패드나 디스플레이·입력 지연이 있는 환경에서는 완전히 정상입니다."}}, {"@type": "Question", "name": "나이대별 평균 반응 속도는 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "반응 속도는 10대 후반에서 20대에 가장 빠르며 클릭 테스트에서 보통 250~270ms입니다. 이후 점차 느려져 40대에는 280~300ms, 60대 이후에는 300~350ms에 가깝습니다. 어린이는 주의력과 운동 조절이 아직 발달 중이라 젊은 성인보다 느립니다. 이는 평균일 뿐이며 개인차와 연습이 나이보다 더 큰 영향을 줍니다."}}, {"@type": "Question", "name": "반응 속도를 어떻게 개선하나요?", "acceptedAnswer": {"@type": "Answer", "text": "해당 과제 자체를 반복 연습하는 것이 가장 효과적이므로 측정 전 워밍업을 하세요. 그 외에 충분한 수면, 수분 섭취, 음주 제한, 유선 마우스와 고주사율 모니터 사용, 방해 요소 제거가 도움이 됩니다. 규칙적인 유산소 운동과 빠른 스포츠·게임도 작지만 실질적인 향상을 줍니다. 극적인 변화보다는 평균에서 20~40ms를 줄이는 것이 현실적인 목표입니다."}}, {"@type": "Question", "name": "제 반응 속도가 왜 느린가요?", "acceptedAnswer": {"@type": "Answer", "text": "흔한 원인은 피로, 집중력 저하, 카페인 효과 감소, 그리고 워밍업 부족입니다. 하드웨어도 영향을 줍니다: 무선 마우스, 60Hz 화면, 브라우저 백그라운드 부하, 터치 입력은 각각 10~50ms를 더할 수 있습니다. 초록 신호를 미리 예상해 일찍 클릭하면 해당 시도가 재시작되어 평균이 나빠집니다. 정신이 맑을 때 깨끗한 라운드를 여러 번 진행해 실제 기준선을 확인하세요."}}, {"@type": "Question", "name": "200ms 반응 속도는 좋은 건가요?", "acceptedAnswer": {"@type": "Answer", "text": "네. 단순 시각 반응 테스트에서 평균 200ms는 대부분의 사람보다 빠르며 경쟁 게이머와 운동선수 범위에 속합니다. 인간 시각 반응의 이론적 한계는 약 150ms인데, 빛이 망막에서 처리되어 신경계를 거쳐 근육 반응을 일으키기까지 걸리는 시간 때문입니다. 따라서 꾸준히 200ms를 기록한다면 거의 최적에 가깝습니다."}}]}</script>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- 1. Nav -->
+<nav>
+<a class="logo" href="/ko/">
+<div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+<div class="nav-right">
+<a class="lang-toggle" href="https://tools.stackfreeks.com/tools/reaction-time-test/">English</a>
+<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+</div>
+</nav>
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+<!-- 3. Hero -->
+<section class="hero">
+<div class="container">
+
+<div class="lang-ko">
+<p class="eyebrow">재미 & 테스트</p>
+<h1>반응 속도 테스트</h1>
+<p class="hero-desc">박스가 초록색으로 바뀌면 최대한 빠르게 클릭하세요. 5회 시도 후 평균 반응 속도(밀리초)와 당신의 반사 신경 수준을 확인할 수 있습니다.</p>
+</div>
+</div>
+</section>
+<!-- 4. Tool body -->
+<main>
+<div class="container">
+<div aria-live="polite" class="stage idle" id="stage" role="button" tabindex="0">
+<div class="stage-big" id="stageBig">Reaction Time Test</div>
+<div class="stage-sub" id="stageSub">Click or tap anywhere in this box to start. When it turns green, click as fast as you can.</div>
+</div>
+<div class="progress" id="progress">Attempt 1 of 5</div>
+<div class="yourbest" hidden id="yourBest"></div>
+<p class="caveat" data-i18n="caveat">Your result includes about 10&ndash;50 ms of unavoidable display and input latency (monitor refresh, mouse polling, browser overhead), so treat it as a relative score, not a lab measurement.</p>
+</div>
+</main>
+<!-- About / SEO copy -->
+<section class="about-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>반응 속도 테스트 소개</h2>
+<p>이 반응 속도 테스트는 시각 신호에 얼마나 빠르게 반응하는지를 측정합니다 &mdash; "초록색이 되면 클릭" 방식의 고전적인 벤치마크입니다. 1.2~4초의 무작위 지연 후 박스가 빨간색에서 초록색으로 바뀌며, 브라우저의 고정밀 <code>performance.now()</code> 타이머로 전환 시점과 클릭 사이의 밀리초를 기록합니다. 5회 시도 후 평균, 최고 기록, 그리고 반사 신경 수준을 알려줍니다.</p>
+<p>성인의 단순 시각 반응 속도는 평균 약 273ms이며, 훈련된 게이머와 운동선수는 180~220ms, 인간의 이론적 한계는 약 150ms입니다. 반응 속도는 각성 상태와 집중력의 지표로 수면 연구, 스포츠 훈련, 운전자 안전 연구에 활용됩니다. 마우스가 있는 데스크톱과 터치 기반 모바일 모두에서 작동하며, 가입 없이 브라우저에서 바로 실행됩니다.</p>
+</div>
+</div>
+</section>
+<!-- 5. How-to section -->
+<section class="guide-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>반응 속도 테스트 사용 방법</h2>
+<div class="guide-grid">
+<div class="guide-card">
+<div class="guide-step">Step 1</div>
+<div class="guide-title">테스트 시작</div>
+<div class="guide-desc">박스를 클릭하거나 탭하세요. 빨간색으로 바뀌며 "초록색을 기다리세요&hellip;"가 표시됩니다. 손을 준비하세요.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 2</div>
+<div class="guide-title">초록색 대기</div>
+<div class="guide-desc">1.2~4초의 무작위 지연 후 박스가 초록색으로 바뀝니다. 빨간색일 때 클릭하면 해당 시도가 다시 시작됩니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 3</div>
+<div class="guide-title">즉시 클릭</div>
+<div class="guide-desc">초록색으로 바뀌는 순간 클릭하세요. 밀리초 단위로 기록되고 다음 시도로 넘어갑니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 4</div>
+<div class="guide-title">결과 확인</div>
+<div class="guide-desc">5회 시도 후 평균, 최고 기록, 반사 신경 수준 밴드가 표시됩니다. "다시 시도"로 재도전하세요.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FAQ -->
+<section class="faq-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>자주 묻는 질문</h2>
+<div class="faq-list">
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>좋은 반응 속도는 어느 정도인가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">이런 단순 시각 반응 속도 테스트에서는 성인 기준 약 200~270ms면 좋은 편입니다. 인간 평균은 약 273ms입니다. 200ms 미만은 훈련된 게이머나 운동선수 수준으로 매우 우수하며, 300ms 이상도 특히 노트북 트랙패드나 디스플레이&middot;입력 지연이 있는 환경에서는 완전히 정상입니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>나이대별 평균 반응 속도는 어떻게 되나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">반응 속도는 10대 후반에서 20대에 가장 빠르며 클릭 테스트에서 보통 250~270ms입니다. 이후 점차 느려져 40대에는 280~300ms, 60대 이후에는 300~350ms에 가깝습니다. 어린이는 주의력과 운동 조절이 아직 발달 중이라 젊은 성인보다 느립니다. 이는 평균일 뿐이며 개인차와 연습이 나이보다 더 큰 영향을 줍니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>반응 속도를 어떻게 개선하나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">해당 과제 자체를 반복 연습하는 것이 가장 효과적이므로 측정 전 워밍업을 하세요. 그 외에 충분한 수면, 수분 섭취, 음주 제한, 유선 마우스와 고주사율 모니터 사용, 방해 요소 제거가 도움이 됩니다. 규칙적인 유산소 운동과 빠른 스포츠&middot;게임도 작지만 실질적인 향상을 줍니다. 극적인 변화보다는 평균에서 20~40ms를 줄이는 것이 현실적인 목표입니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>제 반응 속도가 왜 느린가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">흔한 원인은 피로, 집중력 저하, 카페인 효과 감소, 그리고 워밍업 부족입니다. 하드웨어도 영향을 줍니다: 무선 마우스, 60Hz 화면, 브라우저 백그라운드 부하, 터치 입력은 각각 10~50ms를 더할 수 있습니다. 초록 신호를 미리 예상해 일찍 클릭하면 해당 시도가 재시작되어 평균이 나빠집니다. 정신이 맑을 때 깨끗한 라운드를 여러 번 진행해 실제 기준선을 확인하세요.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>200ms 반응 속도는 좋은 건가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">네. 단순 시각 반응 테스트에서 평균 200ms는 대부분의 사람보다 빠르며 경쟁 게이머와 운동선수 범위에 속합니다. 인간 시각 반응의 이론적 한계는 약 150ms인데, 빛이 망막에서 처리되어 신경계를 거쳐 근육 반응을 일으키기까지 걸리는 시간 때문입니다. 따라서 꾸준히 200ms를 기록한다면 거의 최적에 가깝습니다.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+<div class="sf-related-grid">
+<a class="sf-related-card" href="/tools/click-speed-test/ko/"><span>🖱️</span>Click Speed Test</a>
+<a class="sf-related-card" href="/tools/typing-speed-test/ko/"><span>⌨️</span>Typing Speed Test</a>
+<a class="sf-related-card" href="/tools/keyboard-tester/ko/"><span>🎹</span>Keyboard Tester</a>
+</div>
+</section>
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+<div class="container banner-inner">
+<div>
+<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+</div>
+<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+</div>
+</section>
+<!-- 9. Footer -->
+<footer class="footer">
+<div class="container footer-inner">
+<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+</div>
+</div>
+</footer>
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    caveat: "Your result includes about 10–50 ms of unavoidable display and input latency (monitor refresh, mouse polling, browser overhead), so treat it as a relative score, not a lab measurement.",
+    st_idle_big: "Reaction Time Test",
+    st_idle_sub: "Click or tap anywhere in this box to start. When it turns green, click as fast as you can.",
+    st_wait_big: "Wait for green…",
+    st_wait_sub: "Get ready — don't click until the box turns green.",
+    st_go_big: "Click!",
+    st_toosoon_big: "Too soon!",
+    st_toosoon_sub: "You clicked before green. Click to retry this attempt.",
+    st_attempt_result_sub: "Click to continue.",
+    progress_tpl: "Attempt {n} of 5",
+    progress_done: "Done — 5 of 5",
+    result_band_label: "Reflexes",
+    result_context: "Average human ≈ 273 ms; pro gamers 180–220 ms; theoretical human limit ≈ 150 ms.",
+    stat_best: "Best",
+    stat_avg: "Average",
+    stat_attempts: "Attempts",
+    btn_retry: "Try again",
+    your_best_tpl: "Your best average: {n} ms",
+    band_lightning: "Lightning fast",
+    band_fast: "Faster than most",
+    band_average: "About average",
+    band_slow: "A little slow — try again warmed up",
+    band_sluggish: "Sluggish — check for lag or fatigue",
+    ms: "ms"
+  },
+  ko: {
+    caveat: "결과에는 모니터 주사율, 마우스 폴링, 브라우저 오버헤드 등 약 10~50ms의 피할 수 없는 디스플레이·입력 지연이 포함되므로, 실험실 측정이 아닌 상대적 점수로 보세요.",
+    st_idle_big: "반응 속도 테스트",
+    st_idle_sub: "박스 아무 곳이나 클릭 또는 탭하여 시작하세요. 초록색으로 바뀌면 최대한 빠르게 클릭하세요.",
+    st_wait_big: "초록색을 기다리세요…",
+    st_wait_sub: "준비하세요 — 초록색이 되기 전에 클릭하지 마세요.",
+    st_go_big: "클릭!",
+    st_toosoon_big: "너무 빨라요!",
+    st_toosoon_sub: "초록색 전에 클릭했습니다. 클릭하여 이 시도를 다시 하세요.",
+    st_attempt_result_sub: "계속하려면 클릭하세요.",
+    progress_tpl: "{n} / 5 시도",
+    progress_done: "완료 — 5 / 5",
+    result_band_label: "반사 신경",
+    result_context: "인간 평균 ≈ 273ms, 프로 게이머 180~220ms, 이론적 한계 ≈ 150ms.",
+    stat_best: "최고",
+    stat_avg: "평균",
+    stat_attempts: "시도",
+    btn_retry: "다시 시도",
+    your_best_tpl: "최고 평균 기록: {n} ms",
+    band_lightning: "번개처럼 빠름",
+    band_fast: "대부분보다 빠름",
+    band_average: "평균 수준",
+    band_slow: "약간 느림 — 워밍업 후 다시 시도",
+    band_sluggish: "느림 — 지연이나 피로 확인",
+    ms: "ms"
+  }
+};
+</script>
+<script>
+(function () {
+  // ── Reaction Time Test game ──
+  // ponytail: the reported ms is (green-shown -> pointerdown). It carries ~10-50ms
+  // of display + input latency (monitor refresh, mouse/touch polling, event loop).
+  // Good enough for a relative score; not a lab instrument. No calibration attempted.
+  var TOTAL = 5;
+  var MIN_DELAY = 1200, MAX_DELAY = 4000;
+
+  var stage = document.getElementById('stage');
+  var bigEl = document.getElementById('stageBig');
+  var subEl = document.getElementById('stageSub');
+  var progressEl = document.getElementById('progress');
+  var yourBestEl = document.getElementById('yourBest');
+
+  var state = 'idle';        // idle | waiting | ready | tooSoon | attemptDone | finished
+  var greenTs = 0;
+  var greenTimer = null;
+  var times = [];
+  var attempt = 0;
+
+  function t(key) {
+    var lang = (window.sfLang && window.sfLang.current) || 'en';
+    var dict = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang]) || window.SF_PAGE_I18N.en;
+    return dict[key] != null ? dict[key] : window.SF_PAGE_I18N.en[key];
+  }
+
+  function clearGreenTimer() {
+    if (greenTimer !== null) { clearTimeout(greenTimer); greenTimer = null; }
+  }
+
+  function setStage(cls, big, sub) {
+    stage.className = 'stage ' + cls;
+    bigEl.textContent = big;
+    subEl.innerHTML = '';
+    subEl.textContent = sub || '';
+  }
+
+  function updateProgress() {
+    if (state === 'finished') { progressEl.textContent = t('progress_done'); return; }
+    var n = Math.min(attempt + 1, TOTAL);
+    progressEl.textContent = t('progress_tpl').replace('{n}', n);
+  }
+
+  function showBest() {
+    try {
+      var b = localStorage.getItem('rt-best');
+      if (b) {
+        yourBestEl.hidden = false;
+        yourBestEl.textContent = t('your_best_tpl').replace('{n}', b);
+      }
+    } catch (e) { /* localStorage unavailable */ }
+  }
+
+  function band(avg) {
+    if (avg < 200) return { key: 'band_lightning' };
+    if (avg < 260) return { key: 'band_fast' };
+    if (avg < 320) return { key: 'band_average' };
+    if (avg < 400) return { key: 'band_slow' };
+    return { key: 'band_sluggish' };
+  }
+
+  function startAttempt() {
+    state = 'waiting';
+    setStage('wait', t('st_wait_big'), t('st_wait_sub'));
+    updateProgress();
+    var delay = MIN_DELAY + Math.random() * (MAX_DELAY - MIN_DELAY);
+    clearGreenTimer();
+    greenTimer = setTimeout(function () {
+      greenTimer = null;
+      state = 'ready';
+      greenTs = performance.now();
+      setStage('go', t('st_go_big'), '');
+    }, delay);
+  }
+
+  function recordClick() {
+    var ms = Math.round(performance.now() - greenTs);
+    times.push(ms);
+    attempt++;
+    if (attempt >= TOTAL) {
+      finish();
+    } else {
+      state = 'attemptDone';
+      setStage('result', ms + ' ' + t('ms'), t('st_attempt_result_sub'));
+      updateProgress();
+    }
+  }
+
+  function finish() {
+    state = 'finished';
+    clearGreenTimer();
+    updateProgress();
+
+    var sum = 0, best = Infinity;
+    for (var i = 0; i < times.length; i++) { sum += times[i]; if (times[i] < best) best = times[i]; }
+    var avg = Math.round(sum / times.length);
+
+    var newBest = false;
+    try {
+      var prev = parseInt(localStorage.getItem('rt-best'), 10);
+      if (!prev || avg < prev) { localStorage.setItem('rt-best', String(avg)); newBest = true; }
+    } catch (e) { /* ignore */ }
+
+    var b = band(avg);
+    stage.className = 'stage result';
+    var attemptsStr = times.join(' · ') + ' ' + t('ms');
+    stage.innerHTML =
+      '<div class="result-panel">' +
+        '<div class="result-avg">' + avg + ' <span>' + t('ms') + '</span></div>' +
+        '<div class="result-band">' + t('result_band_label') + ': ' + t(b.key) + (newBest ? ' 🏆' : '') + '</div>' +
+        '<div class="result-context">' + t('result_context') + '</div>' +
+        '<div class="result-stats">' +
+          '<div class="stat-cell"><div class="stat-label">' + t('stat_best') + '</div><div class="stat-val">' + best + ' ' + t('ms') + '</div></div>' +
+          '<div class="stat-cell"><div class="stat-label">' + t('stat_avg') + '</div><div class="stat-val">' + avg + ' ' + t('ms') + '</div></div>' +
+        '</div>' +
+        '<div class="attempts-list">' + attemptsStr + '</div>' +
+        '<button class="btn" id="retryBtn" type="button">' + t('btn_retry') + '</button>' +
+      '</div>';
+    document.getElementById('retryBtn').addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      reset();
+    });
+    showBest();
+  }
+
+  function reset() {
+    clearGreenTimer();
+    times = [];
+    attempt = 0;
+    state = 'idle';
+    stage.className = 'stage idle';
+    stage.innerHTML =
+      '<div class="stage-big" id="stageBig">' + t('st_idle_big') + '</div>' +
+      '<div class="stage-sub" id="stageSub">' + t('st_idle_sub') + '</div>';
+    bigEl = document.getElementById('stageBig');
+    subEl = document.getElementById('stageSub');
+    updateProgress();
+  }
+
+  function handleActivate() {
+    switch (state) {
+      case 'idle':
+      case 'attemptDone':
+        startAttempt();
+        break;
+      case 'waiting':
+        // clicked too early
+        clearGreenTimer();
+        state = 'tooSoon';
+        setStage('wait', t('st_toosoon_big'), t('st_toosoon_sub'));
+        break;
+      case 'tooSoon':
+        startAttempt();
+        break;
+      case 'ready':
+        recordClick();
+        break;
+      // finished: retry handled by its own button
+    }
+  }
+
+  stage.addEventListener('pointerdown', function (e) {
+    if (state === 'finished') return;
+    e.preventDefault();
+    handleActivate();
+  });
+  stage.addEventListener('keydown', function (e) {
+    if (state === 'finished') return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); handleActivate(); }
+  });
+
+  // init labels in current language
+  reset();
+  showBest();
+  document.addEventListener('sfLangChanged', function () {
+    if (state === 'idle') reset();
+    else updateProgress();
+  });
+})();
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+</script>
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

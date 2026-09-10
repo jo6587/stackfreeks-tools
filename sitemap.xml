@@ -69,6 +69,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tools.stackfreeks.com/tools/click-speed-test/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/click-speed-test/ko/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tools.stackfreeks.com/tools/color-converter/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -269,6 +279,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tools.stackfreeks.com/tools/keyboard-tester/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/keyboard-tester/ko/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tools.stackfreeks.com/tools/linux-swap-calculator/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -429,6 +449,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tools.stackfreeks.com/tools/reaction-time-test/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/reaction-time-test/ko/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tools.stackfreeks.com/tools/redis-memory-estimator/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -525,6 +555,16 @@
   </url>
   <url>
     <loc>https://tools.stackfreeks.com/tools/timestamp-converter/ko/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/typing-speed-test/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/typing-speed-test/ko/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typing Speed Test — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Free typing speed test with real code snippets — a code typing test and wpm test for programmers. Measures WPM, raw WPM, and accuracy." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/typing-speed-test/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/typing-speed-test/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/typing-speed-test/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/typing-speed-test/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Typing Speed Test — Free Online Tool | StackFreeks" />
+  <meta property="og:description" content="Free code typing test that measures WPM and accuracy on real snippets in JavaScript, Python, Go, Rust, TypeScript, SQL, and Bash." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/typing-speed-test/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Typing Speed Test | StackFreeks Tools" />
+  <meta name="twitter:description" content="Free code typing test that measures WPM and accuracy on real snippets in 7 programming languages." />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 560px; }
+
+    main { padding: 32px 0 48px; }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+    .card + .card { margin-top: 12px; }
+    .card-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 16px;
+    }
+
+    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+
+    /* Controls row */
+    .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 18px; }
+    .control-group { flex: 1; min-width: 160px; }
+    select {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 9px 12px;
+      font-size: 13px; font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+    }
+    select:focus { border-color: var(--border-2); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 9px 16px;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      white-space: nowrap;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--border-2); color: var(--text-1); }
+
+    /* Typing area */
+    .typing-wrap {
+      position: relative;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: auto;
+      max-height: 380px;
+    }
+    .typing-wrap.focused { border-color: var(--border-2); }
+    .code-display, .capture {
+      margin: 0;
+      padding: 18px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.7;
+      letter-spacing: 0;
+      tab-size: 2;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-width: 100%;
+    }
+    .code-display {
+      color: var(--text-3);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .code-display .ok { color: var(--text-1); }
+    .code-display .bad { color: var(--text-1); background: var(--danger); border-radius: 2px; }
+    .code-display .bad.nl { padding-right: 6px; }
+    .code-display .caret {
+      display: inline-block;
+      width: 0;
+      border-left: 2px solid var(--accent);
+      margin-left: -1px;
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+      height: 1.2em;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .capture {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      resize: none;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: transparent;
+      caret-color: transparent;
+      overflow: auto;
+    }
+
+    .hint { font-size: 11px; color: var(--text-3); margin-top: 10px; line-height: 1.5; }
+
+    /* Live stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 16px;
+    }
+    .stat-cell { background: var(--surface-2); padding: 12px 14px; text-align: center; }
+    .stat-label { font-size: 10px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .stat-val { font-size: 1.1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .stat-val.accent { color: var(--accent); }
+
+    /* Results panel */
+    .results {
+      margin-top: 16px;
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .results-label { font-size: 11px; font-weight: 500; color: var(--success); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+    .results-main { font-size: 2.4rem; font-weight: 500; letter-spacing: -0.04em; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .results-main span { font-size: 14px; color: var(--text-3); margin-left: 6px; }
+    .results-row { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 10px; font-size: 13px; color: var(--text-2); }
+    .results-row b { color: var(--text-1); font-weight: 500; }
+    .results-best { margin-top: 12px; font-size: 12px; color: var(--text-3); }
+    .results-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .btn-primary {
+      background: var(--text-1); color: var(--bg);
+      border: none; border-radius: var(--radius);
+      padding: 9px 18px; font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+
+    /* About / Guide / FAQ */
+    .about-section, .guide-section, .faq-section, .related { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    .faq-list { display: flex; flex-direction: column; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px;
+      text-decoration: none; display: flex; flex-direction: column; gap: 6px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* Related tools */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+      .code-display, .capture { font-size: 13px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Typing Speed Test","description":"A free code typing test that measures typing speed in WPM, raw WPM, and accuracy using real code snippets in JavaScript, Python, Go, Rust, TypeScript, SQL, and Bash.","url":"https://tools.stackfreeks.com/tools/typing-speed-test/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a good typing speed in WPM?","acceptedAnswer":{"@type":"Answer","text":"For plain prose, the average adult types around 40 WPM, a solid touch typist is in the 60-80 WPM range, and anything above 100 WPM is fast. On a code typing test the bar is lower because of symbols and indentation: 30-40 WPM on code is decent, 50-60 WPM is strong, and 70+ WPM on real code is genuinely quick."}},{"@type":"Question","name":"What is the average typing speed for programmers?","acceptedAnswer":{"@type":"Answer","text":"Most working programmers land somewhere between 50 and 70 WPM when typing normal English text. On actual source code the effective rate usually drops to roughly 30-50 WPM, since brackets, operators, underscores, and precise indentation slow everyone down. Raw coding throughput matters far less than reading, thinking, and editing time, so a mid-range score here is perfectly normal."}},{"@type":"Question","name":"How is WPM calculated on this typing speed test?","acceptedAnswer":{"@type":"Answer","text":"This test uses the standard formula: WPM equals the number of correctly typed characters divided by 5, divided by the elapsed time in minutes. Dividing by 5 treats every 5 characters as one word, which is the long-standing convention that makes scores comparable across tools. Raw WPM applies the same formula to every character you typed, including mistakes, so the gap between raw WPM and net WPM reflects your error rate."}},{"@type":"Question","name":"Why is my code typing speed slower than my prose typing speed?","acceptedAnswer":{"@type":"Answer","text":"Code is dense with characters that sit on modifier keys or awkward positions: parentheses, braces, brackets, semicolons, angle brackets, underscores, and pipes. You also cannot rely on muscle-memory word patterns the way you can with English, and every space of indentation has to be typed exactly. A 20-40 percent drop from your prose WPM to your code WPM is completely typical."}},{"@type":"Question","name":"How can I type code faster?","acceptedAnswer":{"@type":"Answer","text":"Practice the symbol keys deliberately until parentheses, braces, and brackets no longer require you to look down. Learn your editor's autocomplete, snippets, and multi-cursor features so you type less code overall. Keep your hands on the home row and use both shift keys. Short daily sessions of 5-10 minutes on a code typing test build far more durable speed than occasional long ones, and accuracy should come before raw pace."}}]}
+  </script>
+
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<!-- 1. Nav -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+  <div class="nav-right">
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  </div>
+</nav>
+
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+
+<!-- 3. Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow">Fun &amp; Tests</p>
+      <h1>Typing Speed Test</h1>
+      <p class="hero-desc">Measure how fast you really type <em>code</em>. Pick a language, type a real snippet, and get your WPM, raw WPM, and accuracy — no signup, runs in your browser.</p>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow">재미 &amp; 테스트</p>
+      <h1>타이핑 속도 테스트</h1>
+      <p class="hero-desc">실제 <em>코드</em>를 얼마나 빨리 입력하는지 측정하세요. 언어를 고르고 실제 스니펫을 입력하면 WPM, 로우 WPM, 정확도를 바로 확인할 수 있습니다. 가입 없이 브라우저에서 동작합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Tool body -->
+<main>
+  <div class="container">
+    <div class="card">
+      <p class="card-label" data-i18n="tool_label">Code Typing Test</p>
+
+      <div class="controls">
+        <div class="control-group">
+          <label data-i18n="lang_lbl">Language</label>
+          <select id="langSelect">
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="go">Go</option>
+            <option value="rust">Rust</option>
+            <option value="typescript">TypeScript</option>
+            <option value="sql">SQL</option>
+            <option value="bash">Bash</option>
+          </select>
+        </div>
+        <button class="btn-ghost" id="newBtn" data-i18n="new_btn">New snippet</button>
+        <button class="btn-ghost" id="restartBtn" data-i18n="restart_btn">Try again (same)</button>
+      </div>
+
+      <div class="typing-wrap" id="typingWrap">
+        <pre class="code-display" id="display" aria-hidden="true"></pre>
+        <textarea class="capture" id="capture" spellcheck="false" autocapitalize="off"
+          autocomplete="off" autocorrect="off" aria-label="Type the code snippet here"></textarea>
+      </div>
+      <p class="hint" data-i18n="tool_hint">Click the box and start typing. The timer starts on your first keystroke. Tab inserts a tab character; pasting is disabled.</p>
+
+      <div class="stats-grid">
+        <div class="stat-cell">
+          <div class="stat-label" data-i18n="st_wpm">WPM</div>
+          <div class="stat-val accent" id="stWpm">0</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label" data-i18n="st_raw">Raw WPM</div>
+          <div class="stat-val" id="stRaw">0</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label" data-i18n="st_acc">Accuracy</div>
+          <div class="stat-val" id="stAcc">100%</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label" data-i18n="st_time">Time</div>
+          <div class="stat-val" id="stTime">0.0s</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label" data-i18n="st_err">Errors</div>
+          <div class="stat-val" id="stErr">0</div>
+        </div>
+      </div>
+
+      <div class="results" id="results" hidden>
+        <div class="results-label" data-i18n="res_label">Result</div>
+        <div class="results-main"><span id="resWpmNum">0</span><span data-i18n="res_wpm_unit">WPM (net)</span></div>
+        <div class="results-row">
+          <span><b id="resRaw">0</b> <span data-i18n="res_raw">raw WPM</span></span>
+          <span><b id="resAcc">0%</b> <span data-i18n="res_acc">accuracy</span></span>
+          <span><b id="resTime">0s</b> <span data-i18n="res_time">time</span></span>
+          <span><b id="resErr">0</b> <span data-i18n="res_err">errors</span></span>
+        </div>
+        <div class="results-best" id="resBest"></div>
+        <div class="results-actions">
+          <button class="btn-primary" id="againBtn" data-i18n="again_btn">Try again (same)</button>
+          <button class="btn-ghost" id="nextBtn" data-i18n="next_btn">New snippet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- About / SEO copy -->
+<section class="about-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>About this code typing test</h2>
+      <p>Most typing speed tests feed you sentences of ordinary prose, which tells you very little about how quickly you can actually write software. This typing speed test uses real, syntactically valid code snippets so your score reflects the thing you do all day: typing brackets, operators, string literals, and precise indentation. It is a wpm test for programmers, built to be honest about the fact that code is slower to type than English.</p>
+      <p>Choose from seven languages — JavaScript, Python, Go, Rust, TypeScript, SQL, and Bash — and the tool serves a short, realistic snippet. As you type, each character is highlighted: grey for untyped, bright for correct, and red where you slipped. A caret marks your position. The test measures net WPM (correct characters only), raw WPM (everything you typed), accuracy, elapsed time, and error count, and it remembers your best net WPM per language in your browser so you can chase a personal record.</p>
+      <p>It is useful for developers who want a realistic benchmark, people practising the symbol-heavy keys that slow coders down, and anyone curious how their editor habits translate into raw throughput. No account, no tracking of your keystrokes, no server round-trips — everything runs locally.</p>
+    </div>
+    <div class="lang-ko">
+      <h2>코드 타이핑 테스트 소개</h2>
+      <p>대부분의 타이핑 속도 테스트는 일반 문장을 입력하게 하지만, 그것만으로는 실제로 코드를 얼마나 빨리 작성하는지 알기 어렵습니다. 이 테스트는 문법적으로 유효한 실제 코드 스니펫을 사용하므로, 괄호·연산자·문자열·들여쓰기까지 포함한 진짜 코딩 속도를 측정합니다. 개발자를 위한 WPM 테스트이며, 코드가 영문보다 느리게 입력된다는 사실을 그대로 반영합니다.</p>
+      <p>JavaScript, Python, Go, Rust, TypeScript, SQL, Bash 7개 언어 중에서 선택하면 짧고 현실적인 스니펫이 제공됩니다. 입력하는 동안 각 문자가 강조 표시됩니다 — 미입력은 회색, 정확은 밝은색, 오타는 빨간색이며 커서가 현재 위치를 표시합니다. 순수 WPM(정확한 문자만), 로우 WPM(입력한 전체 문자), 정확도, 경과 시간, 오류 수를 측정하고, 언어별 최고 순수 WPM을 브라우저에 저장합니다.</p>
+      <p>현실적인 벤치마크가 필요한 개발자, 코더를 느리게 만드는 기호 키를 연습하는 사람, 자신의 에디터 습관이 실제 타이핑 속도로 어떻게 이어지는지 궁금한 사람에게 유용합니다. 계정도, 키 입력 추적도, 서버 통신도 없이 모든 것이 로컬에서 동작합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. How-to section -->
+<section class="guide-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>How to use this typing speed test</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">Pick a language</div>
+          <div class="guide-desc">Choose JavaScript, Python, Go, Rust, TypeScript, SQL, or Bash. A random real snippet loads instantly.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">Click and start typing</div>
+          <div class="guide-desc">Click the code box and type the snippet exactly. The timer starts on your first keystroke — no countdown.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">Type every character</div>
+          <div class="guide-desc">Indentation, newlines, and symbols all count. Tab inserts a real tab; auto-indent is off, so type each space.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">Read your score</div>
+          <div class="guide-desc">On the last character you get net WPM, raw WPM, accuracy, time, and errors. Your best per language is saved locally.</div>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2>타이핑 속도 테스트 사용 방법</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">언어 선택</div>
+          <div class="guide-desc">JavaScript, Python, Go, Rust, TypeScript, SQL, Bash 중 선택하면 실제 스니펫이 무작위로 로드됩니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">클릭 후 입력 시작</div>
+          <div class="guide-desc">코드 상자를 클릭하고 스니펫을 그대로 입력하세요. 첫 키 입력 시 타이머가 시작됩니다 — 카운트다운 없음.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">모든 문자 입력</div>
+          <div class="guide-desc">들여쓰기, 줄바꿈, 기호 모두 포함됩니다. Tab은 실제 탭 문자를 넣고, 자동 들여쓰기는 없으므로 공백도 직접 입력합니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">점수 확인</div>
+          <div class="guide-desc">마지막 문자를 입력하면 순수 WPM, 로우 WPM, 정확도, 시간, 오류가 표시되고 언어별 최고 기록이 로컬에 저장됩니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is a good typing speed in WPM?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">For plain prose, the average adult types around 40 WPM, a solid touch typist is in the 60-80 WPM range, and anything above 100 WPM is fast. On a code typing test the bar is lower because of symbols and indentation: 30-40 WPM on code is decent, 50-60 WPM is strong, and 70+ WPM on real code is genuinely quick.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is the average typing speed for programmers?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Most working programmers land somewhere between 50 and 70 WPM when typing normal English text. On actual source code the effective rate usually drops to roughly 30-50 WPM, since brackets, operators, underscores, and precise indentation slow everyone down. Raw coding throughput matters far less than reading, thinking, and editing time, so a mid-range score here is perfectly normal.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How is WPM calculated on this typing speed test?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">This test uses the standard formula: WPM equals the number of correctly typed characters divided by 5, divided by the elapsed time in minutes. Dividing by 5 treats every 5 characters as one word, which is the long-standing convention that makes scores comparable across tools. Raw WPM applies the same formula to every character you typed, including mistakes, so the gap between raw WPM and net WPM reflects your error rate.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Why is my code typing speed slower than my prose typing speed?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Code is dense with characters that sit on modifier keys or awkward positions: parentheses, braces, brackets, semicolons, angle brackets, underscores, and pipes. You also cannot rely on muscle-memory word patterns the way you can with English, and every space of indentation has to be typed exactly. A 20-40 percent drop from your prose WPM to your code WPM is completely typical.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How can I type code faster?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">Practice the symbol keys deliberately until parentheses, braces, and brackets no longer require you to look down. Learn your editor's autocomplete, snippets, and multi-cursor features so you type less code overall. Keep your hands on the home row and use both shift keys. Short daily sessions of 5-10 minutes on a code typing test build far more durable speed than occasional long ones, and accuracy should come before raw pace.</div>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>좋은 타이핑 속도(WPM)는 어느 정도인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">일반 문장 기준으로 성인 평균은 약 40 WPM, 능숙한 터치 타이피스트는 60-80 WPM, 100 WPM 이상이면 빠른 편입니다. 코드 타이핑 테스트는 기호와 들여쓰기 때문에 기준이 낮아집니다 — 코드 30-40 WPM이면 무난하고, 50-60 WPM이면 우수하며, 실제 코드 70 WPM 이상이면 상당히 빠릅니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>프로그래머의 평균 타이핑 속도는 얼마인가요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">대부분의 현업 개발자는 일반 영문 텍스트에서 50-70 WPM 정도입니다. 실제 소스 코드에서는 괄호, 연산자, 언더스코어, 정확한 들여쓰기 때문에 대략 30-50 WPM으로 떨어집니다. 코딩에서는 읽기·사고·수정 시간이 훨씬 중요하므로 중간 정도 점수는 지극히 정상입니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>이 테스트에서 WPM은 어떻게 계산되나요?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">표준 공식을 사용합니다: WPM = (정확하게 입력한 문자 수 / 5) / 경과 시간(분). 5로 나누는 것은 5자를 한 단어로 보는 오래된 관행으로, 도구 간 점수를 비교 가능하게 합니다. 로우 WPM은 오타를 포함한 모든 입력 문자에 같은 공식을 적용하므로, 로우 WPM과 순수 WPM의 차이가 오류율을 나타냅니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>코드 타이핑 속도가 문장 타이핑보다 느린 이유는?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">코드에는 수정자 키나 불편한 위치에 있는 문자가 많습니다 — 소괄호, 중괄호, 대괄호, 세미콜론, 꺾쇠, 언더스코어, 파이프 등. 영문처럼 단어 단위의 근육 기억에 의존할 수 없고, 들여쓰기 공백도 정확히 입력해야 합니다. 문장 WPM 대비 코드 WPM이 20-40% 낮아지는 것은 완전히 일반적입니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>코드를 더 빨리 입력하려면?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a">소괄호, 중괄호, 대괄호를 내려다보지 않고 칠 수 있을 때까지 기호 키를 의도적으로 연습하세요. 에디터의 자동완성, 스니펫, 멀티 커서를 익혀 입력량 자체를 줄이세요. 손을 홈 로우에 두고 양쪽 Shift를 사용하세요. 하루 5-10분 짧은 연습이 가끔 하는 긴 연습보다 훨씬 오래가는 속도를 만들며, 속도보다 정확도가 먼저입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Related content -->
+<section class="related">
+  <div class="container">
+    <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+    <div class="related-grid">
+      <a href="https://stackfreeks.com/" class="related-card" target="_blank" rel="noopener">
+        <span class="related-tag">Blog</span>
+        <p class="related-title">StackFreeks — developer &amp; VPS guides</p>
+        <span class="related-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+  <div class="sf-related-grid">
+    <a href="/tools/reaction-time-test/" class="sf-related-card"><span>⚡</span>Reaction Time Test</a>
+    <a href="/tools/click-speed-test/" class="sf-related-card"><span>🖱️</span>Click Speed Test</a>
+    <a href="/tools/keyboard-tester/" class="sf-related-card"><span>⌨️</span>Keyboard Tester</a>
+  </div>
+</section>
+
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank"
+       data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- 9. Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    tool_label: "Code Typing Test",
+    lang_lbl: "Language",
+    new_btn: "New snippet",
+    restart_btn: "Try again (same)",
+    tool_hint: "Click the box and start typing. The timer starts on your first keystroke. Tab inserts a tab character; pasting is disabled.",
+    st_wpm: "WPM", st_raw: "Raw WPM", st_acc: "Accuracy", st_time: "Time", st_err: "Errors",
+    res_label: "Result",
+    res_wpm_unit: "WPM (net)",
+    res_raw: "raw WPM", res_acc: "accuracy", res_time: "time", res_err: "errors",
+    again_btn: "Try again (same)", next_btn: "New snippet"
+  },
+  ko: {
+    tool_label: "코드 타이핑 테스트",
+    lang_lbl: "언어",
+    new_btn: "새 스니펫",
+    restart_btn: "다시 시도 (같은 것)",
+    tool_hint: "상자를 클릭하고 입력을 시작하세요. 첫 키 입력 시 타이머가 시작됩니다. Tab은 탭 문자를 삽입하며 붙여넣기는 비활성화됩니다.",
+    st_wpm: "WPM", st_raw: "로우 WPM", st_acc: "정확도", st_time: "시간", st_err: "오류",
+    res_label: "결과",
+    res_wpm_unit: "WPM (순수)",
+    res_raw: "로우 WPM", res_acc: "정확도", res_time: "시간", res_err: "오류",
+    again_btn: "다시 시도 (같은 것)", next_btn: "새 스니펫"
+  }
+};
+</script>
+
+<script>
+// ── Real code snippets, 2-space indent, no trailing whitespace ──
+const SNIPPETS = {
+  javascript: [
+`function debounce(fn, wait) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+
+const log = debounce(() => console.log("hi"), 200);
+log();`,
+`async function getUser(id) {
+  const res = await fetch(\`/api/users/\${id}\`);
+  if (!res.ok) {
+    throw new Error(\`HTTP \${res.status}\`);
+  }
+  return res.json();
+}
+
+getUser(42).then((u) => console.log(u.name));`,
+`const groupBy = (arr, key) =>
+  arr.reduce((acc, item) => {
+    const k = item[key];
+    (acc[k] = acc[k] || []).push(item);
+    return acc;
+  }, {});
+
+const rows = [{ type: "a" }, { type: "b" }, { type: "a" }];
+console.log(groupBy(rows, "type"));`,
+`class Stack {
+  #items = [];
+  push(x) { this.#items.push(x); }
+  pop() { return this.#items.pop(); }
+  get size() { return this.#items.length; }
+}
+
+const s = new Stack();
+s.push(1);
+s.push(2);
+console.log(s.size);`
+  ],
+  python: [
+`from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fib(n: int) -> int:
+    if n < 2:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+print([fib(i) for i in range(10)])`,
+`def read_config(path):
+    config = {}
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            key, _, value = line.partition("=")
+            config[key.strip()] = value.strip()
+    return config`,
+`from dataclasses import dataclass
+
+@dataclass
+class Point:
+    x: float
+    y: float
+
+    def distance(self, other: "Point") -> float:
+        return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
+
+print(Point(0, 0).distance(Point(3, 4)))`,
+`from collections import Counter
+
+def top_words(text, n=3):
+    words = [w.lower() for w in text.split()]
+    counts = Counter(words)
+    return counts.most_common(n)
+
+print(top_words("the cat the dog the bird"))`
+  ],
+  go: [
+`package main
+
+import (
+  "fmt"
+  "sync"
+)
+
+func main() {
+  var wg sync.WaitGroup
+  for i := 0; i < 3; i++ {
+    wg.Add(1)
+    go func(n int) {
+      defer wg.Done()
+      fmt.Println("worker", n)
+    }(i)
+  }
+  wg.Wait()
+}`,
+`package main
+
+import (
+  "encoding/json"
+  "net/http"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+  data := map[string]string{"status": "ok"}
+  w.Header().Set("Content-Type", "application/json")
+  json.NewEncoder(w).Encode(data)
+}`,
+`package main
+
+import "fmt"
+
+type Rect struct {
+  W, H float64
+}
+
+func (r Rect) Area() float64 {
+  return r.W * r.H
+}
+
+func main() {
+  r := Rect{W: 3, H: 4}
+  fmt.Printf("area = %.1f\\n", r.Area())
+}`
+  ],
+  rust: [
+`#[derive(Debug)]
+struct Counter {
+  count: u32,
+}
+
+impl Counter {
+  fn new() -> Self {
+    Counter { count: 0 }
+  }
+  fn tick(&mut self) -> u32 {
+    self.count += 1;
+    self.count
+  }
+}
+
+fn main() {
+  let mut c = Counter::new();
+  println!("{}", c.tick());
+}`,
+`fn main() {
+  let nums = vec![1, 2, 3, 4, 5, 6];
+  let sum: i32 = nums
+    .iter()
+    .filter(|&&n| n % 2 == 0)
+    .map(|&n| n * n)
+    .sum();
+  println!("sum of even squares = {}", sum);
+}`,
+`fn first_char(s: &str) -> Option<char> {
+  s.chars().next()
+}
+
+fn main() {
+  match first_char("rust") {
+    Some(c) => println!("first: {}", c),
+    None => println!("empty string"),
+  }
+}`
+  ],
+  typescript: [
+`interface Box<T> {
+  value: T;
+}
+
+function unwrap<T>(box: Box<T>): T {
+  return box.value;
+}
+
+const n = unwrap<number>({ value: 42 });
+console.log(n.toFixed(2));`,
+`type Result =
+  | { ok: true; data: string }
+  | { ok: false; error: string };
+
+function isOk(r: Result): r is Extract<Result, { ok: true }> {
+  return r.ok;
+}
+
+const r: Result = { ok: true, data: "hello" };
+if (isOk(r)) console.log(r.data.toUpperCase());`,
+`enum Direction {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+
+function move(d: Direction): [number, number] {
+  switch (d) {
+    case Direction.Up: return [0, -1];
+    case Direction.Down: return [0, 1];
+    default: return [0, 0];
+  }
+}`
+  ],
+  sql: [
+`SELECT
+  u.name,
+  COUNT(o.id) AS order_count,
+  SUM(o.total) AS revenue
+FROM users u
+JOIN orders o ON o.user_id = u.id
+WHERE o.created_at >= '2026-01-01'
+GROUP BY u.name
+HAVING SUM(o.total) > 1000
+ORDER BY revenue DESC;`,
+`WITH recent AS (
+  SELECT user_id, MAX(created_at) AS last_seen
+  FROM sessions
+  GROUP BY user_id
+)
+SELECT u.email, r.last_seen
+FROM users u
+JOIN recent r ON r.user_id = u.id
+WHERE r.last_seen < NOW() - INTERVAL '30 days';`,
+`SELECT
+  product_id,
+  sold_on,
+  units,
+  SUM(units) OVER (
+    PARTITION BY product_id
+    ORDER BY sold_on
+  ) AS running_total
+FROM sales
+ORDER BY product_id, sold_on;`
+  ],
+  bash: [
+`#!/usr/bin/env bash
+set -euo pipefail
+
+for file in ./logs/*.log; do
+  lines=$(wc -l < "$file")
+  echo "$file has $lines lines"
+done`,
+`#!/usr/bin/env bash
+backup() {
+  local src="$1"
+  local dest="$2"
+  mkdir -p "$dest"
+  tar -czf "$dest/backup-$(date +%F).tar.gz" "$src"
+  echo "backed up $src"
+}
+
+backup /var/www /mnt/backups`,
+`#!/usr/bin/env bash
+set -e
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+curl -sL "https://example.com/data.json" -o "$tmp/data.json"
+jq '.items | length' "$tmp/data.json"`
+  ]
+};
+
+const display = document.getElementById('display');
+const capture = document.getElementById('capture');
+const wrap = document.getElementById('typingWrap');
+const langSelect = document.getElementById('langSelect');
+const results = document.getElementById('results');
+
+let target = '';
+let startTime = null;
+let timerId = null;
+let finished = false;
+let lastIndex = -1; // which snippet index is loaded, to avoid immediate repeat
+
+function pickSnippet(lang, avoid) {
+  const list = SNIPPETS[lang];
+  if (list.length === 1) return 0;
+  let i;
+  do { i = Math.floor(Math.random() * list.length); } while (i === avoid);
+  return i;
+}
+
+function loadSnippet(sameOne) {
+  const lang = langSelect.value;
+  if (!sameOne) lastIndex = pickSnippet(lang, lastIndex);
+  if (lastIndex < 0 || lastIndex >= SNIPPETS[lang].length) lastIndex = 0;
+  target = SNIPPETS[lang][lastIndex];
+  reset();
+}
+
+function reset() {
+  capture.value = '';
+  capture.readOnly = false;
+  startTime = null;
+  finished = false;
+  if (timerId) { clearInterval(timerId); timerId = null; }
+  results.hidden = true;
+  renderDisplay('');
+  updateStats('');
+  capture.focus();
+}
+
+// Build the highlighted target view against what the user has typed so far.
+function renderDisplay(typed) {
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < target.length; i++) {
+    if (i === typed.length) {
+      const caret = document.createElement('span');
+      caret.className = 'caret';
+      frag.appendChild(caret);
+    }
+    const ch = target[i];
+    const span = document.createElement('span');
+    if (i < typed.length) {
+      span.className = typed[i] === ch ? 'ok' : 'bad';
+      if (ch === '\n' && typed[i] !== ch) span.className += ' nl';
+    }
+    span.textContent = ch === '\n' ? '\n' : ch;
+    frag.appendChild(span);
+  }
+  if (typed.length >= target.length) {
+    const caret = document.createElement('span');
+    caret.className = 'caret';
+    frag.appendChild(caret);
+  }
+  display.replaceChildren(frag);
+}
+
+function countCorrect(typed) {
+  let correct = 0;
+  const len = Math.min(typed.length, target.length);
+  for (let i = 0; i < len; i++) if (typed[i] === target[i]) correct++;
+  return correct;
+}
+
+// ponytail: WPM = (correct chars / 5) / minutes. This is the conventional
+// typing-test formula (5 chars == 1 "word"); code typing WPM runs lower than
+// prose because of symbols and indentation, so don't expect your prose number.
+function computeMetrics(typed) {
+  const correct = countCorrect(typed);
+  const typedLen = typed.length;
+  const errors = typedLen - correct;
+  const elapsedMs = startTime ? (performance.now() - startTime) : 0;
+  const minutes = elapsedMs / 60000;
+  const wpm = minutes > 0 ? Math.round((correct / 5) / minutes) : 0;
+  const raw = minutes > 0 ? Math.round((typedLen / 5) / minutes) : 0;
+  const acc = typedLen > 0 ? Math.round((correct / typedLen) * 100) : 100;
+  return { wpm, raw, acc, errors, seconds: elapsedMs / 1000 };
+}
+
+function updateStats(typed) {
+  const m = computeMetrics(typed);
+  document.getElementById('stWpm').textContent = m.wpm;
+  document.getElementById('stRaw').textContent = m.raw;
+  document.getElementById('stAcc').textContent = m.acc + '%';
+  document.getElementById('stTime').textContent = m.seconds.toFixed(1) + 's';
+  document.getElementById('stErr').textContent = m.errors;
+}
+
+function tick() {
+  if (!finished) updateStats(capture.value);
+}
+
+function bestKey() { return 'typing-best-' + langSelect.value; }
+
+function readBest() {
+  try { return parseInt(localStorage.getItem(bestKey()), 10) || 0; }
+  catch (e) { return 0; }
+}
+
+function writeBest(v) {
+  try { localStorage.setItem(bestKey(), String(v)); }
+  catch (e) { /* storage blocked — ignore */ }
+}
+
+function finish() {
+  finished = true;
+  capture.readOnly = true;
+  if (timerId) { clearInterval(timerId); timerId = null; }
+  const typed = capture.value;
+  const m = computeMetrics(typed);
+  updateStats(typed);
+
+  document.getElementById('resWpmNum').textContent = m.wpm;
+  document.getElementById('resRaw').textContent = m.raw;
+  document.getElementById('resAcc').textContent = m.acc + '%';
+  document.getElementById('resTime').textContent = m.seconds.toFixed(1) + 's';
+  document.getElementById('resErr').textContent = m.errors;
+
+  const prevBest = readBest();
+  const lang = langSelect.options[langSelect.selectedIndex].text;
+  let bestMsg;
+  if (m.wpm > prevBest) {
+    writeBest(m.wpm);
+    bestMsg = 'New best for ' + lang + ': ' + m.wpm + ' WPM';
+  } else {
+    bestMsg = 'Best for ' + lang + ': ' + prevBest + ' WPM';
+  }
+  document.getElementById('resBest').textContent = bestMsg;
+  results.hidden = false;
+}
+
+capture.addEventListener('input', function () {
+  if (finished) return;
+  // Never let the field hold more than the target (guards over-typing / stray paste).
+  if (capture.value.length > target.length) {
+    capture.value = capture.value.slice(0, target.length);
+  }
+  const typed = capture.value;
+  if (startTime === null && typed.length > 0) {
+    startTime = performance.now();
+    timerId = setInterval(tick, 150);
+  }
+  renderDisplay(typed);
+  updateStats(typed);
+  if (typed.length >= target.length) finish();
+});
+
+// Tab inserts a real tab char instead of moving focus.
+capture.addEventListener('keydown', function (e) {
+  if (finished) return;
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const s = capture.selectionStart;
+    const end = capture.selectionEnd;
+    const v = capture.value;
+    const next = v.slice(0, s) + '\t' + v.slice(end);
+    if (next.length <= target.length) {
+      capture.value = next;
+      capture.selectionStart = capture.selectionEnd = s + 1;
+      capture.dispatchEvent(new Event('input'));
+    }
+  }
+});
+
+// Block paste so it can't finish the test for you.
+capture.addEventListener('paste', function (e) { e.preventDefault(); });
+capture.addEventListener('drop', function (e) { e.preventDefault(); });
+
+wrap.addEventListener('click', function () { if (!finished) capture.focus(); });
+capture.addEventListener('focus', function () { wrap.classList.add('focused'); });
+capture.addEventListener('blur', function () { wrap.classList.remove('focused'); });
+
+langSelect.addEventListener('change', function () { loadSnippet(false); });
+document.getElementById('newBtn').addEventListener('click', function () { loadSnippet(false); });
+document.getElementById('restartBtn').addEventListener('click', function () { reset(); });
+document.getElementById('againBtn').addEventListener('click', function () { reset(); });
+document.getElementById('nextBtn').addEventListener('click', function () { loadSnippet(false); });
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+
+// Init
+loadSnippet(false);
+</script>
+
+<!-- i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>
