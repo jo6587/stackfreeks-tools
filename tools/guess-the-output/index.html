@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guess the Output — Free JavaScript Quiz | StackFreeks</title>
+  <meta name="description" content="Free JavaScript quiz — guess the output of 18 tricky JS snippets covering coercion, hoisting, closures and this, with explanations." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/guess-the-output/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/guess-the-output/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/guess-the-output/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/guess-the-output/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Guess the Output — Free JavaScript Quiz | StackFreeks" />
+  <meta property="og:description" content="Guess the output of 18 tricky JavaScript snippets — type coercion, hoisting, closures, this binding and microtasks. With explanations for every answer." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/guess-the-output/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Guess the Output — JavaScript Quiz | StackFreeks Tools" />
+  <meta name="twitter:description" content="Guess the output of 18 tricky JavaScript snippets. Coercion, hoisting, closures, this. With explanations." />
+
+  <!-- ADSENSE_SLOT_TOP -->
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --danger-bg: rgba(239,68,68,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "SFMono-Regular", "Consolas", "Monaco", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 560px; }
+
+    main { padding: 32px 0 8px; }
+
+    /* Quiz */
+    .quiz-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; color: var(--text-3); margin-bottom: 14px;
+      font-variant-numeric: tabular-nums; letter-spacing: 0.03em;
+    }
+    .code-block {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      overflow-x: auto;
+      margin-bottom: 18px;
+    }
+    .code-block code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text-1);
+      white-space: pre;
+      display: block;
+    }
+    .prompt-line { font-size: 13px; color: var(--text-2); margin-bottom: 12px; }
+
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .choice {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 12px 14px;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      word-break: break-word;
+    }
+    .choice:hover:not(:disabled) { border-color: var(--border-2); }
+    .choice:disabled { cursor: default; }
+    .choice.correct { border-color: var(--success); background: var(--success-bg); color: var(--success); }
+    .choice.wrong { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
+
+    .explain {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-left: 2px solid var(--accent);
+      background: var(--surface);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+    .explain strong { color: var(--text-1); font-weight: 500; }
+
+    .btn {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); padding: 10px 22px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); margin-top: 18px;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.88; }
+
+    /* End screen */
+    .endscreen { text-align: center; padding: 24px 0 8px; }
+    .end-score { font-size: 3rem; font-weight: 600; color: var(--text-1); font-variant-numeric: tabular-nums; letter-spacing: -0.03em; }
+    .end-score span { font-size: 1rem; color: var(--text-3); font-weight: 400; }
+    .end-band { margin-top: 6px; font-size: 0.95rem; font-weight: 500; color: var(--accent); }
+    .end-best { margin-top: 8px; font-size: 13px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+    .caveat { margin-top: 18px; font-size: 11px; color: var(--text-3); line-height: 1.6; max-width: 620px; text-align: left; }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+    .about-section code { font-family: var(--font-mono); font-size: 12px; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; color: var(--text-1); }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-a code { font-family: var(--font-mono); font-size: 12px; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; color: var(--text-1); }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related tools */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .choices { grid-template-columns: 1fr; }
+      .choice { width: 100%; }
+      .end-score { font-size: 2.4rem; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Guess the Output — JavaScript Quiz","description":"Free JavaScript quiz. Guess the output of 18 tricky JS snippets covering type coercion, hoisting, the temporal dead zone, var-in-loop closures, this binding, typeof quirks, parseInt radix and microtask ordering, with a plain-English explanation for every answer.","url":"https://tools.stackfreeks.com/tools/guess-the-output/","applicationCategory":"EducationalApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does [] + {} give [object Object]?","acceptedAnswer":{"@type":"Answer","text":"The + operator converts both operands to primitives. An empty array becomes the empty string \"\" and a plain object becomes the string \"[object Object]\", so \"\" + \"[object Object]\" is \"[object Object]\". Note that {} + [] typed at the start of a statement is different, because the {} is parsed as an empty block and the leading + makes it +[], which is 0. Inside console.log() or any expression position it is always \"[object Object]\"."}},{"@type":"Question","name":"Why is 0.1 + 0.2 not 0.3 in JavaScript?","acceptedAnswer":{"@type":"Answer","text":"JavaScript numbers are 64-bit IEEE 754 binary floating point. The decimals 0.1 and 0.2 cannot be represented exactly in binary, so each is stored as the nearest representable value and the tiny rounding errors add up. The result is 0.30000000000000004, and 0.1 + 0.2 === 0.3 is false. To compare safely, round to a fixed number of decimals or check that the absolute difference is smaller than a small epsilon such as Number.EPSILON."}},{"@type":"Question","name":"What is the temporal dead zone in JavaScript?","acceptedAnswer":{"@type":"Answer","text":"Variables declared with let and const are hoisted to the top of their block but are not initialized. The temporal dead zone is the span from the start of the block until the declaration line is reached. Reading the variable in that span throws a ReferenceError: Cannot access before initialization, unlike var which is initialized to undefined when hoisted. The TDZ exists so that using a block-scoped binding before its declaration is a loud error instead of a silent undefined."}},{"@type":"Question","name":"How does JavaScript decide what this is?","acceptedAnswer":{"@type":"Answer","text":"For a normal function, this is set by how the function is called: obj.fn() makes this the object before the dot, a plain fn() call makes this undefined in strict mode or the global object otherwise, new Fn() makes this the new instance, and call, apply or bind set it explicitly. Arrow functions ignore all of that and permanently capture this from the surrounding scope where they were defined, which is why arrows are handy for callbacks inside methods."}},{"@type":"Question","name":"How do I get better at JavaScript output quizzes and tricky questions?","acceptedAnswer":{"@type":"Answer","text":"Learn the small set of rules the tricks rely on rather than memorizing outputs: the abstract equality coercion steps, the ToPrimitive rules for + , how var, let and function declarations hoist, how closures capture a variable and not a value, the call-site rules for this, and the order in which the call stack, microtask queue and macrotask queue run. Then predict each answer out loud before you check it, and read the explanation when you are wrong. Repeating this quiz a few times is enough for the common patterns to become automatic."}}]}
+  </script>
+
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<!-- 1. Nav -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+  <div class="nav-right">
+    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
+    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  </div>
+</nav>
+
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+
+<!-- 3. Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow">Fun &amp; Tests</p>
+      <h1>Guess the Output</h1>
+      <p class="hero-desc">A JavaScript quiz built from 18 famous gotchas — type coercion, hoisting, the temporal dead zone, closures, <code style="font-family:var(--font-mono)">this</code> binding and microtask ordering. Pick an answer, see why it happens.</p>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow">재미 &amp; 테스트</p>
+      <h1>출력값 맞히기</h1>
+      <p class="hero-desc">자바스크립트의 유명한 함정 18개로 만든 퀴즈입니다 — 타입 강제 변환, 호이스팅, 일시적 사각지대(TDZ), 클로저, <code style="font-family:var(--font-mono)">this</code> 바인딩, 마이크로태스크 순서. 답을 고르면 이유를 설명합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Tool body -->
+<main>
+  <div class="container">
+    <div id="quiz">
+      <div class="quiz-bar">
+        <span id="qProgress">Question 1 / 18</span>
+        <span id="qScore">Score 0 &middot; Streak 0</span>
+      </div>
+      <p class="prompt-line" id="promptLine">What does this log to the console?</p>
+      <pre class="code-block"><code id="codeBlock"></code></pre>
+      <div class="choices" id="choices"></div>
+      <div class="explain" id="explain" hidden></div>
+      <button class="btn" id="nextBtn" type="button" hidden>Next question →</button>
+    </div>
+
+    <div class="endscreen" id="endScreen" hidden>
+      <div class="end-score" id="endScore">0 <span>/ 18</span></div>
+      <div class="end-band" id="endBand"></div>
+      <div class="end-best" id="endBest"></div>
+      <button class="btn" id="restartBtn" type="button">Restart quiz</button>
+    </div>
+
+    <p class="caveat" id="caveat">Every expected output in this quiz is a hand-verified constant, not the result of running <code style="font-family:var(--font-mono)">eval()</code> on the snippet. That keeps the page safe and lets it show what a value <em>should</em> be even for the borderline cases.</p>
+  </div>
+</main>
+
+<!-- About / SEO copy -->
+<section class="about-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>About this JavaScript quiz</h2>
+      <p>Guess the Output is a short JavaScript quiz built around the language's most repeated interview traps. Each question shows a real snippet — usually a <code>console.log()</code> — and four possible outputs, exactly one of which is correct. When you pick, the right answer turns green, a wrong pick turns red, and a one or two sentence explanation tells you which rule produced that result. Your running score, current streak and progress through the 18 questions stay visible at the top, and your best score is remembered in your browser with <code>localStorage</code>.</p>
+      <p>The questions deliberately cluster around a handful of mechanics that account for most "wait, what?" moments in JavaScript: the ToPrimitive and abstract-equality coercion rules behind <code>[] + {}</code>, <code>"" == 0</code> and <code>[] == ![]</code>; IEEE 754 floating point and <code>0.1 + 0.2</code>; hoisting and the temporal dead zone; <code>var</code> captured by a closure inside a loop; how <code>this</code> is resolved at the call site and why arrow functions differ; <code>typeof null</code> and <code>typeof typeof 1</code>; <code>parseInt</code> radix with <code>map</code>; and the order the call stack, microtask queue and <code>setTimeout</code> run in. It runs entirely in your browser, needs no signup, and works on mobile.</p>
+    </div>
+    <div class="lang-ko">
+      <h2>이 자바스크립트 퀴즈 소개</h2>
+      <p>출력값 맞히기는 자바스크립트 면접에서 가장 자주 나오는 함정들로 만든 짧은 퀴즈입니다. 각 문제는 실제 코드 조각(대부분 <code>console.log()</code>)과 4개의 보기를 보여주며, 정답은 하나뿐입니다. 답을 고르면 정답은 초록색, 틀린 선택은 빨간색으로 표시되고, 어떤 규칙 때문에 그 결과가 나오는지 1~2문장으로 설명합니다. 현재 점수, 연속 정답(스트릭), 18문제 진행 상황이 상단에 계속 표시되며, 최고 점수는 <code>localStorage</code>로 브라우저에 저장됩니다.</p>
+      <p>문제들은 자바스크립트에서 "어? 왜 이러지?" 하는 순간을 만드는 몇 가지 핵심 동작에 집중합니다: <code>[] + {}</code>, <code>"" == 0</code>, <code>[] == ![]</code> 뒤에 있는 ToPrimitive와 추상 동등 비교 규칙, IEEE 754 부동소수점과 <code>0.1 + 0.2</code>, 호이스팅과 일시적 사각지대, 반복문 안에서 클로저에 붙잡히는 <code>var</code>, 호출 위치에 따라 결정되는 <code>this</code>와 화살표 함수의 차이, <code>typeof null</code>과 <code>typeof typeof 1</code>, <code>map</code>과 함께 쓰는 <code>parseInt</code>의 진법, 그리고 콜 스택·마이크로태스크 큐·<code>setTimeout</code>의 실행 순서입니다. 가입 없이 브라우저에서 바로 실행되고 모바일에서도 작동합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. How-to section -->
+<section class="guide-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>How to use this quiz</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">Read the snippet</div>
+          <div class="guide-desc">A short JavaScript snippet appears in a code block. Work out what it prints before you look at the choices.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">Pick an output</div>
+          <div class="guide-desc">Choose one of the four answers. The correct one turns green; if you missed it, your pick turns red.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">Read the explanation</div>
+          <div class="guide-desc">A short note explains the coercion, hoisting or scoping rule behind the result. Then press Next.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">Check your score</div>
+          <div class="guide-desc">After 18 questions you get a score out of 18 and a band. Your best score is saved. Hit Restart to try again.</div>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2>퀴즈 사용 방법</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-step">Step 1</div>
+          <div class="guide-title">코드 읽기</div>
+          <div class="guide-desc">짧은 자바스크립트 코드가 코드 블록에 나옵니다. 보기를 보기 전에 무엇이 출력될지 먼저 생각해 보세요.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 2</div>
+          <div class="guide-title">출력값 고르기</div>
+          <div class="guide-desc">4개 보기 중 하나를 선택합니다. 정답은 초록색으로, 틀렸다면 선택한 보기가 빨간색으로 표시됩니다.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 3</div>
+          <div class="guide-title">설명 읽기</div>
+          <div class="guide-desc">결과 뒤에 있는 강제 변환, 호이스팅, 스코프 규칙을 짧게 설명합니다. 그다음 다음 버튼을 누르세요.</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-step">Step 4</div>
+          <div class="guide-title">점수 확인</div>
+          <div class="guide-desc">18문제가 끝나면 18점 만점 점수와 등급이 나옵니다. 최고 점수는 저장됩니다. 다시 하려면 재시작을 누르세요.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="lang-en">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why does [] + {} give [object Object]?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">The <code>+</code> operator converts both operands to primitives. An empty array becomes the empty string <code>""</code> and a plain object becomes the string <code>"[object Object]"</code>, so <code>"" + "[object Object]"</code> is <code>"[object Object]"</code>. Note that <code>{} + []</code> typed at the start of a statement is different, because the <code>{}</code> is parsed as an empty block and the leading <code>+</code> makes it <code>+[]</code>, which is 0. Inside <code>console.log()</code> or any expression position it is always <code>"[object Object]"</code>.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why is 0.1 + 0.2 not 0.3 in JavaScript?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">JavaScript numbers are 64-bit IEEE 754 binary floating point. The decimals 0.1 and 0.2 cannot be represented exactly in binary, so each is stored as the nearest representable value and the tiny rounding errors add up. The result is <code>0.30000000000000004</code>, and <code>0.1 + 0.2 === 0.3</code> is <code>false</code>. To compare safely, round to a fixed number of decimals or check that the absolute difference is smaller than a small epsilon such as <code>Number.EPSILON</code>.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the temporal dead zone in JavaScript?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Variables declared with <code>let</code> and <code>const</code> are hoisted to the top of their block but are not initialized. The temporal dead zone is the span from the start of the block until the declaration line is reached. Reading the variable in that span throws a <code>ReferenceError: Cannot access before initialization</code>, unlike <code>var</code> which is initialized to <code>undefined</code> when hoisted. The TDZ exists so that using a block-scoped binding before its declaration is a loud error instead of a silent undefined.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How does JavaScript decide what this is?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">For a normal function, <code>this</code> is set by how the function is called: <code>obj.fn()</code> makes <code>this</code> the object before the dot, a plain <code>fn()</code> call makes <code>this</code> undefined in strict mode or the global object otherwise, <code>new Fn()</code> makes <code>this</code> the new instance, and <code>call</code>, <code>apply</code> or <code>bind</code> set it explicitly. Arrow functions ignore all of that and permanently capture <code>this</code> from the surrounding scope where they were defined, which is why arrows are handy for callbacks inside methods.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How do I get better at JavaScript output quizzes and tricky questions?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Learn the small set of rules the tricks rely on rather than memorizing outputs: the abstract equality coercion steps, the ToPrimitive rules for <code>+</code>, how <code>var</code>, <code>let</code> and function declarations hoist, how closures capture a variable and not a value, the call-site rules for <code>this</code>, and the order in which the call stack, microtask queue and macrotask queue run. Then predict each answer out loud before you check it, and read the explanation when you are wrong. Repeating this quiz a few times is enough for the common patterns to become automatic.</div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>왜 [] + {} 는 [object Object] 가 되나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code>+</code> 연산자는 두 피연산자를 원시값으로 변환합니다. 빈 배열은 빈 문자열 <code>""</code>, 일반 객체는 문자열 <code>"[object Object]"</code>가 되므로 <code>"" + "[object Object]"</code> 는 <code>"[object Object]"</code> 입니다. 문장 맨 앞에 쓴 <code>{} + []</code> 는 다릅니다. 이때 <code>{}</code> 는 빈 블록으로 해석되고 앞의 <code>+</code> 때문에 <code>+[]</code>, 즉 0이 됩니다. <code>console.log()</code> 안이나 표현식 위치에서는 항상 <code>"[object Object]"</code> 입니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>왜 자바스크립트에서 0.1 + 0.2 는 0.3 이 아닌가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">자바스크립트의 숫자는 64비트 IEEE 754 이진 부동소수점입니다. 0.1과 0.2는 이진수로 정확히 표현할 수 없어 각각 가장 가까운 표현 가능한 값으로 저장되고, 미세한 반올림 오차가 누적됩니다. 결과는 <code>0.30000000000000004</code> 이고 <code>0.1 + 0.2 === 0.3</code> 은 <code>false</code> 입니다. 안전하게 비교하려면 소수 자릿수를 고정해 반올림하거나, 차이의 절댓값이 <code>Number.EPSILON</code> 같은 작은 값보다 작은지 확인하세요.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>자바스크립트의 일시적 사각지대(TDZ)가 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code>let</code> 과 <code>const</code> 로 선언한 변수는 블록 맨 위로 호이스팅되지만 초기화되지 않습니다. 일시적 사각지대는 블록 시작부터 선언 줄에 도달하기 전까지의 구간입니다. 이 구간에서 변수를 읽으면 <code>ReferenceError: Cannot access before initialization</code> 가 발생합니다. 호이스팅 시 <code>undefined</code> 로 초기화되는 <code>var</code> 와 다릅니다. TDZ는 블록 스코프 변수를 선언 전에 사용하는 것을 조용한 undefined 대신 명확한 오류로 만들기 위해 존재합니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>자바스크립트는 this 를 어떻게 정하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">일반 함수에서 <code>this</code> 는 함수를 어떻게 호출했는지에 따라 정해집니다: <code>obj.fn()</code> 은 점 앞의 객체, 그냥 <code>fn()</code> 호출은 strict 모드에서 undefined 그 외에는 전역 객체, <code>new Fn()</code> 은 새 인스턴스, 그리고 <code>call</code>·<code>apply</code>·<code>bind</code> 는 명시적으로 지정합니다. 화살표 함수는 이 모든 것을 무시하고 정의된 주변 스코프의 <code>this</code> 를 영구히 캡처합니다. 그래서 메서드 안의 콜백에 화살표 함수가 유용합니다.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>자바스크립트 출력값 퀴즈와 함정 문제를 어떻게 더 잘 풀 수 있나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">출력을 외우기보다 함정이 의존하는 소수의 규칙을 익히세요: 추상 동등 비교의 강제 변환 단계, <code>+</code> 의 ToPrimitive 규칙, <code>var</code>·<code>let</code>·함수 선언의 호이스팅 방식, 클로저가 값이 아니라 변수를 캡처한다는 점, <code>this</code> 의 호출 위치 규칙, 그리고 콜 스택·마이크로태스크 큐·매크로태스크 큐가 실행되는 순서입니다. 그런 다음 확인하기 전에 답을 소리 내어 예측하고, 틀리면 설명을 읽으세요. 이 퀴즈를 몇 번 반복하면 흔한 패턴은 자동으로 익혀집니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+  <div class="sf-related-grid">
+    <a href="/tools/regex-tester/" class="sf-related-card"><span>🔍</span>Regex Tester</a>
+    <a href="/tools/json-formatter/" class="sf-related-card"><span>{ }</span>JSON Formatter</a>
+    <a href="/tools/typing-speed-test/" class="sf-related-card"><span>⌨️</span>Typing Speed Test</a>
+  </div>
+</section>
+
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank"
+       data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<!-- 9. Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    prompt_line: "What does this log to the console?",
+    q_progress_tpl: "Question {n} / {t}",
+    q_score_tpl: "Score {s} · Streak {k}",
+    next_q: "Next question →",
+    see_results: "See results →",
+    restart: "Restart quiz",
+    verdict_right: "Correct.",
+    verdict_wrong: "Not quite.",
+    end_band_ace: "You know your JS quirks cold.",
+    end_band_good: "Solid footing — a few gotchas slipped past.",
+    end_band_mid: "The coercion table won this round.",
+    end_band_low: "Worth another pass through the spec.",
+    end_best_tpl: "Personal best: {b} / {t}",
+    end_best_new: "New personal best! 🏆",
+    caveat: "Every expected output in this quiz is a hand-verified constant, not the result of running eval() on the snippet. That keeps the page safe and lets it show what a value should be even for the borderline cases."
+  },
+  ko: {
+    prompt_line: "이 코드는 콘솔에 무엇을 출력할까요?",
+    q_progress_tpl: "{n} / {t} 문제",
+    q_score_tpl: "점수 {s} · 스트릭 {k}",
+    next_q: "다음 문제 →",
+    see_results: "결과 보기 →",
+    restart: "퀴즈 재시작",
+    verdict_right: "정답입니다.",
+    verdict_wrong: "아쉽네요.",
+    end_band_ace: "자바스크립트의 함정을 완전히 꿰고 있군요.",
+    end_band_good: "기본기는 탄탄합니다 — 몇 개만 놓쳤어요.",
+    end_band_mid: "이번 판은 강제 변환 표의 승리네요.",
+    end_band_low: "명세를 한 번 더 훑어볼 만합니다.",
+    end_best_tpl: "최고 점수: {b} / {t}",
+    end_best_new: "최고 점수 경신! 🏆",
+    caveat: "이 퀴즈의 모든 예상 출력값은 스니펫을 eval() 로 실행한 결과가 아니라 손으로 검증한 상수입니다. 그래서 페이지가 안전하고, 애매한 경우에도 값이 어떠해야 하는지 보여줄 수 있습니다."
+  }
+};
+</script>
+
+<script>
+// ── Guess the Output — JavaScript quiz ──
+// ponytail: every `answer` here is a hand-verified constant, not eval()'d. Safer
+// (no arbitrary execution in the page) and it lets us show the *intended* output
+// even for parser/UB-ish forms (e.g. {} + [] vs [] + {}). Snippets are shown as
+// text only; nothing in QUESTIONS is ever executed.
+(function () {
+  var QUESTIONS = [
+    {
+      code: "console.log([] + {});",
+      choices: ['"[object Object]"', '"undefined"', '0', '"[]{}"'],
+      answer: 0,
+      explain: {
+        en: "The + operator turns both sides into primitives: [] becomes \"\" and {} becomes \"[object Object]\", so the result is the string \"[object Object]\".",
+        ko: "+ 연산자는 양쪽을 원시값으로 바꿉니다. []는 \"\", {}는 \"[object Object]\"가 되어 결과는 문자열 \"[object Object]\"입니다."
+      }
+    },
+    {
+      code: "console.log(0.1 + 0.2);",
+      choices: ['0.3', '0.30000000000000004', '0.30000000000000001', '"0.3"'],
+      answer: 1,
+      explain: {
+        en: "0.1 and 0.2 have no exact binary representation in IEEE 754 doubles, so the rounding errors surface and you get 0.30000000000000004.",
+        ko: "0.1과 0.2는 IEEE 754 배정밀도로 정확히 표현되지 않아 반올림 오차가 드러나고 0.30000000000000004가 나옵니다."
+      }
+    },
+    {
+      code: 'console.log("" == 0);',
+      choices: ['true', 'false', 'TypeError', '"0"'],
+      answer: 0,
+      explain: {
+        en: "With ==, the empty string is converted to the number 0, and 0 == 0 is true. Use === to avoid this coercion.",
+        ko: "== 에서는 빈 문자열이 숫자 0으로 변환되고 0 == 0 은 true 입니다. 이 변환을 피하려면 === 를 쓰세요."
+      }
+    },
+    {
+      code: "console.log(typeof null);",
+      choices: ['"null"', '"object"', '"undefined"', 'null'],
+      answer: 1,
+      explain: {
+        en: "typeof null returns \"object\" — a bug from the first version of JavaScript that can never be fixed for compatibility reasons.",
+        ko: "typeof null 은 \"object\" 를 반환합니다. 초기 자바스크립트의 버그이며 호환성 때문에 절대 고칠 수 없습니다."
+      }
+    },
+    {
+      code: "console.log(NaN === NaN);",
+      choices: ['true', 'false', 'undefined', 'TypeError'],
+      answer: 1,
+      explain: {
+        en: "NaN is the only value in JavaScript that is not equal to itself. Use Number.isNaN(x) to test for it.",
+        ko: "NaN 은 자바스크립트에서 자기 자신과 같지 않은 유일한 값입니다. 검사하려면 Number.isNaN(x) 을 쓰세요."
+      }
+    },
+    {
+      code: "for (var i = 0; i < 3; i++) {\n  setTimeout(function () {\n    console.log(i);\n  });\n}",
+      choices: ['0 1 2', '3 3 3', '0 0 0', '1 2 3'],
+      answer: 1,
+      explain: {
+        en: "var i is one variable shared by every iteration. The callbacks run after the loop finishes, when i is already 3, so they all log 3.",
+        ko: "var i 는 모든 반복이 공유하는 하나의 변수입니다. 콜백은 루프가 끝난 뒤 i 가 이미 3일 때 실행되어 모두 3을 출력합니다."
+      }
+    },
+    {
+      code: "for (let i = 0; i < 3; i++) {\n  setTimeout(function () {\n    console.log(i);\n  });\n}",
+      choices: ['0 1 2', '3 3 3', '0 0 0', 'ReferenceError'],
+      answer: 0,
+      explain: {
+        en: "let creates a fresh binding of i for each loop iteration, so each callback closes over its own value: 0, 1, then 2.",
+        ko: "let 은 반복마다 i 의 새 바인딩을 만들어 각 콜백이 자기 값을 클로저로 가집니다: 0, 1, 2."
+      }
+    },
+    {
+      code: "console.log(a);\nvar a = 1;",
+      choices: ['1', 'undefined', 'ReferenceError', 'null'],
+      answer: 1,
+      explain: {
+        en: "var a is hoisted to the top of the scope and initialized to undefined; only the assignment stays on line 2. So the log prints undefined.",
+        ko: "var a 는 스코프 최상단으로 호이스팅되어 undefined 로 초기화되고, 대입만 2번째 줄에 남습니다. 그래서 undefined 가 출력됩니다."
+      }
+    },
+    {
+      code: "console.log(b);\nlet b = 1;",
+      choices: ['1', 'undefined', 'ReferenceError', 'null'],
+      answer: 2,
+      explain: {
+        en: "let b is hoisted but not initialized. Reading it before its declaration is the temporal dead zone, which throws a ReferenceError.",
+        ko: "let b 는 호이스팅되지만 초기화되지 않습니다. 선언 전에 읽는 것은 일시적 사각지대이며 ReferenceError 를 던집니다."
+      }
+    },
+    {
+      code: 'console.log(["1", "2", "3"].map(parseInt));',
+      choices: ['[1, 2, 3]', '[1, NaN, NaN]', '["1", "2", "3"]', '[1, NaN, 3]'],
+      answer: 1,
+      explain: {
+        en: "map passes (value, index), so it calls parseInt(\"1\",0), parseInt(\"2\",1), parseInt(\"3\",2). Radix 0 means base 10 (→1), radix 1 is invalid (→NaN), and \"3\" is not a valid base-2 digit (→NaN).",
+        ko: "map 은 (값, 인덱스) 를 넘기므로 parseInt(\"1\",0), parseInt(\"2\",1), parseInt(\"3\",2) 를 호출합니다. 진법 0은 10진수(→1), 진법 1은 무효(→NaN), \"3\"은 2진수 자릿수가 아님(→NaN)."
+      }
+    },
+    {
+      code: 'console.log(1);\nsetTimeout(() => console.log(2));\nPromise.resolve().then(() => console.log(3));\nconsole.log(4);',
+      choices: ['1 2 3 4', '1 4 3 2', '1 4 2 3', '1 3 4 2'],
+      answer: 1,
+      explain: {
+        en: "Synchronous code runs first (1, 4). Then the microtask queue drains before any timer, so the Promise callback (3) runs before setTimeout (2).",
+        ko: "동기 코드가 먼저 실행되고(1, 4), 타이머보다 마이크로태스크 큐가 먼저 비워지므로 Promise 콜백(3)이 setTimeout(2)보다 먼저 실행됩니다."
+      }
+    },
+    {
+      code: 'console.log("5" + 3 - 3);',
+      choices: ['5', '53', '50', 'NaN'],
+      answer: 2,
+      explain: {
+        en: "\"5\" + 3 is string concatenation → \"53\". Then \"53\" - 3 forces numeric subtraction → 53 - 3 → 50.",
+        ko: "\"5\" + 3 은 문자열 연결로 \"53\" 이 됩니다. 그다음 \"53\" - 3 은 숫자 뺄셈을 강제해 53 - 3 → 50."
+      }
+    },
+    {
+      code: "console.log([] == ![]);",
+      choices: ['true', 'false', 'TypeError', 'undefined'],
+      answer: 0,
+      explain: {
+        en: "![] is false. Then [] == false becomes [] == 0, [] converts to \"\", \"\" converts to 0, and 0 == 0 is true.",
+        ko: "![] 는 false 입니다. [] == false 는 [] == 0 이 되고, [] → \"\" → 0 으로 변환되어 0 == 0, 즉 true 입니다."
+      }
+    },
+    {
+      code: 'console.log("b" + "a" + + "a" + "a");',
+      choices: ['"baaa"', '"baNaNa"', '"ba a a"', 'NaN'],
+      answer: 1,
+      explain: {
+        en: "The lone + before \"a\" is unary plus: +\"a\" is NaN. Concatenating gives \"ba\" + \"NaN\" + \"a\" → \"baNaNa\".",
+        ko: "\"a\" 앞의 홀로 있는 + 는 단항 플러스라 +\"a\" 는 NaN 입니다. 이어 붙이면 \"ba\" + \"NaN\" + \"a\" → \"baNaNa\"."
+      }
+    },
+    {
+      code: 'console.log(0 ?? "fallback");',
+      choices: ['"fallback"', '0', 'null', 'undefined'],
+      answer: 1,
+      explain: {
+        en: "The nullish coalescing operator ?? only falls back for null or undefined. 0 is neither, so it is returned as-is. (0 || \"fallback\" would give \"fallback\".)",
+        ko: "널 병합 연산자 ?? 는 null 또는 undefined 일 때만 대체합니다. 0 은 둘 다 아니므로 그대로 반환됩니다. (0 || \"fallback\" 이면 \"fallback\".)"
+      }
+    },
+    {
+      code: "console.log(typeof typeof 1);",
+      choices: ['"number"', '"string"', '"undefined"', '1'],
+      answer: 1,
+      explain: {
+        en: "typeof 1 is the string \"number\". typeof \"number\" is \"string\". typeof always produces a string, so a doubled typeof is always \"string\".",
+        ko: "typeof 1 은 문자열 \"number\" 입니다. typeof \"number\" 는 \"string\" 입니다. typeof 는 항상 문자열을 내므로 이중 typeof 는 언제나 \"string\"."
+      }
+    },
+    {
+      code: "const obj = {\n  val: 42,\n  getVal: function () {\n    const inner = () => this.val;\n    return inner();\n  }\n};\nconsole.log(obj.getVal());",
+      choices: ['42', 'undefined', 'TypeError', 'NaN'],
+      answer: 0,
+      explain: {
+        en: "getVal is called as obj.getVal(), so its this is obj. The arrow function inner has no this of its own — it captures getVal's this, so this.val is 42.",
+        ko: "getVal 은 obj.getVal() 로 호출되어 this 가 obj 입니다. 화살표 함수 inner 는 자체 this 가 없어 getVal 의 this 를 캡처하므로 this.val 은 42 입니다."
+      }
+    }
+  ];
+
+  var TOTAL = QUESTIONS.length;
+  var BEST_KEY = 'gto-best';
+
+  var quizEl = document.getElementById('quiz');
+  var endEl = document.getElementById('endScreen');
+  var progressEl = document.getElementById('qProgress');
+  var scoreEl = document.getElementById('qScore');
+  var promptEl = document.getElementById('promptLine');
+  var codeEl = document.getElementById('codeBlock');
+  var choicesEl = document.getElementById('choices');
+  var explainEl = document.getElementById('explain');
+  var nextBtn = document.getElementById('nextBtn');
+  var endScoreEl = document.getElementById('endScore');
+  var endBandEl = document.getElementById('endBand');
+  var endBestEl = document.getElementById('endBest');
+  var restartBtn = document.getElementById('restartBtn');
+  var caveatEl = document.getElementById('caveat');
+
+  var idx = 0, score = 0, streak = 0;
+  var answered = false, picked = -1;
+  var mode = 'quiz';   // quiz | end
+  var savedNewBest = false;
+
+  function lang() {
+    return document.documentElement.getAttribute('data-force-lang') ||
+      (window.sfLang && window.sfLang.current) || 'en';
+  }
+  function t(key) {
+    var l = lang();
+    var dict = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[l]) || window.SF_PAGE_I18N.en;
+    return dict[key] != null ? dict[key] : window.SF_PAGE_I18N.en[key];
+  }
+  function fill(str, map) {
+    return str.replace(/\{(\w+)\}/g, function (m, k) { return map[k] != null ? map[k] : m; });
+  }
+
+  function getBest() {
+    try {
+      var v = parseInt(localStorage.getItem(BEST_KEY), 10);
+      return isNaN(v) ? null : v;
+    } catch (e) { return null; }
+  }
+
+  function updateBar() {
+    progressEl.textContent = fill(t('q_progress_tpl'), { n: Math.min(idx + 1, TOTAL), t: TOTAL });
+    scoreEl.textContent = fill(t('q_score_tpl'), { s: score, k: streak });
+  }
+
+  function renderQuestion() {
+    var q = QUESTIONS[idx];
+    promptEl.textContent = t('prompt_line');
+    caveatEl.textContent = t('caveat');
+    codeEl.textContent = q.code;
+    updateBar();
+
+    choicesEl.innerHTML = '';
+    q.choices.forEach(function (choice, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'choice';
+      b.textContent = choice;
+      b.addEventListener('click', function () { pick(i); });
+      if (answered) {
+        b.disabled = true;
+        if (i === q.answer) b.classList.add('correct');
+        else if (i === picked) b.classList.add('wrong');
+      }
+      choicesEl.appendChild(b);
+    });
+
+    if (answered) {
+      var verdict = picked === q.answer ? t('verdict_right') : t('verdict_wrong');
+      explainEl.innerHTML = '';
+      var strong = document.createElement('strong');
+      strong.textContent = verdict + ' ';
+      explainEl.appendChild(strong);
+      explainEl.appendChild(document.createTextNode(q.explain[lang()] || q.explain.en));
+      explainEl.hidden = false;
+      nextBtn.textContent = idx < TOTAL - 1 ? t('next_q') : t('see_results');
+      nextBtn.hidden = false;
+    } else {
+      explainEl.hidden = true;
+      nextBtn.hidden = true;
+    }
+  }
+
+  function pick(i) {
+    if (answered) return;
+    answered = true;
+    picked = i;
+    if (i === QUESTIONS[idx].answer) { score++; streak++; }
+    else { streak = 0; }
+    renderQuestion();
+  }
+
+  function next() {
+    idx++;
+    if (idx >= TOTAL) { showEnd(); return; }
+    answered = false;
+    picked = -1;
+    renderQuestion();
+  }
+
+  function bandKey(s) {
+    var pct = s / TOTAL;
+    if (pct >= 0.89) return 'end_band_ace';   // 16-18
+    if (pct >= 0.61) return 'end_band_good';  // 11-15
+    if (pct >= 0.39) return 'end_band_mid';   // 7-10
+    return 'end_band_low';
+  }
+
+  function showEnd() {
+    mode = 'end';
+    var prevBest = getBest();
+    savedNewBest = false;
+    if (prevBest === null || score > prevBest) {
+      try { localStorage.setItem(BEST_KEY, String(score)); savedNewBest = true; } catch (e) {}
+    }
+    quizEl.hidden = true;
+    endEl.hidden = false;
+    renderEnd();
+  }
+
+  function renderEnd() {
+    endScoreEl.innerHTML = score + ' <span>/ ' + TOTAL + '</span>';
+    endBandEl.textContent = t(bandKey(score));
+    var best = getBest();
+    if (savedNewBest) {
+      endBestEl.textContent = t('end_best_new');
+    } else if (best !== null) {
+      endBestEl.textContent = fill(t('end_best_tpl'), { b: best, t: TOTAL });
+    } else {
+      endBestEl.textContent = '';
+    }
+    restartBtn.textContent = t('restart');
+  }
+
+  function restart() {
+    mode = 'quiz';
+    idx = 0; score = 0; streak = 0;
+    answered = false; picked = -1;
+    endEl.hidden = true;
+    quizEl.hidden = false;
+    renderQuestion();
+  }
+
+  nextBtn.addEventListener('click', next);
+  restartBtn.addEventListener('click', restart);
+
+  document.addEventListener('sfLangChanged', function () {
+    if (mode === 'end') renderEnd();
+    else renderQuestion();
+  });
+
+  renderQuestion();
+})();
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+</script>
+
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

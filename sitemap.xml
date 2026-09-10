@@ -209,6 +209,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tools.stackfreeks.com/tools/guess-the-output/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/guess-the-output/ko/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tools.stackfreeks.com/tools/hash-generator/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -235,6 +245,16 @@
   </url>
   <url>
     <loc>https://tools.stackfreeks.com/tools/htpasswd-generator/ko/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/http-status-code-quiz/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/http-status-code-quiz/ko/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -485,6 +505,16 @@
   </url>
   <url>
     <loc>https://tools.stackfreeks.com/tools/redis-memory-estimator/ko/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/regex-golf/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/regex-golf/ko/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
