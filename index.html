@@ -55,7 +55,7 @@
     a:hover { opacity: 0.8; }
 
     /* Nav */
-    nav {
+    body > nav {
       border-bottom: 1px solid var(--border);
       padding: 0 24px;
       height: 56px;
@@ -325,7 +325,7 @@
   <!-- Category tile grid -->
   <section class="cat-tiles-section">
     <p class="cat-tiles-eyebrow" data-i18n="cat_browse">Browse by category</p>
-    <nav class="cat-tiles" aria-label="Tool categories">
+    <div class="cat-tiles">
       <a href="#vps-server" class="cat-tile">
         <span class="cat-tile-icon">🖥️</span>
         <span>
@@ -361,7 +361,7 @@
           <span class="cat-tile-count">8 tools</span>
         </span>
       </a>
-    </nav>
+    </div>
   </section>
 
   <!-- Tools Grid -->
