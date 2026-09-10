@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>무료 온라인 툴 모음 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="이미지 변환, 데이터 처리 등 일상에서 쓰는 브라우저 툴 모음. 계정이나 설치 없이 바로 사용하세요." name="description">
+<link href="https://tools.stackfreeks.com/ko/" rel="canonical">
+<meta content="af7051739111fc15870fb7570c44f76477fd988c" name="naver-site-verification">
+<link href="https://tools.stackfreeks.com/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/" hreflang="x-default" rel="alternate">
+  
+
+
+<!-- Open Graph -->
+<meta content="무료 온라인 툴 모음 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="이미지 변환, 데이터 처리 등 일상에서 쓰는 브라우저 툴 모음. 계정이나 설치 없이 바로 사용하세요." property="og:description">
+<meta content="https://tools.stackfreeks.com/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 56px 24px 40px;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--text-2);
+    }
+
+    /* Tools section */
+    .tools-section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+
+    .category {
+      margin-bottom: 36px;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .category-icon {
+      font-size: 14px;
+    }
+
+    .category-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+    }
+
+    .category-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .tools-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tool-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      color: var(--text-1);
+      transition: border-color 0.15s;
+    }
+    .tool-card:hover {
+      border-color: var(--border-2);
+      opacity: 1;
+    }
+
+    .tool-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-2);
+      border-radius: var(--radius);
+    }
+
+    .tool-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tool-name {
+      font-size: 14px;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .tool-desc {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .tool-arrow {
+      color: var(--text-3);
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .tool-card:hover .tool-arrow { color: var(--text-2); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 40px 16px 28px; }
+      .hero h1 { font-size: 24px; }
+      .hero p { font-size: 14px; }
+      .tools-section { padding: 0 16px 48px; }
+      .footer-links { gap: 14px; }
+    }
+  </style>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- Nav -->
+<nav>
+<a class="logo" href="/ko/">StackFreeks Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" style="margin-left:auto;margin-right:14px;font-size:13px;color:var(--text-2);" target="_blank">Blog &nearrow;</a>
+<a class="lang-toggle" href="https://tools.stackfreeks.com/">English</a>
+</nav>
+<!-- Hero -->
+<section class="hero">
+
+<div class="lang-ko">
+<h1>무료 온라인 툴 모음</h1>
+<p>이미지 변환, 데이터 처리 등 일상에서 쓰는 브라우저 툴 모음. 계정이나 설치 없이 바로 사용하세요.</p>
+</div>
+</section>
+<!-- Tools Grid -->
+<section class="tools-section">
+<!-- Image Tools -->
+<div class="category">
+<div class="category-header">
+<span class="category-icon">🖼️</span>
+
+<div class="lang-ko"><span class="category-label">이미지 툴</span></div>
+<div class="category-line"></div>
+</div>
+<div class="tools-grid">
+<a class="tool-card" href="/tools/heic-to-jpg/ko/">
+<div class="tool-icon">📷</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">HEIC &rarr; JPG 변환기</p>
+<p class="tool-desc">iPhone HEIC 사진을 즉시 JPG로 변환 &mdash; 무료, 일괄 변환 지원</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/webp-to-jpg/ko/">
+<div class="tool-icon">🌐</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">WebP &rarr; JPG 변환기</p>
+<p class="tool-desc">WebP 이미지를 즉시 JPG로 변환 &mdash; 무료, 일괄 변환 지원</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/image-compressor/ko/">
+<div class="tool-icon">🗜️</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">이미지 압축기</p>
+<p class="tool-desc">JPG, PNG, WebP 무제한 무료 압축 &mdash; 워터마크 없음, 브라우저에서 처리</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/exif-remover/ko/">
+<div class="tool-icon">🔒</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">EXIF 데이터 제거기</p>
+<p class="tool-desc">사진의 GPS 위치&middot;메타데이터 제거 &mdash; 브라우저에서만 처리, 업로드 없음</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/svg-to-png/ko/">
+<div class="tool-icon">✏️</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">SVG &rarr; PNG 변환기</p>
+<p class="tool-desc">SVG 아이콘을 1x&middot;2x&middot;4x 해상도 PNG로 내보내기 &mdash; 투명&middot;흰 배경 선택 가능</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/css-filter-previewer/ko/">
+<div class="tool-icon">🎨</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">CSS 필터 미리보기</p>
+<p class="tool-desc">blur, brightness, contrast 등 실시간 미리보기 &mdash; CSS 코드 바로 복사</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/image-to-base64/ko/">
+<div class="tool-icon">🔢</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">이미지 &rarr; Base64 인코더</p>
+<p class="tool-desc">이미지를 HTML&middot;CSS&middot;JSON용 Base64 Data URL로 변환 &mdash; 브라우저에서만 처리</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+</div>
+</div>
+<!-- Developer Tools -->
+<div class="category">
+<div class="category-header">
+<span class="category-icon">⚙️</span>
+
+<div class="lang-ko"><span class="category-label">개발자 툴</span></div>
+<div class="category-line"></div>
+</div>
+<div class="tools-grid">
+<a class="tool-card" href="/tools/timestamp-converter/ko/">
+<div class="tool-icon">🕐</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Unix 타임스탬프 변환기</p>
+<p class="tool-desc">Epoch 타임스탬프를 날짜로 변환 &mdash; 현재 Unix 시간 실시간 확인</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/json-to-csv/ko/">
+<div class="tool-icon">🔄</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">JSON &harr; CSV 변환기</p>
+<p class="tool-desc">JSON 배열을 CSV로, CSV를 JSON으로 즉시 변환 &mdash; 무료, 브라우저에서 작동</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/password-generator/ko/">
+<div class="tool-icon">🔐</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">비밀번호 생성기</p>
+<p class="tool-desc">강력한 랜덤 비밀번호 생성 &mdash; 워터마크 없음, 계정 불필요, 암호학적으로 안전</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/base64-encoder/ko/">
+<div class="tool-icon">🔡</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Base64 인코더 / 디코더</p>
+<p class="tool-desc">텍스트&middot;파일을 Base64로 인코딩하거나 디코딩 &mdash; 즉시, 무료</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/json-formatter/ko/">
+<div class="tool-icon">📋</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">JSON 포매터 & 유효성 검사기</p>
+<p class="tool-desc">JSON 포매팅&middot;유효성 검사&middot;구문 강조 &mdash; 무료, 즉시</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/qr-code-generator/ko/">
+<div class="tool-icon">📱</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">QR 코드 생성기</p>
+<p class="tool-desc">워터마크 없이 QR 코드 무료 생성 &mdash; PNG&middot;SVG 다운로드</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/cron-builder/ko/">
+<div class="tool-icon">⏰</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">크론 표현식 빌더</p>
+<p class="tool-desc">비주얼 UI로 크론 표현식 생성&middot;검증 &mdash; 다음 실행 시간 5회 미리보기</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/word-counter/ko/">
+<div class="tool-icon">📝</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">단어 수 세기</p>
+<p class="tool-desc">단어&middot;글자&middot;문장 수와 예상 읽기 시간을 즉시 계산 &mdash; 실시간, 무료</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/text-case-converter/ko/">
+<div class="tool-icon">🔤</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">텍스트 케이스 변환기</p>
+<p class="tool-desc">대소문자&middot;camelCase&middot;snake_case&middot;kebab-case 등 10가지 형식으로 즉시 변환</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/hash-generator/ko/">
+<div class="tool-icon">#️⃣</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">해시 생성기</p>
+<p class="tool-desc">텍스트&middot;파일에서 MD5, SHA-1, SHA-256, SHA-512 해시 즉시 생성 &mdash; 무료</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/url-encoder/ko/">
+<div class="tool-icon">🔗</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">URL 인코더 / 디코더</p>
+<p class="tool-desc">URL과 쿼리 파라미터를 퍼센트 인코딩하거나 디코딩 &mdash; 즉시, 무료</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/diff-checker/ko/">
+<div class="tool-icon">🔍</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Diff 체커</p>
+<p class="tool-desc">두 텍스트를 비교해 추가&middot;삭제된 줄 즉시 강조 &mdash; 무료, 로그인 불필요</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/htpasswd-generator/ko/">
+<div class="tool-icon">🛡️</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">.htpasswd 생성기</p>
+<p class="tool-desc">Apache&middot;Nginx 기본 인증용 .htpasswd 항목 생성 &mdash; bcrypt, MD5, SHA1</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/jwt-decoder/ko/">
+<div class="tool-icon">🪙</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">JWT 디코더</p>
+<p class="tool-desc">JWT 토큰 즉시 디코딩 &mdash; 헤더&middot;페이로드&middot;만료 시간 확인</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/chmod-calculator/ko/">
+<div class="tool-icon">🔑</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Chmod 계산기</p>
+<p class="tool-desc">Linux 파일 권한 계산 &mdash; 8진수&middot;심볼릭&middot;chmod 명령어 즉시 변환</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/og-meta-generator/ko/">
+<div class="tool-icon">📣</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">OG 메타 태그 생성기</p>
+<p class="tool-desc">OG&middot;Twitter Card 태그 생성 + 구글&middot;페이스북&middot;트위터 미리보기</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/subnet-calculator/ko/">
+<div class="tool-icon">🌐</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">IP 서브넷 계산기</p>
+<p class="tool-desc">CIDR 표기법으로 네트워크 주소&middot;호스트 범위&middot;사용 가능 호스트 수 계산</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/regex-tester/ko/">
+<div class="tool-icon">🔍</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">정규식 테스터</p>
+<p class="tool-desc">정규식 실시간 테스트 &mdash; 매치 하이라이트, 플래그, 캡처 그룹 및 치트시트</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/px-rem-converter/ko/">
+<div class="tool-icon">📐</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">px &harr; rem 변환기</p>
+<p class="tool-desc">기준 크기 조절 가능한 px&middot;rem 실시간 변환기 + 자주 쓰는 값 참조표</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/markdown-previewer/ko/">
+<div class="tool-icon">📄</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">마크다운 미리보기</p>
+<p class="tool-desc">실시간 마크다운 편집기 및 미리보기 &mdash; 툴바 및 HTML 복사 지원</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/lorem-ipsum/ko/">
+<div class="tool-icon">📝</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Lorem Ipsum 생성기</p>
+<p class="tool-desc">단어&middot;문장&middot;단락 단위로 더미 텍스트 생성 &mdash; 즉시 복사 가능</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/base-converter/ko/">
+<div class="tool-icon">🔢</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">진법 변환기</p>
+<p class="tool-desc">2진수&middot;8진수&middot;10진수&middot;16진수 실시간 4방향 변환 및 비트 길이 정보 제공</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/color-converter/ko/">
+<div class="tool-icon">🎨</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">HEX/RGB/HSL 색상 변환기</p>
+<p class="tool-desc">HEX&middot;RGB&middot;HSL 실시간 3방향 변환, 색상 피커 및 스와치 미리보기</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/uuid-generator/ko/">
+<div class="tool-icon">🆔</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">UUID 생성기</p>
+<p class="tool-desc">랜덤 v4 UUID 생성 &mdash; 1개 또는 최대 100개 대량 생성, 복사 및 포맷 옵션 지원</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+</div>
+</div>
+<!-- Server & VPS -->
+<div class="category">
+<div class="category-header">
+<span class="category-icon">🖥️</span>
+
+<div class="lang-ko"><span class="category-label">서버 & VPS</span></div>
+<div class="category-line"></div>
+</div>
+<div class="tools-grid">
+<a class="tool-card" href="/tools/vps-cost-calculator/ko/">
+<div class="tool-icon">💰</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">VPS 비용 계산기</p>
+<p class="tool-desc">Vultr, Hetzner, DigitalOcean 비용 비교</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/vps-bandwidth-calculator/ko/">
+<div class="tool-icon">📊</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">VPS 대역폭 계산기</p>
+<p class="tool-desc">트래픽이 VPS 한도를 초과하는지 확인하고 초과 비용 계산</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/server-spec-recommender/ko/">
+<div class="tool-icon">🖥️</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">서버 사양 추천기</p>
+<p class="tool-desc">워크로드와 트래픽 규모를 입력하면 필요한 RAM, CPU, VPS 플랜을 즉시 추천</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/firewall-rule-builder/ko/">
+<div class="tool-icon">🔥</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">방화벽 규칙 생성기</p>
+<p class="tool-desc">iptables와 ufw 규칙을 시각적으로 생성 &mdash; 명령어 암기 필요 없음</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/fail2ban-jail-generator/ko/">
+<div class="tool-icon">🛡️</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Fail2ban Jail 생성기</p>
+<p class="tool-desc">SSH, Nginx, Apache용 jail.local 설정 자동 생성 &mdash; bantime, maxretry, ignoreip</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/vps-migration-checklist/ko/">
+<div class="tool-icon">📋</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">VPS 마이그레이션 체크리스트</p>
+<p class="tool-desc">설치된 서비스를 선택하면 맞춤형 서버 이전 단계별 계획을 생성</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/game-server-cost-calculator/ko/">
+<div class="tool-icon">🎮</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">게임 서버 비용 계산기</p>
+<p class="tool-desc">게임 종류와 동접자 수로 VPS 호스팅 비용 추정 &mdash; 최적 플랜 추천</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/nginx-config-generator/ko/">
+<div class="tool-icon">⚙️</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Nginx 설정 생성기</p>
+<p class="tool-desc">SSL, PHP-FPM, 리버스 프록시, gzip 포함 nginx 서버 블록 자동 생성 &mdash; 복사 또는 다운로드</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/sla-uptime-calculator/ko/">
+<div class="tool-icon">📊</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">SLA 업타임 계산기</p>
+<p class="tool-desc">SLA 퍼센트를 연&middot;월&middot;주&middot;일 허용 다운타임으로 환산 &mdash; 99.9%, 4나인, 5나인 지원</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/docker-ram-calculator/ko/">
+<div class="tool-icon">🐳</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Docker RAM 계산기</p>
+<p class="tool-desc">컨테이너 구성에 맞는 총 RAM 계산 및 VPS 플랜 추천</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/ssh-config-generator/ko/">
+<div class="tool-icon">🔑</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">SSH Config 생성기</p>
+<p class="tool-desc">여러 서버의 ~/.ssh/config 파일을 폼으로 간편하게 생성</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/object-storage-calculator/ko/">
+<div class="tool-icon">🗄️</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">오브젝트 스토리지 비용 계산기</p>
+<p class="tool-desc">S3, Backblaze B2, Cloudflare R2, Vultr, Wasabi, DO Spaces 월간 비용 즉시 비교</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/linux-swap-calculator/ko/">
+<div class="tool-icon">💾</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">리눅스 스왑 크기 계산기</p>
+<p class="tool-desc">VPS&middot;서버에 맞는 최적 스왑 크기와 바로 쓸 수 있는 명령어 제공</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/curl-command-generator/ko/">
+<div class="tool-icon">⚡</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">curl 명령어 생성기</p>
+<p class="tool-desc">메서드, 헤더, 인증, 바디를 설정하고 즉시 실행 가능한 curl 명령어 생성</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/systemd-service-generator/ko/">
+<div class="tool-icon">⚡</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Systemd 서비스 생성기</p>
+<p class="tool-desc">ExecStart, 재시작 정책, 환경변수 포함 .service 유닛 파일 생성 &mdash; Node.js, Python, Go, Java 프리셋</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/dockerfile-generator/ko/">
+<div class="tool-icon">🐋</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Dockerfile 생성기</p>
+<p class="tool-desc">Node.js, Python, Go, PHP, Ruby, Java용 프로덕션 Dockerfile 즉시 생성 &mdash; 멀티 스테이지, 비루트, .dockerignore 포함</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/pm2-ecosystem-generator/ko/">
+<div class="tool-icon">🔁</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">PM2 Ecosystem Config 생성기</p>
+<p class="tool-desc">인스턴스 수, cluster/fork 모드, 환경변수, max_memory_restart 포함 PM2 ecosystem.config.js 생성 &mdash; Express, Next.js, NestJS 프리셋</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/mysql-backup-script-generator/ko/">
+<div class="tool-icon">💾</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">MySQL 백업 스크립트 생성기</p>
+<p class="tool-desc">gzip 압축, 보관 기간 자동 정리, rsync 원격 전송, 크론 프리셋 포함 mysqldump 백업 스크립트 생성</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/redis-memory-estimator/ko/">
+<div class="tool-icon">🔴</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Redis 메모리 예상 계산기</p>
+<p class="tool-desc">키 개수와 데이터 타입으로 Redis 메모리 사용량 예측 &mdash; 적합한 Vultr 플랜 추천</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/managed-database-cost-calculator/ko/">
+<div class="tool-icon">🗃️</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">매니지드 데이터베이스 비용 계산기</p>
+<p class="tool-desc">Vultr, DigitalOcean, AWS RDS 매니지드 데이터베이스 월 비용을 RAM&middot;스토리지&middot;HA 기준으로 비교</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/minecraft-server-ram-calculator/ko/">
+<div class="tool-icon">🟩</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">마인크래프트 서버 RAM 계산기</p>
+<p class="tool-desc">서버 종류&middot;인원&middot;모드로 마인크래프트 서버에 필요한 RAM 계산 &mdash; -Xmx 값과 Vultr 플랜 추천</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/game-server-ram-calculator/ko/">
+<div class="tool-icon">🎮</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">게임 서버 RAM 계산기</p>
+<p class="tool-desc">Palworld&middot;Valheim&middot;ARK&middot;Rust&middot;CS2 데디케이티드 서버 RAM 계산 &mdash; 슬롯 수와 모드 기준</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/nextcloud-server-requirements-calculator/ko/">
+<div class="tool-icon">☁️</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">Nextcloud 서버 사양 계산기</p>
+<p class="tool-desc">Nextcloud 서버 사양 계산 &mdash; 사용자 수&middot;워크로드 기준 vCPU&middot;RAM&middot;스토리지&middot;PHP 워커&middot;Redis</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/postgresql-config-generator/ko/">
+<div class="tool-icon">🐘</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">PostgreSQL 설정 생성기</p>
+<p class="tool-desc">RAM&middot;코어&middot;워크로드로 최적화된 postgresql.conf 생성 &mdash; 빠른 PGTune 대안</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+<a class="tool-card" href="/tools/llm-gpu-cost-calculator/ko/">
+<div class="tool-icon">🤖</div>
+<div class="tool-info">
+
+<div class="lang-ko">
+<p class="tool-name">LLM GPU 비용 계산기</p>
+<p class="tool-desc">LLM 추론 비용 비교: 자체 GPU vs API &mdash; 손익분기 물량과 100만 토큰당 비용</p>
+</div>
+</div>
+<span class="tool-arrow">&rarr;</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com</a>
+</div>
+<p class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</p>
+<p style="margin-top:12px;"><a href="https://fazier.com/launches/tools.stackfreeks.com" rel="noopener" target="_blank"><img alt="Fazier badge" height="32" loading="lazy" src="https://fazier.com/api/v1//public/badges/launch_badges.svg?badge_type=launched&theme=dark" style="opacity:0.7" width="120"></a></p>
+</footer>
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

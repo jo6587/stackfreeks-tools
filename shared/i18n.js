@@ -55,7 +55,8 @@ const SF_I18N = {
 
 (function () {
   // Detect language: localStorage > browser preference > default EN
-  let lang = localStorage.getItem('sf-lang') ||
+  let lang = document.documentElement.getAttribute('data-force-lang') ||
+    localStorage.getItem('sf-lang') ||
     (navigator.language.startsWith('ko') ? 'ko' : 'en');
 
   function applyLang() {

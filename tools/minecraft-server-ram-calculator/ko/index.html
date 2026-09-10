@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>마인크래프트 서버 RAM 계산기 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="Minecraft & VPS" name="description">
+<link href="https://tools.stackfreeks.com/tools/minecraft-server-ram-calculator/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/minecraft-server-ram-calculator/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/minecraft-server-ram-calculator/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/minecraft-server-ram-calculator/" hreflang="x-default" rel="alternate">
+  
+
+
+<!-- Open Graph -->
+<meta content="마인크래프트 서버 RAM 계산기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="Minecraft & VPS" property="og:description">
+<meta content="https://tools.stackfreeks.com/tools/minecraft-server-ram-calculator/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<!-- Twitter -->
+<meta content="summary" name="twitter:card">
+<meta content="마인크래프트 서버 RAM 계산기 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
+<meta content="Minecraft & VPS" name="twitter:description">
+<!-- ADSENSE_SLOT_TOP -->
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 8px; }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    /* Main layout */
+    main { padding: 32px 0 48px; }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; } }
+
+    /* Card */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+    .card + .card { margin-top: 12px; }
+    .card-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 16px;
+    }
+
+    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+
+    input, select {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 9px 12px;
+      font-size: 13px; font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus { border-color: var(--border-2); }
+    input::placeholder { color: var(--text-3); }
+    input[type="number"] { -moz-appearance: textfield; }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+    }
+
+    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+
+    /* Results */
+    .total-row {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .total-label { font-size: 12px; color: var(--text-2); margin-bottom: 4px; }
+    .total-val { font-size: 2.2rem; font-weight: 500; letter-spacing: -0.04em; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .total-unit { font-size: 14px; color: var(--text-3); margin-left: 4px; }
+    .xmx-line { font-size: 12px; color: var(--text-2); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .xmx-line code { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; color: var(--accent); font-size: 12px; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .summary-cell { background: var(--surface-2); padding: 14px 16px; }
+    .summary-label { font-size: 11px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .summary-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .summary-val.accent { color: var(--accent); }
+
+    .plan-box {
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+    .plan-box-label { font-size: 11px; font-weight: 500; color: var(--success); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .plan-box-title { font-size: 1rem; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .plan-box-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
+
+    .btn-vultr-plan {
+      background: var(--success);
+      color: #fff; border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      text-decoration: none; display: inline-block;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr-plan:hover { opacity: 0.85; }
+
+    .disclaimer {
+      font-size: 11px; color: var(--text-3);
+      margin-top: 14px; line-height: 1.6;
+      padding-top: 14px; border-top: 1px solid var(--border);
+    }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related */
+    .related { padding: 40px 0; border-top: 1px solid var(--border); }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px;
+      text-decoration: none; display: flex;
+      flex-direction: column; gap: 6px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Minecraft Server RAM Calculator", "description": "Estimate how much RAM a Minecraft server needs from server type, player count, plugin/mod count, and view distance. See a breakdown, a recommended -Xmx value, and a matching Vultr plan.", "url": "https://tools.stackfreeks.com/tools/minecraft-server-ram-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/minecraft-server-ram-calculator/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "마인크래프트 서버에 RAM이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "플레이어 10명 이하의 소규모 Vanilla 또는 Paper 서버는 2~3 GB로 충분합니다. 플레이어가 10명 늘어날 때마다 약 1 GB, Bukkit/Paper 플러그인당 약 50 MB, Forge·Fabric 모드당 100~150 MB를 더하세요. 무거운 모드팩은 보통 6~10 GB가 필요합니다. Java 힙 외에도 운영체제와 JVM 오버헤드를 위한 메모리가 필요하므로, 계산값보다 1~2 GB 큰 플랜을 선택하세요."}}, {"@type": "Question", "name": "플레이어 20명 마인크래프트 서버에는 RAM이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "20명이면 Vanilla나 Paper/Spigot은 약 4 GB, 일반적인 플러그인 세트와 시야 거리 8~10을 더하면 5~6 GB를 확보하세요. Forge나 Fabric 모드 서버는 보통 6~8 GB, 대형 모드팩은 10 GB 이상까지 필요할 수 있습니다. 운영체제와 Java 오버헤드를 위해 1~2 GB를 추가로 두세요."}}, {"@type": "Question", "name": "RAM이 많으면 마인크래프트 서버가 더 빨라지나요?", "acceptedAnswer": {"@type": "Answer", "text": "어느 정도까지만 그렇습니다. 마인크래프트 서버의 틱 성능(TPS)은 RAM이 아니라 대부분 단일 스레드 CPU 속도에 의해 제한됩니다. 로드된 월드, 엔티티, 플러그인을 GC 없이 담을 만큼 메모리가 충분하면 RAM을 더 늘려도 TPS는 오르지 않습니다. 힙을 과도하게 할당하면 오히려 GC 지연이 길어질 수 있습니다. RAM은 워크로드에 맞추고, 성능은 CPU 클럭 속도와 시야·시뮬레이션 거리로 조정하세요."}}, {"@type": "Question", "name": "마인크래프트 서버의 -Xmx와 -Xms는 어떻게 설정하나요?", "acceptedAnswer": {"@type": "Answer", "text": "-Xmx(최대 힙)를 계산된 서버 RAM 필요량으로 설정하고, -Xms(시작 힙)도 같은 값으로 설정하면 JVM이 힙 크기를 조정하는 데 시간을 쓰지 않습니다. 운영체제, JVM 자체, 오프힙 메모리를 위해 항상 시스템 RAM 1~2 GB를 남겨두세요. 예를 들어 8 GB 머신에서는 -Xms6G -Xmx6G가 일반적입니다."}}, {"@type": "Question", "name": "마인크래프트 서버 호스팅 비용은 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "VPS에서 직접 마인크래프트 서버를 운영하면 RAM과 CPU에 따라 보통 월 5~25 USD가 듭니다. 소규모 친구용 2 GB 인스턴스는 월 5~12 USD, 4 GB 플러그인 서버는 약 20 USD, 8 GB 모드팩 서버는 40~50 USD 정도입니다. 4 GB 이상이라면 서버를 직접 설정하는 대신 동일 RAM의 관리형 마인크래프트 호스팅보다 대개 저렴합니다."}}]}</script>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- 1. Nav -->
+<nav>
+<a class="logo" href="/ko/">
+<div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+<div class="nav-right">
+<a class="lang-toggle" href="https://tools.stackfreeks.com/tools/minecraft-server-ram-calculator/">English</a>
+<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+</div>
+</nav>
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+<!-- 3. Hero -->
+<section class="hero">
+<div class="container">
+
+<div class="lang-ko">
+<p class="eyebrow">Minecraft & VPS</p>
+<h1>마인크래프트 서버 RAM 계산기</h1>
+<p class="hero-desc">서버 종류, 플레이어 수, 플러그인&middot;모드 수, 시야 거리를 입력하면 마인크래프트 서버에 필요한 RAM과 권장 <code>-Xmx</code> 값, 적합한 Vultr 플랜을 확인할 수 있습니다.</p>
+</div>
+</div>
+</section>
+<!-- 4. Tool body -->
+<main>
+<div class="container">
+<div class="tool-grid">
+<!-- Input card -->
+<div class="card">
+<p class="card-label" data-i18n="tool_input_label">Server Setup</p>
+<div class="form-group">
+<label data-i18n="tool_type_lbl">Server type</label>
+<select id="serverType" onchange="onTypeChange()">
+<option value="vanilla">Vanilla</option>
+<option selected value="paper">Paper / Spigot</option>
+<option value="forge">Forge</option>
+<option value="fabric">Fabric</option>
+<option value="modpack">Modpack-heavy</option>
+</select>
+</div>
+<div class="form-group">
+<label data-i18n="tool_players_lbl">Peak concurrent players</label>
+<input id="players" min="1" oninput="recalc()" step="1" type="number" value="10">
+</div>
+<div class="form-group" id="addonGroup">
+<label data-i18n="tool_plugins_lbl" id="addonLbl">Number of plugins</label>
+<input id="addons" min="0" oninput="recalc()" step="1" type="number" value="10">
+<p class="hint" data-i18n="tool_plugins_hint" id="addonHint">Bukkit / Spigot / Paper plugins add roughly 50 MB each.</p>
+</div>
+<div class="form-group">
+<label data-i18n="tool_view_lbl">View distance (chunks)</label>
+<input id="viewDistance" max="32" min="2" oninput="recalc()" step="1" type="number" value="10">
+<p class="hint" data-i18n="tool_view_hint">Default is 10. Higher view distance loads more chunks and needs more world-cache RAM.</p>
+</div>
+<p class="hint" data-i18n="tool_input_hint">Figures are a transparent heuristic based on common hosting guidance &mdash; real usage varies by version, world gen, and specific plugins/mods.</p>
+</div>
+<!-- Results card -->
+<div class="card">
+<p class="card-label" data-i18n="tool_results_label">Recommended RAM</p>
+<div class="total-row">
+<div class="total-label" data-i18n="tool_total_label">Recommended server RAM</div>
+<div>
+<span class="total-val" id="totalVal">0</span>
+<span class="total-unit" id="totalUnit">GB</span>
+</div>
+<div class="xmx-line">
+<span data-i18n="tool_xmx_label">Recommended JVM flags</span>:
+            <code id="xmxVal">-Xms4G -Xmx4G</code>
+</div>
+</div>
+<div class="summary-grid">
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_bd_base">Base JVM + server</div>
+<div class="summary-val" id="bdBase">0 GB</div>
+</div>
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_bd_players">Per-player</div>
+<div class="summary-val" id="bdPlayers">0 GB</div>
+</div>
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_bd_plugins" id="bdAddonLbl">Plugins</div>
+<div class="summary-val" id="bdAddons">0 GB</div>
+</div>
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_bd_world">World cache</div>
+<div class="summary-val" id="bdWorld">0 GB</div>
+</div>
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_bd_heap">Java heap (-Xmx)</div>
+<div class="summary-val accent" id="bdHeap">0 GB</div>
+</div>
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_bd_os">OS + JVM headroom</div>
+<div class="summary-val" id="bdOs">0 GB</div>
+</div>
+</div>
+<div class="plan-box">
+<div class="plan-box-label" data-i18n="tool_plan_label">Suggested Vultr Plan</div>
+<div class="plan-box-title" id="planTitle">2 GB Cloud Compute</div>
+<div class="plan-box-desc" data-i18n="tool_plan_desc">Rounded up for headroom &mdash; a Minecraft box also needs RAM for the OS, the JVM itself, and off-heap memory, so the plan is bigger than the Java heap.</div>
+<a class="btn-vultr-plan" data-i18n="tool_vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Get this plan on Vultr &rarr;</a>
+</div>
+<p class="disclaimer" data-i18n="tool_disclaimer">Estimate only. Actual Minecraft server memory depends on your Minecraft version, world generation, entity counts, and the specific plugins or mods installed. Benchmark with real players before committing to production.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- About / SEO copy -->
+<section class="about-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>마인크래프트 서버 RAM 계산기 소개</h2>
+<p>마인크래프트 서버를 직접 호스팅할 때 가장 먼저 정해야 하는 것이 RAM 용량입니다. 부족하면 서버가 끊기거나 청크가 로드되지 않고 부하 시 메모리 부족으로 크래시가 발생하며, 너무 많으면 쓰지도 않는 VPS 등급에 비용을 지불하게 되고 Java 힙이 지나치게 크면 오히려 GC 지연이 길어질 수 있습니다. 이 계산기는 "마인크래프트 서버에 RAM이 얼마나 필요한가"라는 질문에 투명한 휴리스틱으로 답합니다: JVM&middot;서버 jar 기본량, 플레이어당 할당량, 플러그인&middot;모드당 할당량, 그리고 시야 거리에 따라 늘어나는 월드 캐시 값입니다.</p>
+<p>VPS에서 친구용 서버를 돌리는 사람, 플러그인이 있는 소규모 커뮤니티 SMP, 모드가 적용된 Forge/Fabric 팩을 운영하는 사람, 그리고 Vultr 인스턴스를 적정 사이즈로 구성하려는 DevOps 담당자를 위한 도구입니다. Vanilla, Paper/Spigot, Forge, Fabric, 대형 모드팩 5가지 구성을 지원합니다. 권장 <code>-Xms</code>/<code>-Xmx</code> 값도 함께 출력하며, 운영체제와 JVM의 오프힙 메모리를 위한 여유분을 남기도록 머신 크기를 올림 계산합니다.</p>
+</div>
+</div>
+</section>
+<!-- 5. How-to section -->
+<section class="guide-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>계산기 사용 방법</h2>
+<div class="guide-grid">
+<div class="guide-card">
+<div class="guide-step">Step 1</div>
+<div class="guide-title">서버 종류 선택</div>
+<div class="guide-desc">Vanilla와 Paper/Spigot은 가볍고, Forge&middot;Fabric&middot;모드팩은 더 큰 기본 할당이 필요합니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 2</div>
+<div class="guide-title">최대 동시 접속자 입력</div>
+<div class="guide-desc">전체 멤버 수가 아니라 동시에 접속할 것으로 예상되는 최대 인원을 입력하세요.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 3</div>
+<div class="guide-title">플러그인&middot;모드 수 입력</div>
+<div class="guide-desc">설치된 Bukkit/Paper 플러그인 또는 Forge/Fabric 모드 수를 세세요. Vanilla는 이 항목을 건너뜁니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 4</div>
+<div class="guide-title">결과 확인</div>
+<div class="guide-desc"><code>-Xmx</code> 플래그를 시작 스크립트에 넣고, 여유분을 위해 추천 Vultr 플랜을 선택하세요.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FAQ -->
+<section class="faq-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>자주 묻는 질문</h2>
+<div class="faq-list">
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>마인크래프트 서버에 RAM이 얼마나 필요한가요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">플레이어 10명 이하의 소규모 Vanilla 또는 Paper 서버는 2~3 GB로 충분합니다. 플레이어가 10명 늘어날 때마다 약 1 GB, Bukkit/Paper 플러그인당 약 50 MB, Forge&middot;Fabric 모드당 100~150 MB를 더하세요. 무거운 모드팩은 보통 6~10 GB가 필요합니다. Java 힙 외에도 운영체제와 JVM 오버헤드를 위한 메모리가 필요하므로, 계산값보다 1~2 GB 큰 플랜을 선택하세요.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>플레이어 20명 마인크래프트 서버에는 RAM이 얼마나 필요한가요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">20명이면 Vanilla나 Paper/Spigot은 약 4 GB, 일반적인 플러그인 세트와 시야 거리 8~10을 더하면 5~6 GB를 확보하세요. Forge나 Fabric 모드 서버는 보통 6~8 GB, 대형 모드팩은 10 GB 이상까지 필요할 수 있습니다. 운영체제와 Java 오버헤드를 위해 1~2 GB를 추가로 두세요.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>RAM이 많으면 마인크래프트 서버가 더 빨라지나요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">어느 정도까지만 그렇습니다. 마인크래프트 서버의 틱 성능(TPS)은 RAM이 아니라 대부분 단일 스레드 CPU 속도에 의해 제한됩니다. 로드된 월드, 엔티티, 플러그인을 GC 없이 담을 만큼 메모리가 충분하면 RAM을 더 늘려도 TPS는 오르지 않습니다. 힙을 과도하게 할당하면 오히려 GC 지연이 길어질 수 있습니다. RAM은 워크로드에 맞추고, 성능은 CPU 클럭 속도와 시야&middot;시뮬레이션 거리로 조정하세요.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>마인크래프트 서버의 -Xmx와 -Xms는 어떻게 설정하나요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">-Xmx(최대 힙)를 계산된 서버 RAM 필요량으로 설정하고, -Xms(시작 힙)도 같은 값으로 설정하면 JVM이 힙 크기를 조정하는 데 시간을 쓰지 않습니다. 운영체제, JVM 자체, 오프힙 메모리를 위해 항상 시스템 RAM 1~2 GB를 남겨두세요. 예를 들어 8 GB 머신에서는 -Xms6G -Xmx6G가 일반적입니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>마인크래프트 서버 호스팅 비용은 얼마인가요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">VPS에서 직접 마인크래프트 서버를 운영하면 RAM과 CPU에 따라 보통 월 5~25 USD가 듭니다. 소규모 친구용 2 GB 인스턴스는 월 5~12 USD, 4 GB 플러그인 서버는 약 20 USD, 8 GB 모드팩 서버는 40~50 USD 정도입니다. 4 GB 이상이라면 서버를 직접 설정하는 대신 동일 RAM의 관리형 마인크래프트 호스팅보다 대개 저렴합니다.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Related content -->
+<section class="related">
+<div class="container">
+<p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+<div class="related-grid">
+<a class="related-card" href="https://stackfreeks.com/minecraft-server-ram-requirements/" rel="noopener" target="_blank">
+<span class="related-tag">Minecraft</span>
+<p class="related-title">Minecraft Server RAM Requirements</p>
+<span class="related-arrow">&rarr;</span>
+</a>
+<a class="related-card" href="/tools/game-server-ram-calculator/ko/">
+<span class="related-tag">Game Servers</span>
+<p class="related-title">Game Server RAM Calculator</p>
+<span class="related-arrow">&rarr;</span>
+</a>
+<a class="related-card" href="/tools/vps-cost-calculator/ko/">
+<span class="related-tag">VPS</span>
+<p class="related-title">VPS Cost Calculator</p>
+<span class="related-arrow">&rarr;</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+<div class="sf-related-grid">
+<a class="sf-related-card" href="/tools/game-server-ram-calculator/ko/"><span>🎮</span>Game Server RAM Calculator</a>
+<a class="sf-related-card" href="/tools/game-server-cost-calculator/ko/"><span>💵</span>Game Server Cost Calculator</a>
+<a class="sf-related-card" href="/tools/vps-cost-calculator/ko/"><span>💰</span>VPS Cost Calculator</a>
+<a class="sf-related-card" href="https://stackfreeks.com/minecraft-server-ram-requirements/" rel="noopener" target="_blank"><span>📖</span>Minecraft Server RAM Requirements</a>
+</div>
+</section>
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+<div class="container banner-inner">
+<div>
+<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+</div>
+<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+</div>
+</section>
+<!-- 9. Footer -->
+<footer class="footer">
+<div class="container footer-inner">
+<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+</div>
+</div>
+</footer>
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    tool_input_label: "Server Setup",
+    tool_type_lbl: "Server type",
+    tool_players_lbl: "Peak concurrent players",
+    tool_plugins_lbl: "Number of plugins",
+    tool_plugins_hint: "Bukkit / Spigot / Paper plugins add roughly 50 MB each.",
+    tool_mods_lbl: "Number of mods",
+    tool_mods_hint: "Forge / Fabric mods add roughly 125 MB each.",
+    tool_view_lbl: "View distance (chunks)",
+    tool_view_hint: "Default is 10. Higher view distance loads more chunks and needs more world-cache RAM.",
+    tool_input_hint: "Figures are a transparent heuristic based on common hosting guidance — real usage varies by version, world gen, and specific plugins/mods.",
+    tool_results_label: "Recommended RAM",
+    tool_total_label: "Recommended server RAM",
+    tool_xmx_label: "Recommended JVM flags",
+    tool_bd_base: "Base JVM + server",
+    tool_bd_players: "Per-player",
+    tool_bd_plugins: "Plugins",
+    tool_bd_mods: "Mods",
+    tool_bd_world: "World cache",
+    tool_bd_heap: "Java heap (-Xmx)",
+    tool_bd_os: "OS + JVM headroom",
+    tool_plan_label: "Suggested Vultr Plan",
+    tool_plan_desc: "Rounded up for headroom — a Minecraft box also needs RAM for the OS, the JVM itself, and off-heap memory, so the plan is bigger than the Java heap.",
+    tool_vultr_cta: "Get this plan on Vultr →",
+    tool_disclaimer: "Estimate only. Actual Minecraft server memory depends on your Minecraft version, world generation, entity counts, and the specific plugins or mods installed. Benchmark with real players before committing to production.",
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
+  },
+  ko: {
+    tool_input_label: "서버 구성",
+    tool_type_lbl: "서버 종류",
+    tool_players_lbl: "최대 동시 접속자",
+    tool_plugins_lbl: "플러그인 수",
+    tool_plugins_hint: "Bukkit / Spigot / Paper 플러그인은 각각 약 50 MB를 추가합니다.",
+    tool_mods_lbl: "모드 수",
+    tool_mods_hint: "Forge / Fabric 모드는 각각 약 125 MB를 추가합니다.",
+    tool_view_lbl: "시야 거리 (청크)",
+    tool_view_hint: "기본값은 10입니다. 시야 거리가 크면 더 많은 청크를 로드하고 월드 캐시 RAM이 더 필요합니다.",
+    tool_input_hint: "수치는 일반적인 호스팅 가이드에 기반한 투명한 휴리스틱입니다 — 실제 사용량은 버전, 월드 생성, 특정 플러그인·모드에 따라 다릅니다.",
+    tool_results_label: "권장 RAM",
+    tool_total_label: "권장 서버 RAM",
+    tool_xmx_label: "권장 JVM 플래그",
+    tool_bd_base: "기본 JVM + 서버",
+    tool_bd_players: "플레이어당",
+    tool_bd_plugins: "플러그인",
+    tool_bd_mods: "모드",
+    tool_bd_world: "월드 캐시",
+    tool_bd_heap: "Java 힙 (-Xmx)",
+    tool_bd_os: "OS + JVM 여유분",
+    tool_plan_label: "추천 Vultr 플랜",
+    tool_plan_desc: "여유분을 위해 올림 계산되었습니다 — 마인크래프트 서버는 OS, JVM 자체, 오프힙 메모리에도 RAM이 필요하므로 플랜은 Java 힙보다 큽니다.",
+    tool_vultr_cta: "Vultr에서 이 플랜 선택 →",
+    tool_disclaimer: "참고용 예상치입니다. 실제 마인크래프트 서버 메모리는 마인크래프트 버전, 월드 생성, 엔티티 수, 설치된 특정 플러그인·모드에 따라 달라집니다. 프로덕션 적용 전 실제 플레이어로 벤치마크하세요.",
+    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
+  }
+};
+</script>
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// ponytail: dead-simple heuristic, NOT a profiler. All magic numbers live in the
+// single TUNABLE object below so hosting guidance can be re-tuned in one place
+// without touching the math. Formula (all in GB):
+//   heap = base[type] + players * PER_PLAYER + addons * perAddon[type]
+//          + worldCache(viewDistance)
+//   recommendedRAM = roundUpHalf(heap) + OS_HEADROOM   → matched to a Vultr tier
+// Sources: common Minecraft hosting guidance — vanilla/Paper ~2-3GB up to 10
+// players, +~1GB per 10 players, +~50MB per plugin, +~125MB per mod, modpacks 6-10GB.
+// ─────────────────────────────────────────────────────────────────────────────
+const TUNABLE = {
+  // Base heap for the JVM + server jar before any players/addons (GB)
+  base: { vanilla: 2.0, paper: 1.5, forge: 3.0, fabric: 2.5, modpack: 6.0 },
+  // Extra heap per concurrent player (GB) — ~1GB per 10 players
+  perPlayerGB: 0.1,
+  // Extra heap per plugin / mod (GB)
+  perAddonGB: { vanilla: 0, paper: 0.05, forge: 0.125, fabric: 0.125, modpack: 0.15 },
+  // Whether the server type uses plugins, mods, or neither
+  addonKind: { vanilla: 'none', paper: 'plugins', forge: 'mods', fabric: 'mods', modpack: 'mods' },
+  // World chunk cache: a floor, plus growth for view distance above the vanilla default of 10
+  worldBaseGB: 0.5,
+  worldDefaultView: 10,
+  worldPerExtraChunkGB: 0.12,
+  // Headroom left OUTSIDE the Java heap for the OS + JVM off-heap memory (GB)
+  osHeadroomGB: 1.0,
+  osHeadroomBigGB: 2.0,   // used once the heap is >= 6 GB
+  osHeadroomBigThresholdGB: 6,
+};
+
+// Vultr Cloud Compute tiers (RAM GB / vCPU / approx price)
+const PLANS = [
+  { ram: 1,  cpu: 1,  price: '$6/mo'   },
+  { ram: 2,  cpu: 1,  price: '$12/mo'  },
+  { ram: 4,  cpu: 2,  price: '$24/mo'  },
+  { ram: 8,  cpu: 4,  price: '$48/mo'  },
+  { ram: 16, cpu: 6,  price: '$96/mo'  },
+  { ram: 32, cpu: 8,  price: '$192/mo' },
+];
+
+function roundUpHalf(gb) { return Math.ceil(gb * 2) / 2; }
+
+function xmxString(heapGB) {
+  // JVM wants integer-ish sizes; use whole GB when possible, else 512M steps
+  if (Number.isInteger(heapGB)) return '-Xms' + heapGB + 'G -Xmx' + heapGB + 'G';
+  const mb = Math.round(heapGB * 1024);
+  return '-Xms' + mb + 'M -Xmx' + mb + 'M';
+}
+
+function roundUpPlan(gb) {
+  for (const p of PLANS) { if (p.ram >= gb) return p; }
+  return PLANS[PLANS.length - 1];
+}
+
+function onTypeChange() {
+  const type = document.getElementById('serverType').value;
+  const kind = TUNABLE.addonKind[type];
+  const group = document.getElementById('addonGroup');
+  const lbl = document.getElementById('addonLbl');
+  const hint = document.getElementById('addonHint');
+  const bdLbl = document.getElementById('bdAddonLbl');
+
+  if (kind === 'none') {
+    group.style.display = 'none';
+  } else {
+    group.style.display = '';
+    const isMods = kind === 'mods';
+    lbl.setAttribute('data-i18n', isMods ? 'tool_mods_lbl' : 'tool_plugins_lbl');
+    lbl.textContent = isMods ? 'Number of mods' : 'Number of plugins';
+    hint.setAttribute('data-i18n', isMods ? 'tool_mods_hint' : 'tool_plugins_hint');
+    hint.textContent = isMods
+      ? 'Forge / Fabric mods add roughly 125 MB each.'
+      : 'Bukkit / Spigot / Paper plugins add roughly 50 MB each.';
+    bdLbl.setAttribute('data-i18n', isMods ? 'tool_bd_mods' : 'tool_bd_plugins');
+    bdLbl.textContent = isMods ? 'Mods' : 'Plugins';
+  }
+  if (window.sfLang && typeof sfLang.apply === 'function') sfLang.apply();
+  recalc();
+}
+
+function fmtGB(gb) {
+  if (gb <= 0) return '0 GB';
+  if (gb < 1) return Math.round(gb * 1024) + ' MB';
+  return (Math.round(gb * 100) / 100) + ' GB';
+}
+
+function recalc() {
+  const type = document.getElementById('serverType').value;
+  const kind = TUNABLE.addonKind[type];
+  const players = Math.max(1, parseInt(document.getElementById('players').value, 10) || 1);
+  const addons = kind === 'none' ? 0 : Math.max(0, parseInt(document.getElementById('addons').value, 10) || 0);
+  const view = Math.min(32, Math.max(2, parseInt(document.getElementById('viewDistance').value, 10) || TUNABLE.worldDefaultView));
+
+  // ── Heap components (GB) ──
+  const base = TUNABLE.base[type];
+  const playersGB = players * TUNABLE.perPlayerGB;
+  const addonsGB = addons * TUNABLE.perAddonGB[type];
+  const extraChunks = Math.max(0, view - TUNABLE.worldDefaultView);
+  const worldGB = TUNABLE.worldBaseGB + extraChunks * TUNABLE.worldPerExtraChunkGB;
+
+  const rawHeap = base + playersGB + addonsGB + worldGB;
+  const heapGB = roundUpHalf(rawHeap);
+
+  const osHeadroom = heapGB >= TUNABLE.osHeadroomBigThresholdGB
+    ? TUNABLE.osHeadroomBigGB
+    : TUNABLE.osHeadroomGB;
+
+  const recommendedRAM = heapGB + osHeadroom;
+  const plan = roundUpPlan(recommendedRAM);
+
+  // ── Render ──
+  document.getElementById('totalVal').textContent = recommendedRAM % 1 === 0 ? recommendedRAM : recommendedRAM.toFixed(1);
+  document.getElementById('totalUnit').textContent = 'GB';
+  document.getElementById('xmxVal').textContent = xmxString(heapGB);
+
+  document.getElementById('bdBase').textContent = fmtGB(base);
+  document.getElementById('bdPlayers').textContent = fmtGB(playersGB);
+  document.getElementById('bdAddons').textContent = fmtGB(addonsGB);
+  document.getElementById('bdWorld').textContent = fmtGB(worldGB);
+  document.getElementById('bdHeap').textContent = fmtGB(heapGB);
+  document.getElementById('bdOs').textContent = fmtGB(osHeadroom);
+
+  document.getElementById('planTitle').textContent =
+    plan.ram + ' GB Cloud Compute (' + plan.cpu + ' vCPU, ' + plan.price + ')';
+}
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+
+// Init
+onTypeChange();
+</script>
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

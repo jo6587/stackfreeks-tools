@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>LLM GPU 비용 계산기 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="LLM & GPU" name="description">
+<link href="https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/" hreflang="x-default" rel="alternate">
+  
+
+
+<!-- Open Graph -->
+<meta content="LLM GPU 비용 계산기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="LLM & GPU" property="og:description">
+<meta content="https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<!-- Twitter -->
+<meta content="summary" name="twitter:card">
+<meta content="LLM GPU 비용 계산기 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
+<meta content="LLM & GPU" name="twitter:description">
+<!-- ADSENSE_SLOT_TOP -->
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-left { display: flex; align-items: center; gap: 8px; }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    /* Main layout */
+    main { padding: 32px 0 48px; }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; } }
+
+    /* Card */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+    .card + .card { margin-top: 12px; }
+    .card-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 16px;
+    }
+
+    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    input, select {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      padding: 9px 12px;
+      font-size: 13px; font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus { border-color: var(--border-2); }
+    input::placeholder { color: var(--text-3); }
+    input[type="number"] { -moz-appearance: textfield; }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+    }
+
+    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+
+    /* Results */
+    .total-row {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .total-label { font-size: 12px; color: var(--text-2); margin-bottom: 4px; }
+    .total-val { font-size: 2.2rem; font-weight: 500; letter-spacing: -0.04em; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .total-unit { font-size: 14px; color: var(--text-3); margin-left: 4px; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .summary-cell { background: var(--surface-2); padding: 14px 16px; }
+    .summary-label { font-size: 11px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .summary-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .summary-val.accent { color: var(--accent); }
+
+    .plan-box {
+      background: var(--success-bg);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+    .plan-box-label { font-size: 11px; font-weight: 500; color: var(--success); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .plan-box-title { font-size: 1rem; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
+    .plan-box-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
+
+    .btn-vultr-plan {
+      background: var(--success);
+      color: #fff; border: none;
+      border-radius: var(--radius);
+      padding: 9px 18px;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font);
+      text-decoration: none; display: inline-block;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr-plan:hover { opacity: 0.85; }
+
+    .disclaimer {
+      font-size: 11px; color: var(--text-3);
+      margin-top: 14px; line-height: 1.6;
+      padding-top: 14px; border-top: 1px solid var(--border);
+    }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related */
+    .related { padding: 40px 0; border-top: 1px solid var(--border); }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px;
+      text-decoration: none; display: flex;
+      flex-direction: column; gap: 6px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .banner-inner { flex-direction: column; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "LLM GPU Cost Calculator", "description": "Compare the cost of self-hosting an LLM on a rented GPU against paying per token for an LLM API. Enter your monthly request volume and average input/output tokens to see self-hosted monthly cost, API monthly cost, break-even volume, and cost per million tokens.", "url": "https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "LLM을 직접 호스팅하는 게 API보다 저렴한가요?", "acceptedAnswer": {"@type": "Answer", "text": "거의 전적으로 요청량과 GPU 가동률에 달려 있습니다. 빌린 GPU는 5% 부하든 95% 부하든 비용이 같으므로, 토큰당 API 가격을 이길 만큼 충분한 토큰을 처리해야만 자체 호스팅이 유리해집니다. 요청량이 적을 때는 유휴 용량에 비용을 내지 않는 API가 훨씬 저렴합니다. 이 계산기는 입력한 토큰 크기, GPU 가격, 처리량 가정에 대한 손익분기 요청량을 추정합니다. 실제 가동률은 보통 30~60% 수준이라, 솔직한 손익분기점은 순진한 계산보다 2~3배 높습니다."}}, {"@type": "Question", "name": "GPU에서 Llama를 돌리는 비용은 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "Llama 3 8B 같은 소형 모델은 RTX 4090(임대 시 시간당 약 0.69달러)이나 A100 40GB(시간당 약 1.29달러) 한 장으로 배치 한계 전까지 초당 약 1500~3000 출력 토큰을 처리할 수 있습니다. GPU 한 장을 한 달 내내 돌리면 약 730시간이므로, 카드에 따라 월 최소 약 500~1500달러입니다. 70B 이상 대형 모델은 GPU 여러 장이나 H100이 필요해 월 비용이 수천 달러대로 올라갑니다. 이 고정 비용을 실제 생성한 토큰 수로 나누면 100만 토큰당 실비용이 나옵니다."}}, {"@type": "Question", "name": "LLM 추론에는 어떤 GPU가 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "모델 크기와 양자화가 GPU를 결정합니다. fp16 기준 8B 모델은 약 16GB VRAM이 필요하고 RTX 4090, RTX 3090, L40S에서 잘 돌아갑니다. 13B 모델은 24GB 이상이 필요합니다. fp16 기준 70B 모델은 약 140GB가 필요해 A100 80GB나 H100 2장, 또는 48GB 한 장에 맞추려면 공격적인 4비트 양자화가 필요합니다. 프로덕션 서빙에서는 컨텍스트 길이와 배치 크기에 따라 커지는 KV 캐시 여유분도 필요하므로 모델 가중치보다 한 단계 위 GPU를 선택하세요."}}, {"@type": "Question", "name": "100만 토큰당 LLM 비용은?", "acceptedAnswer": {"@type": "Answer", "text": "자체 호스팅 GPU의 100만 토큰당 비용은 월 GPU 청구액을 그 달에 생성한 토큰 수(백만 단위)로 나눈 값입니다. 완전 가동 시 초당 2000 토큰을 생성하는 RTX 4090은 월 약 52억 토큰을 생성하며, 월 약 500달러 기준 100만 토큰당 0.10달러 미만입니다. 현실적인 40% 가동률에서는 같은 GPU가 100만 토큰당 약 0.24달러입니다. 비슷한 소형 모델의 상용 API는 100만 입력·출력 토큰당 약 0.15~0.60달러를 청구하므로, 자체 호스팅은 꾸준한 대량 처리에서만 이득입니다."}}, {"@type": "Question", "name": "추론용 GPU 시간은 어떻게 추정하나요?", "acceptedAnswer": {"@type": "Answer", "text": "월 총 출력 토큰(월 요청 수 × 요청당 평균 출력 토큰)에서 시작하세요. 이를 실효 처리량(GPU의 초당 토큰 × 현실적 가동률)으로 나누면 GPU-초가 나오고, 3600으로 나누면 GPU-시간입니다. GPU-시간에 시간당 임대 가격을 곱하면 컴퓨팅 비용입니다. 입력 토큰은 prefill 단계에서 처리되며 생성보다 토큰당 훨씬 저렴하므로, 출력 토큰이 추정치를 좌우합니다."}}]}</script>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- 1. Nav -->
+<nav>
+<a class="logo" href="/ko/">
+<div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+<div class="nav-right">
+<a class="lang-toggle" href="https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/">English</a>
+<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+</div>
+</nav>
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+<!-- 3. Hero -->
+<section class="hero">
+<div class="container">
+
+<div class="lang-ko">
+<p class="eyebrow">LLM & GPU</p>
+<h1>LLM GPU 비용 계산기</h1>
+<p class="hero-desc">GPU를 빌려 LLM을 직접 호스팅하는 월 비용과 토큰당 API 비용을 비교합니다 &mdash; 손익분기 요청량과 100만 토큰당 비용까지 계산합니다.</p>
+</div>
+</div>
+</section>
+<!-- 4. Tool body -->
+<main>
+<div class="container">
+<div class="tool-grid">
+<!-- Input card -->
+<div class="card">
+<p class="card-label" data-i18n="tool_input_label">Workload</p>
+<div class="form-group">
+<label data-i18n="tool_reqvol_lbl">Monthly request volume</label>
+<input id="reqVol" min="0" oninput="recalc()" step="10000" type="number" value="500000">
+</div>
+<div class="form-row">
+<div class="form-group">
+<label data-i18n="tool_intok_lbl">Avg input tokens</label>
+<input id="inTok" min="0" oninput="recalc()" step="100" type="number" value="1500">
+</div>
+<div class="form-group">
+<label data-i18n="tool_outtok_lbl">Avg output tokens</label>
+<input id="outTok" min="0" oninput="recalc()" step="50" type="number" value="500">
+</div>
+</div>
+<div class="form-group">
+<label data-i18n="tool_gpu_lbl">GPU type</label>
+<select id="gpu" onchange="onGpuChange()">
+<option value="a100_40">A100 40GB</option>
+<option value="a100_80">A100 80GB</option>
+<option value="h100">H100</option>
+<option value="l40s">L40S</option>
+<option value="rtx4090">RTX 4090</option>
+<option value="rtx3090">RTX 3090</option>
+</select>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label data-i18n="tool_gpuprice_lbl">GPU price ($/hr)</label>
+<input id="gpuPrice" min="0" oninput="recalc()" step="0.01" type="number" value="1.29">
+</div>
+<div class="form-group">
+<label data-i18n="tool_thru_lbl">Throughput (tokens/sec)</label>
+<input id="thru" min="1" oninput="recalc()" step="50" type="number" value="2500">
+</div>
+</div>
+<div class="form-group">
+<label data-i18n="tool_util_lbl">Realistic utilization (%)</label>
+<input id="util" max="100" min="1" oninput="recalc()" step="1" type="number" value="40">
+<p class="hint" data-i18n="tool_util_hint">Real production utilization is usually 30&ndash;60%. A rented GPU costs the same idle or busy, so low utilization pushes cost up 2&ndash;3x versus a naive estimate.</p>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label data-i18n="tool_apiin_lbl">API price ($/1M input)</label>
+<input id="apiIn" min="0" oninput="recalc()" step="0.01" type="number" value="0.15">
+</div>
+<div class="form-group">
+<label data-i18n="tool_apiout_lbl">API price ($/1M output)</label>
+<input id="apiOut" min="0" oninput="recalc()" step="0.01" type="number" value="0.60">
+</div>
+</div>
+<p class="hint" data-i18n="tool_input_hint">GPU $/hr and throughput defaults are editable &mdash; real numbers drift by provider, model, quantization, and batch size.</p>
+</div>
+<!-- Results card -->
+<div class="card">
+<p class="card-label" data-i18n="tool_results_label">Cost Comparison</p>
+<div class="total-row">
+<div class="total-label" data-i18n="tool_total_label">Self-hosted monthly cost</div>
+<div>
+<span class="total-val" id="totalVal">$0</span>
+<span class="total-unit" data-i18n="tool_permo">/ mo</span>
+</div>
+</div>
+<div class="summary-grid">
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_sum_api">API monthly cost</div>
+<div class="summary-val" id="sumApi">$0</div>
+</div>
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_sum_hours">GPU-hours needed / mo</div>
+<div class="summary-val" id="sumHours">0</div>
+</div>
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_sum_selfcpm">Self-host $/1M tokens</div>
+<div class="summary-val accent" id="sumSelfCpm">$0</div>
+</div>
+<div class="summary-cell">
+<div class="summary-label" data-i18n="tool_sum_breakeven">Break-even volume</div>
+<div class="summary-val" id="sumBreakeven">0 / mo</div>
+</div>
+</div>
+<div class="plan-box">
+<div class="plan-box-label" data-i18n="tool_verdict_label">Verdict</div>
+<div class="plan-box-title" id="verdictTitle">&mdash;</div>
+<div class="plan-box-desc" data-i18n="tool_verdict_desc" id="verdictDesc">Self-hosting wins only above the break-even volume, assuming you keep at least one GPU running 24/7 (~730 hours/month).</div>
+<a class="btn-vultr-plan" data-i18n="tool_vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Rent a Cloud GPU on Vultr &rarr;</a>
+</div>
+<p class="disclaimer" data-i18n="tool_disclaimer">Rough model. Actual cost depends on model size, quantization, batch size, context length, KV-cache pressure, and provider pricing. Output tokens dominate; input (prefill) is cheaper per token. Verify with a load test before committing to hardware.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- About / SEO copy -->
+<section class="about-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>LLM GPU 비용 계산기 소개</h2>
+<p>Llama, Mistral, Qwen 같은 오픈 모델을 GPU를 빌려 직접 호스팅할지, 아니면 상용 LLM API를 계속 사용할지는 결국 하나의 질문으로 귀결됩니다. 우리 요청량에서 100만 토큰당 어느 쪽이 더 저렴한가? 빌린 GPU는 놀든 풀가동하든 동일한 고정 월 비용이고, API는 유휴 비용 없이 토큰당 과금됩니다. 이 계산기는 월 요청량, 평균 입력&middot;출력 토큰, GPU 시간당 가격, 가정 처리량(tokens/sec), 현실적 가동률을 입력받아 양쪽 비용을 추정하고, 자체 호스팅이 유리해지는 손익분기 요청량을 알려줍니다.</p>
+<p>추론 스택을 설계하는 백엔드&middot;플랫폼 엔지니어, 자체 호스팅 AI 코딩 어시스턴트와 API 요금을 저울질하는 개인 개발자, Vultr Cloud GPU 등 GPU 임대 플랜에서 100만 토큰당 비용 근거가 필요한 팀에게 유용합니다. GPU $/hr와 초당 토큰 값은 모두 수정 가능합니다 &mdash; 공개된 처리량 수치는 모델, 양자화, 배치 크기, 서빙 프레임워크(vLLM, TGI, TensorRT-LLM)에 따라 크게 달라지기 때문입니다. 기본 가동률 40%는 대부분의 자체 호스팅 추론 GPU가 용량 이하로 돌아간다는 현실을 반영한 것이며, 순진한 스프레드시트가 실제 비용을 2~3배 과소평가하는 이유이기도 합니다.</p>
+</div>
+</div>
+</section>
+<!-- 5. How-to section -->
+<section class="guide-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>계산기 사용 방법</h2>
+<div class="guide-grid">
+<div class="guide-card">
+<div class="guide-step">Step 1</div>
+<div class="guide-title">요청량 입력</div>
+<div class="guide-desc">월 요청 수와 요청당 평균 입력&middot;출력 토큰을 입력하세요.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 2</div>
+<div class="guide-title">GPU 선택</div>
+<div class="guide-desc">A100, H100, L40S, RTX 4090, RTX 3090 중 선택하세요. $/hr와 처리량 기본값이 자동 입력됩니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 3</div>
+<div class="guide-title">가정값 조정</div>
+<div class="guide-desc">GPU 가격, tokens/sec, 가동률, API 가격을 사용 모델과 제공업체 견적에 맞게 수정하세요.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 4</div>
+<div class="guide-title">결과 확인</div>
+<div class="guide-desc">자체 호스팅과 API 월 비용을 비교하고, 손익분기 요청량과 100만 토큰당 비용을 확인하세요.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FAQ -->
+<section class="faq-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>자주 묻는 질문</h2>
+<div class="faq-list">
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>LLM을 직접 호스팅하는 게 API보다 저렴한가요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">거의 전적으로 요청량과 GPU 가동률에 달려 있습니다. 빌린 GPU는 5% 부하든 95% 부하든 비용이 같으므로, 토큰당 API 가격을 이길 만큼 충분한 토큰을 처리해야만 자체 호스팅이 유리해집니다. 요청량이 적을 때는 유휴 용량에 비용을 내지 않는 API가 훨씬 저렴합니다. 이 계산기는 입력한 토큰 크기, GPU 가격, 처리량 가정에 대한 손익분기 요청량을 추정합니다. 실제 가동률은 보통 30~60% 수준이라, 솔직한 손익분기점은 순진한 계산보다 2~3배 높습니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>GPU에서 Llama를 돌리는 비용은 얼마인가요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">Llama 3 8B 같은 소형 모델은 RTX 4090(임대 시 시간당 약 0.69달러)이나 A100 40GB(시간당 약 1.29달러) 한 장으로 배치 한계 전까지 초당 약 1500~3000 출력 토큰을 처리할 수 있습니다. GPU 한 장을 한 달 내내 돌리면 약 730시간이므로, 카드에 따라 월 최소 약 500~1500달러입니다. 70B 이상 대형 모델은 GPU 여러 장이나 H100이 필요해 월 비용이 수천 달러대로 올라갑니다. 이 고정 비용을 실제 생성한 토큰 수로 나누면 100만 토큰당 실비용이 나옵니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>LLM 추론에는 어떤 GPU가 필요한가요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">모델 크기와 양자화가 GPU를 결정합니다. fp16 기준 8B 모델은 약 16GB VRAM이 필요하고 RTX 4090, RTX 3090, L40S에서 잘 돌아갑니다. 13B 모델은 24GB 이상이 필요합니다. fp16 기준 70B 모델은 약 140GB가 필요해 A100 80GB나 H100 2장, 또는 48GB 한 장에 맞추려면 공격적인 4비트 양자화가 필요합니다. 프로덕션 서빙에서는 컨텍스트 길이와 배치 크기에 따라 커지는 KV 캐시 여유분도 필요하므로 모델 가중치보다 한 단계 위 GPU를 선택하세요.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>100만 토큰당 LLM 비용은?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">자체 호스팅 GPU의 100만 토큰당 비용은 월 GPU 청구액을 그 달에 생성한 토큰 수(백만 단위)로 나눈 값입니다. 완전 가동 시 초당 2000 토큰을 생성하는 RTX 4090은 월 약 52억 토큰을 생성하며, 월 약 500달러 기준 100만 토큰당 0.10달러 미만입니다. 현실적인 40% 가동률에서는 같은 GPU가 100만 토큰당 약 0.24달러입니다. 비슷한 소형 모델의 상용 API는 100만 입력&middot;출력 토큰당 약 0.15~0.60달러를 청구하므로, 자체 호스팅은 꾸준한 대량 처리에서만 이득입니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>추론용 GPU 시간은 어떻게 추정하나요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">월 총 출력 토큰(월 요청 수 &times; 요청당 평균 출력 토큰)에서 시작하세요. 이를 실효 처리량(GPU의 초당 토큰 &times; 현실적 가동률)으로 나누면 GPU-초가 나오고, 3600으로 나누면 GPU-시간입니다. GPU-시간에 시간당 임대 가격을 곱하면 컴퓨팅 비용입니다. 입력 토큰은 prefill 단계에서 처리되며 생성보다 토큰당 훨씬 저렴하므로, 출력 토큰이 추정치를 좌우합니다.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Related content -->
+<section class="related">
+<div class="container">
+<p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+<div class="related-grid">
+<a class="related-card" href="https://stackfreeks.com/vultr-cloud-gpu-review/" rel="noopener" target="_blank">
+<span class="related-tag">GPU</span>
+<p class="related-title">Vultr Cloud GPU Review</p>
+<span class="related-arrow">&rarr;</span>
+</a>
+<a class="related-card" href="/tools/vps-cost-calculator/ko/">
+<span class="related-tag">VPS</span>
+<p class="related-title">VPS Cost Calculator</p>
+<span class="related-arrow">&rarr;</span>
+</a>
+<a class="related-card" href="/tools/server-spec-recommender/ko/">
+<span class="related-tag">Sizing</span>
+<p class="related-title">Server Spec Recommender</p>
+<span class="related-arrow">&rarr;</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+<div class="sf-related-grid">
+<a class="sf-related-card" href="/tools/vps-cost-calculator/ko/"><span>💰</span>VPS Cost Calculator</a>
+<a class="sf-related-card" href="/tools/server-spec-recommender/ko/"><span>🖥️</span>Server Spec Recommender</a>
+<a class="sf-related-card" href="/tools/docker-ram-calculator/ko/"><span>🐳</span>Docker RAM Calculator</a>
+<a class="sf-related-card" href="https://stackfreeks.com/vultr-cloud-gpu-review/" rel="noopener" target="_blank"><span>📖</span>Vultr Cloud GPU Review</a>
+</div>
+</section>
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+<div class="container banner-inner">
+<div>
+<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+</div>
+<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+</div>
+</section>
+<!-- 9. Footer -->
+<footer class="footer">
+<div class="container footer-inner">
+<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+</div>
+</div>
+</footer>
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    tool_input_label: "Workload",
+    tool_reqvol_lbl: "Monthly request volume",
+    tool_intok_lbl: "Avg input tokens",
+    tool_outtok_lbl: "Avg output tokens",
+    tool_gpu_lbl: "GPU type",
+    tool_gpuprice_lbl: "GPU price ($/hr)",
+    tool_thru_lbl: "Throughput (tokens/sec)",
+    tool_util_lbl: "Realistic utilization (%)",
+    tool_util_hint: "Real production utilization is usually 30–60%. A rented GPU costs the same idle or busy, so low utilization pushes cost up 2–3x versus a naive estimate.",
+    tool_apiin_lbl: "API price ($/1M input)",
+    tool_apiout_lbl: "API price ($/1M output)",
+    tool_input_hint: "GPU $/hr and throughput defaults are editable — real numbers drift by provider, model, quantization, and batch size.",
+    tool_results_label: "Cost Comparison",
+    tool_total_label: "Self-hosted monthly cost",
+    tool_permo: "/ mo",
+    tool_sum_api: "API monthly cost",
+    tool_sum_hours: "GPU-hours needed / mo",
+    tool_sum_selfcpm: "Self-host $/1M tokens",
+    tool_sum_breakeven: "Break-even volume",
+    tool_verdict_label: "Verdict",
+    tool_verdict_desc: "Self-hosting wins only above the break-even volume, assuming you keep at least one GPU running 24/7 (~730 hours/month).",
+    tool_vultr_cta: "Rent a Cloud GPU on Vultr →",
+    tool_disclaimer: "Rough model. Actual cost depends on model size, quantization, batch size, context length, KV-cache pressure, and provider pricing. Output tokens dominate; input (prefill) is cheaper per token. Verify with a load test before committing to hardware.",
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
+  },
+  ko: {
+    tool_input_label: "워크로드",
+    tool_reqvol_lbl: "월 요청량",
+    tool_intok_lbl: "평균 입력 토큰",
+    tool_outtok_lbl: "평균 출력 토큰",
+    tool_gpu_lbl: "GPU 종류",
+    tool_gpuprice_lbl: "GPU 가격 ($/hr)",
+    tool_thru_lbl: "처리량 (tokens/sec)",
+    tool_util_lbl: "현실적 가동률 (%)",
+    tool_util_hint: "실제 프로덕션 가동률은 보통 30~60%입니다. 빌린 GPU는 놀든 바쁘든 비용이 같으므로, 낮은 가동률은 순진한 추정 대비 비용을 2~3배 높입니다.",
+    tool_apiin_lbl: "API 가격 ($/1M 입력)",
+    tool_apiout_lbl: "API 가격 ($/1M 출력)",
+    tool_input_hint: "GPU $/hr와 처리량 기본값은 수정 가능합니다 — 실제 수치는 제공업체, 모델, 양자화, 배치 크기에 따라 달라집니다.",
+    tool_results_label: "비용 비교",
+    tool_total_label: "자체 호스팅 월 비용",
+    tool_permo: "/ 월",
+    tool_sum_api: "API 월 비용",
+    tool_sum_hours: "월 필요 GPU-시간",
+    tool_sum_selfcpm: "자체 호스팅 $/1M 토큰",
+    tool_sum_breakeven: "손익분기 요청량",
+    tool_verdict_label: "결론",
+    tool_verdict_desc: "GPU 한 장을 24/7(월 약 730시간) 가동한다고 가정할 때, 손익분기 요청량을 넘어야만 자체 호스팅이 유리합니다.",
+    tool_vultr_cta: "Vultr에서 Cloud GPU 임대 →",
+    tool_disclaimer: "대략적인 모델입니다. 실제 비용은 모델 크기, 양자화, 배치 크기, 컨텍스트 길이, KV 캐시 부하, 제공업체 가격에 따라 달라집니다. 출력 토큰이 지배적이며 입력(prefill)은 토큰당 더 저렴합니다. 하드웨어 도입 전 부하 테스트로 검증하세요.",
+    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
+  }
+};
+</script>
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// LLM GPU Cost Calculator — self-hosted GPU vs API cost for LLM inference
+//
+// ponytail: rough model; GPU $/hr and throughput are editable because real
+// numbers drift by provider and model.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Constants: GPU $/hr + output tokens/sec defaults ──────────────────────────
+// pricePerHr : approximate 2026 rented / cloud-GPU hourly rate (USD)
+// tokPerSec  : approximate sustained OUTPUT throughput for a ~7-8B model
+//              (fp16/int8, modest batching, vLLM-class server). Editable.
+const GPU_DEFAULTS = {
+  a100_40: { pricePerHr: 1.29, tokPerSec: 2500 },
+  a100_80: { pricePerHr: 1.99, tokPerSec: 3000 },
+  h100:    { pricePerHr: 2.99, tokPerSec: 5000 },
+  l40s:    { pricePerHr: 1.19, tokPerSec: 2000 },
+  rtx4090: { pricePerHr: 0.69, tokPerSec: 1800 },
+  rtx3090: { pricePerHr: 0.44, tokPerSec: 1200 },
+};
+
+// Hours in an average month if one GPU runs continuously (24 * 365 / 12).
+const HOURS_PER_MONTH = 730;
+
+const $ = (id) => document.getElementById(id);
+
+function onGpuChange() {
+  const d = GPU_DEFAULTS[$('gpu').value];
+  $('gpuPrice').value = d.pricePerHr;
+  $('thru').value = d.tokPerSec;
+  recalc();
+}
+
+function fmtMoney(v) {
+  if (!isFinite(v)) return '—';
+  if (v >= 1000) return '$' + Math.round(v).toLocaleString('en-US');
+  if (v >= 1) return '$' + v.toFixed(2);
+  return '$' + v.toFixed(3);
+}
+
+function fmtInt(v) {
+  if (!isFinite(v)) return '—';
+  return Math.round(v).toLocaleString('en-US');
+}
+
+function recalc() {
+  // ── Inputs ──
+  const reqVol  = Math.max(0, parseFloat($('reqVol').value)  || 0);
+  const inTok   = Math.max(0, parseFloat($('inTok').value)   || 0);
+  const outTok  = Math.max(0, parseFloat($('outTok').value)  || 0);
+  const gpuHr   = Math.max(0, parseFloat($('gpuPrice').value) || 0);
+  const thru    = Math.max(1, parseFloat($('thru').value)    || 1);
+  const utilPct = Math.min(100, Math.max(1, parseFloat($('util').value) || 1));
+  const apiIn   = Math.max(0, parseFloat($('apiIn').value)   || 0);
+  const apiOut  = Math.max(0, parseFloat($('apiOut').value)  || 0);
+
+  const util = utilPct / 100;
+
+  // ── Self-hosted GPU cost ──
+  // Effective throughput accounts for real-world idle time / poor batching.
+  const effThroughput = thru * util;                        // tokens/sec actually delivered
+  const totalOutputTokens = reqVol * outTok;                // output tokens generated per month
+  const gpuSeconds = totalOutputTokens / effThroughput;     // seconds of GPU time needed
+  const gpuHoursNeeded = gpuSeconds / 3600;                 // -> GPU-hours
+
+  // You can't fractionally rent a production server: assume at least one GPU
+  // runs 24/7, so the billed hours are max(needed, 730).
+  const billedHours = Math.max(gpuHoursNeeded, HOURS_PER_MONTH);
+  const selfHostCost = billedHours * gpuHr;
+
+  // ── API cost ──
+  // per-request cost = input side + output side, priced per 1M tokens
+  const apiCostPerReq = (inTok / 1e6) * apiIn + (outTok / 1e6) * apiOut;
+  const apiCost = reqVol * apiCostPerReq;
+
+  // ── Cost per 1M tokens (self-host) ──
+  // total tokens billed = input + output; GPU bill / millions of tokens
+  const totalTokens = reqVol * (inTok + outTok);
+  const selfCostPerM = totalTokens > 0 ? (selfHostCost / (totalTokens / 1e6)) : Infinity;
+
+  // ── Break-even volume ──
+  // Below capacity of one GPU the self-host bill is flat at 730h * $/hr, while
+  // the API bill scales linearly with volume. They cross where:
+  //   apiCostPerReq * N = 730 * gpuHr
+  const flatSelfHost = HOURS_PER_MONTH * gpuHr;
+  const breakEvenVol = apiCostPerReq > 0 ? (flatSelfHost / apiCostPerReq) : Infinity;
+
+  // ── Render ──
+  $('totalVal').textContent   = fmtMoney(selfHostCost);
+  $('sumApi').textContent     = fmtMoney(apiCost);
+  $('sumHours').textContent   = fmtInt(gpuHoursNeeded) + ' h';
+  $('sumSelfCpm').textContent = fmtMoney(selfCostPerM);
+  $('sumBreakeven').textContent = fmtInt(breakEvenVol) + ' / mo';
+
+  // ── Verdict ──
+  const lang = (window.sfLang && sfLang.current === 'ko') ? 'ko' : 'en';
+  let verdict;
+  if (reqVol === 0) {
+    verdict = lang === 'ko' ? '요청량을 입력하세요' : 'Enter a request volume';
+  } else if (selfHostCost < apiCost) {
+    const save = apiCost - selfHostCost;
+    verdict = lang === 'ko'
+      ? '자체 호스팅 우세 — 월 약 ' + fmtMoney(save) + ' 절감'
+      : 'Self-hosting wins — saves ~' + fmtMoney(save) + '/mo';
+  } else {
+    const save = selfHostCost - apiCost;
+    verdict = lang === 'ko'
+      ? 'API 우세 — ' + fmtInt(breakEvenVol) + ' req/mo 이상에서 자체 호스팅이 유리 (월 약 ' + fmtMoney(save) + ' 차이)'
+      : 'API wins — self-host above ' + fmtInt(breakEvenVol) + ' req/mo (gap ~' + fmtMoney(save) + '/mo)';
+  }
+  $('verdictTitle').textContent = verdict;
+}
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+
+// Re-render verdict text on language switch
+document.addEventListener('sfLangChanged', recalc);
+
+// Init
+onGpuChange();
+</script>
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>

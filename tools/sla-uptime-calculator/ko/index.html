@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SLA 업타임 계산기 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="DevOps & 인프라" name="description">
+<link href="https://tools.stackfreeks.com/tools/sla-uptime-calculator/ko/" rel="canonical">
+<!-- Open Graph -->
+<meta content="SLA 업타임 계산기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="DevOps & 인프라" property="og:description">
+<meta content="https://tools.stackfreeks.com/tools/sla-uptime-calculator/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<link href="https://tools.stackfreeks.com/tools/sla-uptime-calculator/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/sla-uptime-calculator/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/sla-uptime-calculator/" hreflang="x-default" rel="alternate">
+  
+
+
+<!-- ADSENSE_SLOT_TOP -->
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-mark {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-2); opacity: 1; }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+
+    /* ── Hero ────────────────────────────────────────────── */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 840px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 10px;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      max-width: 480px;
+    }
+
+    /* ── Main tool area ──────────────────────────────────── */
+    .main {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    /* ── SLA display ─────────────────────────────────────── */
+    .sla-display {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .sla-number {
+      font-size: 3rem;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      margin-bottom: 4px;
+      transition: color 0.2s;
+    }
+
+    .sla-number.color-danger  { color: var(--danger); }
+    .sla-number.color-warning { color: var(--warning); }
+    .sla-number.color-neutral { color: var(--text-1); }
+    .sla-number.color-success { color: var(--success); }
+
+    .sla-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    /* ── Input area ──────────────────────────────────────── */
+    .input-area {
+      margin-bottom: 24px;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .sla-input {
+      width: 120px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 15px;
+      font-variant-numeric: tabular-nums;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+      flex-shrink: 0;
+    }
+    .sla-input:focus { border-color: var(--accent); }
+
+    .pct-sign {
+      font-size: 15px;
+      color: var(--text-3);
+      flex-shrink: 0;
+    }
+
+    .sla-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: var(--surface-2);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .sla-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .sla-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: none;
+    }
+
+    .sla-slider:hover::-webkit-slider-thumb { background: var(--text-1); }
+    .sla-slider:hover::-moz-range-thumb { background: var(--text-1); }
+
+    /* ── Preset buttons ──────────────────────────────────── */
+    .presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+
+    .preset-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 5px 11px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .preset-btn:hover { border-color: var(--border-2); color: var(--text-1); }
+    .preset-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(99,102,241,0.08);
+    }
+
+    /* ── Results table ───────────────────────────────────── */
+    .results-block {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .result-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-row:last-child { border-bottom: none; }
+
+    .result-period {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .result-downtime {
+      font-size: 13px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Guide ───────────────────────────────────────────── */
+    .section {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .guide-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .guide-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* ── FAQ ─────────────────────────────────────────────── */
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 8px;
+      padding: 16px 20px;
+    }
+
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text-1);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+      font-family: var(--font);
+      gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+
+    .faq-a {
+      display: none;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-top: 10px;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    .faq-icon {
+      font-size: 18px;
+      color: var(--text-3);
+      flex-shrink: 0;
+      margin-left: 12px;
+      transition: transform 0.2s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* ── Related ─────────────────────────────────────────── */
+    .related-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 0.15s;
+      text-decoration: none;
+    }
+    .related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    .related-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .related-title {
+      font-size: 14px;
+      color: var(--text-1);
+      font-weight: 500;
+    }
+
+    .related-arrow {
+      color: var(--text-3);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ── Vultr banner ────────────────────────────────────── */
+    .vultr-banner {
+      background: var(--success-bg);
+      border-top: 1px solid rgba(34,197,94,0.15);
+      border-bottom: 1px solid rgba(34,197,94,0.15);
+      padding: 28px 24px;
+      margin-top: 0;
+    }
+
+    .banner-inner {
+      max-width: 840px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .banner-eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .banner-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .banner-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .btn-vultr {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      margin-top: 64px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* ── Mobile ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 1.4rem; }
+      .main { padding: 24px 16px; }
+      .section { padding: 32px 16px; }
+      .sla-number { font-size: 2.4rem; }
+      .input-row { flex-wrap: wrap; }
+      .sla-slider { min-width: 160px; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-links { gap: 14px; }
+      .vultr-banner { padding: 24px 16px; }
+    }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 840px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "SLA Uptime Calculator", "description": "Calculate allowed downtime for any SLA percentage. See yearly, monthly, weekly and daily downtime budgets for 99.9%, 99.99%, and five nines SLAs.", "url": "https://tools.stackfreeks.com/tools/sla-uptime-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/sla-uptime-calculator/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "SLA 업타임에서 \"나인(Nines)\"이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "\"나인\"은 업타임 퍼센트에 포함된 9의 개수를 말합니다. Two Nines = 99% (연간 약 87.6시간 다운타임 허용). Three Nines = 99.9% (약 8.77시간/년). Four Nines = 99.99% (약 52.6분/년). Five Nines = 99.999% (약 5.26분/년). 9가 하나 추가될 때마다 허용 다운타임이 약 10배씩 줄어듭니다."}}, {"@type": "Question", "name": "다운타임 예산은 어떻게 계산하나요?", "acceptedAnswer": {"@type": "Answer", "text": "계산식: 다운타임 = (1 − SLA/100) × 기간(초) . 기간 기준: 연 = 365.25일, 월 = 30.44일(평균), 주 = 7일, 일 = 24시간. 예를 들어 SLA 99.9%: (1 − 0.999) × 365.25 × 86400 ≈ 31,557초 ≈ 연간 8시간 45분 57초."}}, {"@type": "Question", "name": "SLA 보장이 실제 업타임과 같은 건가요?", "acceptedAnswer": {"@type": "Answer", "text": "아닙니다. SLA는 계약상 약속이며 최솟값이지 최댓값이 아닙니다. 클라우드 사업자는 대부분 SLA보다 훨씬 높은 실제 업타임을 달성합니다. SLA는 이 수준 아래로 내려갈 경우 서비스 크레딧이나 위약금을 받을 수 있는 기준입니다. 단, 계획된 유지보수, 불가항력, 고객 측 문제 등은 대부분 제외되므로 약관을 반드시 확인하세요."}}, {"@type": "Question", "name": "VPS·클라우드 사업자에게 어느 정도의 SLA를 요구해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "일반 프로덕션 환경에는 99.9%(Three Nines, 연간 약 8.77시간)가 기본입니다. 트래픽이 많은 이커머스나 금융 앱은 99.99%(연간 약 52.6분)을 요구하는 경우가 많습니다. 몇 분의 다운타임도 허용할 수 없는 미션 크리티컬 시스템은 99.999%(Five Nines)를 목표로 합니다. 높은 나인을 달성하려면 더 나은 SLA 계약서뿐 아니라 로드밸런서, 멀티 리전, 핫 스탠바이 등 중복 인프라가 필요합니다."}}, {"@type": "Question", "name": "여러 서비스의 복합 SLA는 어떻게 계산하나요?", "acceptedAnswer": {"@type": "Answer", "text": "시스템이 독립적인 여러 서비스에 의존할 경우, 복합 업타임은 각 업타임의 곱입니다. 예: 서비스 A가 99.9%, 서비스 B가 99.9%라면 복합 SLA = 99.9% × 99.9% = 99.8%. 의존성이 늘어날수록 전체 가용성이 낮아지므로, 아키텍처를 단순하게 유지하고 각 계층에 이중화를 적용하는 것이 중요합니다."}}]}</script>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- Nav -->
+<nav>
+<div class="nav-left">
+<a class="logo" href="/ko/">
+<div class="logo-mark"></div>
+        StackFreeks Tools
+      </a>
+<div class="nav-sep"></div>
+<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+</div>
+<div class="nav-actions">
+<a class="lang-toggle" href="https://tools.stackfreeks.com/tools/sla-uptime-calculator/">English</a>
+</div>
+</nav>
+<!-- ADSENSE_SLOT_TOP -->
+<!-- Hero -->
+<section class="hero">
+
+<div class="lang-ko">
+<p class="eyebrow">DevOps & 인프라</p>
+<h1>SLA 업타임 계산기</h1>
+<p class="hero-desc">SLA 퍼센트를 입력하면 연간&middot;월간&middot;주간&middot;일간 허용 다운타임을 즉시 계산합니다.</p>
+</div>
+</section>
+<!-- Tool Body -->
+<main class="main">
+<div class="card">
+<!-- Big SLA display -->
+<div class="sla-display">
+<div class="sla-number color-neutral" id="sla-display">99.900%</div>
+<div class="sla-label" data-i18n="sla_uptime_label">Uptime SLA</div>
+</div>
+<!-- Input row: number + slider -->
+<div class="input-area">
+<div class="input-row">
+<input aria-label="SLA percentage" autocomplete="off" class="sla-input" id="sla-input" max="99.999" min="90" oninput="onNumberInput()" spellcheck="false" step="0.001" type="number" value="99.9">
+<span class="pct-sign">%</span>
+<input aria-label="SLA percentage slider" class="sla-slider" id="sla-slider" max="99.999" min="90" oninput="onSliderInput()" step="0.001" type="range" value="99.9">
+</div>
+</div>
+<!-- Preset buttons -->
+<div aria-label="Common SLA presets" class="presets" role="group">
+<button class="preset-btn" data-val="99" onclick="setPreset(99)">99% <span style="color:var(--text-3)">Two Nines</span></button>
+<button class="preset-btn active" data-val="99.9" onclick="setPreset(99.9)">99.9% <span style="color:var(--text-3)">Three Nines</span></button>
+<button class="preset-btn" data-val="99.95" onclick="setPreset(99.95)">99.95%</button>
+<button class="preset-btn" data-val="99.99" onclick="setPreset(99.99)">99.99% <span style="color:var(--text-3)">Four Nines</span></button>
+<button class="preset-btn" data-val="99.999" onclick="setPreset(99.999)">99.999% <span style="color:var(--text-3)">Five Nines</span></button>
+</div>
+<!-- Results table -->
+<div aria-label="Downtime budget" class="results-block" role="table">
+<div class="result-row" role="row">
+<span class="result-period" data-i18n="period_year" role="cell">Per Year</span>
+<span class="result-downtime" id="res-year" role="cell">&mdash;</span>
+</div>
+<div class="result-row" role="row">
+<span class="result-period" data-i18n="period_month" role="cell">Per Month</span>
+<span class="result-downtime" id="res-month" role="cell">&mdash;</span>
+</div>
+<div class="result-row" role="row">
+<span class="result-period" data-i18n="period_week" role="cell">Per Week</span>
+<span class="result-downtime" id="res-week" role="cell">&mdash;</span>
+</div>
+<div class="result-row" role="row">
+<span class="result-period" data-i18n="period_day" role="cell">Per Day</span>
+<span class="result-downtime" id="res-day" role="cell">&mdash;</span>
+</div>
+</div>
+</div>
+</main>
+<!-- How-to Guide -->
+<section class="section">
+
+<div class="lang-ko">
+<p class="section-title">사용 방법</p>
+<div class="guide-grid">
+<div class="guide-card">
+<p class="guide-step">Step 1</p>
+<h3>SLA 퍼센트 입력</h3>
+<p>90%~99.999% 사이의 값을 숫자 입력란에 직접 입력하거나, 슬라이더를 드래그해 조정하세요.</p>
+</div>
+<div class="guide-card">
+<p class="guide-step">Step 2</p>
+<h3>프리셋 버튼 활용</h3>
+<p>자주 쓰는 SLA 티어(Two Nines 99%, Three Nines 99.9%, Four Nines 99.99%, Five Nines 99.999%)를 버튼 한 번으로 선택할 수 있습니다.</p>
+</div>
+<div class="guide-card">
+<p class="guide-step">Step 3</p>
+<h3>다운타임 예산 확인</h3>
+<p>테이블에서 SLA 위반 없이 허용되는 다운타임을 연간&middot;월간&middot;주간&middot;일간으로 확인하세요.</p>
+</div>
+<div class="guide-card">
+<p class="guide-step">Step 4</p>
+<h3>색상 표시 활용</h3>
+<p>상단 숫자 표시가 색상으로 수준을 알려줍니다. 99.9% 미만 빨강, 99.99% 미만 노랑, 99.99% 이상 초록입니다.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ -->
+<section class="section" style="padding-top: 0;">
+
+<div class="lang-ko">
+<p class="section-title">자주 묻는 질문</p>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>SLA 업타임에서 "나인(Nines)"이란 무엇인가요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">
+          "나인"은 업타임 퍼센트에 포함된 9의 개수를 말합니다. Two Nines = 99% (연간 약 87.6시간 다운타임 허용). Three Nines = 99.9% (약 8.77시간/년). Four Nines = 99.99% (약 52.6분/년). Five Nines = 99.999% (약 5.26분/년). 9가 하나 추가될 때마다 허용 다운타임이 약 10배씩 줄어듭니다.
+        </div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>다운타임 예산은 어떻게 계산하나요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">
+          계산식: <strong>다운타임 = (1 &minus; SLA/100) &times; 기간(초)</strong>. 기간 기준: 연 = 365.25일, 월 = 30.44일(평균), 주 = 7일, 일 = 24시간. 예를 들어 SLA 99.9%: (1 &minus; 0.999) &times; 365.25 &times; 86400 &asymp; 31,557초 &asymp; 연간 8시간 45분 57초.
+        </div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>SLA 보장이 실제 업타임과 같은 건가요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">
+          아닙니다. SLA는 계약상 약속이며 최솟값이지 최댓값이 아닙니다. 클라우드 사업자는 대부분 SLA보다 훨씬 높은 실제 업타임을 달성합니다. SLA는 이 수준 아래로 내려갈 경우 서비스 크레딧이나 위약금을 받을 수 있는 기준입니다. 단, 계획된 유지보수, 불가항력, 고객 측 문제 등은 대부분 제외되므로 약관을 반드시 확인하세요.
+        </div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>VPS&middot;클라우드 사업자에게 어느 정도의 SLA를 요구해야 하나요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">
+          일반 프로덕션 환경에는 99.9%(Three Nines, 연간 약 8.77시간)가 기본입니다. 트래픽이 많은 이커머스나 금융 앱은 99.99%(연간 약 52.6분)을 요구하는 경우가 많습니다. 몇 분의 다운타임도 허용할 수 없는 미션 크리티컬 시스템은 99.999%(Five Nines)를 목표로 합니다. 높은 나인을 달성하려면 더 나은 SLA 계약서뿐 아니라 로드밸런서, 멀티 리전, 핫 스탠바이 등 중복 인프라가 필요합니다.
+        </div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)">
+<span>여러 서비스의 복합 SLA는 어떻게 계산하나요?</span>
+<span class="faq-icon">+</span>
+</button>
+<div class="faq-a">
+          시스템이 독립적인 여러 서비스에 의존할 경우, 복합 업타임은 각 업타임의 곱입니다. 예: 서비스 A가 99.9%, 서비스 B가 99.9%라면 복합 SLA = 99.9% &times; 99.9% = 99.8%. 의존성이 늘어날수록 전체 가용성이 낮아지므로, 아키텍처를 단순하게 유지하고 각 계층에 이중화를 적용하는 것이 중요합니다.
+        </div>
+</div>
+</div>
+</section>
+<!-- Related -->
+<section class="section" style="padding-top: 0;">
+<a class="related-card" href="https://stackfreeks.com" rel="noopener" target="_blank">
+<div>
+<p class="related-label">stackfreeks.com</p>
+
+<div class="lang-ko">
+<p class="related-title">stackfreeks.com에서 더 많은 개발자&middot;인프라 가이드 보기 &rarr;</p>
+</div>
+</div>
+<span class="related-arrow">&rarr;</span>
+</a>
+</section>
+<!-- Vultr Banner -->
+<!-- Related tools -->
+<section class="sf-related">
+<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+<div class="sf-related-grid">
+<a class="sf-related-card" href="/tools/object-storage-calculator/ko/"><span>🗄️</span>Object Storage Cost Calculator</a>
+<a class="sf-related-card" href="/tools/vps-cost-calculator/ko/"><span>💰</span>VPS Cost Calculator</a>
+<a class="sf-related-card" href="/tools/vps-bandwidth-calculator/ko/"><span>📶</span>VPS Bandwidth Calculator</a>
+<a class="sf-related-card" href="https://stackfreeks.com/vultr-review-2026/" rel="noopener" target="_blank"><span>📖</span>Vultr Review 2026</a>
+</div>
+</section>
+<section class="vultr-banner">
+<div class="banner-inner">
+<div>
+<p class="banner-eyebrow" data-i18n="vultr_label">Sponsor</p>
+<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+</div>
+<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+</div>
+</section>
+<!-- Footer -->
+<footer>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com</a>
+</div>
+<p class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</p>
+</footer>
+<script>
+    // Page-specific i18n — must come BEFORE i18n.js
+    window.SF_PAGE_I18N = {
+      en: {
+        nav_back:          '← All Tools',
+        sla_uptime_label:  'Uptime SLA',
+        period_year:       'Per Year',
+        period_month:      'Per Month',
+        period_week:       'Per Week',
+        period_day:        'Per Day',
+        vultr_label:       'Sponsor',
+        vultr_title:       'Get started on Vultr',
+        vultr_sub:         'Get $300 free credit — valid for 30 days (limited-time offer)',
+        vultr_cta:         'Claim your credit →',
+        footer_copy:       '© 2026 StackFreeks',
+      },
+      ko: {
+        nav_back:          '← 전체 툴',
+        sla_uptime_label:  '업타임 SLA',
+        period_year:       '연간',
+        period_month:      '월간',
+        period_week:       '주간',
+        period_day:        '일간',
+        vultr_label:       '스폰서',
+        vultr_title:       'Vultr로 시작하세요',
+        vultr_sub:         '$300 무료 크레딧 — 가입 후 30일 유효 (기간 한정)',
+        vultr_cta:         '크레딧 받기 →',
+        footer_copy:       '© 2026 StackFreeks',
+      }
+    };
+  </script>
+<script src="/shared/i18n.js"></script>
+<script>
+    // ── Calculation ───────────────────────────────────────────────────────────
+
+    var SECONDS_PER = {
+      year:  365.25 * 24 * 3600,
+      month: 30.44  * 24 * 3600,
+      week:  7      * 24 * 3600,
+      day:   1      * 24 * 3600
+    };
+
+    function calcDowntime(slaPct, periodSec) {
+      return (1 - slaPct / 100) * periodSec;
+    }
+
+    function formatSeconds(totalSec) {
+      totalSec = Math.max(0, totalSec);
+      var days    = Math.floor(totalSec / 86400);
+      var hours   = Math.floor((totalSec % 86400) / 3600);
+      var minutes = Math.floor((totalSec % 3600) / 60);
+      var seconds = Math.round(totalSec % 60);
+
+      // Handle rounding carry-over
+      if (seconds === 60) { seconds = 0; minutes++; }
+      if (minutes === 60) { minutes = 0; hours++; }
+      if (hours === 24)   { hours   = 0; days++;  }
+
+      var parts = [];
+      if (days    > 0) parts.push(days    + 'd');
+      if (hours   > 0) parts.push(hours   + 'h');
+      if (minutes > 0) parts.push(minutes + 'm');
+      // Always show seconds (at least)
+      parts.push(seconds + 's');
+
+      return parts.join(' ');
+    }
+
+    function getColorClass(sla) {
+      if (sla < 99.9)  return 'color-danger';
+      if (sla < 99.99) return 'color-warning';
+      if (sla >= 99.99) return 'color-success';
+      return 'color-neutral';
+    }
+
+    function updateResults(sla) {
+      // Clamp
+      sla = Math.min(99.999, Math.max(90, sla));
+
+      // Update big display
+      var display = document.getElementById('sla-display');
+      display.textContent = sla.toFixed(3) + '%';
+      display.className = 'sla-number ' + getColorClass(sla);
+
+      // Update table
+      document.getElementById('res-year').textContent  = formatSeconds(calcDowntime(sla, SECONDS_PER.year));
+      document.getElementById('res-month').textContent = formatSeconds(calcDowntime(sla, SECONDS_PER.month));
+      document.getElementById('res-week').textContent  = formatSeconds(calcDowntime(sla, SECONDS_PER.week));
+      document.getElementById('res-day').textContent   = formatSeconds(calcDowntime(sla, SECONDS_PER.day));
+
+      // Sync preset highlight
+      document.querySelectorAll('.preset-btn').forEach(function(btn) {
+        var val = parseFloat(btn.dataset.val);
+        btn.classList.toggle('active', Math.abs(val - sla) < 0.0001);
+      });
+    }
+
+    function onNumberInput() {
+      var input = document.getElementById('sla-input');
+      var val = parseFloat(input.value);
+      if (isNaN(val)) return;
+      val = Math.min(99.999, Math.max(90, val));
+      document.getElementById('sla-slider').value = val;
+      updateResults(val);
+    }
+
+    function onSliderInput() {
+      var val = parseFloat(document.getElementById('sla-slider').value);
+      document.getElementById('sla-input').value = val.toFixed(3);
+      updateResults(val);
+    }
+
+    function setPreset(val) {
+      document.getElementById('sla-input').value  = val;
+      document.getElementById('sla-slider').value = val;
+      updateResults(val);
+    }
+
+    function toggleFaq(btn) {
+      var item = btn.parentElement;
+      item.classList.toggle('open');
+      btn.querySelector('.faq-icon').textContent = item.classList.contains('open') ? '−' : '+';
+    }
+
+    // Init on load
+    updateResults(99.9);
+  </script>
+</body>
+</html>

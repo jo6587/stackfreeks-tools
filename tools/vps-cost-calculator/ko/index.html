@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>VPS 비용 계산기 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="Vultr, Hetzner, DigitalOcean의 월별 VPS 비용을 한눈에 비교하세요. RAM과 CPU 요구사항을 선택하면 최적의 플랜을 즉시 찾아드립니다." name="description">
+<link href="https://tools.stackfreeks.com/tools/vps-cost-calculator/ko/" rel="canonical">
+<!-- Open Graph -->
+<meta content="VPS 비용 계산기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="Vultr, Hetzner, DigitalOcean의 월별 VPS 비용을 한눈에 비교하세요. RAM과 CPU 요구사항을 선택하면 최적의 플랜을 즉시 찾아드립니다." property="og:description">
+<meta content="https://tools.stackfreeks.com/tools/vps-cost-calculator/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<!-- ADSENSE_SLOT_TOP -->
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
+
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border-2);
+    }
+
+    .lang-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 48px 24px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--text-1);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    /* Main */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .filter-group label {
+      font-size: 12px;
+      color: var(--text-2);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-group select {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 14px;
+      padding: 8px 32px 8px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      min-width: 160px;
+      transition: border-color 0.15s;
+    }
+    .filter-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* Results */
+    .results-header {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+
+    .plan-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .plan-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.15s;
+    }
+    .plan-card:hover { border-color: var(--border-2); }
+
+    .plan-card.best-value {
+      border-color: var(--success);
+      background: var(--surface);
+    }
+
+    .plan-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .plan-provider {
+      font-size: 12px;
+      color: var(--text-2);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-best {
+      font-size: 11px;
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid rgba(34,197,94,0.2);
+      padding: 1px 8px;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+
+    .plan-name {
+      font-size: 14px;
+      color: var(--text-1);
+    }
+
+    .plan-specs {
+      display: flex;
+      gap: 12px;
+      margin-top: 2px;
+    }
+
+    .plan-spec {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .plan-spec span {
+      color: var(--text-2);
+    }
+
+    .plan-price {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-1);
+      white-space: nowrap;
+    }
+
+    .plan-price-sub {
+      font-size: 12px;
+      color: var(--text-3);
+      text-align: right;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-2);
+    }
+
+    .empty-state p { font-size: 14px; }
+
+    /* Note */
+    .note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-3);
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    /* Related */
+    .related {
+      max-width: 860px;
+      margin: 0 auto 0;
+      padding: 0 24px 32px;
+    }
+
+    .related-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); opacity: 1; }
+
+    .related-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .related-title {
+      font-size: 14px;
+      color: var(--text-1);
+    }
+
+    .related-arrow {
+      color: var(--text-3);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Vultr Banner */
+    .vultr-banner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+
+    .vultr-inner {
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      background: var(--success-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .vultr-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--success);
+      margin-bottom: 4px;
+    }
+
+    .vultr-title {
+      font-size: 15px;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .vultr-sub {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .vultr-cta {
+      display: inline-block;
+      background: var(--success);
+      color: #000;
+      font-weight: 500;
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .vultr-cta:hover { opacity: 0.85; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-2); opacity: 1; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* Guide */
+    .guide {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .guide-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .guide-step {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .guide-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+    .guide-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .faq {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .faq-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 24px; }
+      .hero h1 { font-size: 22px; }
+      main { padding: 0 16px 40px; }
+      .filters { flex-direction: column; }
+      .filter-group select { min-width: 100%; }
+      .plan-card {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+      }
+      .plan-price-sub { display: none; }
+      .related { padding: 0 16px 24px; }
+      .vultr-banner { padding: 0 16px 24px; }
+      .vultr-inner { flex-direction: column; align-items: flex-start; }
+      .vultr-cta { align-self: stretch; text-align: center; }
+      .related-card { flex-direction: column; align-items: flex-start; }
+      .footer-links { gap: 14px; }
+    }
+  
+    /* Related tools (auto-injected) */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+  </style> <link href="https://tools.stackfreeks.com/tools/vps-cost-calculator/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/vps-cost-calculator/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/vps-cost-calculator/" hreflang="x-default" rel="alternate">
+  
+
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "VPS Cost Calculator", "description": "Compare monthly VPS costs across Vultr, Hetzner, and DigitalOcean. Filter by RAM and CPU to find the best-value plan instantly.", "url": "https://tools.stackfreeks.com/tools/vps-cost-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/vps-cost-calculator/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "VPS란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "VPS(가상 사설 서버)는 클라우드 제공업체에서 임대하는 가상화된 서버입니다. 공유 호스팅과 달리 CPU와 RAM이 독립적으로 할당됩니다. 웹 앱, API, 데이터베이스, 게임 서버 등 상시 실행이 필요한 워크로드에 적합합니다."}}, {"@type": "Question", "name": "Hetzner가 Vultr나 DigitalOcean보다 훨씬 저렴한 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "Hetzner는 주로 유럽(독일, 핀란드)과 미국에 데이터센터를 운영합니다. 낮은 운영 비용 덕분에 훨씬 저렴한 가격을 제공할 수 있습니다. 단점은 리전이 적고, 아시아·남미 사용자는 레이턴시가 다소 높을 수 있습니다."}}, {"@type": "Question", "name": "실제로 RAM이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "경량 정적 사이트나 소규모 Node.js/Python 앱은 1 GB면 충분합니다. 대부분의 프로덕션 웹 앱과 소규모 데이터베이스(MySQL, PostgreSQL)는 2–4 GB가 적당합니다. 셀프 호스팅 툴, 대형 DB, 여러 서비스를 한 서버에서 운영한다면 8 GB 이상을 권장합니다."}}, {"@type": "Question", "name": "스토리지(SSD)는 월 요금에 포함되나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 목록의 모든 플랜은 NVMe/SSD 로컬 스토리지가 기본 포함됩니다. 단, 추가 블록 스토리지나 오브젝트 스토리지(S3 등)가 필요하면 별도 요금이 부과됩니다."}}, {"@type": "Question", "name": "가격 정보가 최신인가요?", "acceptedAnswer": {"@type": "Answer", "text": "가격은 2025년 중반 기준으로 수동 관리되는 참고 데이터입니다. 클라우드 제공업체는 가격을 수시로 변경할 수 있으므로, 구매 전 반드시 해당 제공업체의 공식 가격 페이지에서 확인하세요."}}]}</script>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- Nav -->
+<nav>
+<div class="nav-left">
+<a class="logo" href="/ko/">StackFreeks Tools</a>
+<div class="nav-sep"></div>
+<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+</div>
+<a class="lang-toggle" href="https://tools.stackfreeks.com/tools/vps-cost-calculator/">English</a>
+</nav>
+<!-- ADSENSE_SLOT_TOP -->
+<!-- Hero -->
+<section class="hero">
+
+<div class="lang-ko">
+<h1>VPS 비용 계산기</h1>
+<p>Vultr, Hetzner, DigitalOcean의 월별 VPS 비용을 한눈에 비교하세요. RAM과 CPU 요구사항을 선택하면 최적의 플랜을 즉시 찾아드립니다.</p>
+</div>
+</section>
+<!-- Tool -->
+<main>
+<div class="filters">
+<div class="filter-group">
+<label data-i18n="filter_ram">Minimum RAM</label>
+<select id="sel-ram" onchange="renderPlans()">
+<option value="1">1 GB</option>
+<option value="2">2 GB</option>
+<option value="4">4 GB</option>
+<option value="8">8 GB</option>
+<option value="16">16 GB</option>
+</select>
+</div>
+<div class="filter-group">
+<label data-i18n="filter_cpu">Minimum CPU</label>
+<select id="sel-cpu" onchange="renderPlans()">
+<option value="1">1 Core</option>
+<option value="2">2 Cores</option>
+<option value="4">4 Cores</option>
+<option value="6">6 Cores</option>
+<option value="8">8 Cores</option>
+</select>
+</div>
+</div>
+<div class="results-header" id="results-count"></div>
+<div class="plan-list" id="plan-list"></div>
+<p class="note" data-i18n="note_prices" id="note-prices">
+      Prices are approximate. Verify with provider before purchasing.
+    </p>
+</main>
+<!-- How to Use Guide -->
+<section class="guide">
+
+<div class="lang-ko">
+<p class="guide-title">사용 방법</p>
+<div class="guide-grid">
+<div class="guide-card">
+<p class="guide-step">Step 1</p>
+<h3>최소 RAM 설정</h3>
+<p>작업에 필요한 최소 RAM을 선택하세요. 기본 웹서버는 1&ndash;2 GB로도 충분합니다. 데이터베이스나 앱 서버는 보통 4 GB 이상이 필요합니다.</p>
+</div>
+<div class="guide-card">
+<p class="guide-step">Step 2</p>
+<h3>최소 CPU 설정</h3>
+<p>필요한 최소 CPU 코어 수를 선택하세요. 소규모 프로젝트는 1&ndash;2코어면 충분합니다. 영상 처리, CI 러너 등 CPU 집약적 작업은 4코어 이상을 권장합니다.</p>
+</div>
+<div class="guide-card">
+<p class="guide-step">Step 3</p>
+<h3>결과 비교</h3>
+<p>플랜은 가격 순으로 정렬됩니다. 조건에 맞는 가장 저렴한 플랜에 "최저가" 배지가 표시됩니다. 스토리지 용량도 제공업체마다 크게 다르니 확인하세요.</p>
+</div>
+<div class="guide-card">
+<p class="guide-step">팁</p>
+<h3>구매 전 반드시 확인</h3>
+<p>표시된 가격은 참고용이며 변경될 수 있습니다. 가입 전 반드시 해당 제공업체 웹사이트에서 최종 가격을 확인하세요.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ -->
+<section class="faq">
+
+<div class="lang-ko">
+<p class="faq-title">자주 묻는 질문</p>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>VPS란 무엇인가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">VPS(가상 사설 서버)는 클라우드 제공업체에서 임대하는 가상화된 서버입니다. 공유 호스팅과 달리 CPU와 RAM이 독립적으로 할당됩니다. 웹 앱, API, 데이터베이스, 게임 서버 등 상시 실행이 필요한 워크로드에 적합합니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>Hetzner가 Vultr나 DigitalOcean보다 훨씬 저렴한 이유는?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">Hetzner는 주로 유럽(독일, 핀란드)과 미국에 데이터센터를 운영합니다. 낮은 운영 비용 덕분에 훨씬 저렴한 가격을 제공할 수 있습니다. 단점은 리전이 적고, 아시아&middot;남미 사용자는 레이턴시가 다소 높을 수 있습니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>실제로 RAM이 얼마나 필요한가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">경량 정적 사이트나 소규모 Node.js/Python 앱은 1 GB면 충분합니다. 대부분의 프로덕션 웹 앱과 소규모 데이터베이스(MySQL, PostgreSQL)는 2&ndash;4 GB가 적당합니다. 셀프 호스팅 툴, 대형 DB, 여러 서비스를 한 서버에서 운영한다면 8 GB 이상을 권장합니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>스토리지(SSD)는 월 요금에 포함되나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">네, 목록의 모든 플랜은 NVMe/SSD 로컬 스토리지가 기본 포함됩니다. 단, 추가 블록 스토리지나 오브젝트 스토리지(S3 등)가 필요하면 별도 요금이 부과됩니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>가격 정보가 최신인가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">가격은 2025년 중반 기준으로 수동 관리되는 참고 데이터입니다. 클라우드 제공업체는 가격을 수시로 변경할 수 있으므로, 구매 전 반드시 해당 제공업체의 공식 가격 페이지에서 확인하세요.</div>
+</div>
+</div>
+</section>
+<!-- Related -->
+<section class="related">
+<a class="related-card" href="https://stackfreeks.com" rel="noopener" target="_blank">
+<div>
+<p class="related-label">stackfreeks.com</p>
+
+<div class="lang-ko">
+<p class="related-title">stackfreeks.com에서 VPS&middot;클라우드 가이드 보기 &rarr;</p>
+</div>
+</div>
+</a>
+</section>
+<!-- Vultr Banner -->
+<!-- Related tools -->
+<section class="sf-related">
+<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+<div class="sf-related-grid">
+<a class="sf-related-card" href="/tools/vps-bandwidth-calculator/ko/"><span>📶</span>VPS Bandwidth Calculator</a>
+<a class="sf-related-card" href="/tools/server-spec-recommender/ko/"><span>🖥️</span>Server Spec Recommender</a>
+<a class="sf-related-card" href="/tools/vps-migration-checklist/ko/"><span>✅</span>VPS Migration Checklist</a>
+<a class="sf-related-card" href="https://stackfreeks.com/vultr-pricing-2026/" rel="noopener" target="_blank"><span>📖</span>Vultr Pricing Explained (2026)</a>
+</div>
+</section>
+<section class="vultr-banner">
+<div class="vultr-inner">
+<div>
+<p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
+<p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
+<p class="vultr-sub" data-i18n="vultr_sub">$100 free credit for new accounts</p>
+</div>
+<a class="vultr-cta" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
+        Try Vultr &rarr;
+      </a>
+</div>
+</section>
+<!-- Footer -->
+<footer>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com</a>
+</div>
+<p class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</p>
+</footer>
+<script>
+    // Page-specific i18n
+    window.SF_PAGE_I18N = {
+      en: {
+        filter_ram:   'Minimum RAM',
+        filter_cpu:   'Minimum CPU',
+        col_provider: 'Provider',
+        col_plan:     'Plan',
+        col_cpu:      'CPU',
+        col_ram:      'RAM',
+        col_storage:  'Storage',
+        col_price:    'Price/mo',
+        badge_best:   'Best value',
+        no_results:   'No plans found — try relaxing your requirements.',
+        note_prices:  'Prices are approximate. Verify with provider before purchasing.',
+        results_count: (n) => `${n} plan${n !== 1 ? 's' : ''} found`,
+      },
+      ko: {
+        filter_ram:   '최소 RAM',
+        filter_cpu:   '최소 CPU',
+        col_provider: '제공업체',
+        col_plan:     '플랜',
+        col_cpu:      'CPU',
+        col_ram:      'RAM',
+        col_storage:  '스토리지',
+        col_price:    '월 요금',
+        badge_best:   '최저가',
+        no_results:   '조건에 맞는 플랜이 없습니다 — 조건을 완화해 보세요.',
+        note_prices:  '가격은 대략적인 수치입니다. 구매 전 제공업체에서 확인하세요.',
+        results_count: (n) => `플랜 ${n}개 찾음`,
+      }
+    };
+  </script>
+<script src="/shared/i18n.js"></script>
+<script>
+    const PLANS = [
+      // Vultr
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 1, ram: 1,  storage: 25,  price: 6    },
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 1, ram: 2,  storage: 55,  price: 12   },
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 2, ram: 4,  storage: 80,  price: 24   },
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 4, ram: 8,  storage: 160, price: 48   },
+      { provider: 'Vultr', name: 'Cloud Compute', cpu: 6, ram: 16, storage: 320, price: 96   },
+      // Hetzner
+      { provider: 'Hetzner', name: 'CX11', cpu: 1, ram: 2,  storage: 20,  price: 4.15  },
+      { provider: 'Hetzner', name: 'CX21', cpu: 2, ram: 4,  storage: 40,  price: 7.55  },
+      { provider: 'Hetzner', name: 'CX31', cpu: 2, ram: 8,  storage: 80,  price: 14.39 },
+      { provider: 'Hetzner', name: 'CX41', cpu: 4, ram: 16, storage: 160, price: 27.27 },
+      { provider: 'Hetzner', name: 'CX51', cpu: 8, ram: 32, storage: 240, price: 54.54 },
+      // DigitalOcean
+      { provider: 'DigitalOcean', name: 'Basic Droplet',    cpu: 1, ram: 1,  storage: 25,  price: 6  },
+      { provider: 'DigitalOcean', name: 'Basic Droplet',    cpu: 1, ram: 2,  storage: 50,  price: 12 },
+      { provider: 'DigitalOcean', name: 'Basic Droplet',    cpu: 2, ram: 4,  storage: 80,  price: 24 },
+      { provider: 'DigitalOcean', name: 'Basic Droplet',    cpu: 2, ram: 8,  storage: 160, price: 48 },
+      { provider: 'DigitalOcean', name: 'General Purpose',  cpu: 4, ram: 16, storage: 100, price: 96 },
+    ];
+
+    const PROVIDER_LINKS = {
+      Vultr:        'https://www.vultr.com/?ref=9907834-9J',
+      Hetzner:      'https://www.hetzner.com/cloud',
+      DigitalOcean: 'https://www.digitalocean.com/pricing',
+    };
+
+    function getLang() {
+      return document.documentElement.lang === 'ko' ? 'ko' : 'en';
+    }
+
+    function t(key) {
+      const lang = getLang();
+      const map = window.SF_PAGE_I18N;
+      return (map && map[lang] && map[lang][key]) || (map && map.en && map.en[key]) || key;
+    }
+
+    function renderPlans() {
+      const minRam = parseInt(document.getElementById('sel-ram').value, 10);
+      const minCpu = parseInt(document.getElementById('sel-cpu').value, 10);
+
+      const filtered = PLANS
+        .filter(p => p.ram >= minRam && p.cpu >= minCpu)
+        .sort((a, b) => a.price - b.price);
+
+      const listEl    = document.getElementById('plan-list');
+      const countEl   = document.getElementById('results-count');
+
+      if (filtered.length === 0) {
+        const noResultsKey = t('no_results');
+        listEl.innerHTML = `<div class="empty-state"><p>${noResultsKey}</p></div>`;
+        countEl.textContent = '';
+        return;
+      }
+
+      const fn = window.SF_PAGE_I18N[getLang()].results_count;
+      countEl.textContent = typeof fn === 'function' ? fn(filtered.length) : '';
+
+      const lowestPrice = filtered[0].price;
+
+      listEl.innerHTML = filtered.map((p, i) => {
+        const isBest = p.price === lowestPrice;
+        const badgeHtml = isBest
+          ? `<span class="badge-best">${t('badge_best')}</span>`
+          : '';
+
+        const relAttr = p.provider === 'Vultr'
+          ? 'rel="nofollow sponsored"'
+          : 'rel="noopener"';
+
+        return `
+          <div class="plan-card${isBest ? ' best-value' : ''}">
+            <div class="plan-left">
+              <div class="plan-provider">
+                ${p.provider}
+                ${badgeHtml}
+              </div>
+              <div class="plan-name">${p.name}</div>
+              <div class="plan-specs">
+                <div class="plan-spec">${t('col_cpu')}: <span>${p.cpu} vCPU</span></div>
+                <div class="plan-spec">${t('col_ram')}: <span>${p.ram} GB</span></div>
+                <div class="plan-spec">${t('col_storage')}: <span>${p.storage} GB SSD</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="plan-price">$${p.price.toFixed(2)}</div>
+              <div class="plan-price-sub">/mo</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Initial render
+    renderPlans();
+
+    // Re-render when language changes
+    document.addEventListener('sfLangChanged', renderPlans);
+  
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
