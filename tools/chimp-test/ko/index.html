@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html data-force-lang="ko" lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+<script src="/shared/analytics.js"></script>
+<meta charset="utf-8">
+<link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link href="/stackfreeks_icon.png" rel="apple-touch-icon">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>침팬지 테스트 &mdash; 무료 온라인 도구 | StackFreeks</title>
+<meta content="재미 & 테스트" name="description">
+<link href="https://tools.stackfreeks.com/tools/chimp-test/ko/" rel="canonical">
+<link href="https://tools.stackfreeks.com/tools/chimp-test/" hreflang="en" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/chimp-test/ko/" hreflang="ko" rel="alternate">
+  <link href="https://tools.stackfreeks.com/tools/chimp-test/" hreflang="x-default" rel="alternate">
+  
+
+
+<!-- Open Graph -->
+<meta content="침팬지 테스트 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
+<meta content="재미 & 테스트" property="og:description">
+<meta content="https://tools.stackfreeks.com/tools/chimp-test/ko/" property="og:url">
+<meta content="website" property="og:type">
+<meta content="StackFreeks Tools" property="og:site_name">
+<!-- Twitter -->
+<meta content="summary" name="twitter:card">
+<meta content="침팬지 테스트 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
+<meta content="재미 & 테스트" name="twitter:description">
+<!-- ADSENSE_SLOT_TOP -->
+<style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
+    .logo {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-1); letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-3);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 10px; cursor: pointer;
+      font-family: var(--font);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
+
+    main { padding: 32px 0 48px; }
+
+    /* Game */
+    .game-wrap { max-width: 420px; margin: 0 auto; text-align: center; }
+    .grid {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+    }
+    .tile {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-1);
+      transition: background 0.08s, transform 0.08s, border-color 0.08s;
+    }
+    .grid.locked .tile { cursor: default; }
+    .tile.correct {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: var(--success);
+    }
+    .tile.wrong {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #fff;
+    }
+    .tile.reveal {
+      border-color: var(--border-2);
+      color: var(--text-3);
+    }
+
+    .status { margin-top: 18px; min-height: 24px; font-size: 14px; color: var(--text-1); font-weight: 500; }
+    .status-sub { margin-top: 4px; font-size: 12px; color: var(--text-3); }
+    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); }
+
+    .btn {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); padding: 10px 22px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); margin-top: 18px;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.88; }
+
+    /* About / SEO copy */
+    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
+    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* Guide */
+    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: none; border: none;
+      color: var(--text-1); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left; padding: 0;
+      font-family: var(--font); gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Related tools */
+    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+
+    /* Vultr Banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); text-decoration: none;
+      display: inline-block; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .container { padding: 0 16px; }
+      .game-wrap { max-width: 340px; }
+      .tile { font-size: 0.95rem; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Chimp Test", "description": "Free online Chimp Test. A grid of tiles briefly shows numbers, then hides them. Click the tiles back in ascending order purely from memory. Each round adds one more numbered tile.", "url": "https://tools.stackfreeks.com/tools/chimp-test/ko/", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/chimp-test/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "침팬지 테스트란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "침팬지 테스트는 교토대학교 영장류학자 마츠자와 테츠로의 연구를 바탕으로 한 단기 기억력 게임입니다. 어린 침팬지 아유무는 터치스크린 위 숫자의 위치를 기억하도록 훈련받았고, 여러 실험에서 같은 과제를 수행한 인간 성인보다 더 뛰어난 성과를 보였습니다. 이 온라인 버전은 그 실험을 재현합니다. 격자 위 숫자 타일이 잠깐 반짝인 뒤 가려지면, 기억만으로 오름차순으로 클릭해야 합니다."}}, {"@type": "Question", "name": "왜 침팬지가 이 테스트에서 인간을 이길 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "연구자들은 어린 침팬지가 나이가 들면서 사라지는, 사진처럼 선명한 형태의 단기 기억력을 가지고 있을 수 있다고 봅니다. 이는 어린아이가 종종 강한 시각적 기억력을 보이는 것과 비슷합니다. 인간은 이런 공간적 스냅샷 과제에서 상대적으로 느린 언어적 명명과 순차적 되뇌기에 더 의존하는 경향이 있습니다. 침팬지가 전반적으로 더 똑똑하다는 뜻이 아니라, 이 특정 기억 경로가 어린 침팬지에서 성인 인간보다 더 예리하게 나타난다는 의미입니다."}}, {"@type": "Question", "name": "침팬지 테스트에서 좋은 점수는 어느 정도인가요?", "acceptedAnswer": {"@type": "Answer", "text": "숫자 타일 8~10개인 라운드에 도달하면 인간으로서 좋은 결과이며, 대부분의 사람은 5~9 사이에서 정체됩니다. 원래 연구에서 침팬지 아유무는 1초도 안 되는 시간 동안 표시된 약 9개의 숫자 순서를 정확히 기억해냈는데, 이것이 인간이 높은 라운드에 도달하는 것이 인상적으로 여겨지는 이유입니다."}}, {"@type": "Question", "name": "숫자를 가리는 마스킹은 어떻게 작동하나요?", "acceptedAnswer": {"@type": "Answer", "text": "라운드가 시작되면 숫자 타일들이 짧은 시간 동안 숫자를 보여주어 위치를 살펴볼 수 있게 합니다. 그 시간이 끝나면 모든 타일이 똑같이 생긴 빈 타일로 바뀌어, 더 이상 눈으로는 어떤 타일에 어떤 숫자가 있었는지 알 수 없습니다. 이후에는 각 숫자가 있던 위치에 대한 기억에만 의존해 1부터 순서대로 클릭해야 합니다."}}, {"@type": "Question", "name": "침팬지 테스트 실력을 어떻게 향상시키나요?", "acceptedAnswer": {"@type": "Answer", "text": "타일 위치를 각각 따로 외우기보다 하나의 모양이나 경로로 묶어보고, 모서리와 가장자리부터 먼저 기준점으로 삼으세요. 한 타일에 집중하기보다 격자 전체를 훑어보는 것도 도움이 됩니다. 짧은 라운드를 연달아 플레이하는 것도 도움이 되는데, 이런 시공간 기억력은 큰 영구적 향상은 어렵더라도 반복 연습으로 빠르게 좋아지는 경향이 있기 때문입니다."}}]}</script>
+<!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<!-- 1. Nav -->
+<nav>
+<a class="logo" href="/ko/">
+<div class="logo-mark"></div>
+    StackFreeks Tools
+  </a>
+<div class="nav-right">
+<a class="lang-toggle" href="https://tools.stackfreeks.com/tools/chimp-test/">English</a>
+<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+</div>
+</nav>
+<!-- 2. AdSense slot -->
+<!-- ADSENSE_SLOT_TOP -->
+<!-- 3. Hero -->
+<section class="hero">
+<div class="container">
+
+<div class="lang-ko">
+<p class="eyebrow">재미 & 테스트</p>
+<h1>침팬지 테스트</h1>
+<p class="hero-desc">숫자 타일의 위치를 기억한 뒤, 타일이 가려지면 순서대로 클릭하세요. 라운드마다 타일이 하나씩 늘어납니다. 침팬지가 인간 성인을 이겼던 그 기억력 과제입니다.</p>
+</div>
+</div>
+</section>
+<!-- 4. Tool body -->
+<main>
+<div class="container">
+<div class="game-wrap">
+<div aria-label="Chimp test grid" class="grid locked" id="grid"></div>
+<div aria-live="polite" class="status" data-i18n="st_start" id="status">Round 1 &mdash; press Start to begin</div>
+<div class="status-sub" id="statusSub"></div>
+<div class="yourbest" hidden id="yourBest"></div>
+<button class="btn" data-i18n="btn_start" id="actionBtn" type="button">Start</button>
+</div>
+</div>
+</main>
+<!-- About / SEO copy -->
+<section class="about-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>침팬지 테스트 소개</h2>
+<p>침팬지 테스트는 2007년 교토대학교 영장류학자 마츠자와 테츠로의 유명한 연구에서 이름을 따왔습니다. 이 연구에서 어린 침팬지 아유무는 터치스크린 위 숫자의 위치를 인간 성인보다 더 빠르고 정확하게 기억해냈습니다. 이 온라인 버전은 그 과제를 재현합니다. 타일 격자에 숫자가 잠깐 표시된 뒤 사라지고 모든 타일이 똑같아 보이게 되면, 순전히 공간 기억에 의존해 숫자를 오름차순(1, 2, 3...)으로 클릭해야 합니다.</p>
+<p>라운드를 성공할 때마다 숫자 타일이 하나씩 늘어나므로 난이도가 자동으로 올라가며, 실수하면 그 라운드에서 게임이 끝나고 도달한 라운드가 점수가 됩니다. 페이지는 즉시 로드되고 마우스와 터치를 모두 지원하며, 최고 기록은 브라우저에 로컬로 저장되고 서버로 어떤 데이터도 전송되지 않습니다.</p>
+</div>
+</div>
+</section>
+<!-- 5. How-to section -->
+<section class="guide-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>침팬지 테스트 플레이 방법</h2>
+<div class="guide-grid">
+<div class="guide-card">
+<div class="guide-step">Step 1</div>
+<div class="guide-title">시작 누르기</div>
+<div class="guide-desc">몇 개의 타일에 1부터 시작하는 숫자가 표시된 격자가 나타납니다. 위치를 잘 살펴보세요.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 2</div>
+<div class="guide-title">사라지는 숫자 관찰</div>
+<div class="guide-desc">잠시 후 모든 타일이 똑같이 가려집니다. 숫자는 화면에서 사라졌을 뿐, 당신의 기억 속에서는 아닙니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 3</div>
+<div class="guide-title">순서대로 클릭</div>
+<div class="guide-desc">기억만으로 1, 2, 3... 순서에 해당했던 타일을 클릭하세요. 맞을 때마다 그 숫자가 잠깐 표시됩니다.</div>
+</div>
+<div class="guide-card">
+<div class="guide-step">Step 4</div>
+<div class="guide-title">다음 라운드 또는 재시도</div>
+<div class="guide-desc">순서를 모두 맞히면 타일이 하나 더 늘어난 다음 라운드로 넘어갑니다. 하나라도 틀리면 게임이 끝나며, 다시 시도를 눌러 라운드 1부터 재시작합니다.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FAQ -->
+<section class="faq-section">
+<div class="container">
+
+<div class="lang-ko">
+<h2>자주 묻는 질문</h2>
+<div class="faq-list">
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>침팬지 테스트란 무엇인가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">침팬지 테스트는 교토대학교 영장류학자 마츠자와 테츠로의 연구를 바탕으로 한 단기 기억력 게임입니다. 어린 침팬지 아유무는 터치스크린 위 숫자의 위치를 기억하도록 훈련받았고, 여러 실험에서 같은 과제를 수행한 인간 성인보다 더 뛰어난 성과를 보였습니다. 이 온라인 버전은 그 실험을 재현합니다. 격자 위 숫자 타일이 잠깐 반짝인 뒤 가려지면, 기억만으로 오름차순으로 클릭해야 합니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>왜 침팬지가 이 테스트에서 인간을 이길 수 있나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">연구자들은 어린 침팬지가 나이가 들면서 사라지는, 사진처럼 선명한 형태의 단기 기억력을 가지고 있을 수 있다고 봅니다. 이는 어린아이가 종종 강한 시각적 기억력을 보이는 것과 비슷합니다. 인간은 이런 공간적 스냅샷 과제에서 상대적으로 느린 언어적 명명과 순차적 되뇌기에 더 의존하는 경향이 있습니다. 침팬지가 전반적으로 더 똑똑하다는 뜻이 아니라, 이 특정 기억 경로가 어린 침팬지에서 성인 인간보다 더 예리하게 나타난다는 의미입니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>침팬지 테스트에서 좋은 점수는 어느 정도인가요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">숫자 타일 8~10개인 라운드에 도달하면 인간으로서 좋은 결과이며, 대부분의 사람은 5~9 사이에서 정체됩니다. 원래 연구에서 침팬지 아유무는 1초도 안 되는 시간 동안 표시된 약 9개의 숫자 순서를 정확히 기억해냈는데, 이것이 인간이 높은 라운드에 도달하는 것이 인상적으로 여겨지는 이유입니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>숫자를 가리는 마스킹은 어떻게 작동하나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">라운드가 시작되면 숫자 타일들이 짧은 시간 동안 숫자를 보여주어 위치를 살펴볼 수 있게 합니다. 그 시간이 끝나면 모든 타일이 똑같이 생긴 빈 타일로 바뀌어, 더 이상 눈으로는 어떤 타일에 어떤 숫자가 있었는지 알 수 없습니다. 이후에는 각 숫자가 있던 위치에 대한 기억에만 의존해 1부터 순서대로 클릭해야 합니다.</div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="toggleFaq(this)"><span>침팬지 테스트 실력을 어떻게 향상시키나요?</span><span class="faq-icon">+</span></button>
+<div class="faq-a">타일 위치를 각각 따로 외우기보다 하나의 모양이나 경로로 묶어보고, 모서리와 가장자리부터 먼저 기준점으로 삼으세요. 한 타일에 집중하기보다 격자 전체를 훑어보는 것도 도움이 됩니다. 짧은 라운드를 연달아 플레이하는 것도 도움이 되는데, 이런 시공간 기억력은 큰 영구적 향상은 어렵더라도 반복 연습으로 빠르게 좋아지는 경향이 있기 때문입니다.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Related content -->
+<section class="related" style="padding:0 0 8px;">
+<div class="container">
+<p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+<div class="sf-related-grid" style="max-width:none;">
+<a class="sf-related-card" href="https://stackfreeks.com/" rel="noopener" target="_blank"><span>📝</span>StackFreeks Blog</a>
+</div>
+</div>
+</section>
+<!-- 7.5. Related tools -->
+<section class="sf-related">
+<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+<div class="sf-related-grid">
+<a class="sf-related-card" href="/tools/sequence-memory-test/ko/"><span>🟦</span>Sequence Memory Test</a>
+<a class="sf-related-card" href="/tools/number-memory-test/ko/"><span>🔢</span>Number Memory Test</a>
+<a class="sf-related-card" href="/tools/reaction-time-test/ko/"><span>⚡</span>Reaction Time Test</a>
+</div>
+</section>
+<!-- 8. Vultr banner -->
+<section class="vultr-banner">
+<div class="container banner-inner">
+<div>
+<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+</div>
+<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+</div>
+</section>
+<!-- 9. Footer -->
+<footer class="footer">
+<div class="container footer-inner">
+<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<div class="footer-links">
+<a href="/about/">About</a>
+<a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
+</div>
+</div>
+</footer>
+<!-- Page-specific i18n -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    st_start: "Round 1 — press Start to begin",
+    st_watch: "Memorize the numbers…",
+    st_your_turn: "Your turn — click 1, 2, 3… in order",
+    st_correct: "Correct! Get ready for round {n}…",
+    st_gameover: "Game over",
+    btn_start: "Start",
+    btn_retry: "Try again",
+    sub_round_tpl: "Round {n} · {c} tiles",
+    result_round_word: "Round",
+    result_context: "Most people plateau around round 5-9. Round 8+ is a solid human score.",
+    your_best_tpl: "Your best: round {n}",
+    new_best: "New best!"
+  },
+  ko: {
+    st_start: "라운드 1 — 시작을 누르세요",
+    st_watch: "숫자를 기억하세요…",
+    st_your_turn: "당신 차례 — 1, 2, 3… 순서대로 클릭하세요",
+    st_correct: "정답! 라운드 {n} 준비…",
+    st_gameover: "게임 오버",
+    btn_start: "시작",
+    btn_retry: "다시 시도",
+    sub_round_tpl: "라운드 {n} · 타일 {c}개",
+    result_round_word: "라운드",
+    result_context: "대부분의 사람은 라운드 5~9에서 정체됩니다. 라운드 8 이상이면 훌륭한 인간 점수입니다.",
+    your_best_tpl: "최고 기록: 라운드 {n}",
+    new_best: "최고 기록 경신!"
+  }
+};
+</script>
+<script>
+(function () {
+  // ── Chimp Test game ──
+  // Grid is a fixed 5x5 = 25 cells. Round r shows (3 + r) numbered tiles
+  // among blank tiles. Numbers are shown briefly, then masked; player must
+  // click the tiles back in ascending order purely from memory.
+  var GRID_SIZE = 25;
+  var REVEAL_BASE_MS = 1300;   // how long numbers stay visible before masking
+  var REVEAL_MIN_MS = 650;     // floor for reveal time as rounds get harder
+  var REVEAL_STEP_MS = 35;     // ms shaved off per round
+  var NEXT_ROUND_DELAY = 900;  // pause on "correct" before next round
+  var CORRECT_FLASH_MS = 350;  // how long a correctly-clicked tile stays highlighted
+
+  var gridEl = document.getElementById('grid');
+  var statusEl = document.getElementById('status');
+  var statusSubEl = document.getElementById('statusSub');
+  var yourBestEl = document.getElementById('yourBest');
+  var actionBtn = document.getElementById('actionBtn');
+
+  // build the 25 tile elements once
+  var tiles = [];
+  for (var i = 0; i < GRID_SIZE; i++) {
+    var el = document.createElement('div');
+    el.className = 'tile';
+    el.setAttribute('data-i', String(i));
+    gridEl.appendChild(el);
+    tiles.push(el);
+  }
+
+  var round = 0;          // current round number (also equals numbered-tile count - 3)
+  var numberCount = 0;    // how many numbered tiles this round
+  var positions = [];     // tile index -> number (1-based), only for numbered tiles
+  var nextExpected = 1;   // next number the player must click
+  var phase = 'idle';     // idle | reveal | input | over
+  var timer = null;
+
+  function t(key) {
+    var lang = document.documentElement.getAttribute('data-force-lang') || (window.sfLang && window.sfLang.current) || 'en';
+    var dict = (window.SF_PAGE_I18N && window.SF_PAGE_I18N[lang]) || window.SF_PAGE_I18N.en;
+    return dict[key] != null ? dict[key] : window.SF_PAGE_I18N.en[key];
+  }
+
+  function clearTileState() {
+    for (var i = 0; i < tiles.length; i++) {
+      var el = tiles[i];
+      el.textContent = '';
+      el.classList.remove('correct', 'wrong', 'reveal');
+    }
+  }
+
+  function setSub() {
+    if (phase === 'input' || phase === 'reveal') {
+      statusSubEl.textContent = t('sub_round_tpl').replace('{n}', round).replace('{c}', numberCount);
+    } else {
+      statusSubEl.textContent = '';
+    }
+  }
+
+  function showBest() {
+    try {
+      var b = localStorage.getItem('chimptest-best');
+      if (b) {
+        yourBestEl.hidden = false;
+        yourBestEl.textContent = t('your_best_tpl').replace('{n}', b);
+      } else {
+        yourBestEl.hidden = true;
+      }
+    } catch (e) { /* localStorage unavailable */ }
+  }
+
+  // pick `count` distinct random cell indices out of GRID_SIZE
+  function pickPositions(count) {
+    var pool = [];
+    for (var i = 0; i < GRID_SIZE; i++) pool.push(i);
+    for (var i = pool.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+    }
+    return pool.slice(0, count);
+  }
+
+  function startRound() {
+    round++;
+    numberCount = Math.min(3 + round, GRID_SIZE);
+    nextExpected = 1;
+    positions = {};
+
+    var chosen = pickPositions(numberCount);
+    chosen.forEach(function (cellIndex, k) {
+      positions[cellIndex] = k + 1; // assign numbers 1..numberCount to random cells
+    });
+
+    phase = 'reveal';
+    gridEl.classList.add('locked');
+    clearTileState();
+    statusEl.textContent = t('st_watch');
+    setSub();
+
+    for (var cellIndex in positions) {
+      tiles[cellIndex].textContent = positions[cellIndex];
+    }
+
+    var revealMs = Math.max(REVEAL_MIN_MS, REVEAL_BASE_MS - (round - 1) * REVEAL_STEP_MS);
+    timer = setTimeout(function () {
+      // mask: hide all numbers, tiles become visually identical
+      clearTileState();
+      phase = 'input';
+      gridEl.classList.remove('locked');
+      statusEl.textContent = t('st_your_turn');
+      setSub();
+    }, revealMs);
+  }
+
+  function handleTap(cellIndex, el) {
+    if (phase !== 'input') return;
+
+    var num = positions[cellIndex];
+    if (num === nextExpected) {
+      el.textContent = num;
+      el.classList.add('correct');
+      nextExpected++;
+      if (nextExpected > numberCount) {
+        // round fully cleared
+        phase = 'reveal';
+        gridEl.classList.add('locked');
+        statusEl.textContent = t('st_correct').replace('{n}', round + 1);
+        statusSubEl.textContent = '';
+        timer = setTimeout(startRound, NEXT_ROUND_DELAY);
+      }
+    } else {
+      gameOver(el, num);
+    }
+  }
+
+  function gameOver(wrongEl, wrongNum) {
+    phase = 'over';
+    clearTimeout(timer);
+    gridEl.classList.add('locked');
+
+    if (wrongEl) {
+      wrongEl.textContent = wrongNum || '';
+      wrongEl.classList.add('wrong');
+    }
+    // reveal the full correct layout so the player can see what they missed
+    for (var cellIndex in positions) {
+      var el = tiles[cellIndex];
+      if (!el.classList.contains('correct') && el !== wrongEl) {
+        el.textContent = positions[cellIndex];
+        el.classList.add('reveal');
+      }
+    }
+
+    // score = round reached (mirrors sequence-memory-test convention:
+    // the level you were attempting when you failed)
+    var score = round;
+    var isBest = false;
+    try {
+      var prev = parseInt(localStorage.getItem('chimptest-best'), 10);
+      if (!prev || score > prev) { localStorage.setItem('chimptest-best', String(score)); isBest = true; }
+    } catch (e) { /* ignore */ }
+
+    statusEl.textContent = t('st_gameover');
+    statusSubEl.innerHTML =
+      '<span style="display:block;font-size:2.4rem;font-weight:600;color:var(--text-1);margin-top:10px;line-height:1.1">' +
+        t('result_round_word') + ' ' + score +
+      '</span>' +
+      (isBest ? '<span style="display:block;color:var(--success);font-weight:600;margin-top:4px">' + t('new_best') + ' 🏆</span>' : '') +
+      '<span style="display:block;margin-top:8px;color:var(--text-2)">' + t('result_context') + '</span>';
+
+    actionBtn.hidden = false;
+    actionBtn.textContent = t('btn_retry');
+    showBest();
+  }
+
+  function startGame() {
+    clearTimeout(timer);
+    clearTileState();
+    round = 0;
+    numberCount = 0;
+    positions = {};
+    nextExpected = 1;
+    actionBtn.hidden = true;
+    startRound();
+  }
+
+  // wire tiles — pointerdown covers mouse + touch
+  tiles.forEach(function (el, idx) {
+    el.addEventListener('pointerdown', function (e) {
+      e.preventDefault();
+      handleTap(idx, el);
+    });
+  });
+
+  actionBtn.addEventListener('click', function () { startGame(); });
+
+  // re-render language-dependent text on toggle
+  document.addEventListener('sfLangChanged', function () {
+    if (phase === 'idle') statusEl.textContent = t('st_start');
+    else if (phase === 'reveal') statusEl.textContent = t('st_watch');
+    else if (phase === 'input') statusEl.textContent = t('st_your_turn');
+    if (phase === 'idle' || phase === 'over') {
+      actionBtn.textContent = phase === 'over' ? t('btn_retry') : t('btn_start');
+    }
+    setSub();
+    showBest();
+  });
+
+  // init
+  showBest();
+})();
+
+// FAQ accordion
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+</script>
+<!-- 10. i18n -->
+<script src="/shared/i18n.js"></script>
+</body>
+</html>
