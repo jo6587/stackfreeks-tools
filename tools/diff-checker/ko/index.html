@@ -566,6 +566,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Diff Checker", "description": "Diff checker to compare two texts side by side and highlight every difference. Free, no file size limit, runs in your browser.", "url": "https://tools.stackfreeks.com/tools/diff-checker/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/diff-checker/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Diff 체커란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "Diff 체커는 두 텍스트를 줄 단위로 비교하여 추가·삭제·유지된 내용을 강조 표시합니다. 코드, 문서, 설정 파일 등 텍스트 기반 콘텐츠의 변경 사항을 검토할 때 널리 사용됩니다."}}, {"@type": "Question", "name": "파일 업로드를 지원하나요?", "acceptedAnswer": {"@type": "Answer", "text": "현재는 패널에 직접 텍스트를 붙여넣는 방식만 지원합니다. 코드, 설정 파일, 문서 등 대부분의 경우 이 방식이 가장 빠릅니다. 파일 업로드는 향후 업데이트에서 추가될 수 있습니다."}}, {"@type": "Question", "name": "입력한 텍스트가 저장되거나 전송되나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 모든 처리는 JavaScript를 사용하여 브라우저 내에서만 이루어집니다. 서버로 전송되는 데이터는 없으며, 텍스트는 사용자의 기기를 벗어나지 않습니다."}}, {"@type": "Question", "name": "코드를 비교하려면 어떻게 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "에디터에서 원본 코드를 복사해 원본 패널에 붙여넣고, 수정된 코드를 변경본 패널에 붙여넣은 뒤 비교하기를 클릭하세요. 줄 단위 비교이므로 별도 설정 없이 모든 프로그래밍 언어에서 동작합니다."}}, {"@type": "Question", "name": "통합 보기와 나란히 보기의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "나란히 보기는 원본과 변경본을 두 열로 나란히 표시하여 동시에 읽을 수 있습니다. 통합 보기는 하나의 열로 합쳐서 표시하며, 삭제된 줄은 −, 추가된 줄은 +로 표시합니다. 통합 보기는 git diff가 사용하는 형식입니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->

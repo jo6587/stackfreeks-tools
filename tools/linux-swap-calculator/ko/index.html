@@ -378,6 +378,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link):not(.slider) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link):not(.slider)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Linux Swap Size Calculator", "description": "Calculate the recommended Linux swap size for a VPS or server. Results based on RAM, use case and hibernation — with ready-to-run commands.", "url": "https://tools.stackfreeks.com/tools/linux-swap-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/linux-swap-calculator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "2GB VPS에 스왑이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "2GB RAM VPS에서 일반 서버 용도라면 2GB 스왑이 표준 권장값입니다. RAM과 동일한 1:1 비율로, 2~8GB RAM 서버의 현대 권장 가이드라인을 따릅니다. 메모리 집약적 앱 실행이나 절전 모드가 필요하면 4GB로 늘리세요."}}, {"@type": "Question", "name": "RAM이 충분하면 스왑이 필요 없나요?", "acceptedAnswer": {"@type": "Answer", "text": "RAM이 충분해도 최소 1~2GB 스왑을 권장합니다. 커널은 유휴 메모리 페이지를 스왑으로 옮겨 활성 프로세스에 RAM을 확보합니다. 스왑 없이 RAM이 가득 차면 OOM killer가 프로세스를 강제 종료합니다."}}, {"@type": "Question", "name": "스왑 파일과 스왑 파티션, 어떤 게 더 좋나요?", "acceptedAnswer": {"@type": "Answer", "text": "스왑 파일이 더 유연합니다. 파티션 재구성 없이 크기 조정이나 삭제가 가능합니다. 스왑 파티션은 구형 HDD에서 약간 빠르지만, 현대 SSD나 클라우드 VPS 스토리지에서는 차이가 미미합니다. 대부분의 클라우드 VPS 사용자에게는 스왑 파일이 더 실용적입니다."}}, {"@type": "Question", "name": "Swappiness란 무엇이고 어떤 값을 설정해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "Swappiness(0~100)는 커널이 메모리 페이지를 스왑으로 이동하는 적극성을 제어합니다. 기본값 60은 데스크탑에 적합합니다. 서버에는 10을 권장 — 불필요한 스왑을 줄이고 데이터를 RAM에 더 오래 유지합니다. 데이터베이스 서버는 1~5로 설정해 스왑을 최소화합니다."}}, {"@type": "Question", "name": "스왑이 VPS 속도를 느리게 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "스왑은 RAM보다 훨씬 느립니다 — 특히 HDD에서. 클라우드 VPS SSD에서도 상당한 병목이 됩니다. 스왑은 성능 향상이 아닌 안전망입니다. 서버가 스왑을 자주 사용한다면 RAM이 더 많은 플랜으로 업그레이드할 신호입니다."}}]}</script>

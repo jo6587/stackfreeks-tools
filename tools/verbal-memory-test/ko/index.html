@@ -257,6 +257,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Verbal Memory Test", "description": "Free online verbal memory test. Words appear one at a time and you mark each one SEEN or NEW; you have three lives and your score is how many words you correctly remember before running out.", "url": "https://tools.stackfreeks.com/tools/verbal-memory-test/ko/", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/verbal-memory-test/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "좋은 언어 기억력 점수는 어느 정도인가요?", "acceptedAnswer": {"@type": "Answer", "text": "이 방식의 테스트에서는 40점대가 성인 평균 정도입니다. 50~70점이면 좋은 결과이고, 70~80점 이상이면 보통 단어를 그룹으로 묶거나 반복 패턴을 파악하는 등의 전략을 쓰고 있는 것입니다. 단어 풀이 한정되어 있어 아주 높은 점수는 순수한 기억력보다 집중력과 지구력에도 좌우됩니다."}}, {"@type": "Question", "name": "언어 기억력 테스트는 무엇을 측정하나요?", "acceptedAnswer": {"@type": "Answer", "text": "언어 작업기억과 재인기억을 측정합니다. 점점 늘어나는 단어 목록을 머릿속에 유지하면서 새 단어가 이미 본 것인지 빠르게 판단하는 능력입니다. 후반의 한 번의 실수로 판이 끝나므로 지속적 주의력도 함께 측정합니다. 임상 기억 검사는 아니지만 몇 분간 언어 정보를 얼마나 잘 유지하는지에 대한 합리적인 지표입니다."}}, {"@type": "Question", "name": "평균 언어 기억력 점수는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "가벼운 플레이어의 평균은 약 40개 정답입니다. 대부분 25~55점 사이입니다. 페이스 조절과 기억 전략을 익히면 점수가 올라가고, 피곤하거나 산만하거나 서두르면 떨어집니다. 한 번의 결과는 대략적인 스냅샷으로 보고, 남과 비교하기보다 자신의 점수 변화를 추적하세요."}}, {"@type": "Question", "name": "언어·작업기억을 어떻게 개선하나요?", "acceptedAnswer": {"@type": "Answer", "text": "단기적으로는 연습이 도움이 됩니다. 속도를 늦추고 각 단어를 꼼꼼히 읽으며, 평평한 목록을 통째로 외우기보다 작은 묶음으로 그룹화하세요. 장기적으로는 뇌 훈련 앱보다 수면, 유산소 운동, 분산 주의 줄이기(알림 줄이기, 한 번에 한 가지)가 작업기억에 더 효과적입니다. 꾸준한 독서와 새 어휘 학습도 언어 회상력을 유지해 줍니다."}}, {"@type": "Question", "name": "테스트가 왜 영어 단어를 사용하나요?", "acceptedAnswer": {"@type": "Answer", "text": "Human Benchmark로 알려진 이 테스트의 표준 버전은 점수를 서로 비교할 수 있도록 고정된 common 영어 단어 풀을 사용합니다. 저희도 같은 이유로 영어 단어 목록을 유지하며, 언어를 바꾸면 단어 길이와 친숙도가 달라져 결과를 비교할 수 없게 됩니다. 영어가 모국어가 아니어도 테스트할 수 있습니다. 단어가 전에 나왔는지 알아보는 데는 뜻을 알 필요가 없습니다."}}]}</script>

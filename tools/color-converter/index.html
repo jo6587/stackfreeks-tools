@@ -163,9 +163,7 @@
       font-weight: 600;
       letter-spacing: 0.06em;
       font-family: 'Courier New', monospace;
-      mix-blend-mode: difference;
-      color: #fff;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      color: #fff; /* set per colour by updateSwatch() — WCAG luminance, design-guide 5-6 */
       pointer-events: none;
       user-select: none;
     }
@@ -451,6 +449,16 @@
     @media (max-width: 768px), (pointer: coarse) {
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
+    }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
     }
   </style>  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"Color Converter","description":"Convert colors between HEX, RGB, and HSL instantly. Live three-way sync, color picker, preset palette, and one-click copy for each format.","url":"https://tools.stackfreeks.com/tools/color-converter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
@@ -821,11 +829,13 @@
       swatchLbl.textContent = hex.toUpperCase();
       picker.value = hex;
 
-      // Auto text color for readability
+      // Label colour: whichever of white / near-black has the higher WCAG contrast on this swatch
       const rgb = hexToRgb(hex);
       if (rgb) {
-        const lum = 0.2126 * (rgb.r / 255) + 0.7152 * (rgb.g / 255) + 0.0722 * (rgb.b / 255);
-        swatchLbl.style.color = lum > 0.45 ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.85)';
+        const lin = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+        const L = 0.2126 * lin(rgb.r) + 0.7152 * lin(rgb.g) + 0.0722 * lin(rgb.b);
+        const onWhite = 1.05 / (L + 0.05), onBlack = (L + 0.05) / 0.05; // pure black: max(onWhite, onBlack) >= 4.58 for any colour
+        swatchLbl.style.color = onBlack > onWhite ? '#000000' : '#ffffff';
       }
 
       // Update active preset highlight

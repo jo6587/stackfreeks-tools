@@ -508,6 +508,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "UUID Generator", "description": "Generate random UUID v4 online. Bulk generate up to 100 UUIDs, copy with one click. Runs in your browser — nothing is sent to a server.", "url": "https://tools.stackfreeks.com/tools/uuid-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/uuid-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "UUID란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "UUID는 Universally Unique Identifier 의 약자로, RFC 4122 (RFC 9562로 업데이트)에 정의된 128비트 식별자입니다. 중앙 조정 기관 없이 컴퓨터 시스템에서 정보를 고유하게 식별하는 데 사용됩니다. 데이터베이스 기본 키, API 식별자, 로깅의 상관관계 ID 등으로 널리 활용됩니다."}}, {"@type": "Question", "name": "UUID v4는 다른 버전과 어떻게 다른가요?", "acceptedAnswer": {"@type": "Answer", "text": "UUID v4는 무작위로 생성 됩니다 — 128비트 중 122비트가 암호학적으로 안전한 난수 소스( crypto.randomUUID() )에서 옵니다. 다른 버전은 다른 방식을 사용합니다: v1은 타임스탬프 + MAC 주소, v3/v5는 네임스페이스+이름의 MD5/SHA-1 해시, v7(최신)은 정렬 가능하도록 Unix 타임스탬프 접두사를 사용합니다. 순서 요구 사항 없이 고유 ID만 필요한 대부분의 경우 v4가 가장 간단하고 일반적인 선택입니다."}}, {"@type": "Question", "name": "UUID v4를 데이터베이스 기본 키로 사용해도 안전한가요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 안전합니다. 충돌 확률은 약 5.3 × 10³⁶ 분의 1로 사실상 불가능합니다. 충돌 확률이 50%를 넘으려면 약 2.7 × 10¹⁸ 개의 UUID를 생성해야 합니다. 다만 v4의 무작위 순서는 매우 높은 삽입 속도에서 B-트리 데이터베이스의 인덱스 단편화를 유발할 수 있습니다. 이것이 우려된다면 시간 순서가 있는 UUID v7을 고려하세요."}}, {"@type": "Question", "name": "이 툴은 생성된 UUID를 서버로 전송하나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니오. 모든 UUID는 브라우저 내장 crypto.randomUUID() Web API를 사용해 브라우저 안에서만 생성됩니다. 어떤 데이터도 서버로 전송되지 않습니다. 인터넷을 끊어도 이 툴은 계속 작동합니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->

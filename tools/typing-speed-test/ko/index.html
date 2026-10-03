@@ -343,6 +343,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Typing Speed Test", "description": "A free code typing test that measures typing speed in WPM, raw WPM, and accuracy using real code snippets in JavaScript, Python, Go, Rust, TypeScript, SQL, and Bash.", "url": "https://tools.stackfreeks.com/tools/typing-speed-test/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/typing-speed-test/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "좋은 타이핑 속도(WPM)는 어느 정도인가요?", "acceptedAnswer": {"@type": "Answer", "text": "일반 문장 기준으로 성인 평균은 약 40 WPM, 능숙한 터치 타이피스트는 60-80 WPM, 100 WPM 이상이면 빠른 편입니다. 코드 타이핑 테스트는 기호와 들여쓰기 때문에 기준이 낮아집니다 — 코드 30-40 WPM이면 무난하고, 50-60 WPM이면 우수하며, 실제 코드 70 WPM 이상이면 상당히 빠릅니다."}}, {"@type": "Question", "name": "프로그래머의 평균 타이핑 속도는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "대부분의 현업 개발자는 일반 영문 텍스트에서 50-70 WPM 정도입니다. 실제 소스 코드에서는 괄호, 연산자, 언더스코어, 정확한 들여쓰기 때문에 대략 30-50 WPM으로 떨어집니다. 코딩에서는 읽기·사고·수정 시간이 훨씬 중요하므로 중간 정도 점수는 지극히 정상입니다."}}, {"@type": "Question", "name": "이 테스트에서 WPM은 어떻게 계산되나요?", "acceptedAnswer": {"@type": "Answer", "text": "표준 공식을 사용합니다: WPM = (정확하게 입력한 문자 수 / 5) / 경과 시간(분). 5로 나누는 것은 5자를 한 단어로 보는 오래된 관행으로, 도구 간 점수를 비교 가능하게 합니다. 로우 WPM은 오타를 포함한 모든 입력 문자에 같은 공식을 적용하므로, 로우 WPM과 순수 WPM의 차이가 오류율을 나타냅니다."}}, {"@type": "Question", "name": "코드 타이핑 속도가 문장 타이핑보다 느린 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "코드에는 수정자 키나 불편한 위치에 있는 문자가 많습니다 — 소괄호, 중괄호, 대괄호, 세미콜론, 꺾쇠, 언더스코어, 파이프 등. 영문처럼 단어 단위의 근육 기억에 의존할 수 없고, 들여쓰기 공백도 정확히 입력해야 합니다. 문장 WPM 대비 코드 WPM이 20-40% 낮아지는 것은 완전히 일반적입니다."}}, {"@type": "Question", "name": "코드를 더 빨리 입력하려면?", "acceptedAnswer": {"@type": "Answer", "text": "소괄호, 중괄호, 대괄호를 내려다보지 않고 칠 수 있을 때까지 기호 키를 의도적으로 연습하세요. 에디터의 자동완성, 스니펫, 멀티 커서를 익혀 입력량 자체를 줄이세요. 손을 홈 로우에 두고 양쪽 Shift를 사용하세요. 하루 5-10분 짧은 연습이 가끔 하는 긴 연습보다 훨씬 오래가는 속도를 만들며, 속도보다 정확도가 먼저입니다."}}]}</script>
