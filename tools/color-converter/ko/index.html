@@ -34,7 +34,11 @@
       --text-2: #a1a1aa;
       --text-3: #80808a;
       --accent: #6366f1;
+      --accent-text: #818cf8;
+      --accent-strong: #4f46e5;
       --success: #22c55e;
+      --success-fg: #0a0a0b;
+      --success-hover: #4ade80;
       --success-bg: rgba(34,197,94,0.08);
       --radius: 8px;
       --radius-lg: 12px;
@@ -52,7 +56,7 @@
       min-height: 100vh;
     }
 
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent-text); text-decoration: none; }
     a:hover { opacity: 0.8; }
 
     /* ── Nav ── */
@@ -83,7 +87,7 @@
       color: var(--text-1);
       letter-spacing: -0.01em;
     }
-    .nav-logo span { color: var(--accent); }
+    .nav-logo span { color: var(--accent-text); }
 
     .nav-right {
       display: flex;
@@ -221,7 +225,7 @@
     .format-tag {
       font-size: 11px;
       font-weight: 600;
-      color: var(--accent);
+      color: var(--accent-text);
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
@@ -312,7 +316,7 @@
     .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
     .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
     .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
     .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
 
@@ -321,10 +325,10 @@
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
     .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
@@ -374,7 +378,7 @@
     .vultr-cta {
       display: inline-block;
       background: var(--success);
-      color: #0a0a0b;
+      color: var(--success-fg);
       font-weight: 600;
       font-size: 13px;
       padding: 9px 18px;
@@ -382,7 +386,7 @@
       white-space: nowrap;
       transition: opacity 0.15s;
     }
-    .vultr-cta:hover { opacity: 0.88; color: #0a0a0b; }
+    .vultr-cta:hover { background: var(--success-hover); color: var(--success-fg); }
 
     /* ── Footer ── */
     footer {
@@ -442,6 +446,11 @@
     /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
       input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
+    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    @media (max-width: 768px), (pointer: coarse) {
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Color Converter", "description": "Convert colors between HEX, RGB, and HSL instantly. Live three-way sync, color picker, preset palette, and one-click copy for each format.", "url": "https://tools.stackfreeks.com/tools/color-converter/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/color-converter/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "HEX, RGB, HSL의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "HEX는 CSS에서 널리 사용되는 16진수 표기법입니다 (예: #ff0000 ). RGB는 빨강, 초록, 파랑 채널을 0~255 숫자로 지정합니다. HSL은 색상(Hue), 채도(Saturation), 밝기(Lightness)의 약자로, 색조나 밝기를 독립적으로 조정할 수 있어 디자이너에게 직관적입니다."}}, {"@type": "Question", "name": "HEX나 RGB 대신 HSL을 쓰는 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "HSL은 직관적입니다. 더 밝은 색을 원하면 L을 높이고, 채도를 낮추려면 S를 줄이면 됩니다. 보색으로 이동하려면 H에 180만 더하면 되며 채도나 밝기를 건드릴 필요가 없습니다."}}, {"@type": "Question", "name": "투명도(알파)를 지원하나요?", "acceptedAnswer": {"@type": "Answer", "text": "현재는 지원하지 않습니다. 이 툴은 불투명한 RGB 색상만 처리합니다. RGBA 및 HSLA 형식 지원은 향후 업데이트에서 추가될 예정입니다."}}, {"@type": "Question", "name": "변환 결과가 정확한가요?", "acceptedAnswer": {"@type": "Answer", "text": "HEX ↔ RGB 변환은 손실 없이 정확합니다. HSL 값은 부동소수점 연산으로 인해 약간의 반올림 차이가 있을 수 있지만 시각적 결과는 동일합니다. HEX → HSL → HEX로 변환해도 원래 HEX가 1 반올림 이내로 재현됩니다."}}]}</script>

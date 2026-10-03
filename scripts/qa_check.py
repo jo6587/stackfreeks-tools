@@ -127,6 +127,26 @@ def check(slug: str) -> tuple[list[str], list[str]]:
               if (e.get("type") or "text").lower() not in {"checkbox", "radio", "range", "file", "color", "hidden"}]
     need(not fields or re.search(r"@media\s*\(max-width:\s*768px\)\s*\{\s*input,\s*select,\s*textarea\s*\{\s*font-size:\s*max\(16px",
                                  html), "text inputs but no mobile 16px input rule (iOS zoom; design-guide §5-4)")
+    css = "\n".join(re.findall(r"<style[^>]*>(.*?)</style>", html, re.S))
+    for sel, body in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+        sel = " ".join(sel.split())
+        col = re.search(r"(?<![-\w])color\s*:\s*([^;}]+)", body)
+        col = col.group(1).strip().lower() if col else ""
+        white = re.fullmatch(r"#fff(fff)?|white|var\(--accent-fg\)", col)
+        if white and re.search(r"background(-color)?\s*:\s*(var\(--success\)|#22c55e)", body, re.I):
+            fails.append(f"white text on green {sel!r} (2.28:1) — use var(--success-fg) (design-guide §5-5)")
+        if white and re.search(r"background(-color)?\s*:\s*(var\(--accent\)|#6366f1)", body, re.I):
+            fails.append(f"white text on --accent {sel!r} (4.47:1) — use var(--accent-strong) (design-guide §2)")
+    need(not re.search(r"(?<![-\w])color\s*:\s*(var\(--accent\)|#6366f1)", html),
+         "color: var(--accent) as text (4.22:1 on surface) — use var(--accent-text) (design-guide §2)")
+    for tok, against, low in (("--accent-text", "--surface-2", 4.5), ("--success-fg", "--success", 7.0)):
+        m, b = re.search(tok + r":\s*(#[0-9a-fA-F]{6})", html), re.search(against + r":\s*(#[0-9a-fA-F]{6})", html)
+        if f"var({tok})" in html:
+            need(m, f"uses var({tok}) but never defines it")
+        if m and b:
+            need(contrast(m.group(1), b.group(1)) >= low, f"{tok} {m.group(1)} < {low}:1 on {against}")
+    need(re.search(r"width:\s*max\(100%,\s*40px\);\s*height:\s*max\(100%,\s*40px\)", html),
+         "no 40px touch-target rule (sf-touch-40; .lang-toggle/nav/buttons; design-guide §5-5)")
 
     # mobile + content
     need(re.search(r"@media\s*\(max-width:\s*768px\)", html), "no @media (max-width: 768px)")

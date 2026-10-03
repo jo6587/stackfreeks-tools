@@ -28,6 +28,10 @@
       --border: rgba(255,255,255,0.08); --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa; --text-2: #a1a1aa; --text-3: #80808a;
       --accent: #6366f1; --success: #22c55e; --success-bg: rgba(34,197,94,0.08);
+      --accent-text: #818cf8;
+      --accent-strong: #4f46e5;
+      --success-fg: #0a0a0b;
+      --success-hover: #4ade80;
       --radius: 8px; --radius-lg: 12px;
       --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
     }
@@ -69,7 +73,7 @@
       text-decoration: none;
       letter-spacing: -0.02em;
     }
-    .nav-logo span { color: var(--accent); }
+    .nav-logo span { color: var(--accent-text); }
     .nav-right { display: flex; align-items: center; gap: 12px; }
     .lang-toggle {
       background: var(--surface-2);
@@ -105,7 +109,7 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--accent-text);
       background: rgba(99,102,241,0.1);
       border: 1px solid rgba(99,102,241,0.2);
       border-radius: 20px;
@@ -178,7 +182,7 @@
     }
     .radio-opt input[type="radio"]:checked + label {
       background: rgba(99,102,241,0.15);
-      color: var(--accent);
+      color: var(--accent-text);
       border-color: rgba(99,102,241,0.4);
     }
     .radio-opt label:hover { color: var(--text-1); border-color: var(--border-2); }
@@ -225,7 +229,7 @@
       display: block;
       width: 100%;
       padding: 11px 24px;
-      background: var(--accent);
+      background: var(--accent-strong);
       color: #fff;
       border: none;
       border-radius: var(--radius);
@@ -317,7 +321,7 @@
       border-radius: var(--radius-lg);
       padding: 20px;
     }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
     .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
     .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
 
@@ -329,10 +333,10 @@
     }
     .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
     .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
@@ -380,7 +384,7 @@
       display: inline-block;
       padding: 8px 18px;
       background: var(--success);
-      color: #000;
+      color: var(--success-fg);
       border-radius: var(--radius);
       font-size: 13px;
       font-weight: 700;
@@ -388,7 +392,7 @@
       white-space: nowrap;
       transition: opacity 0.15s;
     }
-    .vultr-cta:hover { opacity: 0.88; }
+    .vultr-cta:hover { background: var(--success-hover); }
 
     /* ── RELATED LINK ── */
     .related {
@@ -405,7 +409,7 @@
       align-items: center;
       gap: 6px;
       font-size: 14px;
-      color: var(--accent);
+      color: var(--accent-text);
       text-decoration: none;
     }
     .related-link:hover { text-decoration: underline; }
@@ -449,6 +453,11 @@
     /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
       input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
+    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    @media (max-width: 768px), (pointer: coarse) {
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Lorem Ipsum Generator", "description": "Free lorem ipsum generator. Create placeholder text by words, sentences or paragraphs in seconds for designers and developers.", "url": "https://tools.stackfreeks.com/tools/lorem-ipsum/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/lorem-ipsum/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Lorem Ipsum이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "Lorem ipsum은 1500년대부터 디자인과 조판에 사용되어 온 업계 표준 플레이스홀더 텍스트입니다. 키케로의 철학 저서 \"de Finibus Bonorum et Malorum\"에서 파생되었으며, 데스크톱 퍼블리싱의 등장 이후 레이아웃 공간을 채우는 데 사용되어 왔습니다."}}, {"@type": "Question", "name": "실제 라틴어인가요?", "acceptedAnswer": {"@type": "Answer", "text": "정확히는 아닙니다. Lorem ipsum은 뒤섞인 라틴어로, 자연스러운 텍스트처럼 보이지만 문법적으로 올바르지 않습니다. 이는 의도적인 것으로, 독자가 단어에서 의미를 파악할 수 없어 콘텐츠보다 레이아웃과 타이포그래피에 집중하게 됩니다."}}, {"@type": "Question", "name": "실제 텍스트 대신 Lorem Ipsum을 사용하는 이유는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "디자인 검토 중에 실제 텍스트를 사용하면 검토자가 레이아웃을 평가하는 대신 내용을 읽기 시작할 수 있습니다. Lorem ipsum 같은 플레이스홀더 텍스트는 실제 의미의 방해 없이 간격, 계층 구조, 타이포그래피에 시각적 초점을 맞출 수 있게 합니다."}}, {"@type": "Question", "name": "출력을 커스터마이즈할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네! 단어, 문장, 단락 중에서 선택하고 필요한 정확한 수량을 설정할 수 있습니다. 텍스트가 고전적인 \"Lorem ipsum dolor sit amet…\" 오프닝으로 시작할지도 토글할 수 있습니다. 모든 생성은 브라우저에서 이루어지며 서버로 전송되는 정보는 없습니다."}}]}</script>

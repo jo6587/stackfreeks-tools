@@ -34,7 +34,11 @@
       --text-2: #a1a1aa;
       --text-3: #80808a;
       --accent: #6366f1;
+      --accent-text: #818cf8;
+      --accent-strong: #4f46e5;
       --success: #22c55e;
+      --success-fg: #0a0a0b;
+      --success-hover: #4ade80;
       --success-bg: rgba(34,197,94,0.08);
       --radius: 8px;
       --radius-lg: 12px;
@@ -53,7 +57,7 @@
       min-height: 100vh;
     }
 
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent-text); text-decoration: none; }
     a:hover { opacity: 0.8; }
 
     /* Nav */
@@ -258,7 +262,7 @@
       transition: border-color 0.15s, color 0.15s;
       white-space: nowrap;
     }
-    .btn-preset:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-preset:hover { border-color: var(--accent); color: var(--accent-text); }
 
     /* Env var rows */
     .env-list { display: flex; flex-direction: column; gap: 8px; }
@@ -303,10 +307,10 @@
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
-    .btn-env-add:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-env-add:hover { border-color: var(--accent); color: var(--accent-text); }
 
     .btn-generate {
-      background: var(--accent);
+      background: var(--accent-strong);
       border: none;
       border-radius: var(--radius);
       color: #fff;
@@ -365,7 +369,7 @@
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
-    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent-text); }
     .btn-copy.copied { border-color: var(--success); color: var(--success); }
 
     .output-code {
@@ -400,7 +404,7 @@
     .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
     .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
     .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
     .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
 
@@ -409,7 +413,7 @@
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
     .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
@@ -466,7 +470,7 @@
       background: var(--success);
       border: none;
       border-radius: var(--radius);
-      color: #000;
+      color: var(--success-fg);
       font-family: var(--font);
       font-size: 14px;
       font-weight: 600;
@@ -474,7 +478,7 @@
       white-space: nowrap;
       transition: opacity 0.15s;
     }
-    .btn-vultr:hover { opacity: 0.85; color: #000; }
+    .btn-vultr:hover { background: var(--success-hover); color: var(--success-fg); }
 
     /* Footer */
     footer {
@@ -519,6 +523,11 @@
     @media (max-width: 768px) {
       input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
     }
+    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    @media (max-width: 768px), (pointer: coarse) {
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
+    }
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"PM2 Ecosystem Config Generator","description":"Free PM2 ecosystem.config.js generator. Set app name, script, instances, cluster/fork mode, env vars, watch mode and max_memory_restart, with Express/Next.js/NestJS presets. No signup.","url":"https://tools.stackfreeks.com/tools/pm2-ecosystem-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
@@ -545,11 +554,11 @@
   <section class="hero">
     <div class="lang-en">
       <h1>PM2 Ecosystem Config Generator</h1>
-      <p>Build a complete <code style="color:var(--accent)">ecosystem.config.js</code> for PM2 — instances, cluster/fork mode, environment variables, watch mode, and max_memory_restart. Presets for Express, Next.js, and NestJS.</p>
+      <p>Build a complete <code style="color:var(--accent-text)">ecosystem.config.js</code> for PM2 — instances, cluster/fork mode, environment variables, watch mode, and max_memory_restart. Presets for Express, Next.js, and NestJS.</p>
     </div>
     <div class="lang-ko">
       <h1>PM2 Ecosystem Config 생성기</h1>
-      <p>PM2용 <code style="color:var(--accent)">ecosystem.config.js</code>를 즉시 생성 — 인스턴스 수, cluster/fork 모드, 환경변수, watch 모드, max_memory_restart 포함. Express, Next.js, NestJS 프리셋 제공.</p>
+      <p>PM2용 <code style="color:var(--accent-text)">ecosystem.config.js</code>를 즉시 생성 — 인스턴스 수, cluster/fork 모드, 환경변수, watch 모드, max_memory_restart 포함. Express, Next.js, NestJS 프리셋 제공.</p>
     </div>
   </section>
 
@@ -679,22 +688,22 @@
         <div class="guide-card">
           <p class="guide-step">STEP 1</p>
           <h3>Pick a preset or fill the form</h3>
-          <p>Click a preset (Express API, Next.js, NestJS) to auto-fill sensible defaults, then adjust the app name and <code style="color:var(--accent)">script</code> path to match your project.</p>
+          <p>Click a preset (Express API, Next.js, NestJS) to auto-fill sensible defaults, then adjust the app name and <code style="color:var(--accent-text)">script</code> path to match your project.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 2</p>
           <h3>Choose instances and mode</h3>
-          <p>Pick <code style="color:var(--accent)">cluster</code> mode with "max" instances to use every CPU core for a stateless API, or <code style="color:var(--accent)">fork</code> mode with 1 instance for background workers.</p>
+          <p>Pick <code style="color:var(--accent-text)">cluster</code> mode with "max" instances to use every CPU core for a stateless API, or <code style="color:var(--accent-text)">fork</code> mode with 1 instance for background workers.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 3</p>
           <h3>Add environment variables</h3>
-          <p>Add KEY=value pairs like NODE_ENV=production or PORT=3000, set a <code style="color:var(--accent)">max_memory_restart</code> safety net, and keep watch mode off in production.</p>
+          <p>Add KEY=value pairs like NODE_ENV=production or PORT=3000, set a <code style="color:var(--accent-text)">max_memory_restart</code> safety net, and keep watch mode off in production.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 4</p>
           <h3>Generate and deploy</h3>
-          <p>Copy or download the file, run <code style="color:var(--accent)">pm2 start ecosystem.config.js</code>, then <code style="color:var(--accent)">pm2 save</code> and <code style="color:var(--accent)">pm2 startup</code> so it survives a reboot.</p>
+          <p>Copy or download the file, run <code style="color:var(--accent-text)">pm2 start ecosystem.config.js</code>, then <code style="color:var(--accent-text)">pm2 save</code> and <code style="color:var(--accent-text)">pm2 startup</code> so it survives a reboot.</p>
         </div>
       </div>
     </div>
@@ -704,22 +713,22 @@
         <div class="guide-card">
           <p class="guide-step">STEP 1</p>
           <h3>프리셋 선택 또는 직접 입력</h3>
-          <p>프리셋(Express API, Next.js, NestJS)을 클릭하면 기본값이 자동 입력됩니다. 앱 이름과 <code style="color:var(--accent)">script</code> 경로를 프로젝트에 맞게 수정하세요.</p>
+          <p>프리셋(Express API, Next.js, NestJS)을 클릭하면 기본값이 자동 입력됩니다. 앱 이름과 <code style="color:var(--accent-text)">script</code> 경로를 프로젝트에 맞게 수정하세요.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 2</p>
           <h3>인스턴스 수와 모드 선택</h3>
-          <p>상태 없는 API는 <code style="color:var(--accent)">cluster</code> 모드 + "max" 인스턴스로 모든 CPU 코어를 활용하고, 백그라운드 워커는 <code style="color:var(--accent)">fork</code> 모드 + 인스턴스 1개를 사용하세요.</p>
+          <p>상태 없는 API는 <code style="color:var(--accent-text)">cluster</code> 모드 + "max" 인스턴스로 모든 CPU 코어를 활용하고, 백그라운드 워커는 <code style="color:var(--accent-text)">fork</code> 모드 + 인스턴스 1개를 사용하세요.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 3</p>
           <h3>환경변수 추가</h3>
-          <p>NODE_ENV=production, PORT=3000 같은 KEY=value 쌍을 추가하고, <code style="color:var(--accent)">max_memory_restart</code> 안전장치를 설정하며, 프로덕션에서는 watch 모드를 꺼두세요.</p>
+          <p>NODE_ENV=production, PORT=3000 같은 KEY=value 쌍을 추가하고, <code style="color:var(--accent-text)">max_memory_restart</code> 안전장치를 설정하며, 프로덕션에서는 watch 모드를 꺼두세요.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 4</p>
           <h3>생성 및 배포</h3>
-          <p>파일을 복사·다운로드한 뒤 <code style="color:var(--accent)">pm2 start ecosystem.config.js</code>를 실행하고, <code style="color:var(--accent)">pm2 save</code>와 <code style="color:var(--accent)">pm2 startup</code>으로 재부팅 후에도 유지되게 하세요.</p>
+          <p>파일을 복사·다운로드한 뒤 <code style="color:var(--accent-text)">pm2 start ecosystem.config.js</code>를 실행하고, <code style="color:var(--accent-text)">pm2 save</code>와 <code style="color:var(--accent-text)">pm2 startup</code>으로 재부팅 후에도 유지되게 하세요.</p>
         </div>
       </div>
     </div>
@@ -735,19 +744,19 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What does setting instances to "max" do in PM2?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><code style="color:var(--accent)">instances: "max"</code> tells PM2 to detect the number of CPU cores on the host and spawn that many cluster instances automatically, so the same ecosystem.config.js scales correctly whether you deploy to a 2-core or 16-core VPS. You can also use <code style="color:var(--accent)">instances: -1</code> to use all cores minus one, leaving headroom for other services, or a fixed number like 2 for predictable memory usage. "max" only applies in cluster mode — fork mode always runs a single instance.</div>
+        <div class="faq-a"><code style="color:var(--accent-text)">instances: "max"</code> tells PM2 to detect the number of CPU cores on the host and spawn that many cluster instances automatically, so the same ecosystem.config.js scales correctly whether you deploy to a 2-core or 16-core VPS. You can also use <code style="color:var(--accent-text)">instances: -1</code> to use all cores minus one, leaving headroom for other services, or a fixed number like 2 for predictable memory usage. "max" only applies in cluster mode — fork mode always runs a single instance.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>Why do I need to run pm2 save and pm2 startup?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><code style="color:var(--accent)">pm2 save</code> writes the current process list to PM2's dump file so it can be restored later. <code style="color:var(--accent)">pm2 startup</code> generates and configures a system init script (systemd, upstart, etc.) that resurrects your saved process list on server reboot. Without both steps, PM2 forgets your apps after a restart or a crash-and-reboot cycle — running only <code style="color:var(--accent)">pm2 start ecosystem.config.js</code> keeps the app alive for the current session but does not survive a reboot.</div>
+        <div class="faq-a"><code style="color:var(--accent-text)">pm2 save</code> writes the current process list to PM2's dump file so it can be restored later. <code style="color:var(--accent-text)">pm2 startup</code> generates and configures a system init script (systemd, upstart, etc.) that resurrects your saved process list on server reboot. Without both steps, PM2 forgets your apps after a restart or a crash-and-reboot cycle — running only <code style="color:var(--accent-text)">pm2 start ecosystem.config.js</code> keeps the app alive for the current session but does not survive a reboot.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What is a good max_memory_restart value?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">A common starting point is 300-500M for small Node.js APIs and 500M-1G for apps with in-memory caching or larger dependency trees. Set it comfortably above your app's normal steady-state memory usage, which you can check with <code style="color:var(--accent)">pm2 monit</code>, so it only triggers on real leaks rather than everyday garbage-collection spikes. Leave it unset while you are still profiling memory usage — adding a restart threshold too early can mask a leak instead of surfacing it.</div>
+        <div class="faq-a">A common starting point is 300-500M for small Node.js APIs and 500M-1G for apps with in-memory caching or larger dependency trees. Set it comfortably above your app's normal steady-state memory usage, which you can check with <code style="color:var(--accent-text)">pm2 monit</code>, so it only triggers on real leaks rather than everyday garbage-collection spikes. Leave it unset while you are still profiling memory usage — adding a restart threshold too early can mask a leak instead of surfacing it.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>Should I enable watch mode in production?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">No — watch mode restarts your app whenever a file in the working directory changes, which is useful in local development but risky in production. Log files, uploaded content, or a deployment script writing new files can trigger unexpected restarts and drop in-flight requests. In production, keep <code style="color:var(--accent)">watch: false</code> and restart deliberately after each deploy — use <code style="color:var(--accent)">pm2 reload ecosystem.config.js</code> for zero-downtime restarts in cluster mode.</div>
+        <div class="faq-a">No — watch mode restarts your app whenever a file in the working directory changes, which is useful in local development but risky in production. Log files, uploaded content, or a deployment script writing new files can trigger unexpected restarts and drop in-flight requests. In production, keep <code style="color:var(--accent-text)">watch: false</code> and restart deliberately after each deploy — use <code style="color:var(--accent-text)">pm2 reload ecosystem.config.js</code> for zero-downtime restarts in cluster mode.</div>
       </div>
     </div>
     <div class="lang-ko">
@@ -758,19 +767,19 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>PM2에서 instances를 "max"로 설정하면 어떻게 되나요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><code style="color:var(--accent)">instances: "max"</code>는 PM2가 호스트의 CPU 코어 수를 감지해 그만큼 cluster 인스턴스를 자동으로 생성하게 합니다 — 같은 ecosystem.config.js로 2코어 VPS와 16코어 VPS 모두에 맞게 확장됩니다. 다른 서비스를 위한 여유를 남기려면 <code style="color:var(--accent)">instances: -1</code>(전체 코어 수-1)을 쓰거나, 메모리 사용량을 예측 가능하게 하려면 2 같은 고정 숫자를 쓸 수 있습니다. "max"는 cluster 모드에서만 적용되며 fork 모드는 항상 인스턴스 1개로 실행됩니다.</div>
+        <div class="faq-a"><code style="color:var(--accent-text)">instances: "max"</code>는 PM2가 호스트의 CPU 코어 수를 감지해 그만큼 cluster 인스턴스를 자동으로 생성하게 합니다 — 같은 ecosystem.config.js로 2코어 VPS와 16코어 VPS 모두에 맞게 확장됩니다. 다른 서비스를 위한 여유를 남기려면 <code style="color:var(--accent-text)">instances: -1</code>(전체 코어 수-1)을 쓰거나, 메모리 사용량을 예측 가능하게 하려면 2 같은 고정 숫자를 쓸 수 있습니다. "max"는 cluster 모드에서만 적용되며 fork 모드는 항상 인스턴스 1개로 실행됩니다.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>pm2 save와 pm2 startup은 왜 실행해야 하나요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><code style="color:var(--accent)">pm2 save</code>는 현재 프로세스 목록을 PM2의 덤프 파일에 저장해 나중에 복원할 수 있게 합니다. <code style="color:var(--accent)">pm2 startup</code>은 서버 재부팅 시 저장된 프로세스 목록을 되살리는 시스템 초기화 스크립트(systemd, upstart 등)를 생성·등록합니다. 두 단계를 모두 하지 않으면 재시작이나 재부팅 후 PM2가 앱을 기억하지 못합니다 — <code style="color:var(--accent)">pm2 start ecosystem.config.js</code>만 실행하면 현재 세션에서는 유지되지만 재부팅에서는 살아남지 못합니다.</div>
+        <div class="faq-a"><code style="color:var(--accent-text)">pm2 save</code>는 현재 프로세스 목록을 PM2의 덤프 파일에 저장해 나중에 복원할 수 있게 합니다. <code style="color:var(--accent-text)">pm2 startup</code>은 서버 재부팅 시 저장된 프로세스 목록을 되살리는 시스템 초기화 스크립트(systemd, upstart 등)를 생성·등록합니다. 두 단계를 모두 하지 않으면 재시작이나 재부팅 후 PM2가 앱을 기억하지 못합니다 — <code style="color:var(--accent-text)">pm2 start ecosystem.config.js</code>만 실행하면 현재 세션에서는 유지되지만 재부팅에서는 살아남지 못합니다.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>max_memory_restart는 어느 정도 값이 적당한가요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">작은 Node.js API는 300-500M, 인메모리 캐싱이나 의존성이 많은 앱은 500M-1G 정도가 일반적인 시작점입니다. <code style="color:var(--accent)">pm2 monit</code>으로 확인한 앱의 평상시 메모리 사용량보다 충분히 높게 설정해, 일상적인 가비지 컬렉션 스파이크가 아니라 실제 메모리 누수일 때만 재시작되게 하세요. 메모리 사용량을 아직 파악 중이라면 값을 비워두는 것이 좋습니다 — 재시작 임계값을 너무 일찍 설정하면 누수를 드러내는 대신 가려버릴 수 있습니다.</div>
+        <div class="faq-a">작은 Node.js API는 300-500M, 인메모리 캐싱이나 의존성이 많은 앱은 500M-1G 정도가 일반적인 시작점입니다. <code style="color:var(--accent-text)">pm2 monit</code>으로 확인한 앱의 평상시 메모리 사용량보다 충분히 높게 설정해, 일상적인 가비지 컬렉션 스파이크가 아니라 실제 메모리 누수일 때만 재시작되게 하세요. 메모리 사용량을 아직 파악 중이라면 값을 비워두는 것이 좋습니다 — 재시작 임계값을 너무 일찍 설정하면 누수를 드러내는 대신 가려버릴 수 있습니다.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>프로덕션에서 watch 모드를 사용해도 되나요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">아니요 — watch 모드는 작업 디렉터리의 파일이 변경될 때마다 앱을 재시작하는데, 로컬 개발에는 유용하지만 프로덕션에서는 위험합니다. 로그 파일, 업로드된 콘텐츠, 배포 스크립트가 새 파일을 쓰는 것만으로도 예기치 않은 재시작이 발생해 진행 중인 요청이 끊길 수 있습니다. 프로덕션에서는 <code style="color:var(--accent)">watch: false</code>를 유지하고 배포 후에는 의도적으로 재시작하세요 — cluster 모드에서 무중단 재시작을 하려면 <code style="color:var(--accent)">pm2 reload ecosystem.config.js</code>를 사용하세요.</div>
+        <div class="faq-a">아니요 — watch 모드는 작업 디렉터리의 파일이 변경될 때마다 앱을 재시작하는데, 로컬 개발에는 유용하지만 프로덕션에서는 위험합니다. 로그 파일, 업로드된 콘텐츠, 배포 스크립트가 새 파일을 쓰는 것만으로도 예기치 않은 재시작이 발생해 진행 중인 요청이 끊길 수 있습니다. 프로덕션에서는 <code style="color:var(--accent-text)">watch: false</code>를 유지하고 배포 후에는 의도적으로 재시작하세요 — cluster 모드에서 무중단 재시작을 하려면 <code style="color:var(--accent-text)">pm2 reload ecosystem.config.js</code>를 사용하세요.</div>
       </div>
     </div>
   </section>

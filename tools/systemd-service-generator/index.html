@@ -34,7 +34,11 @@
       --text-2: #a1a1aa;
       --text-3: #80808a;
       --accent: #6366f1;
+      --accent-text: #818cf8;
+      --accent-strong: #4f46e5;
       --success: #22c55e;
+      --success-fg: #0a0a0b;
+      --success-hover: #4ade80;
       --success-bg: rgba(34,197,94,0.08);
       --radius: 8px;
       --radius-lg: 12px;
@@ -53,7 +57,7 @@
       min-height: 100vh;
     }
 
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent-text); text-decoration: none; }
     a:hover { opacity: 0.8; }
 
     /* Nav */
@@ -229,7 +233,7 @@
       transition: border-color 0.15s, color 0.15s;
       white-space: nowrap;
     }
-    .btn-preset:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-preset:hover { border-color: var(--accent); color: var(--accent-text); }
 
     /* Env var rows */
     .env-list { display: flex; flex-direction: column; gap: 8px; }
@@ -274,10 +278,10 @@
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
-    .btn-env-add:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-env-add:hover { border-color: var(--accent); color: var(--accent-text); }
 
     .btn-generate {
-      background: var(--accent);
+      background: var(--accent-strong);
       border: none;
       border-radius: var(--radius);
       color: #fff;
@@ -336,7 +340,7 @@
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
-    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent-text); }
     .btn-copy.copied { border-color: var(--success); color: var(--success); }
 
     .output-code {
@@ -370,7 +374,7 @@
     .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
     .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
     .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
     .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
 
@@ -379,7 +383,7 @@
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
     .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
@@ -436,7 +440,7 @@
       background: var(--success);
       border: none;
       border-radius: var(--radius);
-      color: #000;
+      color: var(--success-fg);
       font-family: var(--font);
       font-size: 14px;
       font-weight: 600;
@@ -444,7 +448,7 @@
       white-space: nowrap;
       transition: opacity 0.15s;
     }
-    .btn-vultr:hover { opacity: 0.85; color: #000; }
+    .btn-vultr:hover { background: var(--success-hover); color: var(--success-fg); }
 
     /* Footer */
     footer {
@@ -488,6 +492,11 @@
     @media (max-width: 768px) {
       input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
     }
+    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    @media (max-width: 768px), (pointer: coarse) {
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
+    }
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"Systemd Service Generator","description":"Free systemd service file generator. Build a .service unit file with ExecStart, restart policy, env vars and Node.js/Python/Go/Java presets.","url":"https://tools.stackfreeks.com/tools/systemd-service-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
@@ -514,11 +523,11 @@
   <section class="hero">
     <div class="lang-en">
       <h1>Systemd Service Generator</h1>
-      <p>Create a complete <code style="color:var(--accent)">.service</code> unit file for your app — ExecStart, restart policy, environment variables, and ready-to-run install commands. Presets for Node.js, Python, Go, and Java.</p>
+      <p>Create a complete <code style="color:var(--accent-text)">.service</code> unit file for your app — ExecStart, restart policy, environment variables, and ready-to-run install commands. Presets for Node.js, Python, Go, and Java.</p>
     </div>
     <div class="lang-ko">
       <h1>Systemd 서비스 생성기</h1>
-      <p>앱을 위한 <code style="color:var(--accent)">.service</code> 유닛 파일을 즉시 생성 — ExecStart, 재시작 정책, 환경변수, 설치·적용 명령어 포함. Node.js, Python, Go, Java 프리셋 제공.</p>
+      <p>앱을 위한 <code style="color:var(--accent-text)">.service</code> 유닛 파일을 즉시 생성 — ExecStart, 재시작 정책, 환경변수, 설치·적용 명령어 포함. Node.js, Python, Go, Java 프리셋 제공.</p>
     </div>
   </section>
 
@@ -660,12 +669,12 @@
         <div class="guide-card">
           <p class="guide-step">STEP 1</p>
           <h3>Pick a preset or fill the form</h3>
-          <p>Click a preset (Node.js, Python, Go, Java) to auto-fill sensible defaults, then adjust the service name, <code style="color:var(--accent)">ExecStart</code> path, and working directory to match your app.</p>
+          <p>Click a preset (Node.js, Python, Go, Java) to auto-fill sensible defaults, then adjust the service name, <code style="color:var(--accent-text)">ExecStart</code> path, and working directory to match your app.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 2</p>
           <h3>Set the run policy</h3>
-          <p>Choose the service type (<code style="color:var(--accent)">simple</code> for almost every modern app), the restart policy, and the user your app should run as — never root for a web app.</p>
+          <p>Choose the service type (<code style="color:var(--accent-text)">simple</code> for almost every modern app), the restart policy, and the user your app should run as — never root for a web app.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 3</p>
@@ -675,7 +684,7 @@
         <div class="guide-card">
           <p class="guide-step">STEP 4</p>
           <h3>Install and enable</h3>
-          <p>Save the file to <code style="color:var(--accent)">/etc/systemd/system/</code>, then run the generated commands: daemon-reload, <code style="color:var(--accent)">enable --now</code>, and follow logs with journalctl.</p>
+          <p>Save the file to <code style="color:var(--accent-text)">/etc/systemd/system/</code>, then run the generated commands: daemon-reload, <code style="color:var(--accent-text)">enable --now</code>, and follow logs with journalctl.</p>
         </div>
       </div>
     </div>
@@ -685,12 +694,12 @@
         <div class="guide-card">
           <p class="guide-step">STEP 1</p>
           <h3>프리셋 선택 또는 직접 입력</h3>
-          <p>프리셋(Node.js, Python, Go, Java)을 클릭하면 기본값이 자동 입력됩니다. 서비스 이름, <code style="color:var(--accent)">ExecStart</code> 경로, 작업 디렉터리를 앱에 맞게 수정하세요.</p>
+          <p>프리셋(Node.js, Python, Go, Java)을 클릭하면 기본값이 자동 입력됩니다. 서비스 이름, <code style="color:var(--accent-text)">ExecStart</code> 경로, 작업 디렉터리를 앱에 맞게 수정하세요.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 2</p>
           <h3>실행 정책 설정</h3>
-          <p>서비스 타입(요즘 앱은 대부분 <code style="color:var(--accent)">simple</code>), 재시작 정책, 실행 계정을 선택하세요 — 웹 앱은 절대 root로 실행하지 마세요.</p>
+          <p>서비스 타입(요즘 앱은 대부분 <code style="color:var(--accent-text)">simple</code>), 재시작 정책, 실행 계정을 선택하세요 — 웹 앱은 절대 root로 실행하지 마세요.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 3</p>
@@ -700,7 +709,7 @@
         <div class="guide-card">
           <p class="guide-step">STEP 4</p>
           <h3>설치 및 활성화</h3>
-          <p>파일을 <code style="color:var(--accent)">/etc/systemd/system/</code>에 저장하고 생성된 명령어를 실행하세요: daemon-reload, <code style="color:var(--accent)">enable --now</code>, journalctl로 로그 확인.</p>
+          <p>파일을 <code style="color:var(--accent-text)">/etc/systemd/system/</code>에 저장하고 생성된 명령어를 실행하세요: daemon-reload, <code style="color:var(--accent-text)">enable --now</code>, journalctl로 로그 확인.</p>
         </div>
       </div>
     </div>
@@ -712,46 +721,46 @@
       <p class="faq-title">Frequently Asked Questions</p>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between Type=simple and Type=forking?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><code style="color:var(--accent)">Type=simple</code> (the default) assumes the process in ExecStart stays in the foreground — systemd considers the service started as soon as the process is spawned. <code style="color:var(--accent)">Type=forking</code> is for classic daemons that fork into the background and exit the parent process; systemd waits for the fork and usually needs a <code style="color:var(--accent)">PIDFile=</code> to track the child. Modern apps (Node.js, Python, Go, Java) almost always run in the foreground, so use simple. Only use forking for legacy daemons like some builds of nginx or older init-style scripts.</div>
+        <div class="faq-a"><code style="color:var(--accent-text)">Type=simple</code> (the default) assumes the process in ExecStart stays in the foreground — systemd considers the service started as soon as the process is spawned. <code style="color:var(--accent-text)">Type=forking</code> is for classic daemons that fork into the background and exit the parent process; systemd waits for the fork and usually needs a <code style="color:var(--accent-text)">PIDFile=</code> to track the child. Modern apps (Node.js, Python, Go, Java) almost always run in the foreground, so use simple. Only use forking for legacy daemons like some builds of nginx or older init-style scripts.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>Should I use Restart=always or Restart=on-failure?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><code style="color:var(--accent)">Restart=on-failure</code> restarts the service only when it exits with a non-zero code, is killed by a signal, or times out — a clean exit (code 0) stays stopped. <code style="color:var(--accent)">Restart=always</code> restarts it no matter how it exited, including clean exits and manual kills of the process. For web apps and APIs that should never be down, always is the safer choice; for batch-style or one-shot workloads, on-failure avoids restart loops after intentional exits. Pair either with <code style="color:var(--accent)">RestartSec=5</code> so crash loops do not hammer the CPU.</div>
+        <div class="faq-a"><code style="color:var(--accent-text)">Restart=on-failure</code> restarts the service only when it exits with a non-zero code, is killed by a signal, or times out — a clean exit (code 0) stays stopped. <code style="color:var(--accent-text)">Restart=always</code> restarts it no matter how it exited, including clean exits and manual kills of the process. For web apps and APIs that should never be down, always is the safer choice; for batch-style or one-shot workloads, on-failure avoids restart loops after intentional exits. Pair either with <code style="color:var(--accent-text)">RestartSec=5</code> so crash loops do not hammer the CPU.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>How do I view logs for my systemd service?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">Use journalctl. To follow logs live: <code style="color:var(--accent)">sudo journalctl -u myapp -f</code>. To see the last 100 lines: <code style="color:var(--accent)">sudo journalctl -u myapp -n 100</code>. To filter by time: <code style="color:var(--accent)">sudo journalctl -u myapp --since "1 hour ago"</code>. Anything your app writes to stdout/stderr is captured automatically by the journal — no log file configuration needed, which is one big reason to run apps in the foreground under Type=simple.</div>
+        <div class="faq-a">Use journalctl. To follow logs live: <code style="color:var(--accent-text)">sudo journalctl -u myapp -f</code>. To see the last 100 lines: <code style="color:var(--accent-text)">sudo journalctl -u myapp -n 100</code>. To filter by time: <code style="color:var(--accent-text)">sudo journalctl -u myapp --since "1 hour ago"</code>. Anything your app writes to stdout/stderr is captured automatically by the journal — no log file configuration needed, which is one big reason to run apps in the foreground under Type=simple.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between a system service and a user service?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">A system service lives in <code style="color:var(--accent)">/etc/systemd/system/</code>, is managed with sudo systemctl, starts at boot, and can run as any user via the <code style="color:var(--accent)">User=</code> directive. A user service lives in <code style="color:var(--accent)">~/.config/systemd/user/</code>, is managed with <code style="color:var(--accent)">systemctl --user</code> (no sudo), and by default only runs while that user is logged in — unless you enable lingering with <code style="color:var(--accent)">loginctl enable-linger username</code>. For production apps on a VPS, use a system service with User= set to an unprivileged account; user services suit per-user tools on desktops or shared hosts.</div>
+        <div class="faq-a">A system service lives in <code style="color:var(--accent-text)">/etc/systemd/system/</code>, is managed with sudo systemctl, starts at boot, and can run as any user via the <code style="color:var(--accent-text)">User=</code> directive. A user service lives in <code style="color:var(--accent-text)">~/.config/systemd/user/</code>, is managed with <code style="color:var(--accent-text)">systemctl --user</code> (no sudo), and by default only runs while that user is logged in — unless you enable lingering with <code style="color:var(--accent-text)">loginctl enable-linger username</code>. For production apps on a VPS, use a system service with User= set to an unprivileged account; user services suit per-user tools on desktops or shared hosts.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>How do I make my systemd service start automatically at boot?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">Make sure the unit file has an [Install] section with <code style="color:var(--accent)">WantedBy=multi-user.target</code>, then run: <code style="color:var(--accent)">sudo systemctl daemon-reload</code> followed by <code style="color:var(--accent)">sudo systemctl enable --now myapp</code>. The enable command creates a symlink in multi-user.target.wants so the service starts at every boot, and --now also starts it immediately. Verify with <code style="color:var(--accent)">systemctl is-enabled myapp</code> — it should print enabled.</div>
+        <div class="faq-a">Make sure the unit file has an [Install] section with <code style="color:var(--accent-text)">WantedBy=multi-user.target</code>, then run: <code style="color:var(--accent-text)">sudo systemctl daemon-reload</code> followed by <code style="color:var(--accent-text)">sudo systemctl enable --now myapp</code>. The enable command creates a symlink in multi-user.target.wants so the service starts at every boot, and --now also starts it immediately. Verify with <code style="color:var(--accent-text)">systemctl is-enabled myapp</code> — it should print enabled.</div>
       </div>
     </div>
     <div class="lang-ko">
       <p class="faq-title">자주 묻는 질문</p>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>Type=simple과 Type=forking의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><code style="color:var(--accent)">Type=simple</code>(기본값)은 ExecStart의 프로세스가 포그라운드에 머문다고 가정합니다 — 프로세스가 실행되는 순간 서비스가 시작된 것으로 간주합니다. <code style="color:var(--accent)">Type=forking</code>은 백그라운드로 fork한 뒤 부모 프로세스가 종료되는 전통적인 데몬용이며, 보통 <code style="color:var(--accent)">PIDFile=</code>이 필요합니다. Node.js, Python, Go, Java 같은 현대 앱은 거의 모두 포그라운드로 실행되므로 simple을 사용하세요.</div>
+        <div class="faq-a"><code style="color:var(--accent-text)">Type=simple</code>(기본값)은 ExecStart의 프로세스가 포그라운드에 머문다고 가정합니다 — 프로세스가 실행되는 순간 서비스가 시작된 것으로 간주합니다. <code style="color:var(--accent-text)">Type=forking</code>은 백그라운드로 fork한 뒤 부모 프로세스가 종료되는 전통적인 데몬용이며, 보통 <code style="color:var(--accent-text)">PIDFile=</code>이 필요합니다. Node.js, Python, Go, Java 같은 현대 앱은 거의 모두 포그라운드로 실행되므로 simple을 사용하세요.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>Restart=always와 Restart=on-failure 중 뭘 써야 하나요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><code style="color:var(--accent)">Restart=on-failure</code>는 비정상 종료(0이 아닌 종료 코드, 시그널 종료, 타임아웃)일 때만 재시작하고, 정상 종료(코드 0)는 그대로 둡니다. <code style="color:var(--accent)">Restart=always</code>는 종료 방식과 무관하게 항상 재시작합니다. 절대 죽으면 안 되는 웹 앱·API에는 always가 안전하고, 배치성 작업에는 on-failure가 재시작 루프를 방지합니다. 어느 쪽이든 <code style="color:var(--accent)">RestartSec=5</code>와 함께 사용해 크래시 루프가 CPU를 점유하지 않게 하세요.</div>
+        <div class="faq-a"><code style="color:var(--accent-text)">Restart=on-failure</code>는 비정상 종료(0이 아닌 종료 코드, 시그널 종료, 타임아웃)일 때만 재시작하고, 정상 종료(코드 0)는 그대로 둡니다. <code style="color:var(--accent-text)">Restart=always</code>는 종료 방식과 무관하게 항상 재시작합니다. 절대 죽으면 안 되는 웹 앱·API에는 always가 안전하고, 배치성 작업에는 on-failure가 재시작 루프를 방지합니다. 어느 쪽이든 <code style="color:var(--accent-text)">RestartSec=5</code>와 함께 사용해 크래시 루프가 CPU를 점유하지 않게 하세요.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>서비스 로그는 어떻게 보나요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">journalctl을 사용하세요. 실시간 로그: <code style="color:var(--accent)">sudo journalctl -u myapp -f</code>. 마지막 100줄: <code style="color:var(--accent)">sudo journalctl -u myapp -n 100</code>. 시간 필터: <code style="color:var(--accent)">sudo journalctl -u myapp --since "1 hour ago"</code>. 앱이 stdout/stderr로 출력하는 내용은 저널이 자동으로 수집하므로 로그 파일 설정이 필요 없습니다 — 앱을 포그라운드(Type=simple)로 실행하는 큰 이유 중 하나입니다.</div>
+        <div class="faq-a">journalctl을 사용하세요. 실시간 로그: <code style="color:var(--accent-text)">sudo journalctl -u myapp -f</code>. 마지막 100줄: <code style="color:var(--accent-text)">sudo journalctl -u myapp -n 100</code>. 시간 필터: <code style="color:var(--accent-text)">sudo journalctl -u myapp --since "1 hour ago"</code>. 앱이 stdout/stderr로 출력하는 내용은 저널이 자동으로 수집하므로 로그 파일 설정이 필요 없습니다 — 앱을 포그라운드(Type=simple)로 실행하는 큰 이유 중 하나입니다.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>시스템 서비스와 유저 서비스의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">시스템 서비스는 <code style="color:var(--accent)">/etc/systemd/system/</code>에 위치하고 sudo systemctl로 관리하며 부팅 시 시작되고, <code style="color:var(--accent)">User=</code> 지시자로 임의 계정으로 실행할 수 있습니다. 유저 서비스는 <code style="color:var(--accent)">~/.config/systemd/user/</code>에 위치하고 <code style="color:var(--accent)">systemctl --user</code>(sudo 불필요)로 관리하며, 기본적으로 로그인 중에만 실행됩니다 — <code style="color:var(--accent)">loginctl enable-linger</code>로 상시 실행 가능. VPS 프로덕션 앱은 비특권 계정을 User=로 지정한 시스템 서비스를 사용하세요.</div>
+        <div class="faq-a">시스템 서비스는 <code style="color:var(--accent-text)">/etc/systemd/system/</code>에 위치하고 sudo systemctl로 관리하며 부팅 시 시작되고, <code style="color:var(--accent-text)">User=</code> 지시자로 임의 계정으로 실행할 수 있습니다. 유저 서비스는 <code style="color:var(--accent-text)">~/.config/systemd/user/</code>에 위치하고 <code style="color:var(--accent-text)">systemctl --user</code>(sudo 불필요)로 관리하며, 기본적으로 로그인 중에만 실행됩니다 — <code style="color:var(--accent-text)">loginctl enable-linger</code>로 상시 실행 가능. VPS 프로덕션 앱은 비특권 계정을 User=로 지정한 시스템 서비스를 사용하세요.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>부팅 시 서비스를 자동 시작하려면 어떻게 하나요?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">유닛 파일에 <code style="color:var(--accent)">WantedBy=multi-user.target</code>이 포함된 [Install] 섹션이 있는지 확인한 뒤, <code style="color:var(--accent)">sudo systemctl daemon-reload</code> 후 <code style="color:var(--accent)">sudo systemctl enable --now myapp</code>을 실행하세요. enable은 multi-user.target.wants에 심볼릭 링크를 만들어 매 부팅마다 시작되게 하고, --now는 즉시 시작합니다. <code style="color:var(--accent)">systemctl is-enabled myapp</code>으로 확인하세요.</div>
+        <div class="faq-a">유닛 파일에 <code style="color:var(--accent-text)">WantedBy=multi-user.target</code>이 포함된 [Install] 섹션이 있는지 확인한 뒤, <code style="color:var(--accent-text)">sudo systemctl daemon-reload</code> 후 <code style="color:var(--accent-text)">sudo systemctl enable --now myapp</code>을 실행하세요. enable은 multi-user.target.wants에 심볼릭 링크를 만들어 매 부팅마다 시작되게 하고, --now는 즉시 시작합니다. <code style="color:var(--accent-text)">systemctl is-enabled myapp</code>으로 확인하세요.</div>
       </div>
     </div>
   </section>

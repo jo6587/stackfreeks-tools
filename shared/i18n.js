@@ -178,7 +178,7 @@ const SF_I18N = {
       '.cw-banner .vultr-inner{border-color:rgba(37,99,235,0.25);background:rgba(37,99,235,0.05)}',
       '.cw-banner .vultr-label,.cw-banner .eyebrow{color:#60a5fa}',
       '.cw-banner .vultr-cta,.cw-banner .btn-vultr{background:#2563eb;color:#fff}',
-      '.cw-banner .vultr-cta:hover,.cw-banner .btn-vultr:hover{opacity:0.85;color:#fff}'
+      '.cw-banner .vultr-cta:hover,.cw-banner .btn-vultr:hover{background:#2563eb;opacity:0.85;color:#fff}'
     ].join('');
     document.head.appendChild(style);
   }

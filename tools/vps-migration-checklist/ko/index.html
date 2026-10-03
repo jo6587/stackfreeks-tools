@@ -34,7 +34,11 @@
       --text-2: #a1a1aa;
       --text-3: #80808a;
       --accent: #6366f1;
+      --accent-text: #818cf8;
+      --accent-strong: #4f46e5;
       --success: #22c55e;
+      --success-fg: #0a0a0b;
+      --success-hover: #4ade80;
       --success-bg: rgba(34,197,94,0.08);
       --radius: 8px;
       --radius-lg: 12px;
@@ -53,7 +57,7 @@
       min-height: 100vh;
     }
 
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent-text); text-decoration: none; }
     a:hover { opacity: 0.8; }
 
     /* Nav */
@@ -219,7 +223,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--accent);
+      background: var(--accent-strong);
       color: #fff;
       border: none;
       border-radius: var(--radius);
@@ -425,7 +429,7 @@
     .step-num {
       font-size: 11px;
       font-weight: 700;
-      color: var(--accent);
+      color: var(--accent-text);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 8px;
@@ -468,7 +472,7 @@
       justify-content: space-between;
       gap: 12px;
     }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
 
     .faq-icon {
       font-size: 16px;
@@ -562,7 +566,7 @@
       display: inline-flex;
       align-items: center;
       background: var(--success);
-      color: #0a0a0b;
+      color: var(--success-fg);
       border-radius: var(--radius);
       padding: 11px 22px;
       font-size: 14px;
@@ -571,7 +575,7 @@
       transition: opacity 0.15s;
       flex-shrink: 0;
     }
-    .btn-vultr:hover { opacity: 0.88; }
+    .btn-vultr:hover { background: var(--success-hover); }
 
     /* Footer */
     footer {
@@ -630,6 +634,11 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    @media (max-width: 768px), (pointer: coarse) {
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
+    }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "VPS Migration Checklist", "description": "Interactive VPS migration checklist for Linux servers. Select your stack and get a tailored step-by-step migration plan. Free online tool.", "url": "https://tools.stackfreeks.com/tools/vps-migration-checklist/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/vps-migration-checklist/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "VPS 마이그레이션은 보통 얼마나 걸리나요?", "acceptedAnswer": {"@type": "Answer", "text": "단순한 사이트 이전은 1~3시간, MySQL·Docker·여러 앱이 포함된 복잡한 스택은 하루가 걸릴 수 있습니다. 가장 큰 변수는 데이터베이스 크기입니다. 50GB DB는 1Gbps 링크에서도 2~4시간이 걸릴 수 있습니다. 트래픽이 적은 시간대에 이전을 계획하세요."}}, {"@type": "Question", "name": "이전 전에 DNS TTL을 300초로 설정해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 이전 24~48시간 전에 설정하세요. TTL이 낮으면 새 서버를 가리키도록 A 레코드를 변경했을 때 DNS 변경이 더 빨리 전파됩니다. 이전이 안정화(48시간 후)되면 TTL을 3600 이상으로 복원해 DNS 쿼리 부하를 줄이세요."}}, {"@type": "Question", "name": "MySQL 데이터베이스를 가장 안전하게 이전하는 방법은?", "acceptedAnswer": {"@type": "Answer", "text": "InnoDB 테이블은 mysqldump --all-databases --single-transaction > backup.sql 을 사용하세요(잠금 없음). SSH를 통해 rsync 또는 scp로 전송하고, mysql < backup.sql 로 복원하세요. 10GB 이상의 대용량 데이터베이스는 다운타임을 줄이기 위해 Percona XtraBackup을 고려하세요."}}, {"@type": "Question", "name": "새 서버에서 SSL 인증서를 다시 발급받아야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, Let's Encrypt 인증서는 도메인 검증 방식입니다. 새 서버에 Certbot을 설치하고, DNS가 새 IP로 전파된 후 certbot certonly --nginx -d yourdomain.com 을 실행하세요. 기존 인증서를 복사하지 말고, 새 인증서를 발급받아 새 서버 IP와 올바르게 연결하세요."}}, {"@type": "Question", "name": "구 서버를 언제 삭제해도 안전한가요?", "acceptedAnswer": {"@type": "Answer", "text": "DNS 전환 후 최소 48시간을 기다린 후 구 서버를 삭제하세요. 이는 캐시된 DNS 항목으로 인해 구 IP로 접속하는 사용자를 커버합니다. 새 서버의 접속 로그를 모니터링하다가 구 서버 트래픽이 거의 0에 가까워지면 삭제해도 됩니다."}}]}</script>

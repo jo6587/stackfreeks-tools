@@ -34,7 +34,11 @@
       --text-2: #a1a1aa;
       --text-3: #80808a;
       --accent: #6366f1;
+      --accent-text: #818cf8;
+      --accent-strong: #4f46e5;
       --success: #22c55e;
+      --success-fg: #0a0a0b;
+      --success-hover: #4ade80;
       --success-bg: rgba(34,197,94,0.08);
       --warning: #f59e0b;
       --warning-bg: rgba(245,158,11,0.08);
@@ -54,7 +58,7 @@
       min-height: 100vh;
     }
 
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent-text); text-decoration: none; }
     a:hover { opacity: 0.8; }
 
     /* Nav */
@@ -418,7 +422,7 @@
     .guide-step {
       font-size: 11px;
       font-weight: 500;
-      color: var(--accent);
+      color: var(--accent-text);
       margin-bottom: 8px;
     }
     .guide-card h3 {
@@ -449,10 +453,10 @@
     }
     .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
     .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
@@ -538,7 +542,7 @@
     .vultr-cta {
       display: inline-block;
       background: var(--success);
-      color: #000;
+      color: var(--success-fg);
       font-weight: 500;
       font-size: 13px;
       padding: 8px 18px;
@@ -547,7 +551,7 @@
       transition: opacity 0.15s;
       flex-shrink: 0;
     }
-    .vultr-cta:hover { opacity: 0.85; }
+    .vultr-cta:hover { background: var(--success-hover); }
 
     /* Footer */
     footer {
@@ -606,6 +610,11 @@
     /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
       input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
+    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    @media (max-width: 768px), (pointer: coarse) {
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
   </style>  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"VPS Bandwidth Calculator","description":"Calculate VPS bandwidth usage and overage costs for Vultr, Hetzner, and DigitalOcean. Estimate from monthly visitors or enter GB directly.","url":"https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
