@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Game Server Cost Calculator — VPS Hosting Estimator | StackFreeks</title>
-  <meta name="description" content="Estimate your game server hosting cost by player count. Supports Minecraft, Valheim, Rust, ARK, CS2 and more. Find the right Vultr VPS plan instantly." />
+  <meta name="description" content="Game server cost calculator by player count for Minecraft, Valheim, Rust, ARK, CS2 and more. Find the right VPS plan instantly." />
   <link rel="canonical" href="https://tools.stackfreeks.com/tools/game-server-cost-calculator/" />
   <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/game-server-cost-calculator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/game-server-cost-calculator/ko/" />
@@ -16,7 +16,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Game Server Cost Calculator — VPS Hosting Estimator | StackFreeks" />
-  <meta property="og:description" content="Estimate your game server hosting cost by player count. Supports Minecraft, Valheim, Rust, ARK, CS2 and more. Find the right Vultr VPS plan instantly." />
+  <meta property="og:description" content="Game server cost calculator by player count for Minecraft, Valheim, Rust, ARK, CS2 and more. Find the right VPS plan instantly." />
   <meta property="og:url" content="https://tools.stackfreeks.com/tools/game-server-cost-calculator/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
@@ -716,7 +716,7 @@
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
   </style>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"Game Server Cost Calculator","description":"Estimate your game server hosting cost by player count. Supports Minecraft, Valheim, Rust, ARK, CS2 and more. Find the right Vultr VPS plan instantly.","url":"https://tools.stackfreeks.com/tools/game-server-cost-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Game Server Cost Calculator","description":"Game server cost calculator by player count for Minecraft, Valheim, Rust, ARK, CS2 and more. Find the right VPS plan instantly.","url":"https://tools.stackfreeks.com/tools/game-server-cost-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much RAM does a Minecraft server need?","acceptedAnswer":{"@type":"Answer","text":"A Minecraft Java server typically needs about 512 MB of RAM per 10 players as a baseline, plus 1–2 GB for the JVM itself. For a 20-player server without mods, expect 2–3 GB total. With plugins or mods, plan for at least 4 GB."}},{"@type":"Question","name":"Is Vultr good for game server hosting?","acceptedAnswer":{"@type":"Answer","text":"Yes. Vultr offers high-frequency compute instances with NVMe SSDs and data centers worldwide, making it a solid choice for game servers. The Cloud Compute plans are great for small-to-medium game servers, while High Frequency plans suit demanding games like Rust or ARK."}},{"@type":"Question","name":"Why does Rust need so much RAM?","acceptedAnswer":{"@type":"Answer","text":"Rust has a large open-world map and complex server-side physics simulation. The world state, entity tracking, and procedural terrain data all consume significant RAM. A 50-player Rust server can easily use 12–16 GB of RAM, making it one of the most resource-intensive games to host."}},{"@type":"Question","name":"Do I need dedicated CPU cores for a game server?","acceptedAnswer":{"@type":"Answer","text":"Most game servers are single-threaded for core logic, so raw single-core performance matters more than core count. However, more vCPUs help with background tasks, OS overhead, and multi-threaded mods. The calculator recommends 1 core per 20 players as a practical baseline."}},{"@type":"Question","name":"How accurate are these estimates?","acceptedAnswer":{"@type":"Answer","text":"These are community-based estimates for typical gameplay. Actual RAM usage varies with map size, installed mods, tick rate, and player behavior. We recommend starting with the \"one up\" plan from the recommendation to have headroom, then downsizing if resources allow."}}]}
@@ -852,7 +852,7 @@
     <div class="lang-en"><h2 class="section-title">How to Use</h2></div>
     <div class="lang-ko"><h2 class="section-title">사용 방법</h2></div>
 
-    <div class="steps-grid">
+    <div class="steps-grid guide-grid">
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="lang-en">

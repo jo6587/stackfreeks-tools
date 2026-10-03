@@ -442,7 +442,7 @@
       .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
     }
   </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Dockerfile Generator", "description": "Dockerfile generator for Node.js, Python, Go, PHP, Ruby and Java. Multi-stage build, non-root user, .dockerignore included. Free, browser-based.", "url": "https://tools.stackfreeks.com/tools/dockerfile-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/dockerfile-generator/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Dockerfile Generator", "description": "Dockerfile generator for Node.js, Python, Go, PHP, Ruby and Java. Multi-stage build, non-root user and .dockerignore. Free.", "url": "https://tools.stackfreeks.com/tools/dockerfile-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/dockerfile-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "멀티 스테이지 Dockerfile이란? 언제 써야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "멀티 스테이지 빌드는 여러 FROM 구문을 사용합니다. 첫 번째 단계에서 컴파일·설치하고, 최종 단계에서 프로덕션 결과물만 복사합니다. 이미지 크기를 50~90% 줄일 수 있어 빠른 풀, 적은 스토리지, 좁은 공격 표면이 됩니다. TypeScript, Go 바이너리, Maven JAR 등 빌드 단계가 있는 경우 반드시 사용하세요."}}, {"@type": "Question", "name": "컨테이너를 비루트 사용자로 실행해야 하는 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "기본적으로 Docker 컨테이너 내 프로세스는 root로 실행됩니다. 컨테이너 탈출 취약점이 있으면 공격자에게 호스트 루트 권한이 넘어갑니다. 셸이나 sudo 접근 권한이 없는 전용 사용자(node, appuser 등)를 만들면 피해를 최소화할 수 있습니다."}}, {"@type": "Question", "name": ".dockerignore에 뭘 넣어야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "이미지에 불필요한 파일을 제외하세요: node_modules(빌드 중 재설치), .git, 테스트 파일, 로컬 .env, CI 설정, 에디터 설정 등. 빌드 컨텍스트가 작을수록 docker build 속도가 빠르고 이미지 크기도 줄어듭니다."}}, {"@type": "Question", "name": "CMD와 ENTRYPOINT의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "ENTRYPOINT는 실행 파일을 지정하고, CMD는 기본 인수를 설정합니다. CMD만 사용하면 사용자가 전체 명령을 재정의할 수 있습니다. ENTRYPOINT와 CMD를 함께 쓰면 인수만 재정의됩니다. 대부분 앱에는 CMD [\"node\", \"server.js\"]로 충분합니다."}}, {"@type": "Question", "name": "베이스 이미지 태그는 latest, slim, alpine 중 뭘 써야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "slim은 개발 도구를 제거해 약 100 MB를 절약합니다. alpine은 더 작지만 musl libc를 사용해 Node 네이티브 애드온이나 Python C 확장이 깨질 수 있습니다. 프로덕션에서는 node:20-slim 또는 python:3.12-slim이 실용적입니다. 재현 가능한 빌드를 위해 latest 대신 특정 버전을 고정하세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -602,7 +602,7 @@
 </div>
 </section>
 <!-- Related tools -->
-<section class="related">
+<section class="related sf-related">
 
 <div class="lang-ko">
 <p class="related-title">관련 툴</p>
