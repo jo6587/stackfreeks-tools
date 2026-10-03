@@ -70,6 +70,12 @@ def check(slug: str) -> tuple[list[str], list[str]]:
     need(0 < len(desc) <= 160, f"meta description length {len(desc)} (Google truncates past ~160)")
     if len(desc) > 140:
         warns.append(f"meta description length {len(desc)} (target ≤140)")
+    for attrs in ({"property": "og:description"}, {"name": "twitter:description"}):
+        m = soup.find("meta", attrs=attrs)
+        n = len(m.get("content", "")) if m else 0
+        need(n <= 160, f"{next(iter(attrs.values()))} length {n} (>160)")
+        if n > 140:
+            warns.append(f"{next(iter(attrs.values()))} length {n} (target ≤140)")
     canon = soup.find("link", rel="canonical")
     need(canon and canon.get("href") == url, f"canonical != {url}")
     langs = {l.get("hreflang") for l in soup.find_all("link", rel="alternate") if l.get("hreflang")}
