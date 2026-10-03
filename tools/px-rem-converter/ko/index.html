@@ -32,7 +32,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --success: #22c55e;
       --success-bg: rgba(34,197,94,0.08);
@@ -220,6 +220,7 @@
       outline: none;
       color: var(--text-1);
       font-size: 22px;
+      --input-fs: 22px;
       font-weight: 600;
       padding: 12px 14px;
       font-family: var(--font);
@@ -448,7 +449,7 @@
     /* ── Responsive ── */
     @media (max-width: 600px) {
       .converter-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 12px;
       }
       .arrow-divider {
@@ -469,6 +470,10 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "PX to REM Converter", "description": "Convert px to rem and rem to px with a live preview. Adjust the root font size and get a reference table of common values. Free, no signup.", "url": "https://tools.stackfreeks.com/tools/px-rem-converter/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/px-rem-converter/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "rem이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "\"Root em\"의 약자로, 루트 <html> 요소의 폰트 크기를 기준으로 하는 CSS 단위입니다. 브라우저 기본값은 16px이므로 기본적으로 1rem = 16px 입니다."}}, {"@type": "Question", "name": "px 대신 rem을 쓰는 이유가 뭔가요?", "acceptedAnswer": {"@type": "Answer", "text": "rem은 사용자의 브라우저 폰트 설정에 따라 확장되어 접근성이 향상됩니다. 또한 전체적인 폰트 크기 조정이 쉬워 루트 값 하나만 변경하면 모든 요소가 비례적으로 조정됩니다."}}, {"@type": "Question", "name": "기본 루트 폰트 크기는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "브라우저 기본값은 16px입니다. 하지만 많은 프로젝트에서 html { font-size: 62.5%; } 를 설정해 1rem = 10px 로 계산을 편하게 만듭니다. 프로젝트의 CSS 리셋이나 전역 스타일을 확인하세요."}}, {"@type": "Question", "name": "다른 CSS 단위도 변환할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "이 도구는 px ↔ rem 변환만 지원합니다. em, vw, pt 등 다른 단위 변환은 StackFreeks Tools의 다른 도구를 확인해 주세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->

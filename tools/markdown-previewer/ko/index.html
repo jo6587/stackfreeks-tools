@@ -32,7 +32,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --success: #22c55e;
       --success-bg: rgba(34,197,94,0.08);
@@ -512,6 +512,10 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Markdown Previewer", "description": "Live Markdown preview tool with split-pane editor, quick-insert toolbar, HTML export, and dark theme. No install — runs in your browser.", "url": "https://tools.stackfreeks.com/tools/markdown-previewer/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/markdown-previewer/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "어떤 마크다운 기능이 지원되나요?", "acceptedAnswer": {"@type": "Answer", "text": "GFM(GitHub Flavored Markdown)을 지원합니다 — 제목, 굵게, 기울임, 목록, 링크, 이미지, 표, 코드 블록, 인용구, 수평선 등이 포함됩니다."}}, {"@type": "Question", "name": "코드 구문 강조(Syntax Highlighting)를 지원하나요?", "acceptedAnswer": {"@type": "Answer", "text": "현재는 지원하지 않습니다. 코드 블록은 렌더링되지만 언어별 색상 강조는 없습니다."}}, {"@type": "Question", "name": "파일에서 붙여넣기 할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네 — .md 파일을 텍스트 에디터에서 열고, 전체 선택 후 왼쪽 에디터에 붙여넣기 하면 됩니다."}}, {"@type": "Question", "name": "작성한 내용이 저장되나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요 — 내용은 탭이 열려 있는 동안 브라우저에만 존재합니다. 서버로 전송되지 않으며, 닫기 전에 복사해 두세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->

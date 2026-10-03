@@ -36,7 +36,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --success: #22c55e;
       --success-bg: rgba(34,197,94,0.08);
@@ -295,6 +295,10 @@
       .banner-inner { flex-direction: column; }
       .btn-vultr { width: 100%; text-align: center; }
       .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
     }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "LLM GPU Cost Calculator", "description": "Compare the cost of self-hosting an LLM on a rented GPU against paying per token for an LLM API. Enter your monthly request volume and average input/output tokens to see self-hosted monthly cost, API monthly cost, break-even volume, and cost per million tokens.", "url": "https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/llm-gpu-cost-calculator/ko/"}}</script>

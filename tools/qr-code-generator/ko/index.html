@@ -32,7 +32,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --success: #22c55e;
       --success-bg: rgba(34,197,94,0.08);
@@ -483,6 +483,10 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "QR Code Generator", "description": "Generate QR codes free online — no watermark, no account required. Customize colors, size, and error correction. Download PNG or SVG.", "url": "https://tools.stackfreeks.com/tools/qr-code-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/qr-code-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "오류 수정 레벨이란 무엇이며 어떤 것을 선택해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "오류 수정은 QR 코드가 일부 손상되거나 가려진 경우에도 인식되도록 합니다. L은 7% 복구로 깨끗한 화면 표시에 적합하고, M(15%)은 기본값으로 대부분의 용도에 맞습니다. Q(25%)는 긁힘이 생길 수 있는 표면에, H(30%)는 로고를 QR 코드 위에 겹칠 때 적합하지만 코드가 더 조밀해집니다."}}, {"@type": "Question", "name": "워터마크 없이 무료로 QR 코드를 만들 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 완전 무료입니다. 이 도구는 오픈소스 라이브러리를 사용해 브라우저에서 직접 QR 코드를 생성합니다. 워터마크, 구독, 계정, 사용 제한이 전혀 없습니다. 다운로드한 PNG 및 SVG 파일은 깨끗하게 바로 사용할 수 있습니다."}}, {"@type": "Question", "name": "인쇄용 QR 코드에 적합한 크기는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "대부분의 인쇄물에는 Large(1024px)를 선택하여 최고 해상도를 확보하세요. 일반적으로 QR 코드는 인쇄 시 최소 2cm × 2cm 이상이어야 하며, 스캔 거리는 코드 너비의 10배를 넘지 않아야 합니다. 대형 포스터나 현수막에는 SVG로 내보내어 품질 손실 없이 원하는 크기로 확대하세요."}}, {"@type": "Question", "name": "QR 코드 색상을 바꿀 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "가능합니다. 전경색 선택기로 모듈(점) 색상을, 배경색 선택기로 여백 영역 색상을 변경하세요. 스캐너가 코드를 인식하려면 두 색상 사이의 명도 대비가 최소 4:1 이상이어야 합니다. 전경과 배경이 너무 가깝지 않도록 주의하세요."}}, {"@type": "Question", "name": "웹사이트 URL QR 코드는 어떻게 만드나요?", "acceptedAnswer": {"@type": "Answer", "text": "전체 URL(https:// 포함)을 입력창에 붙여넣으면 QR 코드가 즉시 생성됩니다. HTTPS URL을 사용하고 가능한 짧게 유지하는 것이 좋습니다. URL이 짧을수록 더 단순하고 스캔하기 쉬운 코드가 만들어집니다. 코드 밀도를 줄이려면 URL 단축 서비스를 먼저 사용하세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
