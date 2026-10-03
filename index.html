@@ -31,7 +31,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --success: #22c55e;
       --success-bg: rgba(34,197,94,0.08);
@@ -344,6 +344,10 @@
       }
       .cat-tile { padding: 16px; min-height: 0; }
       .cat-tile-icon { width: 40px; height: 40px; font-size: 20px; }
+    }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
     }
   </style>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->

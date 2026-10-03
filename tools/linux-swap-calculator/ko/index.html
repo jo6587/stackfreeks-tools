@@ -27,7 +27,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --accent-fg: #ffffff;
       --success: #22c55e;
@@ -346,7 +346,7 @@
     @media (max-width: 768px) {
       h1 { font-size: 1.4rem; }
       .result-number { font-size: 2rem; }
-      .tool-grid { grid-template-columns: 1fr; }
+      .tool-grid { grid-template-columns: minmax(0, 1fr); }
       .container { padding: 0 16px; }
       .guide { padding: 0 16px 32px; }
       .faq { padding: 0 16px 32px; }
@@ -365,6 +365,10 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Linux Swap Size Calculator", "description": "Calculate the recommended Linux swap size for a VPS or server. Results based on RAM, use case and hibernation — with ready-to-run commands.", "url": "https://tools.stackfreeks.com/tools/linux-swap-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/linux-swap-calculator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "2GB VPS에 스왑이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "2GB RAM VPS에서 일반 서버 용도라면 2GB 스왑이 표준 권장값입니다. RAM과 동일한 1:1 비율로, 2~8GB RAM 서버의 현대 권장 가이드라인을 따릅니다. 메모리 집약적 앱 실행이나 절전 모드가 필요하면 4GB로 늘리세요."}}, {"@type": "Question", "name": "RAM이 충분하면 스왑이 필요 없나요?", "acceptedAnswer": {"@type": "Answer", "text": "RAM이 충분해도 최소 1~2GB 스왑을 권장합니다. 커널은 유휴 메모리 페이지를 스왑으로 옮겨 활성 프로세스에 RAM을 확보합니다. 스왑 없이 RAM이 가득 차면 OOM killer가 프로세스를 강제 종료합니다."}}, {"@type": "Question", "name": "스왑 파일과 스왑 파티션, 어떤 게 더 좋나요?", "acceptedAnswer": {"@type": "Answer", "text": "스왑 파일이 더 유연합니다. 파티션 재구성 없이 크기 조정이나 삭제가 가능합니다. 스왑 파티션은 구형 HDD에서 약간 빠르지만, 현대 SSD나 클라우드 VPS 스토리지에서는 차이가 미미합니다. 대부분의 클라우드 VPS 사용자에게는 스왑 파일이 더 실용적입니다."}}, {"@type": "Question", "name": "Swappiness란 무엇이고 어떤 값을 설정해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "Swappiness(0~100)는 커널이 메모리 페이지를 스왑으로 이동하는 적극성을 제어합니다. 기본값 60은 데스크탑에 적합합니다. 서버에는 10을 권장 — 불필요한 스왑을 줄이고 데이터를 RAM에 더 오래 유지합니다. 데이터베이스 서버는 1~5로 설정해 스왑을 최소화합니다."}}, {"@type": "Question", "name": "스왑이 VPS 속도를 느리게 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "스왑은 RAM보다 훨씬 느립니다 — 특히 HDD에서. 클라우드 VPS SSD에서도 상당한 병목이 됩니다. 스왑은 성능 향상이 아닌 안전망입니다. 서버가 스왑을 자주 사용한다면 RAM이 더 많은 플랜으로 업그레이드할 신호입니다."}}]}</script>

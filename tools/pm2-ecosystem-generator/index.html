@@ -32,7 +32,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --success: #22c55e;
       --success-bg: rgba(34,197,94,0.08);
@@ -507,13 +507,17 @@
     @media (max-width: 768px) {
       .hero { padding: 32px 16px 24px; }
       .hero h1 { font-size: 22px; }
-      .tool-wrap { grid-template-columns: 1fr; padding: 0 16px 40px; }
+      .tool-wrap { grid-template-columns: minmax(0, 1fr); padding: 0 16px 40px; }
       .preset-row { grid-template-columns: 1fr; }
       .guide { padding: 0 16px 36px; }
       .faq { padding: 0 16px 36px; }
       .sf-related { padding: 0 16px 36px; }
       .banner-inner { flex-direction: column; }
       .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
+    }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
     }
   </style>
   <script type="application/ld+json">

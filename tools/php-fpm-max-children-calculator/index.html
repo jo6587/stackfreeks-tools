@@ -28,7 +28,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --accent-fg: #ffffff;
       --success: #22c55e;
@@ -284,6 +284,10 @@
     @media (max-width: 420px) {
       .form-row { grid-template-columns: 1fr; }
       .cmd-block { font-size: 11px; }
+    }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
     }
   </style>
   <script type="application/ld+json">

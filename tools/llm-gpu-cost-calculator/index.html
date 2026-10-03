@@ -37,7 +37,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --success: #22c55e;
       --success-bg: rgba(34,197,94,0.08);
@@ -296,6 +296,10 @@
       .banner-inner { flex-direction: column; }
       .btn-vultr { width: 100%; text-align: center; }
       .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
     }
   </style>
 

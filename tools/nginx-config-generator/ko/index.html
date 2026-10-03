@@ -32,7 +32,7 @@
       --border-2: rgba(255,255,255,0.14);
       --text-1: #fafafa;
       --text-2: #a1a1aa;
-      --text-3: #52525b;
+      --text-3: #80808a;
       --accent: #6366f1;
       --success: #22c55e;
       --success-bg: rgba(34,197,94,0.08);
@@ -559,6 +559,10 @@
     .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
+    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
+    @media (max-width: 768px) {
+      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Nginx Config Generator", "description": "Generate nginx server block configs instantly. Supports SSL, PHP-FPM, reverse proxy, gzip and static caching — copy or download your config.", "url": "https://tools.stackfreeks.com/tools/nginx-config-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/nginx-config-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "PHP-FPM과 프록시 패스를 동시에 사용할 수 없는 이유가 뭔가요?", "acceptedAnswer": {"@type": "Answer", "text": "PHP-FPM과 프록시 패스는 모두 location / 블록을 다르게 처리합니다. PHP-FPM은 FastCGI를 사용해 PHP 파일을 PHP 프로세스에 전달하고, 프록시 패스는 모든 요청을 업스트림 서버(Node.js, Python 등)로 전달합니다. 동일한 location / 에서 둘 다 사용하면 충돌이 발생합니다. 둘 다 필요하다면 별도의 location 블록을 사용하고 설정을 직접 수정하세요."}}, {"@type": "Question", "name": "Let's Encrypt로 SSL 인증서를 발급받으려면 어떻게 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "certbot 와 nginx 플러그인을 설치하세요: apt install certbot python3-certbot-nginx . 그 다음 certbot --nginx -d example.com -d www.example.com 을 실행하세요. Certbot이 인증서를 발급받고 nginx 설정을 자동으로 업데이트합니다. 생성된 설정은 /etc/letsencrypt/live/[domain]/ 의 표준 Let's Encrypt 경로를 사용합니다."}}, {"@type": "Question", "name": "서버에서 nginx 설정 파일을 어디에 저장해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "파일을 /etc/nginx/sites-available/example.com 에 저장하세요. 그런 다음 심볼릭 링크를 만드세요: ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/ . nginx -t 로 설정을 테스트한 후 리로드하세요: systemctl reload nginx . CentOS 등 일부 환경에서는 /etc/nginx/conf.d/ 에 직접 저장합니다."}}, {"@type": "Question", "name": "PHP-FPM 소켓 경로는 어떻게 정해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "Ubuntu/Debian에서 PHP 8.1의 기본 소켓 경로는 /run/php/php8.1-fpm.sock 입니다 — 이 도구가 생성하는 경로입니다. PHP 버전이 다른 경우(예: 8.2, 7.4) 설정에서 버전 번호를 변경하세요. 서버에서 ls /run/php/ 로 실제 소켓 경로를 확인할 수 있습니다."}}, {"@type": "Question", "name": "이 도구가 설정 데이터를 서버로 전송하나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 모든 설정 생성은 JavaScript를 사용하여 브라우저 내에서만 처리됩니다. 입력한 내용은 어디에도 전송되지 않습니다. 도메인 이름과 서버 경로는 완전히 비공개로 유지됩니다."}}]}</script>

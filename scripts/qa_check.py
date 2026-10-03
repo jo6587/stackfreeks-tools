@@ -38,6 +38,16 @@ def blog_post_urls():
     return _post_urls or None
 
 
+def contrast(a: str, b: str) -> float:
+    """WCAG contrast ratio of two #rrggbb colors."""
+    def lum(h):
+        c = [int(h[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+        c = [v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4 for v in c]
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+    hi, lo = sorted((lum(a), lum(b)), reverse=True)
+    return (hi + 0.05) / (lo + 0.05)
+
+
 def check(slug: str) -> tuple[list[str], list[str]]:
     d = ROOT / "tools" / slug
     page = d / "index.html"
@@ -107,6 +117,16 @@ def check(slug: str) -> tuple[list[str], list[str]]:
         need({"nofollow", "sponsored"} <= set(a.get("rel") or []), "Vultr link missing rel=\"nofollow sponsored\"")
     for key in ("vultr_label", "vultr_title", "vultr_sub", "vultr_cta"):
         need(f'data-i18n="{key}"' in html, f'missing data-i18n="{key}"')
+
+    # design (guides/design-guide.md §2, §5-4)
+    t3, bg = re.search(r"--text-3:\s*(#[0-9a-fA-F]{6})", html), re.search(r"--bg:\s*(#[0-9a-fA-F]{6})", html)
+    if t3 and bg:
+        cr = contrast(t3.group(1), bg.group(1))
+        need(cr >= 4.5, f"--text-3 {t3.group(1)} contrast {cr:.2f}:1 on --bg (needs >= 4.5; design-guide §2)")
+    fields = [e for e in soup.find_all(["input", "select", "textarea"])
+              if (e.get("type") or "text").lower() not in {"checkbox", "radio", "range", "file", "color", "hidden"}]
+    need(not fields or re.search(r"@media\s*\(max-width:\s*768px\)\s*\{\s*input,\s*select,\s*textarea\s*\{\s*font-size:\s*max\(16px",
+                                 html), "text inputs but no mobile 16px input rule (iOS zoom; design-guide §5-4)")
 
     # mobile + content
     need(re.search(r"@media\s*\(max-width:\s*768px\)", html), "no @media (max-width: 768px)")
