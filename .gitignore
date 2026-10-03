@@ -19,3 +19,7 @@ Thumbs.db
 # Affiliate tracking URLs
 affiliate-links.json
 marketing/backlink-kit.md
+
+# Pipeline outputs (briefs, QA reports, performance) + Search Console token
+output/
+gsc-token.json
