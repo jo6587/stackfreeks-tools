@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHP-FPM pm.max_children Calculator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Calculate PHP-FPM pm.max_children from RAM, MySQL/Redis reservations and worker size. Get spare server values and a www.conf block." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/" />
+  <meta property="og:title" content="PHP-FPM pm.max_children Calculator | StackFreeks Tools" />
+  <meta property="og:description" content="Size PHP-FPM pm.max_children for your VPS RAM, with per-service reservations, spare servers and a copy-ready www.conf." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+  <!-- ADSENSE_SLOT_TOP -->
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #18181b;
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --accent: #6366f1;
+      --accent-fg: #ffffff;
+      --success: #22c55e;
+      --success-bg: rgba(34,197,94,0.08);
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-2);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    code { font-family: var(--font-mono); font-size: 0.92em; color: var(--text-1); }
+    .container { max-width: 840px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    .navbar {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,11,0.85);
+    }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo {
+      font-size: 14px; font-weight: 500; color: var(--text-1); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: transparent; border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text-3); font-size: 12px; font-weight: 500; padding: 4px 10px;
+      cursor: pointer; font-family: var(--font); transition: border-color 0.15s, color 0.15s;
+    }
+    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
+    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text-1); }
+
+    /* Hero */
+    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+    .eyebrow {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); }
+    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 560px; }
+
+    /* Tool */
+    main { padding: 32px 0; }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .tool-grid > *, .reverse-grid > * { min-width: 0; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 24px;
+    }
+    .card-wide { margin-top: 12px; }
+    .card-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 16px;
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+    input, select {
+      width: 100%; background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); color: var(--text-1); padding: 9px 12px; font-size: 13px;
+      font-family: var(--font); outline: none; transition: border-color 0.15s; -webkit-appearance: none;
+    }
+    input:focus, select:focus { border-color: var(--border-2); }
+    input::placeholder { color: var(--text-3); }
+    .sub-label {
+      font-size: 11px; font-weight: 500; color: var(--text-3); text-transform: uppercase;
+      letter-spacing: 0.08em; margin: 18px 0 10px;
+    }
+
+    /* Result */
+    .result-main { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+    .result-number {
+      font-size: 2.5rem; font-weight: 500; letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums; color: var(--text-1);
+    }
+    .result-unit { font-size: 13px; color: var(--text-3); font-family: var(--font-mono); }
+    .result-note { font-size: 12px; color: var(--text-3); margin-bottom: 12px; line-height: 1.5; }
+    .divider { height: 1px; background: var(--border); margin: 14px 0; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500;
+      border-radius: 20px; padding: 3px 10px; margin-bottom: 12px;
+    }
+    .badge-success { color: var(--success); background: var(--success-bg); }
+    .badge-warn { color: var(--warning); background: rgba(245,158,11,0.08); }
+    .badge-danger { color: var(--danger); background: rgba(239,68,68,0.08); }
+
+    .info-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 7px 0; font-size: 13px; border-bottom: 1px solid var(--border);
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { color: var(--text-2); font-family: var(--font-mono); font-size: 12px; }
+    .info-key.plain { font-family: var(--font); font-size: 13px; }
+    .info-val { color: var(--text-1); font-weight: 500; font-variant-numeric: tabular-nums; text-align: right; }
+    .info-val.accent { color: var(--accent); }
+
+    .formula {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 10px 12px; font-family: var(--font-mono); font-size: 11.5px; color: var(--text-1);
+      line-height: 1.7; margin-top: 4px; overflow-x: auto;
+    }
+    .formula .muted { color: var(--text-2); }
+    .basis { font-size: 11.5px; color: var(--text-3); margin-top: 12px; line-height: 1.6; }
+    .basis a { color: var(--text-2); text-decoration: underline; text-underline-offset: 2px; }
+    .basis a:hover { color: var(--text-1); }
+
+    /* Commands */
+    .cmd-label {
+      font-size: 11px; font-weight: 500; color: var(--text-3); text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 8px;
+    }
+    .cmd-wrap { position: relative; }
+    .cmd-block {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 12px 70px 12px 14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-1);
+      line-height: 1.8; white-space: pre; overflow-x: auto;
+    }
+    .cmd-block.small { font-size: 11px; line-height: 1.6; padding-top: 10px; padding-bottom: 10px; white-space: pre-wrap; word-break: break-all; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 5px; color: var(--text-2);
+      font-size: 11px; padding: 3px 8px; cursor: pointer; font-family: var(--font);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .copy-btn:hover { color: var(--text-1); border-color: var(--border-2); }
+
+    /* Mode selector */
+    .seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 12px; }
+    .seg-btn {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
+      color: var(--text-2); font-family: var(--font-mono); font-size: 12.5px; padding: 9px 8px;
+      cursor: pointer; transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .seg-btn:hover { border-color: var(--border-2); color: var(--text-1); }
+    .seg-btn.active { background: rgba(99,102,241,0.12); border-color: var(--accent); color: var(--text-1); }
+    .mode-advice { font-size: 12.5px; color: var(--text-2); margin-bottom: 14px; line-height: 1.6; }
+
+    /* Reverse */
+    .reverse-grid { display: grid; grid-template-columns: 220px 1fr; gap: 20px; align-items: start; }
+    .reverse-out { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .reverse-big { font-size: 1.6rem; font-weight: 500; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+    .vultr-inline {
+      margin-top: 12px; border: 1px solid rgba(34,197,94,0.25); background: var(--success-bg);
+      border-radius: var(--radius); padding: 12px 14px; display: flex; align-items: center;
+      justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+    .vultr-inline p { font-size: 13px; color: var(--text-1); }
+    .btn-vultr-sm {
+      background: var(--success); color: #fff; border-radius: var(--radius); padding: 7px 14px;
+      font-size: 12.5px; font-weight: 500; white-space: nowrap; transition: opacity 0.15s;
+    }
+    .btn-vultr-sm:hover { opacity: 0.85; }
+
+    /* Guide */
+    .guide { max-width: 840px; margin: 0 auto; padding: 0 24px 48px; }
+    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
+    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* FAQ */
+    .faq { max-width: 840px; margin: 0 auto; padding: 0 24px 48px; }
+    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
+    .faq-q {
+      width: 100%; background: none; border: none; text-align: left;
+      padding: 16px 20px; font-family: var(--font); font-size: 14px;
+      font-weight: 600; color: var(--text-1); cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Related guides (blog) */
+    .related { padding: 8px 0 0; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .related-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px; text-decoration: none;
+      display: flex; flex-direction: column; gap: 6px; transition: border-color 0.15s;
+    }
+    .related-card:hover { border-color: var(--border-2); }
+    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
+
+    /* Related tools */
+    .sf-related { max-width: 840px; margin: 0 auto; padding: 40px 24px 48px; }
+    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
+
+    /* Vultr banner */
+    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
+    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
+    .banner-sub { font-size: 13px; color: var(--text-2); }
+    .btn-vultr {
+      background: var(--success); color: #fff; border: none;
+      border-radius: var(--radius); padding: 9px 18px;
+      font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font);
+      text-decoration: none; display: inline-block; white-space: nowrap; transition: opacity 0.15s;
+    }
+    .btn-vultr:hover { opacity: 0.85; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
+    .footer-inner { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-3); }
+    .footer a { color: var(--text-3); text-decoration: none; }
+    .footer a:hover { color: var(--text-2); }
+    .footer-links { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.4rem; }
+      .result-number { font-size: 2rem; }
+      .tool-grid { grid-template-columns: 1fr; }
+      .reverse-grid { grid-template-columns: 1fr; gap: 12px; }
+      .container { padding: 0 16px; }
+      .card { padding: 18px; }
+      .guide { padding: 0 16px 32px; }
+      .faq { padding: 0 16px 32px; }
+      .sf-related { padding: 32px 16px 36px; }
+      .banner-inner { flex-direction: column; align-items: flex-start; }
+      .btn-vultr { width: 100%; text-align: center; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+      .nav-actions { gap: 10px; }
+    }
+    @media (max-width: 420px) {
+      .form-row { grid-template-columns: 1fr; }
+      .cmd-block { font-size: 11px; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"PHP-FPM pm.max_children Calculator","description":"Calculate PHP-FPM pm.max_children from RAM, MySQL/Redis reservations and worker size. Get spare server values and a www.conf block.","url":"https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I calculate pm.max_children for PHP-FPM?","acceptedAnswer":{"@type":"Answer","text":"Subtract the RAM that everything else needs (OS, MySQL or MariaDB, Redis, Nginx) from total RAM, keep a 10–20% safety buffer, then divide by the average memory of one PHP-FPM worker and round down. Example for 4 GB with MySQL 1 GB and OS 512 MB: floor((4096 − 1536) × 0.9 ÷ 60) = 38 children."}},{"@type":"Question","name":"What pm.max_children should I use for 2 GB or 4 GB RAM?","acceptedAnswer":{"@type":"Answer","text":"It depends on worker size, not RAM alone. A 2 GB VPS with MySQL (512 MB), OS (384 MB) and 60 MB workers gives floor((2048 − 896) × 0.9 ÷ 60) = 17. A 4 GB VPS with MySQL 1 GB and OS 512 MB gives 38. Worker size varies widely by app and plugins, so measure yours with the ps command above; larger workers lower both numbers."}},{"@type":"Question","name":"How do I measure the average PHP-FPM process size?","acceptedAnswer":{"@type":"Answer","text":"Run the ps and awk one-liner shown next to the worker-size field while the site is under normal traffic. It averages the resident memory (RSS) of all php-fpm processes. On Debian and Ubuntu the process is versioned, so replace php-fpm with php-fpm8.3 (or your version). Measure after workers have served requests for a while, because a fresh worker is smaller than a warm one."}},{"@type":"Question","name":"Should I use pm static, dynamic or ondemand?","acceptedAnswer":{"@type":"Answer","text":"static keeps all max_children workers alive: lowest latency, highest steady memory use, best for a dedicated busy server. dynamic keeps between min and max spare idle workers and is the safe default for most VPS. ondemand starts workers only when requests arrive and kills them after pm.process_idle_timeout (10s by default), which suits low-traffic sites or servers with many pools."}},{"@type":"Question","name":"What happens if pm.max_children is too high or too low?","acceptedAnswer":{"@type":"Answer","text":"Too high: under a traffic spike every worker grows to full size, RAM runs out, the server swaps and the Linux OOM killer may kill MySQL. Too low: the PHP-FPM log shows \"server reached pm.max_children setting\" and requests queue up, which appears as slow pages or 502/504 errors. Start from the calculated value and adjust while watching memory and that log line."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark"></div>
+      StackFreeks Tools
+    </a>
+    <div class="nav-actions">
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <a href="/" class="nav-back" data-i18n="nav_back">← all tools</a>
+      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ADSENSE_SLOT_TOP -->
+
+<section class="hero">
+  <div class="container">
+    <div class="lang-en">
+      <div class="eyebrow">PHP &amp; VPS</div>
+      <h1>PHP-FPM pm.max_children Calculator</h1>
+      <p class="hero-desc">Work out pm.max_children and spare servers from your RAM, what MySQL, Redis and the OS need, and your measured worker size. Get a copy-ready www.conf block.</p>
+    </div>
+    <div class="lang-ko">
+      <div class="eyebrow">PHP &amp; VPS</div>
+      <h1>PHP-FPM pm.max_children 계산기</h1>
+      <p class="hero-desc">서버 RAM, MySQL·Redis·OS 예약 메모리, 실측 워커 크기로 pm.max_children과 spare 서버 값을 계산하고 www.conf 설정을 바로 복사하세요.</p>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="container">
+    <div class="tool-grid">
+
+      <!-- Inputs -->
+      <div class="card">
+        <p class="card-label" data-i18n="lbl_input">Server memory</p>
+
+        <div class="form-group">
+          <label for="ramGb" data-i18n="lbl_ram">Total RAM (GB)</label>
+          <input type="number" id="ramGb" value="4" min="0.5" step="0.5" inputmode="decimal" />
+        </div>
+
+        <p class="sub-label" data-i18n="lbl_reserved">Reserved for other services (MB)</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="resOs" data-i18n="lbl_os">OS &amp; system</label>
+            <input type="number" id="resOs" value="512" min="0" step="64" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resDb" data-i18n="lbl_db">MySQL / MariaDB</label>
+            <input type="number" id="resDb" value="1024" min="0" step="128" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resRedis" data-i18n="lbl_redis">Redis / Memcached</label>
+            <input type="number" id="resRedis" value="0" min="0" step="64" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resOther" data-i18n="lbl_other">Other (Nginx, cron…)</label>
+            <input type="number" id="resOther" value="0" min="0" step="64" inputmode="numeric" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bufferPct" data-i18n="lbl_buffer">Safety buffer (%)</label>
+          <input type="number" id="bufferPct" value="10" min="0" max="90" step="5" inputmode="numeric" />
+          <p class="hint" data-i18n="hint_buffer">Headroom for traffic spikes and memory growth. 10–20% is typical; max 90% (higher values are reset to 90).</p>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="procMb" data-i18n="lbl_proc">Average PHP-FPM worker size (MB)</label>
+          <input type="number" id="procMb" value="60" min="1" step="1" inputmode="numeric" />
+          <p class="hint" data-i18n="hint_proc">Measure it on your server (average RSS of all php-fpm processes):</p>
+          <div class="cmd-wrap" style="margin-top:6px;">
+            <pre class="cmd-block small" id="psCmd">ps --no-headers -o "rss,cmd" -C php-fpm | awk '{ sum+=$1 } END { printf ("%d%s\n", sum/NR/1024,"M") }'</pre>
+            <button class="copy-btn" id="btnCopyPs" onclick="copyText('psCmd', this)" data-i18n="btn_copy">Copy</button>
+          </div>
+          <p class="hint" data-i18n="hint_proc2">Debian/Ubuntu: use -C php-fpm8.3 (your PHP version). Run it under real traffic.</p>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="card">
+        <p class="card-label" data-i18n="lbl_result">Recommended pool size</p>
+
+        <div class="result-main">
+          <span class="result-number" id="resMax">38</span>
+          <span class="result-unit">pm.max_children</span>
+        </div>
+        <div id="resBadge" class="badge badge-success"></div>
+        <p class="result-note" id="resNote"></p>
+
+        <div>
+          <div class="info-row"><span class="info-key">pm.start_servers</span><span class="info-val accent" id="resStart">9</span></div>
+          <div class="info-row"><span class="info-key">pm.min_spare_servers</span><span class="info-val" id="resMin">9</span></div>
+          <div class="info-row"><span class="info-key">pm.max_spare_servers</span><span class="info-val" id="resMaxSpare">28</span></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+          <div class="info-row"><span class="info-key plain" data-i18n="row_total">Total RAM</span><span class="info-val" id="rowTotal"></span></div>
+          <div class="info-row"><span class="info-key plain" data-i18n="row_reserved">Reserved (OS + DB + Redis + other)</span><span class="info-val" id="rowReserved"></span></div>
+          <div class="info-row"><span class="info-key plain" data-i18n="row_php">Usable for PHP-FPM (after buffer)</span><span class="info-val" id="rowPhp"></span></div>
+          <div class="info-row"><span class="info-key plain" data-i18n="row_peak">Peak PHP memory at max_children</span><span class="info-val" id="rowPeak"></span></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="cmd-label" data-i18n="lbl_formula">Formula</p>
+        <div class="formula">
+          <div>pm.max_children = floor((RAM − reserved) × (1 − buffer) ÷ worker_size)</div>
+          <div class="muted" id="formulaLive"></div>
+          <div class="muted" id="formulaSpare"></div>
+        </div>
+
+        <p class="basis" id="basisNote"></p>
+      </div>
+
+    </div>
+
+    <!-- pm mode + config -->
+    <div class="card card-wide">
+      <p class="card-label" data-i18n="lbl_mode">Process manager mode &amp; www.conf</p>
+      <div class="seg" role="radiogroup" aria-label="pm mode">
+        <button type="button" class="seg-btn" data-mode="static" role="radio" aria-checked="false" onclick="setMode('static')">static</button>
+        <button type="button" class="seg-btn active" data-mode="dynamic" role="radio" aria-checked="true" onclick="setMode('dynamic')">dynamic</button>
+        <button type="button" class="seg-btn" data-mode="ondemand" role="radio" aria-checked="false" onclick="setMode('ondemand')">ondemand</button>
+      </div>
+      <p class="mode-advice" id="modeAdvice"></p>
+
+      <p class="cmd-label" data-i18n="lbl_config">Pool config (www.conf)</p>
+      <div class="cmd-wrap">
+        <pre class="cmd-block" id="confBlock"></pre>
+        <button class="copy-btn" id="btnCopyConf" onclick="copyText('confBlock', this)" data-i18n="btn_copy">Copy</button>
+      </div>
+      <p class="hint" style="margin-top:8px;" id="reloadHint"></p>
+    </div>
+
+    <!-- Reverse mode -->
+    <div class="card card-wide">
+      <p class="card-label" data-i18n="lbl_reverse">Reverse: RAM needed for a target max_children</p>
+      <div class="reverse-grid">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="targetChildren" data-i18n="lbl_target">Target pm.max_children</label>
+          <input type="number" id="targetChildren" value="50" min="1" step="1" inputmode="numeric" />
+          <p class="hint" data-i18n="hint_target">Uses the same reservations, buffer and worker size as above.</p>
+        </div>
+        <div class="reverse-out" id="reverseOut"></div>
+      </div>
+      <div class="vultr-inline" id="reverseCta" hidden>
+        <p id="reverseCtaText"></p>
+        <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr-sm" id="reverseCtaBtn" rel="nofollow sponsored" target="_blank"></a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- How to Use -->
+<section class="guide">
+  <div class="lang-en">
+    <p class="guide-title">How to Use</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <p class="guide-step">STEP 1</p>
+        <h3>Enter total RAM and reservations</h3>
+        <p>Put in your server RAM, then what the OS, MySQL/MariaDB (roughly innodb_buffer_pool_size plus overhead), Redis and anything else need. Check real usage with free -m and htop.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 2</p>
+        <h3>Measure your worker size</h3>
+        <p>Copy the ps one-liner and run it on the server during normal traffic. Worker size varies widely by app, plugins and PHP settings, so measure yours instead of guessing.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 3</p>
+        <h3>Pick a pm mode and copy the config</h3>
+        <p>Choose static, dynamic or ondemand, copy the block into your pool file (for example /etc/php/8.3/fpm/pool.d/www.conf) and reload PHP-FPM.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 4</p>
+        <h3>Verify under load</h3>
+        <p>Watch free -m and the PHP-FPM log. If you see "server reached pm.max_children", use the reverse calculator to see how much RAM a higher limit needs.</p>
+      </div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <p class="guide-title">사용 방법</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <p class="guide-step">STEP 1</p>
+        <h3>총 RAM과 예약 메모리 입력</h3>
+        <p>서버 RAM을 넣고 OS, MySQL/MariaDB(대략 innodb_buffer_pool_size + 오버헤드), Redis 등 다른 서비스가 쓰는 메모리를 입력하세요. 실제 사용량은 free -m, htop으로 확인합니다.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 2</p>
+        <h3>워커 크기 실측</h3>
+        <p>ps 한 줄 명령을 복사해 평소 트래픽이 있을 때 서버에서 실행하세요. 워커 크기는 앱·플러그인·PHP 설정에 따라 크게 달라지므로 추측하지 말고 직접 측정하세요.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 3</p>
+        <h3>pm 모드 선택 후 설정 복사</h3>
+        <p>static, dynamic, ondemand 중 하나를 고르고 생성된 블록을 풀 설정 파일(예: /etc/php/8.3/fpm/pool.d/www.conf)에 붙여넣은 뒤 PHP-FPM을 reload 하세요.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-step">STEP 4</p>
+        <h3>부하 상태에서 검증</h3>
+        <p>free -m과 PHP-FPM 로그를 지켜보세요. "server reached pm.max_children" 경고가 보이면 역계산기로 더 높은 값에 필요한 RAM을 확인하세요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="lang-en">
+    <p class="faq-title">Frequently Asked Questions</p>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I calculate pm.max_children for PHP-FPM?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Subtract the RAM that everything else needs (OS, MySQL or MariaDB, Redis, Nginx) from total RAM, keep a 10–20% safety buffer, then divide by the average memory of one PHP-FPM worker and round down. Example for 4 GB with MySQL 1 GB and OS 512 MB: floor((4096 − 1536) × 0.9 ÷ 60) = 38 children.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What pm.max_children should I use for 2 GB or 4 GB RAM?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">It depends on worker size, not RAM alone. A 2 GB VPS with MySQL (512 MB), OS (384 MB) and 60 MB workers gives floor((2048 − 896) × 0.9 ÷ 60) = 17. A 4 GB VPS with MySQL 1 GB and OS 512 MB gives 38. Worker size varies widely by app and plugins, so measure yours with the ps command above; larger workers lower both numbers.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I measure the average PHP-FPM process size?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Run the ps and awk one-liner shown next to the worker-size field while the site is under normal traffic. It averages the resident memory (RSS) of all php-fpm processes. On Debian and Ubuntu the process is versioned, so replace php-fpm with php-fpm8.3 (or your version). Measure after workers have served requests for a while, because a fresh worker is smaller than a warm one.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Should I use pm static, dynamic or ondemand?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">static keeps all max_children workers alive: lowest latency, highest steady memory use, best for a dedicated busy server. dynamic keeps between min and max spare idle workers and is the safe default for most VPS. ondemand starts workers only when requests arrive and kills them after pm.process_idle_timeout (10s by default), which suits low-traffic sites or servers with many pools.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What happens if pm.max_children is too high or too low?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Too high: under a traffic spike every worker grows to full size, RAM runs out, the server swaps and the Linux OOM killer may kill MySQL. Too low: the PHP-FPM log shows "server reached pm.max_children setting" and requests queue up, which appears as slow pages or 502/504 errors. Start from the calculated value and adjust while watching memory and that log line.</div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <p class="faq-title">자주 묻는 질문</p>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>PHP-FPM pm.max_children은 어떻게 계산하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">총 RAM에서 다른 서비스(OS, MySQL·MariaDB, Redis, Nginx)가 쓰는 메모리를 빼고, 10–20% 안전 버퍼를 남긴 뒤 PHP-FPM 워커 1개의 평균 메모리로 나누고 내림합니다. 예: 4GB, MySQL 1GB, OS 512MB → floor((4096 − 1536) × 0.9 ÷ 60) = 38개.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>RAM 2GB·4GB 서버에는 pm.max_children을 얼마로 하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">RAM만이 아니라 워커 크기에 따라 달라집니다. 2GB VPS에 MySQL 512MB, OS 384MB, 워커 60MB면 floor((2048 − 896) × 0.9 ÷ 60) = 17입니다. 4GB VPS에 MySQL 1GB, OS 512MB면 38입니다. 워커 크기는 앱과 플러그인에 따라 크게 달라지므로 위의 ps 명령으로 직접 측정하세요. 워커가 클수록 두 값 모두 낮아집니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>PHP-FPM 프로세스 평균 크기는 어떻게 측정하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">워커 크기 입력란 옆의 ps + awk 한 줄 명령을 평소 트래픽이 있을 때 실행하세요. 모든 php-fpm 프로세스의 상주 메모리(RSS) 평균을 MB로 보여줍니다. Debian·Ubuntu는 프로세스 이름에 버전이 붙으므로 php-fpm 대신 php-fpm8.3(사용 버전)으로 바꾸세요. 새로 뜬 워커는 작게 나오므로 요청을 어느 정도 처리한 뒤 측정합니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>pm static, dynamic, ondemand 중 무엇을 써야 하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">static은 max_children 개 워커를 항상 띄워 두어 지연이 가장 적지만 메모리를 계속 차지하므로 트래픽이 많은 전용 서버에 맞습니다. dynamic은 min~max spare 사이의 유휴 워커를 유지하며 대부분의 VPS에 무난한 기본값입니다. ondemand는 요청이 올 때만 워커를 만들고 pm.process_idle_timeout(기본 10초) 뒤 종료하므로 트래픽이 적거나 풀이 많은 서버에 적합합니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>pm.max_children이 너무 크거나 작으면 어떻게 되나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">너무 크면: 트래픽이 몰릴 때 모든 워커가 최대 크기로 커져 RAM이 부족해지고, 스왑이 발생하며 리눅스 OOM killer가 MySQL을 종료시킬 수 있습니다. 너무 작으면: PHP-FPM 로그에 "server reached pm.max_children setting"이 찍히고 요청이 대기열에 쌓여 페이지가 느려지거나 502/504 오류가 납니다. 계산값에서 시작해 메모리와 로그를 보며 조정하세요.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Related guides (blog) -->
+<section class="related">
+  <div class="container">
+    <div class="lang-en">
+      <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+      <div class="related-grid">
+        <a href="https://stackfreeks.com/deploy-laravel-vultr-vps/" class="related-card" target="_blank" rel="noopener">
+          <span class="related-tag">PHP</span>
+          <p class="related-title">Deploy Laravel on Vultr VPS 2026: Full Stack PHP Setup Guide</p>
+          <span class="related-arrow">→</span>
+        </a>
+        <a href="https://stackfreeks.com/deploy-wordpress-on-vultr-vps-full-step-by-step-guide-2026/" class="related-card" target="_blank" rel="noopener">
+          <span class="related-tag">WordPress</span>
+          <p class="related-title">Deploy WordPress on Vultr VPS: Full Step-by-Step Guide 2026</p>
+          <span class="related-arrow">→</span>
+        </a>
+        <a href="https://stackfreeks.com/best-cheap-vps-2026/" class="related-card" target="_blank" rel="noopener">
+          <span class="related-tag">VPS</span>
+          <p class="related-title">Best Cheap VPS Under $10/Month in 2026 (Compared &amp; Ranked)</p>
+          <span class="related-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <p class="eyebrow" style="margin-bottom:12px;">관련 가이드</p>
+      <div class="related-grid">
+        <a href="https://stackfreeks.com/deploy-laravel-vultr-vps/" class="related-card" target="_blank" rel="noopener">
+          <span class="related-tag">PHP</span>
+          <p class="related-title">Deploy Laravel on Vultr VPS 2026: Full Stack PHP Setup Guide</p>
+          <span class="related-arrow">→</span>
+        </a>
+        <a href="https://stackfreeks.com/deploy-wordpress-on-vultr-vps-full-step-by-step-guide-2026/" class="related-card" target="_blank" rel="noopener">
+          <span class="related-tag">WordPress</span>
+          <p class="related-title">Deploy WordPress on Vultr VPS: Full Step-by-Step Guide 2026</p>
+          <span class="related-arrow">→</span>
+        </a>
+        <a href="https://stackfreeks.com/best-cheap-vps-2026/" class="related-card" target="_blank" rel="noopener">
+          <span class="related-tag">VPS</span>
+          <p class="related-title">Best Cheap VPS Under $10/Month in 2026 (Compared &amp; Ranked)</p>
+          <span class="related-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related tools -->
+<section class="sf-related">
+  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
+  <div class="sf-related-grid">
+    <a href="/tools/docker-ram-calculator/" class="sf-related-card"><span>🐳</span>Docker RAM Calculator</a>
+    <a href="/tools/linux-swap-calculator/" class="sf-related-card"><span>💾</span>Linux Swap Size Calculator</a>
+    <a href="/tools/redis-memory-estimator/" class="sf-related-card"><span>🔴</span>Redis Memory Estimator</a>
+    <a href="/tools/nginx-config-generator/" class="sf-related-card"><span>⚙️</span>Nginx Config Generator</a>
+  </div>
+</section>
+
+<!-- Vultr Banner -->
+<section class="vultr-banner">
+  <div class="container banner-inner">
+    <div>
+      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
+      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
+      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+    </div>
+    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
+       rel="nofollow sponsored" target="_blank"
+       data-i18n="vultr_cta">Claim your credit →</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/terms/">Terms</a>
+      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    lbl_input: 'Server memory',
+    lbl_ram: 'Total RAM (GB)',
+    lbl_reserved: 'Reserved for other services (MB)',
+    lbl_os: 'OS & system',
+    lbl_db: 'MySQL / MariaDB',
+    lbl_redis: 'Redis / Memcached',
+    lbl_other: 'Other (Nginx, cron…)',
+    lbl_buffer: 'Safety buffer (%)',
+    hint_buffer: 'Headroom for traffic spikes and memory growth. 10–20% is typical; max 90% (higher values are reset to 90).',
+    lbl_proc: 'Average PHP-FPM worker size (MB)',
+    hint_proc: 'Measure it on your server (average RSS of all php-fpm processes):',
+    hint_proc2: 'Debian/Ubuntu: use -C php-fpm8.3 (your PHP version). Run it under real traffic.',
+    btn_copy: 'Copy',
+    lbl_result: 'Recommended pool size',
+    row_total: 'Total RAM',
+    row_reserved: 'Reserved (OS + DB + Redis + other)',
+    row_php: 'Usable for PHP-FPM (after buffer)',
+    row_peak: 'Peak PHP memory at max_children',
+    lbl_formula: 'Formula',
+    lbl_mode: 'Process manager mode & www.conf',
+    lbl_config: 'Pool config (www.conf)',
+    lbl_reverse: 'Reverse: RAM needed for a target max_children',
+    lbl_target: 'Target pm.max_children',
+    hint_target: 'Uses the same reservations, buffer and worker size as above.'
+  },
+  ko: {
+    lbl_input: '서버 메모리',
+    lbl_ram: '총 RAM (GB)',
+    lbl_reserved: '다른 서비스용 예약 메모리 (MB)',
+    lbl_os: 'OS·시스템',
+    lbl_db: 'MySQL / MariaDB',
+    lbl_redis: 'Redis / Memcached',
+    lbl_other: '기타 (Nginx, cron…)',
+    lbl_buffer: '안전 버퍼 (%)',
+    hint_buffer: '트래픽 급증·메모리 증가 대비 여유분. 보통 10–20%, 최대 90% (초과 값은 90으로 맞춰짐).',
+    lbl_proc: 'PHP-FPM 워커 평균 크기 (MB)',
+    hint_proc: '서버에서 직접 측정하세요 (모든 php-fpm 프로세스 RSS 평균):',
+    hint_proc2: 'Debian/Ubuntu는 -C php-fpm8.3 (사용 중인 PHP 버전)으로 바꾸세요. 실제 트래픽이 있을 때 실행하세요.',
+    btn_copy: '복사',
+    lbl_result: '권장 풀 크기',
+    row_total: '총 RAM',
+    row_reserved: '예약 (OS + DB + Redis + 기타)',
+    row_php: 'PHP-FPM 사용 가능 (버퍼 제외)',
+    row_peak: 'max_children 도달 시 PHP 최대 메모리',
+    lbl_formula: '계산식',
+    lbl_mode: '프로세스 매니저 모드 & www.conf',
+    lbl_config: '풀 설정 (www.conf)',
+    lbl_reverse: '역계산: 목표 max_children에 필요한 RAM',
+    lbl_target: '목표 pm.max_children',
+    hint_target: '위와 같은 예약 메모리·버퍼·워커 크기를 사용합니다.'
+  }
+};
+</script>
+<script src="/shared/i18n.js"></script>
+
+<script>
+var VULTR_REF = 'https://www.vultr.com/?ref=9907834-9J';
+var PHP_DOCS = 'https://www.php.net/manual/en/install.fpm.configuration.php';
+// RAM sizes (GB) of Vultr Cloud Compute ("vc2") plans, from the public plans API
+// https://api.vultr.com/v2/plans (type "vc2": 512 MB … 96 GB), checked 2026-10-03. No prices on purpose.
+// Above the largest size we do not suggest an instance at all.
+var PLAN_SIZES_GB = [0.5, 1, 2, 4, 8, 16, 32, 64, 96];
+var mode = 'dynamic';
+
+// Dynamic (JS-rendered) strings. Re-rendered on sfLangChanged.
+var DYN = {
+  en: {
+    ok: '✓ Fits in RAM with your buffer',
+    tight: '⚠ Very few workers — consider more RAM or smaller workers',
+    none: '✕ Not enough RAM left for PHP-FPM',
+    note: function (n, size) { return 'At most ' + n + ' PHP workers of ~' + size + ' MB can run at once without touching swap.'; },
+    noteNone: 'Reservations plus buffer use all RAM. Lower the reservations, shrink workers or add RAM.',
+    spare: function (n, s, mx) { return 'start = min_spare = 25% → ' + s + ' · max_spare = 75% → ' + mx; },
+    basis: 'Basis: <a href="' + PHP_DOCS + '" target="_blank" rel="noopener">php.net FPM pool directives</a>. The formula and 25% / 75% spare-server split are rules of thumb, verify under load.',
+    adv_static: 'static: all max_children workers stay in memory. Lowest latency and predictable RAM, best for a dedicated, busy server. Only pm.max_children is used.',
+    adv_dynamic: 'dynamic: keeps between min and max spare idle workers and forks more up to max_children. The safe default for most VPS.',
+    adv_ondemand: 'ondemand: no workers at idle; they start per request and exit after pm.process_idle_timeout. Saves RAM on low-traffic sites or servers with many pools.',
+    confHead: function (ram, size) { return '; Generated by tools.stackfreeks.com — ' + ram + ' GB RAM, ~' + size + ' MB per worker'; },
+    confPath: '; File: /etc/php/<version>/fpm/pool.d/www.conf (path varies by distro)',
+    confNone: '; Not enough free RAM for any PHP-FPM worker.\n; Reduce reservations or worker size, or add RAM.',
+    confIdle: '; default 10s — idle workers exit after this',
+    reload: 'Apply: sudo systemctl reload php8.3-fpm (match your version), then watch free -m.',
+    revNeed: function (gb) { return 'Minimum total RAM'; },
+    revDetail: function (t, mb) { return t + ' workers × worker size ÷ (1 − buffer) + reservations = ' + mb + ' MB'; },
+    revFits: function (cur, max) { return '✓ Your current ' + cur + ' GB is enough (it fits up to ' + max + ' children).'; },
+    revShort: function (cur) { return '✕ More than your current ' + cur + ' GB.'; },
+    ctaText: function (need, plan) { return 'You need ≥ ' + need + ' GB — deploy ' + (plan === 8 ? 'an ' : 'a ') + plan + ' GB Vultr instance.'; },
+    ctaBtn: function (plan) { return 'Deploy ' + plan + ' GB on Vultr →'; },
+    copied: '✓ Copied',
+    revInvalid: 'Enter a target of 1 or more.',
+    needProc: '✎ Enter your average worker size (MB)',
+    noteProc: 'Enter your average PHP-FPM worker size (MB) to calculate. Measure it with the ps command under the field.',
+    confProc: '; Enter your average worker size (MB) to generate the pool config.',
+    formulaProc: '= waiting for worker size (MB)',
+    revTooBig: function (max) { return 'That is more than the largest single Vultr Cloud Compute instance (' + max + ' GB). Reduce worker size, lower the target or split pools across servers.'; }
+  },
+  ko: {
+    ok: '✓ 버퍼를 포함해 RAM 안에 들어갑니다',
+    tight: '⚠ 워커 수가 매우 적음 — RAM 증설 또는 워커 크기 축소 권장',
+    none: '✕ PHP-FPM에 남는 RAM이 없습니다',
+    note: function (n, size) { return '약 ' + size + 'MB 워커를 스왑 없이 최대 ' + n + '개까지 동시에 실행할 수 있습니다.'; },
+    noteNone: '예약 메모리와 버퍼가 RAM 전체를 차지합니다. 예약을 줄이거나 워커를 줄이거나 RAM을 늘리세요.',
+    spare: function (n, s, mx) { return 'start = min_spare = 25% → ' + s + ' · max_spare = 75% → ' + mx; },
+    basis: '근거: <a href="' + PHP_DOCS + '" target="_blank" rel="noopener">php.net FPM 풀 지시어 문서</a>. 계산식과 25% / 75% spare 비율은 경험칙이므로 부하 상태에서 검증하세요 (rules of thumb, verify under load).',
+    adv_static: 'static: max_children 개 워커가 항상 메모리에 상주합니다. 지연이 가장 적고 RAM 사용량이 예측 가능해 트래픽이 많은 전용 서버에 적합합니다. pm.max_children만 사용합니다.',
+    adv_dynamic: 'dynamic: min~max spare 사이의 유휴 워커를 유지하고 필요하면 max_children까지 늘립니다. 대부분의 VPS에 무난한 기본값입니다.',
+    adv_ondemand: 'ondemand: 유휴 시 워커가 0개이며 요청마다 생성되고 pm.process_idle_timeout 후 종료됩니다. 트래픽이 적거나 풀이 많은 서버에서 RAM을 아낍니다.',
+    confHead: function (ram, size) { return '; tools.stackfreeks.com 생성 — RAM ' + ram + 'GB, 워커당 약 ' + size + 'MB'; },
+    confPath: '; 파일: /etc/php/<버전>/fpm/pool.d/www.conf (배포판마다 경로 다름)',
+    confNone: '; PHP-FPM 워커를 띄울 여유 RAM이 없습니다.\n; 예약 메모리나 워커 크기를 줄이거나 RAM을 늘리세요.',
+    confIdle: '; 기본값 10s — 유휴 워커가 이 시간 후 종료',
+    reload: '적용: sudo systemctl reload php8.3-fpm (버전에 맞게) 후 free -m으로 확인하세요.',
+    revNeed: function () { return '필요한 최소 총 RAM'; },
+    revDetail: function (t, mb) { return '워커 ' + t + '개 × 워커 크기 ÷ (1 − 버퍼) + 예약 메모리 = ' + mb + ' MB'; },
+    revFits: function (cur, max) { return '✓ 현재 ' + cur + 'GB로 충분합니다 (최대 ' + max + '개까지 가능).'; },
+    revShort: function (cur) { return '✕ 현재 ' + cur + 'GB보다 더 필요합니다.'; },
+    ctaText: function (need, plan) { return '최소 ' + need + 'GB 이상 필요 — ' + plan + 'GB Vultr 인스턴스를 배포하세요.'; },
+    ctaBtn: function (plan) { return 'Vultr ' + plan + 'GB 배포 →'; },
+    copied: '✓ 복사됨',
+    revInvalid: '1 이상의 목표값을 입력하세요.',
+    needProc: '✎ 워커 평균 크기(MB)를 입력하세요',
+    noteProc: '계산하려면 PHP-FPM 워커 평균 크기(MB)를 입력하세요. 입력란 아래 ps 명령으로 측정할 수 있습니다.',
+    confProc: '; 풀 설정을 만들려면 워커 평균 크기(MB)를 입력하세요.',
+    formulaProc: '= 워커 크기(MB) 입력 대기 중',
+    revTooBig: function (max) { return 'Vultr Cloud Compute 단일 인스턴스 최대 크기(' + max + 'GB)보다 큽니다. 워커 크기나 목표값을 줄이거나 풀을 여러 서버로 나누세요.'; }
+  }
+};
+
+function L() { return (window.sfLang && window.sfLang.current === 'ko') ? DYN.ko : DYN.en; }
+function num(id, fallback) {
+  var v = parseFloat(document.getElementById(id).value);
+  return isFinite(v) && v >= 0 ? v : fallback;
+}
+function fmt(n) { return (Math.round(n * 10) / 10).toLocaleString('en-US'); }
+function gb(mb) { return fmt(mb / 1024) + ' GB'; }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function readInputs() {
+  var ramGb = num('ramGb', 0);
+  var reserved = num('resOs', 0) + num('resDb', 0) + num('resRedis', 0) + num('resOther', 0);
+  // Buffer is limited to 0–90%. Out-of-range values are written back into the field,
+  // so the input and the printed formula always show the same number.
+  var bufEl = document.getElementById('bufferPct');
+  var bufRaw = parseFloat(bufEl.value);
+  if (isFinite(bufRaw) && (bufRaw > 90 || bufRaw < 0)) bufEl.value = bufRaw > 90 ? 90 : 0;
+  var buffer = Math.min(num('bufferPct', 0), 90) / 100;
+  var proc = num('procMb', 0);
+  return { ramGb: ramGb, ramMb: ramGb * 1024, reserved: reserved, buffer: buffer, proc: proc };
+}
+
+// Core formula: max_children = floor((RAM − reserved) × (1 − buffer) / worker size)
+function maxChildren(p) {
+  if (p.proc <= 0) return 0;
+  var usable = (p.ramMb - p.reserved) * (1 - p.buffer);
+  return usable > 0 ? Math.floor(usable / p.proc) : 0;
+}
+
+// Spare-server rule of thumb: start = min_spare = 25% of max_children, max_spare = 75%.
+// PHP-FPM requires 1 <= min_spare <= start <= max_spare <= max_children.
+function spare(n) {
+  var minS = Math.max(1, Math.floor(n * 0.25));
+  var maxS = Math.min(n, Math.max(minS, Math.floor(n * 0.75)));
+  return { start: minS, min: minS, max: maxS };
+}
+
+function buildConfig(p, n, s) {
+  var t = L();
+  if (p.proc <= 0) return t.confProc;
+  if (n < 1) return t.confNone;
+  var lines = [t.confHead(fmt(p.ramGb), fmt(p.proc)), t.confPath, '', 'pm = ' + mode, 'pm.max_children = ' + n];
+  if (mode === 'dynamic') {
+    lines.push('pm.start_servers = ' + s.start);
+    lines.push('pm.min_spare_servers = ' + s.min);
+    lines.push('pm.max_spare_servers = ' + s.max);
+  } else if (mode === 'ondemand') {
+    lines.push(t.confIdle);
+    lines.push('pm.process_idle_timeout = 10s');
+  }
+  return lines.join('\n');
+}
+
+function nextPlan(needGb) {
+  for (var i = 0; i < PLAN_SIZES_GB.length; i++) if (PLAN_SIZES_GB[i] >= needGb) return PLAN_SIZES_GB[i];
+  return null; // bigger than any single instance: never invent a size
+}
+
+function renderReverse(p, n) {
+  var t = L();
+  var out = document.getElementById('reverseOut');
+  var cta = document.getElementById('reverseCta');
+  var target = Math.floor(num('targetChildren', 0));
+  if (p.proc <= 0) {
+    out.textContent = t.noteProc;
+    cta.hidden = true;
+    return;
+  }
+  if (target < 1) {
+    out.textContent = t.revInvalid;
+    cta.hidden = true;
+    return;
+  }
+  // Reverse formula: RAM = reserved + target × worker size ÷ (1 − buffer)
+  var needMb = p.reserved + target * p.proc / (1 - p.buffer);
+  var needGb = Math.ceil(needMb / 1024 * 10) / 10; // round up to 0.1 GB
+  var html = '<div class="cmd-label" style="margin-bottom:2px;">' + esc(t.revNeed()) + '</div>' +
+             '<div class="reverse-big">' + fmt(needGb) + ' GB</div>' +
+             '<div class="hint" style="margin-bottom:8px;">' + esc(t.revDetail(target, fmt(needMb))) + '</div>';
+  var short = needMb > p.ramMb;
+  html += '<div class="badge ' + (short ? 'badge-danger' : 'badge-success') + '" style="margin-bottom:0;">' +
+          esc(short ? t.revShort(fmt(p.ramGb)) : t.revFits(fmt(p.ramGb), n)) + '</div>';
+  var plan = short ? nextPlan(needGb) : null;
+  if (short && plan === null) {
+    html += '<p class="hint" style="margin-top:8px;">' + esc(t.revTooBig(PLAN_SIZES_GB[PLAN_SIZES_GB.length - 1])) + '</p>';
+  }
+  out.innerHTML = html;
+  if (short && plan !== null) {
+    document.getElementById('reverseCtaText').textContent = t.ctaText(fmt(needGb), plan);
+    var btn = document.getElementById('reverseCtaBtn');
+    btn.textContent = t.ctaBtn(plan);
+    btn.href = VULTR_REF;
+    cta.hidden = false;
+  } else {
+    cta.hidden = true;
+  }
+}
+
+function calculate() {
+  var t = L();
+  var p = readInputs();
+  var n = maxChildren(p);
+  var s = spare(n);
+  var ok = n >= 1;
+
+  document.getElementById('resMax').textContent = n;
+  document.getElementById('resStart').textContent = ok ? s.start : '—';
+  document.getElementById('resMin').textContent = ok ? s.min : '—';
+  document.getElementById('resMaxSpare').textContent = ok ? s.max : '—';
+
+  var badge = document.getElementById('resBadge');
+  var noProc = p.proc <= 0;
+  if (noProc) { badge.className = 'badge badge-warn'; badge.textContent = t.needProc; }
+  else if (!ok) { badge.className = 'badge badge-danger'; badge.textContent = t.none; }
+  else if (n < 5) { badge.className = 'badge badge-warn'; badge.textContent = t.tight; }
+  else { badge.className = 'badge badge-success'; badge.textContent = t.ok; }
+  document.getElementById('resNote').textContent = noProc ? t.noteProc : (ok ? t.note(n, fmt(p.proc)) : t.noteNone);
+
+  var usable = Math.max(0, (p.ramMb - p.reserved) * (1 - p.buffer));
+  document.getElementById('rowTotal').textContent = fmt(p.ramMb) + ' MB';
+  document.getElementById('rowReserved').textContent = fmt(p.reserved) + ' MB';
+  document.getElementById('rowPhp').textContent = fmt(usable) + ' MB';
+  document.getElementById('rowPeak').textContent = fmt(n * p.proc) + ' MB';
+
+  var raw = p.proc > 0 ? (p.ramMb - p.reserved) * (1 - p.buffer) / p.proc : 0;
+  document.getElementById('formulaLive').textContent = noProc ? t.formulaProc :
+    '= floor((' + fmt(p.ramMb) + ' − ' + fmt(p.reserved) + ') × ' + (1 - p.buffer).toFixed(2) +
+    ' ÷ ' + fmt(p.proc) + ') = floor(' + (Math.round(raw * 100) / 100) + ') = ' + n;
+  document.getElementById('formulaSpare').textContent = ok ? t.spare(n, s.start, s.max) : '';
+  document.getElementById('basisNote').innerHTML = t.basis;
+
+  document.getElementById('modeAdvice').textContent = t['adv_' + mode];
+  document.getElementById('confBlock').textContent = buildConfig(p, n, s);
+  document.getElementById('reloadHint').textContent = t.reload;
+
+  renderReverse(p, n);
+}
+
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll('.seg-btn').forEach(function (b) {
+    var on = b.getAttribute('data-mode') === m;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-checked', on ? 'true' : 'false');
+  });
+  calculate();
+}
+
+function copyText(id, btn) {
+  var text = document.getElementById(id).textContent;
+  var done = function () {
+    btn.textContent = L().copied;
+    setTimeout(function () { btn.textContent = (window.sfLang && sfLang.current === 'ko') ? '복사' : 'Copy'; }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+  } else { fallbackCopy(text); done(); }
+}
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+
+['ramGb', 'resOs', 'resDb', 'resRedis', 'resOther', 'bufferPct', 'procMb', 'targetChildren'].forEach(function (id) {
+  document.getElementById(id).addEventListener('input', calculate);
+});
+document.addEventListener('sfLangChanged', calculate);
+calculate();
+</script>
+
+</body>
+</html>
