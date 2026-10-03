@@ -34,7 +34,11 @@
       --text-2: #a1a1aa;
       --text-3: #80808a;
       --accent: #6366f1;
+      --accent-text: #818cf8;
+      --accent-strong: #4f46e5;
       --success: #22c55e;
+      --success-fg: #0a0a0b;
+      --success-hover: #4ade80;
       --success-bg: rgba(34,197,94,0.08);
       --radius: 8px;
       --radius-lg: 12px;
@@ -53,7 +57,7 @@
       min-height: 100vh;
     }
 
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent-text); text-decoration: none; }
     a:hover { opacity: 0.8; }
 
     /* Nav */
@@ -223,7 +227,7 @@
     }
 
     .btn-generate {
-      background: var(--accent);
+      background: var(--accent-strong);
       border: none;
       border-radius: var(--radius);
       color: #fff;
@@ -279,7 +283,7 @@
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
-    .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-copy:hover { border-color: var(--accent); color: var(--accent-text); }
     .btn-copy.copied { border-color: var(--success); color: var(--success); }
 
     .output-code {
@@ -313,7 +317,7 @@
     .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
     .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
     .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
     .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
 
@@ -322,7 +326,7 @@
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
     .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
@@ -392,7 +396,7 @@
       background: var(--success);
       border: none;
       border-radius: var(--radius);
-      color: #000;
+      color: var(--success-fg);
       font-family: var(--font);
       font-size: 14px;
       font-weight: 600;
@@ -400,7 +404,7 @@
       white-space: nowrap;
       transition: opacity 0.15s;
     }
-    .btn-vultr:hover { opacity: 0.85; color: #000; }
+    .btn-vultr:hover { background: var(--success-hover); color: var(--success-fg); }
 
     /* Footer */
     footer {
@@ -444,6 +448,11 @@
     /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
       input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
+    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    @media (max-width: 768px), (pointer: coarse) {
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
   </style>
   <script type="application/ld+json">
@@ -588,7 +597,7 @@
         <div class="guide-card">
           <p class="guide-step">STEP 2</p>
           <h3>Adjust the commands</h3>
-          <p>Override the install and start commands to match your project. For Node.js: <code style="color:var(--accent)">npm ci</code> vs <code style="color:var(--accent)">yarn install --frozen-lockfile</code>.</p>
+          <p>Override the install and start commands to match your project. For Node.js: <code style="color:var(--accent-text)">npm ci</code> vs <code style="color:var(--accent-text)">yarn install --frozen-lockfile</code>.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 3</p>
@@ -598,7 +607,7 @@
         <div class="guide-card">
           <p class="guide-step">STEP 4</p>
           <h3>Copy and deploy</h3>
-          <p>Paste the Dockerfile into your project root. Also copy the .dockerignore to keep your images lean. Then <code style="color:var(--accent)">docker build -t myapp .</code></p>
+          <p>Paste the Dockerfile into your project root. Also copy the .dockerignore to keep your images lean. Then <code style="color:var(--accent-text)">docker build -t myapp .</code></p>
         </div>
       </div>
     </div>
@@ -613,7 +622,7 @@
         <div class="guide-card">
           <p class="guide-step">STEP 2</p>
           <h3>명령어 조정</h3>
-          <p>프로젝트에 맞게 설치·시작 명령어를 수정하세요. Node.js의 경우 <code style="color:var(--accent)">npm ci</code>와 <code style="color:var(--accent)">yarn install --frozen-lockfile</code> 중 선택.</p>
+          <p>프로젝트에 맞게 설치·시작 명령어를 수정하세요. Node.js의 경우 <code style="color:var(--accent-text)">npm ci</code>와 <code style="color:var(--accent-text)">yarn install --frozen-lockfile</code> 중 선택.</p>
         </div>
         <div class="guide-card">
           <p class="guide-step">STEP 3</p>
@@ -623,7 +632,7 @@
         <div class="guide-card">
           <p class="guide-step">STEP 4</p>
           <h3>복사 후 배포</h3>
-          <p>Dockerfile을 프로젝트 루트에 붙여넣으세요. .dockerignore도 복사해 이미지를 가볍게 유지하세요. 그 다음 <code style="color:var(--accent)">docker build -t myapp .</code></p>
+          <p>Dockerfile을 프로젝트 루트에 붙여넣으세요. .dockerignore도 복사해 이미지를 가볍게 유지하세요. 그 다음 <code style="color:var(--accent-text)">docker build -t myapp .</code></p>
         </div>
       </div>
     </div>
@@ -639,19 +648,19 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>Why run containers as a non-root user?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">By default, processes inside a Docker container run as root, which means a container escape bug gives an attacker full root on the host. Creating a dedicated user (like <code style="color:var(--accent)">node</code> or <code style="color:var(--accent)">appuser</code>) with no shell or sudo access limits the blast radius of any exploit.</div>
+        <div class="faq-a">By default, processes inside a Docker container run as root, which means a container escape bug gives an attacker full root on the host. Creating a dedicated user (like <code style="color:var(--accent-text)">node</code> or <code style="color:var(--accent-text)">appuser</code>) with no shell or sudo access limits the blast radius of any exploit.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What should I put in .dockerignore?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">Exclude anything you don't need in the image: <code style="color:var(--accent)">node_modules</code> (reinstalled during build), <code style="color:var(--accent)">.git</code>, test files, local .env files, CI configs, and editor configs. A lean build context means faster <code style="color:var(--accent)">docker build</code> times and smaller images.</div>
+        <div class="faq-a">Exclude anything you don't need in the image: <code style="color:var(--accent-text)">node_modules</code> (reinstalled during build), <code style="color:var(--accent-text)">.git</code>, test files, local .env files, CI configs, and editor configs. A lean build context means faster <code style="color:var(--accent-text)">docker build</code> times and smaller images.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between CMD and ENTRYPOINT?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a">ENTRYPOINT sets the executable; CMD sets its default arguments. If you only use CMD, users can override it entirely. If you combine ENTRYPOINT with CMD, users can override the arguments but not the main process. For most apps <code style="color:var(--accent)">CMD ["node", "server.js"]</code> works fine. Use ENTRYPOINT when the container should always run a specific binary.</div>
+        <div class="faq-a">ENTRYPOINT sets the executable; CMD sets its default arguments. If you only use CMD, users can override it entirely. If you combine ENTRYPOINT with CMD, users can override the arguments but not the main process. For most apps <code style="color:var(--accent-text)">CMD ["node", "server.js"]</code> works fine. Use ENTRYPOINT when the container should always run a specific binary.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>Which base image tag should I use — latest, slim, or alpine?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><code style="color:var(--accent)">slim</code> images remove most dev tools to save ~100 MB. <code style="color:var(--accent)">alpine</code> is even smaller but uses musl libc, which can break native Node addons or Python C extensions. For production, <code style="color:var(--accent)">node:20-slim</code> or <code style="color:var(--accent)">python:3.12-slim</code> is the practical sweet spot. Pin to a specific version (not <code style="color:var(--accent)">latest</code>) so builds are reproducible.</div>
+        <div class="faq-a"><code style="color:var(--accent-text)">slim</code> images remove most dev tools to save ~100 MB. <code style="color:var(--accent-text)">alpine</code> is even smaller but uses musl libc, which can break native Node addons or Python C extensions. For production, <code style="color:var(--accent-text)">node:20-slim</code> or <code style="color:var(--accent-text)">python:3.12-slim</code> is the practical sweet spot. Pin to a specific version (not <code style="color:var(--accent-text)">latest</code>) so builds are reproducible.</div>
       </div>
     </div>
     <div class="lang-ko">

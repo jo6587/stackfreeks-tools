@@ -34,7 +34,11 @@
       --text-2: #a1a1aa;
       --text-3: #80808a;
       --accent: #6366f1;
+      --accent-text: #818cf8;
+      --accent-strong: #4f46e5;
       --success: #22c55e;
+      --success-fg: #0a0a0b;
+      --success-hover: #4ade80;
       --success-bg: rgba(34,197,94,0.08);
       --error: #ef4444;
       --error-bg: rgba(239,68,68,0.08);
@@ -54,7 +58,7 @@
       min-height: 100vh;
     }
 
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent-text); text-decoration: none; }
     a:hover { opacity: 0.8; }
 
     /* Nav */
@@ -254,7 +258,7 @@
       background: var(--surface-2);
     }
     .btn-action.primary {
-      background: var(--accent);
+      background: var(--accent-strong);
       border-color: var(--accent);
       color: #fff;
     }
@@ -354,7 +358,7 @@
     .cheatsheet-table tr:last-child td { border-bottom: none; }
     .cheatsheet-table code {
       font-family: "SFMono-Regular", "Consolas", monospace;
-      color: var(--accent);
+      color: var(--accent-text);
       font-size: 12px;
       background: rgba(99,102,241,0.08);
       border-radius: 4px;
@@ -372,7 +376,7 @@
     .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
     .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
     .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
     .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
 
@@ -381,10 +385,10 @@
     .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
     .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
@@ -402,7 +406,7 @@
       align-items: center;
       gap: 6px;
       font-size: 14px;
-      color: var(--accent);
+      color: var(--accent-text);
     }
 
     /* Vultr Banner */
@@ -442,7 +446,7 @@
     .vultr-cta {
       flex-shrink: 0;
       background: var(--success);
-      color: #fff;
+      color: var(--success-fg);
       font-weight: 600;
       font-size: 14px;
       padding: 10px 20px;
@@ -450,7 +454,7 @@
       white-space: nowrap;
       transition: opacity 0.15s;
     }
-    .vultr-cta:hover { opacity: 0.85; }
+    .vultr-cta:hover { background: var(--success-hover); }
 
     /* Footer */
     footer {
@@ -503,6 +507,11 @@
     /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
       input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
+    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    @media (max-width: 768px), (pointer: coarse) {
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "URL Encoder / Decoder", "description": "URL encoder and decoder for URLs and query strings. Percent-encode a component or a full URL instantly. Free, no account.", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "URL 인코딩이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 \"%\" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 %20 이 되고 \"&\"는 %26 이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다."}}, {"@type": "Question", "name": "encodeURI와 encodeURIComponent의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "encodeURI 는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: :// ? & = # / )는 그대로 두고 나머지만 인코딩합니다. encodeURIComponent 는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, - _ . ! ~ * ' ( ) 를 제외한 모든 것을 인코딩합니다."}}, {"@type": "Question", "name": "왜 공백이 %20이 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 \"%\"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 \"+\"로 표현하기도 하지만, 현대 표준은 %20 을 사용합니다."}}, {"@type": "Question", "name": "URL 인코딩이 필요한 경우는 언제인가요?", "acceptedAnswer": {"@type": "Answer", "text": "URL에 허용되지 않거나 특별한 의미를 가진 문자가 포함될 때마다 인코딩이 필요합니다. 예를 들면: URL을 쿼리 파라미터로 전달할 때, JavaScript에서 동적 링크를 만들 때, API 요청을 프로그래밍 방식으로 작성할 때, 쿼리 문자열 값에 공백, 앰퍼샌드, 해시 기호 등을 포함할 때입니다."}}, {"@type": "Question", "name": "쿼리 파라미터에 특수 문자를 인코딩할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 바로 Encode Component 가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 encodeURIComponent(\"user@example.com\") 을 사용하면 user%40example.com 이 됩니다. 개별 값에는 항상 encodeURIComponent 를 사용하세요."}}]}</script>
@@ -636,15 +645,15 @@
 <p class="faq-title">자주 묻는 질문</p>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>URL 인코딩이란 무엇인가요?</span><span class="faq-icon">+</span></button>
-<div class="faq-a">URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 "%" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 <code style="font-family:monospace;color:var(--accent)">%20</code>이 되고 "&"는 <code style="font-family:monospace;color:var(--accent)">%26</code>이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다.</div>
+<div class="faq-a">URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 "%" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 <code style="font-family:monospace;color:var(--accent-text)">%20</code>이 되고 "&"는 <code style="font-family:monospace;color:var(--accent-text)">%26</code>이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다.</div>
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>encodeURI와 encodeURIComponent의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
-<div class="faq-a"><code style="font-family:monospace;color:var(--accent)">encodeURI</code>는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: <code style="font-family:monospace;color:var(--accent)">:// ? & = # /</code>)는 그대로 두고 나머지만 인코딩합니다. <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, <code style="font-family:monospace;color:var(--accent)">- _ . ! ~ * ' ( )</code>를 제외한 모든 것을 인코딩합니다.</div>
+<div class="faq-a"><code style="font-family:monospace;color:var(--accent-text)">encodeURI</code>는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: <code style="font-family:monospace;color:var(--accent-text)">:// ? & = # /</code>)는 그대로 두고 나머지만 인코딩합니다. <code style="font-family:monospace;color:var(--accent-text)">encodeURIComponent</code>는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, <code style="font-family:monospace;color:var(--accent-text)">- _ . ! ~ * ' ( )</code>를 제외한 모든 것을 인코딩합니다.</div>
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>왜 공백이 %20이 되나요?</span><span class="faq-icon">+</span></button>
-<div class="faq-a">공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 "%"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 "+"로 표현하기도 하지만, 현대 표준은 <code style="font-family:monospace;color:var(--accent)">%20</code>을 사용합니다.</div>
+<div class="faq-a">공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 "%"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 "+"로 표현하기도 하지만, 현대 표준은 <code style="font-family:monospace;color:var(--accent-text)">%20</code>을 사용합니다.</div>
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>URL 인코딩이 필요한 경우는 언제인가요?</span><span class="faq-icon">+</span></button>
@@ -652,7 +661,7 @@
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>쿼리 파라미터에 특수 문자를 인코딩할 수 있나요?</span><span class="faq-icon">+</span></button>
-<div class="faq-a">네, 바로 <strong>Encode Component</strong>가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 <code style="font-family:monospace;color:var(--accent)">encodeURIComponent("user@example.com")</code>을 사용하면 <code style="font-family:monospace;color:var(--accent)">user%40example.com</code>이 됩니다. 개별 값에는 항상 <code style="font-family:monospace;color:var(--accent)">encodeURIComponent</code>를 사용하세요.</div>
+<div class="faq-a">네, 바로 <strong>Encode Component</strong>가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 <code style="font-family:monospace;color:var(--accent-text)">encodeURIComponent("user@example.com")</code>을 사용하면 <code style="font-family:monospace;color:var(--accent-text)">user%40example.com</code>이 됩니다. 개별 값에는 항상 <code style="font-family:monospace;color:var(--accent-text)">encodeURIComponent</code>를 사용하세요.</div>
 </div>
 </div>
 </section>

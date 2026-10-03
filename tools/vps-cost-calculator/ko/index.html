@@ -34,7 +34,11 @@
       --text-2: #a1a1aa;
       --text-3: #80808a;
       --accent: #6366f1;
+      --accent-text: #818cf8;
+      --accent-strong: #4f46e5;
       --success: #22c55e;
+      --success-fg: #0a0a0b;
+      --success-hover: #4ade80;
       --success-bg: rgba(34,197,94,0.08);
       --radius: 8px;
       --radius-lg: 12px;
@@ -52,7 +56,7 @@
       min-height: 100vh;
     }
 
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent-text); text-decoration: none; }
     a:hover { opacity: 0.8; }
 
     /* Nav */
@@ -367,7 +371,7 @@
     .vultr-cta {
       display: inline-block;
       background: var(--success);
-      color: #000;
+      color: var(--success-fg);
       font-weight: 500;
       font-size: 13px;
       padding: 8px 18px;
@@ -376,7 +380,7 @@
       transition: opacity 0.15s;
       flex-shrink: 0;
     }
-    .vultr-cta:hover { opacity: 0.85; }
+    .vultr-cta:hover { background: var(--success-hover); }
 
     /* Footer */
     footer {
@@ -433,7 +437,7 @@
     .guide-step {
       font-size: 11px;
       font-weight: 500;
-      color: var(--accent);
+      color: var(--accent-text);
       margin-bottom: 8px;
     }
     .guide-card h3 {
@@ -464,10 +468,10 @@
     }
     .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
     .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent); }
+    .faq-q:hover { color: var(--accent-text); }
     .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
@@ -504,6 +508,11 @@
     /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
       input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+    }
+    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    @media (max-width: 768px), (pointer: coarse) {
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
+      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "VPS Cost Calculator", "description": "Compare monthly VPS costs across Vultr, Hetzner, and DigitalOcean. Filter by RAM and CPU to find the best-value plan instantly.", "url": "https://tools.stackfreeks.com/tools/vps-cost-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/vps-cost-calculator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "VPS란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "VPS(가상 사설 서버)는 클라우드 제공업체에서 임대하는 가상화된 서버입니다. 공유 호스팅과 달리 CPU와 RAM이 독립적으로 할당됩니다. 웹 앱, API, 데이터베이스, 게임 서버 등 상시 실행이 필요한 워크로드에 적합합니다."}}, {"@type": "Question", "name": "Hetzner가 Vultr나 DigitalOcean보다 훨씬 저렴한 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "Hetzner는 주로 유럽(독일, 핀란드)과 미국에 데이터센터를 운영합니다. 낮은 운영 비용 덕분에 훨씬 저렴한 가격을 제공할 수 있습니다. 단점은 리전이 적고, 아시아·남미 사용자는 레이턴시가 다소 높을 수 있습니다."}}, {"@type": "Question", "name": "실제로 RAM이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "경량 정적 사이트나 소규모 Node.js/Python 앱은 1 GB면 충분합니다. 대부분의 프로덕션 웹 앱과 소규모 데이터베이스(MySQL, PostgreSQL)는 2–4 GB가 적당합니다. 셀프 호스팅 툴, 대형 DB, 여러 서비스를 한 서버에서 운영한다면 8 GB 이상을 권장합니다."}}, {"@type": "Question", "name": "스토리지(SSD)는 월 요금에 포함되나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 목록의 모든 플랜은 NVMe/SSD 로컬 스토리지가 기본 포함됩니다. 단, 추가 블록 스토리지나 오브젝트 스토리지(S3 등)가 필요하면 별도 요금이 부과됩니다."}}, {"@type": "Question", "name": "가격 정보가 최신인가요?", "acceptedAnswer": {"@type": "Answer", "text": "가격은 2025년 중반 기준으로 수동 관리되는 참고 데이터입니다. 클라우드 제공업체는 가격을 수시로 변경할 수 있으므로, 구매 전 반드시 해당 제공업체의 공식 가격 페이지에서 확인하세요."}}]}</script>
