@@ -147,6 +147,12 @@ def check(slug: str) -> tuple[list[str], list[str]]:
             need(contrast(m.group(1), b.group(1)) >= low, f"{tok} {m.group(1)} < {low}:1 on {against}")
     need(re.search(r"width:\s*max\(100%,\s*40px\);\s*height:\s*max\(100%,\s*40px\)", html),
          "no 40px touch-target rule (sf-touch-40; .lang-toggle/nav/buttons; design-guide §5-5)")
+    need(re.search(r"@media\s*\(max-width:\s*480px\)\s*\{[^{}]*\{[^}]*\}[^{}]*\{[^}]*\}\s*nav\s*:is\(a,\s*button\)\s*\{\s*white-space:\s*nowrap", html),
+         "no sf-nav-compact block (nav must stay one row at 375/320; design-guide §5-1)")
+    need(not re.search(r"\.(nav-back|back-link)\s*\{\s*display:\s*none", html),
+         ".nav-back/.back-link hidden — the back link must stay visible at every width (design-guide §5-1)")
+    need(not re.search(r"(?<![-\w])color\s*:\s*#818cf8", html),
+         "hardcoded #818cf8 — use var(--accent-text) (design-guide §2)")
 
     # mobile + content
     need(re.search(r"@media\s*\(max-width:\s*768px\)", html), "no @media (max-width: 768px)")

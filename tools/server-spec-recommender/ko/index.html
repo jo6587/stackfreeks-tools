@@ -448,6 +448,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Server Spec Recommender", "description": "Server spec recommender: pick your workload and traffic to get RAM, CPU and storage recommendations for a VPS. Free, no signup.", "url": "https://tools.stackfreeks.com/tools/server-spec-recommender/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/server-spec-recommender/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "WordPress 사이트에 RAM이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "기본 WordPress 블로그는 1GB RAM에서 실행되지만 여유가 없습니다. WP Super Cache 같은 캐싱 플러그인을 사용하면 1GB로 저트래픽은 가능합니다. WooCommerce나 페이지 빌더를 추가하면 최소 2GB가 필요합니다. 하루 5천 이상 방문이면 속도 저하를 막기 위해 2–4GB RAM으로 시작하세요."}}, {"@type": "Question", "name": "앱과 같은 서버에 데이터베이스를 운영할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 소규모 프로젝트에서는 일반적입니다. 단점은 앱과 DB가 같은 RAM·CPU를 공유한다는 점입니다. 개인 또는 소규모 트래픽에는 괜찮습니다. 중규모 이상이 되거나 고가용성이 필요하면 DB를 전용 서버로 분리해 리소스 경쟁을 없애고 스케일링을 단순화하세요."}}, {"@type": "Question", "name": "vCPU 수와 실제 성능의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "vCPU는 물리 하드웨어에서 공유되는 가상 코어입니다. Vultr의 1 vCPU는 현대 서버 CPU의 스레드 하나와 비슷합니다. 대부분의 웹 앱은 CPU보다 RAM이 병목입니다. CPU가 병목이 되는 경우는 이미지 처리, 동영상 인코딩, 대용량 CI/CD 빌드 같은 연산 집중 작업입니다."}}, {"@type": "Question", "name": "VPS 플랜을 언제 업그레이드해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "지속적인 RAM 사용률이 80%를 넘거나, 평균 CPU 부하가 장시간 70% 이상을 유지하거나, 응답 시간이 느려지기 시작하면 업그레이드하세요. Linux에서 htop 이나 free -h 로 모니터링하세요. Vultr를 포함한 대부분의 플랫폼은 빠른 재부팅으로 플랜을 업그레이드할 수 있습니다."}}, {"@type": "Question", "name": "Vultr 가격은 AWS나 Google Cloud와 비교해 어떤가요?", "acceptedAnswer": {"@type": "Answer", "text": "Vultr는 동급 사양의 AWS EC2나 Google Cloud Compute Engine보다 보통 40–60% 저렴합니다. $6/월 플랜(1 vCPU, 1GB RAM) vs AWS t3.micro(약 $8.50/월)가 일반적인 비교입니다. Vultr는 대역폭과 NVMe SSD 스토리지가 플랜 가격에 포함되어 있고, AWS는 네트워크 이그레스 비용이 별도로 청구됩니다."}}]}</script>

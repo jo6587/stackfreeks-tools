@@ -508,6 +508,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style>  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"UUID Generator","description":"Generate random UUID v4 online. Bulk generate up to 100 UUIDs, copy with one click. Runs in your browser — nothing is sent to a server.","url":"https://tools.stackfreeks.com/tools/uuid-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>

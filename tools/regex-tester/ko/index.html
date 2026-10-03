@@ -565,6 +565,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Regex Tester", "description": "Regex tester to debug regular expressions in your browser. Live match highlighting, flags, capture groups and a cheat sheet.", "url": "https://tools.stackfreeks.com/tools/regex-tester/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/regex-tester/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "어떤 정규식 엔진을 사용하나요?", "acceptedAnswer": {"@type": "Answer", "text": "자바스크립트 내장 RegExp 를 사용합니다. JavaScript, Node.js 및 대부분의 현대 엔진(V8, SpiderMonkey)과 완전 호환됩니다. 다른 언어용 정규식 작성 시 소소한 문법 차이가 있을 수 있습니다."}}, {"@type": "Question", "name": "g 플래그는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "글로벌(Global) — 첫 번째 매치에서 멈추지 않고 테스트 문자열에서 모든 매치를 찾습니다. g 가 없으면 첫 번째 매치만 반환되고 하이라이트됩니다."}}, {"@type": "Question", "name": "s 플래그는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "닷올(Dotall) — . 이 줄바꿈 문자( \\n )까지 일치하게 합니다. s 가 없으면 점(.)은 같은 줄의 문자만 일치합니다. ES2018에서 도입되었으며 모든 현대 브라우저에서 지원됩니다."}}, {"@type": "Question", "name": "캡처 그룹을 사용할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네 — (\\w+) 처럼 괄호를 사용해 캡처 그룹을 정의하세요. 결과 패널의 각 매치 카드에서 매치된 텍스트와 함께 캡처 그룹이 순서대로 표시됩니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->

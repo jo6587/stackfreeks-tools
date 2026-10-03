@@ -521,7 +521,7 @@
     }
 
     .code-block .c-comment { color: #52525b; }
-    .code-block .c-tag { color: #818cf8; }
+    .code-block .c-tag { color: var(--accent-text); }
     .code-block .c-attr { color: #6ee7b7; }
     .code-block .c-val { color: #fbbf24; }
 
@@ -670,6 +670,16 @@
     @media (max-width: 768px), (pointer: coarse) {
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
+    }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
     }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Open Graph Meta Tag Generator", "description": "Open Graph meta tag generator for OG and Twitter Card tags. Preview your page on Google, Facebook and X. Free, no account.", "url": "https://tools.stackfreeks.com/tools/og-meta-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/og-meta-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Open Graph 메타 태그란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "Open Graph(OG) 메타 태그는 페이지의 <head>에 삽입하는 HTML 코드로, 페이스북·링크드인·슬랙 등에서 링크를 공유할 때 보이는 제목, 설명, 이미지를 제어합니다."}}, {"@type": "Question", "name": "OG 이미지 권장 크기는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "권장 OG 이미지 크기는 1200 × 630 픽셀(약 1.91:1 비율)입니다. 페이스북, 트위터(summary_large_image), 링크드인 모두에서 잘 작동합니다. 트위터 \"summary\" 카드 유형은 1:1 정사각형 이미지(최소 144 × 144 px)가 사용됩니다."}}, {"@type": "Question", "name": "페이스북에서 OG 이미지가 표시되지 않는 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "페이스북은 OG 데이터를 강하게 캐시합니다. 메타 태그를 업데이트한 후 Facebook Sharing Debugger 를 사용해 캐시를 강제 갱신하세요. 이미지 URL이 공개 접근 가능하고 서버가 올바른 Content-Type 헤더를 반환하는지도 확인하세요."}}, {"@type": "Question", "name": "Twitter Card란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "Twitter Card는 트위터에서 링크를 공유할 때 어떻게 보일지 제어하는 메타 태그입니다. 가장 많이 쓰이는 유형은 큰 이미지와 함께 제목·설명을 표시하는 \"summary_large_image\"입니다. OG 태그와 별도로 Twitter Card 메타 태그를 추가해야 합니다."}}, {"@type": "Question", "name": "메타 태그가 SEO에 영향을 미치나요?", "acceptedAnswer": {"@type": "Answer", "text": "<title>과 <meta name=\"description\"> 태그는 구글 검색 결과 표시에 직접 영향을 미치며 클릭률(CTR)에도 영향을 줍니다. OG와 Twitter Card 태그는 직접적인 랭킹 요소는 아니지만, 더 나은 소셜 미리 보기는 트래픽을 늘려 간접적인 SEO 신호로 작용합니다."}}]}</script>

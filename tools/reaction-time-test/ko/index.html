@@ -246,6 +246,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Reaction Time Test", "description": "Free online reaction time test. Click when the box turns green across 5 attempts to measure your average visual reaction time in milliseconds and see how your reflexes compare.", "url": "https://tools.stackfreeks.com/tools/reaction-time-test/ko/", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/reaction-time-test/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "좋은 반응 속도는 어느 정도인가요?", "acceptedAnswer": {"@type": "Answer", "text": "이런 단순 시각 반응 속도 테스트에서는 성인 기준 약 200~270ms면 좋은 편입니다. 인간 평균은 약 273ms입니다. 200ms 미만은 훈련된 게이머나 운동선수 수준으로 매우 우수하며, 300ms 이상도 특히 노트북 트랙패드나 디스플레이·입력 지연이 있는 환경에서는 완전히 정상입니다."}}, {"@type": "Question", "name": "나이대별 평균 반응 속도는 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "반응 속도는 10대 후반에서 20대에 가장 빠르며 클릭 테스트에서 보통 250~270ms입니다. 이후 점차 느려져 40대에는 280~300ms, 60대 이후에는 300~350ms에 가깝습니다. 어린이는 주의력과 운동 조절이 아직 발달 중이라 젊은 성인보다 느립니다. 이는 평균일 뿐이며 개인차와 연습이 나이보다 더 큰 영향을 줍니다."}}, {"@type": "Question", "name": "반응 속도를 어떻게 개선하나요?", "acceptedAnswer": {"@type": "Answer", "text": "해당 과제 자체를 반복 연습하는 것이 가장 효과적이므로 측정 전 워밍업을 하세요. 그 외에 충분한 수면, 수분 섭취, 음주 제한, 유선 마우스와 고주사율 모니터 사용, 방해 요소 제거가 도움이 됩니다. 규칙적인 유산소 운동과 빠른 스포츠·게임도 작지만 실질적인 향상을 줍니다. 극적인 변화보다는 평균에서 20~40ms를 줄이는 것이 현실적인 목표입니다."}}, {"@type": "Question", "name": "제 반응 속도가 왜 느린가요?", "acceptedAnswer": {"@type": "Answer", "text": "흔한 원인은 피로, 집중력 저하, 카페인 효과 감소, 그리고 워밍업 부족입니다. 하드웨어도 영향을 줍니다: 무선 마우스, 60Hz 화면, 브라우저 백그라운드 부하, 터치 입력은 각각 10~50ms를 더할 수 있습니다. 초록 신호를 미리 예상해 일찍 클릭하면 해당 시도가 재시작되어 평균이 나빠집니다. 정신이 맑을 때 깨끗한 라운드를 여러 번 진행해 실제 기준선을 확인하세요."}}, {"@type": "Question", "name": "200ms 반응 속도는 좋은 건가요?", "acceptedAnswer": {"@type": "Answer", "text": "네. 단순 시각 반응 테스트에서 평균 200ms는 대부분의 사람보다 빠르며 경쟁 게이머와 운동선수 범위에 속합니다. 인간 시각 반응의 이론적 한계는 약 150ms인데, 빛이 망막에서 처리되어 신경계를 거쳐 근육 반응을 일으키기까지 걸리는 시간 때문입니다. 따라서 꾸준히 200ms를 기록한다면 거의 최적에 가깝습니다."}}]}</script>

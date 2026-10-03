@@ -471,6 +471,16 @@
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
       :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
     }
+    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
+    @media (max-width: 480px) {
+      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
+      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
+      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
+      nav .nav-sep { display: none !important; }
+    }
+    @media (max-width: 360px) {
+      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+    }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "CSS Filter Previewer", "description": "Preview and generate CSS filter effects in real-time. Adjust blur, brightness, contrast, saturation and more — copy the code instantly.", "url": "https://tools.stackfreeks.com/tools/css-filter-previewer/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/css-filter-previewer/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "CSS filter 속성이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "CSS filter 속성은 이미지 편집 없이 브라우저에서 직접 요소에 블러, 밝기 조정, 그레이스케일 변환 등 시각적 효과를 적용합니다. 이미지, 비디오, 배경, 모든 HTML 요소에 사용할 수 있습니다."}}, {"@type": "Question", "name": "일부 필터 함수만 출력에 포함되는 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "기본값인 필터 함수(예: brightness(100%) , contrast(100%) )는 시각적 효과가 없으므로 생략됩니다. 변경된 값만 포함해 생성되는 CSS를 최소화하고 깔끔하게 유지합니다. 아무것도 변경하지 않으면 filter: none; 이 표시됩니다."}}, {"@type": "Question", "name": "CSS 필터를 지원하는 브라우저는?", "acceptedAnswer": {"@type": "Answer", "text": "CSS 필터는 Chrome, Firefox, Safari, Edge, Opera 등 모든 최신 브라우저에서 지원됩니다. 전 세계 브라우저 지원율은 96% 이상이며, 현재는 벤더 프리픽스 없이 표준 filter 속성을 사용하면 됩니다."}}, {"@type": "Question", "name": "배경 이미지에도 CSS 필터를 적용할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 단 filter 는 자식 요소를 포함한 전체 요소에 적용됩니다. 배경만 필터링하려면 ::before 가상 요소에 배경을 지정하고 그 가상 요소에 filter 를 적용하세요. 또는 요소 뒤 영역에 효과를 주는 CSS backdrop-filter 를 활용할 수도 있습니다."}}, {"@type": "Question", "name": "여러 필터를 사용하면 성능에 영향을 미치나요?", "acceptedAnswer": {"@type": "Answer", "text": "CSS 필터는 최신 브라우저에서 GPU 가속이 적용되어 일반적으로 빠릅니다. 단, 큰 요소에 무거운 필터(특히 blur )를 적용하거나 연속 애니메이션에 사용하면 비용이 클 수 있습니다. 애니메이션에는 will-change: filter 를 사용해 브라우저가 해당 요소를 별도의 컴포지터 레이어로 승격하도록 힌트를 주세요."}}]}</script>
