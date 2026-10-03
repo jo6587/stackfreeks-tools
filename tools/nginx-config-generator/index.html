@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nginx Config Generator — Free Online Tool | StackFreeks</title>
-  <meta name="description" content="Generate nginx server block configs instantly. Supports SSL, PHP-FPM, reverse proxy, gzip, and static caching — copy or download your config." />
+  <meta name="description" content="Generate nginx server block configs instantly. Supports SSL, PHP-FPM, reverse proxy, gzip and static caching — copy or download your config." />
   <link rel="canonical" href="https://tools.stackfreeks.com/tools/nginx-config-generator/" />
   <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/nginx-config-generator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/nginx-config-generator/ko/" />
@@ -16,7 +16,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Nginx Config Generator — Free Online Tool | StackFreeks" />
-  <meta property="og:description" content="Generate nginx server block configs instantly. Supports SSL, PHP-FPM, reverse proxy, gzip, and static caching — copy or download your config." />
+  <meta property="og:description" content="Generate nginx server block configs instantly. Supports SSL, PHP-FPM, reverse proxy, gzip and static caching — copy or download your config." />
   <meta property="og:url" content="https://tools.stackfreeks.com/tools/nginx-config-generator/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
@@ -561,7 +561,7 @@
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
   </style>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"Nginx Config Generator","description":"Generate nginx server block configs instantly. Supports SSL, PHP-FPM, reverse proxy, gzip, and static caching — copy or download your config.","url":"https://tools.stackfreeks.com/tools/nginx-config-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Nginx Config Generator","description":"Generate nginx server block configs instantly. Supports SSL, PHP-FPM, reverse proxy, gzip and static caching — copy or download your config.","url":"https://tools.stackfreeks.com/tools/nginx-config-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why can't I use PHP-FPM and Proxy Pass at the same time?","acceptedAnswer":{"@type":"Answer","text":"PHP-FPM and Proxy Pass both handle the location / block differently — PHP-FPM uses FastCGI to pass PHP files to a PHP process, while Proxy Pass forwards all requests to an upstream server (e.g. Node.js, Python). Combining them on the same location / would create a conflict. If you need both, configure them under separate location blocks and edit the output manually."}},{"@type":"Question","name":"How do I get an SSL certificate with Let's Encrypt?","acceptedAnswer":{"@type":"Answer","text":"Install certbot and the nginx plugin: apt install certbot python3-certbot-nginx . Then run certbot --nginx -d example.com -d www.example.com . Certbot will obtain the certificate and update your nginx config automatically. The generated config uses the expected Let's Encrypt paths at /etc/letsencrypt/live/[domain]/ ."}},{"@type":"Question","name":"Where do I put the nginx config file on my server?","acceptedAnswer":{"@type":"Answer","text":"Save the file to /etc/nginx/sites-available/example.com . Then create a symlink: ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/ . Test the config with nginx -t , then reload: systemctl reload nginx . On some setups (e.g. CentOS), configs go directly in /etc/nginx/conf.d/ instead."}},{"@type":"Question","name":"What PHP-FPM socket path should I use?","acceptedAnswer":{"@type":"Answer","text":"The default socket path for PHP 8.1 on Ubuntu/Debian is /run/php/php8.1-fpm.sock — that's what this tool generates. If you're running a different PHP version (e.g. 8.2, 7.4), change the version number in the config. You can verify the actual socket path with ls /run/php/ on your server."}},{"@type":"Question","name":"Does this tool send my config data to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All config generation happens entirely in your browser with JavaScript. Nothing you type is transmitted anywhere. Your domain names and server paths stay completely private."}}]}
