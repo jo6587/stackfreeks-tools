@@ -440,7 +440,7 @@
       .hero h1 { font-size: 22px; }
     }
   </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Server Spec Recommender", "description": "Find the right VPS plan for your workload. Enter your use case and traffic scale to get instant RAM, CPU, and storage recommendations — free, no signup.", "url": "https://tools.stackfreeks.com/tools/server-spec-recommender/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/server-spec-recommender/ko/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Server Spec Recommender", "description": "Server spec recommender: pick your workload and traffic to get RAM, CPU and storage recommendations for a VPS. Free, no signup.", "url": "https://tools.stackfreeks.com/tools/server-spec-recommender/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/server-spec-recommender/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "WordPress 사이트에 RAM이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "기본 WordPress 블로그는 1GB RAM에서 실행되지만 여유가 없습니다. WP Super Cache 같은 캐싱 플러그인을 사용하면 1GB로 저트래픽은 가능합니다. WooCommerce나 페이지 빌더를 추가하면 최소 2GB가 필요합니다. 하루 5천 이상 방문이면 속도 저하를 막기 위해 2–4GB RAM으로 시작하세요."}}, {"@type": "Question", "name": "앱과 같은 서버에 데이터베이스를 운영할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 소규모 프로젝트에서는 일반적입니다. 단점은 앱과 DB가 같은 RAM·CPU를 공유한다는 점입니다. 개인 또는 소규모 트래픽에는 괜찮습니다. 중규모 이상이 되거나 고가용성이 필요하면 DB를 전용 서버로 분리해 리소스 경쟁을 없애고 스케일링을 단순화하세요."}}, {"@type": "Question", "name": "vCPU 수와 실제 성능의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "vCPU는 물리 하드웨어에서 공유되는 가상 코어입니다. Vultr의 1 vCPU는 현대 서버 CPU의 스레드 하나와 비슷합니다. 대부분의 웹 앱은 CPU보다 RAM이 병목입니다. CPU가 병목이 되는 경우는 이미지 처리, 동영상 인코딩, 대용량 CI/CD 빌드 같은 연산 집중 작업입니다."}}, {"@type": "Question", "name": "VPS 플랜을 언제 업그레이드해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "지속적인 RAM 사용률이 80%를 넘거나, 평균 CPU 부하가 장시간 70% 이상을 유지하거나, 응답 시간이 느려지기 시작하면 업그레이드하세요. Linux에서 htop 이나 free -h 로 모니터링하세요. Vultr를 포함한 대부분의 플랫폼은 빠른 재부팅으로 플랜을 업그레이드할 수 있습니다."}}, {"@type": "Question", "name": "Vultr 가격은 AWS나 Google Cloud와 비교해 어떤가요?", "acceptedAnswer": {"@type": "Answer", "text": "Vultr는 동급 사양의 AWS EC2나 Google Cloud Compute Engine보다 보통 40–60% 저렴합니다. $6/월 플랜(1 vCPU, 1GB RAM) vs AWS t3.micro(약 $8.50/월)가 일반적인 비교입니다. Vultr는 대역폭과 NVMe SSD 스토리지가 플랜 가격에 포함되어 있고, AWS는 네트워크 이그레스 비용이 별도로 청구됩니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
@@ -454,7 +454,8 @@
 </div>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/server-spec-recommender/">English</a>
 </nav>
-<!-- ADSENSE_SLOT_TOP: Insert AdSense code here after approval -->
+<!-- ADSENSE_SLOT_TOP -->
+<!-- Insert AdSense code here after approval -->
 <div class="adsense-slot"></div>
 <!-- Hero -->
 <div class="hero">
@@ -492,7 +493,7 @@
 
 <div class="lang-ko">
 <h2>사용 방법</h2>
-<div class="guide-steps">
+<div class="guide-steps guide-grid">
 <div class="guide-step">
 <div class="step-num">Step 1</div>
 <div class="step-title">워크로드 선택</div>
@@ -561,7 +562,7 @@
 </div>
 </div>
 <!-- Related -->
-<div class="related-section">
+<div class="related-section sf-related">
 
 <div class="lang-ko">
 <h2>관련 도구</h2>

@@ -93,7 +93,8 @@ def check(slug: str) -> tuple[list[str], list[str]]:
          "no /ko/ page or sitemap entry (run scripts/build_ko_pages.py)")
 
     # Vultr affiliate
-    vultr = [a for a in soup.find_all("a", href=True) if "vultr.com" in a["href"]]
+    # plain vultr.com links (pricing citations) are fine; anything carrying a ref must be ours + sponsored
+    vultr = [a for a in soup.find_all("a", href=True) if "vultr.com" in a["href"] and "ref=" in a["href"]]
     need(vultr, "no Vultr affiliate link")
     for a in vultr:
         need(a["href"] == VULTR_REF, f"Vultr link {a['href']} != {VULTR_REF}")

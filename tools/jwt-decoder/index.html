@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JWT Decoder — Decode JSON Web Tokens Online | StackFreeks</title>
-  <meta name="description" content="Decode and inspect JWT tokens instantly. View header, payload, and expiry in a clean interface. Free online JWT decoder — no account, works in your browser." />
+  <meta name="description" content="JWT decoder to inspect token header, payload and expiry instantly. Free, no account needed. Decoding runs in your browser." />
   <link rel="canonical" href="https://tools.stackfreeks.com/tools/jwt-decoder/" />
   <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/jwt-decoder/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/jwt-decoder/ko/" />
@@ -16,7 +16,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="JWT Decoder — Decode JSON Web Tokens Online | StackFreeks" />
-  <meta property="og:description" content="Decode and inspect JWT tokens instantly. View header, payload, and expiry in a clean interface. Free online JWT decoder — no account, works in your browser." />
+  <meta property="og:description" content="JWT decoder to inspect token header, payload and expiry instantly. Free, no account needed. Decoding runs in your browser." />
   <meta property="og:url" content="https://tools.stackfreeks.com/tools/jwt-decoder/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
@@ -96,11 +96,11 @@
     .nav-right { display: flex; align-items: center; gap: 16px; }
     .nav-back {
       font-size: 13px;
-      color: var(--text-3);
+      color: var(--text-2);
       text-decoration: none;
       transition: color 0.15s;
     }
-    .nav-back:hover { color: var(--text-2); opacity: 1; }
+    .nav-back:hover { color: var(--text-1); opacity: 1; }
     .lang-toggle {
       background: transparent;
       border: 1px solid var(--border);
@@ -618,7 +618,7 @@
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
   </style>  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"JWT Decoder","description":"Decode and inspect JWT tokens instantly. View header, payload, and expiry in a clean interface. Free online JWT decoder — no account, works in your browser.","url":"https://tools.stackfreeks.com/tools/jwt-decoder/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  {"@context":"https://schema.org","@type":"WebApplication","name":"JWT Decoder","description":"JWT decoder to inspect token header, payload and expiry instantly. Free, no account needed. Decoding runs in your browser.","url":"https://tools.stackfreeks.com/tools/jwt-decoder/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a JWT token?","acceptedAnswer":{"@type":"Answer","text":"A JSON Web Token (JWT) is a compact, URL-safe token format defined in RFC 7519 . It consists of three base64url-encoded parts separated by dots: header.payload.signature . The header describes the signing algorithm, the payload carries claims (user data, expiry, etc.), and the signature ensures the token hasn't been tampered with."}},{"@type":"Question","name":"Is my JWT token safe to paste here?","acceptedAnswer":{"@type":"Answer","text":"Yes. All decoding happens entirely in your browser using JavaScript — nothing is transmitted to any server. You can verify this by checking the browser's Network tab while using the tool. That said, avoid sharing production tokens with sensitive data in untrusted environments as a general security practice."}},{"@type":"Question","name":"Why isn't the signature verified?","acceptedAnswer":{"@type":"Answer","text":"JWT signature verification requires the secret key (for HMAC algorithms like HS256) or the public key (for asymmetric algorithms like RS256). These keys are never included in the token itself, and your browser has no way to obtain them. Verification must happen server-side where the key is securely stored."}},{"@type":"Question","name":"What is the exp claim?","acceptedAnswer":{"@type":"Answer","text":"The exp (Expiration Time) claim specifies when the token expires, as a Unix timestamp (seconds since January 1, 1970 UTC). Servers should reject tokens with an exp in the past. This tool converts the value to a human-readable date and shows whether the token is currently valid or expired."}},{"@type":"Question","name":"How do I decode a JWT in code?","acceptedAnswer":{"@type":"Answer","text":"In JavaScript: JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))) . In Node.js use the jsonwebtoken library. In Python use PyJWT . In Go use golang-jwt/jwt . Remember that decoding is not the same as verification — always verify tokens server-side before trusting their contents."}}]}

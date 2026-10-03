@@ -6,10 +6,10 @@ so past tools feed back into planning (tool-picker) and lessons (retro).
 
 One-time setup:
   1. pip install google-auth google-auth-oauthlib
-  2. python scripts/performance.py → a browser opens → consent as the Search Console owner.
-     Token is saved to gsc-token.json (gitignored).
+  2. Nothing else if the WordPress pipeline already has gsc-token.json — same Google account and
+     scope, so its token is shared (refreshes are written back there). Otherwise a browser opens to consent.
 Same desktop OAuth app as 04_Ops_Briefing and the WordPress pipeline (only client_secret.json is read).
-Env overrides: GSC_CLIENT_SECRET (path), GSC_SITE (default https://tools.stackfreeks.com/)
+Env overrides: GSC_CLIENT_SECRET, GSC_TOKEN (paths), GSC_SITE (default sc-domain:tools.stackfreeks.com)
 """
 import os
 import subprocess
@@ -25,9 +25,9 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 
 ROOT = Path(__file__).resolve().parent.parent
 CLIENT_SECRET = Path(os.getenv("GSC_CLIENT_SECRET", r"F:\02_PipeLineWork\04_Ops_Briefing\_config\client_secret.json"))
-TOKEN_FILE = ROOT / "gsc-token.json"
+TOKEN_FILE = Path(os.getenv("GSC_TOKEN", ROOT.parent / "02_Autoblog_StackFreeks_Wordpress" / "gsc-token.json"))
 SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
-SITE = os.getenv("GSC_SITE", "https://tools.stackfreeks.com/")
+SITE = os.getenv("GSC_SITE", "sc-domain:tools.stackfreeks.com")
 BASE = "https://tools.stackfreeks.com/tools/"
 DAYS = 28
 LAG = 3  # GSC data is ~2-3 days behind

@@ -6,7 +6,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Htpasswd Generator — Create .htpasswd Entries Online | StackFreeks</title>
-  <meta name="description" content="Generate .htpasswd file entries for Apache and Nginx basic auth. Free online htpasswd generator — bcrypt, MD5, SHA1, and plain formats. Client-side only, no server." />
+  <meta name="description" content="Htpasswd generator for Apache and Nginx basic auth. Create bcrypt, MD5, SHA1 or plain .htpasswd entries. Client-side, free." />
   <link rel="canonical" href="https://tools.stackfreeks.com/tools/htpasswd-generator/" />
   <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/htpasswd-generator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/htpasswd-generator/ko/" />
@@ -16,7 +16,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Htpasswd Generator — Create .htpasswd Entries Online | StackFreeks" />
-  <meta property="og:description" content="Generate .htpasswd file entries for Apache and Nginx basic auth. Free online htpasswd generator — bcrypt, MD5, SHA1, and plain formats. Client-side only, no server." />
+  <meta property="og:description" content="Htpasswd generator for Apache and Nginx basic auth. Create bcrypt, MD5, SHA1 or plain .htpasswd entries. Client-side, free." />
   <meta property="og:url" content="https://tools.stackfreeks.com/tools/htpasswd-generator/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
@@ -119,11 +119,11 @@
     .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
     .nav-back {
       font-size: 13px;
-      color: var(--text-3);
+      color: var(--text-2);
       text-decoration: none;
       transition: color 0.15s;
     }
-    .nav-back:hover { color: var(--text-2); }
+    .nav-back:hover { color: var(--text-1); }
 
     /* ── Hero ── */
     .hero {
@@ -577,7 +577,7 @@
     .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
     @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
   </style>  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"Htpasswd Generator","description":"Generate .htpasswd file entries for Apache and Nginx basic auth. Free online htpasswd generator — bcrypt, MD5, SHA1, and plain formats. Client-side only, no server.","url":"https://tools.stackfreeks.com/tools/htpasswd-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Htpasswd Generator","description":"Htpasswd generator for Apache and Nginx basic auth. Create bcrypt, MD5, SHA1 or plain .htpasswd entries. Client-side, free.","url":"https://tools.stackfreeks.com/tools/htpasswd-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is an .htpasswd file?","acceptedAnswer":{"@type":"Answer","text":"An .htpasswd file is a flat text file that stores username and hashed password pairs, one per line. Apache and Nginx use it to enforce HTTP Basic Authentication — prompting visitors for a username and password before serving protected content."}},{"@type":"Question","name":"Which hash format should I use?","acceptedAnswer":{"@type":"Answer","text":"bcrypt is the best choice for new setups. It's slow by design (making brute-force attacks impractical) and is supported by Apache 2.4+ and Nginx via the auth_basic module with a bcrypt-capable PAM backend. MD5-APR ( $apr1$ ) is widely supported but weaker. SHA1 is legacy and should be avoided on new deployments. Plain text is never acceptable in production."}},{"@type":"Question","name":"Is bcrypt safe for .htpasswd?","acceptedAnswer":{"@type":"Answer","text":"Yes. bcrypt at cost factor 10 requires roughly 100ms per hash check, making automated credential-stuffing attacks extremely slow. Apache 2.4+ supports bcrypt natively via AuthType Basic + AuthUserFile . Note: Nginx does not natively verify bcrypt hashes — you need a bcrypt-capable PAM module or a reverse-proxy auth solution."}},{"@type":"Question","name":"How do I use .htpasswd with Nginx?","acceptedAnswer":{"@type":"Answer","text":"Add these directives to your Nginx server or location block: auth_basic \"Protected Area\"; auth_basic_user_file /etc/nginx/.htpasswd; Nginx supports MD5-APR and SHA1 natively. For bcrypt support, install the libnginx-mod-http-auth-pam package and configure PAM."}},{"@type":"Question","name":"Is my password sent to a server?","acceptedAnswer":{"@type":"Answer","text":"No. This tool runs entirely in your browser. All hashing is performed client-side using JavaScript — bcrypt via the bcryptjs library, SHA1 via the Web Crypto API, and MD5-APR via a self-contained pure-JS implementation. No data is transmitted anywhere."}}]}

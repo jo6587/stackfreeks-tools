@@ -82,10 +82,10 @@
 
     .back-link {
       font-size: 13px;
-      color: var(--text-3);
+      color: var(--text-2);
       transition: color 0.15s;
     }
-    .back-link:hover { color: var(--text-2); opacity: 1; }
+    .back-link:hover { color: var(--text-1); opacity: 1; }
 
     .lang-toggle {
       background: var(--surface-2);
@@ -640,7 +640,7 @@
 <nav>
 <div class="nav-left">
 <a class="logo" href="/ko/">StackFreeks Tools</a>
-<a class="back-link" href="/ko/">&larr; <span data-i18n="nav_all_tools">all tools</span></a>
+<a class="back-link nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
 </div>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/vps-migration-checklist/">English</a>
 </nav>
@@ -754,7 +754,7 @@
 <section class="section">
 
 <div class="lang-ko"><h2 class="section-title">사용 방법</h2></div>
-<div class="steps-grid">
+<div class="steps-grid guide-grid">
 <div class="step-card">
 <div class="step-num">Step 1</div>
 
@@ -1286,7 +1286,7 @@
 <script>
     window.SF_PAGE_I18N = {
       en: {
-        nav_all_tools: 'all tools',
+        nav_back: '← All Tools',
         hero_badge: 'Server & VPS',
         btn_generate: 'Generate Checklist',
         progress_label: 'completed',
@@ -1299,7 +1299,7 @@
         footer_copy: '© 2026 StackFreeks',
       },
       ko: {
-        nav_all_tools: '모든 툴',
+        nav_back: '← 전체 툴',
         hero_badge: '서버 & VPS',
         btn_generate: '체크리스트 생성',
         progress_label: '완료',

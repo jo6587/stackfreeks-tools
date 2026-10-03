@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dockerfile Generator — Free Online Tool | StackFreeks</title>
-  <meta name="description" content="Dockerfile generator for Node.js, Python, Go, PHP, Ruby and Java. Multi-stage build, non-root user, .dockerignore included. Free, browser-based." />
+  <meta name="description" content="Dockerfile generator for Node.js, Python, Go, PHP, Ruby and Java. Multi-stage build, non-root user and .dockerignore. Free." />
   <link rel="canonical" href="https://tools.stackfreeks.com/tools/dockerfile-generator/" />
   <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/dockerfile-generator/" />
   <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/dockerfile-generator/ko/" />
@@ -443,7 +443,7 @@
     }
   </style>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"Dockerfile Generator","description":"Dockerfile generator for Node.js, Python, Go, PHP, Ruby and Java. Multi-stage build, non-root user, .dockerignore included. Free, browser-based.","url":"https://tools.stackfreeks.com/tools/dockerfile-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Dockerfile Generator","description":"Dockerfile generator for Node.js, Python, Go, PHP, Ruby and Java. Multi-stage build, non-root user and .dockerignore. Free.","url":"https://tools.stackfreeks.com/tools/dockerfile-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a multi-stage Dockerfile and when should I use it?","acceptedAnswer":{"@type":"Answer","text":"Multi-stage builds use multiple FROM statements. The first stage compiles or installs everything; the final stage only copies the production artifacts. This can reduce your Docker image size by 50–90%, which matters for faster pulls, less storage, and a smaller attack surface. Use it whenever you have a build step — TypeScript, Go binaries, Maven JARs, etc."}},{"@type":"Question","name":"Why run containers as a non-root user?","acceptedAnswer":{"@type":"Answer","text":"By default, processes inside a Docker container run as root, which means a container escape bug gives an attacker full root on the host. Creating a dedicated user (like node or appuser ) with no shell or sudo access limits the blast radius of any exploit."}},{"@type":"Question","name":"What should I put in .dockerignore?","acceptedAnswer":{"@type":"Answer","text":"Exclude anything you don't need in the image: node_modules (reinstalled during build), .git , test files, local .env files, CI configs, and editor configs. A lean build context means faster docker build times and smaller images."}},{"@type":"Question","name":"What's the difference between CMD and ENTRYPOINT?","acceptedAnswer":{"@type":"Answer","text":"ENTRYPOINT sets the executable; CMD sets its default arguments. If you only use CMD, users can override it entirely. If you combine ENTRYPOINT with CMD, users can override the arguments but not the main process. For most apps CMD [\"node\", \"server.js\"] works fine. Use ENTRYPOINT when the container should always run a specific binary."}},{"@type":"Question","name":"Which base image tag should I use — latest, slim, or alpine?","acceptedAnswer":{"@type":"Answer","text":"slim images remove most dev tools to save ~100 MB. alpine is even smaller but uses musl libc, which can break native Node addons or Python C extensions. For production, node:20-slim or python:3.12-slim is the practical sweet spot. Pin to a specific version (not latest ) so builds are reproducible."}}]}
@@ -676,7 +676,7 @@
   </section>
 
   <!-- Related tools -->
-  <section class="related">
+  <section class="related sf-related">
     <div class="lang-en">
       <p class="related-title">Related Tools</p>
       <div class="related-grid">
