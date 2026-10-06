@@ -26,236 +26,54 @@
   <meta name="twitter:title" content="Reaction Time Test | StackFreeks Tools" />
   <meta name="twitter:description" content="Test your reaction time — click when the box turns green. 5 attempts, average in milliseconds." />
 
-  <!-- ADSENSE_SLOT_TOP -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --danger: #ef4444;
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
-
-    main { padding: 32px 0 48px; }
-
-    /* Game */
+    /* Reaction Time Test — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     .stage {
-      user-select: none;
-      -webkit-user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      width: 100%;
-      min-height: 340px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      background: var(--surface-2);
-      color: var(--text-1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 8px;
-      padding: 32px 24px;
-      cursor: pointer;
-      transition: background 0.12s;
+      user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
+      width: 100%; min-height: 340px; border-radius: var(--radius); border: 1px solid var(--border);
+      background: var(--surface-2); color: var(--text-1);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px;
+      padding: 32px 24px; cursor: pointer; transition: background-color 0.12s, border-color 0.12s, color 0.12s;
     }
-    .stage.wait   { background: var(--danger); color: #fff; }
-    .stage.go     { background: var(--success); color: #05230f; }
+    .stage:hover { border-color: var(--border-2); }
+    /* state wells: red = wait, green = go (tokens, so both themes hold) */
+    .stage.wait, .stage.wait:hover { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+    .stage.go, .stage.go:hover { background: var(--success); border-color: var(--success-fg); color: var(--success-fg); }
     .stage.result { background: var(--surface-2); cursor: default; }
-    .stage-big { font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; }
-    .stage-sub { font-size: 0.9rem; opacity: 0.9; max-width: 420px; }
-    .stage .stage-sub { color: inherit; }
+    .stage-big { font-size: 32px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.2; font-variant-numeric: tabular-nums; }
+    .stage-sub { font-size: 15px; max-width: 420px; color: var(--text-2); }
+    .stage.wait .stage-sub, .stage.go .stage-sub { color: inherit; }
 
-    .progress { margin-top: 14px; font-size: 12px; color: var(--text-3); text-align: center; letter-spacing: 0.04em; }
-    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); text-align: center; }
+    .progress { margin-top: 12px; font-size: 13px; color: var(--text-3); text-align: center; font-variant-numeric: tabular-nums; }
+    .yourbest { margin-top: 4px; font-size: 13px; color: var(--text-3); text-align: center; }
 
-    /* Result panel */
     .result-panel { text-align: center; }
-    .result-avg { font-size: 3rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
-    .result-avg span { font-size: 1rem; color: var(--text-3); font-weight: 400; }
-    .result-band { margin-top: 4px; font-size: 0.95rem; font-weight: 500; color: var(--success); }
-    .result-context { margin-top: 10px; font-size: 13px; color: var(--text-2); max-width: 440px; margin-left: auto; margin-right: auto; }
+    .result-avg { font-size: 48px; font-weight: 650; color: var(--text-1); letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .result-avg span { font-size: 16px; color: var(--text-3); font-weight: 400; }
+    .result-band { margin-top: 6px; font-size: 15px; font-weight: 600; color: var(--accent-text); }
+    .result-context { margin: 10px auto 0; font-size: 14px; color: var(--text-2); max-width: 440px; }
     .result-stats { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
-    .stat-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; min-width: 110px; }
-    .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
-    .stat-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
-    .attempts-list { margin-top: 12px; font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+    .stat-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 10px 16px; min-width: 110px; }
+    .stat-label { font-size: 13px; color: var(--text-3); }
+    .stat-val { font-size: 17px; font-weight: 650; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .attempts-list { margin-top: 12px; font-size: 13px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+    .result-panel .btn { margin-top: 18px; background: var(--accent-strong); color: var(--accent-fg); }
+    .result-panel .btn:hover { background: var(--accent-hover); }
+    .caveat { margin: 12px auto 0; font-size: 13px; color: var(--text-3); line-height: 1.6; max-width: 620px; text-align: center; }
 
-    .btn {
-      background: var(--accent-strong); color: #fff; border: none;
-      border-radius: var(--radius); padding: 10px 22px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); margin-top: 18px;
-      transition: opacity 0.15s;
-    }
-    .btn:hover { opacity: 0.88; }
-
-    .caveat { margin-top: 14px; font-size: 11px; color: var(--text-3); line-height: 1.6; max-width: 620px; margin-left: auto; margin-right: auto; text-align: center; }
-
-    /* About / SEO copy */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    .about-section p { margin-bottom: 12px; color: var(--text-2); line-height: 1.7; max-width: 72ch; }
     .about-section p:last-child { margin-bottom: 0; }
 
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-list { display: flex; flex-direction: column; gap: 1px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related tools */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
-
     @media (max-width: 768px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
-      .stage { min-height: 320px; padding: 28px 16px; }
-      .stage-big { font-size: 1.6rem; }
-      .result-avg { font-size: 2.4rem; }
-      .banner-inner { flex-direction: column; align-items: flex-start; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .stage { min-height: 300px; padding: 28px 16px; }
+      .stage-big { font-size: 26px; }
+      .result-avg { font-size: 38px; }
     }
   </style>
 
@@ -270,128 +88,125 @@
 </head>
 <body>
 
-<!-- 1. Nav -->
-<nav>
-  <a href="/" class="logo">
-    <div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-  <div class="nav-right">
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-  </div>
-</nav>
-
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
-
-<!-- 3. Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="lang-en">
-      <p class="eyebrow">Fun &amp; Tests</p>
-      <h1>Reaction Time Test</h1>
-      <p class="hero-desc">Click as fast as you can when the box turns green. Five attempts, then see your average reaction time in milliseconds and how fast your reflexes really are.</p>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-fun" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-puzzle"/></svg><span data-i18n="cat_fun">Fun &amp; Tests</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <div class="lang-ko">
-      <p class="eyebrow">재미 &amp; 테스트</p>
-      <h1>반응 속도 테스트</h1>
-      <p class="hero-desc">박스가 초록색으로 바뀌면 최대한 빠르게 클릭하세요. 5회 시도 후 평균 반응 속도(밀리초)와 당신의 반사 신경 수준을 확인할 수 있습니다.</p>
-    </div>
-  </div>
-</section>
+  </nav>
 
-<!-- 4. Tool body -->
-<main>
-  <div class="container">
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-zap"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Reaction Time Test</h1>
+        <p>Click as fast as you can when the box turns green. Five attempts, then see your average reaction time in milliseconds and how fast your reflexes really are.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>반응 속도 테스트</h1>
+        <p>박스가 초록색으로 바뀌면 최대한 빠르게 클릭하세요. 5회 시도 후 평균 반응 속도(밀리초)와 당신의 반사 신경 수준을 확인할 수 있습니다.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
     <div id="stage" class="stage idle" role="button" tabindex="0" aria-live="polite">
-      <div class="stage-big" id="stageBig">Reaction Time Test</div>
-      <div class="stage-sub" id="stageSub">Click or tap anywhere in this box to start. When it turns green, click as fast as you can.</div>
+      <div class="stage-big" id="stageBig" data-i18n="x_reaction_time_test">Reaction Time Test</div>
+      <div class="stage-sub" id="stageSub" data-i18n="x_click_or_tap_anywhere_in_this_box_to_start_w">Click or tap anywhere in this box to start. When it turns green, click as fast as you can.</div>
     </div>
-    <div class="progress" id="progress">Attempt 1 of 5</div>
+    <div class="progress" id="progress" data-i18n="x_attempt_1_of_5">Attempt 1 of 5</div>
     <div class="yourbest" id="yourBest" hidden></div>
     <p class="caveat" data-i18n="caveat">Your result includes about 10–50 ms of unavoidable display and input latency (monitor refresh, mouse polling, browser overhead), so treat it as a relative score, not a lab measurement.</p>
-  </div>
-</main>
+  </main>
 
-<!-- About / SEO copy -->
-<section class="about-section">
-  <div class="container">
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More fun &amp; tests</h2>
+      <a class="sec-link" href="/#cat-fun"><span data-i18n="all_in_cat">All Fun &amp; Tests tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card next" href="/tools/click-speed-test/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-mouse-pointer-click"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Click Speed Test (CPS)</span><span class="lang-ko">클릭 속도 테스트 (CPS)</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- About -->
+  <section class="guide about-section">
     <div class="lang-en">
-      <h2>About this reaction time test</h2>
+      <h2 class="guide-title">About this reaction time test</h2>
       <p>This reaction time test measures how quickly you respond to a visual signal — the classic "click when it turns green" benchmark. After a random delay of 1.2 to 4 seconds the box switches from red to green, and the tool records the milliseconds between that switch and your click using the browser's high-resolution <code>performance.now()</code> timer. It runs five attempts and reports your average, your best single attempt, and a qualitative band so you can see how fast your reflexes are compared with typical human numbers.</p>
       <p>Simple visual reaction time for adults averages around 273 ms, with trained gamers and athletes often landing in the 180–220 ms range and the theoretical human floor sitting near 150 ms. Reaction time is a useful proxy for alertness and focus, which is why it is used in sleep research, sports training, and driver-safety studies. It works on desktop with a mouse and on phones and tablets with touch, needs no signup, and runs entirely in your browser.</p>
     </div>
     <div class="lang-ko">
-      <h2>반응 속도 테스트 소개</h2>
+      <h2 class="guide-title">반응 속도 테스트 소개</h2>
       <p>이 반응 속도 테스트는 시각 신호에 얼마나 빠르게 반응하는지를 측정합니다 — "초록색이 되면 클릭" 방식의 고전적인 벤치마크입니다. 1.2~4초의 무작위 지연 후 박스가 빨간색에서 초록색으로 바뀌며, 브라우저의 고정밀 <code>performance.now()</code> 타이머로 전환 시점과 클릭 사이의 밀리초를 기록합니다. 5회 시도 후 평균, 최고 기록, 그리고 반사 신경 수준을 알려줍니다.</p>
       <p>성인의 단순 시각 반응 속도는 평균 약 273ms이며, 훈련된 게이머와 운동선수는 180~220ms, 인간의 이론적 한계는 약 150ms입니다. 반응 속도는 각성 상태와 집중력의 지표로 수면 연구, 스포츠 훈련, 운전자 안전 연구에 활용됩니다. 마우스가 있는 데스크톱과 터치 기반 모바일 모두에서 작동하며, 가입 없이 브라우저에서 바로 실행됩니다.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 5. How-to section -->
-<section class="guide-section">
-  <div class="container">
+  <!-- How to use -->
+  <section class="guide">
     <div class="lang-en">
-      <h2>How to use this reaction time test</h2>
+      <h2 class="guide-title">How to use this reaction time test</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">Start the test</div>
-          <div class="guide-desc">Click or tap the box. It turns red and shows "Wait for green…". Keep your cursor or finger ready.</div>
+          <h3>1. Start the test</h3>
+          <p>Click or tap the box. It turns red and shows "Wait for green…". Keep your cursor or finger ready.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">Wait for green</div>
-          <div class="guide-desc">After a random 1.2–4 second delay the box turns green. If you click while it is still red, the attempt restarts.</div>
+          <h3>2. Wait for green</h3>
+          <p>After a random 1.2–4 second delay the box turns green. If you click while it is still red, the attempt restarts.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">Click instantly</div>
-          <div class="guide-desc">The moment it turns green, click. The tool records your time in milliseconds and moves to the next attempt.</div>
+          <h3>3. Click instantly</h3>
+          <p>The moment it turns green, click. The tool records your time in milliseconds and moves to the next attempt.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">Read your score</div>
-          <div class="guide-desc">After 5 attempts you get your average, your best attempt, and a band showing how your reflexes compare. Hit "Try again" to retry.</div>
+          <h3>4. Read your score</h3>
+          <p>After 5 attempts you get your average, your best attempt, and a band showing how your reflexes compare. Hit "Try again" to retry.</p>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <h2>반응 속도 테스트 사용 방법</h2>
+      <h2 class="guide-title">반응 속도 테스트 사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">테스트 시작</div>
-          <div class="guide-desc">박스를 클릭하거나 탭하세요. 빨간색으로 바뀌며 "초록색을 기다리세요…"가 표시됩니다. 손을 준비하세요.</div>
+          <h3>1. 테스트 시작</h3>
+          <p>박스를 클릭하거나 탭하세요. 빨간색으로 바뀌며 "초록색을 기다리세요…"가 표시됩니다. 손을 준비하세요.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">초록색 대기</div>
-          <div class="guide-desc">1.2~4초의 무작위 지연 후 박스가 초록색으로 바뀝니다. 빨간색일 때 클릭하면 해당 시도가 다시 시작됩니다.</div>
+          <h3>2. 초록색 대기</h3>
+          <p>1.2~4초의 무작위 지연 후 박스가 초록색으로 바뀝니다. 빨간색일 때 클릭하면 해당 시도가 다시 시작됩니다.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">즉시 클릭</div>
-          <div class="guide-desc">초록색으로 바뀌는 순간 클릭하세요. 밀리초 단위로 기록되고 다음 시도로 넘어갑니다.</div>
+          <h3>3. 즉시 클릭</h3>
+          <p>초록색으로 바뀌는 순간 클릭하세요. 밀리초 단위로 기록되고 다음 시도로 넘어갑니다.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">결과 확인</div>
-          <div class="guide-desc">5회 시도 후 평균, 최고 기록, 반사 신경 수준 밴드가 표시됩니다. "다시 시도"로 재도전하세요.</div>
+          <h3>4. 결과 확인</h3>
+          <p>5회 시도 후 평균, 최고 기록, 반사 신경 수준 밴드가 표시됩니다. "다시 시도"로 재도전하세요.</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 6. FAQ -->
-<section class="faq-section">
-  <div class="container">
+  <!-- FAQ -->
+  <section class="faq">
     <div class="lang-en">
-      <h2>Frequently asked questions</h2>
+      <h2 class="faq-title">Frequently asked questions</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>What is a good reaction time?</span><span class="faq-icon">+</span></button>
@@ -416,7 +231,7 @@
       </div>
     </div>
     <div class="lang-ko">
-      <h2>자주 묻는 질문</h2>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>좋은 반응 속도는 어느 정도인가요?</span><span class="faq-icon">+</span></button>
@@ -440,50 +255,67 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 7.5. Related tools -->
-<section class="sf-related">
-  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-  <div class="sf-related-grid">
-    <a href="/tools/click-speed-test/" class="sf-related-card"><span>🖱️</span>Click Speed Test</a>
-    <a href="/tools/typing-speed-test/" class="sf-related-card"><span>⌨️</span>Typing Speed Test</a>
-    <a href="/tools/keyboard-tester/" class="sf-related-card"><span>🎹</span>Keyboard Tester</a>
-  </div>
-</section>
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/click-speed-test/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-mouse-pointer-click"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Click Speed Test (CPS)</span><span class="lang-ko">클릭 속도 테스트 (CPS)</span></span></span></a></li>
+      <li><a href="/tools/typing-speed-test/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-timer"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Typing Speed Test</span><span class="lang-ko">타이핑 속도 테스트</span></span></span></a></li>
+      <li><a href="/tools/keyboard-tester/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-keyboard"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Keyboard Tester</span><span class="lang-ko">키보드 테스터</span></span></span></a></li>
+    </ul>
+  </section>
 
-<!-- 8. Vultr banner -->
-<section class="vultr-banner">
-  <div class="container banner-inner">
-    <div>
-      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+  <!-- Related content -->
+  <section class="related">
+    <div class="lang-en"><a href="https://stackfreeks.com" target="_blank" rel="noopener">More guides and tools on stackfreeks.com →</a></div>
+    <div class="lang-ko"><a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com에서 더 많은 가이드와 툴 보기 →</a></div>
+  </section>
+
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
-       rel="nofollow sponsored" target="_blank"
-       data-i18n="vultr_cta">Claim your credit →</a>
-  </div>
-</section>
+  </footer>
 
-<!-- 9. Footer -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-    </div>
-  </div>
-</footer>
 
 <!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
+        cat_fun: "Fun & Tests",
+        more_tools: "More fun & tests",
+        all_in_cat: "All Fun & Tests tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
     caveat: "Your result includes about 10–50 ms of unavoidable display and input latency (monitor refresh, mouse polling, browser overhead), so treat it as a relative score, not a lab measurement.",
     st_idle_big: "Reaction Time Test",
     st_idle_sub: "Click or tap anywhere in this box to start. When it turns green, click as fast as you can.",
@@ -507,9 +339,20 @@ window.SF_PAGE_I18N = {
     band_average: "About average",
     band_slow: "A little slow — try again warmed up",
     band_sluggish: "Sluggish — check for lag or fatigue",
-    ms: "ms"
-  },
+    ms: "ms",
+        x_attempt_1_of_5: "Attempt 1 of 5",
+        x_click_or_tap_anywhere_in_this_box_to_start_w: "Click or tap anywhere in this box to start. When it turns green, click as fast as you can.",
+        x_reaction_time_test: "Reaction Time Test"
+      },
   ko: {
+        cat_fun: "재미 & 테스트",
+        more_tools: "재미 & 테스트 더 보기",
+        all_in_cat: "재미 & 테스트 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
     caveat: "결과에는 모니터 주사율, 마우스 폴링, 브라우저 오버헤드 등 약 10~50ms의 피할 수 없는 디스플레이·입력 지연이 포함되므로, 실험실 측정이 아닌 상대적 점수로 보세요.",
     st_idle_big: "반응 속도 테스트",
     st_idle_sub: "박스 아무 곳이나 클릭 또는 탭하여 시작하세요. 초록색으로 바뀌면 최대한 빠르게 클릭하세요.",
@@ -533,8 +376,11 @@ window.SF_PAGE_I18N = {
     band_average: "평균 수준",
     band_slow: "약간 느림 — 워밍업 후 다시 시도",
     band_sluggish: "느림 — 지연이나 피로 확인",
-    ms: "ms"
-  }
+    ms: "ms",
+        x_attempt_1_of_5: "1 / 5 회",
+        x_click_or_tap_anywhere_in_this_box_to_start_w: "이 영역을 클릭하거나 탭해서 시작하세요. 초록색으로 바뀌면 최대한 빠르게 클릭하세요.",
+        x_reaction_time_test: "반응 속도 테스트"
+      }
 };
 </script>
 
@@ -648,7 +494,7 @@ window.SF_PAGE_I18N = {
     stage.innerHTML =
       '<div class="result-panel">' +
         '<div class="result-avg">' + avg + ' <span>' + t('ms') + '</span></div>' +
-        '<div class="result-band">' + t('result_band_label') + ': ' + t(b.key) + (newBest ? ' 🏆' : '') + '</div>' +
+        '<div class="result-band">' + t('result_band_label') + ': ' + t(b.key) + (newBest ? ' <svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-trophy"/></svg>' : '') + '</div>' +
         '<div class="result-context">' + t('result_context') + '</div>' +
         '<div class="result-stats">' +
           '<div class="stat-cell"><div class="stat-label">' + t('stat_best') + '</div><div class="stat-val">' + best + ' ' + t('ms') + '</div></div>' +
@@ -727,5 +573,6 @@ function toggleFaq(btn) {
 
 <!-- 10. i18n -->
 <script src="/shared/i18n.js"></script>
+
 </body>
 </html>

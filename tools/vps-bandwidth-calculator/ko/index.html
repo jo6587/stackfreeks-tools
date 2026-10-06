@@ -22,636 +22,157 @@
 <meta content="https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
-<!-- ADSENSE_SLOT_TOP -->
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --warning: #f59e0b;
-      --warning-bg: rgba(245,158,11,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
+    /* VPS Bandwidth Calculator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border-2);
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-    }
-
-    /* Main */
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    /* Tab Toggle */
+    /* Tab toggle (segmented) */
     .tab-bar {
       display: flex;
       gap: 4px;
-      background: var(--surface);
+      background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 4px;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       width: fit-content;
+      max-width: 100%;
     }
-
     .tab-btn {
       background: transparent;
-      border: none;
+      border: 1px solid transparent;
       color: var(--text-2);
       font-family: var(--font);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 7px 16px;
-      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      height: 34px;
+      padding: 0 14px;
+      border-radius: var(--radius-s);
       cursor: pointer;
-      transition: background 0.15s, color 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
       white-space: nowrap;
     }
+    .tab-btn:hover { color: var(--text-1); }
+    .tab-btn.active { background: var(--surface); color: var(--accent-text); border-color: var(--border-2); }
 
-    .tab-btn.active {
-      background: var(--surface-2);
-      color: var(--text-1);
-      border: 1px solid var(--border-2);
-    }
-
-    /* Input Panel */
     .input-panel {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-
-    .input-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .input-group label {
-      font-size: 12px;
-      color: var(--text-2);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .input-group input {
-      background: var(--bg);
-      border: 1px solid var(--border-2);
-      color: var(--text-1);
-      font-family: var(--font);
-      font-size: 14px;
-      padding: 9px 12px;
       border-radius: var(--radius);
-      width: 100%;
-      transition: border-color 0.15s;
-      -moz-appearance: textfield;
+      padding: 18px 20px;
+      margin-bottom: 16px;
     }
+    .input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .input-group input { width: 100%; font-variant-numeric: tabular-nums; -moz-appearance: textfield; }
     .input-group input::-webkit-outer-spin-button,
     .input-group input::-webkit-inner-spin-button { -webkit-appearance: none; }
-    .input-group input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
+    .input-hint { font-size: 13px; color: var(--text-3); }
 
-    .input-hint {
-      font-size: 12px;
-      color: var(--text-3);
-      margin-top: 2px;
-    }
-
-    /* Estimated usage summary */
     .usage-summary {
       background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       padding: 16px 20px;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
+    .usage-icon { flex-shrink: 0; }
+    .usage-label { font-size: 13px; color: var(--text-3); margin-bottom: 2px; }
+    .usage-value { font-size: 26px; font-weight: 650; color: var(--text-1); letter-spacing: -0.02em; line-height: 1.2; font-variant-numeric: tabular-nums; }
+    .usage-sub { font-size: 13px; color: var(--text-3); }
 
-    .usage-icon {
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-
-    .usage-label {
-      font-size: 12px;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 2px;
-    }
-
-    .usage-value {
-      font-size: 22px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .usage-sub {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Provider Results */
-    .results-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
+    .results-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
     .provider-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      transition: border-color 0.15s;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      transition: border-color var(--t);
     }
     .provider-card:hover { border-color: var(--border-2); }
+    .provider-card.status-over { border-color: var(--warning); }
+    .provider-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .provider-name { font-size: 16px; font-weight: 600; color: var(--text-1); }
+    .provider-status { font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 999px; white-space: nowrap; }
+    .status-ok .provider-status { background: var(--success); color: var(--success-fg); }
+    .status-over .provider-status { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning); }
+    .provider-meta { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+    .meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .meta-label { font-size: 13px; color: var(--text-3); }
+    .meta-value { font-size: 15px; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .meta-value.highlight { color: var(--warning); font-weight: 600; }
+    .meta-value.ok { color: var(--text-1); font-weight: 600; }
 
-    .provider-card.status-ok {
-      border-color: rgba(34,197,94,0.25);
-    }
-
-    .provider-card.status-over {
-      border-color: rgba(245,158,11,0.3);
-    }
-
-    .provider-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .provider-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-    }
-
-    .provider-status {
-      font-size: 12px;
-      font-weight: 500;
-      padding: 3px 10px;
-      border-radius: 100px;
-    }
-
-    .status-ok .provider-status {
-      background: var(--success-bg);
-      color: var(--success);
-      border: 1px solid rgba(34,197,94,0.2);
-    }
-
-    .status-over .provider-status {
-      background: var(--warning-bg);
-      color: var(--warning);
-      border: 1px solid rgba(245,158,11,0.2);
-    }
-
-    .provider-meta {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 10px;
-    }
-
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .meta-label {
-      font-size: 11px;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .meta-value {
-      font-size: 14px;
-      color: var(--text-2);
-    }
-
-    .meta-value.highlight {
-      color: var(--warning);
-      font-weight: 500;
-    }
-
-    .meta-value.ok {
-      color: var(--success);
-    }
-
-    /* Vultr CTA note */
     .vultr-note {
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-lg);
-      padding: 16px 20px;
-      margin-bottom: 24px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 12px;
       display: flex;
       align-items: flex-start;
       gap: 12px;
     }
+    .vultr-note-icon { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; color: var(--accent-text); }
+    .vultr-note-text { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+    .vultr-note-text strong { color: var(--text-1); }
 
-    .vultr-note-icon {
-      font-size: 18px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .vultr-note-text {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
-
-    .vultr-note-text strong {
-      color: var(--success);
-    }
-
-    /* Note */
     .note {
-      margin-top: 8px;
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-3);
-      padding: 12px 16px;
+      padding: 10px 14px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-s);
     }
 
-    /* Guide */
-    .guide {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .guide-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 10px;
-    }
-    .guide-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-    .guide-step {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--accent-text);
-      margin-bottom: 8px;
-    }
-    .guide-card h3 {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 6px;
-    }
-    .guide-card p {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
+    .related-label { color: var(--text-3); font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+    .related > p { margin-top: 10px; }
 
-    /* FAQ */
-    .faq {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .faq-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related */
-    .related {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 32px;
-    }
-
-    .related-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      background: var(--surface);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); opacity: 1; }
-
-    .related-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 4px;
-    }
-
-    .related-title {
-      font-size: 14px;
-      color: var(--text-1);
-    }
-
-    .related-arrow {
-      color: var(--text-3);
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    /* Vultr Banner */
-    .vultr-banner {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 32px;
-    }
-
-    .vultr-inner {
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      background: var(--success-bg);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .vultr-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--success);
-      margin-bottom: 4px;
-    }
-
-    .vultr-title {
-      font-size: 15px;
-      color: var(--text-1);
-      margin-bottom: 2px;
-    }
-
-    .vultr-sub {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-
-    .vultr-cta {
-      display: inline-block;
-      background: var(--success);
-      color: var(--success-fg);
-      font-weight: 500;
-      font-size: 13px;
-      padding: 8px 18px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      transition: opacity 0.15s;
-      flex-shrink: 0;
-    }
-    .vultr-cta:hover { background: var(--success-hover); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Mobile */
     @media (max-width: 768px) {
-      .hero { padding: 32px 16px 24px; }
-      .hero h1 { font-size: 22px; }
-      main { padding: 0 16px 40px; }
-      .tab-bar { width: 100%; }
-      .tab-btn { flex: 1; text-align: center; }
-      .input-panel { padding: 16px; }
-      .provider-card { padding: 16px; }
-      .provider-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-      .guide { padding: 0 16px 32px; }
-      .faq { padding: 0 16px 32px; }
-      .related { padding: 0 16px 24px; }
-      .vultr-banner { padding: 0 16px 24px; }
-      .vultr-inner { flex-direction: column; align-items: flex-start; }
-      .vultr-cta { align-self: stretch; text-align: center; }
-      .related-card { flex-direction: column; align-items: flex-start; }
-      .footer-links { gap: 14px; }
+      .input-panel, .provider-card { padding: 16px; }
+      .usage-value { font-size: 22px; }
     }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "VPS Bandwidth Calculator", "description": "Calculate VPS bandwidth usage and overage costs for Vultr, Hetzner, and DigitalOcean. Estimate from monthly visitors or enter GB directly.", "url": "https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/ko/"}}</script>
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "VPS Bandwidth Calculator", "description": "Calculate VPS bandwidth usage and overage costs for Vultr, Hetzner, and DigitalOcean. Estimate from monthly visitors or enter GB directly.", "url": "https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "VPS 대역폭 한도를 초과하면 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "제공업체마다 다릅니다. Vultr와 DigitalOcean은 초과분에 대해 GB당 $0.01을 청구합니다 — 100GB 초과 시 $1입니다. Hetzner는 플랜에 따라 TB당 €1을 청구하거나 속도를 1Mbps로 제한합니다. 한도를 크게 초과하면 서버가 일시 정지될 수도 있습니다."}}, {"@type": "Question", "name": "실제 VPS 대역폭 사용량은 어디서 확인하나요?", "acceptedAnswer": {"@type": "Answer", "text": "각 제공업체의 관리 패널에서 확인할 수 있습니다. Vultr는 서버 상세 페이지의 \"Bandwidth\" 섹션에서, DigitalOcean은 Droplet의 \"Graphs\" 탭에서, Hetzner는 서버 개요 화면에서 확인 가능합니다. 서버 내부에서는 vnstat(Linux) 같은 도구로 지속 모니터링할 수 있습니다."}}, {"@type": "Question", "name": "Hetzner는 왜 Vultr나 DigitalOcean보다 훨씬 많은 대역폭을 제공하나요?", "acceptedAnswer": {"@type": "Answer", "text": "Hetzner의 유럽 데이터센터는 미국 기반 제공업체보다 트랜짓 비용이 훨씬 저렴합니다. 입문 플랜에도 20TB 트래픽이 포함되어 있어, 미디어 스트리밍·대용량 파일 다운로드·고트래픽 웹사이트 — 특히 유럽 사용자 대상 서비스에 탁월한 선택입니다."}}, {"@type": "Question", "name": "서버로 들어오는 인바운드 트래픽(업로드)도 대역폭 한도에 포함되나요?", "acceptedAnswer": {"@type": "Answer", "text": "일반적으로 아닙니다. Vultr·Hetzner·DigitalOcean 세 곳 모두 아웃바운드(발신) 트래픽만 월 한도에 집계합니다. 파일 업로드, git push, 데이터베이스 백업 등 서버로 들어오는 트래픽은 보통 무료이며 제한이 없습니다. 이 계산기는 아웃바운드 사용량만 추정합니다."}}, {"@type": "Question", "name": "\"웹사이트\" 탭의 대역폭 추정은 얼마나 정확한가요?", "acceptedAnswer": {"@type": "Answer", "text": "방문자 수 × 방문당 페이지 수 × 평균 페이지 용량 공식으로 계산합니다. 합리적인 추정치이지만, 한 페이지만 보고 이탈하는 방문자, 크롤러·봇 트래픽, 미디어가 많은 페이지 등 실제 환경에서는 차이가 날 수 있습니다. 참고용으로 활용하고, 사이트 오픈 후 실제 사용량을 모니터링하세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<!-- Nav -->
-<nav>
-<div class="nav-left">
-<a class="logo" href="/ko/">StackFreeks Tools</a>
-<div class="nav-sep"></div>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-vps"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-hard-drive"></use></svg><span data-i18n="cat_vps_server">VPS & Server</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/vps-bandwidth-calculator/">English</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+</div>
 </nav>
-<!-- ADSENSE_SLOT_TOP -->
-<!-- Hero -->
-<section class="hero">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-gauge"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
 <h1>VPS 대역폭 초과 비용 계산기</h1>
 <p>월간 트래픽이 VPS 대역폭 한도를 초과하는지 확인하고, Vultr&middot;Hetzner&middot;DigitalOcean 각각의 초과 비용을 즉시 계산합니다. GB를 직접 입력하거나 방문자 수로 추정할 수 있습니다.</p>
 </div>
-</section>
-<!-- Tool -->
-<main>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
+</div>
+</header>
+<!-- Tool body -->
+<main class="tool wrap-tool">
 <!-- Tab Toggle -->
 <div class="tab-bar" role="tablist">
 <button aria-selected="true" class="tab-btn active" data-i18n="tab_gb" id="tab-gb" onclick="switchTab('gb')" role="tab">By Traffic (GB)</button>
@@ -689,7 +210,7 @@
 </div>
 <!-- Usage Summary -->
 <div class="usage-summary" id="usage-summary">
-<div class="usage-icon">📊</div>
+<span class="tile usage-icon"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-gauge"></use></svg></span>
 <div>
 <p class="usage-label" data-i18n="usage_label">Estimated Monthly Usage</p>
 <p class="usage-value" id="usage-value">500 GB</p>
@@ -700,7 +221,7 @@
 <div class="results-grid" id="results-grid"></div>
 <!-- Vultr CTA note -->
 <div class="vultr-note">
-<div class="vultr-note-icon">💡</div>
+<svg aria-hidden="true" class="ico vultr-note-icon"><use href="/shared/icons.svg#i-zap"></use></svg>
 
 <div class="vultr-note-text lang-ko">
 <strong>Vultr는 모든 플랜에 1TB 무료 대역폭을 제공합니다.</strong> 신규 가입 시 <strong>$300 무료 크레딧</strong>을 드려 대부분의 소규모 사이트는 초과 요금 걱정 없이 운영할 수 있습니다.
@@ -708,29 +229,38 @@
 </div>
 <p class="note" data-i18n="note_prices">Bandwidth prices are approximate. Hetzner overage rate converted from EUR. Verify with provider before purchasing.</p>
 </main>
-<!-- How to Use Guide -->
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More server tools</h2>
+<a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS & Server tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/vps-cost-calculator/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-server"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">VPS 비용 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/vps-migration-checklist/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-list-checks"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">VPS 마이그레이션 체크리스트</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
+<!-- How to use -->
 <section class="guide">
 
 <div class="lang-ko">
-<p class="guide-title">사용 방법</p>
+<h2 class="guide-title">사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<p class="guide-step">Step 1</p>
-<h3>입력 방식 선택</h3>
+<h3>1. 입력 방식 선택</h3>
 <p>호스팅 대시보드에서 월간 데이터 전송량(GB)을 알고 있다면 "트래픽(GB)" 탭을 사용하세요. 방문자 수만 안다면 "웹사이트" 탭으로 추정할 수 있습니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">Step 2</p>
-<h3>플랜 대역폭 입력</h3>
+<h3>2. 플랜 대역폭 입력</h3>
 <p>현재 VPS 플랜에 포함된 대역폭을 확인하세요. 일반 입문 플랜은 대부분 1TB(1024GB)를 제공하며, Hetzner 플랜은 최대 20TB까지 포함합니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">Step 3</p>
-<h3>제공업체별 결과 확인</h3>
+<h3>3. 제공업체별 결과 확인</h3>
 <p>각 제공업체별로 한도 초과 여부와 예상 초과 비용을 확인하세요. 초록색은 안전, 노란색은 추가 요금이 발생함을 의미합니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">팁</p>
 <h3>인바운드 트래픽은 제외</h3>
 <p>대부분의 제공업체는 아웃바운드(발신) 트래픽만 집계합니다. 파일 업로드나 백업처럼 서버로 들어오는 트래픽은 대역폭 한도에 포함되지 않습니다.</p>
 </div>
@@ -741,7 +271,7 @@
 <section class="faq">
 
 <div class="lang-ko">
-<p class="faq-title">자주 묻는 질문</p>
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>VPS 대역폭 한도를 초과하면 어떻게 되나요?</span><span class="faq-icon">+</span></button>
 <div class="faq-a">제공업체마다 다릅니다. Vultr와 DigitalOcean은 초과분에 대해 GB당 $0.01을 청구합니다 &mdash; 100GB 초과 시 $1입니다. Hetzner는 플랜에 따라 TB당 &euro;1을 청구하거나 속도를 1Mbps로 제한합니다. 한도를 크게 초과하면 서버가 일시 정지될 수도 있습니다.</div>
@@ -764,7 +294,16 @@
 </div>
 </div>
 </section>
-<!-- Related -->
+<!-- Related tools -->
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/server-spec-recommender/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-cpu"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">서버 사양 추천기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/vps-migration-checklist/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-list-checks"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">VPS 마이그레이션 체크리스트</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/game-server-cost-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-gamepad-2"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">게임 서버 비용 계산기</span></span></span></a></li>
+</ul>
+</section>
+<!-- Related content -->
 <section class="related">
 <a class="related-card" href="https://stackfreeks.com" rel="noopener" target="_blank">
 <div>
@@ -775,45 +314,42 @@
 </div>
 </div>
 </a>
+<p><a href="https://stackfreeks.com/vps-bandwidth-usage/" rel="noopener" target="_blank">How Much Bandwidth Does a VPS Use?</a></p>
 </section>
-<!-- Vultr Banner -->
-<!-- Related tools -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/server-spec-recommender/ko/"><span>🖥️</span>Server Spec Recommender</a>
-<a class="sf-related-card" href="/tools/vps-migration-checklist/ko/"><span>✅</span>VPS Migration Checklist</a>
-<a class="sf-related-card" href="/tools/game-server-cost-calculator/ko/"><span>🎮</span>Game Server Cost Calculator</a>
-<a class="sf-related-card" href="https://stackfreeks.com/vps-bandwidth-usage/" rel="noopener" target="_blank"><span>📖</span>How Much Bandwidth Does a VPS Use?</a>
-</div>
-</section>
-<section class="vultr-banner">
-<div class="vultr-inner">
+<!-- Vultr affiliate banner -->
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
 <div>
-<p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
-<p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</div>
 </div>
-<a class="vultr-cta" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
-        Claim your credit &rarr;
-      </a>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
 </div>
-</section>
 <!-- Footer -->
-<footer>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
-<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com</a>
 </div>
-<p class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</p>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
+</div>
 </footer>
-<!-- Page-specific i18n (must be before i18n.js) -->
 <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_vps_server: "VPS & Server",
+        more_tools: "More server tools",
+        all_in_cat: "All VPS & Server tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         tab_gb:           'By Traffic (GB)',
         tab_web:          'By Website',
         label_traffic:    'Monthly Traffic (GB)',
@@ -836,6 +372,14 @@
         no_cost:          '$0.00',
       },
       ko: {
+        cat_vps_server: "VPS & 서버",
+        more_tools: "서버 툴 더 보기",
+        all_in_cat: "VPS & 서버 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         tab_gb:           '트래픽(GB) 직접 입력',
         tab_web:          '웹사이트로 추정',
         label_traffic:    '월간 트래픽 (GB)',
@@ -961,7 +505,7 @@
         const isOver = overageGB > 0;
         const statusClass = isOver ? 'status-over' : 'status-ok';
         const statusText = isOver ? t('status_over') : t('status_ok');
-        const statusEmoji = isOver ? '⚠️' : '✅';
+        const statusEmoji = '';
 
         const pctUsed = p.includedGB > 0 ? ((usageGB / p.includedGB) * 100).toFixed(1) : '—';
 
@@ -969,7 +513,7 @@
           <div class="provider-card ${statusClass}">
             <div class="provider-header">
               <span class="provider-name">${p.name}</span>
-              <span class="provider-status">${statusEmoji} ${statusText}</span>
+              <span class="provider-status">${statusEmoji}${statusText}</span>
             </div>
             <div class="provider-meta">
               <div class="meta-item">

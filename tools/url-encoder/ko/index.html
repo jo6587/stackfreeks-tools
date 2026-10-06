@@ -22,533 +22,185 @@
 <meta content="https://tools.stackfreeks.com/tools/url-encoder/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
-<!-- ADSENSE_SLOT_TOP -->
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --error: #ef4444;
-      --error-bg: rgba(239,68,68,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
+    /* URL Encoder / Decoder — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border-2);
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-    }
-
-    /* Tool main */
-    .tool-wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    /* Two-panel layout */
     .panels {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 16px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
-
-    .panel {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .panel-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-2);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
+    .panel { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .panel-label { font-size: 13px; font-weight: 600; color: var(--text-1); }
     .panel-textarea {
       width: 100%;
       min-height: 180px;
-      background: var(--surface);
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius-lg);
-      color: var(--text-1);
-      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
-      font-size: 13px;
+      border-radius: var(--radius);
+      font-family: var(--font-mono);
+      font-size: 14px;
       line-height: 1.6;
-      padding: 14px 16px;
+      padding: 12px 14px;
       resize: vertical;
-      transition: border-color 0.15s;
     }
-    .panel-textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    .panel-textarea[readonly] {
-      color: var(--text-2);
-      cursor: default;
-    }
-    .panel-textarea[readonly]:focus {
-      border-color: var(--border-2);
-    }
-
+    .panel-textarea[readonly] { background: var(--surface-2); cursor: default; }
+    .panel-textarea[readonly]:focus { border-color: var(--border-2); box-shadow: none; }
     .panel-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 28px;
+      gap: 8px;
+      min-height: 32px;
     }
 
-    /* Info badge */
     .info-badge {
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 12px;
+      font-weight: 600;
       padding: 3px 8px;
-      border-radius: 20px;
+      border-radius: 999px;
       opacity: 0;
-      transition: opacity 0.2s;
+      transition: opacity var(--t);
     }
     .info-badge.visible { opacity: 1; }
-    .info-badge.success {
-      background: var(--success-bg);
-      color: var(--success);
-      border: 1px solid rgba(34,197,94,0.2);
-    }
-    .info-badge.error {
-      background: var(--error-bg);
-      color: var(--error);
-      border: 1px solid rgba(239,68,68,0.2);
-    }
+    .info-badge.success { background: var(--success); color: var(--success-fg); }
+    .info-badge.error { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
 
-    /* Copy button */
     .btn-copy {
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 12px;
-      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      height: 32px;
+      padding: 0 12px;
+      border-radius: var(--radius-s);
       border: 1px solid var(--border-2);
-      background: var(--surface-2);
-      color: var(--text-2);
+      background: var(--surface);
+      color: var(--text-1);
       font-family: var(--font);
       cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
     }
-    .btn-copy:hover { border-color: var(--accent); color: var(--text-1); }
-    .btn-copy.copied { border-color: var(--success); color: var(--success); }
+    .btn-copy:hover { background: var(--surface-2); border-color: var(--text-3); }
+    .btn-copy.copied { background: var(--success); border-color: var(--success); color: var(--success-fg); }
 
-    /* Action buttons bar */
-    .btn-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
+    .btn-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
     .btn-action {
       font-family: var(--font);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 9px 18px;
-      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      height: 38px;
+      padding: 0 16px;
+      border-radius: var(--radius-s);
       border: 1px solid var(--border-2);
       background: var(--surface);
       color: var(--text-1);
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
     }
-    .btn-action:hover {
-      border-color: var(--accent);
-      background: var(--surface-2);
-    }
-    .btn-action.primary {
-      background: var(--accent-strong);
-      border-color: var(--accent);
-      color: #fff;
-    }
-    .btn-action.primary:hover {
-      background: #4f52d4;
-      border-color: #4f52d4;
-    }
-    .btn-action.danger {
-      border-color: rgba(239,68,68,0.3);
-      color: var(--text-2);
-    }
-    .btn-action.danger:hover {
-      border-color: var(--error);
-      color: var(--error);
-      background: var(--error-bg);
-    }
+    .btn-action:hover { background: var(--surface-2); border-color: var(--text-3); }
+    .btn-action.primary { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--accent-fg); }
+    .btn-action.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    .btn-action.danger:hover { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
+    .btn-bar-sep { width: 1px; height: 28px; background: var(--border); align-self: center; }
 
-    /* Divider between main buttons and utility buttons */
-    .btn-bar-sep {
-      width: 1px;
-      height: 36px;
-      background: var(--border-2);
-      align-self: center;
-    }
-
-    /* Error message */
     .error-msg {
       display: none;
-      background: var(--error-bg);
-      border: 1px solid rgba(239,68,68,0.25);
-      border-radius: var(--radius);
-      color: var(--error);
-      font-size: 13px;
+      background: var(--danger-bg);
+      border: 1px solid var(--danger);
+      border-radius: var(--radius-s);
+      color: var(--danger);
+      font-size: 14px;
       padding: 10px 14px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     .error-msg.visible { display: block; }
 
-    /* Cheat sheet */
     .cheatsheet {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       overflow: hidden;
     }
-
     .cheatsheet-toggle {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       padding: 14px 16px;
       background: none;
       border: none;
       font-family: var(--font);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-2);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
       cursor: pointer;
       text-align: left;
-      transition: color 0.15s;
+      transition: color var(--t);
     }
-    .cheatsheet-toggle:hover { color: var(--text-1); }
-
-    .cheatsheet-arrow {
-      font-size: 10px;
-      transition: transform 0.2s;
-    }
+    .cheatsheet-toggle:hover { color: var(--accent-text); }
+    .cheatsheet-arrow { width: 16px; height: 16px; color: var(--text-3); transition: transform var(--t); }
     .cheatsheet-arrow.open { transform: rotate(180deg); }
-
-    .cheatsheet-body {
-      display: none;
-      padding: 0 16px 16px;
-    }
+    .cheatsheet-body { display: none; padding: 0 16px 16px; overflow-x: auto; }
     .cheatsheet-body.open { display: block; }
-
-    .cheatsheet-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
+    .cheatsheet-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     .cheatsheet-table th {
       text-align: left;
       padding: 6px 12px;
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 13px;
+      font-weight: 600;
       color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
       border-bottom: 1px solid var(--border);
     }
-    .cheatsheet-table td {
-      padding: 7px 12px;
-      color: var(--text-2);
-      border-bottom: 1px solid var(--border);
-    }
+    .cheatsheet-table td { padding: 7px 12px; color: var(--text-2); border-bottom: 1px solid var(--border); }
     .cheatsheet-table tr:last-child td { border-bottom: none; }
-    .cheatsheet-table code {
-      font-family: "SFMono-Regular", "Consolas", monospace;
-      color: var(--accent-text);
-      font-size: 12px;
-      background: rgba(99,102,241,0.08);
-      border-radius: 4px;
-      padding: 1px 5px;
-    }
-    .cheatsheet-table .char-col {
-      font-family: "SFMono-Regular", "Consolas", monospace;
-      color: var(--text-1);
-      font-size: 14px;
-      font-weight: 600;
-    }
+    .cheatsheet-table code { color: var(--accent-text); font-size: 13px; }
+    .cheatsheet-table .char-col { font-family: var(--font-mono); color: var(--text-1); font-weight: 600; }
 
-    /* Guide */
-    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .faq-a code { font-size: 13px; }
 
-    /* FAQ */
-    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related */
-    .related {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 32px;
-    }
-    .related-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      color: var(--accent-text);
-    }
-
-    /* Vultr Banner */
-    .vultr-banner {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .vultr-inner {
-      background: var(--surface);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    .vultr-label {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--success);
-      margin-bottom: 4px;
-    }
-    .vultr-title {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 4px;
-    }
-    .vultr-sub {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-    .vultr-cta {
-      flex-shrink: 0;
-      background: var(--success);
-      color: var(--success-fg);
-      font-weight: 600;
-      font-size: 14px;
-      padding: 10px 20px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .vultr-cta:hover { background: var(--success-hover); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 12px;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Mobile */
-    @media (max-width: 640px) {
-      .hero { padding: 32px 16px 24px; }
-      .hero h1 { font-size: 22px; }
-      .tool-wrap { padding: 0 16px 40px; }
-      .panels { grid-template-columns: 1fr; }
-      .btn-bar { flex-direction: column; }
-      .btn-bar-sep { width: 100%; height: 1px; }
-      .btn-action { width: 100%; text-align: center; }
-      .guide { padding: 0 16px 40px; }
-      .faq { padding: 0 16px 40px; }
-      .related { padding: 0 16px 24px; }
-      .vultr-banner { padding: 0 16px 40px; }
-      .vultr-inner { flex-direction: column; align-items: flex-start; }
-      .vultr-cta { align-self: stretch; text-align: center; }
-      .footer-links { gap: 14px; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+      .panels { grid-template-columns: minmax(0, 1fr); }
+      .panel-textarea { min-height: 130px; }
+      .btn-action { flex: 1 1 calc(50% - 4px); }
+      .btn-bar-sep { display: none; }
     }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "URL Encoder / Decoder", "description": "URL encoder and decoder for URLs and query strings. Percent-encode a component or a full URL instantly. Free, no account.", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/"}}</script>
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "URL Encoder / Decoder", "description": "URL encoder and decoder for URLs and query strings. Percent-encode a component or a full URL instantly. Free, no account.", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/url-encoder/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "URL 인코딩이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 \"%\" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 %20 이 되고 \"&\"는 %26 이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다."}}, {"@type": "Question", "name": "encodeURI와 encodeURIComponent의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "encodeURI 는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: :// ? & = # / )는 그대로 두고 나머지만 인코딩합니다. encodeURIComponent 는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, - _ . ! ~ * ' ( ) 를 제외한 모든 것을 인코딩합니다."}}, {"@type": "Question", "name": "왜 공백이 %20이 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 \"%\"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 \"+\"로 표현하기도 하지만, 현대 표준은 %20 을 사용합니다."}}, {"@type": "Question", "name": "URL 인코딩이 필요한 경우는 언제인가요?", "acceptedAnswer": {"@type": "Answer", "text": "URL에 허용되지 않거나 특별한 의미를 가진 문자가 포함될 때마다 인코딩이 필요합니다. 예를 들면: URL을 쿼리 파라미터로 전달할 때, JavaScript에서 동적 링크를 만들 때, API 요청을 프로그래밍 방식으로 작성할 때, 쿼리 문자열 값에 공백, 앰퍼샌드, 해시 기호 등을 포함할 때입니다."}}, {"@type": "Question", "name": "쿼리 파라미터에 특수 문자를 인코딩할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 바로 Encode Component 가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 encodeURIComponent(\"user@example.com\") 을 사용하면 user%40example.com 이 됩니다. 개별 값에는 항상 encodeURIComponent 를 사용하세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<!-- Nav -->
-<nav>
-<div class="nav-left">
-<a class="logo" href="/ko/">StackFreeks Tools</a>
-<div class="nav-sep"></div>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-conv"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-left-right"></use></svg><span data-i18n="cat_converters">Converters & Encoders</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/url-encoder/">English</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+</div>
 </nav>
-<!-- ADSENSE_SLOT_TOP -->
-<!-- Hero -->
-<section class="hero">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-link"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
 <h1>URL 인코더 / 디코더</h1>
 <p>URL과 쿼리 파라미터를 퍼센트 인코딩하거나 디코딩 &mdash; 즉시, 브라우저에서 바로.</p>
 </div>
-</section>
-<!-- Tool -->
-<div class="tool-wrap">
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
+</div>
+</header>
+<!-- Tool body -->
+<main class="tool wrap-tool">
 <!-- Error message -->
 <div class="error-msg" id="error-msg"></div>
 <!-- Panels -->
@@ -557,91 +209,100 @@
 <div class="panel">
 
 <div class="panel-label lang-ko">입력</div>
-<textarea class="panel-textarea" id="input-text" placeholder="Paste your URL or text here&hellip;" spellcheck="false"></textarea>
+<textarea class="panel-textarea" data-i18n-placeholder="x_paste_your_url_or_text_here" id="input-text" placeholder="Paste your URL or text here&hellip;" spellcheck="false"></textarea>
 <div class="panel-footer"></div>
 </div>
 <!-- Output panel -->
 <div class="panel">
 
 <div class="panel-label lang-ko">출력</div>
-<textarea class="panel-textarea" id="output-text" placeholder="Result will appear here&hellip;" readonly spellcheck="false"></textarea>
+<textarea class="panel-textarea" data-i18n-placeholder="x_result_will_appear_here" id="output-text" placeholder="Result will appear here&hellip;" readonly spellcheck="false"></textarea>
 <div class="panel-footer">
 <span class="info-badge" id="info-badge"></span>
-<button class="btn-copy" id="btn-copy" onclick="copyOutput()">Copy</button>
+<button class="btn-copy" data-i18n="x_copy" id="btn-copy" onclick="copyOutput()">Copy</button>
 </div>
 </div>
 </div>
 <!-- Action buttons -->
 <div class="btn-bar">
-<button class="btn-action primary" onclick="runEncode('encodeURI')">Encode URL</button>
-<button class="btn-action primary" onclick="runEncode('decodeURI')">Decode URL</button>
-<button class="btn-action" onclick="runEncode('encodeURIComponent')">Encode Component</button>
-<button class="btn-action" onclick="runEncode('decodeURIComponent')">Decode Component</button>
+<button class="btn-action primary" data-i18n="x_encode_url" onclick="runEncode('encodeURI')">Encode URL</button>
+<button class="btn-action primary" data-i18n="x_decode_url" onclick="runEncode('decodeURI')">Decode URL</button>
+<button class="btn-action" data-i18n="x_encode_component" onclick="runEncode('encodeURIComponent')">Encode Component</button>
+<button class="btn-action" data-i18n="x_decode_component" onclick="runEncode('decodeURIComponent')">Decode Component</button>
 <div class="btn-bar-sep"></div>
-<button class="btn-action" onclick="swapValues()">&rlarr; Swap</button>
-<button class="btn-action danger" onclick="clearAll()">Clear</button>
+<button class="btn-action" data-i18n="x_swap" onclick="swapValues()">&rlarr; Swap</button>
+<button class="btn-action danger" data-i18n="x_clear" onclick="clearAll()">Clear</button>
 </div>
 <!-- Cheat sheet (collapsed) -->
 <div class="cheatsheet">
 <button aria-expanded="false" class="cheatsheet-toggle" id="cheatsheet-toggle-btn" onclick="toggleCheatsheet()">
 
 <span class="lang-ko">% 인코딩 치트 시트</span>
-<span class="cheatsheet-arrow" id="cheatsheet-arrow">▼</span>
+<svg aria-hidden="true" class="ico cheatsheet-arrow" id="cheatsheet-arrow"><use href="/shared/icons.svg#i-chevron-down"></use></svg>
 </button>
 <div class="cheatsheet-body" id="cheatsheet-body">
 <table class="cheatsheet-table">
 <thead>
 <tr>
-<th>Character</th>
-<th>Encoded</th>
-<th>Description</th>
+<th data-i18n="x_character">Character</th>
+<th data-i18n="x_encoded">Encoded</th>
+<th data-i18n="x_description">Description</th>
 </tr>
 </thead>
 <tbody>
-<tr><td class="char-col">Space</td><td><code>%20</code></td><td>Whitespace in URLs</td></tr>
-<tr><td class="char-col">&</td><td><code>%26</code></td><td>Query param separator</td></tr>
-<tr><td class="char-col">=</td><td><code>%3D</code></td><td>Key=value separator</td></tr>
-<tr><td class="char-col">+</td><td><code>%2B</code></td><td>Plus sign (also used for space in form data)</td></tr>
-<tr><td class="char-col">#</td><td><code>%23</code></td><td>Fragment identifier</td></tr>
-<tr><td class="char-col">@</td><td><code>%40</code></td><td>Used in email/auth</td></tr>
-<tr><td class="char-col">/</td><td><code>%2F</code></td><td>Path separator</td></tr>
-<tr><td class="char-col">?</td><td><code>%3F</code></td><td>Query string start</td></tr>
-<tr><td class="char-col">:</td><td><code>%3A</code></td><td>Scheme separator</td></tr>
-<tr><td class="char-col">%</td><td><code>%25</code></td><td>Percent sign itself</td></tr>
-<tr><td class="char-col">[</td><td><code>%5B</code></td><td>Left bracket (IPv6)</td></tr>
-<tr><td class="char-col">]</td><td><code>%5D</code></td><td>Right bracket (IPv6)</td></tr>
-<tr><td class="char-col">,</td><td><code>%2C</code></td><td>Comma</td></tr>
-<tr><td class="char-col">"</td><td><code>%22</code></td><td>Double quote</td></tr>
-<tr><td class="char-col">&lt;</td><td><code>%3C</code></td><td>Less-than sign</td></tr>
-<tr><td class="char-col">&gt;</td><td><code>%3E</code></td><td>Greater-than sign</td></tr>
+<tr><td class="char-col" data-i18n="x_space">Space</td><td><code>%20</code></td><td data-i18n="x_whitespace_in_urls">Whitespace in URLs</td></tr>
+<tr><td class="char-col">&</td><td><code>%26</code></td><td data-i18n="x_query_param_separator">Query param separator</td></tr>
+<tr><td class="char-col">=</td><td><code>%3D</code></td><td data-i18n="x_key_value_separator">Key=value separator</td></tr>
+<tr><td class="char-col">+</td><td><code>%2B</code></td><td data-i18n="x_plus_sign_also_used_for_space_in_form_data">Plus sign (also used for space in form data)</td></tr>
+<tr><td class="char-col">#</td><td><code>%23</code></td><td data-i18n="x_fragment_identifier">Fragment identifier</td></tr>
+<tr><td class="char-col">@</td><td><code>%40</code></td><td data-i18n="x_used_in_email_auth">Used in email/auth</td></tr>
+<tr><td class="char-col">/</td><td><code>%2F</code></td><td data-i18n="x_path_separator">Path separator</td></tr>
+<tr><td class="char-col">?</td><td><code>%3F</code></td><td data-i18n="x_query_string_start">Query string start</td></tr>
+<tr><td class="char-col">:</td><td><code>%3A</code></td><td data-i18n="x_scheme_separator">Scheme separator</td></tr>
+<tr><td class="char-col">%</td><td><code>%25</code></td><td data-i18n="x_percent_sign_itself">Percent sign itself</td></tr>
+<tr><td class="char-col">[</td><td><code>%5B</code></td><td data-i18n="x_left_bracket_ipv6">Left bracket (IPv6)</td></tr>
+<tr><td class="char-col">]</td><td><code>%5D</code></td><td data-i18n="x_right_bracket_ipv6">Right bracket (IPv6)</td></tr>
+<tr><td class="char-col">,</td><td><code>%2C</code></td><td data-i18n="x_comma">Comma</td></tr>
+<tr><td class="char-col">"</td><td><code>%22</code></td><td data-i18n="x_double_quote">Double quote</td></tr>
+<tr><td class="char-col">&lt;</td><td><code>%3C</code></td><td data-i18n="x_less_than_sign">Less-than sign</td></tr>
+<tr><td class="char-col">&gt;</td><td><code>%3E</code></td><td data-i18n="x_greater_than_sign">Greater-than sign</td></tr>
 </tbody>
 </table>
 </div>
 </div>
+</main>
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More converters</h2>
+<a class="sec-link" href="/#cat-conv"><span data-i18n="all_in_cat">All Converters & Encoders tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
 </div>
-<!-- How to Use Guide -->
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/base64-encoder/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-file-digit"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Base64 인코더 / 디코더</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/json-to-csv/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-sheet"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">JSON &harr; CSV 변환기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
+<!-- How to use -->
 <section class="guide">
 
 <div class="lang-ko">
-<p class="guide-title">사용 방법</p>
+<h2 class="guide-title">사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<p class="guide-step">Step 1</p>
-<h3>입력 붙여넣기</h3>
+<h3>1. 입력 붙여넣기</h3>
 <p>인코딩하거나 디코딩할 URL 또는 텍스트를 왼쪽 입력 패널에 붙여넣으세요.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">Step 2</p>
-<h3>동작 선택</h3>
+<h3>2. 동작 선택</h3>
 <p>전체 URL에는 <strong>Encode URL</strong>을, 쿼리 파라미터 값에는 <strong>Encode Component</strong>를 클릭하세요. Decode로 반대 작업을 할 수 있습니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">Step 3</p>
-<h3>결과 복사</h3>
+<h3>3. 결과 복사</h3>
 <p>출력 패널에 결과가 표시됩니다. <strong>Copy</strong>를 클릭하면 클립보드에 복사됩니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">팁</p>
 <h3>Swap으로 반복 작업</h3>
 <p><strong>Swap</strong>을 클릭하면 출력 값이 입력으로 이동합니다. 이미 인코딩된 문자열을 다시 인코딩할 때 유용합니다.</p>
 </div>
@@ -652,18 +313,18 @@
 <section class="faq">
 
 <div class="lang-ko">
-<p class="faq-title">자주 묻는 질문</p>
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>URL 인코딩이란 무엇인가요?</span><span class="faq-icon">+</span></button>
-<div class="faq-a">URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 "%" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 <code style="font-family:monospace;color:var(--accent-text)">%20</code>이 되고 "&"는 <code style="font-family:monospace;color:var(--accent-text)">%26</code>이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다.</div>
+<div class="faq-a">URL 인코딩(퍼센트 인코딩이라고도 함)은 특수 문자를 URL에서 안전하게 전송할 수 있는 형식으로 변환합니다. 각 문자는 "%" 뒤에 두 자리 16진수로 표현됩니다. 예를 들어, 공백은 <code>%20</code>이 되고 "&"는 <code>%26</code>이 됩니다. URL은 제한된 ASCII 문자만 포함할 수 있기 때문에 이 과정이 필요합니다.</div>
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>encodeURI와 encodeURIComponent의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
-<div class="faq-a"><code style="font-family:monospace;color:var(--accent-text)">encodeURI</code>는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: <code style="font-family:monospace;color:var(--accent-text)">:// ? & = # /</code>)는 그대로 두고 나머지만 인코딩합니다. <code style="font-family:monospace;color:var(--accent-text)">encodeURIComponent</code>는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, <code style="font-family:monospace;color:var(--accent-text)">- _ . ! ~ * ' ( )</code>를 제외한 모든 것을 인코딩합니다.</div>
+<div class="faq-a"><code>encodeURI</code>는 전체 URL을 위해 설계되었습니다. URL 구조에 의미 있는 문자(예: <code>:// ? & = # /</code>)는 그대로 두고 나머지만 인코딩합니다. <code>encodeURIComponent</code>는 개별 쿼리 파라미터 값을 위한 것으로, 영문자, 숫자, <code>- _ . ! ~ * ' ( )</code>를 제외한 모든 것을 인코딩합니다.</div>
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>왜 공백이 %20이 되나요?</span><span class="faq-icon">+</span></button>
-<div class="faq-a">공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 "%"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 "+"로 표현하기도 하지만, 현대 표준은 <code style="font-family:monospace;color:var(--accent-text)">%20</code>을 사용합니다.</div>
+<div class="faq-a">공백 문자의 ASCII 코드는 32이고, 16진수로 0x20입니다. 퍼센트 인코딩은 문자의 16진수 바이트 값 앞에 "%"를 붙이는 방식입니다. HTML 폼 전송에서는 공백을 "+"로 표현하기도 하지만, 현대 표준은 <code>%20</code>을 사용합니다.</div>
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>URL 인코딩이 필요한 경우는 언제인가요?</span><span class="faq-icon">+</span></button>
@@ -671,50 +332,48 @@
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>쿼리 파라미터에 특수 문자를 인코딩할 수 있나요?</span><span class="faq-icon">+</span></button>
-<div class="faq-a">네, 바로 <strong>Encode Component</strong>가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 <code style="font-family:monospace;color:var(--accent-text)">encodeURIComponent("user@example.com")</code>을 사용하면 <code style="font-family:monospace;color:var(--accent-text)">user%40example.com</code>이 됩니다. 개별 값에는 항상 <code style="font-family:monospace;color:var(--accent-text)">encodeURIComponent</code>를 사용하세요.</div>
+<div class="faq-a">네, 바로 <strong>Encode Component</strong>가 그 용도입니다. 예를 들어 이메일 주소를 쿼리 값으로 전달하려면 <code>encodeURIComponent("user@example.com")</code>을 사용하면 <code>user%40example.com</code>이 됩니다. 개별 값에는 항상 <code>encodeURIComponent</code>를 사용하세요.</div>
 </div>
 </div>
 </section>
-<!-- Related Content -->
+<!-- Related tools -->
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/hash-generator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-hash"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">해시 생성기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/jwt-decoder/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-ticket"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">JWT 디코더</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/uuid-generator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-fingerprint"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">UUID 생성기</span></span></span></a></li>
+</ul>
+</section>
+<!-- Related content -->
 <section class="related">
 <a class="related-link" href="https://stackfreeks.com" rel="noopener" target="_blank">
       More developer guides on stackfreeks.com &rarr;
     </a>
 </section>
-<!-- Vultr Banner -->
-<!-- Related tools -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/hash-generator/ko/"><span>#️⃣</span>Hash Generator</a>
-<a class="sf-related-card" href="/tools/jwt-decoder/ko/"><span>🎫</span>JWT Decoder</a>
-<a class="sf-related-card" href="/tools/uuid-generator/ko/"><span>🆔</span>UUID Generator</a>
-</div>
-</section>
-<section class="vultr-banner">
-<div class="vultr-inner">
+<!-- Vultr affiliate banner -->
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
 <div>
-<p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
-<p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days</p>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days</div>
 </div>
-<a class="vultr-cta" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
-        Claim your credit &rarr;
-      </a>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
 </div>
-</section>
 <!-- Footer -->
-<footer>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
-<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com</a>
 </div>
-<p class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</p>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
+</div>
 </footer>
-<!-- JS Logic -->
 <script>
     // --- Core encode/decode functions ---
     const FN_LABELS = {
@@ -838,20 +497,88 @@
 <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_converters: "Converters & Encoders",
+        more_tools: "More converters",
+        all_in_cat: "All Converters & Encoders tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back:    '← All Tools',
         vultr_label: 'Sponsor',
         vultr_title: 'Get started on Vultr',
         vultr_sub:   'Get $300 free credit — valid for 30 days',
         vultr_cta:   'Claim your credit →',
-        footer_copy: '© 2026 StackFreeks'
+        footer_copy: '© 2026 StackFreeks',
+        x_character: "Character",
+        x_comma: "Comma",
+        x_decode_component: "Decode Component",
+        x_decode_url: "Decode URL",
+        x_double_quote: "Double quote",
+        x_encode_component: "Encode Component",
+        x_encode_url: "Encode URL",
+        x_encoded: "Encoded",
+        x_fragment_identifier: "Fragment identifier",
+        x_greater_than_sign: "Greater-than sign",
+        x_key_value_separator: "Key=value separator",
+        x_left_bracket_ipv6: "Left bracket (IPv6)",
+        x_less_than_sign: "Less-than sign",
+        x_paste_your_url_or_text_here: "Paste your URL or text here…",
+        x_path_separator: "Path separator",
+        x_percent_sign_itself: "Percent sign itself",
+        x_plus_sign_also_used_for_space_in_form_data: "Plus sign (also used for space in form data)",
+        x_query_param_separator: "Query param separator",
+        x_query_string_start: "Query string start",
+        x_result_will_appear_here: "Result will appear here…",
+        x_right_bracket_ipv6: "Right bracket (IPv6)",
+        x_scheme_separator: "Scheme separator",
+        x_space: "Space",
+        x_swap: "⇄ Swap",
+        x_used_in_email_auth: "Used in email/auth",
+        x_whitespace_in_urls: "Whitespace in URLs"
       },
       ko: {
+        cat_converters: "변환 & 인코딩",
+        more_tools: "변환 툴 더 보기",
+        all_in_cat: "변환 & 인코딩 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back:    '← 전체 툴',
         vultr_label: '스폰서',
         vultr_title: 'Vultr로 시작하세요',
         vultr_sub:   '$300 무료 크레딧 — 30일 유효 (기간 한정)',
         vultr_cta:   '크레딧 받기 →',
-        footer_copy: '© 2026 StackFreeks'
+        footer_copy: '© 2026 StackFreeks',
+        x_character: "문자",
+        x_comma: "쉼표",
+        x_decode_component: "컴포넌트 디코딩",
+        x_decode_url: "URL 디코딩",
+        x_double_quote: "큰따옴표",
+        x_encode_component: "컴포넌트 인코딩",
+        x_encode_url: "URL 인코딩",
+        x_encoded: "인코딩 결과",
+        x_fragment_identifier: "프래그먼트 식별자",
+        x_greater_than_sign: "보다 큼 기호",
+        x_key_value_separator: "키=값 구분자",
+        x_left_bracket_ipv6: "여는 대괄호 (IPv6)",
+        x_less_than_sign: "보다 작음 기호",
+        x_paste_your_url_or_text_here: "URL이나 텍스트를 붙여넣으세요…",
+        x_path_separator: "경로 구분자",
+        x_percent_sign_itself: "퍼센트 기호 자체",
+        x_plus_sign_also_used_for_space_in_form_data: "더하기 기호 (폼 데이터에서는 공백을 뜻함)",
+        x_query_param_separator: "쿼리 파라미터 구분자",
+        x_query_string_start: "쿼리 문자열 시작",
+        x_result_will_appear_here: "결과가 여기에 표시됩니다…",
+        x_right_bracket_ipv6: "닫는 대괄호 (IPv6)",
+        x_scheme_separator: "스킴 구분자",
+        x_space: "공백",
+        x_swap: "⇄ 서로 바꾸기",
+        x_used_in_email_auth: "이메일/인증에 사용",
+        x_whitespace_in_urls: "URL 안의 공백"
       }
     };
   </script>

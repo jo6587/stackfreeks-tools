@@ -26,101 +26,21 @@
   <meta name="twitter:title" content="Keyboard Tester | StackFreeks Tools" />
   <meta name="twitter:description" content="Test every key on your keyboard online. Spot a stuck key or ghosting across full, TKL, 75%, 65% and 60% layouts." />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
-
+    /* Keyboard Tester — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 560px; }
 
-    main { padding: 32px 0 48px; }
-
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+    .tool .card:hover { border-color: var(--border); box-shadow: none; transform: none; }
+    .tool .card { display: block; height: auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
     .card-label {
-      font-size: 11px; font-weight: 500;
+      font-size: 12px; font-weight: 500;
       letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--text-3); margin-bottom: 16px;
     }
@@ -128,28 +48,7 @@
     /* Controls */
     .kt-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 18px; }
     .kt-controls label { font-size: 12px; color: var(--text-2); }
-    select {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      padding: 8px 28px 8px 12px;
-      font-size: 13px; font-family: var(--font);
-      outline: none; cursor: pointer;
-      -webkit-appearance: none; appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-    }
-    select:focus { border-color: var(--border-2); }
-    .btn {
-      background: var(--surface-2); border: 1px solid var(--border-2);
-      border-radius: var(--radius); color: var(--text-1);
-      padding: 8px 16px; font-size: 13px; font-weight: 500;
-      font-family: var(--font); cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .btn:hover { border-color: var(--text-3); }
+
     .kt-count { margin-left: auto; font-size: 13px; color: var(--text-2); font-variant-numeric: tabular-nums; }
     .kt-count strong { color: var(--accent-text); }
 
@@ -160,7 +59,7 @@
       padding: 18px;
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       outline: none;
     }
     .kb-wrap.active { border-color: var(--accent); }
@@ -178,14 +77,14 @@
       background: var(--surface); border: 1px solid var(--border);
       border-bottom: 2px solid var(--border-2);
       border-radius: 6px;
-      font-size: 11px; color: var(--text-2);
+      font-size: 12px; color: var(--text-2);
       font-variant-numeric: tabular-nums; text-align: center;
       line-height: 1.1; white-space: nowrap;
       transition: background 0.05s, border-color 0.05s, color 0.05s;
     }
     .key.spacer { background: transparent; border: none; }
-    .key.tested { background: rgba(99,102,241,0.16); color: var(--text-1); border-color: rgba(99,102,241,0.4); }
-    .key.active { background: var(--accent-strong); color: #fff; border-color: var(--accent); }
+    .key.tested { background: var(--accent-soft); color: var(--text-1); border-color: var(--accent-soft-2); }
+    .key.active { background: var(--accent-strong); color: var(--accent-fg); border-color: var(--accent); }
     .key.u125 { min-width: 52px; }
     .key.u15  { min-width: 64px; }
     .key.u175 { min-width: 76px; }
@@ -196,8 +95,8 @@
     .kb-overlay {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
-      background: rgba(10,10,11,0.78);
-      border-radius: var(--radius-lg);
+      background: color-mix(in srgb, var(--surface-2) 80%, transparent);
+      border-radius: var(--radius);
       color: var(--text-1); font-size: 14px; font-weight: 500;
       cursor: pointer; text-align: center; padding: 20px;
     }
@@ -209,14 +108,14 @@
       margin-top: 16px;
     }
     .kt-ro-cell { background: var(--surface-2); padding: 12px 14px; }
-    .kt-ro-label { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .kt-ro-label { font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
     .kt-ro-val { font-size: 0.95rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; word-break: break-all; }
 
-    .kt-note { font-size: 11px; color: var(--text-3); margin-top: 14px; line-height: 1.6; }
+    .kt-note { font-size: 12px; color: var(--text-3); margin-top: 14px; line-height: 1.6; }
     .kt-stuck {
       margin-top: 12px; padding: 12px 14px;
-      background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.35);
-      border-radius: var(--radius); font-size: 12px; color: #fde68a;
+      background: var(--warning-bg); border: 1px solid var(--warning);
+      border-radius: var(--radius); font-size: 12px; color: var(--warning);
     }
     .kt-mobile-note {
       display: none;
@@ -225,94 +124,15 @@
       border-radius: var(--radius); font-size: 12px; color: var(--text-2);
     }
 
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* About */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
-    .about-section p:last-child { margin-bottom: 0; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related tools */
-    .sf-related { max-width: 960px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
     /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
 
     @media (max-width: 768px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
+
       .kt-readout { grid-template-columns: 1fr; }
       .kt-mobile-note { display: block; }
       .kt-count { margin-left: 0; width: 100%; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
     }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
+    
   </style>
 
   <script type="application/ld+json">
@@ -326,163 +146,161 @@
 </head>
 <body>
 
-<!-- 1. Nav -->
-<nav>
-  <a href="/" class="logo">
-    <div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-  <div class="nav-right">
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-  </div>
-</nav>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-fun" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-puzzle"/></svg><span data-i18n="cat_fun">Fun &amp; Tests</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+    </div>
+  </nav>
 
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-keyboard"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Keyboard Tester</h1>
+        <p>Press any key and watch it light up on an on-screen layout. Track every key you've tested and catch a stuck key, chatter, or ghosting — all in your browser.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>키보드 테스터</h1>
+        <p>아무 키나 누르면 화면 키보드에서 해당 키가 켜집니다. 테스트한 키를 추적하고 눌림 고착(stuck key), 채터링, 고스팅을 브라우저에서 바로 확인하세요.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
+    </div>
+  </header>
 
-<!-- 3. Hero -->
-<section class="hero">
-  <div class="container">
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
+  <div class="card">
+        <p class="card-label" data-i18n="kt_tool_label">On-screen keyboard</p>
+
+        <div class="kt-mobile-note" data-i18n="kt_mobile">Use a physical keyboard — on-screen and mobile keyboards don't send the physical key codes this tester needs. The layout below still renders so you can see it.</div>
+
+        <div class="kt-controls">
+          <label for="ktLayout" data-i18n="kt_layout_lbl">Layout</label>
+          <select id="ktLayout">
+            <option value="full" data-i18n="x_full_104">Full (104)</option>
+            <option value="tkl" data-i18n="x_tkl_87">TKL (87)</option>
+            <option value="75">75%</option>
+            <option value="65">65%</option>
+            <option value="60">60%</option>
+          </select>
+          <button class="btn btn-ghost" id="ktReset" data-i18n="kt_reset">Reset</button>
+          <span class="kt-count" id="ktCount"></span>
+        </div>
+
+        <div class="kb-wrap" id="kbWrap" tabindex="0">
+          <div class="kb" id="kb"></div>
+          <div class="kb-overlay" id="kbOverlay" data-i18n="kt_overlay">Click here, then press any key to start testing</div>
+        </div>
+
+        <div class="kt-readout">
+          <div class="kt-ro-cell">
+            <div class="kt-ro-label">event.key</div>
+            <div class="kt-ro-val" id="roKey">—</div>
+          </div>
+          <div class="kt-ro-cell">
+            <div class="kt-ro-label">event.code</div>
+            <div class="kt-ro-val" id="roCode">—</div>
+          </div>
+          <div class="kt-ro-cell">
+            <div class="kt-ro-label">event.keyCode</div>
+            <div class="kt-ro-val" id="roWhich">—</div>
+          </div>
+        </div>
+
+        <div class="kt-stuck" id="stuckHint" hidden><span data-i18n="kt_stuck_pre">Possible stuck key (held over 10s):</span> <span id="stuckKeys"></span></div>
+
+        <p class="kt-note" data-i18n="kt_note">Keys are matched by physical position (event.code), so layout language doesn't matter. Some keys reserved by your OS or browser (screenshot, media, Fn combos, Ctrl+W) may never reach the page and can't be tested here.</p>
+      </div>
+  </main>
+
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More fun &amp; tests</h2>
+      <a class="sec-link" href="/#cat-fun"><span data-i18n="all_in_cat">All Fun &amp; Tests tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/click-speed-test/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-mouse-pointer-click"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Click Speed Test (CPS)</span><span class="lang-ko">클릭 속도 테스트 (CPS)</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/typing-speed-test/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-timer"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Typing Speed Test</span><span class="lang-ko">타이핑 속도 테스트</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- About -->
+  <section class="guide about-section">
     <div class="lang-en">
-      <p class="eyebrow">Fun &amp; Tests</p>
-      <h1>Keyboard Tester</h1>
-      <p class="hero-desc">Press any key and watch it light up on an on-screen layout. Track every key you've tested and catch a stuck key, chatter, or ghosting — all in your browser.</p>
-    </div>
-    <div class="lang-ko">
-      <p class="eyebrow">재미 &amp; 테스트</p>
-      <h1>키보드 테스터</h1>
-      <p class="hero-desc">아무 키나 누르면 화면 키보드에서 해당 키가 켜집니다. 테스트한 키를 추적하고 눌림 고착(stuck key), 채터링, 고스팅을 브라우저에서 바로 확인하세요.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 4. Tool body -->
-<main>
-  <div class="container">
-    <div class="card">
-      <p class="card-label" data-i18n="kt_tool_label">On-screen keyboard</p>
-
-      <div class="kt-mobile-note" data-i18n="kt_mobile">Use a physical keyboard — on-screen and mobile keyboards don't send the physical key codes this tester needs. The layout below still renders so you can see it.</div>
-
-      <div class="kt-controls">
-        <label for="ktLayout" data-i18n="kt_layout_lbl">Layout</label>
-        <select id="ktLayout">
-          <option value="full">Full (104)</option>
-          <option value="tkl">TKL (87)</option>
-          <option value="75">75%</option>
-          <option value="65">65%</option>
-          <option value="60">60%</option>
-        </select>
-        <button class="btn" id="ktReset" data-i18n="kt_reset">Reset</button>
-        <span class="kt-count" id="ktCount"></span>
-      </div>
-
-      <div class="kb-wrap" id="kbWrap" tabindex="0">
-        <div class="kb" id="kb"></div>
-        <div class="kb-overlay" id="kbOverlay" data-i18n="kt_overlay">Click here, then press any key to start testing</div>
-      </div>
-
-      <div class="kt-readout">
-        <div class="kt-ro-cell">
-          <div class="kt-ro-label">event.key</div>
-          <div class="kt-ro-val" id="roKey">—</div>
-        </div>
-        <div class="kt-ro-cell">
-          <div class="kt-ro-label">event.code</div>
-          <div class="kt-ro-val" id="roCode">—</div>
-        </div>
-        <div class="kt-ro-cell">
-          <div class="kt-ro-label">event.keyCode</div>
-          <div class="kt-ro-val" id="roWhich">—</div>
-        </div>
-      </div>
-
-      <div class="kt-stuck" id="stuckHint" hidden><span data-i18n="kt_stuck_pre">Possible stuck key (held over 10s):</span> <span id="stuckKeys"></span></div>
-
-      <p class="kt-note" data-i18n="kt_note">Keys are matched by physical position (event.code), so layout language doesn't matter. Some keys reserved by your OS or browser (screenshot, media, Fn combos, Ctrl+W) may never reach the page and can't be tested here.</p>
-    </div>
-  </div>
-</main>
-
-<!-- About / SEO copy -->
-<section class="about-section">
-  <div class="container">
-    <div class="lang-en">
-      <h2>About this keyboard tester</h2>
+      <h2 class="guide-title">About this keyboard tester</h2>
       <p>This free online keyboard tester lets you test every key on your keyboard directly in the browser — no download, no signup. Press a key and the matching cap on the on-screen layout flashes with the accent colour, then stays lightly shaded so you can see at a glance which keys you've already checked. A running counter ("42 / 104 keys tested") tells you when you've covered the whole board.</p>
       <p>It's the fastest way to diagnose a suspected fault before you RMA a keyboard or open it up: a dead key that never lights up points to a broken switch or controller, a key that stays lit after release or repeats on its own is a classic stuck-key or chatter symptom, and holding several keys at once shows whether your keyboard has ghosting or true N-key rollover. Layout presets for full-size, TKL, 75%, 65% and 60% boards keep the "keys tested" total honest for whatever you actually own.</p>
     </div>
     <div class="lang-ko">
-      <h2>키보드 테스터 소개</h2>
+      <h2 class="guide-title">키보드 테스터 소개</h2>
       <p>이 무료 온라인 키보드 테스터는 다운로드나 가입 없이 브라우저에서 바로 모든 키를 테스트할 수 있습니다. 키를 누르면 화면 키보드의 해당 키캡이 액센트 색으로 반짝인 뒤 옅게 표시되어, 이미 확인한 키를 한눈에 볼 수 있습니다. "42 / 104 키 테스트됨" 카운터로 전체 키를 다 확인했는지 알 수 있습니다.</p>
       <p>키보드를 교환(RMA)하거나 분해하기 전에 의심되는 결함을 가장 빠르게 진단하는 방법입니다. 전혀 켜지지 않는 키는 스위치나 컨트롤러 고장, 손을 뗀 뒤에도 켜져 있거나 저절로 반복되는 키는 전형적인 눌림 고착·채터링 증상입니다. 여러 키를 동시에 누르면 고스팅인지 진짜 N키 롤오버인지 확인할 수 있습니다. 풀사이즈, TKL, 75%, 65%, 60% 레이아웃 프리셋으로 실제 사용하는 키보드에 맞게 테스트 개수를 맞춥니다.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 5. How-to section -->
-<section class="guide-section">
-  <div class="container">
+  <!-- How to use -->
+  <section class="guide">
     <div class="lang-en">
-      <h2>How to use the keyboard tester</h2>
+      <h2 class="guide-title">How to use the keyboard tester</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">Pick your layout</div>
+          <h3>1. Pick your layout</h3>
           <div class="guide-desc">Choose Full, TKL, 75%, 65% or 60% so the on-screen keyboard and the tested count match your board.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">Click to start</div>
+          <h3>2. Click to start</h3>
           <div class="guide-desc">Click the keyboard area to focus it. The overlay disappears and key presses now register.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">Press every key</div>
+          <h3>3. Press every key</h3>
           <div class="guide-desc">Work row by row. Each key lights up on press and stays shaded as tested. Hold several at once to test rollover.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">Read the results</div>
+          <h3>4. Read the results</h3>
           <div class="guide-desc">Watch the key / code / keyCode readout and the stuck-key hint. Hit Reset to clear and test again.</div>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <h2>키보드 테스터 사용 방법</h2>
+      <h2 class="guide-title">키보드 테스터 사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">레이아웃 선택</div>
+          <h3>1. 레이아웃 선택</h3>
           <div class="guide-desc">Full, TKL, 75%, 65%, 60% 중 선택해 화면 키보드와 테스트 개수를 실제 키보드에 맞춥니다.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">클릭해서 시작</div>
+          <h3>2. 클릭해서 시작</h3>
           <div class="guide-desc">키보드 영역을 클릭해 포커스합니다. 오버레이가 사라지고 키 입력이 인식됩니다.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">모든 키 누르기</div>
+          <h3>3. 모든 키 누르기</h3>
           <div class="guide-desc">한 줄씩 눌러보세요. 누른 키는 켜지고 테스트됨으로 표시됩니다. 여러 키를 동시에 눌러 롤오버도 확인하세요.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">결과 확인</div>
+          <h3>4. 결과 확인</h3>
           <div class="guide-desc">key / code / keyCode 값과 눌림 고착 힌트를 확인하세요. Reset으로 초기화 후 다시 테스트합니다.</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 6. FAQ -->
-<section class="faq-section">
-  <div class="container">
+  <!-- FAQ -->
+  <section class="faq">
     <div class="lang-en">
-      <h2>Frequently asked questions</h2>
+      <h2 class="faq-title">Frequently asked questions</h2>
 
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>How do I test my keyboard online?</span><span class="faq-icon">+</span></button>
@@ -511,7 +329,7 @@
     </div>
 
     <div class="lang-ko">
-      <h2>자주 묻는 질문</h2>
+      <h2 class="faq-title">자주 묻는 질문</h2>
 
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>온라인으로 키보드를 어떻게 테스트하나요?</span><span class="faq-icon">+</span></button>
@@ -538,50 +356,60 @@
         <div class="faq-a">키보드 위의 레이아웃 선택기로 사용하는 보드에 맞추세요 — Full (104), TKL (87), 75%, 65%, 60%. 화면 레이아웃과 "테스트됨" 합계가 그에 맞게 바뀌므로, 60% 보드는 61키에서, 풀사이즈는 넘패드를 포함해 104키 전부를 눌러야 완료됩니다. 실제 키보드와 같은 레이아웃을 선택해야 카운터가 실제 커버리지를 반영합니다.</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 7.5. Related tools -->
-<section class="sf-related">
-  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-  <div class="sf-related-grid">
-    <a href="/tools/reaction-time-test/" class="sf-related-card"><span>⚡</span>Reaction Time Test</a>
-    <a href="/tools/click-speed-test/" class="sf-related-card"><span>🖱️</span>Click Speed Test</a>
-    <a href="/tools/typing-speed-test/" class="sf-related-card"><span>⌨️</span>Typing Speed Test</a>
-  </div>
-</section>
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a class="card card-sm sf-related-card" href="/tools/reaction-time-test/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-zap"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Reaction Time Test</span><span class="lang-ko">반응속도 테스트</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/click-speed-test/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-mouse-pointer-click"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Click Speed Test (CPS)</span><span class="lang-ko">클릭 속도 테스트 (CPS)</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/typing-speed-test/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-timer"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Typing Speed Test</span><span class="lang-ko">타이핑 속도 테스트</span></span></span></a></li>
+    </ul>
+  </section>
 
-<!-- 8. Vultr banner -->
-<section class="vultr-banner">
-  <div class="container banner-inner">
-    <div>
-      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
-       rel="nofollow sponsored" target="_blank"
-       data-i18n="vultr_cta">Claim your credit →</a>
-  </div>
-</section>
-
-<!-- 9. Footer -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-    </div>
-  </div>
-</footer>
+  </footer>
 
 <!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
+    cat_fun: "Fun & Tests",
+    more_tools: "More fun & tests",
+    all_in_cat: "All Fun & Tests tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
     kt_tool_label: "On-screen keyboard",
     kt_layout_lbl: "Layout",
     kt_reset: "Reset",
@@ -590,9 +418,19 @@ window.SF_PAGE_I18N = {
     kt_stuck_pre: "Possible stuck key (held over 10s):",
     kt_note: "Keys are matched by physical position (event.code), so layout language doesn't matter. Some keys reserved by your OS or browser (screenshot, media, Fn combos, Ctrl+W) may never reach the page and can't be tested here.",
     kt_count: "{n} / {t} keys tested",
-    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
-  },
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)",
+        x_full_104: "Full (104)",
+        x_tkl_87: "TKL (87)"
+      },
   ko: {
+    cat_fun: "재미 & 테스트",
+    more_tools: "재미 & 테스트 더 보기",
+    all_in_cat: "재미 & 테스트 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
     kt_tool_label: "화면 키보드",
     kt_layout_lbl: "레이아웃",
     kt_reset: "초기화",
@@ -601,8 +439,10 @@ window.SF_PAGE_I18N = {
     kt_stuck_pre: "눌림 고착 의심 (10초 이상 눌림):",
     kt_note: "키는 물리적 위치(event.code)로 매칭되므로 레이아웃 언어와 무관합니다. OS·브라우저가 예약한 일부 키(스크린샷, 미디어, Fn 조합, Ctrl+W)는 페이지에 전달되지 않아 여기서 테스트할 수 없습니다.",
     kt_count: "{t}개 중 {n}개 키 테스트됨",
-    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
-  }
+    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)",
+        x_full_104: "풀배열 (104)",
+        x_tkl_87: "텐키리스 (87)"
+      }
 };
 </script>
 

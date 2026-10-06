@@ -8,7 +8,7 @@
 <link href="/stackfreeks_icon.png" rel="apple-touch-icon">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>게임 서버 RAM 계산기 &mdash; 무료 온라인 도구 | StackFreeks</title>
-<meta content="게임 서버 & VPS" name="description">
+<meta content="게임을 고르고 플레이어 슬롯과 모드를 설정하면 데디케이티드 서버에 필요한 RAM 용량과 적합한 Vultr 플랜을 즉시 확인할 수 있습니다." name="description">
 <link href="https://tools.stackfreeks.com/tools/game-server-ram-calculator/ko/" rel="canonical">
 <link href="https://tools.stackfreeks.com/tools/game-server-ram-calculator/" hreflang="en" rel="alternate">
   <link href="https://tools.stackfreeks.com/tools/game-server-ram-calculator/ko/" hreflang="ko" rel="alternate">
@@ -18,344 +18,93 @@
 
 <!-- Open Graph -->
 <meta content="게임 서버 RAM 계산기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
-<meta content="게임 서버 & VPS" property="og:description">
+<meta content="게임을 고르고 플레이어 슬롯과 모드를 설정하면 데디케이티드 서버에 필요한 RAM 용량과 적합한 Vultr 플랜을 즉시 확인할 수 있습니다." property="og:description">
 <meta content="https://tools.stackfreeks.com/tools/game-server-ram-calculator/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
 <!-- Twitter -->
 <meta content="summary" name="twitter:card">
 <meta content="게임 서버 RAM 계산기 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
-<meta content="게임 서버 & VPS" name="twitter:description">
-<!-- ADSENSE_SLOT_TOP -->
+<meta content="게임을 고르고 플레이어 슬롯과 모드를 설정하면 데디케이티드 서버에 필요한 RAM 용량과 적합한 Vultr 플랜을 즉시 확인할 수 있습니다." name="twitter:description">
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .nav-left { display: flex; align-items: center; gap: 8px; }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
-
-    /* Main layout */
-    main { padding: 32px 0 48px; }
+    /* Game Server RAM Calculator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; } }
-
-    /* Card */
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
-    .card + .card { margin-top: 12px; }
-    .card-label {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 16px;
+    @media (max-width: 768px) {
+      .tool-grid { grid-template-columns: 1fr; }
     }
-
-    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+    .tool .card:hover { border-color: var(--border); box-shadow: none; transform: none; }
+    .tool .card { display: block; height: auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .tool .card + .card { margin-top: 12px; }
+    .card-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 16px; }
     .form-group { margin-bottom: 14px; }
     .form-group:last-child { margin-bottom: 0; }
-
-    input, select {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      padding: 9px 12px;
-      font-size: 13px; font-family: var(--font);
-      outline: none;
-      transition: border-color 0.15s;
-      -webkit-appearance: none;
-    }
-    input:focus, select:focus { border-color: var(--border-2); }
-    input::placeholder { color: var(--text-3); }
-    input[type="number"] { -moz-appearance: textfield; }
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
-
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 28px;
-      cursor: pointer;
-    }
-
+    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
     .check-row { display: flex; align-items: center; gap: 8px; }
     .check-row input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; accent-color: var(--accent); cursor: pointer; }
     .check-row label { margin-bottom: 0; cursor: pointer; }
-
-    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
-
-    /* Results */
-    .total-row {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      margin-bottom: 16px;
-    }
+    .hint { font-size: 12px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+    .total-row { background: var(--surface-2); border: 1px solid var(--border-2); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
     .total-label { font-size: 12px; color: var(--text-2); margin-bottom: 4px; }
     .total-val { font-size: 2.2rem; font-weight: 500; letter-spacing: -0.04em; color: var(--text-1); font-variant-numeric: tabular-nums; }
     .total-unit { font-size: 14px; color: var(--text-3); margin-left: 4px; }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
+    .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: var(--radius-s); overflow: hidden; margin-bottom: 16px; }
     .summary-cell { background: var(--surface-2); padding: 14px 16px; }
-    .summary-label { font-size: 11px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .summary-label { font-size: 12px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
     .summary-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
     .summary-val.accent { color: var(--accent-text); }
-
-    .plan-box {
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.3);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-    }
-    .plan-box-label { font-size: 11px; font-weight: 500; color: var(--success); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .plan-box { background: var(--success); border: 1px solid var(--success); border-radius: var(--radius); padding: 18px; }
+    .plan-box-label { font-size: 12px; font-weight: 500; color: var(--success-fg); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
     .plan-box-title { font-size: 1rem; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
     .plan-box-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
-
-    .btn-vultr-plan {
-      background: var(--success);
-      color: var(--success-fg); border: none;
-      border-radius: var(--radius);
-      padding: 9px 18px;
-      font-size: 13px; font-weight: 500;
-      cursor: pointer; font-family: var(--font);
-      text-decoration: none; display: inline-block;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr-plan:hover { background: var(--success-hover); }
-
-    .disclaimer {
-      font-size: 11px; color: var(--text-3);
-      margin-top: 14px; line-height: 1.6;
-      padding-top: 14px; border-top: 1px solid var(--border);
-    }
-
-    /* About / SEO copy */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
-    .about-section p:last-child { margin-bottom: 0; }
-
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-list { display: flex; flex-direction: column; gap: 1px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related */
-    .related { padding: 40px 0; border-top: 1px solid var(--border); }
-    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .related-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 18px;
-      text-decoration: none; display: flex;
-      flex-direction: column; gap: 6px;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); }
-    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent-text); letter-spacing: 0.06em; text-transform: uppercase; }
-    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
-    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
-
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
-
-    /* Responsive */
+    .disclaimer { font-size: 12px; color: var(--text-3); margin-top: 14px; line-height: 1.6; padding-top: 14px; border-top: 1px solid var(--border); }
     @media (max-width: 640px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
       .summary-grid { grid-template-columns: 1fr; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
     }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
+    .about p { color: var(--text-2); font-size: 15px; line-height: 1.7; max-width: 72ch; }
+    .about p + p { margin-top: 12px; }
+    /* form fields fill their column (the old page's generic input rule) */
+    .tool :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), select, textarea) { width: 100%; }
+    /* sf.css gives every input 9px 12px padding; a range track must not get it */
+    .tool input[type="range"] { padding: 0; }
+    .btn-vultr-plan { display: inline-flex; align-items: center; height: 38px; padding: 0 16px; border-radius: var(--radius-s); background: var(--accent-strong); color: var(--accent-fg); font-size: 14px; font-weight: 600; text-decoration: none; transition: background-color var(--t); }
+    .btn-vultr-plan:hover { background: var(--accent-hover); }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Game Server RAM Calculator", "description": "Estimate dedicated game server RAM for Palworld, Valheim, ARK: Survival Ascended, Rust, Counter-Strike 2 and Project Zomboid from player slots, mods, and world scale. Get a matching Vultr plan.", "url": "https://tools.stackfreeks.com/tools/game-server-ram-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/game-server-ram-calculator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Palworld 서버에는 RAM이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "Pocketpair의 Palworld 데디케이티드 서버 공식 권장 사양은 32인 풀 월드 기준 약 16GB RAM입니다. 4~8인 소규모 사설 서버는 8GB로도 무난하지만, Palworld는 장시간 구동 시 메모리 누수와 단편화가 있어 16GB가 재시작과 거점 확장에 여유를 줍니다. Palworld는 CPU 의존도도 높으므로 최소 4개의 빠른 코어와 함께 구성하세요."}}, {"@type": "Question", "name": "Valheim 데디케이티드 서버 요구 사양은 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "최대 10인 소규모 그룹용 바닐라 Valheim 데디케이티드 서버는 약 4GB RAM과 2~4개 CPU 코어가 필요합니다. 서버가 활성 구역을 로드된 상태로 유지하므로, 플레이어가 맵을 더 탐험하고 큰 거점을 지을수록 RAM 사용량이 증가합니다. Valheim Plus나 BepInEx 모드 팩을 많이 쓰면 바쁜 서버는 6~8GB까지 올라갈 수 있습니다."}}, {"@type": "Question", "name": "Rust 서버에는 RAM이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "Rust 서버 RAM은 플레이어 수보다 맵 크기에 주로 비례합니다. 3000 크기 맵은 대략 6~8GB, 4000 크기 맵은 8~10GB, 4500 이상 맵이나 Oxide/Carbon 모드를 많이 쓴 서버는 12~16GB가 필요할 수 있습니다. 맵이 생성되어 메모리에 상주하므로, 기념물과 엔티티가 많은 대형 절차적 맵이 가장 큰 비용 요인입니다."}}, {"@type": "Question", "name": "ARK: Survival Ascended 서버 요구 사양은 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "ARK: Survival Ascended는 호스팅하기 가장 무거운 생존 서버 중 하나입니다. 바닐라 ASA 서버는 최소 16GB RAM이 필요하며, 모드·클러스터 다중 맵·40인 이상 슬롯을 추가하면 32GB가 권장됩니다. Unreal Engine 5 시뮬레이션이 유휴 상태에서도 부담이 크기 때문에 6개 이상의 CPU 코어도 필요합니다."}}, {"@type": "Question", "name": "특정 RAM 용량으로 몇 명의 플레이어를 수용할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "게임에 따라 크게 다릅니다. 8GB면 Valheim 약 10명, Counter-Strike 2 16~20명, Palworld 8명, 또는 소규모 모드 Zomboid 서버를 무난히 운영할 수 있습니다. 가벼운 게임은 플레이어당 30~60MB만 추가되지만 ARK나 Palworld 같은 생존 게임은 슬롯당 200~450MB가 추가될 수 있어, 순수 슬롯 수보다 기본 게임 오버헤드가 훨씬 중요합니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<!-- 1. Nav -->
-<nav>
-<a class="logo" href="/ko/">
-<div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-<div class="nav-right">
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-vps"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-hard-drive"></use></svg><span data-i18n="cat_vps_server">VPS & Server</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/game-server-ram-calculator/">English</a>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
 </div>
 </nav>
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
-<!-- 3. Hero -->
-<section class="hero">
-<div class="container">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-memory-stick"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
-<p class="eyebrow">게임 서버 & VPS</p>
 <h1>게임 서버 RAM 계산기</h1>
-<p class="hero-desc">게임을 고르고 플레이어 슬롯과 모드를 설정하면 데디케이티드 서버에 필요한 RAM 용량과 적합한 Vultr 플랜을 즉시 확인할 수 있습니다.</p>
+<p>게임을 고르고 플레이어 슬롯과 모드를 설정하면 데디케이티드 서버에 필요한 RAM 용량과 적합한 Vultr 플랜을 즉시 확인할 수 있습니다.</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
 </div>
-</section>
-<!-- 4. Tool body -->
-<main>
-<div class="container">
+</header>
+<main class="tool wrap-tool">
 <div class="tool-grid">
 <!-- Input card -->
 <div class="card">
@@ -369,9 +118,9 @@
 <option value="rust">Rust</option>
 <option value="cs2">Counter-Strike 2</option>
 <option value="zomboid">Project Zomboid</option>
-<option value="generic">Generic / other</option>
+<option data-i18n="x_generic_other" value="generic">Generic / other</option>
 </select>
-<p class="hint" id="gameNote">Official rec is ~16GB for a full 32-player world.</p>
+<p class="hint" data-i18n="x_official_rec_is_16gb_for_a_full_32_player_wo" id="gameNote">Official rec is ~16GB for a full 32-player world.</p>
 </div>
 <div class="form-group">
 <label data-i18n="tool_slots_lbl">Player slots</label>
@@ -435,57 +184,56 @@
 <p class="disclaimer" data-i18n="tool_disclaimer">Estimate only. Real usage depends on the game version, mod pack, map/base size, uptime, and player behavior. Monitor with htop or your host's dashboard and adjust after launch.</p>
 </div>
 </div>
-</div>
 </main>
-<!-- About / SEO copy -->
-<section class="about-section">
-<div class="container">
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More server tools</h2>
+<a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS & Server tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/minecraft-server-ram-calculator/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-box"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">마인크래프트 서버 RAM 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/nextcloud-server-requirements-calculator/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-cloud"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Nextcloud 서버 사양 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
+<section class="guide about">
 
 <div class="lang-ko">
-<h2>게임 서버 RAM 계산기 소개</h2>
+<h2 class="guide-title">게임 서버 RAM 계산기 소개</h2>
 <p>Palworld, Valheim, Rust, ARK: Survival Ascended용 데디케이티드 서버를 임대할 때 보통 RAM을 감으로 정하게 됩니다 &mdash; 필요 없는 32GB 서버에 과지출하거나, 4GB 서버가 레이드 도중 죽거나 둘 중 하나입니다. 이 계산기는 투명한 게임별 휴리스틱을 사용합니다: 지원 게임마다 기본 메모리 사용량, 플레이어당 비용, 모드/플러그인 가중치가 따로 정의되어 있어 게임을 바꾸면 하나의 일반적인 수치가 아닌 현실적인 값을 얻습니다.</p>
 <p>VPS에서 커뮤니티 서버를 직접 운영하며 "Palworld 서버에 RAM이 얼마나 필요한가?" 또는 "Valheim 데디케이티드 서버 요구 사양은?"을 궁금해하는 분들을 위한 도구입니다. 결과는 분해 내역(기본 게임+월드, 플레이어당, 모드), 권장 CPU 코어 수, 여유분을 포함해 딱 맞는 가장 작은 Vultr Cloud Compute 플랜을 보여줍니다.</p>
 </div>
-</div>
 </section>
-<!-- 5. How-to section -->
-<section class="guide-section">
-<div class="container">
+<section class="guide">
 
 <div class="lang-ko">
-<h2>계산기 사용 방법</h2>
+<h2 class="guide-title">계산기 사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<div class="guide-step">Step 1</div>
-<div class="guide-title">게임 선택</div>
-<div class="guide-desc">Palworld, Valheim, ARK, Rust, CS2, Zomboid, Generic 중 선택하세요. 각각 고유한 RAM 상수를 불러옵니다.</div>
+<h3>1. 게임 선택</h3>
+<p>Palworld, Valheim, ARK, Rust, CS2, Zomboid, Generic 중 선택하세요. 각각 고유한 RAM 상수를 불러옵니다.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 2</div>
-<div class="guide-title">플레이어 슬롯 설정</div>
-<div class="guide-desc">허용할 최대 동시 접속 인원을 입력하세요. 생존 게임은 슈터보다 슬롯당 비용이 훨씬 큽니다.</div>
+<h3>2. 플레이어 슬롯 설정</h3>
+<p>허용할 최대 동시 접속 인원을 입력하세요. 생존 게임은 슈터보다 슬롯당 비용이 훨씬 큽니다.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 3</div>
-<div class="guide-title">모드와 월드 규모 추가</div>
-<div class="guide-desc">모드 사용에 체크하고 대략적인 개수를 입력한 뒤 월드/맵 규모를 고르세요. 둘 다 추정치를 높입니다.</div>
+<h3>3. 모드와 월드 규모 추가</h3>
+<p>모드 사용에 체크하고 대략적인 개수를 입력한 뒤 월드/맵 규모를 고르세요. 둘 다 추정치를 높입니다.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 4</div>
-<div class="guide-title">플랜 확인</div>
-<div class="guide-desc">RAM 합계와 CPU 안내를 확인한 뒤, 매칭된 Vultr 플랜으로 이동해 배포하세요.</div>
-</div>
+<h3>4. 플랜 확인</h3>
+<p>RAM 합계와 CPU 안내를 확인한 뒤, 매칭된 Vultr 플랜으로 이동해 배포하세요.</p>
 </div>
 </div>
 </div>
 </section>
-<!-- 6. FAQ -->
-<section class="faq-section">
-<div class="container">
+<section class="faq">
 
 <div class="lang-ko">
-<h2>자주 묻는 질문</h2>
-<div class="faq-list">
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)">
 <span>Palworld 서버에는 RAM이 얼마나 필요한가요?</span>
@@ -522,69 +270,58 @@
 <div class="faq-a">게임에 따라 크게 다릅니다. 8GB면 Valheim 약 10명, Counter-Strike 2 16~20명, Palworld 8명, 또는 소규모 모드 Zomboid 서버를 무난히 운영할 수 있습니다. 가벼운 게임은 플레이어당 30~60MB만 추가되지만 ARK나 Palworld 같은 생존 게임은 슬롯당 200~450MB가 추가될 수 있어, 순수 슬롯 수보다 기본 게임 오버헤드가 훨씬 중요합니다.</div>
 </div>
 </div>
-</div>
-</div>
 </section>
-<!-- 7. Related content -->
-<section class="related">
-<div class="container">
-<p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
-<div class="related-grid">
-<a class="related-card" href="https://stackfreeks.com/minecraft-server-ram-requirements/" rel="noopener" target="_blank">
-<span class="related-tag">Game Servers</span>
-<p class="related-title">Minecraft Server RAM Requirements</p>
-<span class="related-arrow">&rarr;</span>
-</a>
-<a class="related-card" href="/tools/server-spec-recommender/ko/">
-<span class="related-tag">Sizing</span>
-<p class="related-title">Server Spec Recommender</p>
-<span class="related-arrow">&rarr;</span>
-</a>
-<a class="related-card" href="/tools/vps-cost-calculator/ko/">
-<span class="related-tag">VPS</span>
-<p class="related-title">VPS Cost Calculator</p>
-<span class="related-arrow">&rarr;</span>
-</a>
-</div>
-</div>
-</section>
-<!-- 7.5. Related tools -->
 <section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/minecraft-server-ram-calculator/ko/"><span>🧱</span>Minecraft Server RAM Calculator</a>
-<a class="sf-related-card" href="/tools/game-server-cost-calculator/ko/"><span>🎮</span>Game Server Cost Calculator</a>
-<a class="sf-related-card" href="/tools/server-spec-recommender/ko/"><span>🖥️</span>Server Spec Recommender</a>
-<a class="sf-related-card" href="https://stackfreeks.com/minecraft-server-ram-requirements/" rel="noopener" target="_blank"><span>📖</span>Minecraft Server RAM Requirements</a>
-</div>
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/minecraft-server-ram-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-box"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">마인크래프트 서버 RAM 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/game-server-cost-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-gamepad-2"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">게임 서버 비용 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/server-spec-recommender/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-cpu"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">서버 사양 추천기</span></span></span></a></li>
+</ul>
 </section>
-<!-- 8. Vultr banner -->
-<section class="vultr-banner">
-<div class="container banner-inner">
+<section class="related">
+<p><a href="https://stackfreeks.com/minecraft-server-ram-requirements/" rel="noopener" target="_blank">
+Minecraft Server RAM Requirements
+</a></p>
+<p><a href="/tools/server-spec-recommender/ko/">
+Server Spec Recommender
+</a></p>
+<p><a href="/tools/vps-cost-calculator/ko/">
+VPS Cost Calculator
+</a></p>
+</section>
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
 <div>
-<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</div>
 </div>
-<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
 </div>
-</section>
-<!-- 9. Footer -->
-<footer class="footer">
-<div class="container footer-inner">
-<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
 </div>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
 </div>
 </footer>
-<!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
+    cat_vps_server: "VPS & Server",
+    more_tools: "More server tools",
+    all_in_cat: "All VPS & Server tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
     tool_input_label: "Server Setup",
     tool_game_lbl: "Game",
     tool_slots_lbl: "Player slots",
@@ -606,9 +343,19 @@ window.SF_PAGE_I18N = {
     tool_plan_desc: "Rounded up for headroom — game servers spike during autosaves, world generation, and player joins.",
     tool_vultr_cta: "Get this plan on Vultr →",
     tool_disclaimer: "Estimate only. Real usage depends on the game version, mod pack, map/base size, uptime, and player behavior. Monitor with htop or your host's dashboard and adjust after launch.",
-    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
-  },
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)",
+        x_generic_other: "Generic / other",
+        x_official_rec_is_16gb_for_a_full_32_player_wo: "Official rec is ~16GB for a full 32-player world."
+      },
   ko: {
+    cat_vps_server: "VPS & 서버",
+    more_tools: "서버 툴 더 보기",
+    all_in_cat: "VPS & 서버 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
     tool_input_label: "서버 설정",
     tool_game_lbl: "게임",
     tool_slots_lbl: "플레이어 슬롯",
@@ -630,8 +377,10 @@ window.SF_PAGE_I18N = {
     tool_plan_desc: "여유분을 위해 올림 계산되었습니다 — 게임 서버는 자동 저장, 월드 생성, 플레이어 접속 시 사용량이 급증합니다.",
     tool_vultr_cta: "Vultr에서 이 플랜 선택 →",
     tool_disclaimer: "참고용 예상치입니다. 실제 사용량은 게임 버전, 모드 팩, 맵/거점 크기, 구동 시간, 플레이어 행동에 따라 달라집니다. htop이나 호스트 대시보드로 모니터링하고 출시 후 조정하세요.",
-    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
-  }
+    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)",
+        x_generic_other: "기타 / 범용",
+        x_official_rec_is_16gb_for_a_full_32_player_wo: "32인 월드 기준 공식 권장치는 약 16GB입니다."
+      }
 };
 </script>
 <script>
@@ -649,25 +398,25 @@ window.SF_PAGE_I18N = {
 //   - ARK: Survival Ascended: very heavy, 16GB vanilla / 32GB modded.
 // Tune the numbers here; the math below is intentionally linear and transparent.
 const GAMES = {
-  palworld: { label: "Palworld",                 base: 8,  perPlayer: 0.45, modPerMod: 0.15, cores: "4+ cores",  typicalSlots: 8,   maxSlots: 32,
+  palworld: { label: "Palworld",                 base: 8,  perPlayer: 0.45, modPerMod: 0.15, cores: "4+ cores", coresKo: "4코어 이상", typicalSlots: 8,   maxSlots: 32,
               noteEn: "Official rec is ~16GB for a full 32-player world.",
               noteKo: "32인 풀 월드 공식 권장 사양은 약 16GB입니다." },
-  valheim:  { label: "Valheim",                  base: 2,  perPlayer: 0.30, modPerMod: 0.05, cores: "2-4 cores", typicalSlots: 10,  maxSlots: 10,
+  valheim:  { label: "Valheim",                  base: 2,  perPlayer: 0.30, modPerMod: 0.05, cores: "2-4 cores", coresKo: "2~4코어", typicalSlots: 10,  maxSlots: 10,
               noteEn: "~4GB is fine for a small group; bigger bases and mods raise it.",
               noteKo: "소규모 그룹은 약 4GB면 충분하고, 큰 거점과 모드는 사용량을 높입니다." },
-  ark_asa:  { label: "ARK: Survival Ascended",   base: 12, perPlayer: 0.20, modPerMod: 0.25, cores: "6+ cores",  typicalSlots: 20,  maxSlots: 70,
+  ark_asa:  { label: "ARK: Survival Ascended",   base: 12, perPlayer: 0.20, modPerMod: 0.25, cores: "6+ cores", coresKo: "6코어 이상", typicalSlots: 20,  maxSlots: 70,
               noteEn: "ASA is very heavy — 16GB vanilla, 32GB once modded.",
               noteKo: "ASA는 매우 무겁습니다 — 바닐라 16GB, 모드 적용 시 32GB." },
-  rust:     { label: "Rust",                     base: 5,  perPlayer: 0.02, modPerMod: 0.10, cores: "4+ high-clock cores", typicalSlots: 100, maxSlots: 300,
+  rust:     { label: "Rust",                     base: 5,  perPlayer: 0.02, modPerMod: 0.10, cores: "4+ high-clock cores", coresKo: "고클럭 4코어 이상", typicalSlots: 100, maxSlots: 300,
               noteEn: "RAM scales with map size, not players — set world scale to your map size.",
               noteKo: "RAM은 플레이어가 아닌 맵 크기에 비례합니다 — 월드 규모를 맵 크기에 맞추세요." },
-  cs2:      { label: "Counter-Strike 2",         base: 1,  perPlayer: 0.05, modPerMod: 0.05, cores: "2 cores",   typicalSlots: 16,  maxSlots: 32,
+  cs2:      { label: "Counter-Strike 2",         base: 1,  perPlayer: 0.05, modPerMod: 0.05, cores: "2 cores", coresKo: "2코어", typicalSlots: 16,  maxSlots: 32,
               noteEn: "CS2 dedicated servers are light — ~1-2GB is plenty.",
               noteKo: "CS2 데디케이티드 서버는 가볍습니다 — 약 1~2GB면 충분합니다." },
-  zomboid:  { label: "Project Zomboid",          base: 2,  perPlayer: 0.15, modPerMod: 0.08, cores: "2-4 cores", typicalSlots: 16,  maxSlots: 64,
+  zomboid:  { label: "Project Zomboid",          base: 2,  perPlayer: 0.15, modPerMod: 0.08, cores: "2-4 cores", coresKo: "2~4코어", typicalSlots: 16,  maxSlots: 64,
               noteEn: "Mods and map exploration are the main RAM drivers.",
               noteKo: "모드와 맵 탐험이 주된 RAM 증가 요인입니다." },
-  generic:  { label: "Generic / other",          base: 2,  perPlayer: 0.20, modPerMod: 0.10, cores: "2-4 cores", typicalSlots: 16,  maxSlots: 64,
+  generic:  { label: "Generic / other",          base: 2,  perPlayer: 0.20, modPerMod: 0.10, cores: "2-4 cores", coresKo: "2~4코어", typicalSlots: 16,  maxSlots: 64,
               noteEn: "Rough baseline for an unlisted game server.",
               noteKo: "목록에 없는 게임 서버의 대략적인 기준값입니다." }
 };
@@ -736,7 +485,7 @@ function recalc() {
   document.getElementById("sumBase").textContent    = baseRam.toFixed(1) + " GB";
   document.getElementById("sumPlayers").textContent = playerRam.toFixed(1) + " GB";
   document.getElementById("sumMods").textContent    = modRam.toFixed(1) + " GB";
-  document.getElementById("sumCores").textContent   = g.cores;
+  document.getElementById("sumCores").textContent   = currentLang() === "ko" ? g.coresKo : g.cores;
 
   const plan = roundUpPlan(recommended);
   document.getElementById("planTitle").textContent =
@@ -749,12 +498,11 @@ function toggleFaq(btn) {
 }
 
 // Keep the per-game note in the active language
-document.addEventListener("sfLangChanged", updateNote);
+document.addEventListener("sfLangChanged", function () { updateNote(); recalc(); });
 
 // Init
 onGameChange();
 </script>
-<!-- 10. i18n -->
 <script src="/shared/i18n.js"></script>
 </body>
 </html>

@@ -22,466 +22,46 @@
   <meta property="og:site_name" content="StackFreeks Tools" />
 
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* ── Nav ── */
-    .nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-inner {
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-    .nav-logo span { color: var(--accent-text); }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); color: var(--text-1); }
-
-    /* ── Hero ── */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-      max-width: 600px;
-    }
-
-    /* ── Tool Main ── */
-    .tool-wrap {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    /* ── Two-panel layout ── */
-    .tool-panels {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-
-    /* ── Left: Preview Panel ── */
-    .preview-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .preview-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      align-self: flex-start;
-    }
-
-    .preview-image-wrap {
-      width: 100%;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid var(--border-2);
-      line-height: 0;
-    }
-
-    .preview-image-wrap svg {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: filter 0.1s ease;
-    }
-
-    /* ── Right: Sliders Panel ── */
-    .sliders-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .sliders-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .sliders-title {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-    }
-
-    .btn-reset {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 12px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
+    /* CSS Filter Previewer — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .preview-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .preview-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); align-self: flex-start; }
+    .preview-image-wrap { width: 100%; border-radius: var(--radius-s); overflow: hidden; border: 1px solid var(--border-2); line-height: 0; }
+    .preview-image-wrap svg { width: 100%; height: auto; display: block; transition: filter 0.1s ease; }
+    .sliders-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .sliders-header { display: flex; align-items: center; justify-content: space-between; }
+    .sliders-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); }
+    .btn-reset { background: var(--surface-2); border: 1px solid var(--border-2); color: var(--text-2); font-family: var(--font); font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: var(--radius-s); cursor: pointer; transition: border-color 0.15s, color 0.15s; }
     .btn-reset:hover { border-color: var(--accent); color: var(--text-1); }
-
-    .slider-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .slider-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .slider-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-1);
-      font-family: 'Courier New', monospace;
-    }
-
-    .slider-value {
-      font-size: 12px;
-      color: var(--accent-text);
-      font-family: 'Courier New', monospace;
-      min-width: 56px;
-      text-align: right;
-    }
-
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 4px;
-      background: var(--surface-2);
-      border-radius: 2px;
-      outline: none;
-      cursor: pointer;
-      border: 1px solid var(--border);
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: 2px solid var(--bg);
-      box-shadow: 0 0 0 1px var(--accent);
-    }
-    input[type="range"]::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: 2px solid var(--bg);
-      box-shadow: 0 0 0 1px var(--accent);
-    }
-    input[type="range"]:focus::-webkit-slider-thumb {
-      box-shadow: 0 0 0 3px rgba(99,102,241,0.3);
-    }
-
-    /* ── CSS Output ── */
-    .output-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      margin-bottom: 20px;
-    }
-
-    .output-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .output-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-    }
-
-    .btn-copy {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 14px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-    }
+    .slider-row { display: flex; flex-direction: column; gap: 6px; }
+    .slider-meta { display: flex; align-items: center; justify-content: space-between; }
+    .slider-name { font-size: 13px; font-weight: 500; color: var(--text-1); font-family: var(--font-mono); }
+    .slider-value { font-size: 12px; color: var(--accent-text); font-family: var(--font-mono); min-width: 56px; text-align: right; }
+    input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: var(--surface-2); border-radius: 2px; outline: none; cursor: pointer; border: 1px solid var(--border); }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--accent); }
+    input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--accent); }
+    input[type="range"]:focus::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--accent-soft-2); }
+    .output-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 20px; }
+    .output-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .output-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); }
+    .btn-copy { background: var(--surface-2); border: 1px solid var(--border-2); color: var(--text-2); font-family: var(--font); font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: var(--radius-s); cursor: pointer; transition: border-color 0.15s, color 0.15s, background 0.15s; }
     .btn-copy:hover { border-color: var(--accent); color: var(--text-1); }
-    .btn-copy.copied {
-      background: var(--success-bg);
-      border-color: var(--success);
-      color: var(--success);
-    }
-
-    .css-output {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 18px;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      color: var(--text-1);
-      white-space: pre-wrap;
-      word-break: break-all;
-      line-height: 1.7;
-      min-height: 52px;
-      user-select: all;
-    }
-
-    /* ── Guide ── */
-    .guide { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* ── FAQ ── */
-    .faq { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; padding: 16px 20px; }
-    .faq-q { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: none; color: var(--text-1); font-size: 14px; font-weight: 500; cursor: pointer; text-align: left; padding: 0; font-family: var(--font); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; margin-left: 12px; }
-
-    /* ── Related Content ── */
-    .related { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
-    .related-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .related-card h3 { font-size: 15px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
-    .related-card p { font-size: 13px; color: var(--text-2); }
-    .related-link {
-      display: inline-block;
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-1);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      transition: border-color 0.15s;
-    }
-    .related-link:hover { border-color: var(--accent); opacity: 1; }
-
-    /* ── Vultr Banner ── */
-    .vultr-banner { max-width: 960px; margin: 0 auto 48px; padding: 0 24px; }
-    .vultr-inner {
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .vultr-badge { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--success); margin-bottom: 4px; }
-    .vultr-title { font-size: 15px; font-weight: 500; color: var(--text-1); margin-bottom: 3px; }
-    .vultr-sub { font-size: 13px; color: var(--text-2); }
-    .vultr-cta {
-      display: inline-block;
-      background: var(--success);
-      color: var(--success-fg);
-      font-weight: 600;
-      font-size: 13px;
-      padding: 9px 18px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .vultr-cta:hover { background: var(--success-hover); color: var(--success-fg); }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 24px;
-    }
-    .footer-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-copy { font-size: 13px; color: var(--text-3); }
-    .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: 13px; color: var(--text-3); transition: color 0.15s; }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    /* ── Responsive ── */
+    .btn-copy.copied { background: var(--success); border-color: var(--success); color: var(--success-fg); }
+    .css-output { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 14px 18px; font-family: var(--font-mono); font-size: 14px; color: var(--text-1); white-space: pre-wrap; word-break: break-all; line-height: 1.7; min-height: 52px; user-select: all; }
     @media (max-width: 768px) {
-      .tool-panels {
-        grid-template-columns: 1fr;
-      }
-      .sliders-panel {
-        gap: 14px;
-      }
+      .tool-panels { grid-template-columns: 1fr; }
+      .sliders-panel { gap: 14px; }
     }
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 22px; }
-      .guide-grid { grid-template-columns: 1fr; }
-      .vultr-inner { flex-direction: column; align-items: flex-start; }
-      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
-      .related-card { flex-direction: column; align-items: flex-start; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 960px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
+    /* sf.css gives every input 9px 12px padding; a range track must not get it */
+    .tool input[type="range"] { padding: 0; }
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"CSS Filter Previewer","description":"Preview and generate CSS filter effects in real-time. Adjust blur, brightness, contrast, saturation and more — copy the code instantly.","url":"https://tools.stackfreeks.com/tools/css-filter-previewer/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
@@ -492,37 +72,37 @@
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-
-  <!-- 1. Nav -->
-  <nav class="nav">
+  <nav class="nav" aria-label="Main">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
-      <div class="nav-right">
-        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-        <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-      </div>
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-image" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-aperture"/></svg><span data-i18n="cat_image">Image Tools</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
   </nav>
 
-  <!-- 2. AdSense -->
-  <!-- ADSENSE_SLOT_TOP -->
-
-  <!-- 3. Hero -->
-  <header class="hero">
-    <div class="lang-en">
-      <h1>CSS Filter Previewer</h1>
-      <p>Adjust blur, brightness, contrast, saturation, hue and more with live sliders. The preview updates instantly — copy the generated CSS with one click.</p>
-    </div>
-    <div class="lang-ko">
-      <h1>CSS 필터 미리보기</h1>
-      <p>블러, 밝기, 대비, 채도, 색조 등을 슬라이더로 실시간 조정하세요. 미리보기가 즉시 반영되며 생성된 CSS 코드를 한 번에 복사할 수 있습니다.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-contrast"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>CSS Filter Previewer</h1>
+        <p>Adjust blur, brightness, contrast, saturation, hue and more with live sliders. The preview updates instantly — copy the generated CSS with one click.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>CSS 필터 미리보기</h1>
+        <p>블러, 밝기, 대비, 채도, 색조 등을 슬라이더로 실시간 조정하세요. 미리보기가 즉시 반영되며 생성된 CSS 코드를 한 번에 복사할 수 있습니다.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
   </header>
 
-  <!-- 4. Tool Body -->
-  <main class="tool-wrap">
-
+  <main class="tool wrap-tool tool-wrap">
     <div class="tool-panels">
 
       <!-- Left: Preview -->
@@ -702,47 +282,51 @@
       </div>
       <pre class="css-output" id="cssOutput">filter: none;</pre>
     </div>
-
   </main>
 
-  <!-- 5. How to Use -->
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More image tools</h2>
+      <a class="sec-link" href="/#cat-image"><span data-i18n="all_in_cat">All Image Tools tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/svg-to-png/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-pen-tool"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">SVG to PNG Converter</span><span class="lang-ko">SVG → PNG 변환기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+    </ul>
+  </section>
+
   <section class="guide">
     <div class="guide-title lang-en">How to use</div>
     <div class="guide-title lang-ko">사용 방법</div>
     <div class="guide-grid">
 
       <div class="guide-card">
-        <div class="guide-step lang-en">Step 1</div>
-        <div class="guide-step lang-ko">1단계</div>
-        <h3 class="lang-en">Move a slider</h3>
-        <h3 class="lang-ko">슬라이더 조작</h3>
+        <h3 class="lang-en">1. Move a slider</h3>
+        <h3 class="lang-ko">1. 슬라이더 조작</h3>
         <p class="lang-en">Drag any slider on the right panel. The preview image on the left updates instantly as you move it.</p>
         <p class="lang-ko">오른쪽 패널의 슬라이더를 드래그하면 왼쪽 미리보기 이미지가 즉시 변경됩니다.</p>
       </div>
 
       <div class="guide-card">
-        <div class="guide-step lang-en">Step 2</div>
-        <div class="guide-step lang-ko">2단계</div>
-        <h3 class="lang-en">Combine filters</h3>
-        <h3 class="lang-ko">필터 조합</h3>
+        <h3 class="lang-en">2. Combine filters</h3>
+        <h3 class="lang-ko">2. 필터 조합</h3>
         <p class="lang-en">Adjust multiple sliders at once — blur + sepia for a vintage look, grayscale + contrast for B&W drama, and more.</p>
         <p class="lang-ko">여러 슬라이더를 동시에 조정하세요. 블러+세피아로 빈티지, 그레이스케일+대비로 흑백 드라마 효과 등을 연출할 수 있습니다.</p>
       </div>
 
       <div class="guide-card">
-        <div class="guide-step lang-en">Step 3</div>
-        <div class="guide-step lang-ko">3단계</div>
-        <h3 class="lang-en">Check the output</h3>
-        <h3 class="lang-ko">출력 확인</h3>
+        <h3 class="lang-en">3. Check the output</h3>
+        <h3 class="lang-ko">3. 출력 확인</h3>
         <p class="lang-en">The Generated CSS panel below shows only the non-default values. Defaults are omitted to keep your code clean.</p>
         <p class="lang-ko">아래 CSS 출력 패널에는 기본값이 아닌 값만 표시됩니다. 기본값은 생략되어 코드가 깔끔하게 유지됩니다.</p>
       </div>
 
       <div class="guide-card">
-        <div class="guide-step lang-en">Step 4</div>
-        <div class="guide-step lang-ko">4단계</div>
-        <h3 class="lang-en">Copy and paste</h3>
-        <h3 class="lang-ko">복사 후 붙여넣기</h3>
+        <h3 class="lang-en">4. Copy and paste</h3>
+        <h3 class="lang-ko">4. 복사 후 붙여넣기</h3>
         <p class="lang-en">Click "Copy CSS" and paste the rule directly into your stylesheet or &lt;style&gt; block. Done.</p>
         <p class="lang-ko">"CSS 복사" 버튼을 클릭한 뒤 스타일시트나 &lt;style&gt; 블록에 바로 붙여넣으면 완료됩니다.</p>
       </div>
@@ -750,11 +334,10 @@
     </div>
   </section>
 
-  <!-- 6. FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <div class="faq-title">Frequently Asked Questions</div>
-      <div class="faq-list">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+      
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>What is the CSS <code>filter</code> property?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">The CSS <code>filter</code> property applies visual effects to an element — like blur, brightness adjustment, grayscale conversion, and more — directly in the browser without any image editing. It works on images, videos, backgrounds, and any HTML element.</div>
@@ -775,12 +358,12 @@
           <button class="faq-q" onclick="toggleFaq(this)"><span>Does using multiple filters affect performance?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">CSS filters are GPU-accelerated in modern browsers, so they are generally fast. However, applying heavy filters (especially <code>blur</code>) to large elements or animating them continuously can be expensive. For animations, prefer <code>will-change: filter</code> to hint the browser to promote the element to its own compositor layer.</div>
         </div>
-      </div>
+      
     </div>
 
     <div class="lang-ko">
-      <div class="faq-title">자주 묻는 질문</div>
-      <div class="faq-list">
+      <h2 class="faq-title">자주 묻는 질문</h2>
+      
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>CSS <code>filter</code> 속성이란 무엇인가요?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">CSS <code>filter</code> 속성은 이미지 편집 없이 브라우저에서 직접 요소에 블러, 밝기 조정, 그레이스케일 변환 등 시각적 효과를 적용합니다. 이미지, 비디오, 배경, 모든 HTML 요소에 사용할 수 있습니다.</div>
@@ -801,11 +384,19 @@
           <button class="faq-q" onclick="toggleFaq(this)"><span>여러 필터를 사용하면 성능에 영향을 미치나요?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">CSS 필터는 최신 브라우저에서 GPU 가속이 적용되어 일반적으로 빠릅니다. 단, 큰 요소에 무거운 필터(특히 <code>blur</code>)를 적용하거나 연속 애니메이션에 사용하면 비용이 클 수 있습니다. 애니메이션에는 <code>will-change: filter</code>를 사용해 브라우저가 해당 요소를 별도의 컴포지터 레이어로 승격하도록 힌트를 주세요.</div>
         </div>
-      </div>
+      
     </div>
   </section>
 
-  <!-- 7. Related Content -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/og-meta-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-share-2"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Open Graph Meta Tag Generator</span><span class="lang-ko">OG 메타 태그 생성기</span></span></span></a></li>
+      <li><a href="/tools/color-converter/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-palette"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Hex/RGB/HSL Color Converter</span><span class="lang-ko">HEX/RGB/HSL 색상 변환기</span></span></span></a></li>
+      <li><a href="/tools/px-rem-converter/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-ruler"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">px ↔ rem Converter</span><span class="lang-ko">px ↔ rem 변환기</span></span></span></a></li>
+    </ul>
+  </section>
+
   <section class="related">
     <div class="related-card">
       <div>
@@ -818,53 +409,59 @@
     </div>
   </section>
 
-  <!-- 8. Vultr Affiliate Banner -->
   <div class="vultr-banner">
-    <div class="vultr-inner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
       <div>
-        <div class="vultr-badge" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
         <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
         <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
       </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" class="vultr-cta"
-         rel="nofollow sponsored" target="_blank"
-         data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
   </div>
 
-  <!-- 9. Footer -->
-  <!-- Related tools -->
-  <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/og-meta-generator/" class="sf-related-card"><span>🏷️</span>Open Graph Meta Tag Generator</a>
-      <a href="/tools/color-converter/" class="sf-related-card"><span>🌈</span>Color Converter</a>
-      <a href="/tools/px-rem-converter/" class="sf-related-card"><span>📐</span>PX to REM Converter</a>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-inner">
-      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
+  <footer class="site-footer">
+    <div class="wrap-tool">
       <div class="footer-links">
         <a href="/about/">About</a>
         <a href="/privacy/">Privacy</a>
         <a href="/contact/">Contact</a>
         <a href="/terms/">Terms</a>
       </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
   </footer>
 
-  <!-- i18n page-specific keys (must come BEFORE i18n.js) -->
   <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_image: "Image Tools",
+        more_tools: "More image tools",
+        all_in_cat: "All Image Tools tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         btn_reset: 'Reset',
         btn_copy: 'Copy CSS',
         btn_copied: 'Copied!',
         related_cta: 'Visit Blog →'
       },
       ko: {
+        cat_image: "이미지 도구",
+        more_tools: "이미지 툴 더 보기",
+        all_in_cat: "이미지 도구 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         btn_reset: '초기화',
         btn_copy: 'CSS 복사',
         btn_copied: '복사됨!',
@@ -873,7 +470,6 @@
     };
   </script>
 
-  <!-- Filter logic -->
   <script>
     // Slider definitions: [id-suffix, default, unit, isPercent]
     const SLIDERS = [
@@ -964,7 +560,7 @@
     updateFilter();
   </script>
 
-  <!-- 10. i18n -->
   <script src="/shared/i18n.js"></script>
+
 </body>
 </html>

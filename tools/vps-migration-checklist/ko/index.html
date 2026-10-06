@@ -22,631 +22,147 @@
 <meta content="https://tools.stackfreeks.com/tools/vps-migration-checklist/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
-<!-- ADSENSE_SLOT_TOP -->
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .back-link {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .back-link:hover { color: var(--text-1); opacity: 1; }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-      flex-shrink: 0;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Container */
-    .container {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 12px;
-      color: var(--text-3);
-      margin-bottom: 16px;
-    }
-
-    .hero h1 {
-      font-size: 32px;
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      margin-bottom: 12px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 16px;
-      color: var(--text-2);
-      max-width: 580px;
-    }
-
-    /* Tool section */
-    .tool-section {
-      padding: 0 24px 48px;
-      max-width: 760px;
-      margin: 0 auto;
-    }
+    /* VPS Migration Checklist — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
 
     /* Service selector */
     .selector-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      margin-bottom: 20px;
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
     }
-
-    .selector-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-1);
-      margin-bottom: 6px;
-    }
-
-    .selector-subtitle {
-      font-size: 13px;
-      color: var(--text-2);
-      margin-bottom: 20px;
-    }
-
+    .selector-title { font-size: 16px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .selector-subtitle { font-size: 14px; color: var(--text-2); margin-bottom: 16px; }
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 8px;
+      margin-bottom: 18px;
     }
-
     .service-checkbox {
       display: flex;
       align-items: center;
       gap: 10px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-s);
+      padding: 9px 12px;
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
+      transition: background-color var(--t), border-color var(--t);
       user-select: none;
     }
-    .service-checkbox:hover { border-color: var(--border-2); }
-    .service-checkbox.selected {
-      border-color: var(--accent);
-      background: rgba(99,102,241,0.08);
-    }
-
-    .service-checkbox input[type="checkbox"] {
-      width: 15px;
-      height: 15px;
-      accent-color: var(--accent);
-      flex-shrink: 0;
-      cursor: pointer;
-    }
-
-    .service-label {
-      font-size: 13px;
-      color: var(--text-2);
-      font-weight: 500;
-    }
-
-    .service-emoji {
-      font-size: 15px;
-      flex-shrink: 0;
-    }
-
-    .btn-generate {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent-strong);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius);
-      padding: 11px 24px;
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-    .btn-generate:hover { opacity: 0.88; }
+    .service-checkbox:hover { background: var(--surface-2); }
+    .service-checkbox.selected { border-color: var(--accent); background: var(--accent-soft); }
+    .service-checkbox input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; cursor: pointer; }
+    .service-label { font-size: 14px; color: var(--text-1); font-weight: 500; }
+    .service-emoji { width: 16px; height: 16px; flex-shrink: 0; color: var(--text-3); }
+    .service-checkbox.selected .service-emoji { color: var(--accent-text); }
 
     /* Checklist output */
-    .checklist-output {
-      display: none;
-    }
-    .checklist-output.visible {
-      display: block;
-    }
+    .checklist-output { display: none; }
+    .checklist-output.visible { display: block; }
 
-    /* Progress bar */
     .progress-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      margin-bottom: 16px;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 20px;
     }
-
-    .progress-info {
-      flex-shrink: 0;
-    }
-
-    .progress-count {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-1);
-      letter-spacing: -0.02em;
-    }
-
-    .progress-label {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    .progress-bar-wrap {
-      flex: 1;
-      background: var(--surface-2);
-      border-radius: 4px;
-      height: 6px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: var(--success);
-      border-radius: 4px;
-      transition: width 0.3s ease;
-      width: 0%;
-    }
-
-    .progress-actions {
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-
+    .progress-info { flex-shrink: 0; }
+    .progress-count { font-size: 22px; font-weight: 650; color: var(--text-1); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .progress-label { font-size: 13px; color: var(--text-3); }
+    .progress-bar-wrap { flex: 1; background: var(--surface-2); outline: 1px solid var(--border); outline-offset: -1px; border-radius: 999px; height: 6px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.3s var(--ease); width: 0%; }
+    .progress-actions { display: flex; gap: 8px; flex-shrink: 0; }
     .btn-sm {
-      background: var(--surface-2);
+      background: var(--surface);
       border: 1px solid var(--border-2);
-      color: var(--text-2);
+      color: var(--text-1);
       font-family: var(--font);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 6px 12px;
-      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      height: 32px;
+      padding: 0 12px;
+      border-radius: var(--radius-s);
       cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
+      transition: background-color var(--t), border-color var(--t);
       white-space: nowrap;
     }
-    .btn-sm:hover { border-color: var(--accent); color: var(--text-1); }
+    .btn-sm:hover { background: var(--surface-2); border-color: var(--text-3); }
 
-    /* Checklist category */
     .checklist-category {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       margin-bottom: 12px;
       overflow: hidden;
     }
-
     .checklist-category-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 20px;
+      padding: 12px 20px;
       background: var(--surface-2);
       border-bottom: 1px solid var(--border);
     }
+    .checklist-category-title { font-size: 15px; font-weight: 600; color: var(--text-1); }
+    .checklist-category-count { font-size: 13px; color: var(--text-3); margin-left: auto; }
 
-    .checklist-category-icon {
-      font-size: 16px;
-    }
-
-    .checklist-category-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-1);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .checklist-category-count {
-      font-size: 11px;
-      color: var(--text-3);
-      margin-left: auto;
-    }
-
-    /* Checklist item */
     .checklist-item {
       display: flex;
       align-items: flex-start;
       gap: 12px;
       padding: 12px 20px;
       border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
+      transition: background-color var(--t);
     }
     .checklist-item:last-child { border-bottom: none; }
-    .checklist-item:hover { background: rgba(255,255,255,0.02); }
-
-    .checklist-item.done {
-      opacity: 0.45;
-    }
-
-    .checklist-item input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--success);
-      flex-shrink: 0;
-      margin-top: 2px;
-      cursor: pointer;
-    }
-
-    .checklist-item-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .checklist-item-text {
-      font-size: 14px;
-      color: var(--text-1);
-      line-height: 1.5;
-      transition: text-decoration 0.15s;
-    }
-    .checklist-item.done .checklist-item-text {
-      text-decoration: line-through;
-      color: var(--text-3);
-    }
-
+    .checklist-item:hover { background: var(--surface-2); }
+    .checklist-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; margin-top: 3px; cursor: pointer; }
+    .checklist-item-content { flex: 1; min-width: 0; }
+    .checklist-item-text { font-size: 15px; color: var(--text-1); line-height: 1.5; }
+    .checklist-item.done .checklist-item-text { text-decoration: line-through; color: var(--text-3); }
     .checklist-item-code {
       font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text-3);
+      font-size: 13px;
+      color: var(--text-2);
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: 5px;
       padding: 2px 7px;
       display: inline-block;
+      max-width: 100%;
+      overflow-wrap: anywhere;
       margin-top: 4px;
     }
+    .checklist-item.done .checklist-item-code { color: var(--text-3); }
 
-    /* How to use */
-    .section {
-      padding: 0 24px 48px;
-      max-width: 760px;
-      margin: 0 auto;
-    }
+    .faq-a code { font-size: 13px; }
+    .related .section-title { font-size: var(--fs-l); font-weight: 650; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .related-text p:first-child { color: var(--text-3); font-size: 13px; font-weight: 500; }
+    .related-text p:last-child { font-weight: 600; }
+    .related > p { margin-top: 10px; }
 
-    .section-title {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--text-1);
-      margin-bottom: 20px;
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-    }
-
-    .step-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-
-    .step-num {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--accent-text);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-    }
-
-    .step-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-1);
-      margin-bottom: 6px;
-    }
-
-    .step-desc {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.5;
-    }
-
-    /* FAQ */
-    .faq-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 10px;
-    }
-
-    .faq-q {
-      width: 100%;
-      background: none;
-      border: none;
-      text-align: left;
-      padding: 16px 20px;
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-1);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-
-    .faq-icon {
-      font-size: 16px;
-      color: var(--text-3);
-      flex-shrink: 0;
-      transition: transform 0.2s;
-    }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    .faq-a {
-      display: none;
-      padding: 0 20px 16px;
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related guides */
-    .related-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); opacity: 1; }
-
-    .related-text p:first-child {
-      font-size: 11px;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 4px;
-    }
-
-    .related-text p:last-child {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-1);
-    }
-
-    .related-arrow {
-      color: var(--text-3);
-      font-size: 18px;
-    }
-
-    /* Vultr banner */
-    .vultr-banner {
-      background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(99,102,241,0.06) 100%);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 32px 24px;
-      margin-bottom: 0;
-    }
-
-    .banner-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--success);
-      margin-bottom: 6px;
-    }
-
-    .banner-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-1);
-      margin-bottom: 4px;
-    }
-
-    .banner-sub {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-
-    .btn-vultr {
-      display: inline-flex;
-      align-items: center;
-      background: var(--success);
-      color: var(--success-fg);
-      border-radius: var(--radius);
-      padding: 11px 22px;
-      font-size: 14px;
-      font-weight: 700;
-      white-space: nowrap;
-      transition: opacity 0.15s;
-      flex-shrink: 0;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Mobile */
     @media (max-width: 768px) {
-      .hero { padding: 32px 16px 24px; }
-      .hero h1 { font-size: 24px; }
-      .hero p { font-size: 14px; }
-      .tool-section { padding: 0 16px 36px; }
-      .section { padding: 0 16px 36px; }
-      .selector-card { padding: 20px 16px; }
-      .services-grid { grid-template-columns: 1fr 1fr; }
+      .selector-card { padding: 16px; }
+      .services-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
       .progress-card { flex-wrap: wrap; gap: 12px; }
       .progress-actions { width: 100%; }
-      .banner-inner { flex-direction: column; align-items: flex-start; }
-      .steps-grid { grid-template-columns: 1fr 1fr; }
-      .footer-links { gap: 14px; }
-      .nav-left { gap: 10px; }
+      .checklist-item, .checklist-category-header { padding-left: 14px; padding-right: 14px; }
     }
-
     @media (max-width: 480px) {
-      .services-grid { grid-template-columns: 1fr; }
-      .steps-grid { grid-template-columns: 1fr; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 760px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .services-grid { grid-template-columns: minmax(0, 1fr); }
     }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "VPS Migration Checklist", "description": "Interactive VPS migration checklist for Linux servers. Select your stack and get a tailored step-by-step migration plan. Free online tool.", "url": "https://tools.stackfreeks.com/tools/vps-migration-checklist/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/vps-migration-checklist/ko/"}}</script>
@@ -654,26 +170,33 @@
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<!-- Nav -->
-<nav>
-<div class="nav-left">
-<a class="logo" href="/ko/">StackFreeks Tools</a>
-<a class="back-link nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-</div>
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-vps"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-hard-drive"></use></svg><span data-i18n="cat_vps_server">VPS & Server</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/vps-migration-checklist/">English</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+</div>
 </nav>
-<!-- Hero -->
-<section class="hero">
-<div class="hero-badge">📋 <span data-i18n="hero_badge">Server & VPS</span></div>
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-list-checks"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
 <h1>VPS 마이그레이션 체크리스트</h1>
 <p>현재 서버에서 실행 중인 서비스를 선택하면 맞춤형 단계별 이전 계획을 생성합니다. 작업을 완료하면 체크하세요 &mdash; 빠뜨리는 항목 없이 안전하게 이전할 수 있습니다.</p>
 </div>
-</section>
-<!-- ADSENSE_SLOT_IN_TOOL -->
-<!-- Tool Body -->
-<section class="tool-section">
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
+</div>
+</header>
+<!-- Tool body -->
+<main class="tool wrap-tool">
 <!-- Service Selector -->
 <div class="selector-card">
 
@@ -684,67 +207,67 @@
 <div class="services-grid" id="servicesGrid">
 <label class="service-checkbox" id="lbl-nginx">
 <input onchange="toggleService(this)" type="checkbox" value="nginx">
-<span class="service-emoji">🌐</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-globe"></use></svg>
 <span class="service-label">Nginx / Apache</span>
 </label>
 <label class="service-checkbox" id="lbl-mysql">
 <input onchange="toggleService(this)" type="checkbox" value="mysql">
-<span class="service-emoji">🗄️</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-database"></use></svg>
 <span class="service-label">MySQL / MariaDB</span>
 </label>
 <label class="service-checkbox" id="lbl-postgres">
 <input onchange="toggleService(this)" type="checkbox" value="postgres">
-<span class="service-emoji">🐘</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-database"></use></svg>
 <span class="service-label">PostgreSQL</span>
 </label>
 <label class="service-checkbox" id="lbl-redis">
 <input onchange="toggleService(this)" type="checkbox" value="redis">
-<span class="service-emoji">⚡</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-zap"></use></svg>
 <span class="service-label">Redis</span>
 </label>
 <label class="service-checkbox" id="lbl-docker">
 <input onchange="toggleService(this)" type="checkbox" value="docker">
-<span class="service-emoji">🐳</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-container"></use></svg>
 <span class="service-label">Docker / Docker Compose</span>
 </label>
 <label class="service-checkbox" id="lbl-nodejs">
 <input onchange="toggleService(this)" type="checkbox" value="nodejs">
-<span class="service-emoji">🟩</span>
-<span class="service-label">Node.js apps / PM2</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-terminal"></use></svg>
+<span class="service-label" data-i18n="x_node_js_apps_pm2">Node.js apps / PM2</span>
 </label>
 <label class="service-checkbox" id="lbl-wordpress">
 <input onchange="toggleService(this)" type="checkbox" value="wordpress">
-<span class="service-emoji">📝</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-file-code"></use></svg>
 <span class="service-label">PHP / WordPress</span>
 </label>
 <label class="service-checkbox" id="lbl-ssl">
 <input onchange="toggleService(this)" type="checkbox" value="ssl">
-<span class="service-emoji">🔒</span>
-<span class="service-label">SSL certs (Let's Encrypt)</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-lock-keyhole"></use></svg>
+<span class="service-label" data-i18n="x_ssl_certs_let_s_encrypt">SSL certs (Let's Encrypt)</span>
 </label>
 <label class="service-checkbox" id="lbl-cron">
 <input onchange="toggleService(this)" type="checkbox" value="cron">
-<span class="service-emoji">⏰</span>
-<span class="service-label">Cron jobs</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-clock"></use></svg>
+<span class="service-label" data-i18n="x_cron_jobs">Cron jobs</span>
 </label>
 <label class="service-checkbox" id="lbl-firewall">
 <input onchange="toggleService(this)" type="checkbox" value="firewall">
-<span class="service-emoji">🔥</span>
-<span class="service-label">Firewall rules (iptables/ufw)</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-brick-wall"></use></svg>
+<span class="service-label" data-i18n="x_firewall_rules_iptables_ufw">Firewall rules (iptables/ufw)</span>
 </label>
 <label class="service-checkbox" id="lbl-ssh">
 <input onchange="toggleService(this)" type="checkbox" value="ssh">
-<span class="service-emoji">🔑</span>
-<span class="service-label">SSH key-based auth</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-key-round"></use></svg>
+<span class="service-label" data-i18n="x_ssh_key_based_auth">SSH key-based auth</span>
 </label>
 <label class="service-checkbox" id="lbl-backups">
 <input onchange="toggleService(this)" type="checkbox" value="backups">
-<span class="service-emoji">💾</span>
-<span class="service-label">Backups (manual files)</span>
+<svg aria-hidden="true" class="ico service-emoji"><use href="/shared/icons.svg#i-database-backup"></use></svg>
+<span class="service-label" data-i18n="x_backups_manual_files">Backups (manual files)</span>
 </label>
 </div>
-<button class="btn-generate" onclick="generateChecklist()">
-<span>📋</span>
+<button class="btn btn-primary btn-generate" onclick="generateChecklist()">
+<svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-list-checks"></use></svg>
 <span data-i18n="btn_generate">Generate Checklist</span>
 </button>
 </div>
@@ -767,52 +290,60 @@
 <!-- Categories will be injected here -->
 <div id="checklistCategories"></div>
 </div>
+</main>
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More server tools</h2>
+<a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS & Server tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/vps-bandwidth-calculator/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-gauge"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">VPS 대역폭 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/server-spec-recommender/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-cpu"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">서버 사양 추천기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
 </section>
-<!-- How to Use -->
-<section class="section">
+<!-- How to use -->
+<section class="guide">
 
-<div class="lang-ko"><h2 class="section-title">사용 방법</h2></div>
-<div class="steps-grid guide-grid">
-<div class="step-card">
-<div class="step-num">Step 1</div>
-
-<div class="lang-ko">
-<p class="step-title">서비스 선택</p>
-<p class="step-desc">현재 서버에서 실행 중인 소프트웨어와 서비스를 모두 체크하세요.</p>
-</div>
-</div>
-<div class="step-card">
-<div class="step-num">Step 2</div>
+<div class="lang-ko"><h2 class="guide-title">사용 방법</h2></div>
+<div class="guide-grid">
+<div class="guide-card">
 
 <div class="lang-ko">
-<p class="step-title">계획 생성</p>
-<p class="step-desc">"체크리스트 생성"을 클릭하면 맞춤형 이전 계획이 만들어집니다.</p>
+<h3>1. 서비스 선택</h3>
+<p>현재 서버에서 실행 중인 소프트웨어와 서비스를 모두 체크하세요.</p>
 </div>
 </div>
-<div class="step-card">
-<div class="step-num">Step 3</div>
+<div class="guide-card">
 
 <div class="lang-ko">
-<p class="step-title">단계별 실행</p>
-<p class="step-desc">순서대로 각 단계를 따르세요. 완료한 항목을 체크해 진행 상황을 추적하세요.</p>
+<h3>2. 계획 생성</h3>
+<p>"체크리스트 생성"을 클릭하면 맞춤형 이전 계획이 만들어집니다.</p>
 </div>
 </div>
-<div class="step-card">
-<div class="step-num">Step 4</div>
+<div class="guide-card">
 
 <div class="lang-ko">
-<p class="step-title">복사 & 공유</p>
-<p class="step-desc">"텍스트로 복사"로 남은 항목을 노트 앱에 붙여넣거나 팀과 공유하세요.</p>
+<h3>3. 단계별 실행</h3>
+<p>순서대로 각 단계를 따르세요. 완료한 항목을 체크해 진행 상황을 추적하세요.</p>
+</div>
+</div>
+<div class="guide-card">
+
+<div class="lang-ko">
+<h3>4. 복사 & 공유</h3>
+<p>"텍스트로 복사"로 남은 항목을 노트 앱에 붙여넣거나 팀과 공유하세요.</p>
 </div>
 </div>
 </div>
 </section>
 <!-- FAQ -->
-<section class="section">
+<section class="faq">
 
 <div class="lang-ko">
-<h2 class="section-title">자주 묻는 질문</h2>
-<div class="faq-list">
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>VPS 마이그레이션은 보통 얼마나 걸리나요?</span><span class="faq-icon">+</span></button>
 <div class="faq-a">단순한 사이트 이전은 1~3시간, MySQL&middot;Docker&middot;여러 앱이 포함된 복잡한 스택은 하루가 걸릴 수 있습니다. 가장 큰 변수는 데이터베이스 크기입니다. 50GB DB는 1Gbps 링크에서도 2~4시간이 걸릴 수 있습니다. 트래픽이 적은 시간대에 이전을 계획하세요.</div>
@@ -834,10 +365,18 @@
 <div class="faq-a">DNS 전환 후 최소 48시간을 기다린 후 구 서버를 삭제하세요. 이는 캐시된 DNS 항목으로 인해 구 IP로 접속하는 사용자를 커버합니다. 새 서버의 접속 로그를 모니터링하다가 구 서버 트래픽이 거의 0에 가까워지면 삭제해도 됩니다.</div>
 </div>
 </div>
-</div>
 </section>
-<!-- Related Guides -->
-<section class="section">
+<!-- Related tools -->
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/game-server-cost-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-gamepad-2"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">게임 서버 비용 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/sla-uptime-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-activity"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">SLA 업타임 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/object-storage-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-archive"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">오브젝트 스토리지 비용 계산기</span></span></span></a></li>
+</ul>
+</section>
+<!-- Related content -->
+<section class="related">
 
 <div class="lang-ko"><h2 class="section-title">관련 가이드</h2></div>
 <a class="related-card" href="https://stackfreeks.com/vultr-vs-hetzner-2026/" rel="noopener" target="_blank">
@@ -850,38 +389,30 @@
 </div>
 <span class="related-arrow">&rarr;</span>
 </a>
+<p><a href="https://stackfreeks.com/migrate-digitalocean-to-vultr/" rel="noopener" target="_blank">Migrating from DigitalOcean to Vultr</a></p>
 </section>
-<!-- Vultr Banner -->
-<!-- Related tools -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/game-server-cost-calculator/ko/"><span>🎮</span>Game Server Cost Calculator</a>
-<a class="sf-related-card" href="/tools/sla-uptime-calculator/ko/"><span>⏱️</span>SLA Uptime Calculator</a>
-<a class="sf-related-card" href="/tools/object-storage-calculator/ko/"><span>🗄️</span>Object Storage Cost Calculator</a>
-<a class="sf-related-card" href="https://stackfreeks.com/migrate-digitalocean-to-vultr/" rel="noopener" target="_blank"><span>📖</span>Migrating from DigitalOcean to Vultr</a>
-</div>
-</section>
-<section class="vultr-banner">
-<div class="container banner-inner">
+<!-- Vultr affiliate banner -->
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
 <div>
-<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</div>
 </div>
-<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
 </div>
-</section>
 <!-- Footer -->
-<footer>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
-<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com</a>
 </div>
-<p class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</p>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
+</div>
 </footer>
 <script>
     // ─── Service toggle ───────────────────────────────────────────────
@@ -896,7 +427,6 @@
     const CATEGORIES = [
       {
         id: 'pre',
-        icon: '📦',
         title_en: 'Pre-Migration',
         title_ko: '이전 준비',
         items: [
@@ -911,7 +441,6 @@
       },
       {
         id: 'transfer',
-        icon: '📤',
         title_en: 'Transfer Files',
         title_ko: '파일 전송',
         items: [
@@ -923,7 +452,6 @@
       },
       {
         id: 'nginx',
-        icon: '🌐',
         title_en: 'Nginx / Apache',
         title_ko: 'Nginx / Apache',
         service: 'nginx',
@@ -937,7 +465,6 @@
       },
       {
         id: 'mysql',
-        icon: '🗄️',
         title_en: 'MySQL / MariaDB',
         title_ko: 'MySQL / MariaDB',
         service: 'mysql',
@@ -951,7 +478,6 @@
       },
       {
         id: 'postgres',
-        icon: '🐘',
         title_en: 'PostgreSQL',
         title_ko: 'PostgreSQL',
         service: 'postgres',
@@ -965,7 +491,6 @@
       },
       {
         id: 'redis',
-        icon: '⚡',
         title_en: 'Redis',
         title_ko: 'Redis',
         service: 'redis',
@@ -979,7 +504,6 @@
       },
       {
         id: 'docker',
-        icon: '🐳',
         title_en: 'Docker / Docker Compose',
         title_ko: 'Docker / Docker Compose',
         service: 'docker',
@@ -995,7 +519,6 @@
       },
       {
         id: 'nodejs',
-        icon: '🟩',
         title_en: 'Node.js apps / PM2',
         title_ko: 'Node.js 앱 / PM2',
         service: 'nodejs',
@@ -1012,7 +535,6 @@
       },
       {
         id: 'wordpress',
-        icon: '📝',
         title_en: 'PHP / WordPress',
         title_ko: 'PHP / WordPress',
         service: 'wordpress',
@@ -1029,7 +551,6 @@
       },
       {
         id: 'ssl',
-        icon: '🔒',
         title_en: 'SSL Certificates (Let\'s Encrypt)',
         title_ko: 'SSL 인증서 (Let\'s Encrypt)',
         service: 'ssl',
@@ -1042,7 +563,6 @@
       },
       {
         id: 'cron',
-        icon: '⏰',
         title_en: 'Cron Jobs',
         title_ko: '크론 작업',
         service: 'cron',
@@ -1056,7 +576,6 @@
       },
       {
         id: 'firewall',
-        icon: '🔥',
         title_en: 'Firewall Rules',
         title_ko: '방화벽 규칙',
         service: 'firewall',
@@ -1071,7 +590,6 @@
       },
       {
         id: 'ssh',
-        icon: '🔑',
         title_en: 'SSH Key-based Auth',
         title_ko: 'SSH 키 인증',
         service: 'ssh',
@@ -1085,7 +603,6 @@
       },
       {
         id: 'backups',
-        icon: '💾',
         title_en: 'Backups',
         title_ko: '백업',
         service: 'backups',
@@ -1099,7 +616,6 @@
       },
       {
         id: 'dns',
-        icon: '🌍',
         title_en: 'DNS & Cutover',
         title_ko: 'DNS 전환',
         items: [
@@ -1113,7 +629,6 @@
       },
       {
         id: 'post',
-        icon: '✅',
         title_en: 'Post-Migration',
         title_ko: '이전 완료 후',
         items: [
@@ -1150,7 +665,6 @@
         const header = document.createElement('div');
         header.className = 'checklist-category-header';
         header.innerHTML = `
-          <span class="checklist-category-icon">${cat.icon}</span>
           <span class="checklist-category-title">
             <span class="lang-en">${cat.title_en}</span>
             <span class="lang-ko">${cat.title_ko}</span>
@@ -1304,6 +818,14 @@
 <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_vps_server: "VPS & Server",
+        more_tools: "More server tools",
+        all_in_cat: "All VPS & Server tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back: '← All Tools',
         hero_badge: 'Server & VPS',
         btn_generate: 'Generate Checklist',
@@ -1315,8 +837,22 @@
         vultr_sub: 'Get $300 free credit — valid for 30 days (limited-time offer)',
         vultr_cta: 'Claim your credit →',
         footer_copy: '© 2026 StackFreeks',
+        x_backups_manual_files: "Backups (manual files)",
+        x_cron_jobs: "Cron jobs",
+        x_firewall_rules_iptables_ufw: "Firewall rules (iptables/ufw)",
+        x_node_js_apps_pm2: "Node.js apps / PM2",
+        x_ssh_key_based_auth: "SSH key-based auth",
+        x_ssl_certs_let_s_encrypt: "SSL certs (Let's Encrypt)"
       },
       ko: {
+        cat_vps_server: "VPS & 서버",
+        more_tools: "서버 툴 더 보기",
+        all_in_cat: "VPS & 서버 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back: '← 전체 툴',
         hero_badge: '서버 & VPS',
         btn_generate: '체크리스트 생성',
@@ -1328,6 +864,12 @@
         vultr_sub: '$300 무료 크레딧 — 30일간 유효 (한정 기간 제공)',
         vultr_cta: '크레딧 받기 →',
         footer_copy: '© 2026 StackFreeks',
+        x_backups_manual_files: "백업 (수동 파일)",
+        x_cron_jobs: "cron 작업",
+        x_firewall_rules_iptables_ufw: "방화벽 규칙 (iptables/ufw)",
+        x_node_js_apps_pm2: "Node.js 앱 / PM2",
+        x_ssh_key_based_auth: "SSH 키 기반 인증",
+        x_ssl_certs_let_s_encrypt: "SSL 인증서 (Let's Encrypt)"
       }
     };
   </script>

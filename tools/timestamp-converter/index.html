@@ -21,149 +21,38 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border-2);
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-    }
+    /* Unix Timestamp Converter — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
 
     /* Current time card */
-    .now-card {
-      max-width: 860px;
-      margin: 0 auto 32px;
-      padding: 0 24px;
-    }
-
+    .now-card { margin-bottom: 16px; }
     .now-card-inner {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
+      border-radius: var(--radius);
+      padding: 18px 20px;
     }
-
     .now-label {
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent-text);
-      margin-bottom: 8px;
+      color: var(--text-2);
+      margin-bottom: 6px;
     }
-
     .now-ts {
-      font-size: 36px;
-      font-weight: 600;
-      font-family: monospace;
+      font-size: 30px;
+      font-weight: 650;
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
       color: var(--text-1);
       letter-spacing: -0.02em;
     }
-
     .now-row {
       display: flex;
       align-items: center;
@@ -171,456 +60,112 @@
       margin-top: 4px;
       flex-wrap: wrap;
     }
-
     .now-sub {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-2);
-      font-family: monospace;
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
     }
-
     .now-dates {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 8px;
       margin-top: 16px;
       padding-top: 16px;
       border-top: 1px solid var(--border);
     }
+    .now-date-row { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .now-date-lbl { font-size: 13px; color: var(--text-3); }
+    .now-date-val { font-size: 14px; font-family: var(--font-mono); color: var(--text-1); overflow-wrap: anywhere; }
 
-    .now-date-row {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .now-date-lbl {
-      font-size: 11px;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .now-date-val {
-      font-size: 13px;
-      font-family: monospace;
-      color: var(--text-1);
-    }
-
-    /* Converter section */
-    .converter {
-      max-width: 860px;
-      margin: 0 auto 32px;
-      padding: 0 24px;
-    }
-
+    /* Converter */
     .converter-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
+      border-radius: var(--radius);
+      padding: 18px 20px;
     }
-
-    /* Tabs */
-    .tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 20px;
-    }
-
+    .tabs { display: flex; gap: 6px; margin-bottom: 18px; }
     .tab-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
+      background: var(--surface);
+      border: 1px solid var(--border-2);
       color: var(--text-2);
       font-family: var(--font);
-      font-size: 13px;
-      padding: 8px 16px;
-      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      height: 38px;
+      padding: 0 14px;
+      border-radius: var(--radius-s);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
     }
+    .tab-btn:hover { background: var(--surface-2); color: var(--text-1); }
+    .tab-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
 
-    .tab-btn.active {
-      background: var(--accent-strong);
-      border-color: var(--accent);
-      color: #fff;
-    }
+    .input-group { margin-bottom: 18px; }
+    .input-label { display: block; margin-bottom: 6px; }
+    .input-field { width: 100%; font-family: var(--font-mono); }
+    .input-hint { font-size: 13px; color: var(--text-3); margin-top: 6px; }
 
-    .tab-panel {
-      display: none;
-    }
-
-    .tab-panel.active {
-      display: block;
-    }
-
-    /* Input fields */
-    .input-group {
-      margin-bottom: 20px;
-    }
-
-    .input-label {
-      font-size: 12px;
-      color: var(--text-2);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 6px;
-      display: block;
-    }
-
-    .input-field {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-1);
-      font-family: monospace;
-      font-size: 15px;
-      padding: 10px 14px;
-      border-radius: var(--radius);
-      transition: border-color 0.15s;
-    }
-
-    .input-field:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .input-field::placeholder {
-      color: var(--text-3);
-    }
-
-    .input-hint {
-      font-size: 12px;
-      color: var(--text-3);
-      margin-top: 6px;
-    }
-
-    /* Result rows */
     .results-block {
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 4px 16px;
+      border-radius: var(--radius-s);
+      padding: 2px 16px;
     }
-
     .result-row {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px 0;
+      padding: 10px 0;
       border-bottom: 1px solid var(--border);
       flex-wrap: wrap;
     }
-
-    .result-row:last-child {
-      border-bottom: none;
-    }
-
-    .result-label {
-      font-size: 12px;
-      color: var(--text-3);
-      min-width: 100px;
-    }
-
+    .result-row:last-child { border-bottom: none; }
+    .result-label { font-size: 13px; color: var(--text-3); min-width: 100px; }
     .result-value {
-      font-family: monospace;
+      font-family: var(--font-mono);
       font-size: 14px;
       color: var(--text-1);
       flex: 1;
+      min-width: 0;
       word-break: break-all;
     }
-
     .copy-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: var(--text-2);
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      color: var(--text-1);
       font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.15s;
-      flex-shrink: 0;
-    }
-
-    .copy-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent-text);
-    }
-
-    .copy-btn.copied {
-      border-color: var(--success);
-      color: var(--success);
-    }
-
-    .empty-result {
-      font-size: 13px;
-      color: var(--text-3);
-      font-family: monospace;
-    }
-
-    .error-result {
-      font-size: 13px;
-      color: #f87171;
-      font-family: monospace;
-    }
-
-    /* Guide */
-    .guide {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    .guide-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-    }
-
-    .guide-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-
-    .guide-step {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--accent-text);
-      margin-bottom: 8px;
-    }
-
-    .guide-card h3 {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 6px;
-    }
-
-    .guide-card p {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
-
-    /* FAQ */
-    .faq {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    .faq-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-
-    .faq-a code {
-      font-family: monospace;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      padding: 1px 5px;
-      border-radius: 4px;
-      font-size: 12px;
-      color: var(--text-1);
-    }
-
-    /* Related */
-    .related {
-      max-width: 860px;
-      margin: 0 auto 0;
-      padding: 0 24px 32px;
-    }
-
-    .related-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      background: var(--surface);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      transition: border-color 0.15s;
-    }
-
-    .related-card:hover { border-color: var(--border-2); opacity: 1; }
-
-    .related-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 4px;
-    }
-
-    .related-title {
-      font-size: 14px;
-      color: var(--text-1);
-    }
-
-    .related-arrow {
-      color: var(--text-3);
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    /* Vultr Banner */
-    .vultr-banner {
-      background: var(--success-bg);
-      border-top: 1px solid rgba(34,197,94,0.15);
-      border-bottom: 1px solid rgba(34,197,94,0.15);
-      padding: 24px;
-    }
-
-    .banner-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .eyebrow {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--success);
-      margin-bottom: 4px;
-    }
-
-    .banner-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 4px;
-    }
-
-    .banner-sub {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-
-    .btn-vultr {
-      display: inline-block;
-      background: var(--success);
-      color: var(--success-fg);
       font-size: 13px;
       font-weight: 600;
-      padding: 10px 20px;
-      border-radius: var(--radius);
+      height: 30px;
+      padding: 0 10px;
+      border-radius: var(--radius-s);
+      cursor: pointer;
       white-space: nowrap;
-      transition: opacity 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
+      flex-shrink: 0;
     }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent-text); }
+    .copy-btn.copied { background: var(--success); border-color: var(--success); color: var(--success-fg); }
+    .empty-result { color: var(--text-3); }
+    .error-result { font-size: 13px; color: var(--danger); font-family: var(--font-mono); }
 
-    .btn-vultr:hover { background: var(--success-hover); }
+    .faq-a code { font-size: 13px; }
+    .related-label { color: var(--text-3); font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+    .related-arrow { display: none; }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Mobile */
     @media (max-width: 768px) {
-      .hero { padding: 32px 16px 24px; }
-      .hero h1 { font-size: 22px; }
-      .now-card { padding: 0 16px; margin-bottom: 24px; }
-      .now-ts { font-size: 26px; }
-      .converter { padding: 0 16px; }
+      .now-ts { font-size: 24px; }
+      .now-card-inner, .converter-card { padding: 16px; }
       .tabs { flex-wrap: wrap; }
-      .result-label { min-width: 80px; font-size: 11px; }
-      .guide { padding: 0 16px 40px; }
-      .faq { padding: 0 16px 40px; }
-      .related { padding: 0 16px 24px; }
-      .vultr-banner { padding: 20px 16px; }
-      .banner-inner { flex-direction: column; align-items: flex-start; }
-      .btn-vultr { align-self: stretch; text-align: center; }
-      .footer-links { gap: 14px; }
+      .result-label { min-width: 80px; }
       .now-dates { grid-template-columns: 1fr; }
     }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style>  <script type="application/ld+json">
+  </style>
+  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"Unix Timestamp Converter","description":"Convert Unix timestamps to dates and back. See current epoch time live. Free online tool — no account needed, works in your browser.","url":"https://tools.stackfreeks.com/tools/timestamp-converter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
@@ -630,33 +175,40 @@
 </head>
 <body>
 
-  <!-- Nav -->
-  <nav>
-    <div class="nav-left">
-      <a href="/" class="logo">StackFreeks Tools</a>
-      <div class="nav-sep"></div>
-      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-conv" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left-right"/></svg><span data-i18n="cat_converters">Converters &amp; Encoders</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
   </nav>
 
-  <!-- ADSENSE_SLOT_TOP -->
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="lang-en">
-      <h1>Unix Timestamp Converter</h1>
-      <p>Convert Unix timestamps to human-readable dates and back. See the current epoch time live.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-clock"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Unix Timestamp Converter</h1>
+        <p>Convert Unix timestamps to human-readable dates and back. See the current epoch time live.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>Unix 타임스탬프 변환기</h1>
+        <p>Unix 타임스탬프를 날짜로, 날짜를 타임스탬프로 변환. 현재 Epoch 시간을 실시간으로 확인.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-    <div class="lang-ko">
-      <h1>Unix 타임스탬프 변환기</h1>
-      <p>Unix 타임스탬프를 날짜로, 날짜를 타임스탬프로 변환. 현재 Epoch 시간을 실시간으로 확인.</p>
-    </div>
-  </section>
+  </header>
 
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
   <!-- Current Time Card -->
-  <section class="now-card" aria-label="Current Unix timestamp">
+  <section class="now-card" aria-label="Current Unix timestamp" data-i18n-aria="x_current_unix_timestamp">
     <div class="now-card-inner">
       <p class="now-label" data-i18n="current_ts_label">Current Unix Timestamp</p>
       <div class="now-row">
@@ -685,7 +237,7 @@
   </section>
 
   <!-- Converter -->
-  <section class="converter" aria-label="Timestamp converter">
+  <section class="converter" aria-label="Timestamp converter" data-i18n-aria="x_timestamp_converter">
     <div class="converter-card">
       <div class="tabs" role="tablist">
         <button class="tab-btn active" id="tab-ts" role="tab" aria-selected="true"
@@ -703,6 +255,7 @@
             id="input-ts"
             class="input-field"
             placeholder="e.g. 1719100800 or 1719100800000"
+            data-i18n-placeholder="x_ph_ts"
             oninput="convertTsToDate()"
             autocomplete="off"
             spellcheck="false"
@@ -770,55 +323,62 @@
       </div>
     </div>
   </section>
+  </main>
 
-  <!-- How to Use Guide -->
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More converters</h2>
+      <a class="sec-link" href="/#cat-conv"><span data-i18n="all_in_cat">All Converters &amp; Encoders tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card next" href="/tools/color-converter/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-palette"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Hex/RGB/HSL Color Converter</span><span class="lang-ko">HEX/RGB/HSL 색상 변환기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- How to use -->
   <section class="guide">
     <div class="lang-en">
-      <p class="guide-title">How to use this tool</p>
+      <h2 class="guide-title">How to use this tool</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">Step 1</p>
-          <h3>See the current time live</h3>
+          <h3>1. See the current time live</h3>
           <p>The top card shows the current Unix timestamp in real time, updating every second. Copy it with one click.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 2</p>
-          <h3>Paste a timestamp</h3>
+          <h3>2. Paste a timestamp</h3>
           <p>Switch to the "Timestamp → Date" tab and paste any Unix timestamp (seconds or milliseconds). The tool auto-detects the unit.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 3</p>
-          <h3>Or pick a date</h3>
+          <h3>3. Or pick a date</h3>
           <p>Use the "Date → Timestamp" tab to select a date and time. Get the corresponding Unix timestamp in seconds, milliseconds, and ISO 8601 instantly.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 4</p>
-          <h3>Copy any result</h3>
+          <h3>4. Copy any result</h3>
           <p>Each output field has its own Copy button. Click it once to copy that value to your clipboard — the button briefly confirms the copy.</p>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <p class="guide-title">사용 방법</p>
+      <h2 class="guide-title">사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">Step 1</p>
-          <h3>현재 시간을 실시간으로 확인</h3>
+          <h3>1. 현재 시간을 실시간으로 확인</h3>
           <p>상단 카드에서 현재 Unix 타임스탬프를 실시간으로 볼 수 있습니다. 매 초 업데이트되며, 버튼 한 번으로 복사할 수 있습니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 2</p>
-          <h3>타임스탬프 붙여넣기</h3>
+          <h3>2. 타임스탬프 붙여넣기</h3>
           <p>"Timestamp → Date" 탭으로 전환한 뒤 Unix 타임스탬프를 입력하세요. 초 또는 밀리초 단위를 자동으로 감지합니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 3</p>
-          <h3>날짜 선택</h3>
+          <h3>3. 날짜 선택</h3>
           <p>"Date → Timestamp" 탭에서 날짜와 시간을 선택하면, 해당하는 Unix 타임스탬프(초/밀리초)와 ISO 8601 문자열을 즉시 확인할 수 있습니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 4</p>
-          <h3>결과 복사</h3>
+          <h3>4. 결과 복사</h3>
           <p>각 출력 항목 옆에 복사 버튼이 있습니다. 한 번 클릭하면 해당 값이 클립보드에 복사됩니다.</p>
         </div>
       </div>
@@ -828,7 +388,7 @@
   <!-- FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <p class="faq-title">Frequently Asked Questions</p>
+      <h2 class="faq-title">Frequently Asked Questions</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What is a Unix timestamp?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">A Unix timestamp (also called epoch time) is the number of seconds that have elapsed since January 1, 1970, 00:00:00 UTC — known as the Unix epoch. It is a single integer that represents any point in time unambiguously, regardless of timezone or locale. For example, the timestamp <code>1719100800</code> refers to June 23, 2024, 00:00:00 UTC.</div>
@@ -851,7 +411,7 @@
       </div>
     </div>
     <div class="lang-ko">
-      <p class="faq-title">자주 묻는 질문</p>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>Unix 타임스탬프란 무엇인가요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">Unix 타임스탬프(Epoch 시간이라고도 함)는 1970년 1월 1일 00:00:00 UTC(Unix Epoch)부터 경과한 초(秒) 수입니다. 타임존이나 로케일과 무관하게 특정 시각을 하나의 정수로 표현합니다. 예를 들어 <code>1719100800</code>은 2024년 6월 23일 00:00:00 UTC를 가리킵니다.</div>
@@ -875,7 +435,17 @@
     </div>
   </section>
 
-  <!-- Related -->
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/password-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-rectangle-ellipsis"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Password Generator</span><span class="lang-ko">비밀번호 생성기</span></span></span></a></li>
+      <li><a href="/tools/base64-encoder/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-digit"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Base64 Encoder / Decoder</span><span class="lang-ko">Base64 인코더 / 디코더</span></span></span></a></li>
+      <li><a href="/tools/image-to-base64/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-image"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Image to Base64 Encoder</span><span class="lang-ko">이미지 → Base64 인코더</span></span></span></a></li>
+    </ul>
+  </section>
+
+  <!-- Related content -->
   <section class="related">
     <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
       <div>
@@ -891,46 +461,48 @@
     </a>
   </section>
 
-  <!-- Vultr Banner -->
-  <!-- Related tools -->
-  <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/password-generator/" class="sf-related-card"><span>🗝️</span>Password Generator</a>
-      <a href="/tools/base64-encoder/" class="sf-related-card"><span>🔤</span>Base64 Encoder / Decoder</a>
-      <a href="/tools/image-to-base64/" class="sf-related-card"><span>🖼️</span>Image to Base64 Encoder</a>
-    </div>
-  </section>
-
-  <section class="vultr-banner">
-    <div class="banner-inner">
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
       <div>
-        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-        <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
       </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">
-        Claim your credit →
-      </a>
-    </div>
-  </section>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
   </footer>
 
   <script>
     // Page-specific i18n — must come BEFORE i18n.js
     window.SF_PAGE_I18N = {
       en: {
+        cat_converters: "Converters & Encoders",
+        more_tools: "More converters",
+        all_in_cat: "All Converters & Encoders tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back:         '← All Tools',
         copy_btn:         'Copy',
         copied_btn:       'Copied!',
@@ -948,8 +520,22 @@
         vultr_sub:        'Get $300 free credit — valid for 30 days',
         vultr_cta:        'Claim your credit →',
         footer_copy:      '© 2026 StackFreeks',
+        x_current_unix_timestamp: "Current Unix timestamp",
+        x_timestamp_converter: "Timestamp converter",
+        x_ph_ts: "e.g. 1719100800 or 1719100800000",
+        x_invalid_input: "Invalid input",
+        x_invalid_timestamp: "Invalid timestamp",
+        x_invalid_date: "Invalid date"
       },
       ko: {
+        cat_converters: "변환 & 인코딩",
+        more_tools: "변환 툴 더 보기",
+        all_in_cat: "변환 & 인코딩 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back:         '← 전체 툴',
         copy_btn:         '복사',
         copied_btn:       '복사됨!',
@@ -967,6 +553,12 @@
         vultr_sub:        '$300 무료 크레딧 — 가입 후 30일 유효',
         vultr_cta:        '크레딧 받기 →',
         footer_copy:      '© 2026 StackFreeks',
+        x_current_unix_timestamp: "현재 Unix 타임스탬프",
+        x_timestamp_converter: "타임스탬프 변환기",
+        x_ph_ts: "예: 1719100800 또는 1719100800000",
+        x_invalid_input: "잘못된 입력",
+        x_invalid_timestamp: "잘못된 타임스탬프",
+        x_invalid_date: "잘못된 날짜"
       }
     };
   </script>
@@ -1147,7 +739,7 @@
 
       if (isNaN(num)) {
         ['res-ts-local','res-ts-utc','res-ts-iso','res-ts-relative'].forEach(function(id) {
-          setResult(id, 'Invalid input', true);
+          setResult(id, t('x_invalid_input'), true);
         });
         return;
       }
@@ -1158,7 +750,7 @@
 
       if (isNaN(d.getTime())) {
         ['res-ts-local','res-ts-utc','res-ts-iso','res-ts-relative'].forEach(function(id) {
-          setResult(id, 'Invalid timestamp', true);
+          setResult(id, t('x_invalid_timestamp'), true);
         });
         return;
       }
@@ -1185,7 +777,7 @@
 
       if (isNaN(d.getTime())) {
         ['res-date-sec','res-date-ms','res-date-iso'].forEach(function(id) {
-          setResult(id, 'Invalid date', true);
+          setResult(id, t('x_invalid_date'), true);
         });
         return;
       }

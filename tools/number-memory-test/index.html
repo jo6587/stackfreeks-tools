@@ -26,96 +26,15 @@
   <meta name="twitter:title" content="Number Memory Test | StackFreeks Tools" />
   <meta name="twitter:description" content="How many digits can you remember? A number flashes on screen, then you type it back. Each level adds one more digit." />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --danger: #ef4444;
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
-
-    main { padding: 32px 0 48px; }
+    /* Number Memory Test — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
 
     /* Game */
     .stage {
@@ -124,7 +43,7 @@
       -webkit-tap-highlight-color: transparent;
       width: 100%;
       min-height: 340px;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       border: 1px solid var(--border);
       background: var(--surface-2);
       color: var(--text-1);
@@ -136,145 +55,57 @@
       gap: 14px;
       padding: 32px 24px;
     }
-    .stage-level { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); }
+    .stage-level { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); }
     .stage-number {
       font-size: clamp(1.8rem, 7vw, 3.4rem);
-      font-weight: 600; letter-spacing: 0.06em;
+      font-weight: 650; letter-spacing: 0.06em;
       color: var(--text-1);
       font-variant-numeric: tabular-nums;
       word-break: break-all;
     }
-    .stage-hint { font-size: 0.9rem; color: var(--text-2); max-width: 420px; }
+    .stage-hint { font-size: 15px; color: var(--text-2); max-width: 420px; }
 
-    .countbar-track { width: 100%; max-width: 360px; height: 6px; border-radius: 999px; background: var(--surface); overflow: hidden; }
+    .countbar-track { width: 100%; max-width: 360px; height: 6px; border-radius: 999px; background: var(--surface); outline: 1px solid var(--border); outline-offset: -1px; overflow: hidden; }
     .countbar-fill { height: 100%; width: 100%; background: var(--accent); border-radius: 999px; }
 
     .answer-input {
       width: 100%; max-width: 320px;
-      background: var(--surface); border: 1px solid var(--border-2);
-      border-radius: var(--radius); color: var(--text-1);
-      font-family: var(--font); font-size: 1.4rem; font-weight: 600;
+      font-size: 1.4rem; font-weight: 600;
       letter-spacing: 0.08em; text-align: center;
       padding: 12px 14px; font-variant-numeric: tabular-nums;
-      outline: none;
     }
-    .answer-input:focus { border-color: var(--accent); }
 
-    .btn {
-      background: var(--accent-strong); color: #fff; border: none;
-      border-radius: var(--radius); padding: 10px 22px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font);
-      transition: opacity 0.15s;
-    }
-    .btn:hover { opacity: 0.88; }
-    .btn-ghost { background: transparent; border: 1px solid var(--border-2); color: var(--text-2); }
+    /* buttons are built by the game script as class="btn" */
+    .stage .btn { min-width: 120px; background: var(--accent-strong); color: var(--accent-fg); }
+    .stage .btn:hover { background: var(--accent-hover); }
 
-    .start-big { font-size: 1.6rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.02em; }
+    .start-big { font-size: 1.6rem; font-weight: 650; color: var(--text-1); letter-spacing: -0.02em; }
 
     /* Game over */
-    .over-title { font-size: 1.9rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.02em; }
+    .over-title { font-size: 1.9rem; font-weight: 650; color: var(--text-1); letter-spacing: -0.02em; }
     .over-title span { color: var(--accent-text); }
     .over-compare { display: flex; gap: 10px; justify-content: center; margin-top: 4px; flex-wrap: wrap; }
-    .over-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; min-width: 120px; }
-    .over-cell.bad { border-color: rgba(239,68,68,0.4); }
-    .over-cell.good { border-color: rgba(34,197,94,0.4); }
-    .over-cell-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
-    .over-cell-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; word-break: break-all; }
-    .over-context { margin-top: 6px; font-size: 13px; color: var(--text-2); max-width: 440px; }
+    .over-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 10px 16px; min-width: 120px; }
+    .over-cell.bad { border-color: var(--danger); }
+    .over-cell.good { border-color: var(--success-fg); }
+    .over-cell-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+    .over-cell-val { font-size: var(--fs-m); font-weight: 600; color: var(--text-1); font-variant-numeric: tabular-nums; word-break: break-all; }
+    .over-context { margin-top: 6px; font-size: var(--fs-xs); color: var(--text-2); max-width: 440px; }
 
-    .progress { margin-top: 14px; font-size: 12px; color: var(--text-3); text-align: center; letter-spacing: 0.04em; }
-    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); text-align: center; }
-    .caveat { margin-top: 14px; font-size: 11px; color: var(--text-3); line-height: 1.6; max-width: 620px; margin-left: auto; margin-right: auto; text-align: center; }
+    .progress { margin-top: 14px; font-size: var(--fs-xs); color: var(--text-3); text-align: center; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+    .yourbest { margin-top: 6px; font-size: var(--fs-xs); color: var(--text-3); text-align: center; }
+    .caveat { margin-top: 14px; font-size: 12px; color: var(--text-3); line-height: 1.6; max-width: 620px; margin-left: auto; margin-right: auto; text-align: center; }
 
-    /* About / SEO copy */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
-    .about-section p:last-child { margin-bottom: 0; }
-
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-list { display: flex; flex-direction: column; gap: 1px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related tools */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
+    /* About copy (below the tool) */
+    .about-section { max-width: var(--wrap-tool); margin: 0 auto; padding: 56px 32px 0; }
+    .about-section h2 { font-size: var(--fs-l); font-weight: 650; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .about-section p { color: var(--text-2); font-size: 15px; line-height: 1.7; max-width: 72ch; }
+    .about-section p + p { margin-top: 12px; }
 
     @media (max-width: 768px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
       .stage { min-height: 320px; padding: 28px 16px; }
       .over-title { font-size: 1.5rem; }
-      .banner-inner { flex-direction: column; align-items: flex-start; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
-    }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .about-section { padding: 40px 16px 0; }
     }
   </style>
 
@@ -290,51 +121,65 @@
 <body>
 
 <!-- 1. Nav -->
-<nav>
-  <a href="/" class="logo">
-    <div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-  <div class="nav-right">
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-  </div>
-</nav>
+<nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-fun" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-puzzle"/></svg><span data-i18n="cat_fun">Fun &amp; Tests</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+    </div>
+  </nav>
 
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
 
 <!-- 3. Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="lang-en">
-      <p class="eyebrow">Fun &amp; Tests</p>
-      <h1>Number Memory Test</h1>
-      <p class="hero-desc">A number flashes on screen, then you type it back from memory. Every level adds one more digit — find out how many digits you can remember.</p>
+<header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-list-ordered"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Number Memory Test</h1>
+        <p>A number flashes on screen, then you type it back from memory. Every level adds one more digit — find out how many digits you can remember.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>숫자 기억력 테스트</h1>
+        <p>숫자가 화면에 잠깐 나타난 뒤, 기억해서 다시 입력하세요. 레벨이 오를 때마다 자릿수가 하나씩 늘어납니다 — 당신은 몇 자리까지 기억할 수 있나요?</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-    <div class="lang-ko">
-      <p class="eyebrow">재미 &amp; 테스트</p>
-      <h1>숫자 기억력 테스트</h1>
-      <p class="hero-desc">숫자가 화면에 잠깐 나타난 뒤, 기억해서 다시 입력하세요. 레벨이 오를 때마다 자릿수가 하나씩 늘어납니다 — 당신은 몇 자리까지 기억할 수 있나요?</p>
-    </div>
-  </div>
-</section>
+  </header>
 
 <!-- 4. Tool body -->
-<main>
-  <div class="container">
-    <div id="stage" class="stage"></div>
+<main class="tool wrap-tool">
+      <div id="stage" class="stage"></div>
     <div class="progress" id="progress"></div>
     <div class="yourbest" id="yourBest" hidden></div>
     <p class="caveat" data-i18n="caveat">This measures digit span — the digits you can hold in short-term memory right now. Tiredness, distraction, and stress lower it; practice and chunking raise it. Treat one run as a snapshot.</p>
-  </div>
+  
 </main>
+
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More fun &amp; tests</h2>
+      <a class="sec-link" href="/#cat-fun"><span data-i18n="all_in_cat">All Fun &amp; Tests tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/typing-speed-test/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-timer"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Typing Speed Test</span><span class="lang-ko">타이핑 속도 테스트</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/sequence-memory-test/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-grid-3x3"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Sequence Memory Test</span><span class="lang-ko">패턴 기억력 테스트</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
 
 <!-- About / SEO copy -->
 <section class="about-section">
-  <div class="container">
-    <div class="lang-en">
+      <div class="lang-en">
       <h2>About this number memory test</h2>
       <p>This number memory test shows you a number for a few seconds, hides it, and asks you to type it back. Level 1 is a single digit; each level you clear adds one more digit, so level N is an N-digit number. Get it exactly right and you advance; one wrong digit ends the run. The level you reach is your digit span — the number of digits you were able to hold in short-term memory. It is the same idea as the digit-span subtest used in the WAIS intelligence battery, minus the clinician.</p>
       <p>The average adult reaches about level 7, matching the "magic number seven, plus or minus two" that psychologist George Miller described in 1956. The number is shown longer at higher levels (a tunable <code>2000&nbsp;+&nbsp;level&nbsp;&times;&nbsp;1000</code>&nbsp;ms) so that reading speed is not the bottleneck. Your best level is saved in your browser with <code>localStorage</code> so you can try to beat it. Everything runs client-side — no signup, no data leaves your device.</p>
@@ -344,72 +189,61 @@
       <p>이 숫자 기억력 테스트는 숫자를 몇 초간 보여준 뒤 감추고, 그것을 다시 입력하도록 합니다. 레벨 1은 한 자리 숫자이며, 레벨을 하나 통과할 때마다 자릿수가 하나씩 늘어나 레벨 N은 N자리 숫자입니다. 정확히 맞히면 다음 레벨로 넘어가고, 한 자리라도 틀리면 게임이 끝납니다. 도달한 레벨이 곧 당신의 숫자 폭(digit span) — 단기 기억에 담을 수 있었던 자릿수입니다. WAIS 지능 검사의 숫자 외우기 소검사와 같은 원리입니다.</p>
       <p>성인 평균은 약 레벨 7로, 1956년 심리학자 조지 밀러가 말한 "매직 넘버 7 ± 2"와 일치합니다. 높은 레벨일수록 숫자가 더 오래 표시되어(<code>2000&nbsp;+&nbsp;레벨&nbsp;&times;&nbsp;1000</code>&nbsp;ms, 조정 가능) 읽는 속도가 병목이 되지 않도록 했습니다. 최고 레벨은 <code>localStorage</code>로 브라우저에 저장됩니다. 모든 처리는 브라우저에서만 이루어지며, 데이터는 기기를 벗어나지 않습니다.</p>
     </div>
-  </div>
+  
 </section>
 
 <!-- 5. How-to section -->
-<section class="guide-section">
-  <div class="container">
-    <div class="lang-en">
-      <h2>How to use this number memory test</h2>
+<section class="guide">
+      <div class="lang-en">
+      <h2 class="guide-title">How to use this number memory test</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">Start the test</div>
-          <div class="guide-desc">Click Start. A one-digit number appears with a shrinking bar showing how long it stays visible.</div>
+          <h3>1. Start the test</h3>
+          <p>Click Start. A one-digit number appears with a shrinking bar showing how long it stays visible.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">Memorise the number</div>
-          <div class="guide-desc">Read it and hold it in your head. Higher levels show the number longer, so use the time to chunk the digits into groups.</div>
+          <h3>2. Memorise the number</h3>
+          <p>Read it and hold it in your head. Higher levels show the number longer, so use the time to chunk the digits into groups.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">Type it back</div>
-          <div class="guide-desc">When the number hides, an input box appears. Type what you remember and press Enter or Submit.</div>
+          <h3>3. Type it back</h3>
+          <p>When the number hides, an input box appears. Type what you remember and press Enter or Submit.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">Climb the levels</div>
-          <div class="guide-desc">Correct answers add a digit and move you up a level. One wrong digit ends the run and shows the level you reached.</div>
+          <h3>4. Climb the levels</h3>
+          <p>Correct answers add a digit and move you up a level. One wrong digit ends the run and shows the level you reached.</p>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <h2>숫자 기억력 테스트 사용 방법</h2>
+      <h2 class="guide-title">숫자 기억력 테스트 사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">테스트 시작</div>
-          <div class="guide-desc">시작 버튼을 누르세요. 한 자리 숫자와 함께 표시 시간을 나타내는 줄어드는 막대가 나옵니다.</div>
+          <h3>1. 테스트 시작</h3>
+          <p>시작 버튼을 누르세요. 한 자리 숫자와 함께 표시 시간을 나타내는 줄어드는 막대가 나옵니다.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">숫자 외우기</div>
-          <div class="guide-desc">숫자를 읽고 머릿속에 담으세요. 높은 레벨일수록 더 오래 표시되니, 자릿수를 그룹으로 묶어 외우세요.</div>
+          <h3>2. 숫자 외우기</h3>
+          <p>숫자를 읽고 머릿속에 담으세요. 높은 레벨일수록 더 오래 표시되니, 자릿수를 그룹으로 묶어 외우세요.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">다시 입력</div>
-          <div class="guide-desc">숫자가 사라지면 입력창이 나타납니다. 기억한 숫자를 입력하고 Enter 또는 제출을 누르세요.</div>
+          <h3>3. 다시 입력</h3>
+          <p>숫자가 사라지면 입력창이 나타납니다. 기억한 숫자를 입력하고 Enter 또는 제출을 누르세요.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">레벨 올리기</div>
-          <div class="guide-desc">정답이면 자릿수가 하나 늘고 레벨이 올라갑니다. 한 자리라도 틀리면 게임이 끝나고 도달 레벨이 표시됩니다.</div>
+          <h3>4. 레벨 올리기</h3>
+          <p>정답이면 자릿수가 하나 늘고 레벨이 올라갑니다. 한 자리라도 틀리면 게임이 끝나고 도달 레벨이 표시됩니다.</p>
         </div>
       </div>
     </div>
-  </div>
+  
 </section>
 
 <!-- 6. FAQ -->
-<section class="faq-section">
-  <div class="container">
-    <div class="lang-en">
-      <h2>Frequently asked questions</h2>
-      <div class="faq-list">
-        <div class="faq-item">
+<section class="faq">
+      <div class="lang-en">
+      <h2 class="faq-title">Frequently asked questions</h2>
+              <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>How many digits can the average person remember?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">Most adults can hold about 7 digits in short-term memory, which is why this test's average score lands near level 7. The classic figure from George Miller's 1956 paper is 7 plus or minus 2, so a range of roughly 5 to 9 digits is completely normal. Reaching level 8 or 9 puts you above average, and past level 10 you are almost certainly using a memory technique such as chunking rather than raw short-term memory.</div>
         </div>
@@ -429,12 +263,11 @@
           <button class="faq-q" onclick="toggleFaq(this)"><span>Is number memory linked to IQ?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">There is a modest correlation. Digit span is one component of working memory, and working memory capacity correlates with fluid intelligence and is included in IQ batteries such as the WAIS. But the link is far from one to one: motivation, attention, practice, language, and whether you use memory strategies all affect your score. A single number memory result says very little about anyone's overall intelligence.</div>
         </div>
-      </div>
+      
     </div>
     <div class="lang-ko">
-      <h2>자주 묻는 질문</h2>
-      <div class="faq-list">
-        <div class="faq-item">
+      <h2 class="faq-title">자주 묻는 질문</h2>
+              <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>보통 사람은 몇 자리 숫자를 기억할 수 있나요?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">대부분의 성인은 단기 기억에 약 7자리를 담을 수 있으며, 그래서 이 테스트의 평균 점수도 레벨 7 부근입니다. 1956년 조지 밀러의 논문에 나온 고전적 수치는 7 ± 2로, 대략 5~9자리는 완전히 정상 범위입니다. 레벨 8~9면 평균 이상이고, 레벨 10을 넘으면 순수 단기 기억이 아니라 청킹 같은 기억법을 쓰고 있을 가능성이 큽니다.</div>
         </div>
@@ -454,52 +287,63 @@
           <button class="faq-q" onclick="toggleFaq(this)"><span>숫자 기억력은 IQ와 관련이 있나요?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">약한 상관관계가 있습니다. 숫자 폭은 작업 기억의 한 요소이고, 작업 기억 용량은 유동 지능과 상관이 있으며 WAIS 같은 IQ 검사에도 포함됩니다. 하지만 일대일 관계와는 거리가 멉니다: 동기, 주의력, 연습, 언어, 기억 전략 사용 여부가 모두 점수에 영향을 줍니다. 한 번의 숫자 기억력 결과는 전반적 지능에 대해 알려주는 바가 거의 없습니다.</div>
         </div>
-      </div>
+      
     </div>
-  </div>
+  
 </section>
 
 <!-- 7.5. Related tools -->
 <section class="sf-related">
-  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-  <div class="sf-related-grid">
-    <a href="/tools/sequence-memory-test/" class="sf-related-card"><span>🔢</span>Sequence Memory Test</a>
-    <a href="/tools/verbal-memory-test/" class="sf-related-card"><span>📖</span>Verbal Memory Test</a>
-    <a href="/tools/reaction-time-test/" class="sf-related-card"><span>⚡</span>Reaction Time Test</a>
-  </div>
-</section>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/sequence-memory-test/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-grid-3x3"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Sequence Memory Test</span><span class="lang-ko">패턴 기억력 테스트</span></span></span></a></li>
+      <li><a href="/tools/verbal-memory-test/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-message-square-text"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Verbal Memory Test</span><span class="lang-ko">단어 기억력 테스트</span></span></span></a></li>
+      <li><a href="/tools/reaction-time-test/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-zap"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Reaction Time Test</span><span class="lang-ko">반응속도 테스트</span></span></span></a></li>
+    </ul>
+  </section>
 
 <!-- 8. Vultr banner -->
-<section class="vultr-banner">
-  <div class="container banner-inner">
-    <div>
-      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
-    </div>
-    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
-       rel="nofollow sponsored" target="_blank"
-       data-i18n="vultr_cta">Claim your credit →</a>
+<div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
   </div>
-</section>
 
 <!-- 9. Footer -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
+<footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-  </div>
-</footer>
+  </footer>
 
 <!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
+    cat_fun: "Fun & Tests",
+    more_tools: "More fun & tests",
+    all_in_cat: "All Fun & Tests tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
     caveat: "This measures digit span — the digits you can hold in short-term memory right now. Tiredness, distraction, and stress lower it; practice and chunking raise it. Treat one run as a snapshot.",
     start_big: "Number Memory Test",
     start_hint: "A number will appear. Memorise it, then type it back when it disappears.",
@@ -517,11 +361,19 @@ window.SF_PAGE_I18N = {
     over_number: "The number",
     over_you: "You typed",
     over_context: "The average person remembers about 7 digits — Miller's Law (7 ± 2). Practice and chunking push it higher.",
-    over_new_best: "New best! 🏆",
+    over_new_best: "New best!",
     retry_btn: "Try again",
     empty_dash: "(nothing)"
   },
   ko: {
+    cat_fun: "재미 & 테스트",
+    more_tools: "재미 & 테스트 더 보기",
+    all_in_cat: "재미 & 테스트 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
     caveat: "이것은 숫자 폭(digit span) — 지금 단기 기억에 담을 수 있는 자릿수를 측정합니다. 피로, 산만함, 스트레스는 낮추고 연습과 청킹은 높입니다. 한 번의 결과는 스냅숏으로 보세요.",
     start_big: "숫자 기억력 테스트",
     start_hint: "숫자가 나타납니다. 외운 뒤 사라지면 다시 입력하세요.",
@@ -539,7 +391,7 @@ window.SF_PAGE_I18N = {
     over_number: "정답 숫자",
     over_you: "입력한 숫자",
     over_context: "보통 사람은 약 7자리를 기억합니다 — 밀러의 법칙 (7 ± 2). 연습과 청킹으로 더 높일 수 있습니다.",
-    over_new_best: "최고 기록 경신! 🏆",
+    over_new_best: "최고 기록 경신!",
     retry_btn: "다시 시도",
     empty_dash: "(입력 없음)"
   }
@@ -692,7 +544,7 @@ window.SF_PAGE_I18N = {
     var shownGuess = guess && guess.length ? guess : t('empty_dash');
     stage.innerHTML =
       '<div class="over-title">' + t('over_title').replace('{n}', score) + '</div>' +
-      '<div class="stage-hint">' + t('over_sub').replace('{n}', score) + (newBest ? ' · ' + t('over_new_best') : '') + '</div>' +
+      '<div class="stage-hint">' + t('over_sub').replace('{n}', score) + (newBest ? ' · ' + t('over_new_best') + ' <svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-trophy"/></svg>' : '') + '</div>' +
       '<div class="over-compare">' +
         '<div class="over-cell good"><div class="over-cell-label">' + t('over_number') + '</div><div class="over-cell-val">' + currentNumber + '</div></div>' +
         '<div class="over-cell bad"><div class="over-cell-label">' + t('over_you') + '</div><div class="over-cell-val">' + shownGuess + '</div></div>' +

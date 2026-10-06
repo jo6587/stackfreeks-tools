@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>서버 사양 추천기 &mdash; 무료 온라인 도구 | StackFreeks</title>
-<meta content="서버 도구" name="description">
+<meta content="워크로드와 트래픽 규모를 선택하면 필요한 최소 RAM, CPU, 스토리지와 Vultr 플랜을 즉시 추천합니다." name="description">
 <link href="https://tools.stackfreeks.com/tools/server-spec-recommender/ko/" rel="canonical">
 <link href="https://tools.stackfreeks.com/tools/server-spec-recommender/" hreflang="en" rel="alternate">
   <link href="https://tools.stackfreeks.com/tools/server-spec-recommender/ko/" hreflang="ko" rel="alternate">
@@ -15,448 +15,71 @@
 
 
 <link href="/stackfreeks_icon.png" rel="icon" type="image/png">
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text-1);
-      font-family: var(--font);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-    .nav-left { display: flex; align-items: center; gap: 20px; }
-    .logo { font-size: 15px; font-weight: 500; color: var(--text-1); letter-spacing: -0.01em; }
-    .nav-sep { width: 1px; height: 16px; background: var(--border-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* AdSense */
-    .adsense-slot {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 16px 24px 0;
-      min-height: 1px;
-    }
-
-    /* Hero */
-    .hero {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 48px 24px 32px;
-    }
-    .hero-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent-text);
-      background: rgba(99,102,241,0.1);
-      border: 1px solid rgba(99,102,241,0.2);
-      border-radius: 20px;
-      padding: 3px 10px;
-      margin-bottom: 16px;
-    }
-    .hero h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
-    .hero p { font-size: 15px; color: var(--text-2); max-width: 560px; }
-
-    /* Tool section */
-    .tool-section {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 32px;
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 12px;
-    }
+    /* Server Spec Recommender — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .section-label { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 10px; }
 
     /* Workload cards */
-    .workload-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-    .workload-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 14px;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      user-select: none;
-    }
+    .workload-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 24px; }
+    .workload-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; cursor: pointer; transition: background-color var(--t), border-color var(--t); user-select: none; }
     .workload-card:hover { border-color: var(--border-2); }
-    .workload-card.selected {
-      border-color: var(--accent);
-      background: rgba(99,102,241,0.05);
-    }
-    .workload-icon { font-size: 22px; margin-bottom: 8px; line-height: 1; }
-    .workload-name { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 3px; }
-    .workload-desc { font-size: 12px; color: var(--text-2); line-height: 1.4; }
+    .workload-card.selected { border-color: var(--accent); background: var(--accent-soft); }
+    .workload-name { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 2px; }
+    .workload-card.selected .workload-name { color: var(--accent-text); }
+    .workload-desc { font-size: 13px; color: var(--text-2); line-height: 1.4; }
 
     /* Traffic */
-    .traffic-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-    .traffic-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px 14px;
-      cursor: pointer;
-      text-align: left;
-      transition: border-color 0.15s, background 0.15s;
-      font-family: var(--font);
-    }
+    .traffic-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 24px; }
+    .traffic-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 10px 14px; cursor: pointer; text-align: left; transition: background-color var(--t), border-color var(--t); font-family: var(--font); }
     .traffic-btn:hover { border-color: var(--border-2); }
-    .traffic-btn.selected {
-      background: var(--surface-2);
-      border-color: var(--border-2);
-      color: var(--text-1);
-    }
-    .traffic-btn-label { font-size: 13px; font-weight: 600; color: var(--text-1); display: block; margin-bottom: 2px; }
-    .traffic-btn-desc { font-size: 11px; color: var(--text-2); display: block; }
+    .traffic-btn.selected { background: var(--accent-soft); border-color: var(--accent); }
+    .traffic-btn-label { font-size: 14px; font-weight: 600; color: var(--text-1); display: block; margin-bottom: 2px; }
+    .traffic-btn.selected .traffic-btn-label { color: var(--accent-text); }
+    .traffic-btn-desc { font-size: 13px; color: var(--text-2); display: block; }
 
     /* Extras */
-    .extras-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-    .extra-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 14px;
-      cursor: pointer;
-      transition: border-color 0.15s;
-      user-select: none;
-      font-size: 13px;
-      color: var(--text-1);
-    }
+    .extras-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .extra-item { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 9px 14px; cursor: pointer; transition: background-color var(--t), border-color var(--t); user-select: none; font-size: 14px; color: var(--text-1); }
     .extra-item:hover { border-color: var(--border-2); }
-    .extra-item.checked { border-color: var(--accent); background: rgba(99,102,241,0.05); }
+    .extra-item.checked { border-color: var(--accent); background: var(--accent-soft); }
     .extra-item input[type="checkbox"] { display: none; }
-    .extra-check {
-      width: 16px;
-      height: 16px;
-      border: 1.5px solid var(--border-2);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .extra-item.checked .extra-check {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-    .extra-item.checked .extra-check::after {
-      content: '✓';
-      font-size: 10px;
-      color: #fff;
-      font-weight: 700;
-    }
+    .extra-check { position: relative; width: 16px; height: 16px; border: 1.5px solid var(--border-2); border-radius: 4px; flex-shrink: 0; transition: background-color var(--t), border-color var(--t); }
+    .extra-item.checked .extra-check { background: var(--accent-strong); border-color: var(--accent-strong); }
+    .extra-item.checked .extra-check::after { content: ""; position: absolute; left: 4px; top: 1px; width: 4px; height: 8px; border: solid var(--accent-fg); border-width: 0 2px 2px 0; transform: rotate(45deg); }
 
     /* Result */
-    .result-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 32px;
-    }
-    .result-empty {
-      padding: 32px;
-      text-align: center;
-      color: var(--text-3);
-      font-size: 14px;
-    }
-    .result-main {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-    .result-col {
-      padding: 24px;
-    }
-    .result-col:first-child {
-      border-right: 1px solid var(--border);
-    }
-    .result-col-label {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-3);
-      margin-bottom: 16px;
-    }
-    .spec-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-    .spec-key { font-size: 12px; color: var(--text-2); }
-    .spec-val { font-size: 14px; font-weight: 600; color: var(--text-1); }
-    .plan-name { font-size: 18px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
-    .plan-price { font-size: 28px; font-weight: 800; color: var(--accent-text); letter-spacing: -0.02em; }
+    .result-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .result-empty { padding: 32px; text-align: center; color: var(--text-3); font-size: 14px; }
+    .result-main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .result-col { padding: 20px 24px; }
+    .result-col:first-child { border-right: 1px solid var(--border); }
+    .result-col-label { font-size: 13px; font-weight: 600; color: var(--text-3); margin-bottom: 14px; }
+    .spec-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .spec-row:last-child { border-bottom: 0; }
+    .spec-key { font-size: 14px; color: var(--text-2); }
+    .spec-val { font-size: 16px; font-weight: 600; color: var(--text-1); font-variant-numeric: tabular-nums; }
+    .plan-name { font-size: 16px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+    .plan-price { font-size: 30px; font-weight: 650; color: var(--text-1); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
     .plan-price span { font-size: 14px; font-weight: 400; color: var(--text-2); }
-    .plan-storage { font-size: 12px; color: var(--text-2); margin-top: 4px; margin-bottom: 16px; }
-    .plan-cta {
-      display: inline-block;
-      background: var(--accent-strong);
-      color: #fff;
-      font-weight: 600;
-      font-size: 13px;
-      padding: 8px 18px;
-      border-radius: var(--radius);
-      transition: opacity 0.15s;
-      text-decoration: none;
-    }
-    .plan-cta:hover { opacity: 0.85; }
-    .result-comfort {
-      border-top: 1px solid var(--border);
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .comfort-label {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-3);
-      margin-bottom: 3px;
-    }
-    .comfort-text { font-size: 13px; color: var(--text-2); }
-    .comfort-badge {
-      display: inline-block;
-      font-size: 11px;
-      color: var(--success);
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: 4px;
-      padding: 2px 7px;
-      white-space: nowrap;
-    }
+    .plan-storage { font-size: 13px; color: var(--text-2); margin-top: 4px; margin-bottom: 16px; }
+    .plan-cta { display: inline-flex; align-items: center; height: 38px; padding: 0 16px; background: var(--accent-strong); color: var(--accent-fg); font-weight: 600; font-size: 14px; border-radius: var(--radius-s); text-decoration: none; transition: background-color var(--t); }
+    .plan-cta:hover { background: var(--accent-hover); color: var(--accent-fg); }
+    .result-comfort { border-top: 1px solid var(--border); background: var(--surface-2); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .comfort-label { font-size: 13px; font-weight: 600; color: var(--text-3); margin-bottom: 2px; }
+    .comfort-text { font-size: 14px; color: var(--text-2); }
+    .comfort-badge { font-size: 13px; font-weight: 500; color: var(--success-fg); background: var(--success); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
 
-    /* Guide */
-    .guide-section {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .guide-section h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 20px; }
-    .guide-steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .guide-step {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-    .step-num {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent-text);
-      margin-bottom: 8px;
-    }
-    .step-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
-    .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
 
-    /* FAQ */
-    .faq-section {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .faq-section h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 20px; }
-    .faq-list { display: flex; flex-direction: column; gap: 10px; }
-    .faq-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-    }
-    .faq-q {
-      width: 100%;
-      background: none;
-      border: none;
-      text-align: left;
-      padding: 16px 20px;
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-1);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a {
-      display: none;
-      padding: 0 20px 16px;
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related */
-    .related-section {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .related-section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
-    .related-links { display: flex; flex-wrap: wrap; gap: 10px; }
-    .related-link {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 16px;
-      font-size: 13px;
-      color: var(--text-2);
-      transition: border-color 0.15s, color 0.15s;
-      text-decoration: none;
-    }
-    .related-link:hover { border-color: var(--accent); color: var(--text-1); opacity: 1; }
-
-    /* Vultr banner */
-    .vultr-banner { max-width: 860px; margin: 0 auto; padding: 0 24px 32px; }
-    .vultr-inner {
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      background: var(--success-bg);
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    }
-    .vultr-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--success); margin-bottom: 4px; }
-    .vultr-title { font-size: 15px; color: var(--text-1); margin-bottom: 2px; }
-    .vultr-sub { font-size: 13px; color: var(--text-2); }
-    .vultr-cta {
-      display: inline-block; background: var(--success); color: var(--success-fg); font-weight: 500;
-      font-size: 13px; padding: 8px 18px; border-radius: var(--radius); white-space: nowrap;
-      transition: opacity 0.15s; flex-shrink: 0; text-decoration: none;
-    }
-    .vultr-cta:hover { background: var(--success-hover); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 12px;
-    }
-    .footer-links a { font-size: 13px; color: var(--text-2); }
-    .footer-links a:hover { color: var(--text-1); opacity: 1; }
-    .footer-copy { font-size: 12px; color: var(--text-3); }
-
-    /* Mobile */
     @media (max-width: 768px) {
-      .workload-grid { grid-template-columns: repeat(2, 1fr); }
-      .traffic-grid { grid-template-columns: repeat(2, 1fr); }
+      .workload-grid, .traffic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .result-main { grid-template-columns: 1fr; }
       .result-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
       .result-comfort { flex-direction: column; align-items: flex-start; }
-      .guide-steps { grid-template-columns: 1fr; }
-      .vultr-inner { flex-direction: column; }
-      .hero h1 { font-size: 22px; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
     }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Server Spec Recommender", "description": "Server spec recommender: pick your workload and traffic to get RAM, CPU and storage recommendations for a VPS. Free, no signup.", "url": "https://tools.stackfreeks.com/tools/server-spec-recommender/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/server-spec-recommender/ko/"}}</script>
@@ -464,40 +87,44 @@
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<nav>
-<div class="nav-left">
-<a class="logo" href="/ko/">StackFreeks Tools</a>
-<div class="nav-sep"></div>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-vps"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-hard-drive"></use></svg><span data-i18n="cat_vps_server">VPS & Server</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/server-spec-recommender/">English</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+</div>
 </nav>
-<!-- ADSENSE_SLOT_TOP -->
-<!-- Insert AdSense code here after approval -->
-<div class="adsense-slot"></div>
-<!-- Hero -->
-<div class="hero">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-cpu"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
-<p class="hero-badge">서버 도구</p>
 <h1>서버 사양 추천기</h1>
 <p>워크로드와 트래픽 규모를 선택하면 필요한 최소 RAM, CPU, 스토리지와 Vultr 플랜을 즉시 추천합니다.</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
 </div>
-<!-- Tool -->
-<div class="tool-section">
+</header>
+<!-- Tool body -->
+<main class="tool wrap-tool">
 <!-- Step 1: Workload -->
 
-<div class="section-label lang-ko">Step 1 &mdash; 워크로드 선택</div>
+<div class="section-label lang-ko">1단계 &mdash; 워크로드 선택</div>
 <div class="workload-grid" id="workloadGrid"></div>
 <!-- Step 2: Traffic -->
 
-<div class="section-label lang-ko">Step 2 &mdash; 예상 트래픽</div>
+<div class="section-label lang-ko">2단계 &mdash; 예상 트래픽</div>
 <div class="traffic-grid" id="trafficGrid"></div>
 <!-- Step 3: Extras -->
 
-<div class="section-label lang-ko">Step 3 &mdash; 추가 서비스 (선택)</div>
+<div class="section-label lang-ko">3단계 &mdash; 추가 서비스 (선택)</div>
 <div class="extras-row" id="extrasRow"></div>
 <!-- Result -->
 
@@ -506,41 +133,48 @@
 
 <div class="result-empty lang-ko">위에서 워크로드를 선택하면 추천 결과가 표시됩니다</div>
 </div>
+</main>
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More server tools</h2>
+<a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS & Server tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
 </div>
-<!-- Guide -->
-<div class="guide-section">
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/vps-migration-checklist/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-list-checks"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">VPS 마이그레이션 체크리스트</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/sla-uptime-calculator/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-activity"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">SLA 업타임 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
+<section class="guide">
 
 <div class="lang-ko">
-<h2>사용 방법</h2>
-<div class="guide-steps guide-grid">
-<div class="guide-step">
-<div class="step-num">Step 1</div>
-<div class="step-title">워크로드 선택</div>
-<div class="step-desc">각 워크로드 유형마다 기본 사양이 다릅니다. CI/CD 러너는 CPU가 많이 필요하고, 데이터베이스 서버는 RAM이 더 필요합니다. 용도에 맞는 항목을 선택하세요.</div>
+<h2 class="guide-title">사용 방법</h2>
+<div class="guide-grid">
+<div class="guide-card">
+<h3>1. 워크로드 선택</h3>
+<p>각 워크로드 유형마다 기본 사양이 다릅니다. CI/CD 러너는 CPU가 많이 필요하고, 데이터베이스 서버는 RAM이 더 필요합니다. 용도에 맞는 항목을 선택하세요.</p>
 </div>
-<div class="guide-step">
-<div class="step-num">Step 2</div>
-<div class="step-title">트래픽 규모 설정</div>
-<div class="step-desc">트래픽이 적으면 작은 플랜으로 시작하세요. 트래픽이 많을수록 동시 접속이 늘어나므로 RAM과 CPU 배수가 올라갑니다.</div>
+<div class="guide-card">
+<h3>2. 트래픽 규모 설정</h3>
+<p>트래픽이 적으면 작은 플랜으로 시작하세요. 트래픽이 많을수록 동시 접속이 늘어나므로 RAM과 CPU 배수가 올라갑니다.</p>
 </div>
-<div class="guide-step">
-<div class="step-num">Step 3</div>
-<div class="step-title">추가 서비스 선택</div>
-<div class="step-desc">앱과 같은 서버에 DB를 운영하면 RAM과 스토리지가 더 필요합니다. Redis는 약 1GB RAM이 추가됩니다. 체크박스를 선택하면 최소 요구사항이 자동 조정됩니다.</div>
+<div class="guide-card">
+<h3>3. 추가 서비스 선택</h3>
+<p>앱과 같은 서버에 DB를 운영하면 RAM과 스토리지가 더 필요합니다. Redis는 약 1GB RAM이 추가됩니다. 체크박스를 선택하면 최소 요구사항이 자동 조정됩니다.</p>
 </div>
-<div class="guide-step">
-<div class="step-num">팁</div>
-<div class="step-title">작게 시작, 나중에 업그레이드</div>
-<div class="step-desc">Vultr는 다운타임 없이 몇 초 만에 플랜을 업그레이드할 수 있습니다. 최소 플랜으로 시작하고 트래픽이 늘어날 때 올리세요. 처음부터 과도한 사양은 불필요합니다.</div>
+<div class="guide-card">
+<h3>작게 시작, 나중에 업그레이드</h3>
+<p>Vultr는 다운타임 없이 몇 초 만에 플랜을 업그레이드할 수 있습니다. 최소 플랜으로 시작하고 트래픽이 늘어날 때 올리세요. 처음부터 과도한 사양은 불필요합니다.</p>
 </div>
 </div>
 </div>
-</div>
-<!-- FAQ -->
-<div class="faq-section">
+</section>
+<section class="faq">
 
 <div class="lang-ko">
-<h2>자주 묻는 질문</h2>
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-list">
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)">
@@ -579,45 +213,54 @@
 </div>
 </div>
 </div>
-</div>
-<!-- Related -->
-<div class="related-section sf-related">
-
-<div class="lang-ko">
-<h2>관련 도구</h2>
-<div class="related-links">
-<a class="related-link" href="/tools/vps-cost-calculator/ko/">💰 VPS 비용 계산기</a>
-<a class="related-link" href="/tools/vps-bandwidth-calculator/ko/">📊 VPS 대역폭 계산기</a>
-<a class="related-link" href="/tools/nextcloud-server-requirements-calculator/ko/">☁️ Nextcloud 서버 사양 계산기</a>
-<a class="related-link" href="https://stackfreeks.com/vultr-vs-hetzner-2026/" rel="noopener" target="_blank">📖 Vultr vs Hetzner 2026 비교 &nearrow;</a>
-</div>
-</div>
-</div>
-<!-- Vultr Banner -->
-<section class="vultr-banner">
-<div class="vultr-inner">
-<div>
-<p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
-<p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="vultr-sub" data-i18n="vultr_sub">$300 free credit for new accounts. Deploy in seconds.</p>
-</div>
-<a class="vultr-cta" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
-</div>
 </section>
+<!-- Related tools -->
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/vps-cost-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-server"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">VPS 비용 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/vps-bandwidth-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-gauge"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">VPS 대역폭 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/nextcloud-server-requirements-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-cloud"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Nextcloud 서버 사양 계산기</span></span></span></a></li>
+</ul>
+</section>
+<!-- Related content -->
+<section class="related">
+<a href="https://stackfreeks.com/vultr-vs-hetzner-2026/" rel="noopener" target="_blank"><span class="lang-ko">Vultr vs Hetzner 2026 비교</span> &rarr;</a>
+</section>
+<!-- Vultr affiliate banner -->
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
+<div>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">$300 free credit for new accounts. Deploy in seconds.</div>
+</div>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
+</div>
 <!-- Footer -->
-<footer>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
-<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com</a>
 </div>
-<p class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</p>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
+</div>
 </footer>
 <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_vps_server: "VPS & Server",
+        more_tools: "More server tools",
+        all_in_cat: "All VPS & Server tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back: '← All Tools',
         vultr_label: 'Sponsor',
         vultr_title: 'Get started on Vultr',
@@ -626,6 +269,14 @@
         footer_copy: '© 2026 StackFreeks'
       },
       ko: {
+        cat_vps_server: "VPS & 서버",
+        more_tools: "서버 툴 더 보기",
+        all_in_cat: "VPS & 서버 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back: '← 전체 도구',
         vultr_label: '스폰서',
         vultr_title: 'Vultr 시작하기',
@@ -638,14 +289,14 @@
 <script src="/shared/i18n.js"></script>
 <script>
     const WORKLOADS = [
-      { id: 'wordpress',  icon: '📝', cpu: 1, ram: 1,  storage: 25, label_en: 'WordPress / CMS',      label_ko: 'WordPress / CMS',     desc_en: 'Blog, WooCommerce, or CMS site',          desc_ko: '블로그, WooCommerce, CMS 사이트' },
-      { id: 'nodejs',     icon: '⚡', cpu: 1, ram: 1,  storage: 25, label_en: 'Node.js / Python API',  label_ko: 'Node.js / Python API', desc_en: 'REST API, Express, FastAPI, Django',      desc_ko: 'REST API, Express, FastAPI, Django' },
-      { id: 'database',   icon: '🗄️', cpu: 1, ram: 2,  storage: 40, label_en: 'PostgreSQL / MySQL DB', label_ko: 'PostgreSQL / MySQL DB', desc_en: 'Dedicated database server',               desc_ko: '전용 데이터베이스 서버' },
-      { id: 'nextjs',     icon: '▲',  cpu: 1, ram: 1,  storage: 25, label_en: 'Next.js / SSR App',     label_ko: 'Next.js / SSR 앱',     desc_en: 'Server-side rendered React or Nuxt',     desc_ko: '서버 사이드 렌더링 React / Nuxt' },
-      { id: 'docker',     icon: '🐳', cpu: 2, ram: 2,  storage: 40, label_en: 'Docker (multi-app)',    label_ko: 'Docker (멀티 앱)',      desc_en: 'Multiple containerized services',        desc_ko: '여러 컨테이너화된 서비스' },
-      { id: 'cicd',       icon: '🔁', cpu: 2, ram: 4,  storage: 80, label_en: 'CI/CD Runner',          label_ko: 'CI/CD 러너',           desc_en: 'GitHub Actions self-hosted, Jenkins',    desc_ko: 'GitHub Actions, Jenkins 빌드 서버' },
-      { id: 'gameserver', icon: '🎮', cpu: 2, ram: 4,  storage: 80, label_en: 'Game Server',           label_ko: '게임 서버',             desc_en: 'Minecraft, Valheim, CS2 server',         desc_ko: 'Minecraft, Valheim, CS2 서버' },
-      { id: 'static',     icon: '🌐', cpu: 1, ram: 1,  storage: 25, label_en: 'Static / Nginx Proxy',  label_ko: '정적 사이트 / Nginx',  desc_en: 'HTML/JS site or nginx reverse proxy',   desc_ko: 'HTML/JS 사이트 또는 Nginx 리버스 프록시' },
+      { id: 'wordpress',  cpu: 1, ram: 1,  storage: 25, label_en: 'WordPress / CMS',      label_ko: 'WordPress / CMS',     desc_en: 'Blog, WooCommerce, or CMS site',          desc_ko: '블로그, WooCommerce, CMS 사이트' },
+      { id: 'nodejs',     cpu: 1, ram: 1,  storage: 25, label_en: 'Node.js / Python API',  label_ko: 'Node.js / Python API', desc_en: 'REST API, Express, FastAPI, Django',      desc_ko: 'REST API, Express, FastAPI, Django' },
+      { id: 'database',   cpu: 1, ram: 2,  storage: 40, label_en: 'PostgreSQL / MySQL DB', label_ko: 'PostgreSQL / MySQL DB', desc_en: 'Dedicated database server',               desc_ko: '전용 데이터베이스 서버' },
+      { id: 'nextjs',     cpu: 1, ram: 1,  storage: 25, label_en: 'Next.js / SSR App',     label_ko: 'Next.js / SSR 앱',     desc_en: 'Server-side rendered React or Nuxt',     desc_ko: '서버 사이드 렌더링 React / Nuxt' },
+      { id: 'docker',     cpu: 2, ram: 2,  storage: 40, label_en: 'Docker (multi-app)',    label_ko: 'Docker (멀티 앱)',      desc_en: 'Multiple containerized services',        desc_ko: '여러 컨테이너화된 서비스' },
+      { id: 'cicd',       cpu: 2, ram: 4,  storage: 80, label_en: 'CI/CD Runner',          label_ko: 'CI/CD 러너',           desc_en: 'GitHub Actions self-hosted, Jenkins',    desc_ko: 'GitHub Actions, Jenkins 빌드 서버' },
+      { id: 'gameserver', cpu: 2, ram: 4,  storage: 80, label_en: 'Game Server',           label_ko: '게임 서버',             desc_en: 'Minecraft, Valheim, CS2 server',         desc_ko: 'Minecraft, Valheim, CS2 서버' },
+      { id: 'static',     cpu: 1, ram: 1,  storage: 25, label_en: 'Static / Nginx Proxy',  label_ko: '정적 사이트 / Nginx',  desc_en: 'HTML/JS site or nginx reverse proxy',   desc_ko: 'HTML/JS 사이트 또는 Nginx 리버스 프록시' },
     ];
 
     const TRAFFIC_TIERS = [
@@ -684,7 +335,6 @@
       card.className = 'workload-card';
       card.dataset.id = w.id;
       card.innerHTML = `
-        <div class="workload-icon">${w.icon}</div>
         <div class="workload-name lang-en">${w.label_en}</div>
         <div class="workload-name lang-ko">${w.label_ko}</div>
         <div class="workload-desc lang-en">${w.desc_en}</div>
@@ -805,7 +455,7 @@
             <div class="result-col-label lang-en">RECOMMENDED PLAN</div>
             <div class="result-col-label lang-ko">추천 플랜</div>
             <div class="plan-name">${plan.cpu} vCPU / ${plan.ram} GB RAM</div>
-            <div class="plan-price">$${plan.price}<span> / mo</span></div>
+            <div class="plan-price">$${plan.price}<span class="lang-en"> / mo</span><span class="lang-ko"> / 월</span></div>
             <div class="plan-storage lang-en">${plan.storage} GB NVMe SSD</div>
             <div class="plan-storage lang-ko">${plan.storage} GB NVMe SSD</div>
             <a href="${vultrUrl}" class="plan-cta" rel="nofollow sponsored" target="_blank">

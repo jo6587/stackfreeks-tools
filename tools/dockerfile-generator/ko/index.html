@@ -22,474 +22,75 @@
 <meta content="https://tools.stackfreeks.com/tools/dockerfile-generator/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
-<!-- ADSENSE_SLOT_TOP -->
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border-2);
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-    }
-
-    /* Tool layout */
-    .tool-wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    /* Form panel */
-    .form-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
+    /* Dockerfile Generator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .form-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 18px; }
     .field { display: flex; flex-direction: column; gap: 6px; }
-
-    .field label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-2);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .field select,
-    .field input {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      font-family: var(--font);
-      font-size: 14px;
-      padding: 8px 12px;
-      width: 100%;
-      transition: border-color 0.15s;
-    }
-    .field select:focus,
-    .field input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    .field select option { background: #18181b; }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .section-divider {
-      height: 1px;
-      background: var(--border);
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    /* Checkboxes */
+    .field label { font-size: 12px; font-weight: 500; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em; }
+    .field select, .field input { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); color: var(--text-1); font-family: var(--font); font-size: 14px; padding: 8px 12px; width: 100%; transition: border-color 0.15s; }
+    .field select:focus, .field input:focus { outline: none; border-color: var(--accent); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .section-divider { height: 1px; background: var(--border); }
     .check-list { display: flex; flex-direction: column; gap: 10px; }
-
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
-
-    .check-item input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--accent);
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .check-item span {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-
-    .btn-generate {
-      background: var(--accent-strong);
-      border: none;
-      border-radius: var(--radius);
-      color: #fff;
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 500;
-      padding: 10px 20px;
-      cursor: pointer;
-      width: 100%;
-      transition: opacity 0.15s;
-      margin-top: 4px;
-    }
+    .check-item { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+    .check-item span { font-size: 13px; color: var(--text-2); }
+    .btn-generate { background: var(--accent-strong); border: none; border-radius: var(--radius-s); color: var(--accent-fg); font-family: var(--font); font-size: 14px; font-weight: 500; padding: 10px 20px; cursor: pointer; width: 100%; transition: opacity 0.15s; margin-top: 4px; }
     .btn-generate:hover { opacity: 0.85; }
-
-    /* Output panel */
-    .output-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .output-block {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .output-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .output-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-2);
-      font-family: var(--font-mono);
-      letter-spacing: 0.02em;
-    }
-
-    .btn-copy {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 12px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
+    .output-panel { display: flex; flex-direction: column; gap: 20px; }
+    .output-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .output-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .output-title { font-size: 12px; font-weight: 600; color: var(--text-2); font-family: var(--font-mono); letter-spacing: 0.02em; }
+    .btn-copy { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); color: var(--text-2); font-family: var(--font); font-size: 12px; padding: 4px 12px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
     .btn-copy:hover { border-color: var(--accent); color: var(--accent-text); }
-    .btn-copy.copied { border-color: var(--success); color: var(--success); }
-
-    .output-code {
-      padding: 16px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text-1);
-      white-space: pre;
-      overflow-x: auto;
-      min-height: 80px;
-    }
-
-    /* Syntax colors */
-    .dk-comment { color: #52525b; }
+    .btn-copy.copied { border-color: var(--success); color: var(--success-fg); }
+    .output-code { padding: 16px; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--text-1); white-space: pre; overflow-x: auto; min-height: 80px; }
+    .dk-comment { color: var(--text-3); }
     .dk-keyword { color: var(--accent-text); }
-    .dk-string { color: #86efac; }
-    .dk-cmd { color: #fbbf24; }
-
-    .placeholder-msg {
-      color: var(--text-3);
-      font-family: var(--font);
-      font-size: 14px;
-      font-style: italic;
-      padding: 24px 16px;
-      text-align: center;
-    }
-
-    /* Guide */
-    .guide { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FAQ */
-    .faq { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related */
-    .related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
-    .related-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .related-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--text-1);
-      font-size: 13px;
-      font-weight: 500;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); opacity: 1; }
-    .related-card-icon { font-size: 20px; }
-
-    /* Vultr banner */
-    .vultr-banner {
-      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(34,197,94,0.08));
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 32px 24px;
-      margin-bottom: 0;
-    }
-
-    .banner-inner {
-      max-width: 980px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 4px;
-    }
-
-    .banner-title {
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 4px;
-    }
-
-    .banner-sub {
-      font-size: 14px;
-      color: var(--text-2);
-    }
-
-    .btn-vultr {
-      background: var(--success);
-      border: none;
-      border-radius: var(--radius);
-      color: var(--success-fg);
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 12px 24px;
-      white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); color: var(--success-fg); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Mobile */
+    .dk-string { color: var(--success-fg); }
+    .dk-cmd { color: var(--warning); }
+    .placeholder-msg { color: var(--text-3); font-family: var(--font); font-size: 14px; font-style: italic; padding: 24px 16px; text-align: center; }
     @media (max-width: 768px) {
-      .hero { padding: 32px 16px 24px; }
-      .hero h1 { font-size: 22px; }
-      .tool-wrap { grid-template-columns: minmax(0, 1fr); padding: 0 16px 40px; }
       .field-row { grid-template-columns: 1fr; }
-      .guide { padding: 0 16px 36px; }
-      .faq { padding: 0 16px 36px; }
-      .related { padding: 0 16px 36px; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
     }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
+    .section-label { font-size: 12px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Dockerfile Generator", "description": "Dockerfile generator for Node.js, Python, Go, PHP, Ruby and Java. Multi-stage build, non-root user and .dockerignore. Free.", "url": "https://tools.stackfreeks.com/tools/dockerfile-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/dockerfile-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "멀티 스테이지 Dockerfile이란? 언제 써야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "멀티 스테이지 빌드는 여러 FROM 구문을 사용합니다. 첫 번째 단계에서 컴파일·설치하고, 최종 단계에서 프로덕션 결과물만 복사합니다. 이미지 크기를 50~90% 줄일 수 있어 빠른 풀, 적은 스토리지, 좁은 공격 표면이 됩니다. TypeScript, Go 바이너리, Maven JAR 등 빌드 단계가 있는 경우 반드시 사용하세요."}}, {"@type": "Question", "name": "컨테이너를 비루트 사용자로 실행해야 하는 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "기본적으로 Docker 컨테이너 내 프로세스는 root로 실행됩니다. 컨테이너 탈출 취약점이 있으면 공격자에게 호스트 루트 권한이 넘어갑니다. 셸이나 sudo 접근 권한이 없는 전용 사용자(node, appuser 등)를 만들면 피해를 최소화할 수 있습니다."}}, {"@type": "Question", "name": ".dockerignore에 뭘 넣어야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "이미지에 불필요한 파일을 제외하세요: node_modules(빌드 중 재설치), .git, 테스트 파일, 로컬 .env, CI 설정, 에디터 설정 등. 빌드 컨텍스트가 작을수록 docker build 속도가 빠르고 이미지 크기도 줄어듭니다."}}, {"@type": "Question", "name": "CMD와 ENTRYPOINT의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "ENTRYPOINT는 실행 파일을 지정하고, CMD는 기본 인수를 설정합니다. CMD만 사용하면 사용자가 전체 명령을 재정의할 수 있습니다. ENTRYPOINT와 CMD를 함께 쓰면 인수만 재정의됩니다. 대부분 앱에는 CMD [\"node\", \"server.js\"]로 충분합니다."}}, {"@type": "Question", "name": "베이스 이미지 태그는 latest, slim, alpine 중 뭘 써야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "slim은 개발 도구를 제거해 약 100 MB를 절약합니다. alpine은 더 작지만 musl libc를 사용해 Node 네이티브 애드온이나 Python C 확장이 깨질 수 있습니다. 프로덕션에서는 node:20-slim 또는 python:3.12-slim이 실용적입니다. 재현 가능한 빌드를 위해 latest 대신 특정 버전을 고정하세요."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<!-- Nav -->
-<nav>
-<div class="nav-left">
-<a class="logo" href="/ko/">StackFreeks Tools</a>
-<div class="nav-sep"></div>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-devops"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-wrench"></use></svg><span data-i18n="cat_devops">DevOps & Config Generators</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/dockerfile-generator/">English</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+</div>
 </nav>
-<!-- Hero -->
-<section class="hero">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-file-code"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
 <h1>Dockerfile 생성기</h1>
 <p>Node.js, Python, Go, PHP, Ruby, Java용 프로덕션 Dockerfile을 즉시 생성 &mdash; 멀티 스테이지 빌드, 비루트 사용자, .dockerignore 포함.</p>
 </div>
-</section>
-<!-- Tool -->
-<section class="tool-wrap">
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
+</div>
+</header>
+<main class="tool wrap-tool tool-wrap">
 <!-- Form panel -->
 <div class="form-panel">
 <div class="field">
@@ -567,41 +168,48 @@
 <div class="output-code" id="dockerignore-out"></div>
 </div>
 </div>
+</main>
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More DevOps tools</h2>
+<a class="sec-link" href="/#cat-devops"><span data-i18n="all_in_cat">All DevOps & Config Generators tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/curl-command-generator/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-terminal"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">curl 명령어 생성기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/nginx-config-generator/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-server-cog"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Nginx 설정 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
 </section>
-<!-- Guide -->
 <section class="guide">
 
 <div class="lang-ko">
-<p class="guide-title">사용 방법</p>
+<h2 class="guide-title">사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<p class="guide-step">STEP 1</p>
-<h3>런타임 선택</h3>
+<h3>1. 런타임 선택</h3>
 <p>앱이 사용하는 언어와 버전을 선택하세요. 포트, 설치 명령어, 시작 명령어는 자동으로 설정됩니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">STEP 2</p>
-<h3>명령어 조정</h3>
+<h3>2. 명령어 조정</h3>
 <p>프로젝트에 맞게 설치&middot;시작 명령어를 수정하세요. Node.js의 경우 <code style="color:var(--accent-text)">npm ci</code>와 <code style="color:var(--accent-text)">yarn install --frozen-lockfile</code> 중 선택.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">STEP 3</p>
-<h3>옵션 설정</h3>
+<h3>3. 옵션 설정</h3>
 <p>멀티 스테이지 빌드는 최종 이미지 크기를 줄입니다. 비루트 사용자는 보안 모범 사례입니다. HEALTHCHECK는 비정상 컨테이너를 자동 재시작합니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">STEP 4</p>
-<h3>복사 후 배포</h3>
+<h3>4. 복사 후 배포</h3>
 <p>Dockerfile을 프로젝트 루트에 붙여넣으세요. .dockerignore도 복사해 이미지를 가볍게 유지하세요. 그 다음 <code style="color:var(--accent-text)">docker build -t myapp .</code></p>
 </div>
 </div>
 </div>
 </section>
-<!-- FAQ -->
 <section class="faq">
 
 <div class="lang-ko">
-<p class="faq-title">자주 묻는 질문</p>
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>멀티 스테이지 Dockerfile이란? 언제 써야 하나요?</span><span class="faq-icon">+</span></button>
 <div class="faq-a">멀티 스테이지 빌드는 여러 FROM 구문을 사용합니다. 첫 번째 단계에서 컴파일&middot;설치하고, 최종 단계에서 프로덕션 결과물만 복사합니다. 이미지 크기를 50~90% 줄일 수 있어 빠른 풀, 적은 스토리지, 좁은 공격 표면이 됩니다. TypeScript, Go 바이너리, Maven JAR 등 빌드 단계가 있는 경우 반드시 사용하세요.</div>
@@ -624,61 +232,52 @@
 </div>
 </div>
 </section>
-<!-- Related tools -->
-<section class="related sf-related">
-
-<div class="lang-ko">
-<p class="related-title">관련 툴</p>
-<div class="related-grid">
-<a class="related-card" href="/tools/docker-ram-calculator/ko/">
-<span class="related-card-icon">🐳</span>
-          Docker RAM 계산기
-        </a>
-<a class="related-card" href="/tools/nginx-config-generator/ko/">
-<span class="related-card-icon">⚙️</span>
-          Nginx 설정 생성기
-        </a>
-<a class="related-card" href="/tools/linux-swap-calculator/ko/">
-<span class="related-card-icon">💾</span>
-          리눅스 스왑 계산기
-        </a>
-<a class="related-card" href="/tools/firewall-rule-builder/ko/">
-<span class="related-card-icon">🔥</span>
-          방화벽 규칙 생성기
-        </a>
-<a class="related-card" href="https://stackfreeks.com/deploy-docker-vultr-vps/" rel="noopener" target="_blank">
-<span class="related-card-icon">📖</span>
-          Docker를 Vultr VPS에 배포하기 &rarr;
-        </a>
-</div>
-</div>
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/docker-ram-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-container"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Docker RAM 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/nginx-config-generator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-server-cog"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Nginx 설정 생성기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/linux-swap-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-down-up"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">리눅스 스왑 크기 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/firewall-rule-builder/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-brick-wall"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">방화벽 규칙 생성기</span></span></span></a></li>
+</ul>
 </section>
-<!-- Vultr Banner -->
-<section class="vultr-banner">
-<div class="banner-inner">
+<section class="related">
+<p><a href="https://stackfreeks.com/deploy-docker-vultr-vps/" rel="noopener" target="_blank">Deploy Docker on a Vultr VPS &rarr;</a></p>
+<p><a href="https://stackfreeks.com/deploy-docker-vultr-vps/" rel="noopener" target="_blank">Docker를 Vultr VPS에 배포하기 &rarr;</a></p>
+</section>
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
 <div>
-<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-<p class="banner-title" data-i18n="vultr_title">Deploy your Docker app on Vultr</p>
-<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Deploy your Docker app on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</div>
 </div>
-<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
 </div>
-</section>
-<!-- Footer -->
-<footer>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
-<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com</a>
 </div>
-<p class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</p>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
+</div>
 </footer>
 <script>
     // i18n page-specific keys (must be before i18n.js)
     window.SF_PAGE_I18N = {
       en: {
+        cat_devops: "DevOps & Config Generators",
+        more_tools: "More DevOps tools",
+        all_in_cat: "All DevOps & Config Generators tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         df_runtime: 'Runtime',
         df_version: 'Version',
         df_port: 'Port',
@@ -695,6 +294,14 @@
         copy_btn: 'Copy',
       },
       ko: {
+        cat_devops: "DevOps & 설정 생성기",
+        more_tools: "DevOps 툴 더 보기",
+        all_in_cat: "DevOps & 설정 생성기 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         df_runtime: '런타임',
         df_version: '버전',
         df_port: '포트',
@@ -1041,10 +648,10 @@
       const text = el._raw || el.textContent;
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.getElementById(btnId);
-        btn.textContent = '✓ Copied';
+        btn.textContent = '✓ ' + sfT('x_copied_s');
         btn.classList.add('copied');
         setTimeout(() => {
-          btn.textContent = 'Copy';
+          btn.textContent = sfT('x_copy');
           btn.classList.remove('copied');
         }, 2000);
       });
@@ -1052,7 +659,7 @@
 
     function resetCopy(btnId) {
       const btn = document.getElementById(btnId);
-      if (btn) { btn.textContent = 'Copy'; btn.classList.remove('copied'); }
+      if (btn) { btn.textContent = sfT('x_copy'); btn.classList.remove('copied'); }
     }
 
     function toggleFaq(btn) {

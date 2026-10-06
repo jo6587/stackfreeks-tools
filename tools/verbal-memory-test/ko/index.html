@@ -8,7 +8,7 @@
 <link href="/stackfreeks_icon.png" rel="apple-touch-icon">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>언어 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks</title>
-<meta content="재미 & 테스트" name="description">
+<meta content='단어가 하나씩 나타납니다. 이번 판에서 이미 본 단어면 SEEN, 처음 보는 단어면 NEW를 누르세요. 생명은 3개입니다. 단어는 모두 영어입니다 &mdash; 뜻을 몰라도 "전에 나왔는지"만 판단하면 됩니다. 몇 개나 기억할 수 있나요?' name="description">
 <link href="https://tools.stackfreeks.com/tools/verbal-memory-test/ko/" rel="canonical">
 <link href="https://tools.stackfreeks.com/tools/verbal-memory-test/" hreflang="en" rel="alternate">
   <link href="https://tools.stackfreeks.com/tools/verbal-memory-test/ko/" hreflang="ko" rel="alternate">
@@ -18,103 +18,21 @@
 
 <!-- Open Graph -->
 <meta content="언어 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
-<meta content="재미 & 테스트" property="og:description">
+<meta content='단어가 하나씩 나타납니다. 이번 판에서 이미 본 단어면 SEEN, 처음 보는 단어면 NEW를 누르세요. 생명은 3개입니다. 단어는 모두 영어입니다 &mdash; 뜻을 몰라도 "전에 나왔는지"만 판단하면 됩니다. 몇 개나 기억할 수 있나요?' property="og:description">
 <meta content="https://tools.stackfreeks.com/tools/verbal-memory-test/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
 <!-- Twitter -->
 <meta content="summary" name="twitter:card">
 <meta content="언어 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
-<meta content="재미 & 테스트" name="twitter:description">
-<!-- ADSENSE_SLOT_TOP -->
+<meta content='단어가 하나씩 나타납니다. 이번 판에서 이미 본 단어면 SEEN, 처음 보는 단어면 NEW를 누르세요. 생명은 3개입니다. 단어는 모두 영어입니다 &mdash; 뜻을 몰라도 "전에 나왔는지"만 판단하면 됩니다. 몇 개나 기억할 수 있나요?' name="twitter:description">
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --danger: #ef4444;
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
-
-    main { padding: 32px 0 48px; }
+    /* Verbal Memory Test — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
 
     /* Game */
     .stage {
@@ -123,7 +41,7 @@
       -webkit-tap-highlight-color: transparent;
       width: 100%;
       min-height: 340px;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       border: 1px solid var(--border);
       background: var(--surface-2);
       color: var(--text-1);
@@ -136,136 +54,55 @@
       padding: 32px 24px;
     }
     .stage-word {
-      font-size: 2.6rem; font-weight: 600; letter-spacing: -0.02em;
+      font-size: 40px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.15;
       color: var(--text-1); word-break: break-word;
     }
-    .lives { font-size: 1.1rem; letter-spacing: 0.15em; color: var(--danger); min-height: 1.4em; }
-    .scoreline { font-size: 12px; color: var(--text-3); letter-spacing: 0.04em; }
+    .lives { font-size: 18px; letter-spacing: 0.15em; color: var(--danger); min-height: 1.4em; }
+    .scoreline { font-size: var(--fs-xs); color: var(--text-3); font-variant-numeric: tabular-nums; }
 
     .choices { display: flex; gap: 12px; justify-content: center; margin-top: 22px; flex-wrap: wrap; }
     .choice-btn {
       background: var(--surface); color: var(--text-1);
       border: 1px solid var(--border-2);
-      border-radius: var(--radius); padding: 16px 34px;
+      border-radius: var(--radius-s); padding: 16px 34px;
       font-size: 15px; font-weight: 600; cursor: pointer;
       font-family: var(--font); min-width: 150px;
-      transition: border-color 0.15s, background 0.15s;
+      transition: border-color var(--t), background-color var(--t);
     }
-    .choice-btn:hover { border-color: var(--accent); background: var(--surface-2); }
-    .choice-btn small { display: block; font-size: 10px; font-weight: 400; color: var(--text-3); margin-top: 4px; letter-spacing: 0.04em; }
+    .choice-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+    .choice-btn small { display: block; font-size: 12px; font-weight: 400; color: var(--text-2); margin-top: 4px; }
 
-    .stage-flash { font-size: 0.95rem; font-weight: 500; min-height: 1.4em; }
-    .stage-flash.ok { color: var(--success); }
+    .stage-flash { font-size: 15px; font-weight: 600; min-height: 1.4em; }
+    .stage-flash.ok { color: var(--success-fg); }
     .stage-flash.bad { color: var(--danger); }
 
-    .progress { margin-top: 14px; font-size: 12px; color: var(--text-3); text-align: center; letter-spacing: 0.04em; }
-    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); text-align: center; }
+    .progress { margin-top: 14px; font-size: var(--fs-xs); color: var(--text-3); text-align: center; }
+    .yourbest { margin-top: 6px; font-size: var(--fs-xs); color: var(--text-3); text-align: center; }
 
-    /* Result panel */
+    /* Result panel (rendered by JS inside .choices) */
     .result-panel { text-align: center; }
-    .result-avg { font-size: 3rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
-    .result-avg span { font-size: 1rem; color: var(--text-3); font-weight: 400; }
-    .result-band { margin-top: 4px; font-size: 0.95rem; font-weight: 500; color: var(--success); }
-    .result-context { margin-top: 10px; font-size: 13px; color: var(--text-2); max-width: 440px; margin-left: auto; margin-right: auto; }
+    .result-avg { font-size: 44px; font-weight: 650; color: var(--text-1); letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .result-avg span { font-size: var(--fs-m); color: var(--text-3); font-weight: 400; letter-spacing: 0; }
+    .result-band { display: inline-block; margin-top: 8px; padding: 2px 10px; border-radius: 999px; font-size: var(--fs-s); font-weight: 600; background: var(--success); color: var(--success-fg); }
+    .result-context { margin-top: 10px; font-size: var(--fs-s); color: var(--text-2); max-width: 440px; margin-left: auto; margin-right: auto; }
+    .result-panel .btn { margin-top: 20px; background: var(--accent-strong); color: var(--accent-fg); }
+    .result-panel .btn:hover { background: var(--accent-hover); }
 
-    .btn {
-      background: var(--accent-strong); color: #fff; border: none;
-      border-radius: var(--radius); padding: 12px 26px;
-      font-size: 14px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); margin-top: 20px;
-      transition: opacity 0.15s;
-    }
-    .btn:hover { opacity: 0.88; }
+    .caveat { margin-top: 14px; font-size: var(--fs-xs); color: var(--text-3); line-height: 1.6; max-width: 620px; margin-left: auto; margin-right: auto; text-align: center; }
 
-    .caveat { margin-top: 14px; font-size: 11px; color: var(--text-3); line-height: 1.6; max-width: 620px; margin-left: auto; margin-right: auto; text-align: center; }
-
-    /* About / SEO copy */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
-    .about-section p:last-child { margin-bottom: 0; }
-
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-list { display: flex; flex-direction: column; gap: 1px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related tools */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
+    /* About copy (below the tool) */
+    .about-section { max-width: var(--wrap-tool); margin: 0 auto; padding: 56px 32px 0; }
+    .about-section h2 { font-size: var(--fs-l); font-weight: 650; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .about-section p { color: var(--text-2); font-size: 15px; line-height: 1.7; max-width: 72ch; }
+    .about-section p + p { margin-top: 12px; }
 
     @media (max-width: 768px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
-      .stage { min-height: 320px; padding: 28px 16px; }
-      .stage-word { font-size: 2rem; }
+      .stage { min-height: 300px; padding: 24px 16px; }
+      .stage-word { font-size: 32px; }
       .choices { gap: 10px; }
       .choice-btn { flex: 1 1 45%; min-width: 0; padding: 18px 12px; }
-      .result-avg { font-size: 2.4rem; }
-      .banner-inner { flex-direction: column; align-items: flex-start; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .result-avg { font-size: 36px; }
+      .about-section { padding: 40px 16px 0; }
     }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Verbal Memory Test", "description": "Free online verbal memory test. Words appear one at a time and you mark each one SEEN or NEW; you have three lives and your score is how many words you correctly remember before running out.", "url": "https://tools.stackfreeks.com/tools/verbal-memory-test/ko/", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/verbal-memory-test/ko/"}}</script>
@@ -274,36 +111,37 @@
 </head>
 <body>
 <!-- 1. Nav -->
-<nav>
-<a class="logo" href="/ko/">
-<div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-<div class="nav-right">
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-fun"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-puzzle"></use></svg><span data-i18n="cat_fun">Fun & Tests</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/verbal-memory-test/">English</a>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
 </div>
 </nav>
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
 <!-- 3. Hero -->
-<section class="hero">
-<div class="container">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-message-square-text"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
-<p class="eyebrow">재미 & 테스트</p>
 <h1>언어 기억력 테스트</h1>
-<p class="hero-desc">단어가 하나씩 나타납니다. 이번 판에서 이미 본 단어면 SEEN, 처음 보는 단어면 NEW를 누르세요. 생명은 3개입니다. 단어는 모두 영어입니다 &mdash; 뜻을 몰라도 "전에 나왔는지"만 판단하면 됩니다. 몇 개나 기억할 수 있나요?</p>
+<p>단어가 하나씩 나타납니다. 이번 판에서 이미 본 단어면 SEEN, 처음 보는 단어면 NEW를 누르세요. 생명은 3개입니다. 단어는 모두 영어입니다 &mdash; 뜻을 몰라도 "전에 나왔는지"만 판단하면 됩니다. 몇 개나 기억할 수 있나요?</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
 </div>
-</section>
+</header>
 <!-- 4. Tool body -->
-<main>
-<div class="container">
+<main class="tool wrap-tool">
 <div class="stage" id="stage">
-<div class="lives" id="lives">&hearts;&hearts;&hearts;</div>
-<div class="stage-word" id="word">Verbal Memory Test</div>
+<div class="lives" id="lives"><svg aria-hidden="true" class="ico ico-inline"><use href="/shared/icons.svg#i-heart"></use></svg> <svg aria-hidden="true" class="ico ico-inline"><use href="/shared/icons.svg#i-heart"></use></svg> <svg aria-hidden="true" class="ico ico-inline"><use href="/shared/icons.svg#i-heart"></use></svg></div>
+<div class="stage-word" data-i18n="x_verbal_memory_test" id="word">Verbal Memory Test</div>
 <div class="stage-flash" id="flash"></div>
 <div class="choices" id="choices">
 <button class="choice-btn" data-i18n="btn_start" id="btnStart" type="button">Start</button>
@@ -313,57 +151,59 @@
 <div class="progress" data-i18n="hint_keys" id="progress">Shortcuts: NEW = Left arrow or K &nbsp;&middot;&nbsp; SEEN = Right arrow or L</div>
 <div class="yourbest" hidden id="yourBest"></div>
 <p class="caveat" data-i18n="caveat">The word pool is a fixed list of about 250 common English words, so once you have seen most of them the game leans on focus and stamina as much as raw memory. Treat your score as a relative benchmark, not a clinical measurement.</p>
-</div>
 </main>
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More fun & tests</h2>
+<a class="sec-link" href="/#cat-fun"><span data-i18n="all_in_cat">All Fun & Tests tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/sequence-memory-test/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-grid-3x3"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">패턴 기억력 테스트</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/aim-trainer/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-crosshair"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">에임 트레이너</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
 <!-- About / SEO copy -->
 <section class="about-section">
-<div class="container">
 
 <div class="lang-ko">
 <h2>언어 기억력 테스트 소개</h2>
 <p>이 언어 기억력 테스트는 Human Benchmark로 널리 알려진 "몇 개의 단어를 기억할 수 있는가" 챌린지입니다. 한 번에 한 단어가 표시됩니다. 초반에는 대부분 처음 보는 단어이므로 NEW를 누르고, 그 단어는 "본 단어" 목록에 조용히 추가됩니다. 판이 진행되면 단어가 반복되기 시작하고, 그것을 알아보고 SEEN을 눌러야 합니다. 정답마다 1점씩 올라가고, 오답(반복된 단어를 NEW로, 새 단어를 SEEN으로)마다 생명 3개 중 하나를 잃습니다. 3개가 모두 사라지면 게임이 끝나고 점수가 표시됩니다.</p>
 <p>단어 목록은 영어로 고정되어 있습니다. 이것이 이 테스트의 표준 방식이며, KO 사용자도 단어의 뜻을 알 필요 없이 "전에 나왔는지"만 판단하면 됩니다. 툴은 본 단어 전체를 JavaScript Set에 저장하고, 목록이 커질수록 반복 단어를 더 자주 보여주는 간단한 휴리스틱으로 다음 단어를 고르며, 최고 점수는 localStorage로 브라우저에만 저장합니다. 마우스&middot;터치&middot;키보드 모두 지원하고 가입이 필요 없으며 전부 브라우저에서 실행됩니다. 평균은 약 40점, 꾸준히 60점을 넘기면 우수한 편입니다.</p>
 </div>
-</div>
 </section>
 <!-- 5. How-to section -->
-<section class="guide-section">
-<div class="container">
+<section class="guide">
 
 <div class="lang-ko">
-<h2>언어 기억력 테스트 사용 방법</h2>
+<h2 class="guide-title">언어 기억력 테스트 사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<div class="guide-step">Step 1</div>
-<div class="guide-title">판 시작</div>
-<div class="guide-desc">Start를 누르세요. 박스 중앙에 단어 하나가 나타나고 위에 생명 3개가 표시됩니다.</div>
+<h3>1. 판 시작</h3>
+<p>Start를 누르세요. 박스 중앙에 단어 하나가 나타나고 위에 생명 3개가 표시됩니다.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 2</div>
-<div class="guide-title">각 단어 판단</div>
-<div class="guide-desc">이번 판에서 처음 보는 단어면 NEW, 전에 나온 적 있으면 SEEN을 누르세요. 버튼을 쓰거나, NEW는 왼쪽 화살표&middot;K, SEEN은 오른쪽 화살표&middot;L.</div>
+<h3>2. 각 단어 판단</h3>
+<p>이번 판에서 처음 보는 단어면 NEW, 전에 나온 적 있으면 SEEN을 누르세요. 버튼을 쓰거나, NEW는 왼쪽 화살표&middot;K, SEEN은 오른쪽 화살표&middot;L.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 3</div>
-<div class="guide-title">생명 지키기</div>
-<div class="guide-desc">정답마다 1점. 오답마다 생명 하나. 생명 3개가 모두 사라질 때까지 계속됩니다.</div>
+<h3>3. 생명 지키기</h3>
+<p>정답마다 1점. 오답마다 생명 하나. 생명 3개가 모두 사라질 때까지 계속됩니다.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 4</div>
-<div class="guide-title">결과 확인</div>
-<div class="guide-desc">생명이 0이 되면 점수, 비교(평균 약 40, 60 이상이면 우수), 저장된 최고 기록이 표시됩니다. Try again으로 새 판을 시작하세요.</div>
-</div>
+<h3>4. 결과 확인</h3>
+<p>생명이 0이 되면 점수, 비교(평균 약 40, 60 이상이면 우수), 저장된 최고 기록이 표시됩니다. Try again으로 새 판을 시작하세요.</p>
 </div>
 </div>
 </div>
 </section>
 <!-- 6. FAQ -->
-<section class="faq-section">
-<div class="container">
+<section class="faq">
 
 <div class="lang-ko">
-<h2>자주 묻는 질문</h2>
-<div class="faq-list">
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>좋은 언어 기억력 점수는 어느 정도인가요?</span><span class="faq-icon">+</span></button>
 <div class="faq-a">이 방식의 테스트에서는 40점대가 성인 평균 정도입니다. 50~70점이면 좋은 결과이고, 70~80점 이상이면 보통 단어를 그룹으로 묶거나 반복 패턴을 파악하는 등의 전략을 쓰고 있는 것입니다. 단어 풀이 한정되어 있어 아주 높은 점수는 순수한 기억력보다 집중력과 지구력에도 좌우됩니다.</div>
@@ -385,45 +225,51 @@
 <div class="faq-a">Human Benchmark로 알려진 이 테스트의 표준 버전은 점수를 서로 비교할 수 있도록 고정된 common 영어 단어 풀을 사용합니다. 저희도 같은 이유로 영어 단어 목록을 유지하며, 언어를 바꾸면 단어 길이와 친숙도가 달라져 결과를 비교할 수 없게 됩니다. 영어가 모국어가 아니어도 테스트할 수 있습니다. 단어가 전에 나왔는지 알아보는 데는 뜻을 알 필요가 없습니다.</div>
 </div>
 </div>
-</div>
-</div>
 </section>
 <!-- 7.5. Related tools -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/number-memory-test/ko/"><span>🔢</span>Number Memory Test</a>
-<a class="sf-related-card" href="/tools/sequence-memory-test/ko/"><span>🧩</span>Sequence Memory Test</a>
-<a class="sf-related-card" href="/tools/reaction-time-test/ko/"><span>⚡</span>Reaction Time Test</a>
-</div>
-</section>
 <!-- 8. Vultr banner -->
-<section class="vultr-banner">
-<div class="container banner-inner">
-<div>
-<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
-</div>
-<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
-</div>
-</section>
 <!-- 9. Footer -->
-<footer class="footer">
-<div class="container footer-inner">
-<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/number-memory-test/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-list-ordered"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">숫자 기억력 테스트</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/sequence-memory-test/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-grid-3x3"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">패턴 기억력 테스트</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/reaction-time-test/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-zap"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">반응속도 테스트</span></span></span></a></li>
+</ul>
+</section>
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
+<div>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</div>
+</div>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
+</div>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
 </div>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
 </div>
 </footer>
 <!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
+    cat_fun: "Fun & Tests",
+    more_tools: "More fun & tests",
+    all_in_cat: "All Fun & Tests tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
     caveat: "The word pool is a fixed list of about 250 common English words, so once you have seen most of them the game leans on focus and stamina as much as raw memory. Treat your score as a relative benchmark, not a clinical measurement.",
     hint_keys: "Shortcuts: NEW = Left arrow or K · SEEN = Right arrow or L",
     btn_start: "Start",
@@ -439,9 +285,18 @@ window.SF_PAGE_I18N = {
     result_label: "Words remembered",
     result_context: "Average is around 40; over 60 is strong.",
     your_best_tpl: "Your best: {n}",
-    new_best: "New best! 🏆"
-  },
+    new_best: "New best!",
+        x_verbal_memory_test: "Verbal Memory Test"
+      },
   ko: {
+    cat_fun: "재미 & 테스트",
+    more_tools: "재미 & 테스트 더 보기",
+    all_in_cat: "재미 & 테스트 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
     caveat: "단어 풀은 약 250개의 흔한 영어 단어로 고정되어 있어, 대부분을 본 뒤에는 순수 기억력만큼이나 집중력과 지구력이 관건이 됩니다. 점수는 임상 측정이 아닌 상대적 벤치마크로 보세요.",
     hint_keys: "단축키: NEW = 왼쪽 화살표 또는 K · SEEN = 오른쪽 화살표 또는 L",
     btn_start: "시작",
@@ -457,8 +312,9 @@ window.SF_PAGE_I18N = {
     result_label: "기억한 단어",
     result_context: "평균은 약 40개, 60개 이상이면 우수합니다.",
     your_best_tpl: "최고 기록: {n}",
-    new_best: "최고 기록 갱신! 🏆"
-  }
+    new_best: "최고 기록 갱신!",
+        x_verbal_memory_test: "단어 기억력 테스트"
+      }
 };
 </script>
 <script>
@@ -481,7 +337,7 @@ window.SF_PAGE_I18N = {
   var progressEl = document.getElementById('progress');
   var yourBestEl = document.getElementById('yourBest');
 
-  var HEART = '♥';
+  var HEART = '<svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-heart"/></svg>';
   var state = 'idle';   // idle | playing | over
   var pool = [];        // words not yet introduced
   var seenList = [];     // words the player has been shown (for weighted pick)
@@ -498,7 +354,7 @@ window.SF_PAGE_I18N = {
   }
 
   function renderLives() {
-    livesEl.textContent = lives > 0 ? new Array(lives + 1).join(HEART + ' ').trim() : '';
+    livesEl.innerHTML = lives > 0 ? new Array(lives + 1).join(HEART + ' ').trim() : '';
   }
 
   function renderScore() {
@@ -597,7 +453,7 @@ window.SF_PAGE_I18N = {
     choicesEl.innerHTML =
       '<div class="result-panel">' +
         '<div class="result-avg">' + final + ' <span>' + t('result_label') + '</span></div>' +
-        (newBest ? '<div class="result-band">' + t('new_best') + '</div>' : '') +
+        (newBest ? '<div class="result-band">' + t('new_best') + ' <svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-trophy"/></svg></div>' : '') +
         '<div class="result-context">' + t('result_context') + '</div>' +
         '<button class="btn" id="btnRetry" type="button">' + t('btn_retry') + '</button>' +
       '</div>';

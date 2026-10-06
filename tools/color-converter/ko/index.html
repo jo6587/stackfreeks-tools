@@ -22,470 +22,75 @@
 <meta content="https://tools.stackfreeks.com/tools/color-converter/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
-<!-- ADSENSE_SLOT_TOP -->
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* ── Nav ── */
-    .nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-inner {
-      width: 100%;
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-    .nav-logo span { color: var(--accent-text); }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); color: var(--text-1); }
-
-    /* ── Hero ── */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-      max-width: 560px;
-    }
-
-    /* ── Tool Main ── */
-    .tool-wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    /* Color Swatch Preview */
-    .color-swatch {
-      width: 100%;
-      height: 160px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-      transition: background-color 0.15s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .swatch-label {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      font-family: 'Courier New', monospace;
-      color: #fff; /* set per colour by updateSwatch() — WCAG luminance, design-guide 5-6 */
-      pointer-events: none;
-      user-select: none;
-    }
-
-    /* Color Picker Row */
-    .picker-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 24px;
-    }
-
-    .picker-label {
-      font-size: 12px;
-      color: var(--text-2);
-      font-weight: 500;
-    }
-
-    input[type="color"] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 48px;
-      height: 36px;
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius);
-      background: var(--surface-2);
-      cursor: pointer;
-      padding: 3px;
-    }
+    /* Hex/RGB/HSL Color Converter — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .color-swatch { width: 100%; height: 160px; border-radius: var(--radius); border: 1px solid var(--border-2); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; transition: background-color 0.15s; position: relative; overflow: hidden; }
+    .swatch-label { font-size: 20px; font-weight: 600; letter-spacing: 0.06em; font-family: var(--font-mono); color: #fff; pointer-events: none; user-select: none; }
+    .picker-row { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+    .picker-label { font-size: 12px; color: var(--text-2); font-weight: 500; }
+    input[type="color"] { -webkit-appearance: none; appearance: none; width: 48px; height: 36px; border: 1px solid var(--border-2); border-radius: var(--radius-s); background: var(--surface-2); cursor: pointer; padding: 3px; }
     input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
     input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
-
-    /* Format Cards */
-    .format-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .format-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px 20px;
-      transition: border-color 0.15s;
-    }
+    .format-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 28px; }
+    .format-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; transition: border-color 0.15s; }
     .format-card:focus-within { border-color: var(--border-2); }
-
-    .format-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .format-tag {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent-text);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .copy-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 11px;
-      font-weight: 500;
-      padding: 3px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-    }
+    .format-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .format-tag { font-size: 12px; font-weight: 600; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.08em; }
+    .copy-btn { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-family: var(--font); font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 6px; cursor: pointer; transition: border-color 0.15s, color 0.15s, background 0.15s; }
     .copy-btn:hover { border-color: var(--accent); color: var(--text-1); }
-    .copy-btn.copied {
-      background: var(--success-bg);
-      border-color: var(--success);
-      color: var(--success);
-    }
-
-    .format-inputs {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
-      min-width: 56px;
-    }
-
-    .input-group label {
-      font-size: 11px;
-      color: var(--text-3);
-    }
-
-    .format-input {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      padding: 7px 10px;
-      transition: border-color 0.15s;
-      outline: none;
-    }
+    .copy-btn.copied { background: var(--success); border-color: var(--success); color: var(--success-fg); }
+    .format-inputs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .input-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 56px; }
+    .input-group label { font-size: 12px; color: var(--text-3); }
+    .format-input { width: 100%; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); color: var(--text-1); font-family: var(--font-mono); font-size: 13px; padding: 7px 10px; transition: border-color 0.15s; outline: none; }
     .format-input:focus { border-color: var(--accent); }
     .format-input.wide { font-size: 14px; }
-
-    /* Preset Palette */
-    .presets-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 10px;
-    }
-
-    .preset-palette {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 0;
-    }
-
-    .preset-swatch {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius);
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: transform 0.1s, border-color 0.15s;
-    }
-    .preset-swatch:hover { transform: scale(1.12); border-color: rgba(255,255,255,0.3); }
+    .presets-label { font-size: 12px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .preset-palette { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 0; }
+    .preset-swatch { width: 36px; height: 36px; border-radius: var(--radius-s); border: 2px solid transparent; cursor: pointer; transition: transform 0.1s, border-color 0.15s; }
+    .preset-swatch:hover { transform: scale(1.12); border-color: var(--border-2); }
     .preset-swatch.active { border-color: var(--text-1); }
-
-    /* ── Guide ── */
-    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* ── FAQ ── */
-    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* ── Vultr Banner ── */
-    .vultr-banner {
-      max-width: 860px;
-      margin: 0 auto 48px;
-      padding: 0 24px;
-    }
-
-    .vultr-inner {
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .vultr-badge {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--success);
-      margin-bottom: 4px;
-    }
-
-    .vultr-title {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 3px;
-    }
-
-    .vultr-sub {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-
-    .vultr-cta {
-      display: inline-block;
-      background: var(--success);
-      color: var(--success-fg);
-      font-weight: 600;
-      font-size: 13px;
-      padding: 9px 18px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .vultr-cta:hover { background: var(--success-hover); color: var(--success-fg); }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 24px;
-      text-align: center;
-    }
-
-    .footer-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .footer-copy {
-      font-size: 13px;
-      color: var(--text-3);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 20px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    /* ── Lang visibility ── */
-    .lang-ko { display: none; }
     body.lang-ko .lang-ko { display: block; }
     body.lang-ko .lang-en { display: none; }
-
-    /* ── Responsive ── */
     @media (max-width: 600px) {
-      .hero h1 { font-size: 22px; }
       .format-grid { grid-template-columns: 1fr; }
-      .guide-grid { grid-template-columns: 1fr; }
-      .vultr-inner { flex-direction: column; align-items: flex-start; }
-      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
     }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Color Converter", "description": "Convert colors between HEX, RGB, and HSL instantly. Live three-way sync, color picker, preset palette, and one-click copy for each format.", "url": "https://tools.stackfreeks.com/tools/color-converter/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/color-converter/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "HEX, RGB, HSL의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "HEX는 CSS에서 널리 사용되는 16진수 표기법입니다 (예: #ff0000 ). RGB는 빨강, 초록, 파랑 채널을 0~255 숫자로 지정합니다. HSL은 색상(Hue), 채도(Saturation), 밝기(Lightness)의 약자로, 색조나 밝기를 독립적으로 조정할 수 있어 디자이너에게 직관적입니다."}}, {"@type": "Question", "name": "HEX나 RGB 대신 HSL을 쓰는 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "HSL은 직관적입니다. 더 밝은 색을 원하면 L을 높이고, 채도를 낮추려면 S를 줄이면 됩니다. 보색으로 이동하려면 H에 180만 더하면 되며 채도나 밝기를 건드릴 필요가 없습니다."}}, {"@type": "Question", "name": "투명도(알파)를 지원하나요?", "acceptedAnswer": {"@type": "Answer", "text": "현재는 지원하지 않습니다. 이 툴은 불투명한 RGB 색상만 처리합니다. RGBA 및 HSLA 형식 지원은 향후 업데이트에서 추가될 예정입니다."}}, {"@type": "Question", "name": "변환 결과가 정확한가요?", "acceptedAnswer": {"@type": "Answer", "text": "HEX ↔ RGB 변환은 손실 없이 정확합니다. HSL 값은 부동소수점 연산으로 인해 약간의 반올림 차이가 있을 수 있지만 시각적 결과는 동일합니다. HEX → HSL → HEX로 변환해도 원래 HEX가 1 반올림 이내로 재현됩니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<!-- Nav -->
-<nav class="nav">
+<nav aria-label="Main" class="nav">
 <div class="nav-inner">
-<a class="nav-logo" href="/ko/">StackFreeks <span>Tools</span></a>
-<div class="nav-right">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-conv"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-left-right"></use></svg><span data-i18n="cat_converters">Converters & Encoders</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/color-converter/">English</a>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
 </div>
 </nav>
-<!-- Hero -->
-<header class="hero">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-palette"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
 <h1>색상 변환기</h1>
 <p>HEX, RGB, HSL 색상을 실시간으로 변환하세요. 색상 피커, 직접 입력, 프리셋 클릭 &mdash; 세 가지 형식이 항상 동기화됩니다.</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
+</div>
 </header>
-<!-- Tool Body -->
-<main class="tool-wrap">
+<main class="tool wrap-tool tool-wrap">
 <!-- Color Swatch Preview -->
 <div class="color-swatch" id="colorSwatch">
 <span class="swatch-label" id="swatchLabel">#6366f1</span>
@@ -494,7 +99,7 @@
 <div class="picker-row">
 
 <span class="picker-label lang-ko">색상 선택:</span>
-<input id="colorPicker" title="Color Picker" type="color" value="#6366f1">
+<input data-i18n-title="x_color_picker" id="colorPicker" title="Color Picker" type="color" value="#6366f1">
 </div>
 <!-- Format Cards -->
 <div class="format-grid">
@@ -568,51 +173,53 @@
 <div class="preset-swatch" onclick="loadPreset('#ec4899')" style="background:#ec4899;" title="#ec4899"></div>
 </div>
 </main>
-<!-- Guide -->
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More converters</h2>
+<a class="sec-link" href="/#cat-conv"><span data-i18n="all_in_cat">All Converters & Encoders tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/timestamp-converter/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-clock"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Unix 타임스탬프 변환기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/px-rem-converter/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-ruler"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">px &harr; rem 변환기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
 <section class="guide">
 
 <div class="guide-title lang-ko">사용 방법</div>
 <div class="guide-grid">
 <div class="guide-card">
 
-<div class="guide-step lang-ko">1단계</div>
-
-<h3 class="lang-ko">색상 값 입력</h3>
+<h3 class="lang-ko">1. 색상 값 입력</h3>
 
 <p class="lang-ko">HEX, RGB, HSL 중 어느 필드에나 값을 입력하면 나머지 두 형식이 즉시 업데이트됩니다.</p>
 </div>
 <div class="guide-card">
 
-<div class="guide-step lang-ko">2단계</div>
-
-<h3 class="lang-ko">색상 피커 사용</h3>
+<h3 class="lang-ko">2. 색상 피커 사용</h3>
 
 <p class="lang-ko">색상 피커를 클릭해 시각적으로 선택하세요. 세 가지 형식이 자동으로 동기화됩니다.</p>
 </div>
 <div class="guide-card">
 
-<div class="guide-step lang-ko">3단계</div>
-
-<h3 class="lang-ko">프리셋 클릭</h3>
+<h3 class="lang-ko">3. 프리셋 클릭</h3>
 
 <p class="lang-ko">8가지 대표 웹 색상 중 하나를 클릭하면 모든 형식에 즉시 로드됩니다.</p>
 </div>
 <div class="guide-card">
 
-<div class="guide-step lang-ko">4단계</div>
-
-<h3 class="lang-ko">형식 복사</h3>
+<h3 class="lang-ko">4. 형식 복사</h3>
 
 <p class="lang-ko">HEX, RGB, HSL 옆의 복사 버튼을 클릭해 형식화된 문자열을 클립보드에 복사하세요.</p>
 </div>
 </div>
 </section>
-<!-- FAQ -->
 <section class="faq">
 
 <div class="lang-ko">
-<div class="faq-title">자주 묻는 질문</div>
-<div class="faq-list">
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>HEX, RGB, HSL의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
 <div class="faq-a">HEX는 CSS에서 널리 사용되는 16진수 표기법입니다 (예: <code>#ff0000</code>). RGB는 빨강, 초록, 파랑 채널을 0~255 숫자로 지정합니다. HSL은 색상(Hue), 채도(Saturation), 밝기(Lightness)의 약자로, 색조나 밝기를 독립적으로 조정할 수 있어 디자이너에게 직관적입니다.</div>
@@ -630,43 +237,47 @@
 <div class="faq-a">HEX &harr; RGB 변환은 손실 없이 정확합니다. HSL 값은 부동소수점 연산으로 인해 약간의 반올림 차이가 있을 수 있지만 시각적 결과는 동일합니다. HEX &rarr; HSL &rarr; HEX로 변환해도 원래 HEX가 1 반올림 이내로 재현됩니다.</div>
 </div>
 </div>
-</div>
 </section>
-<!-- Vultr Affiliate Banner -->
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/px-rem-converter/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-ruler"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">px &harr; rem 변환기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/css-filter-previewer/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-contrast"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">CSS 필터 미리보기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/og-meta-generator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-share-2"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">OG 메타 태그 생성기</span></span></span></a></li>
+</ul>
+</section>
 <div class="vultr-banner">
-<div class="vultr-inner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
 <div>
-<div class="vultr-badge" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
 <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
 <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days</div>
 </div>
-<a class="vultr-cta" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
 </div>
-</div>
-<!-- Footer -->
-<!-- Related tools -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/px-rem-converter/ko/"><span>📐</span>PX to REM Converter</a>
-<a class="sf-related-card" href="/tools/css-filter-previewer/ko/"><span>🪄</span>CSS Filter Previewer</a>
-<a class="sf-related-card" href="/tools/og-meta-generator/ko/"><span>🏷️</span>Open Graph Meta Tag Generator</a>
-</div>
-</section>
-<footer>
-<div class="footer-inner">
-<span class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
+<a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
 </div>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
 </div>
 </footer>
-<!-- ── i18n page keys (must come BEFORE i18n.js) ── -->
 <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_converters: "Converters & Encoders",
+        more_tools: "More converters",
+        all_in_cat: "All Converters & Encoders tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back: "← All Tools",
         vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
         vultr_sub: "Get $300 free credit — valid for 30 days",
@@ -674,9 +285,18 @@
         footer_copy: "© 2026 StackFreeks",
         copy: "Copy", copied: "Copied!",
         hex_label: "HEX", rgb_label: "RGB", hsl_label: "HSL",
-        preview_label: "Color Preview"
+        preview_label: "Color Preview",
+        x_color_picker: "Color Picker"
       },
       ko: {
+        cat_converters: "변환 & 인코딩",
+        more_tools: "변환 툴 더 보기",
+        all_in_cat: "변환 & 인코딩 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back: "← 전체 툴",
         vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
         vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
@@ -684,11 +304,11 @@
         footer_copy: "© 2026 StackFreeks",
         copy: "복사", copied: "복사됨!",
         hex_label: "HEX", rgb_label: "RGB", hsl_label: "HSL",
-        preview_label: "색상 미리보기"
+        preview_label: "색상 미리보기",
+        x_color_picker: "색상 선택기"
       }
     };
   </script>
-<!-- ── Color Converter Logic ── -->
 <script>
     // ── Conversion helpers ──────────────────────────────────────────────────
 

@@ -21,584 +21,49 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border-2);
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-    }
-
-    /* Tool layout */
-    .tool-wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    /* Firewall type tabs */
-    .fw-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 20px;
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .fw-tab {
-      flex: 1;
-      background: none;
-      border: none;
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 9px 16px;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-    }
-    .fw-tab.active {
-      background: var(--accent-strong);
-      color: #fff;
-    }
-    .fw-tab:not(.active):hover {
-      background: var(--surface-2);
-      color: var(--text-1);
-    }
-
-    /* Form panel */
-    .form-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .field label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-2);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .field select,
-    .field input[type="text"] {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-1);
-      font-family: var(--font);
-      font-size: 14px;
-      padding: 9px 12px;
-      border-radius: var(--radius);
-      transition: border-color 0.15s;
-      width: 100%;
-    }
-
-    .field select {
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      padding-right: 32px;
-      cursor: pointer;
-    }
-
-    .field select:focus,
-    .field input[type="text"]:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .field input[type="text"]::placeholder {
-      color: var(--text-3);
-    }
-
+    /* Firewall Rule Builder — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .fw-tabs { display: flex; gap: 0; margin-bottom: 20px; border: 1px solid var(--border-2); border-radius: var(--radius-s); overflow: hidden; }
+    .fw-tab { flex: 1; background: none; border: none; color: var(--text-2); font-family: var(--font); font-size: 13px; font-weight: 500; padding: 9px 16px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+    .fw-tab.active { background: var(--accent-soft); color: var(--accent-text); box-shadow: inset 0 0 0 1px var(--accent); }
+    .fw-tab:not(.active):hover { background: var(--surface-2); color: var(--text-1); }
+    .form-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 12px; font-weight: 500; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.05em; }
+    .field select, .field input[type="text"] { background: var(--surface-2); border: 1px solid var(--border-2); color: var(--text-1); font-family: var(--font); font-size: 14px; padding: 9px 12px; border-radius: var(--radius-s); transition: border-color 0.15s; width: 100%; }
+    .field select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; cursor: pointer; }
+    .field select:focus, .field input[type="text"]:focus { outline: none; border-color: var(--accent); }
+    .field input[type="text"]::placeholder { color: var(--text-3); }
     .field.hidden { display: none; }
-
-    /* Output panel */
-    .output-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .output-block {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .output-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface-2);
-    }
-
-    .output-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 5px 12px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn:hover { border-color: var(--accent); color: var(--text-1); }
-    .btn.btn-accent {
-      background: var(--accent-strong);
-      border-color: var(--accent);
-      color: #fff;
-    }
+    .output-panel { display: flex; flex-direction: column; gap: 16px; }
+    .output-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .output-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+    .output-label { font-size: 12px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; }
+    .btn-row { display: flex; gap: 8px; }
+    .btn.btn-accent { background: var(--accent-strong); border-color: var(--accent); color: var(--accent-fg); }
     .btn.btn-accent:hover { opacity: 0.85; }
-    .btn.btn-success {
-      background: var(--success);
-      border-color: var(--success);
-      color: #000;
-    }
+    .btn.btn-success { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--accent-fg); }
     .btn.btn-success:hover { opacity: 0.85; }
-    .btn.btn-danger {
-      border-color: rgba(239,68,68,0.4);
-      color: #f87171;
-    }
-    .btn.btn-danger:hover { border-color: #ef4444; }
-
-    .output-code {
-      padding: 16px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--success);
-      line-height: 1.7;
-      white-space: pre-wrap;
-      word-break: break-all;
-      min-height: 56px;
-    }
-
-    .output-code.placeholder {
-      color: var(--text-3);
-      font-family: var(--font);
-      font-style: italic;
-    }
-
-    /* Notice (ufw forward) */
-    .notice {
-      background: rgba(99,102,241,0.08);
-      border: 1px solid rgba(99,102,241,0.2);
-      border-radius: var(--radius);
-      padding: 12px 16px;
-      font-size: 13px;
-      color: var(--text-2);
-      display: none;
-    }
+    .btn.btn-danger { background: var(--surface); border-color: var(--danger); color: var(--danger); }
+    .btn.btn-danger:hover { background: var(--danger-bg); }
+    .output-code { padding: 16px; font-family: var(--font-mono); font-size: 13px; color: var(--success-fg); line-height: 1.7; white-space: pre-wrap; word-break: break-all; min-height: 56px; }
+    .output-code.placeholder { color: var(--text-3); font-family: var(--font); font-style: italic; }
+    .notice { background: var(--accent-soft); border: 1px solid var(--accent-soft-2); border-radius: var(--radius-s); padding: 12px 16px; font-size: 13px; color: var(--text-2); display: none; }
     .notice.visible { display: block; }
-
-    /* Script section */
-    .script-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .script-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface-2);
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .script-code {
-      padding: 16px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text-2);
-      line-height: 1.7;
-      white-space: pre-wrap;
-      word-break: break-all;
-      min-height: 80px;
-    }
-
-    .script-empty {
-      color: var(--text-3);
-      font-family: var(--font);
-      font-style: italic;
-      font-size: 13px;
-    }
-
-    .rule-count {
-      font-size: 12px;
-      color: var(--text-3);
-      margin-left: 8px;
-    }
-
-    /* How to use */
-    .guide {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    .section-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 10px;
-    }
-
-    .guide-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-    }
-
-    .guide-step {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--accent-text);
-      margin-bottom: 8px;
-    }
-
-    .guide-card h3 {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 6px;
-    }
-
-    .guide-card p {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
-
-    /* FAQ */
-    .faq {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related */
-    .related {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 32px;
-    }
-
-    .related-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      background: var(--surface);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); opacity: 1; }
-
-    .related-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 4px;
-    }
-
-    .related-title {
-      font-size: 14px;
-      color: var(--text-1);
-    }
-
-    .related-arrow {
-      color: var(--text-3);
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    /* Vultr Banner */
-    .vultr-banner {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 32px;
-    }
-
-    .vultr-inner {
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      background: var(--success-bg);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .vultr-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--success);
-      margin-bottom: 4px;
-    }
-
-    .vultr-title {
-      font-size: 15px;
-      color: var(--text-1);
-      margin-bottom: 2px;
-    }
-
-    .vultr-sub {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-
-    .vultr-cta {
-      display: inline-block;
-      background: var(--success);
-      color: var(--success-fg);
-      font-weight: 500;
-      font-size: 13px;
-      padding: 8px 18px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      transition: opacity 0.15s;
-      flex-shrink: 0;
-    }
-    .vultr-cta:hover { background: var(--success-hover); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      .hero { padding: 32px 16px 24px; }
-      .hero h1 { font-size: 22px; }
-      .tool-wrap {
-        grid-template-columns: 1fr;
-        padding: 0 16px 40px;
-      }
-      .guide { padding: 0 16px 40px; }
-      .faq { padding: 0 16px 40px; }
-      .related { padding: 0 16px 24px; }
-      .vultr-banner { padding: 0 16px 24px; }
-      .vultr-inner { flex-direction: column; align-items: flex-start; }
-      .vultr-cta { align-self: stretch; text-align: center; }
-      .related-card { flex-direction: column; align-items: flex-start; }
-      .footer-links { gap: 14px; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* .fw-tab sits in an overflow:hidden box, so the invisible hit area is clipped -> real min-height */
-    @media (max-width: 768px), (pointer: coarse) { .fw-tab { min-height: 40px; } }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
+    .script-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .script-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface-2); flex-wrap: wrap; gap: 8px; }
+    .script-code { padding: 16px; font-family: var(--font-mono); font-size: 12px; color: var(--text-2); line-height: 1.7; white-space: pre-wrap; word-break: break-all; min-height: 80px; }
+    .script-empty { color: var(--text-3); font-family: var(--font); font-style: italic; font-size: 13px; }
+    .rule-count { font-size: 12px; color: var(--text-3); margin-left: 8px; }
     @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .fw-tab { min-height: 40px; }
     }
   </style>
   <script type="application/ld+json">
@@ -610,37 +75,37 @@
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-
-  <!-- Nav -->
-  <nav>
-    <div class="nav-left">
-      <a href="/" class="logo">StackFreeks Tools</a>
-      <div class="nav-sep"></div>
-      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-devops" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-wrench"/></svg><span data-i18n="cat_devops">DevOps &amp; Config Generators</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
   </nav>
 
-  <!-- ADSENSE_SLOT_TOP -->
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="lang-en">
-      <h1>🔥 Firewall Rule Builder</h1>
-      <p>Generate <strong>iptables</strong> and <strong>ufw</strong> firewall rules visually. Fill in the form, get a ready-to-paste shell command — no syntax memorization needed.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-brick-wall"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Firewall Rule Builder</h1>
+        <p>Generate <strong>iptables</strong> and <strong>ufw</strong> firewall rules visually. Fill in the form, get a ready-to-paste shell command — no syntax memorization needed.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>방화벽 규칙 생성기</h1>
+        <p><strong>iptables</strong>와 <strong>ufw</strong> 방화벽 규칙을 시각적으로 생성하세요. 폼을 채우면 바로 복사할 수 있는 쉘 명령어가 생성됩니다 — 명령어 암기 불필요.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-    <div class="lang-ko">
-      <h1>🔥 방화벽 규칙 생성기</h1>
-      <p><strong>iptables</strong>와 <strong>ufw</strong> 방화벽 규칙을 시각적으로 생성하세요. 폼을 채우면 바로 복사할 수 있는 쉘 명령어가 생성됩니다 — 명령어 암기 불필요.</p>
-    </div>
-  </section>
+  </header>
 
-  <!-- ADSENSE_SLOT_IN_TOOL -->
-
-  <!-- Tool -->
-  <div class="tool-wrap">
-
+  <main class="tool wrap-tool tool-wrap">
     <!-- Left: Form -->
     <div>
       <!-- Firewall type tabs -->
@@ -655,9 +120,9 @@
         <div class="field">
           <label data-i18n="label_direction">Direction</label>
           <select id="sel-direction" onchange="onFormChange()">
-            <option value="in">Inbound (INPUT)</option>
-            <option value="out">Outbound (OUTPUT)</option>
-            <option value="fwd" class="ipt-only">Forward (FORWARD)</option>
+            <option value="in" data-i18n="x_inbound_input">Inbound (INPUT)</option>
+            <option value="out" data-i18n="x_outbound_output">Outbound (OUTPUT)</option>
+            <option value="fwd" class="ipt-only" data-i18n="x_forward_forward">Forward (FORWARD)</option>
           </select>
         </div>
 
@@ -665,9 +130,9 @@
         <div class="field">
           <label data-i18n="label_action">Action</label>
           <select id="sel-action" onchange="onFormChange()">
-            <option value="ACCEPT">Allow (ACCEPT)</option>
-            <option value="DROP">Deny (DROP)</option>
-            <option value="REJECT">Reject (REJECT)</option>
+            <option value="ACCEPT" data-i18n="x_allow_accept">Allow (ACCEPT)</option>
+            <option value="DROP" data-i18n="x_deny_drop">Deny (DROP)</option>
+            <option value="REJECT" data-i18n="x_reject_reject">Reject (REJECT)</option>
           </select>
         </div>
 
@@ -678,32 +143,32 @@
             <option value="tcp">TCP</option>
             <option value="udp">UDP</option>
             <option value="icmp">ICMP</option>
-            <option value="all">All</option>
+            <option value="all" data-i18n="x_all">All</option>
           </select>
         </div>
 
         <!-- Port -->
         <div class="field" id="field-port">
           <label data-i18n="label_port">Port</label>
-          <input type="text" id="inp-port" placeholder="e.g. 80, 443, 8000:8090" oninput="onFormChange()" />
+          <input type="text" id="inp-port" placeholder="e.g. 80, 443, 8000:8090" data-i18n-placeholder="x_port_ph" oninput="onFormChange()" />
         </div>
 
         <!-- Source IP -->
         <div class="field" id="field-src">
           <label data-i18n="label_src">Source IP / CIDR</label>
-          <input type="text" id="inp-src" placeholder="e.g. 0.0.0.0/0, 192.168.1.0/24" oninput="onFormChange()" />
+          <input type="text" id="inp-src" placeholder="e.g. 0.0.0.0/0, 192.168.1.0/24" data-i18n-placeholder="x_src_ph" oninput="onFormChange()" />
         </div>
 
         <!-- Dest IP -->
         <div class="field" id="field-dst">
           <label data-i18n="label_dst">Destination IP / CIDR</label>
-          <input type="text" id="inp-dst" placeholder="e.g. 10.0.0.1, 10.0.0.0/8" oninput="onFormChange()" />
+          <input type="text" id="inp-dst" placeholder="e.g. 10.0.0.1, 10.0.0.0/8" data-i18n-placeholder="x_dst_ph" oninput="onFormChange()" />
         </div>
 
         <!-- Interface (iptables only) -->
         <div class="field" id="field-iface">
           <label data-i18n="label_iface">Interface <span style="font-weight:400;color:var(--text-3)">(optional)</span></label>
-          <input type="text" id="inp-iface" placeholder="e.g. eth0, ens3" oninput="onFormChange()" />
+          <input type="text" id="inp-iface" placeholder="e.g. eth0, ens3" data-i18n-placeholder="x_iface_ph" oninput="onFormChange()" />
         </div>
 
       </div>
@@ -717,7 +182,7 @@
         <div class="output-header">
           <span class="output-label" data-i18n="label_generated">Generated Rule</span>
           <div class="btn-row">
-            <button class="btn" onclick="copyRule()" id="btn-copy" data-i18n="btn_copy">Copy</button>
+            <button class="btn btn-ghost" onclick="copyRule()" id="btn-copy" data-i18n="btn_copy">Copy</button>
             <button class="btn btn-accent" onclick="addToScript()" data-i18n="btn_add">Add to Script</button>
           </div>
         </div>
@@ -726,8 +191,8 @@
 
       <!-- ufw Forward notice -->
       <div class="notice" id="ufw-fwd-notice">
-        <div class="lang-en">ℹ️ <strong>ufw does not support the FORWARD chain.</strong> Use <code>iptables</code> mode for forward rules, or enable IP forwarding manually with <code>iptables -A FORWARD ...</code></div>
-        <div class="lang-ko">ℹ️ <strong>ufw는 FORWARD 체인을 지원하지 않습니다.</strong> 포워드 규칙은 <code>iptables</code> 모드를 사용하거나, <code>iptables -A FORWARD ...</code> 명령어를 직접 입력하세요.</div>
+        <div class="lang-en"><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-info"/></svg> <strong>ufw does not support the FORWARD chain.</strong> Use <code>iptables</code> mode for forward rules, or enable IP forwarding manually with <code>iptables -A FORWARD ...</code></div>
+        <div class="lang-ko"><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-info"/></svg> <strong>ufw는 FORWARD 체인을 지원하지 않습니다.</strong> 포워드 규칙은 <code>iptables</code> 모드를 사용하거나, <code>iptables -A FORWARD ...</code> 명령어를 직접 입력하세요.</div>
       </div>
 
       <!-- Script builder -->
@@ -746,67 +211,72 @@
       </div>
 
     </div>
-  </div>
+  </main>
 
-  <!-- How to Use -->
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More DevOps tools</h2>
+      <a class="sec-link" href="/#cat-devops"><span data-i18n="all_in_cat">All DevOps &amp; Config Generators tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/fail2ban-jail-generator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-shield-ban"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Fail2ban Jail Generator</span><span class="lang-ko">Fail2ban Jail 생성기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/mysql-backup-script-generator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database-backup"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">MySQL Backup Script Generator</span><span class="lang-ko">MySQL 백업 스크립트 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
   <section class="guide">
     <div class="lang-en">
-      <p class="section-title">How to use this tool</p>
+      <h2 class="guide-title">How to use this tool</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">Step 1</p>
-          <h3>Choose firewall type</h3>
+          <h3>1. Choose firewall type</h3>
           <p>Pick <strong>iptables</strong> for low-level control or <strong>ufw</strong> for a simpler interface. Both are common on Ubuntu/Debian servers.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 2</p>
-          <h3>Fill in the options</h3>
+          <h3>2. Fill in the options</h3>
           <p>Set direction, action, protocol, port, and source/destination IPs. Leave optional fields blank to generate a broader rule.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 3</p>
-          <h3>Copy or add to script</h3>
+          <h3>3. Copy or add to script</h3>
           <p>Copy the single rule, or click "Add to Script" to accumulate multiple rules into a complete bash script.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 4</p>
-          <h3>Run on your server</h3>
+          <h3>4. Run on your server</h3>
           <p>SSH into your server and paste. Run as root or with <code>sudo</code>. Always test in a safe environment first.</p>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <p class="section-title">사용 방법</p>
+      <h2 class="guide-title">사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">Step 1</p>
-          <h3>방화벽 유형 선택</h3>
+          <h3>1. 방화벽 유형 선택</h3>
           <p>세밀한 제어가 필요하면 <strong>iptables</strong>, 더 간단한 인터페이스를 원하면 <strong>ufw</strong>를 선택하세요. 둘 다 Ubuntu/Debian 서버에서 일반적으로 사용됩니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 2</p>
-          <h3>옵션 입력</h3>
+          <h3>2. 옵션 입력</h3>
           <p>방향, 동작, 프로토콜, 포트, 출발지/목적지 IP를 설정하세요. 선택 항목은 비워두면 더 넓은 범위의 규칙이 생성됩니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 3</p>
-          <h3>복사 또는 스크립트 추가</h3>
+          <h3>3. 복사 또는 스크립트 추가</h3>
           <p>단일 규칙을 복사하거나 "스크립트에 추가"를 클릭해 여러 규칙을 완전한 bash 스크립트로 모으세요.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 4</p>
-          <h3>서버에서 실행</h3>
+          <h3>4. 서버에서 실행</h3>
           <p>서버에 SSH 접속 후 붙여넣기하세요. root 또는 <code>sudo</code>로 실행하고, 항상 안전한 환경에서 먼저 테스트하세요.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <p class="section-title">Frequently Asked Questions</p>
-      <div class="faq-list">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+      
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between iptables and ufw?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">iptables is the low-level Linux kernel firewall tool — it gives you full control but requires knowing its exact syntax. ufw (Uncomplicated Firewall) is a frontend that simplifies common firewall tasks. For most Ubuntu VPS setups, ufw is recommended; for advanced scenarios like NAT, packet marking, or FORWARD chains, use iptables directly.</div>
@@ -827,12 +297,12 @@
           <button class="faq-q" onclick="toggleFaq(this)"><span>Does this tool send my data to a server?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">No. All rule generation happens entirely in your browser using JavaScript. Nothing you type is sent to any server. Your IP addresses and network configuration stay private.</div>
         </div>
-      </div>
+      
     </div>
 
     <div class="lang-ko">
-      <p class="section-title">자주 묻는 질문</p>
-      <div class="faq-list">
+      <h2 class="faq-title">자주 묻는 질문</h2>
+      
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>iptables와 ufw의 차이점은 무엇인가요?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">iptables는 리눅스 커널의 저수준 방화벽 도구로, 완전한 제어가 가능하지만 정확한 문법 숙지가 필요합니다. ufw(Uncomplicated Firewall)는 일반적인 방화벽 작업을 단순화한 프론트엔드입니다. Ubuntu VPS 설정에는 ufw를 권장하며, NAT·패킷 마킹·FORWARD 체인 등 고급 시나리오에서는 iptables를 직접 사용하세요.</div>
@@ -853,64 +323,70 @@
           <button class="faq-q" onclick="toggleFaq(this)"><span>이 도구가 내 데이터를 서버로 전송하나요?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">아니요. 모든 규칙 생성은 JavaScript를 사용하여 브라우저 내에서만 처리됩니다. 입력한 내용은 어떤 서버에도 전송되지 않습니다. IP 주소와 네트워크 구성 정보는 완전히 비공개로 유지됩니다.</div>
         </div>
-      </div>
+      
     </div>
   </section>
 
-  <!-- Related -->
-  <section class="related">
-    <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
-      <div>
-        <p class="related-label">stackfreeks.com</p>
-        <div class="lang-en">
-          <p class="related-title">Linux server security &amp; firewall guides on stackfreeks.com →</p>
-        </div>
-        <div class="lang-ko">
-          <p class="related-title">stackfreeks.com에서 Linux 서버 보안 · 방화벽 가이드 보기 →</p>
-        </div>
-      </div>
-      <span class="related-arrow">→</span>
-    </a>
-  </section>
-
-  <!-- Vultr Banner -->
-  <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/curl-command-generator/" class="sf-related-card"><span>🌐</span>curl Command Generator</a>
-      <a href="/tools/chmod-calculator/" class="sf-related-card"><span>🔐</span>Chmod Calculator</a>
-      <a href="/tools/cron-builder/" class="sf-related-card"><span>⏰</span>Cron Expression Builder</a>
-          <a href="https://stackfreeks.com/vultr-firewall-setup/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Vultr Firewall Setup Guide</a>
-    </div>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/curl-command-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-terminal"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">curl Command Generator</span><span class="lang-ko">curl 명령어 생성기</span></span></span></a></li>
+      <li><a href="/tools/chmod-calculator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-lock"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Chmod Calculator</span><span class="lang-ko">Chmod 계산기</span></span></span></a></li>
+      <li><a href="/tools/cron-builder/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-calendar-clock"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Cron Expression Builder</span><span class="lang-ko">크론 표현식 빌더</span></span></span></a></li>
+    </ul>
   </section>
 
-  <section class="vultr-banner">
-    <div class="vultr-inner">
+  <section class="related">
+<p><a href="https://stackfreeks.com" rel="noopener" target="_blank">
+<span class="lang-en">
+Linux server security &amp; firewall guides on stackfreeks.com →
+</span>
+<span class="lang-ko">
+stackfreeks.com에서 Linux 서버 보안 · 방화벽 가이드 보기 →
+</span>
+</a></p>
+<p><a href="https://stackfreeks.com/vultr-firewall-setup/" rel="noopener" target="_blank">Vultr Firewall Setup Guide</a></p>
+</section>
+
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
       <div>
-        <p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
-        <p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
-        <p class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
       </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" class="vultr-cta" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
-  </section>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
   </footer>
 
   <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_devops: "DevOps & Config Generators",
+        more_tools: "More DevOps tools",
+        all_in_cat: "All DevOps & Config Generators tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back:        '← All Tools',
         label_direction: 'Direction',
         label_action:    'Action',
@@ -919,6 +395,10 @@
         label_src:       'Source IP / CIDR',
         label_dst:       'Destination IP / CIDR',
         label_iface:     'Interface',
+        x_iface_ph:      'e.g. eth0, ens3',
+        x_port_ph:       'e.g. 80, 443, 8000:8090',
+        x_src_ph:        'e.g. 0.0.0.0/0, 192.168.1.0/24',
+        x_dst_ph:        'e.g. 10.0.0.1, 10.0.0.0/8',
         label_generated: 'Generated Rule',
         label_script:    'Script Builder',
         btn_copy:        'Copy',
@@ -931,8 +411,23 @@
         vultr_sub:       'Get $300 free credit — valid for 30 days (limited-time offer)',
         vultr_cta:       'Claim your credit →',
         footer_copy:     '© 2026 StackFreeks',
+        x_all: "All",
+        x_allow_accept: "Allow (ACCEPT)",
+        x_deny_drop: "Deny (DROP)",
+        x_forward_forward: "Forward (FORWARD)",
+        x_inbound_input: "Inbound (INPUT)",
+        x_outbound_output: "Outbound (OUTPUT)",
+        x_reject_reject: "Reject (REJECT)"
       },
       ko: {
+        cat_devops: "DevOps & 설정 생성기",
+        more_tools: "DevOps 툴 더 보기",
+        all_in_cat: "DevOps & 설정 생성기 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back:        '← 모든 툴',
         label_direction: '방향',
         label_action:    '동작',
@@ -941,6 +436,10 @@
         label_src:       '출발지 IP / CIDR',
         label_dst:       '목적지 IP / CIDR',
         label_iface:     '인터페이스',
+        x_iface_ph:      '예: eth0, ens3',
+        x_port_ph:       '예: 80, 443, 8000:8090',
+        x_src_ph:        '예: 0.0.0.0/0, 192.168.1.0/24',
+        x_dst_ph:        '예: 10.0.0.1, 10.0.0.0/8',
         label_generated: '생성된 규칙',
         label_script:    '스크립트 빌더',
         btn_copy:        '복사',
@@ -953,9 +452,17 @@
         vultr_sub:       '$300 무료 크레딧 — 30일간 유효 (기간 한정)',
         vultr_cta:       '크레딧 받기 →',
         footer_copy:     '© 2026 StackFreeks',
+        x_all: "전체",
+        x_allow_accept: "허용 (ACCEPT)",
+        x_deny_drop: "차단 (DROP)",
+        x_forward_forward: "포워드 (FORWARD)",
+        x_inbound_input: "인바운드 (INPUT)",
+        x_outbound_output: "아웃바운드 (OUTPUT)",
+        x_reject_reject: "거부 (REJECT)"
       }
     };
   </script>
+
   <script src="/shared/i18n.js"></script>
 
   <script>
@@ -1111,7 +618,7 @@
       navigator.clipboard.writeText(el.textContent).then(() => {
         const btn = document.getElementById('btn-copy');
         const orig = btn.textContent;
-        btn.textContent = '✓ Copied';
+        btn.textContent = '✓ ' + sfT('x_copied_s');
         setTimeout(() => { btn.textContent = orig; }, 1500);
       });
     }
@@ -1140,7 +647,9 @@
 
       const script = ['#!/bin/bash', '', ...scriptRules, ''].join('\n');
       el.textContent = script;
-      countEl.textContent = `(${scriptRules.length} rule${scriptRules.length !== 1 ? 's' : ''})`;
+      countEl.textContent = sfLang.current === 'ko'
+        ? `(규칙 ${scriptRules.length}개)`
+        : `(${scriptRules.length} rule${scriptRules.length !== 1 ? 's' : ''})`;
     }
 
     function copyScript() {
@@ -1149,7 +658,7 @@
       navigator.clipboard.writeText(script).then(() => {
         const btn = event.target;
         const orig = btn.textContent;
-        btn.textContent = '✓ Copied';
+        btn.textContent = '✓ ' + sfT('x_copied_s');
         setTimeout(() => { btn.textContent = orig; }, 1500);
       });
     }

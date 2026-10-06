@@ -26,147 +26,46 @@
   <meta name="twitter:title" content="LLM GPU Cost Calculator | StackFreeks Tools" />
   <meta name="twitter:description" content="Self-hosted GPU vs API cost comparison for LLM inference. Break-even volume and cost per million tokens." />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .nav-left { display: flex; align-items: center; gap: 8px; }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
-
+    /* LLM GPU Cost Calculator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* Main layout */
-    main { padding: 32px 0 48px; }
+    
     .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; }
+    }
 
     /* Card */
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
-    .card + .card { margin-top: 12px; }
+    .tool .card:hover { border-color: var(--border); box-shadow: none; transform: none; }
+    .tool .card { display: block; height: auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .tool .card + .card { margin-top: 12px; }
     .card-label {
-      font-size: 11px; font-weight: 500;
+      font-size: 12px; font-weight: 500;
       letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--text-3); margin-bottom: 16px;
     }
 
-    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
     .form-group { margin-bottom: 14px; }
     .form-group:last-child { margin-bottom: 0; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 
-    input, select {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      padding: 9px 12px;
-      font-size: 13px; font-family: var(--font);
-      outline: none;
-      transition: border-color 0.15s;
-      -webkit-appearance: none;
-    }
-    input:focus, select:focus { border-color: var(--border-2); }
-    input::placeholder { color: var(--text-3); }
     input[type="number"] { -moz-appearance: textfield; }
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 28px;
-      cursor: pointer;
-    }
-
-    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+    .hint { font-size: 12px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
 
     /* Results */
     .total-row {
       background: var(--surface-2);
       border: 1px solid var(--border-2);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 20px;
       margin-bottom: 16px;
     }
@@ -184,142 +83,48 @@
       margin-bottom: 16px;
     }
     .summary-cell { background: var(--surface-2); padding: 14px 16px; }
-    .summary-label { font-size: 11px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .summary-label { font-size: 12px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
     .summary-val { font-size: 1rem; font-weight: 500; color: var(--text-1); font-variant-numeric: tabular-nums; }
     .summary-val.accent { color: var(--accent-text); }
 
     .plan-box {
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.3);
-      border-radius: var(--radius-lg);
+      background: var(--success);
+      border: 1px solid var(--success);
+      border-radius: var(--radius);
       padding: 18px;
     }
-    .plan-box-label { font-size: 11px; font-weight: 500; color: var(--success); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .plan-box-label { font-size: 12px; font-weight: 500; color: var(--success-fg); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
     .plan-box-title { font-size: 1rem; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
     .plan-box-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
 
     .btn-vultr-plan {
-      background: var(--success);
-      color: var(--success-fg); border: none;
-      border-radius: var(--radius);
+      background: var(--accent-strong);
+      color: var(--accent-fg); border: none;
+      border-radius: var(--radius-s);
       padding: 9px 18px;
       font-size: 13px; font-weight: 500;
       cursor: pointer; font-family: var(--font);
       text-decoration: none; display: inline-block;
-      transition: opacity 0.15s;
+      transition: background-color var(--t);
     }
-    .btn-vultr-plan:hover { background: var(--success-hover); }
+    .btn-vultr-plan:hover { background: var(--accent-hover); }
 
     .disclaimer {
-      font-size: 11px; color: var(--text-3);
+      font-size: 12px; color: var(--text-3);
       margin-top: 14px; line-height: 1.6;
       padding-top: 14px; border-top: 1px solid var(--border);
     }
 
-    /* About / SEO copy */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
-    .about-section p:last-child { margin-bottom: 0; }
-
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-list { display: flex; flex-direction: column; gap: 1px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related */
-    .related { padding: 40px 0; border-top: 1px solid var(--border); }
-    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .related-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 18px;
-      text-decoration: none; display: flex;
-      flex-direction: column; gap: 6px;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); }
-    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent-text); letter-spacing: 0.06em; text-transform: uppercase; }
-    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
-    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
-
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
-
     /* Responsive */
     @media (max-width: 640px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
+
       .summary-grid { grid-template-columns: 1fr; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
     }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
+    
+    /* form fields fill their column (the old page's generic input rule) */
+    .tool :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), select, textarea) { width: 100%; }
+    /* sf.css gives every input 9px 12px padding; a range track must not get it */
+    .tool input[type="range"] { padding: 0; }
   </style>
 
   <script type="application/ld+json">
@@ -333,236 +138,231 @@
 </head>
 <body>
 
-<!-- 1. Nav -->
-<nav>
-  <a href="/" class="logo">
-    <div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-  <div class="nav-right">
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-  </div>
-</nav>
-
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
-
-<!-- 3. Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="lang-en">
-      <p class="eyebrow">LLM &amp; GPU</p>
-      <h1>LLM GPU Cost Calculator</h1>
-      <p class="hero-desc">Compare the monthly cost of self-hosting an LLM on a rented GPU against paying per token for an API — with a break-even volume and cost per million tokens.</p>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-vps" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-hard-drive"/></svg><span data-i18n="cat_vps_server">VPS &amp; Server</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <div class="lang-ko">
-      <p class="eyebrow">LLM &amp; GPU</p>
-      <h1>LLM GPU 비용 계산기</h1>
-      <p class="hero-desc">GPU를 빌려 LLM을 직접 호스팅하는 월 비용과 토큰당 API 비용을 비교합니다 — 손익분기 요청량과 100만 토큰당 비용까지 계산합니다.</p>
-    </div>
-  </div>
-</section>
+  </nav>
 
-<!-- 4. Tool body -->
-<main>
-  <div class="container">
-    <div class="tool-grid">
-
-      <!-- Input card -->
-      <div class="card">
-        <p class="card-label" data-i18n="tool_input_label">Workload</p>
-
-        <div class="form-group">
-          <label data-i18n="tool_reqvol_lbl">Monthly request volume</label>
-          <input type="number" id="reqVol" value="500000" min="0" step="10000" oninput="recalc()" />
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label data-i18n="tool_intok_lbl">Avg input tokens</label>
-            <input type="number" id="inTok" value="1500" min="0" step="100" oninput="recalc()" />
-          </div>
-          <div class="form-group">
-            <label data-i18n="tool_outtok_lbl">Avg output tokens</label>
-            <input type="number" id="outTok" value="500" min="0" step="50" oninput="recalc()" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label data-i18n="tool_gpu_lbl">GPU type</label>
-          <select id="gpu" onchange="onGpuChange()">
-            <option value="a100_40">A100 40GB</option>
-            <option value="a100_80">A100 80GB</option>
-            <option value="h100">H100</option>
-            <option value="l40s">L40S</option>
-            <option value="rtx4090">RTX 4090</option>
-            <option value="rtx3090">RTX 3090</option>
-          </select>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label data-i18n="tool_gpuprice_lbl">GPU price ($/hr)</label>
-            <input type="number" id="gpuPrice" value="1.29" min="0" step="0.01" oninput="recalc()" />
-          </div>
-          <div class="form-group">
-            <label data-i18n="tool_thru_lbl">Throughput (tokens/sec)</label>
-            <input type="number" id="thru" value="2500" min="1" step="50" oninput="recalc()" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label data-i18n="tool_util_lbl">Realistic utilization (%)</label>
-          <input type="number" id="util" value="40" min="1" max="100" step="1" oninput="recalc()" />
-          <p class="hint" data-i18n="tool_util_hint">Real production utilization is usually 30–60%. A rented GPU costs the same idle or busy, so low utilization pushes cost up 2–3x versus a naive estimate.</p>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label data-i18n="tool_apiin_lbl">API price ($/1M input)</label>
-            <input type="number" id="apiIn" value="0.15" min="0" step="0.01" oninput="recalc()" />
-          </div>
-          <div class="form-group">
-            <label data-i18n="tool_apiout_lbl">API price ($/1M output)</label>
-            <input type="number" id="apiOut" value="0.60" min="0" step="0.01" oninput="recalc()" />
-          </div>
-        </div>
-
-        <p class="hint" data-i18n="tool_input_hint">GPU $/hr and throughput defaults are editable — real numbers drift by provider, model, quantization, and batch size.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-brain-circuit"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>LLM GPU Cost Calculator</h1>
+        <p>Compare the monthly cost of self-hosting an LLM on a rented GPU against paying per token for an API — with a break-even volume and cost per million tokens.</p>
       </div>
-
-      <!-- Results card -->
-      <div class="card">
-        <p class="card-label" data-i18n="tool_results_label">Cost Comparison</p>
-
-        <div class="total-row">
-          <div class="total-label" data-i18n="tool_total_label">Self-hosted monthly cost</div>
-          <div>
-            <span class="total-val" id="totalVal">$0</span>
-            <span class="total-unit" data-i18n="tool_permo">/ mo</span>
-          </div>
-        </div>
-
-        <div class="summary-grid">
-          <div class="summary-cell">
-            <div class="summary-label" data-i18n="tool_sum_api">API monthly cost</div>
-            <div class="summary-val" id="sumApi">$0</div>
-          </div>
-          <div class="summary-cell">
-            <div class="summary-label" data-i18n="tool_sum_hours">GPU-hours needed / mo</div>
-            <div class="summary-val" id="sumHours">0</div>
-          </div>
-          <div class="summary-cell">
-            <div class="summary-label" data-i18n="tool_sum_selfcpm">Self-host $/1M tokens</div>
-            <div class="summary-val accent" id="sumSelfCpm">$0</div>
-          </div>
-          <div class="summary-cell">
-            <div class="summary-label" data-i18n="tool_sum_breakeven">Break-even volume</div>
-            <div class="summary-val" id="sumBreakeven">0 / mo</div>
-          </div>
-        </div>
-
-        <div class="plan-box">
-          <div class="plan-box-label" data-i18n="tool_verdict_label">Verdict</div>
-          <div class="plan-box-title" id="verdictTitle">—</div>
-          <div class="plan-box-desc" id="verdictDesc" data-i18n="tool_verdict_desc">Self-hosting wins only above the break-even volume, assuming you keep at least one GPU running 24/7 (~730 hours/month).</div>
-          <a href="https://www.vultr.com/?ref=9907834-9J"
-             class="btn-vultr-plan"
-             rel="nofollow sponsored"
-             target="_blank"
-             data-i18n="tool_vultr_cta">Rent a Cloud GPU on Vultr →</a>
-        </div>
-
-        <p class="disclaimer" data-i18n="tool_disclaimer">Rough model. Actual cost depends on model size, quantization, batch size, context length, KV-cache pressure, and provider pricing. Output tokens dominate; input (prefill) is cheaper per token. Verify with a load test before committing to hardware.</p>
+      <div class="lang-ko">
+        <h1>LLM GPU 비용 계산기</h1>
+        <p>GPU를 빌려 LLM을 직접 호스팅하는 월 비용과 토큰당 API 비용을 비교합니다 — 손익분기 요청량과 100만 토큰당 비용까지 계산합니다.</p>
       </div>
-
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-  </div>
-</main>
+  </header>
 
-<!-- About / SEO copy -->
-<section class="about-section">
-  <div class="container">
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
+  <div class="tool-grid">
+
+        <!-- Input card -->
+        <div class="card">
+          <p class="card-label" data-i18n="tool_input_label">Workload</p>
+
+          <div class="form-group">
+            <label data-i18n="tool_reqvol_lbl">Monthly request volume</label>
+            <input type="number" id="reqVol" value="500000" min="0" step="10000" oninput="recalc()" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="tool_intok_lbl">Avg input tokens</label>
+              <input type="number" id="inTok" value="1500" min="0" step="100" oninput="recalc()" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="tool_outtok_lbl">Avg output tokens</label>
+              <input type="number" id="outTok" value="500" min="0" step="50" oninput="recalc()" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="tool_gpu_lbl">GPU type</label>
+            <select id="gpu" onchange="onGpuChange()">
+              <option value="a100_40">A100 40GB</option>
+              <option value="a100_80">A100 80GB</option>
+              <option value="h100">H100</option>
+              <option value="l40s">L40S</option>
+              <option value="rtx4090">RTX 4090</option>
+              <option value="rtx3090">RTX 3090</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="tool_gpuprice_lbl">GPU price ($/hr)</label>
+              <input type="number" id="gpuPrice" value="1.29" min="0" step="0.01" oninput="recalc()" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="tool_thru_lbl">Throughput (tokens/sec)</label>
+              <input type="number" id="thru" value="2500" min="1" step="50" oninput="recalc()" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="tool_util_lbl">Realistic utilization (%)</label>
+            <input type="number" id="util" value="40" min="1" max="100" step="1" oninput="recalc()" />
+            <p class="hint" data-i18n="tool_util_hint">Real production utilization is usually 30–60%. A rented GPU costs the same idle or busy, so low utilization pushes cost up 2–3x versus a naive estimate.</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="tool_apiin_lbl">API price ($/1M input)</label>
+              <input type="number" id="apiIn" value="0.15" min="0" step="0.01" oninput="recalc()" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="tool_apiout_lbl">API price ($/1M output)</label>
+              <input type="number" id="apiOut" value="0.60" min="0" step="0.01" oninput="recalc()" />
+            </div>
+          </div>
+
+          <p class="hint" data-i18n="tool_input_hint">GPU $/hr and throughput defaults are editable — real numbers drift by provider, model, quantization, and batch size.</p>
+        </div>
+
+        <!-- Results card -->
+        <div class="card">
+          <p class="card-label" data-i18n="tool_results_label">Cost Comparison</p>
+
+          <div class="total-row">
+            <div class="total-label" data-i18n="tool_total_label">Self-hosted monthly cost</div>
+            <div>
+              <span class="total-val" id="totalVal">$0</span>
+              <span class="total-unit" data-i18n="tool_permo">/ mo</span>
+            </div>
+          </div>
+
+          <div class="summary-grid">
+            <div class="summary-cell">
+              <div class="summary-label" data-i18n="tool_sum_api">API monthly cost</div>
+              <div class="summary-val" id="sumApi">$0</div>
+            </div>
+            <div class="summary-cell">
+              <div class="summary-label" data-i18n="tool_sum_hours">GPU-hours needed / mo</div>
+              <div class="summary-val" id="sumHours">0</div>
+            </div>
+            <div class="summary-cell">
+              <div class="summary-label" data-i18n="tool_sum_selfcpm">Self-host $/1M tokens</div>
+              <div class="summary-val accent" id="sumSelfCpm">$0</div>
+            </div>
+            <div class="summary-cell">
+              <div class="summary-label" data-i18n="tool_sum_breakeven">Break-even volume</div>
+              <div class="summary-val" id="sumBreakeven">0 / mo</div>
+            </div>
+          </div>
+
+          <div class="plan-box">
+            <div class="plan-box-label" data-i18n="tool_verdict_label">Verdict</div>
+            <div class="plan-box-title" id="verdictTitle">—</div>
+            <div class="plan-box-desc" id="verdictDesc" data-i18n="tool_verdict_desc">Self-hosting wins only above the break-even volume, assuming you keep at least one GPU running 24/7 (~730 hours/month).</div>
+            <a href="https://www.vultr.com/?ref=9907834-9J"
+               class="btn-vultr-plan"
+               rel="nofollow sponsored"
+               target="_blank"
+               data-i18n="tool_vultr_cta">Rent a Cloud GPU on Vultr →</a>
+          </div>
+
+          <p class="disclaimer" data-i18n="tool_disclaimer">Rough model. Actual cost depends on model size, quantization, batch size, context length, KV-cache pressure, and provider pricing. Output tokens dominate; input (prefill) is cheaper per token. Verify with a load test before committing to hardware.</p>
+        </div>
+
+      </div>
+  </main>
+
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More server tools</h2>
+      <a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS &amp; Server tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/nextcloud-server-requirements-calculator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-cloud"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Nextcloud Server Requirements Calculator</span><span class="lang-ko">Nextcloud 서버 사양 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/redis-memory-estimator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database-zap"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Redis Memory Estimator</span><span class="lang-ko">Redis 메모리 예상 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- About -->
+  <section class="guide about-section">
     <div class="lang-en">
-      <h2>About this LLM GPU cost calculator</h2>
+      <h2 class="guide-title">About this LLM GPU cost calculator</h2>
       <p>Deciding whether to self-host an open model like Llama, Mistral, or Qwen on a rented GPU or to keep paying a commercial LLM API comes down to one question: at your request volume, which is cheaper per million tokens? A rented GPU is a fixed monthly cost — it bills the same whether it sits idle or runs flat out — while an API charges per token with zero idle cost. This LLM inference GPU cost calculator estimates both sides from your monthly request volume, average input and output tokens, GPU hourly price, assumed token throughput, and a realistic utilization percentage, then reports the break-even request volume where self-hosting starts to win.</p>
       <p>It is aimed at backend and platform engineers sizing an inference stack, indie developers weighing a self-hosted AI coding assistant against API bills, and teams on a Vultr Cloud GPU or similar rented-GPU plan who want a defensible cost-per-million-tokens number. Every GPU $/hr and tokens-per-second value is editable because published throughput figures vary widely by model, quantization, batch size, and serving framework (vLLM, TGI, TensorRT-LLM). The default utilization of 40 percent reflects the awkward truth that most self-hosted inference GPUs run well below capacity, which is why naive spreadsheets underestimate the true cost by two to three times.</p>
     </div>
     <div class="lang-ko">
-      <h2>LLM GPU 비용 계산기 소개</h2>
+      <h2 class="guide-title">LLM GPU 비용 계산기 소개</h2>
       <p>Llama, Mistral, Qwen 같은 오픈 모델을 GPU를 빌려 직접 호스팅할지, 아니면 상용 LLM API를 계속 사용할지는 결국 하나의 질문으로 귀결됩니다. 우리 요청량에서 100만 토큰당 어느 쪽이 더 저렴한가? 빌린 GPU는 놀든 풀가동하든 동일한 고정 월 비용이고, API는 유휴 비용 없이 토큰당 과금됩니다. 이 계산기는 월 요청량, 평균 입력·출력 토큰, GPU 시간당 가격, 가정 처리량(tokens/sec), 현실적 가동률을 입력받아 양쪽 비용을 추정하고, 자체 호스팅이 유리해지는 손익분기 요청량을 알려줍니다.</p>
       <p>추론 스택을 설계하는 백엔드·플랫폼 엔지니어, 자체 호스팅 AI 코딩 어시스턴트와 API 요금을 저울질하는 개인 개발자, Vultr Cloud GPU 등 GPU 임대 플랜에서 100만 토큰당 비용 근거가 필요한 팀에게 유용합니다. GPU $/hr와 초당 토큰 값은 모두 수정 가능합니다 — 공개된 처리량 수치는 모델, 양자화, 배치 크기, 서빙 프레임워크(vLLM, TGI, TensorRT-LLM)에 따라 크게 달라지기 때문입니다. 기본 가동률 40%는 대부분의 자체 호스팅 추론 GPU가 용량 이하로 돌아간다는 현실을 반영한 것이며, 순진한 스프레드시트가 실제 비용을 2~3배 과소평가하는 이유이기도 합니다.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 5. How-to section -->
-<section class="guide-section">
-  <div class="container">
-
+  <!-- How to use -->
+  <section class="guide">
     <div class="lang-en">
-      <h2>How to use this calculator</h2>
+      <h2 class="guide-title">How to use this calculator</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">Enter your volume</div>
+          <h3>1. Enter your volume</h3>
           <div class="guide-desc">Type your monthly request count and the average input and output tokens per request.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">Pick a GPU</div>
+          <h3>2. Pick a GPU</h3>
           <div class="guide-desc">Choose A100, H100, L40S, RTX 4090, or RTX 3090. The $/hr and throughput defaults fill in automatically.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">Tune the assumptions</div>
+          <h3>3. Tune the assumptions</h3>
           <div class="guide-desc">Adjust GPU price, tokens/sec, utilization, and API prices to match your model and provider quotes.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">Read the verdict</div>
+          <h3>4. Read the verdict</h3>
           <div class="guide-desc">Compare self-hosted vs API monthly cost, check the break-even volume, and see cost per million tokens.</div>
         </div>
       </div>
     </div>
 
     <div class="lang-ko">
-      <h2>계산기 사용 방법</h2>
+      <h2 class="guide-title">계산기 사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">요청량 입력</div>
+          <h3>1. 요청량 입력</h3>
           <div class="guide-desc">월 요청 수와 요청당 평균 입력·출력 토큰을 입력하세요.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">GPU 선택</div>
+          <h3>2. GPU 선택</h3>
           <div class="guide-desc">A100, H100, L40S, RTX 4090, RTX 3090 중 선택하세요. $/hr와 처리량 기본값이 자동 입력됩니다.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">가정값 조정</div>
+          <h3>3. 가정값 조정</h3>
           <div class="guide-desc">GPU 가격, tokens/sec, 가동률, API 가격을 사용 모델과 제공업체 견적에 맞게 수정하세요.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">결과 확인</div>
+          <h3>4. 결과 확인</h3>
           <div class="guide-desc">자체 호스팅과 API 월 비용을 비교하고, 손익분기 요청량과 100만 토큰당 비용을 확인하세요.</div>
         </div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<!-- 6. FAQ -->
-<section class="faq-section">
-  <div class="container">
-
+  <!-- FAQ -->
+  <section class="faq">
     <div class="lang-en">
-      <h2>Frequently asked questions</h2>
+      <h2 class="faq-title">Frequently asked questions</h2>
       <div class="faq-list">
 
         <div class="faq-item">
@@ -609,7 +409,7 @@
     </div>
 
     <div class="lang-ko">
-      <h2>자주 묻는 질문</h2>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-list">
 
         <div class="faq-item">
@@ -654,14 +454,21 @@
 
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a class="card card-sm sf-related-card" href="/tools/vps-cost-calculator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-server"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">VPS Cost Calculator</span><span class="lang-ko">VPS 비용 계산기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/server-spec-recommender/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-cpu"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Server Spec Recommender</span><span class="lang-ko">서버 사양 추천기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/docker-ram-calculator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-container"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Docker RAM Calculator</span><span class="lang-ko">Docker RAM 계산기</span></span></span></a></li>
+    </ul>
+  </section>
 
-<!-- 7. Related content -->
-<section class="related">
-  <div class="container">
-    <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+  <!-- Related content -->
+  <section class="related">
+    <h2 class="sf-related-title"><span class="lang-en">Related guides</span><span class="lang-ko">관련 가이드</span></h2>
     <div class="related-grid">
       <a href="https://stackfreeks.com/vultr-cloud-gpu-review/" class="related-card" target="_blank" rel="noopener">
         <span class="related-tag">GPU</span>
@@ -679,51 +486,51 @@
         <span class="related-arrow">→</span>
       </a>
     </div>
-  </div>
-</section>
+    <a href="https://stackfreeks.com/vultr-cloud-gpu-review/" target="_blank" rel="noopener">Vultr Cloud GPU Review</a>
+  </section>
 
-<!-- 7.5. Related tools -->
-<section class="sf-related">
-  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-  <div class="sf-related-grid">
-    <a href="/tools/vps-cost-calculator/" class="sf-related-card"><span>💰</span>VPS Cost Calculator</a>
-    <a href="/tools/server-spec-recommender/" class="sf-related-card"><span>🖥️</span>Server Spec Recommender</a>
-    <a href="/tools/docker-ram-calculator/" class="sf-related-card"><span>🐳</span>Docker RAM Calculator</a>
-    <a href="https://stackfreeks.com/vultr-cloud-gpu-review/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Vultr Cloud GPU Review</a>
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
   </div>
-</section>
 
-<!-- 8. Vultr banner -->
-<section class="vultr-banner">
-  <div class="container banner-inner">
-    <div>
-      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
-       rel="nofollow sponsored" target="_blank"
-       data-i18n="vultr_cta">Claim your credit →</a>
-  </div>
-</section>
-
-<!-- 9. Footer -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-    </div>
-  </div>
-</footer>
+  </footer>
 
 <!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
+    cat_vps_server: "VPS & Server",
+    more_tools: "More server tools",
+    all_in_cat: "All VPS & Server tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
     tool_input_label: "Workload",
     tool_reqvol_lbl: "Monthly request volume",
     tool_intok_lbl: "Avg input tokens",
@@ -750,6 +557,14 @@ window.SF_PAGE_I18N = {
     vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
   },
   ko: {
+    cat_vps_server: "VPS & 서버",
+    more_tools: "서버 툴 더 보기",
+    all_in_cat: "VPS & 서버 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
     tool_input_label: "워크로드",
     tool_reqvol_lbl: "월 요청량",
     tool_intok_lbl: "평균 입력 토큰",
@@ -870,10 +685,10 @@ function recalc() {
   $('sumApi').textContent     = fmtMoney(apiCost);
   $('sumHours').textContent   = fmtInt(gpuHoursNeeded) + ' h';
   $('sumSelfCpm').textContent = fmtMoney(selfCostPerM);
-  $('sumBreakeven').textContent = fmtInt(breakEvenVol) + ' / mo';
+  const lang = (window.sfLang && sfLang.current === 'ko') ? 'ko' : 'en';
+  $('sumBreakeven').textContent = fmtInt(breakEvenVol) + (lang === 'ko' ? ' / 월' : ' / mo');
 
   // ── Verdict ──
-  const lang = (window.sfLang && sfLang.current === 'ko') ? 'ko' : 'en';
   let verdict;
   if (reqVol === 0) {
     verdict = lang === 'ko' ? '요청량을 입력하세요' : 'Enter a request volume';

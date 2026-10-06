@@ -21,691 +21,64 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --danger: #ef4444;
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
+    /* SSH Config Generator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool-wrap { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 20px; align-items: start; }
+    .left-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    .form-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+    .panel-title { font-size: 15px; font-weight: 600; color: var(--text-1); }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field input, .field select { width: 100%; }
 
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border-2);
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 1040px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-    }
-
-    /* Tool layout */
-    .tool-wrap {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    /* Left column: form + host list */
-    .left-col {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* Form panel */
-    .form-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .panel-title {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .field label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-2);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .field select,
-    .field input[type="text"],
-    .field input[type="number"] {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-1);
-      font-family: var(--font);
-      font-size: 14px;
-      padding: 9px 12px;
-      border-radius: var(--radius);
-      transition: border-color 0.15s;
-      width: 100%;
-    }
-
-    .field select {
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      padding-right: 32px;
-      cursor: pointer;
-    }
-
-    .field select:focus,
-    .field input[type="text"]:focus,
-    .field input[type="number"]:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .field input::placeholder {
-      color: var(--text-3);
-    }
-
-    /* Toggle row */
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .toggle-label {
-      font-size: 13px;
-      color: var(--text-1);
-      font-weight: 500;
-    }
-
-    .switch {
-      position: relative;
-      width: 36px;
-      height: 20px;
-      flex-shrink: 0;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      position: absolute;
-    }
-
-    .switch-track {
-      position: absolute;
-      inset: 0;
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .switch-track::after {
-      content: '';
-      position: absolute;
-      left: 2px;
-      top: 2px;
-      width: 14px;
-      height: 14px;
-      background: var(--text-3);
-      border-radius: 50%;
-      transition: transform 0.2s, background 0.2s;
-    }
-
-    .switch input:checked + .switch-track {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .switch input:checked + .switch-track::after {
-      transform: translateX(16px);
-      background: #fff;
-    }
-
-    .form-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 2px 0;
-    }
-
-    /* Add host button */
-    .btn-add {
-      width: 100%;
-      padding: 10px;
-      background: var(--accent-strong);
-      border: none;
-      border-radius: var(--radius);
-      color: #fff;
-      font-family: var(--font);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-    .btn-add:hover { opacity: 0.85; }
-
-    .error-msg {
-      font-size: 12px;
-      color: var(--danger);
-      display: none;
-    }
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .toggle-label { font-size: 13px; color: var(--text-1); font-weight: 600; }
+    .switch { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .switch-track { position: absolute; inset: 0; background: var(--surface-2); border: 1px solid var(--border-2); border-radius: 999px; cursor: pointer; transition: background-color var(--t), border-color var(--t); }
+    .switch-track::after { content: ''; position: absolute; left: 2px; top: 2px; width: 14px; height: 14px; background: var(--text-3); border-radius: 50%; transition: transform var(--t), background-color var(--t); }
+    .switch input:checked + .switch-track { background: var(--accent-strong); border-color: var(--accent-strong); }
+    .switch input:checked + .switch-track::after { transform: translateX(16px); background: var(--accent-fg); }
+    .switch input:focus-visible + .switch-track { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .form-divider { height: 1px; background: var(--border); margin: 2px 0; }
+    .btn-add { width: 100%; }
+    .error-msg { font-size: 13px; color: var(--danger); display: none; }
     .error-msg.visible { display: block; }
 
-    /* Host list */
-    .host-list-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .host-list-header {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface-2);
-    }
-
-    .host-list-header p {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-    }
-
-    .host-list-empty {
-      padding: 20px 16px;
-      font-size: 13px;
-      color: var(--text-3);
-      font-style: italic;
-    }
-
-    .host-list {
-      list-style: none;
-    }
-
-    .host-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
-      gap: 12px;
-    }
+    .host-list-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .host-list-header { padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+    .host-list-header p { font-size: 13px; font-weight: 600; color: var(--text-1); }
+    .host-list-empty { padding: 20px 16px; font-size: 14px; color: var(--text-3); }
+    .host-list { list-style: none; }
+    .host-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--border); gap: 12px; }
     .host-item:last-child { border-bottom: none; }
-
-    .host-item-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 0;
-    }
-
-    .host-alias {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-1);
-      font-family: var(--font-mono);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .host-hostname {
-      font-size: 12px;
-      color: var(--text-2);
-      font-family: var(--font-mono);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .btn-remove {
-      background: none;
-      border: 1px solid var(--border-2);
-      color: var(--text-3);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-      flex-shrink: 0;
-    }
+    .host-item-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .host-alias { font-size: 14px; font-weight: 600; color: var(--text-1); font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .host-hostname { font-size: 13px; color: var(--text-2); font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .btn-remove { background: var(--surface); border: 1px solid var(--border-2); color: var(--text-2); font-family: var(--font); font-size: 13px; padding: 4px 10px; border-radius: var(--radius-s); cursor: pointer; transition: border-color var(--t), color var(--t); flex-shrink: 0; }
     .btn-remove:hover { border-color: var(--danger); color: var(--danger); }
 
-    /* Output panel */
-    .output-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .output-panel { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+    .output-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .output-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--surface); }
+    .output-label { font-size: 13px; font-weight: 600; color: var(--text-1); font-family: var(--font-mono); }
+    .btn-row { display: flex; gap: 8px; }
+    .output-header .btn { height: 32px; padding: 0 12px; font-size: 13px; }
+    .output-code { margin: 0; border: 0; border-radius: 0; padding: 16px; font-size: 13px; color: var(--text-1); line-height: 1.7; white-space: pre; overflow-x: auto; min-height: 240px; }
+    .output-code.placeholder { color: var(--text-3); font-family: var(--font); white-space: normal; }
 
-    .output-block {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
+    .install-hint { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .install-hint p { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+    .related-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 
-    .output-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface-2);
-    }
-
-    .output-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 5px 12px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn:hover { border-color: var(--accent); color: var(--text-1); }
-
-    .output-code {
-      padding: 16px;
-      font-family: var(--font-mono);
-      font-size: 12.5px;
-      color: var(--success);
-      line-height: 1.7;
-      white-space: pre;
-      overflow-x: auto;
-      min-height: 240px;
-    }
-
-    .output-code.placeholder {
-      color: var(--text-3);
-      font-family: var(--font);
-      font-style: italic;
-      white-space: normal;
-    }
-
-    /* Install hint */
-    .install-hint {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-    }
-
-    .install-hint p {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
-
-    .install-hint code {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text-1);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      padding: 1px 5px;
-      border-radius: 4px;
-    }
-
-    /* How to use */
-    .guide {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    .section-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-    }
-
-    .guide-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-    }
-
-    .guide-step {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--accent-text);
-      margin-bottom: 8px;
-    }
-
-    .guide-card h3 {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 6px;
-    }
-
-    .guide-card p {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
-
-    /* FAQ */
-    .faq {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: none; color: var(--text-1); font-size: 14px; font-weight: 500; cursor: pointer; text-align: left; padding: 16px 20px; font-family: var(--font); gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; padding: 0 20px 16px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; margin-left: 12px; }
-
-    /* Related */
-    .related {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 0 24px 32px;
-    }
-
-    .related-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      background: var(--surface);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); opacity: 1; }
-
-    .related-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 4px;
-    }
-
-    .related-title {
-      font-size: 14px;
-      color: var(--text-1);
-    }
-
-    .related-arrow {
-      color: var(--text-3);
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    /* Vultr Banner */
-    .vultr-banner {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 0 24px 32px;
-    }
-
-    .vultr-inner {
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      background: var(--success-bg);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .vultr-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--success);
-      margin-bottom: 4px;
-    }
-
-    .vultr-title {
-      font-size: 15px;
-      color: var(--text-1);
-      margin-bottom: 2px;
-    }
-
-    .vultr-sub {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-
-    .vultr-cta {
-      display: inline-block;
-      background: var(--success);
-      color: var(--success-fg);
-      font-weight: 500;
-      font-size: 13px;
-      padding: 8px 18px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      transition: opacity 0.15s;
-      flex-shrink: 0;
-    }
-    .vultr-cta:hover { background: var(--success-hover); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Mobile */
     @media (max-width: 768px) {
-      .hero { padding: 32px 16px 24px; }
-      .hero h1 { font-size: 22px; }
-      .tool-wrap {
-        grid-template-columns: 1fr;
-        padding: 0 16px 40px;
-      }
-      .guide { padding: 0 16px 40px; }
-      .faq { padding: 0 16px 40px; }
-      .related { padding: 0 16px 24px; }
-      .vultr-banner { padding: 0 16px 24px; }
-      .vultr-inner { flex-direction: column; align-items: flex-start; }
-      .vultr-cta { align-self: stretch; text-align: center; }
-      .related-card { flex-direction: column; align-items: flex-start; }
-      .footer-links { gap: 14px; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 1040px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .tool-wrap { grid-template-columns: 1fr; }
     }
   </style>
   <script type="application/ld+json">
@@ -718,33 +91,38 @@
 </head>
 <body>
 
-  <!-- Nav -->
-  <nav>
-    <div class="nav-left">
-      <a href="/" class="logo">StackFreeks Tools</a>
-      <div class="nav-sep"></div>
-      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-devops" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-wrench"/></svg><span data-i18n="cat_devops">DevOps &amp; Config Generators</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
   </nav>
 
-  <!-- ADSENSE_SLOT_TOP -->
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="lang-en">
-      <h1>SSH Config Generator</h1>
-      <p>Fill in the form to build a ready-to-paste <strong>~/.ssh/config</strong> file. Add multiple hosts, set aliases, keys, and jump proxies — no manual syntax lookup needed.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-key-round"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>SSH Config Generator</h1>
+        <p>Fill in the form to build a ready-to-paste <strong>~/.ssh/config</strong> file. Add multiple hosts, set aliases, keys, and jump proxies — no manual syntax lookup needed.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>SSH Config 생성기</h1>
+        <p>폼을 채우면 바로 붙여넣을 수 있는 <strong>~/.ssh/config</strong> 파일이 생성됩니다. 여러 호스트 추가, 별칭·키·점프 프록시 설정 — 직접 문법을 찾아볼 필요가 없습니다.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-    <div class="lang-ko">
-      <h1>SSH Config 생성기</h1>
-      <p>폼을 채우면 바로 붙여넣을 수 있는 <strong>~/.ssh/config</strong> 파일이 생성됩니다. 여러 호스트 추가, 별칭·키·점프 프록시 설정 — 직접 문법을 찾아볼 필요가 없습니다.</p>
-    </div>
-  </section>
+  </header>
 
-  <!-- Tool -->
-  <div class="tool-wrap">
+  <!-- Tool body -->
+  <main class="tool wrap-tool tool-wrap">
 
     <!-- Left column -->
     <div class="left-col">
@@ -803,7 +181,7 @@
         <div class="field">
           <label data-i18n="label_stricthost">StrictHostKeyChecking</label>
           <select id="sel-strict">
-            <option value="">(omit)</option>
+            <option value="" data-i18n="x_omit">(omit)</option>
             <option value="accept-new">accept-new</option>
             <option value="yes">yes</option>
             <option value="no">no</option>
@@ -812,7 +190,7 @@
 
         <p class="error-msg" id="form-error" data-i18n="err_required">Host Alias and HostName are required.</p>
 
-        <button class="btn-add" onclick="addHost()" data-i18n="btn_add">+ Add Host</button>
+        <button class="btn btn-primary btn-add" onclick="addHost()" data-i18n="btn_add">+ Add Host</button>
       </div>
 
       <!-- Host list -->
@@ -836,11 +214,11 @@
         <div class="output-header">
           <span class="output-label" data-i18n="label_output">~/.ssh/config</span>
           <div class="btn-row">
-            <button class="btn" id="btn-copy" onclick="copyConfig()" data-i18n="btn_copy">Copy</button>
-            <button class="btn" onclick="downloadConfig()" data-i18n="btn_download">Download</button>
+            <button class="btn btn-ghost" id="btn-copy" onclick="copyConfig()" data-i18n="btn_copy">Copy</button>
+            <button class="btn btn-ghost" onclick="downloadConfig()" data-i18n="btn_download">Download</button>
           </div>
         </div>
-        <pre class="output-code placeholder" id="output-config">Add a host entry to generate your config…</pre>
+        <pre class="output-code placeholder" id="output-config" data-i18n="x_add_a_host_entry_to_generate_your_config">Add a host entry to generate your config…</pre>
       </div>
 
       <div class="install-hint">
@@ -853,66 +231,71 @@
       </div>
 
     </div>
-  </div>
+  </main>
 
-  <!-- How to Use -->
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More DevOps tools</h2>
+      <a class="sec-link" href="/#cat-devops"><span data-i18n="all_in_cat">All DevOps &amp; Config Generators tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/pm2-ecosystem-generator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-refresh-cw"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">PM2 Ecosystem Config Generator</span><span class="lang-ko">PM2 Ecosystem Config 생성기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/fail2ban-jail-generator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-shield-ban"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Fail2ban Jail Generator</span><span class="lang-ko">Fail2ban Jail 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
   <section class="guide">
     <div class="lang-en">
-      <p class="section-title">How to use this tool</p>
+      <h2 class="guide-title">How to use this tool</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">Step 1</p>
-          <h3>Fill in a host entry</h3>
+          <h3>1. Fill in a host entry</h3>
           <p>Enter a short <strong>alias</strong> (e.g. <code>prod</code>) and the actual <strong>HostName</strong> (IP or domain). Other fields are optional.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 2</p>
-          <h3>Click "Add Host"</h3>
+          <h3>2. Click "Add Host"</h3>
           <p>The host is appended to the list and the config output updates instantly. Repeat for each server you want to configure.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 3</p>
-          <h3>Copy or download</h3>
+          <h3>3. Copy or download</h3>
           <p>Click <strong>Copy</strong> to paste directly, or <strong>Download</strong> to save as <code>ssh_config</code>. You can reorder by removing and re-adding hosts.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 4</p>
-          <h3>Deploy to ~/.ssh/config</h3>
+          <h3>4. Deploy to ~/.ssh/config</h3>
           <p>Paste into <code>~/.ssh/config</code> and run <code>chmod 600 ~/.ssh/config</code>. Then connect with <code>ssh alias</code> — no flags needed.</p>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <p class="section-title">사용 방법</p>
+      <h2 class="guide-title">사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">Step 1</p>
-          <h3>호스트 항목 입력</h3>
+          <h3>1. 호스트 항목 입력</h3>
           <p>짧은 <strong>별칭</strong>(예: <code>prod</code>)과 실제 <strong>HostName</strong>(IP 또는 도메인)을 입력하세요. 나머지 필드는 선택 사항입니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 2</p>
-          <h3>"호스트 추가" 클릭</h3>
+          <h3>2. "호스트 추가" 클릭</h3>
           <p>호스트가 목록에 추가되고 설정 출력이 즉시 업데이트됩니다. 설정할 서버마다 반복하세요.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 3</p>
-          <h3>복사 또는 다운로드</h3>
+          <h3>3. 복사 또는 다운로드</h3>
           <p><strong>복사</strong>를 눌러 바로 붙여넣거나 <strong>다운로드</strong>를 눌러 <code>ssh_config</code>로 저장하세요. 호스트를 삭제 후 재추가해 순서를 바꿀 수 있습니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 4</p>
-          <h3>~/.ssh/config에 적용</h3>
+          <h3>4. ~/.ssh/config에 적용</h3>
           <p><code>~/.ssh/config</code>에 붙여넣고 <code>chmod 600 ~/.ssh/config</code>를 실행하세요. 이후 <code>ssh 별칭</code>으로 플래그 없이 접속 가능합니다.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <p class="section-title">Frequently Asked Questions</p>
+      <h2 class="faq-title">Frequently Asked Questions</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>What is the SSH config file and where does it live?</span><span class="faq-icon">+</span></button>
@@ -938,7 +321,7 @@
     </div>
 
     <div class="lang-ko">
-      <p class="section-title">자주 묻는 질문</p>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>SSH config 파일이란 무엇이며 어디에 있나요?</span><span class="faq-icon">+</span></button>
@@ -964,60 +347,65 @@
     </div>
   </section>
 
-  <!-- Related -->
-  <section class="related">
-    <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
-      <div>
-        <p class="related-label">stackfreeks.com</p>
-        <div class="lang-en">
-          <p class="related-title">SSH hardening guides &amp; VPS setup tutorials on stackfreeks.com →</p>
-        </div>
-        <div class="lang-ko">
-          <p class="related-title">stackfreeks.com에서 SSH 보안 강화 가이드 &amp; VPS 설정 튜토리얼 보기 →</p>
-        </div>
-      </div>
-      <span class="related-arrow">→</span>
-    </a>
-  </section>
-
-  <!-- Vultr Banner -->
   <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/firewall-rule-builder/" class="sf-related-card"><span>🔥</span>Firewall Rule Builder</a>
-      <a href="/tools/curl-command-generator/" class="sf-related-card"><span>🌐</span>curl Command Generator</a>
-      <a href="/tools/chmod-calculator/" class="sf-related-card"><span>🔐</span>Chmod Calculator</a>
-          <a href="https://stackfreeks.com/vultr-firewall-setup/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Vultr Firewall Setup Guide</a>
-    </div>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/firewall-rule-builder/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-brick-wall"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Firewall Rule Builder</span><span class="lang-ko">방화벽 규칙 생성기</span></span></span></a></li>
+      <li><a href="/tools/curl-command-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-terminal"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">curl Command Generator</span><span class="lang-ko">curl 명령어 생성기</span></span></span></a></li>
+      <li><a href="/tools/chmod-calculator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-lock"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Chmod Calculator</span><span class="lang-ko">Chmod 계산기</span></span></span></a></li>
+    </ul>
   </section>
 
-  <section class="vultr-banner">
-    <div class="vultr-inner">
-      <div>
-        <p class="vultr-label" data-i18n="vultr_label">Sponsor</p>
-        <p class="vultr-title" data-i18n="vultr_title">Get started on Vultr</p>
-        <p class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
-      </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" class="vultr-cta" rel="nofollow sponsored" target="_blank" data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
+  <!-- Related content -->
+  <section class="related">
+    <ul class="related-list">
+      <li><a href="https://stackfreeks.com" target="_blank" rel="noopener"><span class="lang-en">SSH hardening guides &amp; VPS setup tutorials on stackfreeks.com →</span><span class="lang-ko">stackfreeks.com에서 SSH 보안 강화 가이드 &amp; VPS 설정 튜토리얼 보기 →</span></a></li>
+      <li><a href="https://stackfreeks.com/vultr-firewall-setup/" target="_blank" rel="noopener">Vultr Firewall Setup Guide →</a></li>
+    </ul>
   </section>
+
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
   </footer>
 
   <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_devops: "DevOps & Config Generators",
+        more_tools: "More DevOps tools",
+        all_in_cat: "All DevOps & Config Generators tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         panel_form:    'Configure Host Entry',
         panel_hosts:   'Added Hosts',
         label_alias:   'Host Alias *',
@@ -1042,8 +430,18 @@
         ph_identity:   '~/.ssh/id_rsa',
         ph_alive:      '60',
         ph_proxyjump:  'jumphost',
+        x_add_a_host_entry_to_generate_your_config: "Add a host entry to generate your config…",
+        x_omit: "(omit)"
       },
       ko: {
+        cat_devops: "DevOps & 설정 생성기",
+        more_tools: "DevOps 툴 더 보기",
+        all_in_cat: "DevOps & 설정 생성기 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         panel_form:    '호스트 항목 설정',
         panel_hosts:   '추가된 호스트',
         label_alias:   'Host 별칭 *',
@@ -1068,6 +466,8 @@
         ph_identity:   '~/.ssh/id_rsa',
         ph_alive:      '60',
         ph_proxyjump:  'jumphost',
+        x_add_a_host_entry_to_generate_your_config: "호스트를 추가하면 설정이 생성됩니다…",
+        x_omit: "(생략)"
       }
     };
   </script>
@@ -1196,8 +596,8 @@
       navigator.clipboard.writeText(el.textContent).then(function() {
         const btn  = document.getElementById('btn-copy');
         const orig = btn.textContent;
-        btn.textContent = '✓ Copied!';
-        btn.style.color = 'var(--success)';
+        btn.textContent = '✓ ' + sfT('x_copied_s');
+        btn.style.color = 'var(--success-fg)';
         setTimeout(function() {
           btn.textContent = orig;
           btn.style.color = '';

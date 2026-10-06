@@ -19,127 +19,20 @@
   <!-- AdSense slot — insert code here after approval -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
 
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0a0a0b; --surface: #111113; --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08); --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa; --text-2: #a1a1aa; --text-3: #80808a;
-      --accent: #6366f1; --success: #22c55e; --success-bg: rgba(34,197,94,0.08);
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --radius: 8px; --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text-1);
-      font-family: var(--font);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    /* ── NAV ── */
-    .nav {
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(10,10,11,0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-    .nav-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-1);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-    .nav-logo span { color: var(--accent-text); }
-    .nav-right { display: flex; align-items: center; gap: 12px; }
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .lang-toggle:hover { color: var(--text-1); border-color: rgba(255,255,255,0.24); }
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* ── HERO ── */
-    .hero {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 48px 24px 32px;
-      text-align: center;
-    }
-    .hero-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent-text);
-      background: rgba(99,102,241,0.1);
-      border: 1px solid rgba(99,102,241,0.2);
-      border-radius: 20px;
-      padding: 3px 12px;
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-size: clamp(24px, 5vw, 36px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--text-1);
-      margin-bottom: 14px;
-    }
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-      max-width: 520px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
+    /* Lorem Ipsum Generator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* ── TOOL CARD ── */
-    .tool-wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
+    
     .tool-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       overflow: hidden;
     }
     .tool-body { padding: 24px; }
@@ -155,7 +48,7 @@
 
     .ctrl-group { display: flex; flex-direction: column; gap: 8px; }
     .ctrl-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -180,9 +73,9 @@
       user-select: none;
     }
     .radio-opt input[type="radio"]:checked + label {
-      background: rgba(99,102,241,0.15);
+      background: var(--accent-soft);
       color: var(--accent-text);
-      border-color: rgba(99,102,241,0.4);
+      border-color: var(--accent-soft-2);
     }
     .radio-opt label:hover { color: var(--text-1); border-color: var(--border-2); }
 
@@ -199,7 +92,7 @@
       outline: none;
       transition: border-color 0.15s;
     }
-    .num-input:focus { border-color: rgba(99,102,241,0.5); }
+    .num-input:focus { border-color: var(--accent-soft-2); }
     .num-input::-webkit-inner-spin-button { opacity: 0.5; }
 
     /* Checkbox */
@@ -229,7 +122,7 @@
       width: 100%;
       padding: 11px 24px;
       background: var(--accent-strong);
-      color: #fff;
+      color: var(--accent-fg);
       border: none;
       border-radius: var(--radius);
       font-family: var(--font);
@@ -296,179 +189,23 @@
       transition: background 0.15s, color 0.15s, border-color 0.15s;
       white-space: nowrap;
     }
-    .btn-copy:hover { color: var(--text-1); border-color: rgba(255,255,255,0.24); }
+    .btn-copy:hover { color: var(--text-1); border-color: var(--border); }
     .btn-copy.copied {
-      color: var(--success);
-      border-color: rgba(34,197,94,0.4);
-      background: var(--success-bg);
-    }
-
-    /* ── GUIDE ── */
-    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title {
-      font-size: 13px; font-weight: 500; color: var(--text-3);
-      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
-    }
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 10px;
-    }
-    .guide-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* ── FAQ ── */
-    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title {
-      font-size: 13px; font-weight: 500; color: var(--text-3);
-      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
-    }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* ── VULTR BANNER ── */
-    .vultr-banner {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(135deg, rgba(34,197,94,0.04) 0%, rgba(34,197,94,0.01) 100%);
-      margin-bottom: 0;
-    }
-    .vultr-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .vultr-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--success);
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: 20px;
-      padding: 2px 8px;
-      white-space: nowrap;
-    }
-    .vultr-text {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .vultr-text strong { font-size: 14px; color: var(--text-1); font-weight: 600; }
-    .vultr-text span { font-size: 13px; color: var(--text-2); }
-    .vultr-cta {
-      display: inline-block;
-      padding: 8px 18px;
-      background: var(--success);
       color: var(--success-fg);
-      border-radius: var(--radius);
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: opacity 0.15s;
+      border-color: var(--success);
+      background: var(--success);
     }
-    .vultr-cta:hover { background: var(--success-hover); }
-
-    /* ── RELATED LINK ── */
-    .related {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 40px;
-    }
-    .related-title {
-      font-size: 13px; font-weight: 500; color: var(--text-3);
-      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;
-    }
-    .related-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      color: var(--accent-text);
-      text-decoration: none;
-    }
-    .related-link:hover { text-decoration: underline; }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-    .footer-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-copy { font-size: 13px; color: var(--text-3); }
-    .footer-links { display: flex; gap: 16px; }
-    .footer-links a { font-size: 13px; color: var(--text-3); text-decoration: none; transition: color 0.15s; }
-    .footer-links a:hover { color: var(--text-2); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
-      .hero { padding: 32px 20px 24px; }
+      
       .tool-body { padding: 18px; }
       .controls-row { gap: 12px; }
-      .vultr-inner { gap: 12px; }
-      .footer-inner { flex-direction: column; text-align: center; }
     }
   
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style>  <script type="application/ld+json">
+    
+  </style>
+  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"Lorem Ipsum Generator","description":"Free lorem ipsum generator. Create placeholder text by words, sentences or paragraphs in seconds for designers and developers.","url":"https://tools.stackfreeks.com/tools/lorem-ipsum/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
@@ -478,152 +215,166 @@
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="nav">
+  <nav class="nav" aria-label="Main">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
-      <div class="nav-right">
-        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-        <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-      </div>
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-text" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-type"/></svg><span data-i18n="cat_text_code">Text &amp; Code</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
   </nav>
 
-  <!-- ADSENSE_SLOT_TOP -->
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-pilcrow"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Lorem Ipsum Generator</h1>
+        <p>Generate classic placeholder text instantly. Choose words, sentences, or paragraphs — ready to paste into any design or document.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>Lorem Ipsum 생성기</h1>
+        <p>디자인이나 문서에 바로 사용할 수 있는 플레이스홀더 텍스트를 즉시 생성하세요. 단어, 문장, 단락을 자유롭게 선택할 수 있습니다.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
+    </div>
+  </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-badge">Free Tool</div>
-    <div class="lang-en">
-      <h1>Lorem Ipsum Generator</h1>
-      <p>Generate classic placeholder text instantly. Choose words, sentences, or paragraphs — ready to paste into any design or document.</p>
+  <!-- Tool body -->
+  <main class="tool wrap-tool tool-wrap">
+  <div class="tool-card">
+        <div class="tool-body">
+
+          <!-- Output Type -->
+          <div class="controls-row">
+            <div class="ctrl-group">
+              <div class="ctrl-label lang-en">Output Type</div>
+              <div class="ctrl-label lang-ko">출력 형식</div>
+              <div class="radio-group">
+                <div class="radio-opt">
+                  <input type="radio" name="type" id="type-paragraphs" value="paragraphs" checked />
+                  <label for="type-paragraphs" data-i18n="paragraphs_label">Paragraphs</label>
+                </div>
+                <div class="radio-opt">
+                  <input type="radio" name="type" id="type-sentences" value="sentences" />
+                  <label for="type-sentences" data-i18n="sentences_label">Sentences</label>
+                </div>
+                <div class="radio-opt">
+                  <input type="radio" name="type" id="type-words" value="words" />
+                  <label for="type-words" data-i18n="words_label">Words</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="ctrl-group">
+              <div class="ctrl-label lang-en">Count</div>
+              <div class="ctrl-label lang-ko">수량</div>
+              <input type="number" id="count-input" class="num-input" value="5" min="1" max="100" />
+            </div>
+          </div>
+
+          <!-- Checkbox -->
+          <label class="checkbox-wrap">
+            <input type="checkbox" id="start-lorem" checked />
+            <span data-i18n="start_lorem">Start with "Lorem ipsum..."</span>
+          </label>
+
+          <!-- Generate button -->
+          <button class="btn-generate" id="btn-generate" onclick="generateText()" data-i18n="generate">
+            Generate
+          </button>
+
+          <!-- Output -->
+          <div class="output-wrap">
+            <textarea
+              id="output"
+              class="output-textarea"
+              readonly
+              placeholder="Click Generate to produce filler text…"
+             data-i18n-placeholder="x_click_generate_to_produce_filler_text"></textarea>
+          </div>
+
+          <!-- Stats + Copy -->
+          <div class="output-footer">
+            <div class="stats">
+              <div class="stat-item">
+                <span data-i18n="word_count">Words</span><span id="stat-words">0</span>
+              </div>
+              <div class="stat-item">
+                <span data-i18n="char_count">Characters</span><span id="stat-chars">0</span>
+              </div>
+            </div>
+            <button class="btn-copy" id="btn-copy" onclick="copyText()" data-i18n="copy">
+              Copy
+            </button>
+          </div>
+
+        </div>
+      </div>
+  </main>
+
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More text &amp; code tools</h2>
+      <a class="sec-link" href="/#cat-text"><span data-i18n="all_in_cat">All Text &amp; Code tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
     </div>
-    <div class="lang-ko">
-      <h1>Lorem Ipsum 생성기</h1>
-      <p>디자인이나 문서에 바로 사용할 수 있는 플레이스홀더 텍스트를 즉시 생성하세요. 단어, 문장, 단락을 자유롭게 선택할 수 있습니다.</p>
-    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/word-counter/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-text"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Word Counter</span><span class="lang-ko">단어 수 세기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/markdown-previewer/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-notebook-pen"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Markdown Previewer</span><span class="lang-ko">마크다운 미리보기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
   </section>
 
-  <!-- TOOL -->
-  <div class="tool-wrap">
-    <div class="tool-card">
-      <div class="tool-body">
-
-        <!-- Output Type -->
-        <div class="controls-row">
-          <div class="ctrl-group">
-            <div class="ctrl-label lang-en">Output Type</div>
-            <div class="ctrl-label lang-ko">출력 형식</div>
-            <div class="radio-group">
-              <div class="radio-opt">
-                <input type="radio" name="type" id="type-paragraphs" value="paragraphs" checked />
-                <label for="type-paragraphs" data-i18n="paragraphs_label">Paragraphs</label>
-              </div>
-              <div class="radio-opt">
-                <input type="radio" name="type" id="type-sentences" value="sentences" />
-                <label for="type-sentences" data-i18n="sentences_label">Sentences</label>
-              </div>
-              <div class="radio-opt">
-                <input type="radio" name="type" id="type-words" value="words" />
-                <label for="type-words" data-i18n="words_label">Words</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="ctrl-group">
-            <div class="ctrl-label lang-en">Count</div>
-            <div class="ctrl-label lang-ko">수량</div>
-            <input type="number" id="count-input" class="num-input" value="5" min="1" max="100" />
-          </div>
-        </div>
-
-        <!-- Checkbox -->
-        <label class="checkbox-wrap">
-          <input type="checkbox" id="start-lorem" checked />
-          <span data-i18n="start_lorem">Start with "Lorem ipsum..."</span>
-        </label>
-
-        <!-- Generate button -->
-        <button class="btn-generate" id="btn-generate" onclick="generateText()" data-i18n="generate">
-          Generate
-        </button>
-
-        <!-- Output -->
-        <div class="output-wrap">
-          <textarea
-            id="output"
-            class="output-textarea"
-            readonly
-            placeholder="Click Generate to produce filler text…"
-          ></textarea>
-        </div>
-
-        <!-- Stats + Copy -->
-        <div class="output-footer">
-          <div class="stats">
-            <div class="stat-item">
-              <span data-i18n="word_count">Words</span><span id="stat-words">0</span>
-            </div>
-            <div class="stat-item">
-              <span data-i18n="char_count">Characters</span><span id="stat-chars">0</span>
-            </div>
-          </div>
-          <button class="btn-copy" id="btn-copy" onclick="copyText()" data-i18n="copy">
-            Copy
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- GUIDE -->
+  <!-- How to use -->
   <section class="guide">
     <div class="guide-title lang-en">How to use</div>
     <div class="guide-title lang-ko">사용 방법</div>
     <div class="guide-grid">
       <div class="guide-card">
-        <div class="guide-step">Step 1</div>
         <div class="lang-en">
-          <h3>Choose output type</h3>
+          <h3>1. Choose output type</h3>
           <p>Select Words, Sentences, or Paragraphs depending on how much structure you need for your placeholder text.</p>
         </div>
         <div class="lang-ko">
-          <h3>출력 형식 선택</h3>
+          <h3>1. 출력 형식 선택</h3>
           <p>플레이스홀더 텍스트에 필요한 구조에 따라 단어, 문장, 단락 중 하나를 선택하세요.</p>
         </div>
       </div>
       <div class="guide-card">
-        <div class="guide-step">Step 2</div>
         <div class="lang-en">
-          <h3>Set count &amp; options</h3>
+          <h3>2. Set count &amp; options</h3>
           <p>Enter the number of units to generate. Toggle the classic opening to start with the traditional "Lorem ipsum" sentence.</p>
         </div>
         <div class="lang-ko">
-          <h3>수량 및 옵션 설정</h3>
+          <h3>2. 수량 및 옵션 설정</h3>
           <p>생성할 수량을 입력하세요. 클래식 오프닝 토글로 전통적인 "Lorem ipsum" 문장으로 시작할 수 있습니다.</p>
         </div>
       </div>
       <div class="guide-card">
-        <div class="guide-step">Step 3</div>
         <div class="lang-en">
-          <h3>Generate filler text</h3>
+          <h3>3. Generate filler text</h3>
           <p>Click the Generate button to instantly produce randomized lorem ipsum placeholder text from the classic Latin corpus.</p>
         </div>
         <div class="lang-ko">
-          <h3>텍스트 생성</h3>
+          <h3>3. 텍스트 생성</h3>
           <p>생성 버튼을 클릭하면 고전 라틴어 코퍼스를 기반으로 무작위 lorem ipsum 텍스트가 즉시 생성됩니다.</p>
         </div>
       </div>
       <div class="guide-card">
-        <div class="guide-step">Step 4</div>
         <div class="lang-en">
-          <h3>Copy and paste</h3>
+          <h3>4. Copy and paste</h3>
           <p>Click Copy to grab the text and paste it directly into your design tool, document, or code editor. That's it!</p>
         </div>
         <div class="lang-ko">
-          <h3>복사 후 붙여넣기</h3>
+          <h3>4. 복사 후 붙여넣기</h3>
           <p>복사 버튼을 클릭하고 디자인 툴, 문서, 또는 코드 에디터에 바로 붙여넣으세요. 끝!</p>
         </div>
       </div>
@@ -633,7 +384,7 @@
   <!-- FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <div class="faq-title">Frequently Asked Questions</div>
+      <h2 class="faq-title">Frequently Asked Questions</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>What is Lorem Ipsum?</span><span class="faq-icon">+</span></button>
@@ -655,7 +406,7 @@
     </div>
 
     <div class="lang-ko">
-      <div class="faq-title">자주 묻는 질문</div>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>Lorem Ipsum이란 무엇인가요?</span><span class="faq-icon">+</span></button>
@@ -677,37 +428,43 @@
     </div>
   </section>
 
-  <!-- VULTR BANNER -->
   <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/diff-checker/" class="sf-related-card"><span>🔍</span>Diff Checker</a>
-      <a href="/tools/markdown-previewer/" class="sf-related-card"><span>📖</span>Markdown Previewer</a>
-      <a href="/tools/regex-tester/" class="sf-related-card"><span>🎯</span>Regex Tester</a>
-    </div>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a class="card card-sm sf-related-card" href="/tools/diff-checker/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-diff"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Diff Checker</span><span class="lang-ko">Diff 체커</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/markdown-previewer/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-notebook-pen"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Markdown Previewer</span><span class="lang-ko">마크다운 미리보기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/regex-tester/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-regex"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Regex Tester</span><span class="lang-ko">정규식 테스터</span></span></span></a></li>
+    </ul>
   </section>
 
-  <section class="vultr-banner">
-    <div class="vultr-inner">
-      <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
-      <div class="vultr-text">
-        <strong data-i18n="vultr_title">Get started on Vultr</strong>
-        <span data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
       </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" target="_blank" rel="nofollow sponsored" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
-  </section>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
-      <nav class="footer-links">
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
         <a href="/about/">About</a>
         <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
         <a href="/terms/">Terms</a>
-      </nav>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
   </footer>
 
@@ -715,6 +472,14 @@
   <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_text_code: "Text & Code",
+        more_tools: "More text & code tools",
+        all_in_cat: "All Text & Code tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back: "← All Tools",
         vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
         vultr_sub: "Get $300 free credit — valid for 30 days",
@@ -723,9 +488,18 @@
         generate: "Generate", copy: "Copy", copied: "Copied!",
         words_label: "Words", sentences_label: "Sentences", paragraphs_label: "Paragraphs",
         start_lorem: "Start with \"Lorem ipsum...\"",
-        word_count: "Words", char_count: "Characters"
+        word_count: "Words", char_count: "Characters",
+        x_click_generate_to_produce_filler_text: "Click Generate to produce filler text…"
       },
       ko: {
+        cat_text_code: "텍스트 & 코드",
+        more_tools: "텍스트 & 코드 툴 더 보기",
+        all_in_cat: "텍스트 & 코드 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back: "← 전체 툴",
         vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
         vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
@@ -734,7 +508,8 @@
         generate: "생성", copy: "복사", copied: "복사됨!",
         words_label: "단어", sentences_label: "문장", paragraphs_label: "단락",
         start_lorem: "\"Lorem ipsum...\"으로 시작",
-        word_count: "단어 수", char_count: "글자 수"
+        word_count: "단어 수", char_count: "글자 수",
+        x_click_generate_to_produce_filler_text: "생성을 누르면 더미 텍스트가 만들어집니다…"
       }
     };
   </script>

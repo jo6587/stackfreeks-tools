@@ -21,491 +21,58 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
+    /* Systemd Service Generator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool-head code { color: var(--accent-text); }
+    .tool-wrap { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 20px; align-items: start; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    .form-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+    .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .field input, .field select { width: 100%; }
+    .field input[type="text"], .field input[type="number"] { font-family: var(--font-mono); font-size: 14px; }
+    .field-hint { font-size: 13px; color: var(--text-3); }
+    .field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .section-divider { height: 1px; background: var(--border); }
+    .section-label { font-size: 15px; font-weight: 600; color: var(--text-1); }
 
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
+    .preset-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .btn-preset { background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius-s); color: var(--text-1); font-family: var(--font); font-size: 13px; font-weight: 500; padding: 8px 10px; cursor: pointer; transition: background-color var(--t), border-color var(--t), color var(--t); white-space: nowrap; }
+    .btn-preset:hover { border-color: var(--accent); color: var(--accent-text); background: var(--accent-soft); }
 
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border-2);
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-    }
-
-    /* Tool layout */
-    .tool-wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    /* Form panel */
-    .form-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .field { display: flex; flex-direction: column; gap: 6px; }
-
-    .field label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-2);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .field select,
-    .field input[type="text"],
-    .field input[type="number"] {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      font-family: var(--font-mono);
-      font-size: 13px;
-      padding: 8px 12px;
-      width: 100%;
-      transition: border-color 0.15s;
-    }
-    .field select { font-family: var(--font); font-size: 14px; }
-    .field select:focus,
-    .field input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    .field select option { background: #18181b; }
-    .field input::placeholder { color: var(--text-3); }
-
-    .field-hint {
-      font-size: 11px;
-      color: var(--text-3);
-      text-transform: none;
-      letter-spacing: 0;
-      font-weight: 400;
-    }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .section-divider {
-      height: 1px;
-      background: var(--border);
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    /* Presets */
-    .preset-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .btn-preset {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 7px 10px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-      white-space: nowrap;
-    }
-    .btn-preset:hover { border-color: var(--accent); color: var(--accent-text); }
-
-    /* Env var rows */
     .env-list { display: flex; flex-direction: column; gap: 8px; }
-    .env-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 28px;
-      gap: 8px;
-      align-items: center;
-    }
-    .env-row input {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      padding: 7px 10px;
-      width: 100%;
-      transition: border-color 0.15s;
-    }
-    .env-row input:focus { outline: none; border-color: var(--accent); }
-    .env-row input::placeholder { color: var(--text-3); }
-    .btn-env-del {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-3);
-      font-size: 14px;
-      height: 28px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn-env-del:hover { border-color: #ef4444; color: #ef4444; }
-    .btn-env-add {
-      background: none;
-      border: 1px dashed var(--border-2);
-      border-radius: var(--radius);
-      color: var(--text-3);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 6px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
+    .env-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 34px; gap: 8px; align-items: center; }
+    .env-row input { font-family: var(--font-mono); font-size: 13px; padding: 8px 10px; width: 100%; }
+    .btn-env-del { background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius-s); color: var(--text-3); font-size: 16px; height: 34px; cursor: pointer; transition: border-color var(--t), color var(--t); }
+    .btn-env-del:hover { border-color: var(--danger); color: var(--danger); }
+    .btn-env-add { background: none; border: 1px dashed var(--border-2); border-radius: var(--radius-s); color: var(--text-2); font-family: var(--font); font-size: 13px; font-weight: 500; padding: 8px; cursor: pointer; transition: border-color var(--t), color var(--t); }
     .btn-env-add:hover { border-color: var(--accent); color: var(--accent-text); }
+    .btn-generate { width: 100%; margin-top: 4px; }
 
-    .btn-generate {
-      background: var(--accent-strong);
-      border: none;
-      border-radius: var(--radius);
-      color: #fff;
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 500;
-      padding: 10px 20px;
-      cursor: pointer;
-      width: 100%;
-      transition: opacity 0.15s;
-      margin-top: 4px;
-    }
-    .btn-generate:hover { opacity: 0.85; }
-
-    /* Output panel */
-    .output-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .output-block {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .output-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      gap: 8px;
-    }
-
-    .output-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-2);
-      font-family: var(--font-mono);
-      letter-spacing: 0.02em;
-    }
-
+    .output-panel { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+    .output-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .output-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--border); gap: 8px; }
+    .output-title { font-size: 13px; font-weight: 600; color: var(--text-1); font-family: var(--font-mono); }
     .output-actions { display: flex; gap: 8px; }
+    .btn-copy { background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius-s); color: var(--text-1); font-family: var(--font); font-size: 13px; font-weight: 600; height: 32px; padding: 0 12px; cursor: pointer; transition: background-color var(--t), border-color var(--t), color var(--t); }
+    .btn-copy:hover { background: var(--surface-2); border-color: var(--text-3); }
+    .btn-copy.copied { background: var(--success); color: var(--success-fg); border-color: transparent; }
+    .output-code { padding: 16px; background: var(--surface-2); font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--text-2); white-space: pre; overflow-x: auto; min-height: 80px; }
 
-    .btn-copy {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 12px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn-copy:hover { border-color: var(--accent); color: var(--accent-text); }
-    .btn-copy.copied { border-color: var(--success); color: var(--success); }
+    /* Syntax colours: teal + slate only */
+    .sd-comment { color: var(--text-3); }
+    .sd-section { color: var(--accent-text); font-weight: 600; }
+    .sd-key { color: var(--text-1); font-weight: 600; }
+    .sd-cmd { color: var(--text-1); }
+    .placeholder-msg { color: var(--text-3); font-family: var(--font); font-size: 14px; padding: 24px 16px; text-align: center; white-space: normal; }
 
-    .output-code {
-      padding: 16px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text-1);
-      white-space: pre;
-      overflow-x: auto;
-      min-height: 80px;
-    }
-
-    /* Syntax colors */
-    .sd-comment { color: #52525b; }
-    .sd-section { color: var(--accent-text); }
-    .sd-key { color: #fbbf24; }
-    .sd-cmd { color: #86efac; }
-
-    .placeholder-msg {
-      color: var(--text-3);
-      font-family: var(--font);
-      font-size: 14px;
-      font-style: italic;
-      padding: 24px 16px;
-      text-align: center;
-    }
-
-    /* Guide */
-    .guide { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FAQ */
-    .faq { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related tools */
-    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2); opacity: 1; }
-
-    /* Vultr banner */
-    .vultr-banner {
-      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(34,197,94,0.08));
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 32px 24px;
-      margin-bottom: 0;
-    }
-
-    .banner-inner {
-      max-width: 980px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 4px;
-    }
-
-    .banner-title {
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 4px;
-    }
-
-    .banner-sub {
-      font-size: 14px;
-      color: var(--text-2);
-    }
-
-    .btn-vultr {
-      background: var(--success);
-      border: none;
-      border-radius: var(--radius);
-      color: var(--success-fg);
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 12px 24px;
-      white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); color: var(--success-fg); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Mobile */
     @media (max-width: 768px) {
-      .hero { padding: 32px 16px 24px; }
-      .hero h1 { font-size: 22px; }
-      .tool-wrap { grid-template-columns: minmax(0, 1fr); padding: 0 16px 40px; }
-      .guide { padding: 0 16px 36px; }
-      .faq { padding: 0 16px 36px; }
-      .sf-related { padding: 0 16px 36px; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
-    }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .tool-wrap { grid-template-columns: minmax(0, 1fr); }
     }
   </style>
   <script type="application/ld+json">
@@ -518,40 +85,47 @@
 </head>
 <body>
 
-  <!-- Nav -->
-  <nav>
-    <div class="nav-left">
-      <a href="/" class="logo">StackFreeks Tools</a>
-      <div class="nav-sep"></div>
-      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-devops" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-wrench"/></svg><span data-i18n="cat_devops">DevOps &amp; Config Generators</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="lang-en">
-      <h1>Systemd Service Generator</h1>
-      <p>Create a complete <code style="color:var(--accent-text)">.service</code> unit file for your app — ExecStart, restart policy, environment variables, and ready-to-run install commands. Presets for Node.js, Python, Go, and Java.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-settings"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Systemd Service Generator</h1>
+        <p>Create a complete <code>.service</code> unit file for your app — ExecStart, restart policy, environment variables, and ready-to-run install commands. Presets for Node.js, Python, Go, and Java.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>Systemd 서비스 생성기</h1>
+        <p>앱을 위한 <code>.service</code> 유닛 파일을 즉시 생성 — ExecStart, 재시작 정책, 환경변수, 설치·적용 명령어 포함. Node.js, Python, Go, Java 프리셋 제공.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-    <div class="lang-ko">
-      <h1>Systemd 서비스 생성기</h1>
-      <p>앱을 위한 <code style="color:var(--accent-text)">.service</code> 유닛 파일을 즉시 생성 — ExecStart, 재시작 정책, 환경변수, 설치·적용 명령어 포함. Node.js, Python, Go, Java 프리셋 제공.</p>
-    </div>
-  </section>
+  </header>
 
-  <!-- Tool -->
-  <section class="tool-wrap">
+  <!-- Tool body -->
+  <main class="tool wrap-tool tool-wrap">
 
     <!-- Form panel -->
     <div class="form-panel">
 
       <p class="section-label" data-i18n="sdg_presets">Presets</p>
       <div class="preset-row">
-        <button class="btn-preset" onclick="applyPreset('node')">Node.js app</button>
-        <button class="btn-preset" onclick="applyPreset('python')">Python app</button>
-        <button class="btn-preset" onclick="applyPreset('go')">Go binary</button>
+        <button class="btn-preset" onclick="applyPreset('node')" data-i18n="x_node_js_app">Node.js app</button>
+        <button class="btn-preset" onclick="applyPreset('python')" data-i18n="x_python_app">Python app</button>
+        <button class="btn-preset" onclick="applyPreset('go')" data-i18n="x_go_binary">Go binary</button>
         <button class="btn-preset" onclick="applyPreset('java')">Java jar</button>
       </div>
 
@@ -577,27 +151,27 @@
 
       <div class="field">
         <label>WorkingDirectory</label>
-        <input type="text" id="svc-wd" value="/var/www/myapp" spellcheck="false" placeholder="(optional)" />
+        <input type="text" id="svc-wd" value="/var/www/myapp" spellcheck="false" placeholder="(optional)"  data-i18n-placeholder="x_optional"/>
       </div>
 
       <div class="field-row">
         <div class="field">
-          <label>User</label>
-          <input type="text" id="svc-user" value="www-data" spellcheck="false" placeholder="(optional)" />
+          <label data-i18n="x_user">User</label>
+          <input type="text" id="svc-user" value="www-data" spellcheck="false" placeholder="(optional)"  data-i18n-placeholder="x_optional"/>
         </div>
         <div class="field">
-          <label>Group</label>
-          <input type="text" id="svc-group" value="" spellcheck="false" placeholder="(optional)" />
+          <label data-i18n="x_group">Group</label>
+          <input type="text" id="svc-group" value="" spellcheck="false" placeholder="(optional)"  data-i18n-placeholder="x_optional"/>
         </div>
       </div>
 
       <div class="field">
         <label data-i18n="sdg_type">Service Type</label>
         <select id="svc-type">
-          <option value="simple" selected>simple (foreground process)</option>
-          <option value="forking">forking (daemonizes itself)</option>
-          <option value="oneshot">oneshot (runs once and exits)</option>
-          <option value="notify">notify (sd_notify support)</option>
+          <option value="simple" selected data-i18n="x_simple_foreground_process">simple (foreground process)</option>
+          <option value="forking" data-i18n="x_forking_daemonizes_itself">forking (daemonizes itself)</option>
+          <option value="oneshot" data-i18n="x_oneshot_runs_once_and_exits">oneshot (runs once and exits)</option>
+          <option value="notify" data-i18n="x_notify_sd_notify_support">notify (sd_notify support)</option>
         </select>
       </div>
 
@@ -606,7 +180,7 @@
 
       <div class="field-row">
         <div class="field">
-          <label>Restart</label>
+          <label data-i18n="x_restart">Restart</label>
           <select id="svc-restart">
             <option value="no">no</option>
             <option value="on-failure">on-failure</option>
@@ -625,19 +199,19 @@
       <div class="env-list" id="env-list">
         <div class="env-row">
           <input type="text" class="env-key" value="NODE_ENV" placeholder="KEY" spellcheck="false" />
-          <input type="text" class="env-val" value="production" placeholder="value" spellcheck="false" />
-          <button class="btn-env-del" onclick="removeEnv(this)" aria-label="Remove">×</button>
+          <input type="text" class="env-val" value="production" placeholder="value" data-i18n-placeholder="x_value" spellcheck="false" />
+          <button class="btn-env-del" onclick="removeEnv(this)" aria-label="Remove" data-i18n-aria="x_remove">×</button>
         </div>
       </div>
       <button class="btn-env-add" onclick="addEnv()" data-i18n="sdg_env_add">+ Add variable</button>
 
       <div class="field">
         <label>EnvironmentFile</label>
-        <input type="text" id="svc-envfile" value="" spellcheck="false" placeholder="/etc/myapp/env (optional)" />
+        <input type="text" id="svc-envfile" value="" spellcheck="false" placeholder="/etc/myapp/env (optional)" data-i18n-placeholder="x_ph_envfile" />
         <span class="field-hint" data-i18n="sdg_envfile_hint">Optional — path to a KEY=value file</span>
       </div>
 
-      <button class="btn-generate" onclick="generate()" data-i18n="sdg_generate">Generate .service file</button>
+      <button class="btn btn-primary btn-generate" onclick="generate()" data-i18n="sdg_generate">Generate .service file</button>
 
     </div>
 
@@ -668,67 +242,71 @@
       </div>
 
     </div>
+  </main>
 
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More DevOps tools</h2>
+      <a class="sec-link" href="/#cat-devops"><span data-i18n="all_in_cat">All DevOps &amp; Config Generators tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/nginx-config-generator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-server-cog"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Nginx Config Generator</span><span class="lang-ko">Nginx 설정 생성기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/pm2-ecosystem-generator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-refresh-cw"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">PM2 Ecosystem Config Generator</span><span class="lang-ko">PM2 Ecosystem Config 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
   </section>
 
-  <!-- Guide -->
   <section class="guide">
     <div class="lang-en">
-      <p class="guide-title">How to Use</p>
+      <h2 class="guide-title">How to Use</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">STEP 1</p>
-          <h3>Pick a preset or fill the form</h3>
+          <h3>1. Pick a preset or fill the form</h3>
           <p>Click a preset (Node.js, Python, Go, Java) to auto-fill sensible defaults, then adjust the service name, <code style="color:var(--accent-text)">ExecStart</code> path, and working directory to match your app.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 2</p>
-          <h3>Set the run policy</h3>
+          <h3>2. Set the run policy</h3>
           <p>Choose the service type (<code style="color:var(--accent-text)">simple</code> for almost every modern app), the restart policy, and the user your app should run as — never root for a web app.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 3</p>
-          <h3>Add environment variables</h3>
+          <h3>3. Add environment variables</h3>
           <p>Add KEY=value pairs like NODE_ENV=production or PORT=3000, or point EnvironmentFile at a secrets file kept outside the unit — handy for API keys.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 4</p>
-          <h3>Install and enable</h3>
+          <h3>4. Install and enable</h3>
           <p>Save the file to <code style="color:var(--accent-text)">/etc/systemd/system/</code>, then run the generated commands: daemon-reload, <code style="color:var(--accent-text)">enable --now</code>, and follow logs with journalctl.</p>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <p class="guide-title">사용 방법</p>
+      <h2 class="guide-title">사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">STEP 1</p>
-          <h3>프리셋 선택 또는 직접 입력</h3>
+          <h3>1. 프리셋 선택 또는 직접 입력</h3>
           <p>프리셋(Node.js, Python, Go, Java)을 클릭하면 기본값이 자동 입력됩니다. 서비스 이름, <code style="color:var(--accent-text)">ExecStart</code> 경로, 작업 디렉터리를 앱에 맞게 수정하세요.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 2</p>
-          <h3>실행 정책 설정</h3>
+          <h3>2. 실행 정책 설정</h3>
           <p>서비스 타입(요즘 앱은 대부분 <code style="color:var(--accent-text)">simple</code>), 재시작 정책, 실행 계정을 선택하세요 — 웹 앱은 절대 root로 실행하지 마세요.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 3</p>
-          <h3>환경변수 추가</h3>
+          <h3>3. 환경변수 추가</h3>
           <p>NODE_ENV=production, PORT=3000 같은 KEY=value 쌍을 추가하거나, EnvironmentFile로 유닛 밖의 시크릿 파일을 지정하세요 — API 키 관리에 유용합니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 4</p>
-          <h3>설치 및 활성화</h3>
+          <h3>4. 설치 및 활성화</h3>
           <p>파일을 <code style="color:var(--accent-text)">/etc/systemd/system/</code>에 저장하고 생성된 명령어를 실행하세요: daemon-reload, <code style="color:var(--accent-text)">enable --now</code>, journalctl로 로그 확인.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <p class="faq-title">Frequently Asked Questions</p>
+      <h2 class="faq-title">Frequently Asked Questions</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between Type=simple and Type=forking?</span><span class="faq-icon">+</span></button>
         <div class="faq-a"><code style="color:var(--accent-text)">Type=simple</code> (the default) assumes the process in ExecStart stays in the foreground — systemd considers the service started as soon as the process is spawned. <code style="color:var(--accent-text)">Type=forking</code> is for classic daemons that fork into the background and exit the parent process; systemd waits for the fork and usually needs a <code style="color:var(--accent-text)">PIDFile=</code> to track the child. Modern apps (Node.js, Python, Go, Java) almost always run in the foreground, so use simple. Only use forking for legacy daemons like some builds of nginx or older init-style scripts.</div>
@@ -751,7 +329,7 @@
       </div>
     </div>
     <div class="lang-ko">
-      <p class="faq-title">자주 묻는 질문</p>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>Type=simple과 Type=forking의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a"><code style="color:var(--accent-text)">Type=simple</code>(기본값)은 ExecStart의 프로세스가 포그라운드에 머문다고 가정합니다 — 프로세스가 실행되는 순간 서비스가 시작된 것으로 간주합니다. <code style="color:var(--accent-text)">Type=forking</code>은 백그라운드로 fork한 뒤 부모 프로세스가 종료되는 전통적인 데몬용이며, 보통 <code style="color:var(--accent-text)">PIDFile=</code>이 필요합니다. Node.js, Python, Go, Java 같은 현대 앱은 거의 모두 포그라운드로 실행되므로 simple을 사용하세요.</div>
@@ -777,45 +355,61 @@
 
   <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/cron-builder/" class="sf-related-card"><span>⏰</span>Cron Expression Builder</a>
-      <a href="/tools/nginx-config-generator/" class="sf-related-card"><span>⚙️</span>Nginx Config Generator</a>
-      <a href="/tools/ssh-config-generator/" class="sf-related-card"><span>🔑</span>SSH Config Generator</a>
-      <a href="https://stackfreeks.com/deploy-nodejs-vultr-vps/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Deploy Node.js on a Vultr VPS</a>
-    </div>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/cron-builder/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-calendar-clock"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Cron Expression Builder</span><span class="lang-ko">크론 표현식 빌더</span></span></span></a></li>
+      <li><a href="/tools/nginx-config-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-server-cog"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Nginx Config Generator</span><span class="lang-ko">Nginx 설정 생성기</span></span></span></a></li>
+      <li><a href="/tools/ssh-config-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-key-round"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">SSH Config Generator</span><span class="lang-ko">SSH Config 생성기</span></span></span></a></li>
+    </ul>
   </section>
 
-  <!-- Vultr Banner -->
-  <section class="vultr-banner">
-    <div class="banner-inner">
-      <div>
-        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-        <p class="banner-title" data-i18n="vultr_title">Run your service on Vultr</p>
-        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
-      </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
-         rel="nofollow sponsored" target="_blank"
-         data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
+  <!-- Related content -->
+  <section class="related">
+    <a href="https://stackfreeks.com/deploy-nodejs-vultr-vps/" target="_blank" rel="noopener">Deploy Node.js on a Vultr VPS →</a>
   </section>
+
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Run your service on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
   </footer>
 
   <script>
     // i18n page-specific keys (must be before i18n.js)
     window.SF_PAGE_I18N = {
       en: {
+        cat_devops: "DevOps & Config Generators",
+        more_tools: "More DevOps tools",
+        all_in_cat: "All DevOps & Config Generators tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         sdg_presets: 'Presets',
         sdg_service: 'Service',
         sdg_name: 'Service Name',
@@ -832,8 +426,29 @@
         sdg_cmd_title: 'Install & manage commands',
         copy_btn: 'Copy',
         download_btn: 'Download',
+        x_forking_daemonizes_itself: "forking (daemonizes itself)",
+        x_go_binary: "Go binary",
+        x_node_js_app: "Node.js app",
+        x_notify_sd_notify_support: "notify (sd_notify support)",
+        x_oneshot_runs_once_and_exits: "oneshot (runs once and exits)",
+        x_optional: "(optional)",
+        x_value: "value",
+        x_ph_envfile: "/etc/myapp/env (optional)",
+        x_python_app: "Python app",
+        x_restart: "Restart",
+        x_simple_foreground_process: "simple (foreground process)",
+        x_user: "User",
+        x_need_execstart: "ExecStart is required — enter the command that starts your app."
       },
       ko: {
+        cat_devops: "DevOps & 설정 생성기",
+        more_tools: "DevOps 툴 더 보기",
+        all_in_cat: "DevOps & 설정 생성기 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         sdg_presets: '프리셋',
         sdg_service: '서비스',
         sdg_name: '서비스 이름',
@@ -850,6 +465,19 @@
         sdg_cmd_title: '설치 · 관리 명령어',
         copy_btn: '복사',
         download_btn: '다운로드',
+        x_forking_daemonizes_itself: "forking (스스로 데몬화)",
+        x_go_binary: "Go 바이너리",
+        x_node_js_app: "Node.js 앱",
+        x_notify_sd_notify_support: "notify (sd_notify 지원)",
+        x_oneshot_runs_once_and_exits: "oneshot (한 번 실행 후 종료)",
+        x_optional: "(선택)",
+        x_value: "값",
+        x_ph_envfile: "/etc/myapp/env (선택)",
+        x_python_app: "Python 앱",
+        x_restart: "재시작",
+        x_simple_foreground_process: "simple (포그라운드 프로세스)",
+        x_user: "사용자",
+        x_need_execstart: "ExecStart는 필수입니다 — 앱을 실행하는 명령어를 입력하세요."
       }
     };
 
@@ -906,8 +534,8 @@
       row.className = 'env-row';
       row.innerHTML =
         '<input type="text" class="env-key" placeholder="KEY" spellcheck="false" />' +
-        '<input type="text" class="env-val" placeholder="value" spellcheck="false" />' +
-        '<button class="btn-env-del" onclick="removeEnv(this)" aria-label="Remove">×</button>';
+        '<input type="text" class="env-val" placeholder="value" data-i18n-placeholder="x_value" spellcheck="false" />' +
+        '<button class="btn-env-del" onclick="removeEnv(this)" aria-label="Remove" data-i18n-aria="x_remove">×</button>';
       row.querySelector('.env-key').value = key || '';
       row.querySelector('.env-val').value = val || '';
       document.getElementById('env-list').appendChild(row);
@@ -937,7 +565,7 @@
 
       const outEl = document.getElementById('unit-out');
       if (!exec) {
-        outEl.innerHTML = '<div class="placeholder-msg">ExecStart is required — enter the command that starts your app.</div>';
+        outEl.innerHTML = '<div class="placeholder-msg">' + sfT('x_need_execstart') + '</div>';
         outEl._raw = '';
         document.getElementById('cmd-block').style.display = 'none';
         return;
@@ -1026,10 +654,10 @@
       if (!text) return;
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.getElementById(btnId);
-        btn.textContent = '✓ Copied';
+        btn.textContent = '✓ ' + sfT('x_copied_s');
         btn.classList.add('copied');
         setTimeout(() => {
-          btn.textContent = 'Copy';
+          btn.textContent = sfT('x_copy');
           btn.classList.remove('copied');
         }, 2000);
       });
@@ -1052,7 +680,7 @@
 
     function resetCopy(btnId) {
       const btn = document.getElementById(btnId);
-      if (btn) { btn.textContent = 'Copy'; btn.classList.remove('copied'); }
+      if (btn) { btn.textContent = sfT('x_copy'); btn.classList.remove('copied'); }
     }
 
     function toggleFaq(btn) {

@@ -21,295 +21,80 @@
 <meta content="https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
-<!-- ADSENSE_SLOT_TOP -->
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --accent-fg: #ffffff;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--accent-text); text-decoration: none; }
-    code { font-family: var(--font-mono); font-size: 0.92em; color: var(--text-1); }
-    .container { max-width: 840px; margin: 0 auto; padding: 0 24px; }
-
-    /* Nav */
-    .navbar {
-      border-bottom: 1px solid var(--border);
-      padding: 14px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(12px);
-      background: rgba(10,10,11,0.85);
-    }
-    .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-    .nav-logo {
-      font-size: 14px; font-weight: 500; color: var(--text-1); text-decoration: none;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; }
-    .nav-actions { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent; border: 1px solid var(--border); border-radius: 6px;
-      color: var(--text-3); font-size: 12px; font-weight: 500; padding: 4px 10px;
-      cursor: pointer; font-family: var(--font); transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 560px; }
-
-    /* Tool */
-    main { padding: 32px 0; }
-    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    /* PHP-FPM pm.max_children Calculator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool code { color: var(--text-1); }
+    .tool-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
     .tool-grid > *, .reverse-grid > * { min-width: 0; }
-    .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 24px;
-    }
     .card-wide { margin-top: 12px; }
-    .card-label {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 16px;
-    }
+    .card-label { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
     .form-group { margin-bottom: 14px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
-    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
-    input, select {
-      width: 100%; background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: var(--radius); color: var(--text-1); padding: 9px 12px; font-size: 13px;
-      font-family: var(--font); outline: none; transition: border-color 0.15s; -webkit-appearance: none;
-    }
-    input:focus, select:focus { border-color: var(--border-2); }
-    input::placeholder { color: var(--text-3); }
-    .sub-label {
-      font-size: 11px; font-weight: 500; color: var(--text-3); text-transform: uppercase;
-      letter-spacing: 0.08em; margin: 18px 0 10px;
-    }
+    .form-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .tool label { display: block; font-size: 13px; font-weight: 500; color: var(--text-2); margin-bottom: 5px; }
+    .tool input { width: 100%; font-variant-numeric: tabular-nums; }
+    .hint { font-size: 13px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+    .sub-label { font-size: 13px; font-weight: 600; color: var(--text-1); margin: 18px 0 10px; }
 
-    /* Result */
+    /* result */
     .result-main { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
-    .result-number {
-      font-size: 2.5rem; font-weight: 500; letter-spacing: -0.04em;
-      font-variant-numeric: tabular-nums; color: var(--text-1);
-    }
+    .result-number { font-size: 40px; font-weight: 650; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--text-1); }
     .result-unit { font-size: 13px; color: var(--text-3); font-family: var(--font-mono); }
-    .result-note { font-size: 12px; color: var(--text-3); margin-bottom: 12px; line-height: 1.5; }
+    .result-note { font-size: 13px; color: var(--text-2); margin-bottom: 12px; line-height: 1.5; }
     .divider { height: 1px; background: var(--border); margin: 14px 0; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500;
-      border-radius: 20px; padding: 3px 10px; margin-bottom: 12px;
-    }
-    .badge-success { color: var(--success); background: var(--success-bg); }
-    .badge-warn { color: var(--warning); background: rgba(245,158,11,0.08); }
-    .badge-danger { color: var(--danger); background: rgba(239,68,68,0.08); }
-
-    .info-row {
-      display: flex; justify-content: space-between; align-items: center; gap: 12px;
-      padding: 7px 0; font-size: 13px; border-bottom: 1px solid var(--border);
-    }
+    .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; border-radius: 999px; padding: 3px 10px; margin-bottom: 12px; border: 1px solid transparent; }
+    .badge:empty { display: none; }
+    .badge-success { color: var(--success-fg); background: var(--success); }
+    .badge-warn { color: var(--warning); background: var(--warning-bg); border-color: var(--warning); }
+    .badge-danger { color: var(--danger); background: var(--danger-bg); border-color: var(--danger); }
+    .info-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 7px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
     .info-row:last-child { border-bottom: none; }
-    .info-key { color: var(--text-2); font-family: var(--font-mono); font-size: 12px; }
-    .info-key.plain { font-family: var(--font); font-size: 13px; }
-    .info-val { color: var(--text-1); font-weight: 500; font-variant-numeric: tabular-nums; text-align: right; }
+    .info-key { color: var(--text-2); font-family: var(--font-mono); font-size: 13px; }
+    .info-key.plain { font-family: var(--font); font-size: 14px; }
+    .info-val { color: var(--text-1); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
     .info-val.accent { color: var(--accent-text); }
-
-    .formula {
-      background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 10px 12px; font-family: var(--font-mono); font-size: 11.5px; color: var(--text-1);
-      line-height: 1.7; margin-top: 4px; overflow-x: auto;
-    }
+    .formula { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 10px 12px; font-family: var(--font-mono); font-size: 12.5px; color: var(--text-1); line-height: 1.7; margin-top: 4px; overflow-x: auto; }
     .formula .muted { color: var(--text-2); }
-    .basis { font-size: 11.5px; color: var(--text-3); margin-top: 12px; line-height: 1.6; }
+    .basis { font-size: 13px; color: var(--text-3); margin-top: 12px; line-height: 1.6; }
     .basis a { color: var(--text-2); text-decoration: underline; text-underline-offset: 2px; }
     .basis a:hover { color: var(--text-1); }
 
-    /* Commands */
-    .cmd-label {
-      font-size: 11px; font-weight: 500; color: var(--text-3); text-transform: uppercase;
-      letter-spacing: 0.08em; margin-bottom: 8px;
-    }
+    /* commands */
+    .cmd-label { font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
     .cmd-wrap { position: relative; }
-    .cmd-block {
-      background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 12px 70px 12px 14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-1);
-      line-height: 1.8; white-space: pre; overflow-x: auto;
-    }
-    .cmd-block.small { font-size: 11px; line-height: 1.6; padding-top: 10px; padding-bottom: 10px; white-space: pre-wrap; word-break: break-all; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px; background: var(--surface);
-      border: 1px solid var(--border); border-radius: 5px; color: var(--text-2);
-      font-size: 11px; padding: 3px 8px; cursor: pointer; font-family: var(--font);
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .copy-btn:hover { color: var(--text-1); border-color: var(--border-2); }
+    .cmd-block { margin: 0; padding: 12px 72px 12px 14px; font-size: 13px; color: var(--text-1); line-height: 1.8; white-space: pre; overflow-x: auto; }
+    .cmd-block.small { font-size: 12px; line-height: 1.6; padding-top: 10px; padding-bottom: 10px; white-space: pre-wrap; word-break: break-all; }
+    .copy-btn { position: absolute; top: 7px; right: 7px; background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius-s); color: var(--text-2); font: 600 13px var(--font); padding: 3px 10px; cursor: pointer; transition: background-color var(--t), border-color var(--t), color var(--t); }
+    .copy-btn:hover { color: var(--text-1); border-color: var(--text-3); }
 
-    /* Mode selector */
-    .seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 12px; }
-    .seg-btn {
-      background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
-      color: var(--text-2); font-family: var(--font-mono); font-size: 12.5px; padding: 9px 8px;
-      cursor: pointer; transition: border-color 0.15s, color 0.15s, background 0.15s;
-    }
-    .seg-btn:hover { border-color: var(--border-2); color: var(--text-1); }
-    .seg-btn.active { background: rgba(99,102,241,0.12); border-color: var(--accent); color: var(--text-1); }
-    .mode-advice { font-size: 12.5px; color: var(--text-2); margin-bottom: 14px; line-height: 1.6; }
+    /* pm mode */
+    .seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
+    .seg-btn { background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius-s); color: var(--text-2); font-family: var(--font-mono); font-size: 13px; padding: 9px 8px; cursor: pointer; transition: background-color var(--t), border-color var(--t), color var(--t); }
+    .seg-btn:hover { border-color: var(--text-3); color: var(--text-1); }
+    .seg-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+    .mode-advice { font-size: 14px; color: var(--text-2); margin-bottom: 14px; line-height: 1.6; }
 
-    /* Reverse */
-    .reverse-grid { display: grid; grid-template-columns: 220px 1fr; gap: 20px; align-items: start; }
-    .reverse-out { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .reverse-big { font-size: 1.6rem; font-weight: 500; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
-    .vultr-inline {
-      margin-top: 12px; border: 1px solid rgba(34,197,94,0.25); background: var(--success-bg);
-      border-radius: var(--radius); padding: 12px 14px; display: flex; align-items: center;
-      justify-content: space-between; gap: 12px; flex-wrap: wrap;
-    }
-    .vultr-inline p { font-size: 13px; color: var(--text-1); }
-    .btn-vultr-sm {
-      background: var(--success); color: var(--success-fg); border-radius: var(--radius); padding: 7px 14px;
-      font-size: 12.5px; font-weight: 500; white-space: nowrap; transition: opacity 0.15s;
-    }
-    .btn-vultr-sm:hover { background: var(--success-hover); }
+    /* reverse */
+    .reverse-grid { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; align-items: start; }
+    .reverse-out { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+    .reverse-big { font-size: 26px; font-weight: 650; color: var(--text-1); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .vultr-inline { margin-top: 14px; border: 1px solid var(--border); background: var(--surface-2); border-radius: var(--radius-s); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .vultr-inline[hidden] { display: none; }
+    .vultr-inline p { font-size: 14px; color: var(--text-1); }
 
-    /* Guide */
-    .guide { max-width: 840px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FAQ */
-    .faq { max-width: 840px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q {
-      width: 100%; background: none; border: none; text-align: left;
-      padding: 16px 20px; font-family: var(--font); font-size: 14px;
-      font-weight: 600; color: var(--text-1); cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related guides (blog) */
-    .related { padding: 8px 0 0; }
-    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .related-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 18px; text-decoration: none;
-      display: flex; flex-direction: column; gap: 6px; transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); }
-    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent-text); letter-spacing: 0.06em; text-transform: uppercase; }
-    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
-    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
-
-    /* Related tools */
-    .sf-related { max-width: 840px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-
-    /* Vultr banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font);
-      text-decoration: none; display: inline-block; white-space: nowrap; transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-
-    /* Mobile */
     @media (max-width: 768px) {
-      h1 { font-size: 1.4rem; }
-      .result-number { font-size: 2rem; }
-      .tool-grid { grid-template-columns: 1fr; }
-      .reverse-grid { grid-template-columns: 1fr; gap: 12px; }
-      .container { padding: 0 16px; }
-      .card { padding: 18px; }
-      .guide { padding: 0 16px 32px; }
-      .faq { padding: 0 16px 32px; }
-      .sf-related { padding: 32px 16px 36px; }
-      .banner-inner { flex-direction: column; align-items: flex-start; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; }
-      .nav-actions { gap: 10px; }
+      .result-number { font-size: 32px; }
+      .tool-grid { grid-template-columns: minmax(0, 1fr); }
+      .reverse-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .card-box { padding: 16px; }
     }
     @media (max-width: 420px) {
-      .form-row { grid-template-columns: 1fr; }
-      .cmd-block { font-size: 11px; }
-    }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .form-row { grid-template-columns: minmax(0, 1fr); }
+      .cmd-block { font-size: 12px; }
     }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "PHP-FPM pm.max_children Calculator", "description": "Calculate PHP-FPM pm.max_children from RAM, MySQL/Redis reservations and worker size. Get spare server values and a www.conf block.", "url": "https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/ko/", "applicationCategory": "DeveloperApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/ko/"}}</script>
@@ -317,35 +102,36 @@
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<nav class="navbar">
-<div class="container nav-inner">
-<a class="nav-logo" href="/ko/">
-<div class="logo-mark"></div>
-      StackFreeks Tools
-    </a>
-<div class="nav-actions">
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-vps"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-hard-drive"></use></svg><span data-i18n="cat_vps_server">VPS & Server</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/php-fpm-max-children-calculator/">English</a>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; all tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
 </div>
 </nav>
-<!-- ADSENSE_SLOT_TOP -->
-<section class="hero">
-<div class="container">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-layers"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
-<div class="eyebrow">PHP & VPS</div>
 <h1>PHP-FPM pm.max_children 계산기</h1>
-<p class="hero-desc">서버 RAM, MySQL&middot;Redis&middot;OS 예약 메모리, 실측 워커 크기로 pm.max_children과 spare 서버 값을 계산하고 www.conf 설정을 바로 복사하세요.</p>
+<p>서버 RAM, MySQL&middot;Redis&middot;OS 예약 메모리, 실측 워커 크기로 pm.max_children과 spare 서버 값을 계산하고 www.conf 설정을 바로 복사하세요.</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
 </div>
-</section>
-<main>
-<div class="container">
+</header>
+<!-- Tool body -->
+<main class="tool wrap-tool">
 <div class="tool-grid">
 <!-- Inputs -->
-<div class="card">
+<div class="card-box">
 <p class="card-label" data-i18n="lbl_input">Server memory</p>
 <div class="form-group">
 <label data-i18n="lbl_ram" for="ramGb">Total RAM (GB)</label>
@@ -387,7 +173,7 @@
 </div>
 </div>
 <!-- Result -->
-<div class="card">
+<div class="card-box">
 <p class="card-label" data-i18n="lbl_result">Recommended pool size</p>
 <div class="result-main">
 <span class="result-number" id="resMax">38</span>
@@ -418,9 +204,9 @@
 </div>
 </div>
 <!-- pm mode + config -->
-<div class="card card-wide">
+<div class="card-box card-wide">
 <p class="card-label" data-i18n="lbl_mode">Process manager mode & www.conf</p>
-<div aria-label="pm mode" class="seg" role="radiogroup">
+<div aria-label="pm mode" class="seg" data-i18n-aria="x_pm_mode" role="radiogroup">
 <button aria-checked="false" class="seg-btn" data-mode="static" onclick="setMode('static')" role="radio" type="button">static</button>
 <button aria-checked="true" class="seg-btn active" data-mode="dynamic" onclick="setMode('dynamic')" role="radio" type="button">dynamic</button>
 <button aria-checked="false" class="seg-btn" data-mode="ondemand" onclick="setMode('ondemand')" role="radio" type="button">ondemand</button>
@@ -434,7 +220,7 @@
 <p class="hint" id="reloadHint" style="margin-top:8px;"></p>
 </div>
 <!-- Reverse mode -->
-<div class="card card-wide">
+<div class="card-box card-wide">
 <p class="card-label" data-i18n="lbl_reverse">Reverse: RAM needed for a target max_children</p>
 <div class="reverse-grid">
 <div class="form-group" style="margin-bottom:0;">
@@ -446,35 +232,43 @@
 </div>
 <div class="vultr-inline" hidden id="reverseCta">
 <p id="reverseCtaText"></p>
-<a class="btn-vultr-sm" href="https://www.vultr.com/?ref=9907834-9J" id="reverseCtaBtn" rel="nofollow sponsored" target="_blank"></a>
-</div>
+<a class="btn btn-primary btn-vultr-sm" href="https://www.vultr.com/?ref=9907834-9J" id="reverseCtaBtn" rel="nofollow sponsored" target="_blank"></a>
 </div>
 </div>
 </main>
-<!-- How to Use -->
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More server tools</h2>
+<a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS & Server tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/redis-memory-estimator/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-database-zap"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Redis 메모리 예상 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/managed-database-cost-calculator/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-database"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">매니지드 데이터베이스 비용 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
+<!-- How to use -->
 <section class="guide">
 
 <div class="lang-ko">
-<p class="guide-title">사용 방법</p>
+<h2 class="guide-title">사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<p class="guide-step">STEP 1</p>
-<h3>총 RAM과 예약 메모리 입력</h3>
+<h3>1. 총 RAM과 예약 메모리 입력</h3>
 <p>서버 RAM을 넣고 OS, MySQL/MariaDB(대략 innodb_buffer_pool_size + 오버헤드), Redis 등 다른 서비스가 쓰는 메모리를 입력하세요. 실제 사용량은 free -m, htop으로 확인합니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">STEP 2</p>
-<h3>워커 크기 실측</h3>
+<h3>2. 워커 크기 실측</h3>
 <p>ps 한 줄 명령을 복사해 평소 트래픽이 있을 때 서버에서 실행하세요. 워커 크기는 앱&middot;플러그인&middot;PHP 설정에 따라 크게 달라지므로 추측하지 말고 직접 측정하세요.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">STEP 3</p>
-<h3>pm 모드 선택 후 설정 복사</h3>
+<h3>3. pm 모드 선택 후 설정 복사</h3>
 <p>static, dynamic, ondemand 중 하나를 고르고 생성된 블록을 풀 설정 파일(예: /etc/php/8.3/fpm/pool.d/www.conf)에 붙여넣은 뒤 PHP-FPM을 reload 하세요.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">STEP 4</p>
-<h3>부하 상태에서 검증</h3>
+<h3>4. 부하 상태에서 검증</h3>
 <p>free -m과 PHP-FPM 로그를 지켜보세요. "server reached pm.max_children" 경고가 보이면 역계산기로 더 높은 값에 필요한 RAM을 확인하세요.</p>
 </div>
 </div>
@@ -484,7 +278,7 @@
 <section class="faq">
 
 <div class="lang-ko">
-<p class="faq-title">자주 묻는 질문</p>
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>PHP-FPM pm.max_children은 어떻게 계산하나요?</span><span class="faq-icon">+</span></button>
 <div class="faq-a">총 RAM에서 다른 서비스(OS, MySQL&middot;MariaDB, Redis, Nginx)가 쓰는 메모리를 빼고, 10&ndash;20% 안전 버퍼를 남긴 뒤 PHP-FPM 워커 1개의 평균 메모리로 나누고 내림합니다. 예: 4GB, MySQL 1GB, OS 512MB &rarr; floor((4096 &minus; 1536) &times; 0.9 &divide; 60) = 38개.</div>
@@ -507,68 +301,56 @@
 </div>
 </div>
 </section>
-<!-- Related guides (blog) -->
-<section class="related">
-<div class="container">
-
-<div class="lang-ko">
-<p class="eyebrow" style="margin-bottom:12px;">관련 가이드</p>
-<div class="related-grid">
-<a class="related-card" href="https://stackfreeks.com/deploy-laravel-vultr-vps/" rel="noopener" target="_blank">
-<span class="related-tag">PHP</span>
-<p class="related-title">Deploy Laravel on Vultr VPS 2026: Full Stack PHP Setup Guide</p>
-<span class="related-arrow">&rarr;</span>
-</a>
-<a class="related-card" href="https://stackfreeks.com/deploy-wordpress-on-vultr-vps-full-step-by-step-guide-2026/" rel="noopener" target="_blank">
-<span class="related-tag">WordPress</span>
-<p class="related-title">Deploy WordPress on Vultr VPS: Full Step-by-Step Guide 2026</p>
-<span class="related-arrow">&rarr;</span>
-</a>
-<a class="related-card" href="https://stackfreeks.com/best-cheap-vps-2026/" rel="noopener" target="_blank">
-<span class="related-tag">VPS</span>
-<p class="related-title">Best Cheap VPS Under $10/Month in 2026 (Compared & Ranked)</p>
-<span class="related-arrow">&rarr;</span>
-</a>
-</div>
-</div>
-</div>
-</section>
 <!-- Related tools -->
 <section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/docker-ram-calculator/ko/"><span>🐳</span>Docker RAM Calculator</a>
-<a class="sf-related-card" href="/tools/linux-swap-calculator/ko/"><span>💾</span>Linux Swap Size Calculator</a>
-<a class="sf-related-card" href="/tools/redis-memory-estimator/ko/"><span>🔴</span>Redis Memory Estimator</a>
-<a class="sf-related-card" href="/tools/nginx-config-generator/ko/"><span>⚙️</span>Nginx Config Generator</a>
-</div>
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/docker-ram-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-container"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Docker RAM 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/linux-swap-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-down-up"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">리눅스 스왑 크기 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/redis-memory-estimator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-database-zap"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Redis 메모리 예상 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/nginx-config-generator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-server-cog"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Nginx 설정 생성기</span></span></span></a></li>
+</ul>
 </section>
-<!-- Vultr Banner -->
-<section class="vultr-banner">
-<div class="container banner-inner">
+<!-- Related content -->
+<section class="related">
+<p><a href="https://stackfreeks.com/deploy-laravel-vultr-vps/" rel="noopener" target="_blank">Deploy Laravel on Vultr VPS 2026: Full Stack PHP Setup Guide</a></p>
+<p><a href="https://stackfreeks.com/deploy-wordpress-on-vultr-vps-full-step-by-step-guide-2026/" rel="noopener" target="_blank">Deploy WordPress on Vultr VPS: Full Step-by-Step Guide 2026</a></p>
+<p><a href="https://stackfreeks.com/best-cheap-vps-2026/" rel="noopener" target="_blank">Best Cheap VPS Under $10/Month in 2026 (Compared & Ranked)</a></p>
+</section>
+<!-- Vultr affiliate banner -->
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
 <div>
-<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</div>
 </div>
-<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
 </div>
-</section>
-<footer class="footer">
-<div class="container footer-inner">
-<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<!-- Footer -->
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
-<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com &rarr;</a>
 </div>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
 </div>
 </footer>
 <script>
 window.SF_PAGE_I18N = {
   en: {
+        cat_vps_server: 'VPS & Server',
+        more_tools: 'More server tools',
+        all_in_cat: 'All VPS & Server tools',
+        prev_tool: 'Previous tool',
+        next_tool: 'Next tool',
+        badge_free: 'Free',
+        badge_signup: 'No sign-up',
+        badge_browser: 'Runs in your browser',
     lbl_input: 'Server memory',
     lbl_ram: 'Total RAM (GB)',
     lbl_reserved: 'Reserved for other services (MB)',
@@ -592,9 +374,18 @@ window.SF_PAGE_I18N = {
     lbl_config: 'Pool config (www.conf)',
     lbl_reverse: 'Reverse: RAM needed for a target max_children',
     lbl_target: 'Target pm.max_children',
-    hint_target: 'Uses the same reservations, buffer and worker size as above.'
-  },
+    hint_target: 'Uses the same reservations, buffer and worker size as above.',
+        x_pm_mode: "pm mode"
+      },
   ko: {
+        cat_vps_server: 'VPS & 서버',
+        more_tools: '서버 툴 더 보기',
+        all_in_cat: 'VPS & 서버 전체',
+        prev_tool: '이전 툴',
+        next_tool: '다음 툴',
+        badge_free: '무료',
+        badge_signup: '가입 없음',
+        badge_browser: '브라우저에서 실행',
     lbl_input: '서버 메모리',
     lbl_ram: '총 RAM (GB)',
     lbl_reserved: '다른 서비스용 예약 메모리 (MB)',
@@ -618,8 +409,9 @@ window.SF_PAGE_I18N = {
     lbl_config: '풀 설정 (www.conf)',
     lbl_reverse: '역계산: 목표 max_children에 필요한 RAM',
     lbl_target: '목표 pm.max_children',
-    hint_target: '위와 같은 예약 메모리·버퍼·워커 크기를 사용합니다.'
-  }
+    hint_target: '위와 같은 예약 메모리·버퍼·워커 크기를 사용합니다.',
+        x_pm_mode: "pm 모드"
+      }
 };
 </script>
 <script src="/shared/i18n.js"></script>
@@ -635,9 +427,9 @@ var mode = 'dynamic';
 // Dynamic (JS-rendered) strings. Re-rendered on sfLangChanged.
 var DYN = {
   en: {
-    ok: '✓ Fits in RAM with your buffer',
-    tight: '⚠ Very few workers — consider more RAM or smaller workers',
-    none: '✕ Not enough RAM left for PHP-FPM',
+    ok: 'Fits in RAM with your buffer',
+    tight: 'Very few workers — consider more RAM or smaller workers',
+    none: 'Not enough RAM left for PHP-FPM',
     note: function (n, size) { return 'At most ' + n + ' PHP workers of ~' + size + ' MB can run at once without touching swap.'; },
     noteNone: 'Reservations plus buffer use all RAM. Lower the reservations, shrink workers or add RAM.',
     spare: function (n, s, mx) { return 'start = min_spare = 25% → ' + s + ' · max_spare = 75% → ' + mx; },
@@ -652,22 +444,22 @@ var DYN = {
     reload: 'Apply: sudo systemctl reload php8.3-fpm (match your version), then watch free -m.',
     revNeed: function (gb) { return 'Minimum total RAM'; },
     revDetail: function (t, mb) { return t + ' workers × worker size ÷ (1 − buffer) + reservations = ' + mb + ' MB'; },
-    revFits: function (cur, max) { return '✓ Your current ' + cur + ' GB is enough (it fits up to ' + max + ' children).'; },
-    revShort: function (cur) { return '✕ More than your current ' + cur + ' GB.'; },
+    revFits: function (cur, max) { return 'Your current ' + cur + ' GB is enough (it fits up to ' + max + ' children).'; },
+    revShort: function (cur) { return 'More than your current ' + cur + ' GB.'; },
     ctaText: function (need, plan) { return 'You need ≥ ' + need + ' GB — deploy ' + (plan === 8 ? 'an ' : 'a ') + plan + ' GB Vultr instance.'; },
     ctaBtn: function (plan) { return 'Deploy ' + plan + ' GB on Vultr →'; },
     copied: '✓ Copied',
     revInvalid: 'Enter a target of 1 or more.',
-    needProc: '✎ Enter your average worker size (MB)',
+    needProc: 'Enter your average worker size (MB)',
     noteProc: 'Enter your average PHP-FPM worker size (MB) to calculate. Measure it with the ps command under the field.',
     confProc: '; Enter your average worker size (MB) to generate the pool config.',
     formulaProc: '= waiting for worker size (MB)',
     revTooBig: function (max) { return 'That is more than the largest single Vultr Cloud Compute instance (' + max + ' GB). Reduce worker size, lower the target or split pools across servers.'; }
   },
   ko: {
-    ok: '✓ 버퍼를 포함해 RAM 안에 들어갑니다',
-    tight: '⚠ 워커 수가 매우 적음 — RAM 증설 또는 워커 크기 축소 권장',
-    none: '✕ PHP-FPM에 남는 RAM이 없습니다',
+    ok: '버퍼를 포함해 RAM 안에 들어갑니다',
+    tight: '워커 수가 매우 적음 — RAM 증설 또는 워커 크기 축소 권장',
+    none: 'PHP-FPM에 남는 RAM이 없습니다',
     note: function (n, size) { return '약 ' + size + 'MB 워커를 스왑 없이 최대 ' + n + '개까지 동시에 실행할 수 있습니다.'; },
     noteNone: '예약 메모리와 버퍼가 RAM 전체를 차지합니다. 예약을 줄이거나 워커를 줄이거나 RAM을 늘리세요.',
     spare: function (n, s, mx) { return 'start = min_spare = 25% → ' + s + ' · max_spare = 75% → ' + mx; },
@@ -682,13 +474,13 @@ var DYN = {
     reload: '적용: sudo systemctl reload php8.3-fpm (버전에 맞게) 후 free -m으로 확인하세요.',
     revNeed: function () { return '필요한 최소 총 RAM'; },
     revDetail: function (t, mb) { return '워커 ' + t + '개 × 워커 크기 ÷ (1 − 버퍼) + 예약 메모리 = ' + mb + ' MB'; },
-    revFits: function (cur, max) { return '✓ 현재 ' + cur + 'GB로 충분합니다 (최대 ' + max + '개까지 가능).'; },
-    revShort: function (cur) { return '✕ 현재 ' + cur + 'GB보다 더 필요합니다.'; },
+    revFits: function (cur, max) { return '현재 ' + cur + 'GB로 충분합니다 (최대 ' + max + '개까지 가능).'; },
+    revShort: function (cur) { return '현재 ' + cur + 'GB보다 더 필요합니다.'; },
     ctaText: function (need, plan) { return '최소 ' + need + 'GB 이상 필요 — ' + plan + 'GB Vultr 인스턴스를 배포하세요.'; },
     ctaBtn: function (plan) { return 'Vultr ' + plan + 'GB 배포 →'; },
     copied: '✓ 복사됨',
     revInvalid: '1 이상의 목표값을 입력하세요.',
-    needProc: '✎ 워커 평균 크기(MB)를 입력하세요',
+    needProc: '워커 평균 크기(MB)를 입력하세요',
     noteProc: '계산하려면 PHP-FPM 워커 평균 크기(MB)를 입력하세요. 입력란 아래 ps 명령으로 측정할 수 있습니다.',
     confProc: '; 풀 설정을 만들려면 워커 평균 크기(MB)를 입력하세요.',
     formulaProc: '= 워커 크기(MB) 입력 대기 중',
@@ -701,6 +493,8 @@ function num(id, fallback) {
   var v = parseFloat(document.getElementById(id).value);
   return isFinite(v) && v >= 0 ? v : fallback;
 }
+var CHECK_ICO = '<svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg>';
+var CROSS_ICO = '<svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-circle-x"/></svg>';
 function fmt(n) { return (Math.round(n * 10) / 10).toLocaleString('en-US'); }
 function gb(mb) { return fmt(mb / 1024) + ' GB'; }
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
@@ -777,6 +571,7 @@ function renderReverse(p, n) {
              '<div class="hint" style="margin-bottom:8px;">' + esc(t.revDetail(target, fmt(needMb))) + '</div>';
   var short = needMb > p.ramMb;
   html += '<div class="badge ' + (short ? 'badge-danger' : 'badge-success') + '" style="margin-bottom:0;">' +
+          (short ? CROSS_ICO : CHECK_ICO) +
           esc(short ? t.revShort(fmt(p.ramGb)) : t.revFits(fmt(p.ramGb), n)) + '</div>';
   var plan = short ? nextPlan(needGb) : null;
   if (short && plan === null) {
@@ -808,10 +603,15 @@ function calculate() {
 
   var badge = document.getElementById('resBadge');
   var noProc = p.proc <= 0;
-  if (noProc) { badge.className = 'badge badge-warn'; badge.textContent = t.needProc; }
-  else if (!ok) { badge.className = 'badge badge-danger'; badge.textContent = t.none; }
-  else if (n < 5) { badge.className = 'badge badge-warn'; badge.textContent = t.tight; }
-  else { badge.className = 'badge badge-success'; badge.textContent = t.ok; }
+  var setBadge = function (cls, icon, text) {
+    badge.className = 'badge ' + cls;
+    badge.innerHTML = '<svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-' + icon + '"/></svg>';
+    badge.appendChild(document.createTextNode(text));
+  };
+  if (noProc) setBadge('badge-warn', 'triangle-alert', t.needProc);
+  else if (!ok) setBadge('badge-danger', 'circle-x', t.none);
+  else if (n < 5) setBadge('badge-warn', 'triangle-alert', t.tight);
+  else setBadge('badge-success', 'check', t.ok);
   document.getElementById('resNote').textContent = noProc ? t.noteProc : (ok ? t.note(n, fmt(p.proc)) : t.noteNone);
 
   var usable = Math.max(0, (p.ramMb - p.reserved) * (1 - p.buffer));

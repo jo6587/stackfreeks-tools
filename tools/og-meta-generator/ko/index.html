@@ -27,725 +27,140 @@
 <meta content="https://tools.stackfreeks.com/tools/og-meta-generator/" property="twitter:url">
 <meta content="Open Graph Meta Tag Generator &mdash; Free SEO Tool | StackFreeks" property="twitter:title">
 <meta content="Generate Open Graph and Twitter Card meta tags for any webpage. Preview how your page looks on Google, Facebook, and Twitter." property="twitter:description">
-<!-- ADSENSE_SLOT_TOP -->
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
+    /* Open Graph Meta Tag Generator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool-cols { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: 20px; align-items: start; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* form */
+    .form-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+    .form-panel-title, .preview-section-title { font-size: 15px; font-weight: 600; }
+    .preview-section-title { font-size: 13px; color: var(--text-2); margin-bottom: 8px; }
+    .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .field-label { display: flex; justify-content: space-between; align-items: center; }
+    .field-label label { font-size: 13px; font-weight: 500; color: var(--text-2); }
+    .char-count { font-size: 13px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+    .char-count.warn { color: var(--warning); }
+    .char-count.over { color: var(--danger); font-weight: 600; }
+    .field input, .field textarea, .field select { width: 100%; }
+    .field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+    .field-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
+    /* previews: neutral link-card mock-ups (tokens only, so both themes hold) */
+    .preview-panel { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+    .preview-google { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
+    .google-url { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; }
+    .google-url-icon { width: 18px; height: 18px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 50%; flex-shrink: 0; }
+    .google-url-text { color: var(--text-2); font-size: 13px; overflow: hidden; text-overflow: ellipsis; }
+    .google-title { font-size: 18px; color: var(--accent-text); line-height: 1.4; margin-bottom: 4px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .google-desc { font-size: 14px; color: var(--text-2); line-height: 1.55; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
+    .preview-facebook, .preview-twitter { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .fb-image, .tw-image { width: 100%; aspect-ratio: 1200/630; background: var(--surface-2); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; border-bottom: 1px solid var(--border); }
+    .fb-image img, .tw-image img { width: 100%; height: 100%; object-fit: cover; }
+    .fb-image-placeholder, .tw-image-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-3); }
+    .fb-image-placeholder .ico, .tw-image-placeholder .ico { width: 32px; height: 32px; }
+    .fb-image-placeholder span, .tw-image-placeholder span { font-size: 13px; }
+    .fb-meta { padding: 12px 16px 14px; background: var(--surface-2); }
+    .tw-meta { padding: 12px 16px 14px; }
+    .fb-domain { font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+    .tw-domain { font-size: 13px; color: var(--text-3); margin-bottom: 3px; }
+    .fb-title, .tw-title { font-size: 15px; font-weight: 600; color: var(--text-1); line-height: 1.4; margin-bottom: 2px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .fb-desc, .tw-desc { font-size: 14px; color: var(--text-2); line-height: 1.45; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .fb-desc { -webkit-line-clamp: 1; }
 
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border-2);
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-    }
-
-    /* Tool layout */
-    .tool-wrap {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    .tool-cols {
-      display: grid;
-      grid-template-columns: 400px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    @media (max-width: 768px) {
-      .tool-cols {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Form panel */
-    .form-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .form-panel-title {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 4px;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .field-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .field-label label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-2);
-    }
-
-    .char-count {
-      font-size: 11px;
-      color: var(--text-3);
-    }
-    .char-count.warn { color: #f59e0b; }
-    .char-count.over { color: #ef4444; }
-
-    .field input,
-    .field textarea,
-    .field select {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-1);
-      font-family: var(--font);
-      font-size: 13px;
-      padding: 9px 12px;
-      border-radius: var(--radius);
-      width: 100%;
-      transition: border-color 0.15s;
-    }
-
-    .field input:focus,
-    .field textarea:focus,
-    .field select:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .field input::placeholder,
-    .field textarea::placeholder {
-      color: var(--text-3);
-    }
-
-    .field textarea {
-      resize: vertical;
-      min-height: 80px;
-      line-height: 1.5;
-    }
-
-    .field select {
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a1a1aa' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-color: var(--surface-2);
-      cursor: pointer;
-    }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    /* Preview panel */
-    .preview-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .preview-section-title {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 4px;
-    }
-
-    /* Google Preview */
-    .preview-google {
-      background: #fff;
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      border: 1px solid var(--border);
-    }
-
-    .google-url {
-      font-size: 12px;
-      color: #202124;
-      margin-bottom: 2px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .google-url-icon {
-      width: 18px;
-      height: 18px;
-      background: #e8eaed;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .google-url-text {
-      color: #202124;
-      font-size: 12px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .google-title {
-      font-size: 18px;
-      color: #1a0dab;
-      line-height: 1.4;
-      margin-bottom: 4px;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    .google-desc {
-      font-size: 13px;
-      color: #4d5156;
-      line-height: 1.6;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    .google-label {
-      font-size: 11px;
-      color: #70757a;
-      margin-bottom: 12px;
-    }
-
-    /* Facebook Preview */
-    .preview-facebook {
-      background: #1c1e21;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .fb-image {
-      width: 100%;
-      aspect-ratio: 1200/630;
-      background: #3a3b3c;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .fb-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .fb-image-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: #65676b;
-    }
-
-    .fb-image-placeholder svg {
-      opacity: 0.5;
-    }
-
-    .fb-image-placeholder span {
-      font-size: 12px;
-    }
-
-    .fb-meta {
-      padding: 12px 16px 14px;
-      background: #242526;
-    }
-
-    .fb-domain {
-      font-size: 11px;
-      color: #8a8d91;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 4px;
-    }
-
-    .fb-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #e4e6eb;
-      line-height: 1.4;
-      margin-bottom: 4px;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    .fb-desc {
-      font-size: 13px;
-      color: #8a8d91;
-      line-height: 1.4;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
-
-    /* Twitter Preview */
-    .preview-twitter {
-      background: #15202b;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.10);
-    }
-
-    .tw-image {
-      width: 100%;
-      aspect-ratio: 1200/630;
-      background: #1e2c3a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    }
-
-    .tw-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .tw-image-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: #536471;
-    }
-
-    .tw-image-placeholder span {
-      font-size: 12px;
-    }
-
-    .tw-meta {
-      padding: 12px 16px 14px;
-    }
-
-    .tw-domain {
-      font-size: 12px;
-      color: #536471;
-      margin-bottom: 3px;
-    }
-
-    .tw-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #e7e9ea;
-      line-height: 1.4;
-      margin-bottom: 2px;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    .tw-desc {
-      font-size: 13px;
-      color: #71767b;
-      line-height: 1.4;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    /* Code output */
-    .code-section {
-      margin-top: 24px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .code-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .code-header-title {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-2);
-    }
-
-    .copy-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 5px 12px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .copy-btn:hover { border-color: var(--accent); color: var(--text-1); }
-    .copy-btn.copied { border-color: var(--success); color: var(--success); }
-
-    .code-block {
-      padding: 20px;
-      overflow-x: auto;
-      font-family: "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", monospace;
-      font-size: 12px;
-      line-height: 1.7;
-      color: #a1a1aa;
-      white-space: pre;
-    }
-
-    .code-block .c-comment { color: #52525b; }
+    /* code output */
+    .code-section { margin-top: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .code-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px 10px 16px; border-bottom: 1px solid var(--border); }
+    .code-header-title { font-size: 14px; font-weight: 600; }
+    .copy-btn.copied { background: var(--success); color: var(--success-fg); border-color: var(--success); }
+    .code-block { padding: 16px 18px; overflow-x: auto; background: var(--surface-2); font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--text-2); white-space: pre; }
+    .code-block .c-comment { color: var(--text-3); }
     .code-block .c-tag { color: var(--accent-text); }
-    .code-block .c-attr { color: #6ee7b7; }
-    .code-block .c-val { color: #fbbf24; }
+    .code-block .c-attr { color: var(--text-1); }
+    .code-block .c-val { color: var(--text-2); }
 
-    /* Divider */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 0 0 48px;
-    }
-
-    /* Guide */
-    .guide { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FAQ */
-    .faq { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related */
-    .related {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    .related a {
-      font-size: 14px;
-      color: var(--accent-text);
-    }
-
-    /* Vultr Banner */
-    .vultr-banner {
-      max-width: 960px;
-      margin: 0 auto 48px;
-      padding: 0 24px;
-    }
-
-    .vultr-inner {
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      text-decoration: none;
-      transition: border-color 0.15s;
-    }
-    .vultr-inner:hover { border-color: var(--success); opacity: 1; }
-
-    .vultr-left { display: flex; flex-direction: column; gap: 4px; }
-
-    .vultr-label {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--success);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .vultr-title {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-    }
-
-    .vultr-sub {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-
-    .vultr-cta {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--success);
-      white-space: nowrap;
-    }
-
-    @media (max-width: 480px) {
-      .vultr-inner { flex-direction: column; align-items: flex-start; }
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Responsive tweaks */
-    @media (max-width: 600px) {
-      .hero { padding: 32px 16px 24px; }
-      .tool-wrap { padding: 0 16px 48px; }
-      .hero h1 { font-size: 22px; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 960px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .tool-cols { grid-template-columns: minmax(0, 1fr); }
+      .form-panel { padding: 16px; }
+      .code-header { align-items: flex-start; flex-direction: column; }
     }
   </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Open Graph Meta Tag Generator", "description": "Open Graph meta tag generator for OG and Twitter Card tags. Preview your page on Google, Facebook and X. Free, no account.", "url": "https://tools.stackfreeks.com/tools/og-meta-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/og-meta-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Open Graph 메타 태그란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "Open Graph(OG) 메타 태그는 페이지의 <head>에 삽입하는 HTML 코드로, 페이스북·링크드인·슬랙 등에서 링크를 공유할 때 보이는 제목, 설명, 이미지를 제어합니다."}}, {"@type": "Question", "name": "OG 이미지 권장 크기는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "권장 OG 이미지 크기는 1200 × 630 픽셀(약 1.91:1 비율)입니다. 페이스북, 트위터(summary_large_image), 링크드인 모두에서 잘 작동합니다. 트위터 \"summary\" 카드 유형은 1:1 정사각형 이미지(최소 144 × 144 px)가 사용됩니다."}}, {"@type": "Question", "name": "페이스북에서 OG 이미지가 표시되지 않는 이유는?", "acceptedAnswer": {"@type": "Answer", "text": "페이스북은 OG 데이터를 강하게 캐시합니다. 메타 태그를 업데이트한 후 Facebook Sharing Debugger 를 사용해 캐시를 강제 갱신하세요. 이미지 URL이 공개 접근 가능하고 서버가 올바른 Content-Type 헤더를 반환하는지도 확인하세요."}}, {"@type": "Question", "name": "Twitter Card란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "Twitter Card는 트위터에서 링크를 공유할 때 어떻게 보일지 제어하는 메타 태그입니다. 가장 많이 쓰이는 유형은 큰 이미지와 함께 제목·설명을 표시하는 \"summary_large_image\"입니다. OG 태그와 별도로 Twitter Card 메타 태그를 추가해야 합니다."}}, {"@type": "Question", "name": "메타 태그가 SEO에 영향을 미치나요?", "acceptedAnswer": {"@type": "Answer", "text": "<title>과 <meta name=\"description\"> 태그는 구글 검색 결과 표시에 직접 영향을 미치며 클릭률(CTR)에도 영향을 줍니다. OG와 Twitter Card 태그는 직접적인 랭킹 요소는 아니지만, 더 나은 소셜 미리 보기는 트래픽을 늘려 간접적인 SEO 신호로 작용합니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<!-- Nav -->
-<nav>
-<div class="nav-left">
-<a class="logo" href="/ko/">StackFreeks Tools</a>
-<div class="nav-sep"></div>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-devops"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-wrench"></use></svg><span data-i18n="cat_devops">DevOps & Config Generators</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/og-meta-generator/">English</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+</div>
 </nav>
-<!-- Hero -->
-<div class="hero">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-share-2"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
 <h1>Open Graph 메타 태그 생성기</h1>
 <p>OG 및 Twitter Card 메타 태그를 생성하고 구글&middot;페이스북&middot;트위터에서 어떻게 보이는지 미리 확인하세요</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
 </div>
+</header>
 <!-- Tool body -->
-<div class="tool-wrap">
+<main class="tool wrap-tool">
 <div class="tool-cols">
 <!-- Form panel -->
 <div class="form-panel">
-<div class="form-panel-title">Page Details</div>
+<div class="form-panel-title" data-i18n="x_page_details">Page Details</div>
 <div class="field">
 <div class="field-label">
-<label for="f-title">Page Title</label>
+<label data-i18n="x_page_title" for="f-title">Page Title</label>
 <span class="char-count" id="cnt-title">0/60</span>
 </div>
-<input id="f-title" maxlength="100" placeholder="My Awesome Page" type="text">
+<input data-i18n-placeholder="x_ph_title" id="f-title" maxlength="100" placeholder="My Awesome Page" type="text">
 </div>
 <div class="field">
 <div class="field-label">
-<label for="f-desc">Description</label>
+<label data-i18n="x_description" for="f-desc">Description</label>
 <span class="char-count" id="cnt-desc">0/160</span>
 </div>
-<textarea id="f-desc" maxlength="300" placeholder="A short description of your page (140&ndash;160 chars recommended)."></textarea>
+<textarea data-i18n-placeholder="x_a_short_description_of_your_page_140_160_cha" id="f-desc" maxlength="300" placeholder="A short description of your page (140&ndash;160 chars recommended)."></textarea>
 </div>
 <div class="field">
 <div class="field-label">
-<label for="f-url">Page URL</label>
+<label data-i18n="x_page_url" for="f-url">Page URL</label>
 </div>
 <input id="f-url" placeholder="https://example.com/page" type="url">
 </div>
 <div class="field">
 <div class="field-label">
-<label for="f-image">Image URL</label>
+<label data-i18n="x_image_url" for="f-image">Image URL</label>
 </div>
 <input id="f-image" placeholder="https://example.com/og-image.jpg" type="url">
 </div>
 <div class="field">
 <div class="field-label">
-<label for="f-sitename">Site Name</label>
+<label data-i18n="x_site_name" for="f-sitename">Site Name</label>
 </div>
-<input id="f-sitename" placeholder="My Website" type="text">
+<input data-i18n-placeholder="x_ph_sitename" id="f-sitename" placeholder="My Website" type="text">
 </div>
 <div class="field-row">
 <div class="field">
 <div class="field-label">
-<label for="f-type">Page Type</label>
+<label data-i18n="x_page_type" for="f-type">Page Type</label>
 </div>
 <select id="f-type">
 <option selected value="website">website</option>
@@ -755,7 +170,7 @@
 </div>
 <div class="field">
 <div class="field-label">
-<label for="f-locale">Locale</label>
+<label data-i18n="x_locale" for="f-locale">Locale</label>
 </div>
 <select id="f-locale">
 <option selected value="en_US">en_US</option>
@@ -771,7 +186,7 @@
 <div class="field-row">
 <div class="field">
 <div class="field-label">
-<label for="f-twcard">Twitter Card</label>
+<label data-i18n="x_twitter_card" for="f-twcard">Twitter Card</label>
 </div>
 <select id="f-twcard">
 <option selected value="summary_large_image">summary_large_image</option>
@@ -782,7 +197,7 @@
 </div>
 <div class="field">
 <div class="field-label">
-<label for="f-twuser">Twitter @handle</label>
+<label data-i18n="x_twitter_handle" for="f-twuser">Twitter @handle</label>
 </div>
 <input id="f-twuser" placeholder="@youraccount" type="text">
 </div>
@@ -792,14 +207,14 @@
 <div class="preview-panel">
 <!-- Google preview -->
 <div>
-<div class="preview-section-title">Google Search Result</div>
+<div class="preview-section-title" data-i18n="x_google_search_result">Google Search Result</div>
 <div class="preview-google">
 <div class="google-url">
 <div class="google-url-icon"></div>
 <span class="google-url-text" id="prev-g-url">example.com</span>
 </div>
-<div class="google-title" id="prev-g-title">Page Title</div>
-<div class="google-desc" id="prev-g-desc">Your page description will appear here. Keep it between 140&ndash;160 characters for best results in search engines.</div>
+<div class="google-title" data-i18n="x_page_title" id="prev-g-title">Page Title</div>
+<div class="google-desc" data-i18n="x_your_page_description_will_appear_here_keep" id="prev-g-desc">Your page description will appear here. Keep it between 140&ndash;160 characters for best results in search engines.</div>
 </div>
 </div>
 <!-- Facebook OG preview -->
@@ -808,33 +223,33 @@
 <div class="preview-facebook">
 <div class="fb-image" id="prev-fb-img-wrap">
 <div class="fb-image-placeholder" id="prev-fb-placeholder">
-<svg fill="none" height="36" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="36"><rect height="18" rx="2" width="18" x="3" y="3"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>
-<span>1200 &times; 630 image</span>
+<svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-image"></use></svg>
+<span data-i18n="x_1200_630_image">1200 &times; 630 image</span>
 </div>
 <img alt="OG preview image" id="prev-fb-img" src style="display:none;">
 </div>
 <div class="fb-meta">
 <div class="fb-domain" id="prev-fb-domain">example.com</div>
-<div class="fb-title" id="prev-fb-title">Page Title</div>
-<div class="fb-desc" id="prev-fb-desc">Page description</div>
+<div class="fb-title" data-i18n="x_page_title" id="prev-fb-title">Page Title</div>
+<div class="fb-desc" data-i18n="x_page_description" id="prev-fb-desc">Page description</div>
 </div>
 </div>
 </div>
 <!-- Twitter preview -->
 <div>
-<div class="preview-section-title">Twitter Card</div>
+<div class="preview-section-title" data-i18n="x_twitter_card">Twitter Card</div>
 <div class="preview-twitter">
 <div class="tw-image" id="prev-tw-img-wrap">
 <div class="tw-image-placeholder" id="prev-tw-placeholder">
-<svg fill="none" height="36" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="36"><rect height="18" rx="2" width="18" x="3" y="3"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>
-<span>1200 &times; 630 image</span>
+<svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-image"></use></svg>
+<span data-i18n="x_1200_630_image">1200 &times; 630 image</span>
 </div>
 <img alt="Twitter card image" id="prev-tw-img" src style="display:none;">
 </div>
 <div class="tw-meta">
 <div class="tw-domain" id="prev-tw-domain">example.com</div>
-<div class="tw-title" id="prev-tw-title">Page Title</div>
-<div class="tw-desc" id="prev-tw-desc">Page description</div>
+<div class="tw-title" data-i18n="x_page_title" id="prev-tw-title">Page Title</div>
+<div class="tw-desc" data-i18n="x_page_description" id="prev-tw-desc">Page description</div>
 </div>
 </div>
 </div>
@@ -843,55 +258,63 @@
 <!-- Code output -->
 <div class="code-section">
 <div class="code-header">
-<span class="code-header-title">Generated Meta Tags &mdash; copy and paste into your &lt;head&gt;</span>
-<button class="copy-btn" id="copy-btn" onclick="copyCode()">Copy All</button>
+<span class="code-header-title" data-i18n="x_generated_meta_tags">Generated Meta Tags &mdash; copy and paste into your &lt;head&gt;</span>
+<button class="btn btn-secondary copy-btn" data-i18n="x_copy_all" id="copy-btn" onclick="copyCode()">Copy All</button>
 </div>
 <div class="code-block" id="code-output"></div>
 </div>
+</main>
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More DevOps tools</h2>
+<a class="sec-link" href="/#cat-devops"><span data-i18n="all_in_cat">All DevOps & Config Generators tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
 </div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/postgresql-config-generator/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-sliders-horizontal"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">PostgreSQL 설정 생성기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+</ul>
+</section>
 <!-- How to use -->
-<div class="guide">
-<div class="guide-title">How to Use</div>
+<section class="guide">
+<h2 class="guide-title"><span class="lang-ko">사용 방법</span></h2>
 <div class="guide-grid">
 <div class="guide-card">
-<div class="guide-step">STEP 01</div>
 
 <div class="lang-ko">
-<h3>페이지 정보 입력</h3>
+<h3>01. 페이지 정보 입력</h3>
 <p>공유할 페이지의 제목, 설명, URL, 이미지 URL을 입력하세요.</p>
 </div>
 </div>
 <div class="guide-card">
-<div class="guide-step">STEP 02</div>
 
 <div class="lang-ko">
-<h3>플랫폼별 미리 보기</h3>
+<h3>02. 플랫폼별 미리 보기</h3>
 <p>구글, 페이스북, 트위터에서 링크가 어떻게 보일지 실시간으로 확인하세요.</p>
 </div>
 </div>
 <div class="guide-card">
-<div class="guide-step">STEP 03</div>
 
 <div class="lang-ko">
-<h3>코드 복사</h3>
+<h3>03. 코드 복사</h3>
 <p>"Copy All" 버튼을 클릭해 메타 태그 코드를 클립보드에 복사하세요.</p>
 </div>
 </div>
 <div class="guide-card">
-<div class="guide-step">STEP 04</div>
 
 <div class="lang-ko">
-<h3>&lt;head&gt;에 붙여넣기</h3>
+<h3>04. &lt;head&gt;에 붙여넣기</h3>
 <p>HTML &lt;head&gt; 태그 안에 코드를 붙여넣고 배포하세요. 서버 코드 불필요.</p>
 </div>
 </div>
 </div>
-</div>
+</section>
 <!-- FAQ -->
-<div class="faq">
+<section class="faq">
 
 <div class="lang-ko">
-<div class="faq-title">자주 묻는 질문</div>
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-list">
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>Open Graph 메타 태그란 무엇인가요?</span><span class="faq-icon">+</span></button>
@@ -915,36 +338,37 @@
 </div>
 </div>
 </div>
-</div>
-<!-- Related -->
-<div class="related">
+</section>
+<!-- Related tools -->
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/color-converter/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-palette"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">HEX/RGB/HSL 색상 변환기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/px-rem-converter/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-ruler"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">px &harr; rem 변환기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/css-filter-previewer/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-contrast"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">CSS 필터 미리보기</span></span></span></a></li>
+</ul>
+</section>
+<!-- Related content -->
+<section class="related">
 
 <div class="lang-ko">
 <a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com에서 더 많은 SEO&middot;개발자 가이드 보기 &rarr;</a>
 </div>
-</div>
-<!-- Vultr Banner -->
+</section>
+<!-- Vultr affiliate banner -->
 <div class="vultr-banner">
 <a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
-<div class="vultr-left">
-<span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
-<span class="vultr-title" data-i18n="vultr_title">Get started on Vultr</span>
-<span class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days</span>
+<div>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days</div>
 </div>
-<span class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</span>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
 </a>
 </div>
 <!-- Footer -->
-<!-- Related tools -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/color-converter/ko/"><span>🌈</span>Color Converter</a>
-<a class="sf-related-card" href="/tools/px-rem-converter/ko/"><span>📐</span>PX to REM Converter</a>
-<a class="sf-related-card" href="/tools/css-filter-previewer/ko/"><span>🪄</span>CSS Filter Previewer</a>
-</div>
-</section>
-<footer>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
@@ -952,6 +376,7 @@
 <a href="/terms/">Terms</a>
 </div>
 <div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
+</div>
 </footer>
 <script>
 (function () {
@@ -1025,6 +450,11 @@
   }
 
   // ---- Update function ----
+  // sfT only exists once /shared/i18n.js has loaded; update() also runs before that.
+  function tx(key, fallback) {
+    return typeof sfT === 'function' ? sfT(key) : fallback;
+  }
+
   function update() {
     var title   = fTitle.value;
     var desc    = fDesc.value;
@@ -1049,13 +479,13 @@
       try { gUrlPath = new URL(url.startsWith('http') ? url : 'https://' + url).pathname; } catch(e) {}
     }
     gUrl.textContent   = domain + gUrlPath;
-    gTitle.textContent = title || 'Page Title';
-    gDesc.textContent  = desc  || 'Your page description will appear here. Keep it between 140–160 characters for best results in search engines.';
+    gTitle.textContent = title || tx('x_page_title', 'Page Title');
+    gDesc.textContent  = desc  || tx('x_your_page_description_will_appear_here_keep', 'Your page description will appear here.');
 
     // ---- Facebook preview ----
     fbDomain.textContent = domain;
-    fbTitle.textContent  = title || 'Page Title';
-    fbDesc.textContent   = desc  || 'Page description';
+    fbTitle.textContent  = title || tx('x_page_title', 'Page Title');
+    fbDesc.textContent   = desc  || tx('x_page_description', 'Page description');
 
     if (image) {
       fbImg.src = image;
@@ -1068,8 +498,8 @@
 
     // ---- Twitter preview ----
     twDomain.textContent = domain;
-    twTitle.textContent  = title || 'Page Title';
-    twDesc.textContent   = desc  || 'Page description';
+    twTitle.textContent  = title || tx('x_page_title', 'Page Title');
+    twDesc.textContent   = desc  || tx('x_page_description', 'Page description');
 
     if (image) {
       twImg.src = image;
@@ -1135,6 +565,9 @@
     el.addEventListener('change', update);
   });
 
+  // Re-render the localized preview placeholders when the language changes
+  document.addEventListener('sfLangChanged', update);
+
   // ---- Copy ----
   window.copyCode = function() {
     // Build plain text version
@@ -1188,10 +621,10 @@
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function() {
-        btn.textContent = 'Copied!';
+        btn.textContent = sfT('x_copied');
         btn.classList.add('copied');
         setTimeout(function() {
-          btn.textContent = 'Copy All';
+          btn.textContent = sfT('x_copy_all');
           btn.classList.remove('copied');
         }, 2000);
       });
@@ -1205,10 +638,10 @@
       ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
-      btn.textContent = 'Copied!';
+      btn.textContent = sfT('x_copied');
       btn.classList.add('copied');
       setTimeout(function() {
-        btn.textContent = 'Copy All';
+        btn.textContent = sfT('x_copy_all');
         btn.classList.remove('copied');
       }, 2000);
     }
@@ -1221,21 +654,73 @@
 <script>
 window.SF_PAGE_I18N = {
   en: {
+        cat_devops: "DevOps & Config Generators",
+        more_tools: "More DevOps tools",
+        all_in_cat: "All DevOps & Config Generators tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
     nav_back: "← All Tools",
     vultr_label: "Sponsor",
     vultr_title: "Get started on Vultr",
     vultr_sub: "Get $300 free credit — valid for 30 days",
     vultr_cta: "Claim your credit →",
-    footer_copy: "© 2026 StackFreeks"
-  },
+    footer_copy: "© 2026 StackFreeks",
+        x_1200_630_image: "1200 × 630 image",
+        x_a_short_description_of_your_page_140_160_cha: "A short description of your page (140–160 chars recommended).",
+        x_copy_all: "Copy All",
+        x_google_search_result: "Google Search Result",
+        x_image_url: "Image URL",
+        x_locale: "Locale",
+        x_page_description: "Page description",
+        x_page_details: "Page Details",
+        x_page_title: "Page Title",
+        x_page_type: "Page Type",
+        x_page_url: "Page URL",
+        x_site_name: "Site Name",
+        x_twitter_card: "Twitter Card",
+        x_twitter_handle: "Twitter @handle",
+        x_your_page_description_will_appear_here_keep: "Your page description will appear here. Keep it between 140–160 characters for best results in search engines.",
+        x_generated_meta_tags: "Generated Meta Tags — copy and paste into your <head>",
+        x_ph_title: "My Awesome Page",
+        x_ph_sitename: "My Website"
+      },
   ko: {
+        cat_devops: "DevOps & 설정 생성기",
+        more_tools: "DevOps 툴 더 보기",
+        all_in_cat: "DevOps & 설정 생성기 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
     nav_back: "← 전체 툴",
     vultr_label: "스폰서",
     vultr_title: "Vultr로 시작하세요",
     vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
     vultr_cta: "크레딧 받기 →",
-    footer_copy: "© 2026 StackFreeks"
-  }
+    footer_copy: "© 2026 StackFreeks",
+        x_1200_630_image: "1200 × 630 이미지",
+        x_a_short_description_of_your_page_140_160_cha: "페이지에 대한 짧은 설명 (140–160자 권장).",
+        x_copy_all: "전체 복사",
+        x_google_search_result: "Google 검색 결과 미리보기",
+        x_image_url: "이미지 URL",
+        x_locale: "로케일",
+        x_page_description: "페이지 설명",
+        x_page_details: "페이지 정보",
+        x_page_title: "페이지 제목",
+        x_page_type: "페이지 유형",
+        x_page_url: "페이지 URL",
+        x_site_name: "사이트 이름",
+        x_twitter_card: "Twitter 카드",
+        x_twitter_handle: "Twitter @핸들",
+        x_your_page_description_will_appear_here_keep: "페이지 설명이 여기에 표시됩니다. 검색 엔진에서 가장 잘 보이도록 140–160자로 유지하세요.",
+        x_generated_meta_tags: "생성된 메타 태그 — 복사해서 <head>에 붙여넣으세요",
+        x_ph_title: "내 멋진 페이지",
+        x_ph_sitename: "내 웹사이트"
+      }
 };
 </script>
 <script src="/shared/i18n.js"></script>

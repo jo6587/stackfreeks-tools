@@ -21,504 +21,129 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
 
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
+
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
+    /* UUID Generator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ── Nav ── */
-    .nav {
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-1);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-    .nav-logo span { color: var(--accent-text); }
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .lang-toggle {
-      font-size: 12px;
-      font-family: var(--font);
-      font-weight: 500;
-      color: var(--text-2);
-      background: transparent;
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius);
-      padding: 4px 10px;
-      cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .lang-toggle:hover { color: var(--text-1); border-color: var(--accent); }
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); text-decoration: none; }
-
-    /* ── Hero ── */
-    .hero {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 48px 24px 32px;
-    }
-    .hero h1 {
-      font-size: clamp(22px, 4vw, 30px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--text-1);
-      margin-bottom: 10px;
-    }
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-      max-width: 560px;
-      line-height: 1.7;
-    }
-
-    /* ── Tool body ── */
-    .tool {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    /* Options row */
-    .options-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+    .options-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 14px; }
     .option-check {
       display: flex;
       align-items: center;
-      gap: 7px;
-      font-size: 13px;
-      color: var(--text-2);
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
       cursor: pointer;
       user-select: none;
     }
-    .option-check input[type="checkbox"] {
-      width: 15px;
-      height: 15px;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-    .option-check:hover { color: var(--text-1); }
+    .option-check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
 
-    /* Single UUID section */
     .section-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-    .section-card-title {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 14px;
-    }
-
-    /* UUID display box */
-    .uuid-display {
-      background: var(--bg);
-      border: 1px solid var(--border-2);
       border-radius: var(--radius);
-      padding: 16px 18px;
-      font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+    }
+    .section-card-title { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 12px; }
+
+    .uuid-display {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-s);
+      padding: 14px 16px;
+      font-family: var(--font-mono);
       font-size: 17px;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
       color: var(--text-1);
       word-break: break-all;
       min-height: 54px;
       display: flex;
       align-items: center;
       margin-bottom: 12px;
-      transition: border-color 0.2s;
+      transition: border-color var(--t);
     }
-    .uuid-display.flash {
-      border-color: var(--accent);
-    }
-    .uuid-display.empty {
-      color: var(--text-3);
-      font-size: 14px;
-      font-family: var(--font);
-      letter-spacing: 0;
-    }
+    .uuid-display.flash { border-color: var(--accent); }
+    .uuid-display.empty { color: var(--text-3); font-size: 14px; font-family: var(--font); letter-spacing: 0; }
 
-    /* Buttons */
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .btn {
-      font-family: var(--font);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: var(--radius);
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .btn:active { transform: scale(0.97); }
-    .btn-primary {
-      background: var(--accent-strong);
-      color: #fff;
-    }
-    .btn-primary:hover { opacity: 0.88; }
-    .btn-ghost {
-      background: var(--surface-2);
-      color: var(--text-2);
-      border: 1px solid var(--border-2);
-    }
-    .btn-ghost:hover { color: var(--text-1); border-color: rgba(255,255,255,0.25); }
-    .btn-success {
-      background: var(--success-bg);
-      color: var(--success);
-      border: 1px solid rgba(34,197,94,0.25);
-    }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn.btn-success, .btn.btn-success:hover { background: var(--success); color: var(--success-fg); border-color: var(--success); }
 
-    /* Bulk section */
-    .bulk-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .count-label {
-      font-size: 13px;
-      color: var(--text-2);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .count-input {
-      width: 70px;
-      padding: 7px 10px;
-      background: var(--bg);
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      font-size: 13px;
-      font-family: var(--font);
-      text-align: center;
-    }
-    .count-input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
+    .bulk-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+    .count-label { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--text-2); }
+    .count-input { width: 76px; height: 38px; text-align: center; font-variant-numeric: tabular-nums; }
 
-    /* Bulk UUID list */
     .uuid-list {
-      background: var(--bg);
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius);
-      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-s);
       max-height: 340px;
       overflow-y: auto;
     }
-    .uuid-list::-webkit-scrollbar { width: 6px; }
-    .uuid-list::-webkit-scrollbar-track { background: transparent; }
-    .uuid-list::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
     .uuid-list-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 9px 14px;
+      padding: 8px 14px;
       border-bottom: 1px solid var(--border);
-      transition: background 0.1s;
       gap: 12px;
+      transition: background-color var(--t);
     }
     .uuid-list-item:last-child { border-bottom: none; }
-    .uuid-list-item:hover { background: var(--surface); }
+    .uuid-list-item:hover { background: var(--surface-2); }
     .uuid-list-item code {
-      font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
-      font-size: 13px;
+      background: none;
+      border: 0;
+      padding: 0;
+      font-family: var(--font-mono);
+      font-size: 14px;
       color: var(--text-1);
       word-break: break-all;
       flex: 1;
     }
     .uuid-copy-btn {
       font-family: var(--font);
-      font-size: 11px;
-      font-weight: 500;
-      padding: 4px 10px;
-      border-radius: 5px;
+      font-size: 13px;
+      font-weight: 600;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: var(--radius-s);
       border: 1px solid var(--border-2);
-      background: transparent;
-      color: var(--text-3);
+      background: var(--surface);
+      color: var(--text-1);
       cursor: pointer;
       flex-shrink: 0;
-      transition: color 0.15s, border-color 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
     }
-    .uuid-copy-btn:hover { color: var(--text-1); border-color: rgba(255,255,255,0.25); }
-    .uuid-copy-btn.ok { color: var(--success); border-color: rgba(34,197,94,0.4); }
+    .uuid-copy-btn:hover { background: var(--surface-2); border-color: var(--text-3); }
+    .uuid-copy-btn.ok { background: var(--success); border-color: var(--success); color: var(--success-fg); }
+    .uuid-list-empty { padding: 28px; text-align: center; color: var(--text-3); font-size: 14px; }
+    .bulk-action-row { display: flex; gap: 8px; margin-top: 12px; }
 
-    .uuid-list-empty {
-      padding: 32px;
-      text-align: center;
-      color: var(--text-3);
-      font-size: 13px;
-    }
-
-    .bulk-action-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    /* Version info card */
     .info-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: var(--radius-lg);
-      padding: 16px 20px;
-      margin-bottom: 48px;
-    }
-    .info-card-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent-text);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-    }
-    .info-card p {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.7;
-    }
-    .info-card code {
-      font-family: "SF Mono", "Fira Code", monospace;
-      font-size: 12px;
       background: var(--surface-2);
-      padding: 1px 5px;
-      border-radius: 4px;
-      color: var(--text-1);
-    }
-
-    /* ── Guide ── */
-    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* ── FAQ ── */
-    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-a code {
-      font-family: "SF Mono", "Fira Code", monospace;
-      font-size: 12px;
-      background: var(--surface);
-      padding: 1px 5px;
-      border-radius: 4px;
-      color: var(--text-1);
-    }
-
-    /* ── Vultr Banner ── */
-    .vultr-banner {
-      background: var(--success-bg);
-      border-top: 1px solid rgba(34,197,94,0.15);
-      border-bottom: 1px solid rgba(34,197,94,0.15);
-      padding: 20px 24px;
-      margin-bottom: 0;
-    }
-    .vultr-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px 20px;
-    }
-    .vultr-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--success);
-      background: rgba(34,197,94,0.15);
-      border: 1px solid rgba(34,197,94,0.3);
-      border-radius: 4px;
-      padding: 2px 8px;
-      flex-shrink: 0;
-    }
-    .vultr-text {
-      flex: 1;
-      min-width: 180px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .vultr-text strong {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-1);
-    }
-    .vultr-text span {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-    .vultr-cta {
-      display: inline-block;
-      background: var(--success);
-      color: var(--success-fg);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 9px 18px;
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      text-decoration: none;
-      flex-shrink: 0;
-      transition: opacity 0.15s;
+      padding: 16px 20px;
     }
-    .vultr-cta:hover { background: var(--success-hover); text-decoration: none; }
+    .info-card-title { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
+    .info-card p { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+    .info-card code { font-size: 13px; color: var(--text-1); }
 
-    /* ── Footer ── */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 24px;
-      text-align: center;
-    }
-    .footer-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    .footer-copy {
-      font-size: 13px;
-      color: var(--text-3);
-    }
-    .footer-links {
-      display: flex;
-      gap: 16px;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-    }
-    .footer-links a:hover { color: var(--text-2); }
 
-    /* ── Responsive ── */
-    @media (max-width: 480px) {
-      .hero { padding: 32px 16px 24px; }
-      .tool, .guide, .faq { padding-left: 16px; padding-right: 16px; }
-      .uuid-display { font-size: 13px; }
-      .nav-inner { padding: 0 16px; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+      .uuid-display { font-size: 14px; }
+      .section-card { padding: 16px; }
     }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style>  <script type="application/ld+json">
+  </style>
+  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"UUID Generator","description":"Generate random UUID v4 online. Bulk generate up to 100 UUIDs, copy with one click. Runs in your browser — nothing is sent to a server.","url":"https://tools.stackfreeks.com/tools/uuid-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
@@ -528,32 +153,38 @@
 </head>
 <body>
 
-  <!-- 1. Navigation -->
-  <nav class="nav">
+  <nav class="nav" aria-label="Main">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
-      <div class="nav-right">
-        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-        <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-      </div>
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-conv" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left-right"/></svg><span data-i18n="cat_converters">Converters &amp; Encoders</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
   </nav>
 
-  <!-- 2. Hero -->
-  <header class="hero">
-    <div class="lang-en">
-      <h1>UUID Generator</h1>
-      <p>Generate cryptographically random UUID v4 values instantly. Bulk generate up to 100 at once, toggle formatting options, and copy results with one click. Everything runs in your browser — no data is sent anywhere.</p>
-    </div>
-    <div class="lang-ko">
-      <h1>UUID 생성기</h1>
-      <p>암호학적으로 안전한 UUID v4를 즉시 생성합니다. 최대 100개까지 한 번에 생성하고, 서식 옵션을 조정하며, 원클릭으로 복사하세요. 모든 처리는 브라우저에서 이루어지며 서버로 전송되는 데이터는 없습니다.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-fingerprint"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>UUID Generator</h1>
+        <p>Generate cryptographically random UUID v4 values instantly. Bulk generate up to 100 at once, toggle formatting options, and copy results with one click. Everything runs in your browser — no data is sent anywhere.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>UUID 생성기</h1>
+        <p>암호학적으로 안전한 UUID v4를 즉시 생성합니다. 최대 100개까지 한 번에 생성하고, 서식 옵션을 조정하며, 원클릭으로 복사하세요. 모든 처리는 브라우저에서 이루어지며 서버로 전송되는 데이터는 없습니다.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
   </header>
 
-  <!-- 3. Tool body -->
-  <main class="tool">
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
 
     <!-- Options -->
     <div class="options-row">
@@ -579,7 +210,7 @@
 
       <div class="btn-row">
         <button class="btn btn-primary" onclick="generateSingle()">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-refresh-cw"/></svg>
           <span data-i18n="generate">Generate UUID</span>
         </button>
         <button class="btn btn-ghost" id="singleCopyBtn" onclick="copySingle()" style="display:none">
@@ -599,7 +230,7 @@
           <input type="number" id="bulkCount" class="count-input" value="10" min="1" max="100">
         </label>
         <button class="btn btn-primary" onclick="generateBulk()">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-layers"/></svg>
           <span data-i18n="generate_bulk">Generate 10 UUIDs</span>
         </button>
       </div>
@@ -611,11 +242,10 @@
 
       <div class="bulk-action-row" id="bulkActions" style="display:none">
         <button class="btn btn-ghost" onclick="copyAll()" id="copyAllBtn">
-          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           <span data-i18n="copy_all">Copy All</span>
         </button>
         <button class="btn btn-ghost" onclick="clearBulk()">
-          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-eraser"/></svg>
           <span data-i18n="clear">Clear</span>
         </button>
       </div>
@@ -635,46 +265,57 @@
 
   </main>
 
-  <!-- 4. Guide section -->
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More converters</h2>
+      <a class="sec-link" href="/#cat-conv"><span data-i18n="all_in_cat">All Converters &amp; Encoders tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/jwt-decoder/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-ticket"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">JWT Decoder</span><span class="lang-ko">JWT 디코더</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/chmod-calculator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-lock"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Chmod Calculator</span><span class="lang-ko">Chmod 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- How to use -->
   <section class="guide">
-    <div class="guide-title lang-en">How to Use</div>
-    <div class="guide-title lang-ko">사용 방법</div>
+    <h2 class="guide-title lang-en">How to Use</h2>
+    <h2 class="guide-title lang-ko">사용 방법</h2>
     <div class="guide-grid">
       <div class="guide-card">
-        <div class="guide-step">STEP 1</div>
-        <h3 class="lang-en">Generate a UUID</h3>
-        <h3 class="lang-ko">UUID 생성</h3>
+        <h3 class="lang-en">1. Generate a UUID</h3>
+        <h3 class="lang-ko">1. UUID 생성</h3>
         <p class="lang-en">Click the "Generate UUID" button. A fresh v4 UUID appears in the display box above it.</p>
         <p class="lang-ko">"UUID 생성" 버튼을 클릭하면 새로운 v4 UUID가 표시 박스에 나타납니다.</p>
       </div>
       <div class="guide-card">
-        <div class="guide-step">STEP 2</div>
-        <h3 class="lang-en">Toggle formatting</h3>
-        <h3 class="lang-ko">서식 옵션 선택</h3>
+        <h3 class="lang-en">2. Toggle formatting</h3>
+        <h3 class="lang-ko">2. 서식 옵션 선택</h3>
         <p class="lang-en">Check <strong>Uppercase</strong> to get letters A–F in caps. Check <strong>With braces</strong> to wrap the UUID in <code>{...}</code>, useful for Microsoft tools.</p>
         <p class="lang-ko"><strong>대문자</strong> 체크 시 A–F가 대문자로 표시됩니다. <strong>중괄호 포함</strong> 체크 시 <code>{...}</code>로 감싸 Microsoft 도구에 활용할 수 있습니다.</p>
       </div>
       <div class="guide-card">
-        <div class="guide-step">STEP 3</div>
-        <h3 class="lang-en">Bulk generate</h3>
-        <h3 class="lang-ko">대량 생성</h3>
+        <h3 class="lang-en">3. Bulk generate</h3>
+        <h3 class="lang-ko">3. 대량 생성</h3>
         <p class="lang-en">Set the count (1–100) and click "Generate 10 UUIDs". All are generated at once and listed below.</p>
         <p class="lang-ko">개수(1–100)를 설정하고 "UUID 10개 생성" 버튼을 클릭하세요. 지정한 개수만큼 한 번에 생성됩니다.</p>
       </div>
       <div class="guide-card">
-        <div class="guide-step">STEP 4</div>
-        <h3 class="lang-en">Copy results</h3>
-        <h3 class="lang-ko">결과 복사</h3>
+        <h3 class="lang-en">4. Copy results</h3>
+        <h3 class="lang-ko">4. 결과 복사</h3>
         <p class="lang-en">Click <strong>Copy</strong> next to any UUID, or <strong>Copy All</strong> to grab every UUID in the list as newline-separated text.</p>
         <p class="lang-ko">각 UUID 옆의 <strong>복사</strong> 버튼을 클릭하거나, <strong>전체 복사</strong>로 목록의 모든 UUID를 줄바꿈 구분 텍스트로 복사하세요.</p>
       </div>
     </div>
   </section>
 
-  <!-- 5. FAQ section -->
+  <!-- FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <div class="faq-title">Frequently Asked Questions</div>
+      <h2 class="faq-title">Frequently Asked Questions</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>What is a UUID?</span><span class="faq-icon">+</span></button>
@@ -696,7 +337,7 @@
     </div>
 
     <div class="lang-ko">
-      <div class="faq-title">자주 묻는 질문</div>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>UUID란 무엇인가요?</span><span class="faq-icon">+</span></button>
@@ -718,44 +359,57 @@
     </div>
   </section>
 
-  <!-- 6. Vultr affiliate banner -->
   <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/base-converter/" class="sf-related-card"><span>🔢</span>Number Base Converter</a>
-      <a href="/tools/json-formatter/" class="sf-related-card"><span>📋</span>JSON Formatter & Validator</a>
-      <a href="/tools/json-to-csv/" class="sf-related-card"><span>📊</span>JSON to CSV Converter</a>
-    </div>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/base-converter/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-binary"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Number Base Converter</span><span class="lang-ko">진법 변환기</span></span></span></a></li>
+      <li><a href="/tools/json-formatter/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-braces"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">JSON Formatter &amp; Validator</span><span class="lang-ko">JSON 포매터 & 유효성 검사기</span></span></span></a></li>
+      <li><a href="/tools/json-to-csv/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-sheet"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">JSON to CSV Converter</span><span class="lang-ko">JSON ↔ CSV 변환기</span></span></span></a></li>
+    </ul>
   </section>
 
-  <section class="vultr-banner">
-    <div class="vultr-inner">
-      <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
-      <div class="vultr-text">
-        <strong data-i18n="vultr_title">Get started on Vultr</strong>
-        <span data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
       </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" target="_blank" rel="nofollow sponsored" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
-  </section>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
-  <!-- 7. Footer -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
-      <nav class="footer-links">
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
         <a href="/about/">About</a>
         <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
         <a href="/terms/">Terms</a>
-      </nav>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
   </footer>
 
-  <!-- i18n: page-specific translations BEFORE i18n.js -->
   <script>
   window.SF_PAGE_I18N = {
     en: {
+        cat_converters: "Converters & Encoders",
+        more_tools: "More converters",
+        all_in_cat: "All Converters & Encoders tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
       nav_back: "← All Tools",
       vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
       vultr_sub: "Get $300 free credit — valid for 30 days",
@@ -767,6 +421,14 @@
       count_label: "Bulk count", version_label: "Version"
     },
     ko: {
+        cat_converters: "변환 & 인코딩",
+        more_tools: "변환 툴 더 보기",
+        all_in_cat: "변환 & 인코딩 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
       nav_back: "← 전체 툴",
       vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
       vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
