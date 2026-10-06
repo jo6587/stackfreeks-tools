@@ -21,561 +21,84 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* ── Nav ── */
-    .nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-inner {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-logo {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-    .nav-logo span { color: var(--accent-text); }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      border-radius: 6px;
-      padding: 4px 12px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .lang-toggle:hover { color: var(--text-1); border-color: var(--accent); }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* ── Hero ── */
-    .hero {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 48px 24px 36px;
-    }
-    .hero h1 {
-      font-size: clamp(24px, 4vw, 36px);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      color: var(--text-1);
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    .hero p {
-      font-size: 16px;
-      color: var(--text-2);
-      max-width: 560px;
-      line-height: 1.7;
-    }
-
-    /* ── Tool body ── */
-    .tool-body {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .field-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-    }
+    /* Regex Tester — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool-body { display: flex; flex-direction: column; gap: 16px; }
+    .field-label { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
 
     /* Pattern row */
-    .pattern-row {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .pattern-wrap {
-      flex: 1;
-    }
-
-    .pattern-input-group {
-      display: flex;
-      align-items: center;
-      background: var(--surface);
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: border-color 0.15s;
-    }
-    .pattern-input-group:focus-within { border-color: var(--accent); }
-    .pattern-slash {
-      padding: 0 10px;
-      color: var(--text-3);
-      font-family: 'Menlo', 'Consolas', monospace;
-      font-size: 18px;
-      line-height: 1;
-      user-select: none;
-      flex-shrink: 0;
-    }
-    #patternInput {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--text-1);
-      font-family: 'Menlo', 'Consolas', monospace;
-      font-size: 15px;
-      padding: 10px 0;
-      min-width: 0;
-    }
-    #patternInput::placeholder { color: var(--text-3); }
-
-    .copy-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      border-radius: var(--radius);
-      padding: 10px 16px;
-      font-size: 13px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: color 0.15s, border-color 0.15s, background 0.15s;
-      align-self: flex-end;
-      height: 44px;
-    }
-    .copy-btn:hover { color: var(--text-1); border-color: var(--accent); }
-    .copy-btn.copied { color: var(--success); border-color: var(--success); }
+    .pattern-row { display: flex; gap: 12px; align-items: flex-start; }
+    .pattern-wrap { flex: 1; min-width: 0; }
+    .pattern-input-group { display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius-s); overflow: hidden; transition: border-color var(--t), box-shadow var(--t); }
+    .pattern-input-group:hover { border-color: var(--text-3); }
+    .pattern-input-group:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft-2); }
+    .pattern-slash { padding: 0 10px; color: var(--text-3); font-family: var(--font-mono); font-size: 18px; line-height: 1; user-select: none; flex-shrink: 0; }
+    #patternInput { flex: 1; background: transparent; border: none; box-shadow: none; border-radius: 0; color: var(--text-1); font-family: var(--font-mono); font-size: 15px; padding: 10px 0; min-width: 0; }
+    .copy-btn { flex-shrink: 0; height: 44px; }
+    .copy-btn.copied { background: var(--success); color: var(--success-fg); border-color: transparent; }
 
     /* Flags */
     .flags-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
-    .flag-btn {
-      background: var(--surface);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      border-radius: 20px;
-      padding: 5px 14px;
-      font-size: 13px;
-      font-family: 'Menlo', 'Consolas', monospace;
-      cursor: pointer;
-      transition: all 0.15s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .flag-btn:hover { color: var(--text-1); border-color: var(--border-2); }
-    .flag-btn.active {
-      background: rgba(99,102,241,0.15);
-      border-color: var(--accent);
-      color: var(--accent-text);
-    }
-    .flag-desc {
-      font-family: var(--font);
-      font-size: 11px;
-      color: var(--text-3);
-    }
-    .flag-btn.active .flag-desc { color: rgba(99,102,241,0.7); }
+    .flag-btn { background: var(--surface); border: 1px solid var(--border-2); color: var(--text-2); border-radius: 999px; padding: 6px 14px; font-size: 14px; font-family: var(--font-mono); cursor: pointer; transition: background-color var(--t), border-color var(--t), color var(--t); display: flex; align-items: center; gap: 6px; }
+    .flag-btn:hover { color: var(--text-1); border-color: var(--text-3); }
+    .flag-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); }
+    .flag-desc { font-family: var(--font); font-size: 13px; color: var(--text-3); }
+    .flag-btn.active .flag-desc { color: var(--accent-text); }
 
     /* Test string */
-    #testInput {
-      width: 100%;
-      min-height: 200px;
-      background: var(--surface);
-      border: 1px solid var(--border-2);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      font-family: 'Menlo', 'Consolas', monospace;
-      font-size: 14px;
-      padding: 12px 14px;
-      outline: none;
-      resize: vertical;
-      line-height: 1.7;
-      transition: border-color 0.15s;
-    }
-    #testInput:focus { border-color: var(--accent); }
-    #testInput::placeholder { color: var(--text-3); }
+    #testInput { width: 100%; min-height: 200px; font-family: var(--font-mono); font-size: 14px; padding: 12px 14px; resize: vertical; line-height: 1.7; display: block; }
 
-    /* Error state */
-    .error-msg {
-      font-size: 13px;
-      color: #f87171;
-      margin-top: 6px;
-      display: none;
-    }
+    .error-msg { font-size: 13px; color: var(--danger); margin-top: 6px; display: none; }
     .error-msg.visible { display: block; }
 
     /* Highlighted output */
-    .output-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .output-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface-2);
-    }
-    .output-header-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .match-count-badge {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--accent-text);
-      background: rgba(99,102,241,0.12);
-      border-radius: 20px;
-      padding: 2px 10px;
-    }
+    .output-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .output-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+    .output-header-label { font-size: 13px; font-weight: 600; color: var(--text-1); }
+    .match-count-badge { font-size: 13px; font-weight: 600; color: var(--accent-text); background: var(--accent-soft); border-radius: 999px; padding: 2px 10px; font-variant-numeric: tabular-nums; }
     .match-count-badge.no-match { color: var(--text-3); background: transparent; }
-
-    .highlighted-output {
-      padding: 14px;
-      font-family: 'Menlo', 'Consolas', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--text-2);
-      white-space: pre-wrap;
-      word-break: break-all;
-      min-height: 60px;
-    }
-
-    mark.match-highlight {
-      background: rgba(99,102,241,0.25);
-      color: var(--text-1);
-      border-radius: 3px;
-      padding: 1px 0;
-    }
+    .highlighted-output { padding: 14px; font-family: var(--font-mono); font-size: 14px; line-height: 1.8; color: var(--text-2); white-space: pre-wrap; word-break: break-all; min-height: 60px; }
+    mark.match-highlight { background: var(--accent-soft-2); color: var(--text-1); border-radius: 3px; padding: 1px 0; }
 
     /* Match list */
-    .match-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 12px 14px;
-      border-top: 1px solid var(--border);
-    }
-    .match-item {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 12px;
-      display: grid;
-      grid-template-columns: 28px 1fr auto;
-      gap: 10px;
-      align-items: center;
-    }
-    .match-index {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent-text);
-      background: rgba(99,102,241,0.12);
-      border-radius: 4px;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .match-text {
-      font-family: 'Menlo', 'Consolas', monospace;
-      font-size: 13px;
-      color: var(--text-1);
-      word-break: break-all;
-    }
-    .match-groups { font-size: 11px; color: var(--text-3); margin-top: 3px; }
-    .match-meta {
-      font-size: 11px;
-      color: var(--text-3);
-      white-space: nowrap;
-      text-align: right;
-    }
+    .match-list { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--border); }
+    .match-item { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 10px 12px; display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+    .match-index { font-size: 12px; font-weight: 600; color: var(--accent-text); background: var(--accent-soft); border-radius: 6px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+    .match-text { font-family: var(--font-mono); font-size: 13px; color: var(--text-1); word-break: break-all; }
+    .match-groups { font-size: 13px; color: var(--text-3); margin-top: 3px; }
+    .match-meta { font-size: 13px; color: var(--text-3); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+    .no-match-state { padding: 24px 14px; text-align: center; font-size: 14px; color: var(--text-3); border-top: 1px solid var(--border); }
 
-    .no-match-state {
-      padding: 24px 14px;
-      text-align: center;
-      font-size: 13px;
-      color: var(--text-3);
-      border-top: 1px solid var(--border);
-    }
-
-    /* ── Cheat sheet ── */
-    .cheatsheet {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px 24px;
-    }
-    .cheatsheet-toggle {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      margin-bottom: 16px;
-    }
-    .cheatsheet-toggle-label {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .cheatsheet-toggle-icon {
-      font-size: 11px;
-      color: var(--text-3);
-      transition: transform 0.2s;
-    }
+    /* Cheat sheet */
+    .cheatsheet-toggle { display: flex; align-items: center; gap: 8px; background: none; border: none; cursor: pointer; padding: 4px 0; margin-bottom: 12px; color: var(--text-1); font-family: var(--font); }
+    .cheatsheet-toggle:hover { color: var(--accent-text); }
+    .cheatsheet-toggle-label { font-size: var(--fs-m); font-weight: 600; }
+    .cheatsheet-toggle-icon { width: 16px; height: 16px; color: var(--text-3); transition: transform var(--t); }
     .cheatsheet-toggle.open .cheatsheet-toggle-icon { transform: rotate(180deg); }
+    .cheatsheet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+    .cheat-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+    .cheat-name { font-size: 13px; font-weight: 600; color: var(--text-1); }
+    .cheat-pattern { font-size: 13px; color: var(--accent-text); word-break: break-all; padding: 6px 8px; border-radius: 6px; flex: 1; }
+    .cheat-use-btn { background: var(--surface); border: 1px solid var(--border-2); color: var(--text-1); border-radius: var(--radius-s); padding: 6px 14px; font-size: 13px; font-weight: 600; font-family: var(--font); cursor: pointer; transition: background-color var(--t), border-color var(--t); align-self: flex-start; }
+    .cheat-use-btn:hover { background: var(--surface-2); border-color: var(--text-3); }
 
-    .cheatsheet-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 10px;
-    }
-    .cheat-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .cheat-name {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-2);
-    }
-    .cheat-pattern {
-      font-family: 'Menlo', 'Consolas', monospace;
-      font-size: 12px;
-      color: var(--accent-text);
-      word-break: break-all;
-      background: rgba(99,102,241,0.08);
-      padding: 6px 8px;
-      border-radius: 5px;
-      flex: 1;
-    }
-    .cheat-use-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      border-radius: 6px;
-      padding: 5px 12px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.15s;
-      align-self: flex-start;
-    }
-    .cheat-use-btn:hover { color: var(--text-1); border-color: var(--accent); }
+    .related p { color: var(--text-2); font-size: var(--fs-s); }
+    .related p a { display: inline; font-size: inherit; }
 
-    /* ── Guide ── */
-    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* ── FAQ ── */
-    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-    code { font-family: 'Menlo', 'Consolas', monospace; background: rgba(99,102,241,0.12); color: var(--accent-text); padding: 1px 5px; border-radius: 4px; font-size: 12px; }
-
-    /* ── Vultr banner ── */
-    .vultr-banner {
-      background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(34,197,94,0.02) 100%);
-      border-top: 1px solid rgba(34,197,94,0.15);
-      border-bottom: 1px solid rgba(34,197,94,0.15);
-      padding: 20px 24px;
-      margin-bottom: 0;
-    }
-    .vultr-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .vultr-label {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--success);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.2);
-      padding: 3px 10px;
-      border-radius: 20px;
-      flex-shrink: 0;
-    }
-    .vultr-text {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 180px;
-    }
-    .vultr-text strong { font-size: 14px; color: var(--text-1); }
-    .vultr-text span { font-size: 13px; color: var(--text-2); }
-    .vultr-cta {
-      background: var(--success);
-      color: var(--success-fg);
-      font-weight: 600;
-      font-size: 13px;
-      padding: 10px 20px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      transition: opacity 0.15s;
-      flex-shrink: 0;
-    }
-    .vultr-cta:hover { background: var(--success-hover); color: var(--success-fg); }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-    .footer-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-copy { font-size: 13px; color: var(--text-3); }
-    .footer-links { display: flex; gap: 16px; }
-    .footer-links a { font-size: 13px; color: var(--text-3); }
-    .footer-links a:hover { color: var(--text-2); }
-
-    /* ── Responsive ── */
-    @media (max-width: 600px) {
-      .pattern-row { flex-direction: column; }
-      .copy-btn { align-self: flex-start; }
-      .match-item { grid-template-columns: 28px 1fr; }
-      .match-meta { grid-column: 2; }
-      .vultr-inner { flex-direction: column; align-items: flex-start; }
-      .footer-inner { justify-content: center; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
+      .pattern-row { flex-direction: column; }
+      .pattern-wrap { width: 100%; }
+      .match-item { grid-template-columns: 28px minmax(0, 1fr); }
+      .match-meta { grid-column: 2; text-align: left; }
     }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style>  <script type="application/ld+json">
+  </style>
+  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"Regex Tester","description":"Regex tester to debug regular expressions in your browser. Live match highlighting, flags, capture groups and a cheat sheet.","url":"https://tools.stackfreeks.com/tools/regex-tester/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
@@ -585,35 +108,38 @@
 </head>
 <body>
 
-  <!-- 1. Navigation -->
-  <nav class="nav">
+  <nav class="nav" aria-label="Main">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
-      <div class="nav-right">
-        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-        <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-      </div>
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-text" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-type"/></svg><span data-i18n="cat_text_code">Text &amp; Code</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
   </nav>
 
-  <!-- 2. AdSense slot (top) -->
-  <!-- ADSENSE_SLOT_HERO -->
-
-  <!-- 3. Hero -->
-  <section class="hero">
-    <div class="lang-en">
-      <h1>Regex Tester</h1>
-      <p>Test and debug regular expressions instantly in your browser. Live match highlighting, flag toggles, capture group viewer, and a quick-access cheat sheet — no signup required.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-regex"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Regex Tester</h1>
+        <p>Test and debug regular expressions instantly in your browser. Live match highlighting, flag toggles, capture group viewer, and a quick-access cheat sheet — no signup required.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>정규식 테스터</h1>
+        <p>브라우저에서 바로 정규 표현식을 테스트하고 디버깅하세요. 실시간 매치 하이라이팅, 플래그 토글, 캡처 그룹 뷰어, 빠른 치트시트까지 — 회원가입 불필요.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-    <div class="lang-ko">
-      <h1>정규식 테스터</h1>
-      <p>브라우저에서 바로 정규 표현식을 테스트하고 디버깅하세요. 실시간 매치 하이라이팅, 플래그 토글, 캡처 그룹 뷰어, 빠른 치트시트까지 — 회원가입 불필요.</p>
-    </div>
-  </section>
+  </header>
 
-  <!-- 4. Tool body -->
-  <main class="tool-body" aria-label="Regex tester tool">
+  <!-- Tool body -->
+  <main class="tool wrap-tool tool-body" aria-label="Regex tester tool">
 
     <!-- Pattern input -->
     <div>
@@ -630,14 +156,15 @@
               autocorrect="off"
               autocapitalize="off"
               placeholder="pattern"
+              data-i18n-placeholder="x_ph_pattern"
               value="\b\w{4}\b"
               aria-label="Regex pattern"
-            />
+             data-i18n-aria="x_regex_pattern"/>
             <span class="pattern-slash" id="flagsDisplay">/gi</span>
           </div>
           <div class="error-msg" id="errorMsg" role="alert"></div>
         </div>
-        <button class="copy-btn" id="copyBtn" onclick="copyPattern()" data-i18n="copy_pattern">Copy Pattern</button>
+        <button class="btn btn-ghost copy-btn" id="copyBtn" onclick="copyPattern()" data-i18n="copy_pattern">Copy Pattern</button>
       </div>
     </div>
 
@@ -645,16 +172,16 @@
     <div>
       <div class="field-label" data-i18n="flags_label">Flags</div>
       <div class="flags-wrap" id="flagsWrap">
-        <button class="flag-btn active" data-flag="g" onclick="toggleFlag(this)" title="Global — find all matches">
+        <button class="flag-btn active" data-flag="g" onclick="toggleFlag(this)" title="Global — find all matches" data-i18n-title="x_global_find_all_matches">
           <span>g</span><span class="flag-desc">global</span>
         </button>
-        <button class="flag-btn active" data-flag="i" onclick="toggleFlag(this)" title="Case insensitive">
-          <span>i</span><span class="flag-desc">ignore case</span>
+        <button class="flag-btn active" data-flag="i" onclick="toggleFlag(this)" title="Case insensitive" data-i18n-title="x_case_insensitive">
+          <span>i</span><span class="flag-desc" data-i18n="x_ignore_case">ignore case</span>
         </button>
-        <button class="flag-btn" data-flag="m" onclick="toggleFlag(this)" title="Multiline — ^ and $ match line boundaries">
+        <button class="flag-btn" data-flag="m" onclick="toggleFlag(this)" title="Multiline — ^ and $ match line boundaries" data-i18n-title="x_multiline_and_match_line_boundaries">
           <span>m</span><span class="flag-desc">multiline</span>
         </button>
-        <button class="flag-btn" data-flag="s" onclick="toggleFlag(this)" title="Dotall — . matches newlines too">
+        <button class="flag-btn" data-flag="s" onclick="toggleFlag(this)" title="Dotall — . matches newlines too" data-i18n-title="x_dotall_matches_newlines_too">
           <span>s</span><span class="flag-desc">dotall</span>
         </button>
       </div>
@@ -667,7 +194,7 @@
         id="testInput"
         spellcheck="false"
         aria-label="Test string"
-      >The quick brown fox jumps over the lazy dog</textarea>
+       data-i18n-aria="x_test_string">The quick brown fox jumps over the lazy dog</textarea>
     </div>
 
     <!-- Output / match results -->
@@ -681,121 +208,115 @@
       <div id="noMatchState" class="no-match-state" style="display:none;" data-i18n="no_match">No matches</div>
     </div>
 
+    <!-- Cheat sheet (collapsible) -->
+    <div class="cheatsheet">
+      <button class="cheatsheet-toggle" id="cheatToggle" onclick="toggleCheatsheet()" aria-expanded="false">
+        <span class="cheatsheet-toggle-label" data-i18n="x_regex_cheat_sheet">Regex Cheat Sheet</span>
+        <svg class="ico cheatsheet-toggle-icon" aria-hidden="true"><use href="/shared/icons.svg#i-chevron-down"/></svg>
+      </button>
+      <div class="cheatsheet-grid" id="cheatGrid" style="display:none;">
+        <div class="cheat-item">
+          <span class="cheat-name">Email</span>
+          <code class="cheat-pattern">[\w.-]+@[\w.-]+\.\w+</code>
+          <button class="cheat-use-btn" onclick="useCheat('[\\w.-]+@[\\w.-]+\\.\\w+','g')" data-i18n="x_use">Use</button>
+        </div>
+        <div class="cheat-item">
+          <span class="cheat-name">URL</span>
+          <code class="cheat-pattern">https?:\/\/[^\s]+</code>
+          <button class="cheat-use-btn" onclick="useCheat('https?:\\/\\/[^\\s]+','g')" data-i18n="x_use">Use</button>
+        </div>
+        <div class="cheat-item">
+          <span class="cheat-name" data-i18n="x_phone_us">Phone (US)</span>
+          <code class="cheat-pattern">\d{3}[-.\s]\d{3}[-.\s]\d{4}</code>
+          <button class="cheat-use-btn" onclick="useCheat('\\d{3}[-.\\s]\\d{3}[-.\\s]\\d{4}','g')" data-i18n="x_use">Use</button>
+        </div>
+        <div class="cheat-item">
+          <span class="cheat-name">IPv4</span>
+          <code class="cheat-pattern">\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b</code>
+          <button class="cheat-use-btn" onclick="useCheat('\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b','g')" data-i18n="x_use">Use</button>
+        </div>
+        <div class="cheat-item">
+          <span class="cheat-name" data-i18n="x_date_yyyy_mm_dd">Date (YYYY-MM-DD)</span>
+          <code class="cheat-pattern">\d{4}-\d{2}-\d{2}</code>
+          <button class="cheat-use-btn" onclick="useCheat('\\d{4}-\\d{2}-\\d{2}','g')" data-i18n="x_use">Use</button>
+        </div>
+        <div class="cheat-item">
+          <span class="cheat-name" data-i18n="x_hex_color">Hex Color</span>
+          <code class="cheat-pattern">#[0-9a-fA-F]{3,6}</code>
+          <button class="cheat-use-btn" onclick="useCheat('#[0-9a-fA-F]{3,6}','g')" data-i18n="x_use">Use</button>
+        </div>
+        <div class="cheat-item">
+          <span class="cheat-name" data-i18n="x_numbers_only">Numbers Only</span>
+          <code class="cheat-pattern">\d+</code>
+          <button class="cheat-use-btn" onclick="useCheat('\\d+','g')" data-i18n="x_use">Use</button>
+        </div>
+        <div class="cheat-item">
+          <span class="cheat-name" data-i18n="x_words">Words</span>
+          <code class="cheat-pattern">\b\w+\b</code>
+          <button class="cheat-use-btn" onclick="useCheat('\\b\\w+\\b','g')" data-i18n="x_use">Use</button>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <!-- 5. Cheat sheet (collapsible) -->
-  <section class="cheatsheet">
-    <button class="cheatsheet-toggle" id="cheatToggle" onclick="toggleCheatsheet()" aria-expanded="false">
-      <span class="cheatsheet-toggle-label">Regex Cheat Sheet</span>
-      <span class="cheatsheet-toggle-icon">▼</span>
-    </button>
-    <div class="cheatsheet-grid" id="cheatGrid" style="display:none;">
-      <div class="cheat-item">
-        <span class="cheat-name">Email</span>
-        <code class="cheat-pattern">[\w.-]+@[\w.-]+\.\w+</code>
-        <button class="cheat-use-btn" onclick="useCheat('[\\w.-]+@[\\w.-]+\\.\\w+','g')">Use</button>
-      </div>
-      <div class="cheat-item">
-        <span class="cheat-name">URL</span>
-        <code class="cheat-pattern">https?:\/\/[^\s]+</code>
-        <button class="cheat-use-btn" onclick="useCheat('https?:\\/\\/[^\\s]+','g')">Use</button>
-      </div>
-      <div class="cheat-item">
-        <span class="cheat-name">Phone (US)</span>
-        <code class="cheat-pattern">\d{3}[-.\s]\d{3}[-.\s]\d{4}</code>
-        <button class="cheat-use-btn" onclick="useCheat('\\d{3}[-.\\s]\\d{3}[-.\\s]\\d{4}','g')">Use</button>
-      </div>
-      <div class="cheat-item">
-        <span class="cheat-name">IPv4</span>
-        <code class="cheat-pattern">\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b</code>
-        <button class="cheat-use-btn" onclick="useCheat('\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b','g')">Use</button>
-      </div>
-      <div class="cheat-item">
-        <span class="cheat-name">Date (YYYY-MM-DD)</span>
-        <code class="cheat-pattern">\d{4}-\d{2}-\d{2}</code>
-        <button class="cheat-use-btn" onclick="useCheat('\\d{4}-\\d{2}-\\d{2}','g')">Use</button>
-      </div>
-      <div class="cheat-item">
-        <span class="cheat-name">Hex Color</span>
-        <code class="cheat-pattern">#[0-9a-fA-F]{3,6}</code>
-        <button class="cheat-use-btn" onclick="useCheat('#[0-9a-fA-F]{3,6}','g')">Use</button>
-      </div>
-      <div class="cheat-item">
-        <span class="cheat-name">Numbers Only</span>
-        <code class="cheat-pattern">\d+</code>
-        <button class="cheat-use-btn" onclick="useCheat('\\d+','g')">Use</button>
-      </div>
-      <div class="cheat-item">
-        <span class="cheat-name">Words</span>
-        <code class="cheat-pattern">\b\w+\b</code>
-        <button class="cheat-use-btn" onclick="useCheat('\\b\\w+\\b','g')">Use</button>
-      </div>
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More text &amp; code tools</h2>
+      <a class="sec-link" href="/#cat-text"><span data-i18n="all_in_cat">All Text &amp; Code tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
     </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/markdown-previewer/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-notebook-pen"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Markdown Previewer</span><span class="lang-ko">마크다운 미리보기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+    </ul>
   </section>
 
-  <!-- 6. Related link -->
-  <section style="max-width:860px;margin:0 auto;padding:0 24px 40px;">
-    <div class="lang-en">
-      <p style="font-size:13px;color:var(--text-3);">
-        More dev tools on <a href="https://stackfreeks.com" style="color:var(--accent-text);">stackfreeks.com</a> — VPS guides, server setup tutorials, and developer resources.
-      </p>
-    </div>
-    <div class="lang-ko">
-      <p style="font-size:13px;color:var(--text-3);">
-        <a href="https://stackfreeks.com" style="color:var(--accent-text);">stackfreeks.com</a>에서 더 많은 개발 도구와 VPS 가이드, 서버 설정 튜토리얼을 확인하세요.
-      </p>
-    </div>
-  </section>
-
-  <!-- 7. Guide section -->
   <section class="guide">
-    <div class="guide-title">How to use</div>
+    <h2 class="guide-title"><span class="lang-en">How to use</span><span class="lang-ko">사용 방법</span></h2>
     <div class="guide-grid">
 
       <div class="guide-card">
-        <div class="guide-step">STEP 1</div>
         <div class="lang-en">
-          <h3>Enter your pattern</h3>
+          <h3>1. Enter your pattern</h3>
           <p>Type your regex pattern in the pattern field — no slashes needed. The tool adds them for display.</p>
         </div>
         <div class="lang-ko">
-          <h3>패턴 입력</h3>
+          <h3>1. 패턴 입력</h3>
           <p>패턴 필드에 정규식을 입력하세요 — 슬래시 불필요. 도구가 자동으로 표시해줍니다.</p>
         </div>
       </div>
 
       <div class="guide-card">
-        <div class="guide-step">STEP 2</div>
         <div class="lang-en">
-          <h3>Toggle flags</h3>
+          <h3>2. Toggle flags</h3>
           <p>Use the flag pills to activate <code>g</code> (global), <code>i</code> (case-insensitive), <code>m</code> (multiline), or <code>s</code> (dotall).</p>
         </div>
         <div class="lang-ko">
-          <h3>플래그 선택</h3>
+          <h3>2. 플래그 선택</h3>
           <p>플래그 버튼으로 <code>g</code>(전체), <code>i</code>(대소문자 무시), <code>m</code>(여러 줄), <code>s</code>(점 전체 일치)를 활성화하세요.</p>
         </div>
       </div>
 
       <div class="guide-card">
-        <div class="guide-step">STEP 3</div>
         <div class="lang-en">
-          <h3>Paste your test string</h3>
+          <h3>3. Paste your test string</h3>
           <p>Type or paste any text into the test string area — matches highlight instantly as you type.</p>
         </div>
         <div class="lang-ko">
-          <h3>테스트 문자열 붙여넣기</h3>
+          <h3>3. 테스트 문자열 붙여넣기</h3>
           <p>테스트 영역에 텍스트를 입력하거나 붙여넣으세요 — 입력과 동시에 매치가 하이라이트됩니다.</p>
         </div>
       </div>
 
       <div class="guide-card">
-        <div class="guide-step">STEP 4</div>
         <div class="lang-en">
-          <h3>Use the cheat sheet</h3>
+          <h3>4. Use the cheat sheet</h3>
           <p>Open the cheat sheet to load common patterns — email, URL, IP address, date, hex color — in one click.</p>
         </div>
         <div class="lang-ko">
-          <h3>치트시트 활용</h3>
+          <h3>4. 치트시트 활용</h3>
           <p>치트시트를 열어 이메일, URL, IP 주소, 날짜, 색상 코드 등 자주 쓰는 패턴을 한 번에 불러오세요.</p>
         </div>
       </div>
@@ -803,10 +324,9 @@
     </div>
   </section>
 
-  <!-- 8. FAQ section -->
   <section class="faq">
     <div class="lang-en">
-      <div class="faq-title">FAQ</div>
+      <h2 class="faq-title">FAQ</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>What regex flavor does this use?</span><span class="faq-icon">+</span></button>
@@ -828,7 +348,7 @@
     </div>
 
     <div class="lang-ko">
-      <div class="faq-title">자주 묻는 질문</div>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>어떤 정규식 엔진을 사용하나요?</span><span class="faq-icon">+</span></button>
@@ -850,44 +370,72 @@
     </div>
   </section>
 
-  <!-- 9. Vultr affiliate banner -->
   <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/word-counter/" class="sf-related-card"><span>📝</span>Word Counter</a>
-      <a href="/tools/text-case-converter/" class="sf-related-card"><span>🔡</span>Text Case Converter</a>
-      <a href="/tools/lorem-ipsum/" class="sf-related-card"><span>📄</span>Lorem Ipsum Generator</a>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/word-counter/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-text"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Word Counter</span><span class="lang-ko">단어 수 세기</span></span></span></a></li>
+      <li><a href="/tools/text-case-converter/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-case-sensitive"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Text Case Converter</span><span class="lang-ko">텍스트 케이스 변환기</span></span></span></a></li>
+      <li><a href="/tools/lorem-ipsum/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-pilcrow"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Lorem Ipsum Generator</span><span class="lang-ko">Lorem Ipsum 생성기</span></span></span></a></li>
+    </ul>
+  </section>
+
+  <!-- Related content -->
+  <section class="related">
+    <div class="lang-en">
+      <p>
+        More dev tools on <a href="https://stackfreeks.com">stackfreeks.com</a> — VPS guides, server setup tutorials, and developer resources.
+      </p>
+    </div>
+    <div class="lang-ko">
+      <p>
+        <a href="https://stackfreeks.com">stackfreeks.com</a>에서 더 많은 개발 도구와 VPS 가이드, 서버 설정 튜토리얼을 확인하세요.
+      </p>
     </div>
   </section>
 
-  <section class="vultr-banner">
-    <div class="vultr-inner">
-      <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
-      <div class="vultr-text">
-        <strong data-i18n="vultr_title">Get started on Vultr</strong>
-        <span data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
       </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" target="_blank" rel="nofollow sponsored" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
-  </section>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
-  <!-- 10. Footer -->
-  <footer>
-    <div class="footer-inner">
-      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
-      <nav class="footer-links" aria-label="Footer navigation">
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
         <a href="/about/">About</a>
         <a href="/privacy/">Privacy</a>
-        <a href="/tools/">Tools</a>
-      </nav>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
   </footer>
 
-  <!-- i18n config (must be before i18n.js) -->
+<!-- i18n config (must be before i18n.js) -->
   <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_text_code: "Text & Code",
+        more_tools: "More text & code tools",
+        all_in_cat: "All Text & Code tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back: "← All Tools",
         vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
         vultr_sub: "Get $300 free credit — valid for 30 days",
@@ -897,9 +445,34 @@
         test_label: "Test String", matches_label: "Matches",
         no_match: "No matches", invalid_regex: "Invalid regex",
         match_count: "match", matches_count: "matches",
-        copy_pattern: "Copy Pattern", copied: "Copied!"
+        copy_pattern: "Copy Pattern", copied: "Copied!",
+        x_case_insensitive: "Case insensitive",
+        x_date_yyyy_mm_dd: "Date (YYYY-MM-DD)",
+        x_dotall_matches_newlines_too: "Dotall — . matches newlines too",
+        x_global_find_all_matches: "Global — find all matches",
+        x_hex_color: "Hex Color",
+        x_ignore_case: "ignore case",
+        x_multiline_and_match_line_boundaries: "Multiline — ^ and $ match line boundaries",
+        x_numbers_only: "Numbers Only",
+        x_phone_us: "Phone (US)",
+        x_regex_cheat_sheet: "Regex Cheat Sheet",
+        x_regex_pattern: "Regex pattern",
+        x_test_string: "Test string",
+        x_use: "Use",
+        x_groups: "Groups",
+        x_pos: "pos",
+        x_len: "len",
+        x_ph_pattern: "pattern"
       },
       ko: {
+        cat_text_code: "텍스트 & 코드",
+        more_tools: "텍스트 & 코드 툴 더 보기",
+        all_in_cat: "텍스트 & 코드 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back: "← 전체 툴",
         vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
         vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
@@ -909,7 +482,24 @@
         test_label: "테스트 문자열", matches_label: "매치 결과",
         no_match: "매치 없음", invalid_regex: "유효하지 않은 정규식",
         match_count: "개 매치", matches_count: "개 매치",
-        copy_pattern: "패턴 복사", copied: "복사됨!"
+        copy_pattern: "패턴 복사", copied: "복사됨!",
+        x_case_insensitive: "대소문자 구분 없음",
+        x_date_yyyy_mm_dd: "날짜 (YYYY-MM-DD)",
+        x_dotall_matches_newlines_too: "dotall — . 가 줄바꿈에도 일치",
+        x_global_find_all_matches: "global — 모든 일치 찾기",
+        x_hex_color: "Hex 색상",
+        x_ignore_case: "대소문자 무시",
+        x_multiline_and_match_line_boundaries: "multiline — ^ 와 $ 가 줄 경계에 일치",
+        x_numbers_only: "숫자만",
+        x_phone_us: "전화번호 (미국)",
+        x_regex_cheat_sheet: "정규식 치트시트",
+        x_regex_pattern: "정규식 패턴",
+        x_test_string: "테스트 문자열",
+        x_use: "적용",
+        x_groups: "그룹",
+        x_pos: "위치",
+        x_len: "길이",
+        x_ph_pattern: "패턴"
       }
     };
   </script>
@@ -1040,7 +630,7 @@
 
         let groupsHtml = '';
         if (groups.length) {
-          groupsHtml = `<div class="match-groups">Groups: ${groups.map((g, gi) => `[${gi+1}] ${g === undefined ? '<em>undefined</em>' : escapeHtml(String(g))}`).join('  ')}</div>`;
+          groupsHtml = `<div class="match-groups">${t.x_groups || 'Groups'}: ${groups.map((g, gi) => `[${gi+1}] ${g === undefined ? '<em>undefined</em>' : escapeHtml(String(g))}`).join('  ')}</div>`;
         }
 
         div.innerHTML = `
@@ -1050,7 +640,7 @@
             ${groupsHtml}
           </div>
           <div class="match-meta">
-            pos ${m.index}<br>len ${m[0].length}
+            ${t.x_pos || 'pos'} ${m.index}<br>${t.x_len || 'len'} ${m[0].length}
           </div>
         `;
         matchList.appendChild(div);

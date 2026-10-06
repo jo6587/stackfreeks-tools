@@ -21,119 +21,15 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 5px 12px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-1); }
-
-    /* Hero */
-    .hero {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 48px 24px 32px;
-    }
-
-    .hero h1 {
-      font-size: clamp(24px, 4vw, 36px);
-      font-weight: 600;
-      color: var(--text-1);
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-      max-width: 580px;
-    }
-
-    /* Tool container */
-    .tool-wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
+    /* JSON to CSV Converter — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* Tabs */
     .tabs { display: flex; gap: 4px; margin-bottom: 16px; }
     .tab-btn {
@@ -145,9 +41,9 @@
       padding: 8px 16px;
       border-radius: var(--radius);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
     }
-    .tab-btn.active { background: var(--accent-strong); border-color: var(--accent); color: #fff; }
+    .tab-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); }
     .tab-btn:not(.active):hover { border-color: var(--border-2); color: var(--text-1); }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
@@ -156,7 +52,7 @@
     .panel-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 20px;
     }
 
@@ -170,23 +66,6 @@
       display: block;
     }
 
-    textarea {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      font-family: "SF Mono", "Fira Code", "Menlo", monospace;
-      font-size: 13px;
-      line-height: 1.6;
-      padding: 12px;
-      resize: vertical;
-      min-height: 160px;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    textarea:focus { border-color: var(--border-2); }
-    textarea::placeholder { color: var(--text-3); }
     textarea[readonly] { cursor: default; }
 
     /* Buttons row */
@@ -197,44 +76,6 @@
       margin-top: 12px;
       align-items: center;
     }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: var(--radius);
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: var(--accent-strong);
-      color: #fff;
-      border-color: var(--accent);
-    }
-    .btn-primary:hover { opacity: 0.85; }
-
-    .btn-secondary {
-      background: var(--surface-2);
-      color: var(--text-2);
-      border-color: var(--border);
-    }
-    .btn-secondary:hover { border-color: var(--border-2); color: var(--text-1); }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-3);
-      border-color: var(--border);
-      font-size: 12px;
-      padding: 6px 12px;
-    }
-    .btn-ghost:hover { color: var(--text-2); border-color: var(--border-2); }
 
     /* Divider */
     .divider {
@@ -253,17 +94,17 @@
 
     .output-meta {
       font-size: 12px;
-      color: var(--success);
+      color: var(--success-fg);
       font-weight: 500;
     }
 
     .output-code {
       width: 100%;
-      background: #0d0d10;
+      background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      color: #a5f3fc;
-      font-family: "SF Mono", "Fira Code", "Menlo", monospace;
+      color: var(--text-1);
+      font-family: var(--font-mono);
       font-size: 12px;
       line-height: 1.7;
       padding: 12px;
@@ -276,87 +117,19 @@
 
     .copy-feedback {
       font-size: 12px;
-      color: var(--success);
+      color: var(--success-fg);
       opacity: 0;
       transition: opacity 0.3s;
       margin-left: auto;
     }
     .copy-feedback.show { opacity: 1; }
 
-    /* Guide */
-    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FAQ */
-    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related */
-    .related {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-      font-size: 13px;
-    }
-
-    /* Vultr banner */
-    .vultr-banner { background: var(--success-bg); border-top: 1px solid rgba(34,197,94,0.15); border-bottom: 1px solid rgba(34,197,94,0.15); padding: 24px; }
-    .banner-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--success); margin-bottom: 4px; }
-    .banner-title { font-size: 16px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr { display: inline-block; background: var(--success); color: var(--success-fg); font-size: 13px; font-weight: 600; padding: 10px 20px; border-radius: var(--radius); white-space: nowrap; transition: opacity 0.15s; }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px 24px;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      color: var(--text-3);
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 16px;
-    }
-
-    .footer-links a {
-      color: var(--text-3);
-      font-size: 13px;
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
     /* Error state */
     .error-msg {
       font-size: 13px;
-      color: #f87171;
-      background: rgba(248,113,113,0.08);
-      border: 1px solid rgba(248,113,113,0.2);
+      color: var(--danger);
+      background: var(--danger-bg);
+      border: 1px solid var(--danger);
       border-radius: var(--radius);
       padding: 10px 14px;
       margin-top: 10px;
@@ -365,39 +138,14 @@
     .error-msg.show { display: block; }
 
     @media (max-width: 600px) {
-      .hero { padding: 32px 16px 24px; }
-      .tool-wrap, .guide, .faq, .related { padding-left: 16px; padding-right: 16px; }
-      footer { padding: 20px 16px; }
+
       .tabs { flex-wrap: wrap; }
     }
   
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style>  <script type="application/ld+json">
+    
+    #json-input { display: block; width: 100%; min-height: 160px; resize: vertical; background: var(--surface-2); font-family: var(--font-mono); font-size: 13px; line-height: 1.6; padding: 12px; }
+  </style>
+  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"JSON to CSV Converter","description":"Convert JSON arrays to CSV online for free. Also convert CSV back to JSON. No account required, works entirely in your browser.","url":"https://tools.stackfreeks.com/tools/json-to-csv/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
@@ -407,151 +155,163 @@
 </head>
 <body>
 
-  <!-- 1. Nav -->
-  <nav>
-    <div class="nav-left">
-      <a href="/" class="logo">StackFreeks Tools</a>
-      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-conv" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left-right"/></svg><span data-i18n="cat_converters">Converters &amp; Encoders</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
   </nav>
 
-  <!-- 2. AdSense slot -->
-  <!-- ADSENSE_SLOT_TOP -->
-
-  <!-- 3. Hero -->
-  <div class="hero">
-    <div class="lang-en">
-      <h1>JSON to CSV Converter</h1>
-      <p>Convert JSON arrays to CSV and back — free, instant, works in your browser.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-sheet"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>JSON to CSV Converter</h1>
+        <p>Convert JSON arrays to CSV and back — free, instant, works in your browser.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>JSON ↔ CSV 변환기</h1>
+        <p>JSON 배열을 CSV로, CSV를 JSON으로 즉시 변환. 무료, 브라우저에서 작동.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-    <div class="lang-ko">
-      <h1>JSON ↔ CSV 변환기</h1>
-      <p>JSON 배열을 CSV로, CSV를 JSON으로 즉시 변환. 무료, 브라우저에서 작동.</p>
-    </div>
-  </div>
+  </header>
 
-  <!-- 4. Tool body -->
-  <div class="tool-wrap">
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('json2csv')" id="tab-json2csv" data-i18n="tab_json_to_csv">JSON → CSV</button>
-      <button class="tab-btn" onclick="switchTab('csv2json')" id="tab-csv2json" data-i18n="tab_csv_to_json">CSV → JSON</button>
-    </div>
+  <!-- Tool body -->
+  <main class="tool wrap-tool tool-wrap">
+  <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('json2csv')" id="tab-json2csv" data-i18n="tab_json_to_csv">JSON → CSV</button>
+        <button class="tab-btn" onclick="switchTab('csv2json')" id="tab-csv2json" data-i18n="tab_csv_to_json">CSV → JSON</button>
+      </div>
 
-    <!-- Tab A: JSON → CSV -->
-    <div class="tab-panel active" id="panel-json2csv">
-      <div class="panel-card">
-        <label class="input-label" for="json-input" data-i18n="result_label">JSON Input</label>
-        <textarea id="json-input" placeholder='Paste a JSON array of objects here, e.g. [{"name":"web-1","cpu":2,"ram_gb":4}]' rows="8"></textarea>
-        <div id="json2csv-error" class="error-msg"></div>
-        <div class="btn-row">
-          <button class="btn btn-primary" onclick="convertJsonToCsv()" data-i18n="convert_btn">Convert to CSV</button>
-          <button class="btn btn-ghost" onclick="loadJsonSample()" data-i18n="load_sample_btn">Load sample</button>
-          <button class="btn btn-ghost" onclick="clearPanel('json2csv')" data-i18n="clear_btn">Clear</button>
-        </div>
+      <!-- Tab A: JSON → CSV -->
+      <div class="tab-panel active" id="panel-json2csv">
+        <div class="panel-card">
+          <label class="input-label" for="json-input" data-i18n="result_label">JSON Input</label>
+          <textarea id="json-input" placeholder='Paste a JSON array of objects here, e.g. [{"name":"web-1","cpu":2,"ram_gb":4}]' data-i18n-placeholder="x_json_input_ph" rows="8"></textarea>
+          <div id="json2csv-error" class="error-msg"></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="convertJsonToCsv()" data-i18n="convert_btn">Convert to CSV</button>
+            <button class="btn btn-ghost" onclick="loadJsonSample()" data-i18n="load_sample_btn">Load sample</button>
+            <button class="btn btn-ghost" onclick="clearPanel('json2csv')" data-i18n="clear_btn">Clear</button>
+          </div>
 
-        <hr class="divider" />
+          <hr class="divider" />
 
-        <div class="output-label">
-          <span class="input-label" style="margin-bottom:0" data-i18n="result_label">CSV Output</span>
-          <span class="output-meta" id="json2csv-meta"></span>
-        </div>
-        <textarea class="output-code" id="csv-output" readonly placeholder="CSV output will appear here..."></textarea>
-        <div class="btn-row">
-          <button class="btn btn-secondary" onclick="copyCsv()" data-i18n="copy_btn">Copy CSV</button>
-          <button class="btn btn-secondary" onclick="downloadCsv()" data-i18n="download_btn">Download .csv</button>
-          <span class="copy-feedback" id="csv-copy-ok">Copied!</span>
+          <div class="output-label">
+            <span class="input-label" style="margin-bottom:0" data-i18n="result_label">CSV Output</span>
+            <span class="output-meta" id="json2csv-meta"></span>
+          </div>
+          <textarea class="output-code" id="csv-output" readonly placeholder="CSV output will appear here..." data-i18n-placeholder="x_csv_output_will_appear_here"></textarea>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="copyCsv()" data-i18n="copy_btn">Copy CSV</button>
+            <button class="btn btn-secondary" onclick="downloadCsv()" data-i18n="download_btn">Download .csv</button>
+            <span class="copy-feedback" id="csv-copy-ok" data-i18n="x_copied">Copied!</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Tab B: CSV → JSON -->
-    <div class="tab-panel" id="panel-csv2json">
-      <div class="panel-card">
-        <label class="input-label" for="csv-input">CSV Input</label>
-        <textarea id="csv-input" placeholder="Paste CSV with a header row here, e.g.:&#10;name,cpu,ram_gb,price_month&#10;web-1,2,4,12" rows="8"></textarea>
-        <div id="csv2json-error" class="error-msg"></div>
-        <div class="btn-row">
-          <button class="btn btn-primary" onclick="convertCsvToJson()" data-i18n="convert_btn">Convert to JSON</button>
-          <button class="btn btn-ghost" onclick="loadCsvSample()" data-i18n="load_sample_btn">Load sample</button>
-          <button class="btn btn-ghost" onclick="clearPanel('csv2json')" data-i18n="clear_btn">Clear</button>
-        </div>
+      <!-- Tab B: CSV → JSON -->
+      <div class="tab-panel" id="panel-csv2json">
+        <div class="panel-card">
+          <label class="input-label" for="csv-input" data-i18n="x_csv_input">CSV Input</label>
+          <textarea id="csv-input" placeholder="Paste CSV with a header row here, e.g.:&#10;name,cpu,ram_gb,price_month&#10;web-1,2,4,12" data-i18n-placeholder="x_csv_input_ph" rows="8"></textarea>
+          <div id="csv2json-error" class="error-msg"></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="convertCsvToJson()" data-i18n="convert_btn">Convert to JSON</button>
+            <button class="btn btn-ghost" onclick="loadCsvSample()" data-i18n="load_sample_btn">Load sample</button>
+            <button class="btn btn-ghost" onclick="clearPanel('csv2json')" data-i18n="clear_btn">Clear</button>
+          </div>
 
-        <hr class="divider" />
+          <hr class="divider" />
 
-        <div class="output-label">
-          <span class="input-label" style="margin-bottom:0" data-i18n="result_label">JSON Output</span>
-          <span class="output-meta" id="csv2json-meta"></span>
-        </div>
-        <textarea class="output-code" id="json-output" readonly placeholder="JSON output will appear here..."></textarea>
-        <div class="btn-row">
-          <button class="btn btn-secondary" onclick="copyJson()" data-i18n="copy_btn">Copy JSON</button>
-          <button class="btn btn-secondary" onclick="downloadJson()" data-i18n="download_btn">Download .json</button>
-          <span class="copy-feedback" id="json-copy-ok">Copied!</span>
+          <div class="output-label">
+            <span class="input-label" style="margin-bottom:0" data-i18n="result_label">JSON Output</span>
+            <span class="output-meta" id="csv2json-meta"></span>
+          </div>
+          <textarea class="output-code" id="json-output" readonly placeholder="JSON output will appear here..." data-i18n-placeholder="x_json_output_will_appear_here"></textarea>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="copyJson()" data-i18n="copy_btn">Copy JSON</button>
+            <button class="btn btn-secondary" onclick="downloadJson()" data-i18n="download_btn">Download .json</button>
+            <span class="copy-feedback" id="json-copy-ok" data-i18n="x_copied">Copied!</span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+  </main>
 
-  <!-- 5. Guide section -->
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More converters</h2>
+      <a class="sec-link" href="/#cat-conv"><span data-i18n="all_in_cat">All Converters &amp; Encoders tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/url-encoder/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-link"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">URL Encoder / Decoder</span><span class="lang-ko">URL 인코더 / 디코더</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/hash-generator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-hash"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Hash Generator</span><span class="lang-ko">해시 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- How to use -->
   <section class="guide">
     <div class="lang-en">
-      <p class="guide-title">How to use</p>
+      <h2 class="guide-title">How to use</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">Step 1</p>
-          <h3>Paste your JSON array</h3>
+          <h3>1. Paste your JSON array</h3>
           <p>Paste a JSON array of objects into the input area, or click "Load sample" to try it with example data.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 2</p>
-          <h3>Click Convert</h3>
+          <h3>2. Click Convert</h3>
           <p>Hit "Convert to CSV" — column headers are auto-detected from the keys of the first object in your array.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 3</p>
-          <h3>Preview the CSV output</h3>
+          <h3>3. Preview the CSV output</h3>
           <p>The CSV preview appears instantly. Row and column counts are shown so you can verify accuracy.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">Step 4</p>
-          <h3>Copy or download</h3>
+          <h3>4. Copy or download</h3>
           <p>Click "Copy CSV" to copy to clipboard, or "Download .csv" to save the file directly to your computer.</p>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <p class="guide-title">사용 방법</p>
+      <h2 class="guide-title">사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">1단계</p>
-          <h3>JSON 배열 붙여넣기</h3>
+          <h3>1. JSON 배열 붙여넣기</h3>
           <p>JSON 객체 배열을 입력창에 붙여넣거나, "샘플 불러오기"를 클릭해 예시 데이터로 체험하세요.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">2단계</p>
-          <h3>변환 버튼 클릭</h3>
+          <h3>2. 변환 버튼 클릭</h3>
           <p>"CSV로 변환"을 클릭하면 첫 번째 객체의 키에서 헤더가 자동으로 감지됩니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">3단계</p>
-          <h3>CSV 미리보기 확인</h3>
+          <h3>3. CSV 미리보기 확인</h3>
           <p>CSV가 즉시 미리보기로 표시됩니다. 행과 열 개수를 확인해 정확성을 검증하세요.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">4단계</p>
-          <h3>복사 또는 다운로드</h3>
+          <h3>4. 복사 또는 다운로드</h3>
           <p>"CSV 복사"로 클립보드에 복사하거나, "다운로드 .csv"로 파일을 저장하세요.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 6. FAQ section -->
+  <!-- FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <p class="faq-title">FAQ</p>
+      <h2 class="faq-title">FAQ</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What JSON format does this converter support?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">This tool supports a JSON array of objects — the most common format for data export and APIs. Each object in the array becomes one row in the CSV. The keys of the first object are used as the header row. Flat objects work best; nested objects are serialized as a JSON string in the CSV cell.</div>
@@ -574,7 +334,7 @@
       </div>
     </div>
     <div class="lang-ko">
-      <p class="faq-title">자주 묻는 질문</p>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>어떤 JSON 형식을 지원하나요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">이 툴은 객체 배열 형태의 JSON을 지원합니다. 배열 안의 각 객체가 CSV의 한 행이 됩니다. 첫 번째 객체의 키가 헤더 행으로 사용됩니다. 평면(flat) 객체가 가장 잘 작동하며, 중첩 객체는 CSV 셀 안에 JSON 문자열로 직렬화됩니다.</div>
@@ -598,48 +358,63 @@
     </div>
   </section>
 
-  <!-- 7. Related content -->
-  <div class="related">
-    <a href="https://stackfreeks.com" target="_blank" rel="noopener">More developer guides on stackfreeks.com →</a>
-  </div>
-
-  <!-- 8. Vultr banner -->
-  <div class="vultr-banner">
-    <div class="banner-inner">
-      <div>
-        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-        <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
-      </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank" class="btn-vultr" data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
-  </div>
-
-  <!-- 9. Footer -->
   <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/timestamp-converter/" class="sf-related-card"><span>🕐</span>Unix Timestamp Converter</a>
-      <a href="/tools/password-generator/" class="sf-related-card"><span>🗝️</span>Password Generator</a>
-      <a href="/tools/base64-encoder/" class="sf-related-card"><span>🔤</span>Base64 Encoder / Decoder</a>
-    </div>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a class="card card-sm sf-related-card" href="/tools/timestamp-converter/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-clock"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Unix Timestamp Converter</span><span class="lang-ko">Unix 타임스탬프 변환기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/password-generator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-rectangle-ellipsis"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Password Generator</span><span class="lang-ko">비밀번호 생성기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/base64-encoder/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-digit"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Base64 Encoder / Decoder</span><span class="lang-ko">Base64 인코더 / 디코더</span></span></span></a></li>
+    </ul>
   </section>
 
-  <footer>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
+  <!-- Related content -->
+  <section class="related">
+    <a href="https://stackfreeks.com" target="_blank" rel="noopener">More developer guides on stackfreeks.com →</a>
+  </section>
+
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
   </footer>
 
   <!-- Page-specific i18n -->
   <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_converters: "Converters & Encoders",
+        more_tools: "More converters",
+        all_in_cat: "All Converters & Encoders tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         tab_json_to_csv: 'JSON → CSV',
         tab_csv_to_json: 'CSV → JSON',
         convert_btn: 'Convert',
@@ -648,9 +423,27 @@
         load_sample_btn: 'Load sample',
         clear_btn: 'Clear',
         result_label: 'Output',
-        nav_back: '← All Tools'
+        nav_back: '← All Tools',
+        x_csv_input: "CSV Input",
+        x_csv_output_will_appear_here: "CSV output will appear here...",
+        x_json_output_will_appear_here: "JSON output will appear here...",
+        x_cols_suffix: " columns",
+        x_converted: "Converted: ",
+        x_parsed: "Parsed: ",
+        x_rows_cols_mid: " rows, ",
+        x_rows_suffix: " rows",
+        x_json_input_ph: 'Paste a JSON array of objects here, e.g. [{"name":"web-1","cpu":2,"ram_gb":4}]',
+        x_csv_input_ph: "Paste CSV with a header row here, e.g.:\nname,cpu,ram_gb,price_month\nweb-1,2,4,12"
       },
       ko: {
+        cat_converters: "변환 & 인코딩",
+        more_tools: "변환 툴 더 보기",
+        all_in_cat: "변환 & 인코딩 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         tab_json_to_csv: 'JSON → CSV',
         tab_csv_to_json: 'CSV → JSON',
         convert_btn: '변환하기',
@@ -659,7 +452,17 @@
         load_sample_btn: '샘플 불러오기',
         clear_btn: '초기화',
         result_label: '출력',
-        nav_back: '← 전체 툴'
+        nav_back: '← 전체 툴',
+        x_csv_input: "CSV 입력",
+        x_csv_output_will_appear_here: "CSV 결과가 여기에 표시됩니다...",
+        x_json_output_will_appear_here: "JSON 결과가 여기에 표시됩니다...",
+        x_cols_suffix: "열",
+        x_converted: "변환 완료: ",
+        x_parsed: "파싱 완료: ",
+        x_rows_cols_mid: "행, ",
+        x_rows_suffix: "행",
+        x_json_input_ph: '객체 배열 형태의 JSON을 붙여넣으세요. 예: [{"name":"web-1","cpu":2,"ram_gb":4}]',
+        x_csv_input_ph: "헤더 행이 있는 CSV를 붙여넣으세요. 예:\nname,cpu,ram_gb,price_month\nweb-1,2,4,12"
       }
     };
 
@@ -802,7 +605,7 @@
       var csv = lines.join('\n');
       document.getElementById('csv-output').value = csv;
       document.getElementById('json2csv-meta').textContent =
-        'Converted: ' + data.length + ' rows, ' + headers.length + ' columns';
+        sfT('x_converted') + data.length + sfT('x_rows_cols_mid') + headers.length + sfT('x_cols_suffix');
     }
 
     /* ── Copy CSV ────────────────────────────────────── */
@@ -891,7 +694,7 @@
 
       var json = JSON.stringify(rows, null, 2);
       document.getElementById('json-output').value = json;
-      document.getElementById('csv2json-meta').textContent = 'Parsed: ' + rows.length + ' rows';
+      document.getElementById('csv2json-meta').textContent = sfT('x_parsed') + rows.length + sfT('x_rows_suffix');
     }
 
     /* ── Copy JSON ───────────────────────────────────── */

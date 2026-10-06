@@ -21,500 +21,46 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* ── Nav ── */
-    .nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-    }
-    .nav-inner {
-      width: 100%;
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-    .nav-logo span { color: var(--accent-text); }
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); color: var(--text-1); }
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    /* ── Hero ── */
-    .hero {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 48px 24px 32px;
-    }
-    .hero h1 {
-      font-size: clamp(24px, 4vw, 36px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 12px;
-    }
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-      max-width: 560px;
-      line-height: 1.7;
-    }
-
-    /* ── Tool body ── */
-    .tool-body {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
-    /* Presets */
-    .presets {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-    .presets-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      width: 100%;
-      margin-bottom: 2px;
-    }
-    .preset-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: var(--text-2);
-      font-size: 12px;
-      font-weight: 500;
-      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
-      padding: 5px 12px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-    }
-    .preset-btn:hover {
-      border-color: var(--accent);
-      color: var(--text-1);
-      background: rgba(99,102,241,0.08);
-    }
-
-    /* Base grid */
-    .base-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-    .base-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px 20px;
-      transition: border-color 0.15s;
-    }
-    .base-card:focus-within {
-      border-color: var(--accent);
-    }
-    .base-card.error {
-      border-color: #ef4444;
-    }
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .card-label {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-2);
-    }
-    .card-badge {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-3);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2px 7px;
-      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
-      min-width: 28px;
-      text-align: center;
-    }
-    .card-input-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .base-input {
-      flex: 1;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
-      font-size: 16px;
-      padding: 10px 14px;
-      outline: none;
-      transition: border-color 0.15s;
-      width: 0; /* flex child: allow shrinking */
-      min-width: 0;
-    }
-    .base-input:focus {
-      border-color: var(--accent);
-    }
-    .base-input.is-error {
-      border-color: #ef4444;
-      color: #f87171;
-    }
-    .base-input::placeholder {
-      color: var(--text-3);
-    }
-    .copy-btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: var(--text-2);
-      font-size: 12px;
-      font-weight: 500;
-      font-family: var(--font);
-      padding: 9px 12px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-    }
-    .copy-btn:hover {
-      border-color: var(--border-2);
-      color: var(--text-1);
-    }
-    .copy-btn.copied {
-      border-color: var(--success);
-      color: var(--success);
-      background: var(--success-bg);
-    }
-
-    /* Bit-length info card */
-    .bit-info {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px 20px;
-      display: none;
-    }
+    /* Number Base Converter — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .presets-label { font-size: 12px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; width: 100%; margin-bottom: 2px; }
+    .preset-btn { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-size: 12px; font-weight: 500; font-family: var(--font-mono); padding: 5px 12px; border-radius: var(--radius-s); cursor: pointer; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+    .preset-btn:hover { border-color: var(--accent); color: var(--text-1); background: var(--accent-soft); }
+    .base-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .base-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; transition: border-color 0.15s; }
+    .base-card:focus-within { border-color: var(--accent); }
+    .base-card.error { border-color: var(--danger); }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .card-label { font-size: 13px; font-weight: 500; color: var(--text-2); }
+    .card-badge { font-size: 12px; font-weight: 500; color: var(--text-3); background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; font-family: var(--font-mono); min-width: 28px; text-align: center; }
+    .card-input-row { display: flex; align-items: center; gap: 8px; }
+    .base-input { flex: 1; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); color: var(--text-1); font-family: var(--font-mono); font-size: 16px; padding: 10px 14px; outline: none; transition: border-color 0.15s; width: 0; min-width: 0; }
+    .base-input:focus { border-color: var(--accent); }
+    .base-input.is-error { border-color: var(--danger); color: var(--danger); }
+    .base-input::placeholder { color: var(--text-3); }
+    .copy-btn { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-size: 12px; font-weight: 500; font-family: var(--font); padding: 9px 12px; border-radius: var(--radius-s); cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+    .copy-btn:hover { border-color: var(--border-2); color: var(--text-1); }
+    .copy-btn.copied { border-color: var(--success); color: var(--success-fg); background: var(--success); }
+    .bit-info { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: none; }
     .bit-info.visible { display: block; }
-    .bit-info-title {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 14px;
-    }
-    .bit-info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 10px;
-    }
-    .bit-stat {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px 14px;
-    }
-    .bit-stat-val {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-1);
-      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
-      margin-bottom: 2px;
-      letter-spacing: -0.02em;
-    }
-    .bit-stat-label {
-      font-size: 11px;
-      color: var(--text-2);
-    }
-    .bit-fit {
-      margin-top: 12px;
-      font-size: 13px;
-      color: var(--text-2);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .bit-fit-badge {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 99px;
-      border: 1px solid var(--border);
-      background: var(--surface-2);
-      color: var(--text-3);
-    }
-    .bit-fit-badge.ok {
-      border-color: var(--success);
-      background: var(--success-bg);
-      color: var(--success);
-    }
-
-    /* ── Guide ── */
-    .guide {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .guide-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 10px;
-    }
-    .guide-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-    .guide-step {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--accent-text);
-      margin-bottom: 8px;
-    }
-    .guide-card h3 {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 6px;
-    }
-    .guide-card p {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-    }
-
-    /* ── FAQ ── */
-    .faq {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .faq-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* ── Vultr banner ── */
-    .vultr-banner {
-      background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(34,197,94,0.02) 100%);
-      border-top: 1px solid rgba(34,197,94,0.15);
-      border-bottom: 1px solid rgba(34,197,94,0.15);
-      padding: 20px 24px;
-    }
-    .vultr-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .vultr-label {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--success);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.25);
-      padding: 3px 8px;
-      border-radius: 4px;
-      flex-shrink: 0;
-    }
-    .vultr-text {
-      flex: 1;
-      min-width: 200px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .vultr-text strong {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-1);
-    }
-    .vultr-text span {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-    .vultr-cta {
-      background: var(--success);
-      color: var(--success-fg);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 9px 18px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      flex-shrink: 0;
-      transition: opacity 0.15s;
-    }
-    .vultr-cta:hover { background: var(--success-hover); color: var(--success-fg); }
-
-    /* ── Footer ── */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 24px;
-    }
-    .footer-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .footer-copy {
-      font-size: 13px;
-      color: var(--text-3);
-    }
-    .footer-links {
-      display: flex;
-      gap: 16px;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    /* ── Responsive ── */
+    .bit-info-title { font-size: 12px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+    .bit-info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+    .bit-stat { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 12px 14px; }
+    .bit-stat-val { font-size: 20px; font-weight: 700; color: var(--text-1); font-family: var(--font-mono); margin-bottom: 2px; letter-spacing: -0.02em; }
+    .bit-stat-label { font-size: 12px; color: var(--text-2); }
+    .bit-fit { margin-top: 12px; font-size: 13px; color: var(--text-2); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .bit-fit-badge { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text-3); }
+    .bit-fit-badge.ok { border-color: var(--success); background: var(--success); color: var(--success-fg); }
     @media (max-width: 600px) {
-      .hero { padding: 32px 16px 24px; }
-      .tool-body { padding: 0 16px 40px; }
       .base-grid { grid-template-columns: 1fr; }
-      .guide { padding: 0 16px 40px; }
-      .faq { padding: 0 16px 40px; }
-      .vultr-inner { flex-direction: column; align-items: flex-start; }
-    }
-  
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
     }
   </style>  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"Number Base Converter","description":"Convert numbers between Binary, Octal, Decimal, and Hexadecimal. Live four-way conversion with copy buttons and bit-length analysis.","url":"https://tools.stackfreeks.com/tools/base-converter/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
@@ -525,37 +71,40 @@
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-
-  <!-- Nav -->
-  <nav class="nav">
+  <nav class="nav" aria-label="Main">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">StackFreeks <span>Tools</span></a>
-      <div class="nav-right">
-        <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-        <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-        <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-      </div>
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-conv" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left-right"/></svg><span data-i18n="cat_converters">Converters &amp; Encoders</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hero">
-    <div class="lang-en">
-      <h1>Number Base Converter</h1>
-      <p>Instantly convert between Binary, Octal, Decimal, and Hexadecimal. Edit any field — the other three update in real time.</p>
-    </div>
-    <div class="lang-ko">
-      <h1>진법 변환기</h1>
-      <p>2진수, 8진수, 10진수, 16진수를 즉시 변환합니다. 어느 필드를 수정해도 나머지 세 필드가 실시간으로 업데이트됩니다.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-binary"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Number Base Converter</h1>
+        <p>Instantly convert between Binary, Octal, Decimal, and Hexadecimal. Edit any field — the other three update in real time.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>진법 변환기</h1>
+        <p>2진수, 8진수, 10진수, 16진수를 즉시 변환합니다. 어느 필드를 수정해도 나머지 세 필드가 실시간으로 업데이트됩니다.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
   </header>
 
-  <!-- Tool body -->
-  <main class="tool-body">
-
+  <main class="tool wrap-tool tool-body">
     <!-- Presets -->
     <div class="presets">
-      <div class="presets-label">Quick presets</div>
+      <div class="presets-label" data-i18n="x_quick_presets">Quick presets</div>
       <button class="preset-btn" data-preset="0">0</button>
       <button class="preset-btn" data-preset="1">1</button>
       <button class="preset-btn" data-preset="8">8</button>
@@ -583,6 +132,7 @@
             type="text"
             inputmode="text"
             placeholder="0 or 1"
+            data-i18n-placeholder="x_0_or_1"
             autocomplete="off"
             spellcheck="false"
             data-base="2"
@@ -662,71 +212,80 @@
 
     <!-- Bit-length info -->
     <div class="bit-info" id="bit-info">
-      <div class="bit-info-title">Bit analysis</div>
+      <div class="bit-info-title" data-i18n="x_bit_analysis">Bit analysis</div>
       <div class="bit-info-grid">
         <div class="bit-stat">
           <div class="bit-stat-val" id="bit-digits">—</div>
-          <div class="bit-stat-label">Binary digits</div>
+          <div class="bit-stat-label" data-i18n="x_binary_digits">Binary digits</div>
         </div>
         <div class="bit-stat">
           <div class="bit-stat-val" id="bit-min">—</div>
-          <div class="bit-stat-label">Min bits needed</div>
+          <div class="bit-stat-label" data-i18n="x_min_bits_needed">Min bits needed</div>
         </div>
       </div>
       <div class="bit-fit" id="bit-fit"></div>
     </div>
-
   </main>
 
-  <!-- Guide -->
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More converters</h2>
+      <a class="sec-link" href="/#cat-conv"><span data-i18n="all_in_cat">All Converters &amp; Encoders tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/px-rem-converter/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-ruler"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">px ↔ rem Converter</span><span class="lang-ko">px ↔ rem 변환기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/base64-encoder/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-digit"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Base64 Encoder / Decoder</span><span class="lang-ko">Base64 인코더 / 디코더</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
   <section class="guide">
-    <div class="guide-title">How to use</div>
+    <h2 class="guide-title"><span class="lang-en">How to use</span><span class="lang-ko">사용 방법</span></h2>
     <div class="guide-grid">
 
       <div class="guide-card">
-        <div class="guide-step">STEP 1</div>
         <div class="lang-en">
-          <h3>Type in any field</h3>
+          <h3>1. Type in any field</h3>
           <p>Enter a number in Binary, Octal, Decimal, or Hex — the other three fields update instantly.</p>
         </div>
         <div class="lang-ko">
-          <h3>아무 필드에 입력하세요</h3>
+          <h3>1. 아무 필드에 입력하세요</h3>
           <p>2진수, 8진수, 10진수, 16진수 중 어느 필드에 숫자를 입력하면 나머지 세 필드가 즉시 업데이트됩니다.</p>
         </div>
       </div>
 
       <div class="guide-card">
-        <div class="guide-step">STEP 2</div>
         <div class="lang-en">
-          <h3>Hex is case-insensitive</h3>
+          <h3>2. Hex is case-insensitive</h3>
           <p>You can type A–F in upper or lower case — the result is always displayed in uppercase.</p>
         </div>
         <div class="lang-ko">
-          <h3>Hex는 대소문자 구분 없음</h3>
+          <h3>2. Hex는 대소문자 구분 없음</h3>
           <p>16진수는 대문자·소문자 모두 입력 가능하며, 결과는 항상 대문자로 표시됩니다.</p>
         </div>
       </div>
 
       <div class="guide-card">
-        <div class="guide-step">STEP 3</div>
         <div class="lang-en">
-          <h3>Use quick presets</h3>
+          <h3>3. Use quick presets</h3>
           <p>Click a preset button (e.g. 255, 65535) to instantly load a common value and see all conversions.</p>
         </div>
         <div class="lang-ko">
-          <h3>빠른 프리셋 사용</h3>
+          <h3>3. 빠른 프리셋 사용</h3>
           <p>프리셋 버튼(예: 255, 65535)을 클릭하면 자주 쓰는 값을 즉시 불러와 모든 진법 변환 결과를 확인할 수 있습니다.</p>
         </div>
       </div>
 
       <div class="guide-card">
-        <div class="guide-step">STEP 4</div>
         <div class="lang-en">
-          <h3>Copy any result</h3>
+          <h3>4. Copy any result</h3>
           <p>Click the Copy button next to any field to copy the value to your clipboard in one click.</p>
         </div>
         <div class="lang-ko">
-          <h3>결과 복사</h3>
+          <h3>4. 결과 복사</h3>
           <p>각 필드 옆의 복사 버튼을 클릭하면 해당 값이 클립보드에 즉시 복사됩니다.</p>
         </div>
       </div>
@@ -734,11 +293,10 @@
     </div>
   </section>
 
-  <!-- FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <div class="faq-title">FAQ</div>
-      <div class="faq-list">
+      <h2 class="faq-title">FAQ</h2>
+      
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>What number bases does this tool support?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">Binary (Base 2), Octal (Base 8), Decimal (Base 10), and Hexadecimal (Base 16). These are the four most common bases in computer science and programming.</div>
@@ -755,12 +313,12 @@
           <button class="faq-q" onclick="toggleFaq(this)"><span>Why is hexadecimal always shown in uppercase?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">Uppercase hex (e.g. <code>0xFF</code>) is the dominant convention in programming, debuggers, and hardware documentation. It's easier to distinguish letters from numbers at a glance.</div>
         </div>
-      </div>
+      
     </div>
 
     <div class="lang-ko">
-      <div class="faq-title">자주 묻는 질문</div>
-      <div class="faq-list">
+      <h2 class="faq-title">자주 묻는 질문</h2>
+      
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>어떤 진법을 지원하나요?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">2진수(Base 2), 8진수(Base 8), 10진수(Base 10), 16진수(Base 16)를 지원합니다. 컴퓨터 과학에서 가장 널리 사용되는 네 가지 진법입니다.</div>
@@ -777,48 +335,58 @@
           <button class="faq-q" onclick="toggleFaq(this)"><span>16진수는 왜 항상 대문자로 표시되나요?</span><span class="faq-icon">+</span></button>
           <div class="faq-a">대문자 16진수(예: <code>0xFF</code>)는 프로그래밍, 디버거, 하드웨어 문서에서 표준 관례입니다. 숫자와 문자를 한눈에 구별하기 쉬워 가독성이 높습니다.</div>
         </div>
-      </div>
+      
     </div>
   </section>
 
-  <!-- Vultr affiliate banner -->
-  <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/json-formatter/" class="sf-related-card"><span>📋</span>JSON Formatter & Validator</a>
-      <a href="/tools/json-to-csv/" class="sf-related-card"><span>📊</span>JSON to CSV Converter</a>
-      <a href="/tools/timestamp-converter/" class="sf-related-card"><span>🕐</span>Unix Timestamp Converter</a>
-    </div>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/json-formatter/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-braces"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">JSON Formatter & Validator</span><span class="lang-ko">JSON 포매터 & 유효성 검사기</span></span></span></a></li>
+      <li><a href="/tools/json-to-csv/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-sheet"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">JSON to CSV Converter</span><span class="lang-ko">JSON ↔ CSV 변환기</span></span></span></a></li>
+      <li><a href="/tools/timestamp-converter/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-clock"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Unix Timestamp Converter</span><span class="lang-ko">Unix 타임스탬프 변환기</span></span></span></a></li>
+    </ul>
   </section>
 
-  <section class="vultr-banner">
-    <div class="vultr-inner">
-      <span class="vultr-label" data-i18n="vultr_label">Sponsor</span>
-      <div class="vultr-text">
-        <strong data-i18n="vultr_title">Get started on Vultr</strong>
-        <span data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</span>
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
       </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" target="_blank" rel="nofollow sponsored" class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
-  </section>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <span class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</span>
-      <nav class="footer-links">
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
         <a href="/about/">About</a>
         <a href="/privacy/">Privacy</a>
-        <a href="/tools/vps-cost-calculator/">VPS Calculator</a>
-      </nav>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
   </footer>
 
-  <!-- i18n -->
   <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_converters: "Converters & Encoders",
+        more_tools: "More converters",
+        all_in_cat: "All Converters & Encoders tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back: "← All Tools",
         vultr_label: "Sponsor", vultr_title: "Get started on Vultr",
         vultr_sub: "Get $300 free credit — valid for 30 days",
@@ -827,9 +395,22 @@
         copy: "Copy", copied: "Copied!",
         bin_label: "Binary (Base 2)", oct_label: "Octal (Base 8)",
         dec_label: "Decimal (Base 10)", hex_label: "Hexadecimal (Base 16)",
-        invalid: "Invalid input"
+        invalid: "Invalid input",
+        x_binary_digits: "Binary digits",
+        x_bit_analysis: "Bit analysis",
+        x_min_bits_needed: "Min bits needed",
+        x_quick_presets: "Quick presets",
+        x_0_or_1: "0 or 1"
       },
       ko: {
+        cat_converters: "변환 & 인코딩",
+        more_tools: "변환 툴 더 보기",
+        all_in_cat: "변환 & 인코딩 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back: "← 전체 툴",
         vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요",
         vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
@@ -838,13 +419,18 @@
         copy: "복사", copied: "복사됨!",
         bin_label: "2진수 (Base 2)", oct_label: "8진수 (Base 8)",
         dec_label: "10진수 (Base 10)", hex_label: "16진수 (Base 16)",
-        invalid: "유효하지 않은 입력"
+        invalid: "유효하지 않은 입력",
+        x_binary_digits: "2진수 자릿수",
+        x_bit_analysis: "비트 분석",
+        x_min_bits_needed: "필요한 최소 비트",
+        x_quick_presets: "빠른 프리셋",
+        x_0_or_1: "0 또는 1"
       }
     };
   </script>
+
   <script src="/shared/i18n.js"></script>
 
-  <!-- Tool logic -->
   <script>
     (function () {
       var FIELDS = [
@@ -894,7 +480,7 @@
           inputs[f.id].classList.remove('is-error');
           cards[f.id].classList.remove('error');
           // Restore placeholder
-          var placeholders = { bin: '0 or 1', oct: '0–7', dec: '0–9', hex: '0–9, A–F' };
+          var placeholders = { bin: getI18n('x_0_or_1'), oct: '0–7', dec: '0–9', hex: '0–9, A–F' };
           inputs[f.id].placeholder = placeholders[f.id];
         });
       }

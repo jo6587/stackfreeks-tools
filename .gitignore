@@ -23,3 +23,7 @@ marketing/backlink-kit.md
 # Pipeline outputs (briefs, QA reports, performance) + Search Console token
 output/
 gsc-token.json
+
+# Impeccable design workspace (local only)
+.impeccable/
+PRODUCT.md

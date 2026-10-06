@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>.htpasswd 생성기 &mdash; 무료 온라인 도구 | StackFreeks</title>
-<meta content="서버 보안" name="description">
+<meta content="Apache&middot;Nginx 기본 인증용 .htpasswd 항목 생성 &mdash; bcrypt, MD5-APR, SHA1. 브라우저에서만 처리되며 비밀번호는 서버로 전송되지 않습니다." name="description">
 <link href="https://tools.stackfreeks.com/tools/htpasswd-generator/ko/" rel="canonical">
 <link href="https://tools.stackfreeks.com/tools/htpasswd-generator/" hreflang="en" rel="alternate">
   <link href="https://tools.stackfreeks.com/tools/htpasswd-generator/ko/" hreflang="ko" rel="alternate">
@@ -18,163 +18,33 @@
 <link href="/stackfreeks_icon.png" rel="apple-touch-icon">
 <!-- Open Graph -->
 <meta content=".htpasswd 생성기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
-<meta content="서버 보안" property="og:description">
+<meta content="Apache&middot;Nginx 기본 인증용 .htpasswd 항목 생성 &mdash; bcrypt, MD5-APR, SHA1. 브라우저에서만 처리되며 비밀번호는 서버로 전송되지 않습니다." property="og:description">
 <meta content="https://tools.stackfreeks.com/tools/htpasswd-generator/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
-<!-- ADSENSE_SLOT_TOP -->
 <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --warning: #f59e0b;
-      --warning-bg: rgba(245,158,11,0.08);
-      --error: #ef4444;
-      --error-bg: rgba(239,68,68,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* ── Nav ── */
-    .navbar {
-      border-bottom: 1px solid var(--border);
-      padding: 14px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(12px);
-      background: rgba(10,10,11,0.85);
-    }
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    .nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .nav-logo {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-1);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .logo-mark {
-      width: 20px;
-      height: 20px;
-      background: var(--accent);
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 10px;
-      cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* ── Hero ── */
-    .hero {
-      padding: 48px 0 32px;
-      border-bottom: 1px solid var(--border);
-    }
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-3);
-      margin-bottom: 10px;
-    }
-    .hero h1 {
-      font-size: 1.75rem;
-      font-weight: 500;
-      letter-spacing: -0.03em;
-      color: var(--text-1);
-      margin-bottom: 10px;
-    }
-    .hero-desc {
-      font-size: 0.95rem;
-      color: var(--text-2);
-      max-width: 520px;
-    }
-
+    /* .htpasswd Generator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* ── Main tool area ── */
-    .tool-section {
-      padding: 32px 0;
-    }
 
-    .card {
+    .tool .card:hover { border-color: var(--border); box-shadow: none; transform: none; }
+    .tool .card {
+      display: block;
+      height: auto;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 24px;
     }
 
     /* ── Form elements ── */
     .form-group { margin-bottom: 16px; }
-    label {
-      display: block;
-      font-size: 12px;
-      color: var(--text-2);
-      margin-bottom: 5px;
-      font-weight: 500;
-    }
+    
     input[type="text"],
     input[type="password"] {
       width: 100%;
@@ -190,7 +60,6 @@
     }
     input[type="text"]:focus,
     input[type="password"]:focus { border-color: var(--border-2); }
-    input::placeholder { color: var(--text-3); }
 
     .pw-wrapper {
       position: relative;
@@ -237,7 +106,7 @@
     }
     .format-option input:checked + .format-pill {
       border-color: var(--accent);
-      background: rgba(99,102,241,0.06);
+      background: var(--accent-soft);
     }
     .format-pill-name {
       font-size: 12px;
@@ -245,16 +114,16 @@
       color: var(--text-1);
     }
     .format-pill-desc {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-3);
     }
     .format-option input:checked + .format-pill .format-pill-name { color: var(--accent-text); }
     .badge-recommended {
       display: inline-block;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 500;
-      color: var(--success);
-      background: var(--success-bg);
+      color: var(--success-fg);
+      background: var(--success);
       border-radius: 20px;
       padding: 1px 7px;
       margin-left: 6px;
@@ -262,7 +131,7 @@
     }
     .badge-warning {
       display: inline-block;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--warning);
       background: var(--warning-bg);
@@ -272,64 +141,12 @@
       vertical-align: middle;
     }
 
-    /* ── Buttons ── */
-    .btn-primary {
-      width: 100%;
-      background: var(--text-1);
-      color: var(--bg);
-      border: none;
-      border-radius: var(--radius);
-      padding: 10px 20px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: var(--font);
-      transition: opacity 0.15s;
-      letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 8px 16px;
-      font-size: 13px;
-      cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn-ghost:hover { border-color: var(--border-2); color: var(--text-1); }
-
-    .btn-vultr {
-      background: var(--success);
-      color: var(--success-fg);
-      border: none;
-      border-radius: var(--radius);
-      padding: 9px 18px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: var(--font);
-      text-decoration: none;
-      display: inline-block;
-      white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
     /* ── Spinner ── */
     .spinner {
       width: 14px;
       height: 14px;
-      border: 2px solid rgba(0,0,0,0.3);
-      border-top-color: #000;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
       flex-shrink: 0;
@@ -340,7 +157,7 @@
     .output-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       overflow: hidden;
     }
     .output-header {
@@ -351,7 +168,7 @@
       border-bottom: 1px solid var(--border);
     }
     .output-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--text-3);
       text-transform: uppercase;
@@ -362,7 +179,7 @@
       border: 1px solid var(--border);
       border-radius: 6px;
       color: var(--text-3);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       padding: 3px 10px;
       cursor: pointer;
@@ -370,7 +187,7 @@
       transition: border-color 0.15s, color 0.15s;
     }
     .copy-btn:hover { border-color: var(--border-2); color: var(--text-2); }
-    .copy-btn.copied { color: var(--success); border-color: var(--success); }
+    .copy-btn.copied { color: var(--success-fg); border-color: var(--success); }
 
     .output-body {
       padding: 16px;
@@ -393,20 +210,20 @@
     /* ── Plain text warning banner ── */
     .plain-warning {
       display: none;
-      background: var(--error-bg);
-      border: 1px solid rgba(239,68,68,0.2);
+      background: var(--danger-bg);
+      border: 1px solid var(--danger);
       border-radius: var(--radius);
       padding: 10px 14px;
       font-size: 12px;
-      color: var(--error);
+      color: var(--danger);
       margin-bottom: 16px;
     }
     .plain-warning.visible { display: flex; align-items: flex-start; gap: 8px; }
 
     /* ── Append-mode info ── */
     .info-box {
-      background: rgba(99,102,241,0.05);
-      border: 1px solid rgba(99,102,241,0.15);
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-soft);
       border-radius: var(--radius);
       padding: 12px 14px;
       font-size: 12px;
@@ -438,97 +255,6 @@
       .format-grid { grid-template-columns: 1fr; }
     }
 
-    /* ── Guide & FAQ ── */
-    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-a code {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1px 5px;
-      color: var(--text-1);
-    }
-
-    /* ── Related ── */
-    .related { padding: 40px 0; }
-    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .related-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); }
-    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent-text); letter-spacing: 0.06em; text-transform: uppercase; }
-    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
-    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
-
-    /* ── Vultr banner ── */
-    .vultr-banner {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 28px 0;
-      margin: 48px 0 0;
-    }
-    .banner-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-    }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-
-    /* ── Footer ── */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
-      margin-top: 0;
-    }
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--text-3);
-    }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-
-    @media (max-width: 640px) {
-      .banner-inner { flex-direction: column; align-items: flex-start; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .hero h1 { font-size: 1.4rem; }
-      .footer-inner { flex-direction: column; gap: 12px; align-items: flex-start; }
-    }
-
     /* ── Entry list items in output ── */
     .output-entry {
       font-family: var(--font-mono);
@@ -540,7 +266,7 @@
     }
     .output-entry:last-child { border-bottom: none; padding-bottom: 0; }
     .entry-count {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-3);
       margin-top: 10px;
       padding-top: 10px;
@@ -569,75 +295,50 @@
       padding: 2px 6px;
       transition: color 0.15s;
     }
-    .remove-user-btn:hover { color: var(--error); }
+    .remove-user-btn:hover { color: var(--danger); }
     .user-row-block .form-group:last-child { margin-bottom: 0; }
   
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Htpasswd Generator", "description": "Htpasswd generator for Apache and Nginx basic auth. Create bcrypt, MD5, SHA1 or plain .htpasswd entries. Client-side, free.", "url": "https://tools.stackfreeks.com/tools/htpasswd-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/htpasswd-generator/ko/"}}</script>
+    
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Htpasswd Generator", "description": "Htpasswd generator for Apache and Nginx basic auth. Create bcrypt, MD5, SHA1 or plain .htpasswd entries. Client-side, free.", "url": "https://tools.stackfreeks.com/tools/htpasswd-generator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/htpasswd-generator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": ".htpasswd 파일이란 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": ".htpasswd 파일은 사용자명과 해시된 비밀번호 쌍을 한 줄씩 저장하는 텍스트 파일입니다. Apache와 Nginx는 이 파일을 사용해 HTTP 기본 인증(Basic Auth)을 적용하며, 보호된 콘텐츠에 접근하기 전에 방문자에게 사용자명과 비밀번호를 요구합니다."}}, {"@type": "Question", "name": "어떤 해시 형식을 사용해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "새 설정에는 bcrypt 가 가장 좋은 선택입니다. 설계상 느리게 동작해 무차별 대입 공격을 실용적으로 불가능하게 만들며, Apache 2.4+와 Nginx(bcrypt 지원 PAM 백엔드)에서 지원됩니다. MD5-APR( $apr1$ )은 광범위하게 지원되지만 보안이 약합니다. SHA1은 레거시 형식으로 새 환경에는 피하세요. 평문은 프로덕션에서 절대 사용하면 안 됩니다."}}, {"@type": "Question", "name": "bcrypt는 .htpasswd에 안전한가요?", "acceptedAnswer": {"@type": "Answer", "text": "네. 비용 인자(cost factor) 10의 bcrypt는 해시 검증에 약 100ms가 소요되어 자동화된 크리덴셜 스터핑 공격을 극도로 느리게 만듭니다. Apache 2.4+는 AuthType Basic + AuthUserFile 조합으로 bcrypt를 기본 지원합니다. 단, Nginx는 기본적으로 bcrypt 해시를 검증하지 않으므로 bcrypt 지원 PAM 모듈이나 리버스 프록시 인증 솔루션이 필요합니다."}}, {"@type": "Question", "name": "Nginx에서 .htpasswd를 어떻게 사용하나요?", "acceptedAnswer": {"@type": "Answer", "text": "Nginx server 또는 location 블록에 다음 지시어를 추가하세요: auth_basic \"Protected Area\"; auth_basic_user_file /etc/nginx/.htpasswd; Nginx는 MD5-APR과 SHA1을 기본 지원합니다. bcrypt 지원이 필요하면 libnginx-mod-http-auth-pam 패키지를 설치하고 PAM을 설정하세요."}}, {"@type": "Question", "name": "비밀번호가 서버로 전송되나요?", "acceptedAnswer": {"@type": "Answer", "text": "아닙니다. 이 도구는 완전히 브라우저 내에서 실행됩니다. 모든 해싱은 JavaScript를 통해 클라이언트 측에서 처리됩니다 — bcrypt는 bcryptjs 라이브러리, SHA1은 Web Crypto API, MD5-APR은 순수 JS 구현을 사용합니다. 어떠한 데이터도 전송되지 않습니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<!-- ── Navigation ── -->
-<nav class="navbar">
-<div class="container nav-inner">
-<a class="nav-logo" href="/ko/">
-<div class="logo-mark"></div>
-      StackFreeks Tools
-    </a>
-<div class="nav-actions">
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-devops"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-wrench"></use></svg><span data-i18n="cat_devops">DevOps & Config Generators</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/htpasswd-generator/">English</a>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
 </div>
 </nav>
-<!-- ── Hero ── -->
-<section class="hero">
-<div class="container">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-lock-keyhole"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
-<p class="eyebrow">서버 보안</p>
 <h1>.htpasswd 생성기</h1>
-<p class="hero-desc">Apache&middot;Nginx 기본 인증용 .htpasswd 항목 생성 &mdash; bcrypt, MD5-APR, SHA1. 브라우저에서만 처리되며 비밀번호는 서버로 전송되지 않습니다.</p>
+<p>Apache&middot;Nginx 기본 인증용 .htpasswd 항목 생성 &mdash; bcrypt, MD5-APR, SHA1. 브라우저에서만 처리되며 비밀번호는 서버로 전송되지 않습니다.</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
 </div>
-</section>
-<!-- ── Tool ── -->
-<main class="tool-section">
+</header>
+<!-- Tool body -->
+<main class="tool wrap-tool">
 <div class="container">
-<!-- ADSENSE_SLOT_IN_TOOL -->
 <div class="tool-grid">
 <!-- LEFT: Input form -->
 <div class="card">
 <!-- Plain-text warning (shown only when Plain is selected) -->
 <div class="plain-warning" id="plainWarning">
-<span>⚠</span>
+<span><svg aria-hidden="true" class="ico ico-inline"><use href="/shared/icons.svg#i-triangle-alert"></use></svg></span>
 
 <span class="lang-ko">평문 비밀번호는 매우 위험합니다. .htpasswd 파일을 읽을 수 있는 누구나 비밀번호를 볼 수 있습니다. bcrypt를 사용하세요.</span>
 </div>
@@ -651,29 +352,29 @@
 <label class="format-option">
 <input checked name="hashFormat" onchange="onFormatChange()" type="radio" value="bcrypt">
 <div class="format-pill">
-<span class="format-pill-name">bcrypt <span class="badge-recommended">recommended</span></span>
-<span class="format-pill-desc">$2y$&hellip; &middot; most secure</span>
+<span class="format-pill-name">bcrypt <span class="badge-recommended" data-i18n="x_recommended">recommended</span></span>
+<span class="format-pill-desc" data-i18n="x_fmt_bcrypt_desc">$2y$&hellip; &middot; most secure</span>
 </div>
 </label>
 <label class="format-option">
 <input name="hashFormat" onchange="onFormatChange()" type="radio" value="apr1">
 <div class="format-pill">
 <span class="format-pill-name">MD5-APR</span>
-<span class="format-pill-desc">$apr1$&hellip; &middot; Apache compat</span>
+<span class="format-pill-desc" data-i18n="x_fmt_apr1_desc">$apr1$&hellip; &middot; Apache compat</span>
 </div>
 </label>
 <label class="format-option">
 <input name="hashFormat" onchange="onFormatChange()" type="radio" value="sha1">
 <div class="format-pill">
 <span class="format-pill-name">SHA1</span>
-<span class="format-pill-desc">{SHA}&hellip; &middot; legacy</span>
+<span class="format-pill-desc" data-i18n="x_fmt_sha1_desc">{SHA}&hellip; &middot; legacy</span>
 </div>
 </label>
 <label class="format-option">
 <input name="hashFormat" onchange="onFormatChange()" type="radio" value="plain">
 <div class="format-pill">
-<span class="format-pill-name">Plain <span class="badge-warning">insecure</span></span>
-<span class="format-pill-desc">no hashing &mdash; avoid</span>
+<span class="format-pill-name">Plain <span class="badge-warning" data-i18n="x_insecure">insecure</span></span>
+<span class="format-pill-desc" data-i18n="x_no_hashing_avoid">no hashing &mdash; avoid</span>
 </div>
 </label>
 </div>
@@ -684,7 +385,7 @@
 
 <span class="lang-ko">사용자명</span>
 </label>
-<input autocomplete="off" id="username0" placeholder="e.g. admin" spellcheck="false" type="text">
+<input autocomplete="off" data-i18n-placeholder="x_eg_admin" id="username0" placeholder="e.g. admin" spellcheck="false" type="text">
 </div>
 <div class="form-group">
 <label for="password0">
@@ -692,24 +393,22 @@
 <span class="lang-ko">비밀번호</span>
 </label>
 <div class="pw-wrapper">
-<input autocomplete="new-password" id="password0" placeholder="Enter password" type="password">
-<button class="pw-toggle" onclick="togglePw('password0', this)" title="Show / hide password" type="button">
-              👁
-            </button>
+<input autocomplete="new-password" data-i18n-placeholder="x_enter_password" id="password0" placeholder="Enter password" type="password">
+<button class="pw-toggle" data-i18n-title="x_show_hide_password" onclick="togglePw('password0', this)" title="Show / hide password" type="button"><svg aria-hidden="true" class="ico ico-inline"><use href="/shared/icons.svg#i-eye"></use></svg></button>
 </div>
 </div>
 <!-- Additional user rows container -->
 <div class="user-rows" id="extraUsers"></div>
 <!-- Add another user -->
 <div class="add-user-row">
-<button class="btn-ghost" onclick="addUserRow()" type="button">
+<button class="btn btn-ghost" onclick="addUserRow()" type="button">
 
 <span class="lang-ko">+ 사용자 추가</span>
 </button>
 </div>
 <!-- Generate button -->
 <div style="margin-top:20px;">
-<button class="btn-primary" id="generateBtn" onclick="generate()">
+<button class="btn btn-primary" id="generateBtn" onclick="generate()">
 
 <span class="lang-ko">.htpasswd 항목 생성</span>
 </button>
@@ -719,7 +418,7 @@
 <div>
 <div class="output-card">
 <div class="output-header">
-<span class="output-label">.htpasswd output</span>
+<span class="output-label" data-i18n="x_htpasswd_output">.htpasswd output</span>
 <button class="copy-btn" id="copyBtn" onclick="copyOutput()">
 
 <span class="lang-ko">복사</span>
@@ -737,50 +436,56 @@
 <div class="info-box">
 
 <div class="lang-ko">
-<strong>팁:</strong> 하나의 <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--text-1);">.htpasswd</code> 파일에 여러 항목을 추가할 수 있습니다 &mdash; 한 줄에 <code style="font-family:var(--font-mono);font-size:11px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--text-1);">사용자명:해시</code> 형식으로 작성하세요. "사용자 추가"를 눌러 여러 항목을 한 번에 생성하고 복사할 수 있습니다.
-          </div>
+<strong>팁:</strong> 하나의 <code style="font-family:var(--font-mono);font-size:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--text-1);">.htpasswd</code> 파일에 여러 항목을 추가할 수 있습니다 &mdash; 한 줄에 <code style="font-family:var(--font-mono);font-size:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--text-1);">사용자명:해시</code> 형식으로 작성하세요. "사용자 추가"를 눌러 여러 항목을 한 번에 생성하고 복사할 수 있습니다.
+            </div>
 </div>
 </div>
 </div><!-- /.tool-grid -->
 </div>
 </main>
-<!-- ── How to use guide ── -->
-<section>
-<div class="guide">
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More DevOps tools</h2>
+<a class="sec-link" href="/#cat-devops"><span data-i18n="all_in_cat">All DevOps & Config Generators tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/mysql-backup-script-generator/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-database-backup"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">MySQL 백업 스크립트 생성기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/postgresql-config-generator/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-sliders-horizontal"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">PostgreSQL 설정 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
+<!-- How to use -->
+<section class="guide">
 
 <div class="lang-ko">
-<p class="guide-title">사용 방법</p>
+<h2 class="guide-title">사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<p class="guide-step">Step 1</p>
-<h3>해시 형식 선택</h3>
+<h3>1. 해시 형식 선택</h3>
 <p>최고의 보안을 위해 bcrypt를 선택하세요. 구버전 Apache 형식만 지원하는 서버라면 MD5-APR을 사용하세요. SHA1은 레거시 형식으로 새 설정에는 권장하지 않습니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">Step 2</p>
-<h3>자격증명 입력</h3>
+<h3>2. 자격증명 입력</h3>
 <p>사용자명과 비밀번호를 입력하세요. "사용자 추가" 버튼으로 여러 사용자를 추가하면 한 번에 모든 항목을 생성할 수 있습니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">Step 3</p>
-<h3>생성 및 복사</h3>
-<p>생성 버튼을 클릭하고 결과를 복사하세요. 각 줄은 <code style="font-family:var(--font-mono);font-size:11px;">사용자명:해시</code> 형식의 .htpasswd 항목입니다.</p>
+<h3>3. 생성 및 복사</h3>
+<p>생성 버튼을 클릭하고 결과를 복사하세요. 각 줄은 <code style="font-family:var(--font-mono);font-size:12px;">사용자명:해시</code> 형식의 .htpasswd 항목입니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">Step 4</p>
-<h3>서버에 배포</h3>
-<p>출력 내용을 <code style="font-family:var(--font-mono);font-size:11px;">.htpasswd</code> 파일로 저장하고 Apache 또는 Nginx 설정에서 참조하세요. 이 파일은 웹 루트 외부에 보관하세요.</p>
-</div>
+<h3>4. 서버에 배포</h3>
+<p>출력 내용을 <code style="font-family:var(--font-mono);font-size:12px;">.htpasswd</code> 파일로 저장하고 Apache 또는 Nginx 설정에서 참조하세요. 이 파일은 웹 루트 외부에 보관하세요.</p>
 </div>
 </div>
 </div>
 </section>
-<!-- ── FAQ ── -->
-<section>
-<div class="faq">
+<!-- FAQ -->
+<section class="faq">
 
 <div class="lang-ko">
-<p class="faq-title">자주 묻는 질문</p>
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>.htpasswd 파일이란 무엇인가요?</span><span class="faq-icon">+</span></button>
 <div class="faq-a"><code>.htpasswd</code> 파일은 사용자명과 해시된 비밀번호 쌍을 한 줄씩 저장하는 텍스트 파일입니다. Apache와 Nginx는 이 파일을 사용해 HTTP 기본 인증(Basic Auth)을 적용하며, 보호된 콘텐츠에 접근하기 전에 방문자에게 사용자명과 비밀번호를 요구합니다.</div>
@@ -802,15 +507,22 @@
 <div class="faq-a">아닙니다. 이 도구는 완전히 브라우저 내에서 실행됩니다. 모든 해싱은 JavaScript를 통해 클라이언트 측에서 처리됩니다 &mdash; bcrypt는 bcryptjs 라이브러리, SHA1은 Web Crypto API, MD5-APR은 순수 JS 구현을 사용합니다. 어떠한 데이터도 전송되지 않습니다.</div>
 </div>
 </div>
-</div>
 </section>
-<!-- ── Related ── -->
+<!-- Related tools -->
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/subnet-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-network"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">IP 서브넷 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/docker-ram-calculator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-container"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Docker RAM 계산기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/dockerfile-generator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-file-code"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Dockerfile 생성기</span></span></span></a></li>
+</ul>
+</section>
+<!-- Related content -->
 <section class="related">
-<div class="container">
-<p class="eyebrow" style="margin-bottom:12px;">
+<h2 class="sf-related-title">
 
 <span class="lang-ko">관련 가이드</span>
-</p>
+</h2>
 <div class="related-grid">
 <a class="related-card" href="https://stackfreeks.com" rel="noopener" target="_blank">
 <span class="related-tag">Security</span>
@@ -825,39 +537,29 @@
 <span class="related-arrow">&rarr;</span>
 </a>
 </div>
-</div>
+<a href="https://stackfreeks.com/deploy-wordpress-on-vultr-vps-full-step-by-step-guide-2026/" rel="noopener" target="_blank">Deploy WordPress on a Vultr VPS</a>
 </section>
-<!-- ── Vultr banner ── -->
-<!-- Related tools -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/subnet-calculator/ko/"><span>🧮</span>IP Subnet Calculator</a>
-<a class="sf-related-card" href="/tools/docker-ram-calculator/ko/"><span>🐳</span>Docker RAM Calculator</a>
-<a class="sf-related-card" href="/tools/dockerfile-generator/ko/"><span>📦</span>Dockerfile Generator</a>
-<a class="sf-related-card" href="https://stackfreeks.com/deploy-wordpress-on-vultr-vps-full-step-by-step-guide-2026/" rel="noopener" target="_blank"><span>📖</span>Deploy WordPress on a Vultr VPS</a>
-</div>
-</section>
-<section class="vultr-banner">
-<div class="container banner-inner">
+<!-- Vultr affiliate banner -->
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
 <div>
-<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days</p>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days</div>
 </div>
-<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
 </div>
-</section>
-<!-- ── Footer ── -->
-<footer class="footer">
-<div class="container footer-inner">
-<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<!-- Footer -->
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
 </div>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
 </div>
 </footer>
 <!-- ── Tool JavaScript ── -->
@@ -882,10 +584,10 @@
     const inp = document.getElementById(inputId);
     if (inp.type === 'password') {
       inp.type = 'text';
-      btn.textContent = '🙈';
+      btn.innerHTML = '<svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-eye-off"/></svg>';
     } else {
       inp.type = 'password';
-      btn.textContent = '👁';
+      btn.innerHTML = '<svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-eye"/></svg>';
     }
   }
 
@@ -898,13 +600,13 @@
     block.className = 'user-row-block';
     block.id = 'userBlock' + idx;
     block.innerHTML = `
-      <button class="remove-user-btn" type="button" onclick="removeUserRow(${idx})" title="Remove">✕</button>
+      <button class="remove-user-btn" type="button" onclick="removeUserRow(${idx})" title="${sfT('x_remove')}"><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-x"/></svg></button>
       <div class="form-group">
         <label for="username${idx}">
           <span class="lang-en">Username</span>
           <span class="lang-ko">사용자명</span>
         </label>
-        <input type="text" id="username${idx}" placeholder="e.g. editor" autocomplete="off" spellcheck="false" />
+        <input type="text" id="username${idx}" placeholder="${sfT('x_eg_editor')}" data-i18n-placeholder="x_eg_editor" autocomplete="off" spellcheck="false" />
       </div>
       <div class="form-group">
         <label for="password${idx}">
@@ -912,8 +614,8 @@
           <span class="lang-ko">비밀번호</span>
         </label>
         <div class="pw-wrapper">
-          <input type="password" id="password${idx}" placeholder="Enter password" autocomplete="new-password" />
-          <button class="pw-toggle" type="button" onclick="togglePw('password${idx}', this)" title="Show / hide password">👁</button>
+          <input type="password" id="password${idx}" placeholder="${sfT('x_enter_password')}" data-i18n-placeholder="x_enter_password" autocomplete="new-password" />
+          <button class="pw-toggle" type="button" onclick="togglePw('password${idx}', this)" title="${sfT('x_show_hide_password')}" data-i18n-title="x_show_hide_password"><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-eye"/></svg></button>
         </div>
       </div>
     `;
@@ -1146,14 +848,14 @@
   async function generate() {
     const users = collectUsers();
     if (users.length === 0) {
-      alert('Please enter at least one username.');
+      alert(sfT('x_need_username'));
       return;
     }
     // Validate
     for (const u of users) {
-      if (!u.username) { alert('Please fill in all usernames.'); return; }
-      if (!u.password) { alert('Please fill in all passwords.'); return; }
-      if (u.username.includes(':')) { alert('Usernames cannot contain a colon (:).'); return; }
+      if (!u.username) { alert(sfT('x_fill_usernames')); return; }
+      if (!u.password) { alert(sfT('x_fill_passwords')); return; }
+      if (u.username.includes(':')) { alert(sfT('x_no_colon')); return; }
     }
 
     const btn = document.getElementById('generateBtn');
@@ -1162,7 +864,7 @@
     // Show spinner for bcrypt (slow)
     if (format === 'bcrypt') {
       btn.disabled = true;
-      btn.innerHTML = '<div class="spinner"></div><span>Generating…</span>';
+      btn.innerHTML = '<div class="spinner"></div><span>' + sfT('x_generating') + '</span>';
     }
 
     try {
@@ -1175,7 +877,7 @@
       renderOutput(lines);
     } catch (e) {
       console.error(e);
-      alert('Error generating hash: ' + e.message);
+      alert(sfT('x_hash_error') + e.message);
     } finally {
       btn.disabled = false;
       const lang = window.sfLang ? window.sfLang.current : 'en';
@@ -1245,21 +947,71 @@
 <script>
 window.SF_PAGE_I18N = {
   en: {
+    cat_devops: "DevOps & Config Generators",
+    more_tools: "More DevOps tools",
+    all_in_cat: "All DevOps & Config Generators tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
     nav_back: "← All Tools",
     vultr_label: "Sponsor",
     vultr_title: "Get started on Vultr",
     vultr_sub: "Get $300 free credit — valid for 30 days",
     vultr_cta: "Claim your credit →",
-    footer_copy: "© 2026 StackFreeks"
-  },
+    footer_copy: "© 2026 StackFreeks",
+        x_enter_password: "Enter password",
+        x_htpasswd_output: ".htpasswd output",
+        x_insecure: "insecure",
+        x_no_hashing_avoid: "no hashing — avoid",
+        x_recommended: "recommended",
+        x_show_hide_password: "Show / hide password",
+        x_fill_passwords: "Please fill in all passwords.",
+        x_fill_usernames: "Please fill in all usernames.",
+        x_generating: "Generating…",
+        x_hash_error: "Error generating hash: ",
+        x_need_username: "Please enter at least one username.",
+        x_no_colon: "Usernames cannot contain a colon (:).",
+        x_eg_admin: "e.g. admin",
+        x_eg_editor: "e.g. editor",
+        x_fmt_bcrypt_desc: "$2y$… · most secure",
+        x_fmt_apr1_desc: "$apr1$… · Apache compat",
+        x_fmt_sha1_desc: "{SHA}… · legacy"
+      },
   ko: {
+    cat_devops: "DevOps & 설정 생성기",
+    more_tools: "DevOps 툴 더 보기",
+    all_in_cat: "DevOps & 설정 생성기 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
     nav_back: "← 전체 툴",
     vultr_label: "스폰서",
     vultr_title: "Vultr로 시작하세요",
     vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
     vultr_cta: "크레딧 받기 →",
-    footer_copy: "© 2026 StackFreeks"
-  }
+    footer_copy: "© 2026 StackFreeks",
+        x_enter_password: "비밀번호 입력",
+        x_htpasswd_output: ".htpasswd 출력",
+        x_insecure: "안전하지 않음",
+        x_no_hashing_avoid: "해싱 없음 — 사용 비권장",
+        x_recommended: "권장",
+        x_show_hide_password: "비밀번호 표시 / 숨기기",
+        x_fill_passwords: "모든 비밀번호를 입력하세요.",
+        x_fill_usernames: "모든 사용자명을 입력하세요.",
+        x_generating: "생성 중…",
+        x_hash_error: "해시 생성 오류: ",
+        x_need_username: "사용자명을 하나 이상 입력하세요.",
+        x_no_colon: "사용자명에는 콜론(:)을 쓸 수 없습니다.",
+        x_eg_admin: "예: admin",
+        x_eg_editor: "예: editor",
+        x_fmt_bcrypt_desc: "$2y$… · 가장 안전",
+        x_fmt_apr1_desc: "$apr1$… · Apache 호환",
+        x_fmt_sha1_desc: "{SHA}… · 레거시"
+      }
 };
 </script>
 <script src="/shared/i18n.js"></script>

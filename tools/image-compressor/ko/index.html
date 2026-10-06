@@ -22,115 +22,13 @@
 <meta content="https://tools.stackfreeks.com/tools/image-compressor/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
-<!-- ADSENSE_SLOT_TOP -->
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left { display: flex; align-items: center; gap: 20px; }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-    .logo span { color: var(--accent-text); }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-right { display: flex; align-items: center; gap: 12px; }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .lang-toggle:hover { color: var(--text-1); border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 48px 24px 36px;
-    }
-    .hero h1 {
-      font-size: clamp(24px, 4vw, 36px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-      color: var(--text-1);
-    }
-    .hero p {
-      font-size: 16px;
-      color: var(--text-2);
-      max-width: 600px;
-      line-height: 1.7;
-    }
-
-    /* Tool section */
-    .tool-wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-
+    /* Image Compressor — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* Controls */
     .controls {
       display: flex;
@@ -140,7 +38,7 @@
       margin-bottom: 20px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 20px;
     }
 
@@ -184,11 +82,11 @@
       border-radius: 50%;
       background: var(--accent);
       cursor: pointer;
-      box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+      box-shadow: 0 0 0 3px var(--accent-soft-2);
       transition: box-shadow 0.15s;
     }
     input[type="range"]::-webkit-slider-thumb:hover {
-      box-shadow: 0 0 0 5px rgba(99,102,241,0.3);
+      box-shadow: 0 0 0 5px var(--accent-soft-2);
     }
     input[type="range"]::-moz-range-thumb {
       width: 16px;
@@ -218,15 +116,15 @@
       padding: 6px 14px;
       border-radius: var(--radius);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
     }
     .btn-group button:hover { border-color: var(--border-2); color: var(--text-1); }
-    .btn-group button.active { background: var(--accent-strong); border-color: var(--accent); color: #fff; }
+    .btn-group button.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); }
 
     /* Drop zone */
     .drop-zone {
       border: 2px dashed var(--border-2);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 48px 24px;
       text-align: center;
       cursor: pointer;
@@ -235,7 +133,7 @@
     }
     .drop-zone:hover, .drop-zone.drag-over {
       border-color: var(--accent);
-      background: rgba(99,102,241,0.04);
+      background: var(--accent-soft);
     }
     .drop-zone input[type="file"] {
       position: absolute;
@@ -246,10 +144,12 @@
       height: 100%;
     }
     .drop-icon {
-      font-size: 36px;
+      display: flex;
+      justify-content: center;
       margin-bottom: 12px;
-      opacity: 0.6;
+      color: var(--accent-text);
     }
+    .drop-icon .ico { width: 32px; height: 32px; }
     .drop-title {
       font-size: 15px;
       font-weight: 500;
@@ -278,7 +178,7 @@
       align-items: center;
       gap: 6px;
       background: var(--accent-strong);
-      color: #fff;
+      color: var(--accent-fg);
       border: none;
       font-family: var(--font);
       font-size: 13px;
@@ -300,7 +200,7 @@
     .result-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       overflow: hidden;
       position: relative;
       transition: border-color 0.15s;
@@ -324,7 +224,7 @@
       right: 8px;
       width: 24px;
       height: 24px;
-      background: rgba(0,0,0,0.6);
+      background: var(--surface);
       border: 1px solid var(--border-2);
       border-radius: 50%;
       color: var(--text-2);
@@ -332,9 +232,9 @@
       line-height: 22px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
     }
-    .card-remove:hover { background: rgba(239,68,68,0.8); color: #fff; border-color: transparent; }
+    .card-remove:hover { background: var(--danger-bg); color: var(--danger); border-color: var(--danger); }
 
     .card-body { padding: 14px; }
 
@@ -357,10 +257,10 @@
 
     .badge-saved {
       display: inline-block;
-      background: var(--success-bg);
-      color: var(--success);
-      border: 1px solid rgba(34,197,94,0.2);
-      font-size: 11px;
+      background: var(--success);
+      color: var(--success-fg);
+      border: 1px solid var(--success);
+      font-size: 12px;
       font-weight: 600;
       padding: 2px 8px;
       border-radius: 20px;
@@ -403,10 +303,10 @@
       cursor: pointer;
       text-align: center;
       margin-top: 10px;
-      transition: all 0.15s;
+      transition: background-color var(--t), border-color var(--t), color var(--t);
       text-decoration: none;
     }
-    .btn-download:hover { background: var(--accent-strong); border-color: var(--accent); color: #fff; opacity: 1; }
+    .btn-download:hover { background: var(--accent-strong); border-color: var(--accent); color: var(--accent-fg); opacity: 1; }
     .btn-download:disabled {
       opacity: 0.4;
       pointer-events: none;
@@ -418,185 +318,49 @@
       margin-top: 4px;
     }
 
-    /* Guide */
-    .guide { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-    }
-    .guide-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FAQ */
-    .faq { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related */
-    .related {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .related-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 12px;
-    }
-    .related a {
-      font-size: 14px;
-      color: var(--accent-text);
-    }
-
-    /* Vultr banner */
-    .vultr-banner {
-      background: var(--success-bg);
-      border-top: 1px solid rgba(34,197,94,0.15);
-      border-bottom: 1px solid rgba(34,197,94,0.15);
-      padding: 24px;
-    }
-    .banner-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--success); margin-bottom: 4px; }
-    .banner-title { font-size: 16px; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      display: inline-block;
-      background: var(--success);
-      color: var(--success-fg);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: var(--radius);
-      white-space: nowrap;
-      transition: opacity 0.15s;
-      text-decoration: none;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-    .footer-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .footer-copy { font-size: 13px; color: var(--text-3); }
-    .footer-links { display: flex; gap: 16px; }
-    .footer-links a { font-size: 13px; color: var(--text-3); }
-    .footer-links a:hover { color: var(--text-2); }
-
     /* Responsive */
     @media (max-width: 600px) {
-      .hero { padding: 32px 16px 24px; }
-      .tool-wrap { padding: 0 16px 40px; }
+
       .controls { padding: 16px; }
       .results-grid { grid-template-columns: 1fr; }
-      .guide, .faq, .related { padding-left: 16px; padding-right: 16px; }
-      .footer-inner { flex-direction: column; text-align: center; }
-      .nav-back[href^="https://stackfreeks.com"] { display: none; }
     }
   
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style> <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Image Compressor", "description": "Compress JPG, PNG, and WebP images free online. No file size limit, no watermark. Batch compress multiple images in your browser.", "url": "https://tools.stackfreeks.com/tools/image-compressor/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/image-compressor/ko/"}}</script>
+    
+    /* sf.css gives every input 9px 12px padding; a range track must not get it */
+    .tool input[type="range"] { padding: 0; }
+  </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Image Compressor", "description": "Compress JPG, PNG, and WebP images free online. No file size limit, no watermark. Batch compress multiple images in your browser.", "url": "https://tools.stackfreeks.com/tools/image-compressor/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/image-compressor/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "화질 손실 없이 이미지를 압축하려면?", "acceptedAnswer": {"@type": "Answer", "text": "품질 슬라이더를 75–85%로 설정하세요. 이 범위는 육안으로 구분하기 어려운 데이터를 제거하는 손실 압축 방식으로, 파일 크기를 눈에 띄게 줄이면서 시각적 선명도를 유지합니다. 무손실 압축이 필요하다면 PNG 포맷에서 90% 이상을 사용하세요."}}, {"@type": "Question", "name": "이미지 압축 품질 설정은 얼마가 최적인가요?", "acceptedAnswer": {"@type": "Answer", "text": "대부분의 웹 용도에서는 80%가 이상적입니다. JPEG 파일 크기를 보통 60–75% 줄이면서 사람 눈으로는 원본과 구분하기 어렵습니다. SNS 썸네일은 70%도 충분하고, 인쇄 품질이 필요하면 85–90%를 유지하세요."}}, {"@type": "Question", "name": "여러 이미지를 한 번에 무료로 압축할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네 — 이 툴은 파일 수 제한 없이 일괄 압축을 지원합니다. 필요한 만큼 이미지를 선택하거나 드롭하면 동시에 압축됩니다. 두 개 이상의 파일이 압축되면 \"전체 다운로드\" 버튼이 나타납니다."}}, {"@type": "Question", "name": "압축하면 이미지 크기(해상도)가 줄어드나요?", "acceptedAnswer": {"@type": "Answer", "text": "최대 너비 옵션을 선택한 경우에만 줄어듭니다. 기본값인 \"원본\"을 선택하면 이미지 해상도는 그대로 유지되고 파일 크기만 줄어듭니다. 1920px, 1280px, 800px를 선택하면 가장 긴 쪽이 해당 값을 넘지 않도록 리사이즈됩니다."}}, {"@type": "Question", "name": "손실 압축과 무손실 압축의 차이는?", "acceptedAnswer": {"@type": "Answer", "text": "손실 압축(JPEG, WebP에 사용)은 파일 크기를 줄이기 위해 일부 이미지 데이터를 영구적으로 제거합니다 — 적당한 설정에서는 품질 차이가 거의 느껴지지 않습니다. 무손실 압축(PNG에 사용)은 데이터를 버리지 않고 재구성하므로 파일이 완전히 동일하지만 크기 절감 효과가 작습니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<!-- Nav -->
-<nav>
-<div class="nav-left">
-<a class="logo" href="/ko/">Stack<span>Freeks</span></a>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
-<div class="nav-right">
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-image"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-aperture"></use></svg><span data-i18n="cat_image">Image Tools</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/image-compressor/">English</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
 </div>
 </nav>
-<!-- Hero -->
-<div class="hero">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-shrink"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
 <h1>이미지 압축기</h1>
 <p>JPG, PNG, WebP 이미지를 무료로 온라인 압축. 파일 크기 제한 없음, 워터마크 없음 &mdash; 브라우저에서만 처리.</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
 </div>
-<!-- Tool -->
-<div class="tool-wrap">
-<!-- Controls -->
+</header>
+<!-- Tool body -->
+<main class="tool wrap-tool tool-wrap">
 <div class="controls">
 <div class="control-group">
 <div class="control-label" data-i18n="quality_label">Quality</div>
@@ -618,9 +382,9 @@
 <!-- Drop zone -->
 <div class="drop-zone" id="dropZone">
 <input accept="image/jpeg,image/png,image/webp" id="fileInput" multiple type="file">
-<div class="drop-icon">🖼️</div>
+<div class="drop-icon"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-image"></use></svg></div>
 <div class="drop-title" data-i18n="drop_label">Drop images here or click to select</div>
-<div class="drop-sub">JPG, PNG, WebP &mdash; multiple files supported</div>
+<div class="drop-sub" data-i18n="x_jpg_png_webp_multiple_files_supported">JPG, PNG, WebP &mdash; multiple files supported</div>
 </div>
 <!-- Results -->
 <div id="resultsSection" style="display:none;">
@@ -630,31 +394,40 @@
 </div>
 <div class="results-grid" id="resultsGrid"></div>
 </div>
+</main>
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More image tools</h2>
+<a class="sec-link" href="/#cat-image"><span data-i18n="all_in_cat">All Image Tools tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
 </div>
-<!-- Guide -->
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/webp-to-jpg/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-images"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">WebP &rarr; JPG 변환기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/exif-remover/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-eraser"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">EXIF 데이터 제거기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
+<!-- How to use -->
 <section class="guide">
 
 <div class="lang-ko">
-<div class="guide-title">사용 방법</div>
+<h2 class="guide-title">사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<div class="guide-step">Step 1</div>
-<h3>이미지 드롭</h3>
+<h3>1. 이미지 드롭</h3>
 <p>JPG, PNG, WebP 파일을 드롭 존에 끌어다 놓거나 클릭해서 파일을 선택하세요. 여러 파일을 동시에 선택할 수 있습니다.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 2</div>
-<h3>품질 설정</h3>
+<h3>2. 품질 설정</h3>
 <p>80%가 품질과 용량 절감의 최적 균형점입니다. 더 작은 파일이 필요하면 슬라이더를 낮추세요.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 3</div>
-<h3>실시간 압축 확인</h3>
+<h3>3. 실시간 압축 확인</h3>
 <p>각 이미지가 브라우저에서 즉시 압축됩니다. 압축 전후 크기와 절감률을 실시간으로 확인하세요.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 4</div>
-<h3>워터마크 없이 다운로드</h3>
+<h3>4. 워터마크 없이 다운로드</h3>
 <p>파일별로 다운로드하거나 "전체 다운로드"를 사용하세요. 회원가입 불필요, 워터마크 없음, 서버 업로드 없음.</p>
 </div>
 </div>
@@ -664,7 +437,7 @@
 <section class="faq">
 
 <div class="lang-ko">
-<div class="faq-title">자주 묻는 질문</div>
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>화질 손실 없이 이미지를 압축하려면?</span><span class="faq-icon">+</span></button>
 <div class="faq-a">품질 슬라이더를 75&ndash;85%로 설정하세요. 이 범위는 육안으로 구분하기 어려운 데이터를 제거하는 손실 압축 방식으로, 파일 크기를 눈에 띄게 줄이면서 시각적 선명도를 유지합니다. 무손실 압축이 필요하다면 PNG 포맷에서 90% 이상을 사용하세요.</div>
@@ -687,7 +460,16 @@
 </div>
 </div>
 </section>
-<!-- Related -->
+<!-- Related tools -->
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/qr-code-generator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-qr-code"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">QR 코드 생성기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/heic-to-jpg/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-image"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">HEIC &rarr; JPG 변환기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/webp-to-jpg/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-images"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">WebP &rarr; JPG 변환기</span></span></span></a></li>
+</ul>
+</section>
+<!-- Related content -->
 <section class="related">
 <div class="related-title">Related Resources</div>
 
@@ -695,41 +477,41 @@
 <a href="https://stackfreeks.com" rel="noopener" target="_blank">StackFreeks 블로그 &mdash; 개발자 가이드 및 서버 팁</a>
 </div>
 </section>
-<!-- Vultr banner -->
+<!-- Vultr affiliate banner -->
 <div class="vultr-banner">
-<div class="banner-inner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored noopener" target="_blank">
 <div>
-<div class="eyebrow" data-i18n="vultr_label">Sponsor</div>
-<div class="banner-title" data-i18n="vultr_title">Get started on Vultr</div>
-<div class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days</div>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days</div>
 </div>
-<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored noopener" target="_blank">Claim your credit &rarr;</a>
-</div>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
 </div>
 <!-- Footer -->
-<!-- Related tools -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/qr-code-generator/ko/"><span>📱</span>QR Code Generator</a>
-<a class="sf-related-card" href="/tools/heic-to-jpg/ko/"><span>📷</span>HEIC to JPG Converter</a>
-<a class="sf-related-card" href="/tools/webp-to-jpg/ko/"><span>🌄</span>WebP to JPG Converter</a>
-</div>
-</section>
-<footer>
-<div class="footer-inner">
-<span class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
-<a href="/tools/">All Tools</a>
+<a href="/contact/">Contact</a>
+<a href="/terms/">Terms</a>
 </div>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
 </div>
 </footer>
 <!-- i18n page-specific keys -->
 <script>
     window.SF_PAGE_I18N = {
       en: {
+        cat_image: "Image Tools",
+        more_tools: "More image tools",
+        all_in_cat: "All Image Tools tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         nav_back: '← All Tools',
         drop_label: 'Drop images here or click to select',
         quality_label: 'Quality',
@@ -742,9 +524,25 @@
         vultr_title: 'Get started on Vultr',
         vultr_sub: 'Get $300 free credit — valid for 30 days',
         vultr_cta: 'Claim your credit →',
-        footer_copy: '© 2026 StackFreeks'
+        footer_copy: '© 2026 StackFreeks',
+        x_jpg_png_webp_multiple_files_supported: "JPG, PNG, WebP — multiple files supported",
+        x_compress_failed: "compression failed",
+        x_error: "Error: ",
+        x_before: "Before",
+        x_after: "After",
+        x_pct_smaller: "{n}% smaller",
+        x_files_one: "{n} file",
+        x_files_many: "{n} files"
       },
       ko: {
+        cat_image: "이미지 도구",
+        more_tools: "이미지 툴 더 보기",
+        all_in_cat: "이미지 도구 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         nav_back: '← 전체 툴',
         drop_label: '이미지를 드롭하거나 클릭해서 선택',
         quality_label: '품질',
@@ -757,7 +555,15 @@
         vultr_title: 'Vultr로 시작하세요',
         vultr_sub: '$300 무료 크레딧 — 가입 후 30일 유효',
         vultr_cta: '크레딧 받기 →',
-        footer_copy: '© 2026 StackFreeks'
+        footer_copy: '© 2026 StackFreeks',
+        x_jpg_png_webp_multiple_files_supported: "JPG, PNG, WebP — 여러 파일 지원",
+        x_compress_failed: "압축 실패",
+        x_error: "오류: ",
+        x_before: "변환 전",
+        x_after: "변환 후",
+        x_pct_smaller: "{n}% 감소",
+        x_files_one: "파일 {n}개",
+        x_files_many: "파일 {n}개"
       }
     };
   </script>
@@ -838,6 +644,11 @@
       return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
     }
 
+    function sizesHtml(before, after) {
+      return sfT('x_before') + ': <strong>' + formatBytes(before) + '</strong> → ' +
+        sfT('x_after') + ': <strong>' + formatBytes(after) + '</strong>';
+    }
+
     // ─── Card creation ────────────────────────────────────────────────────────
     function createCard(id, file, thumbUrl) {
       const card = document.createElement('div');
@@ -846,11 +657,11 @@
       card.innerHTML = `
         <div class="card-thumb-wrap">
           <img class="card-thumb" src="${thumbUrl}" alt="${escapeHtml(file.name)}" loading="lazy" />
-          <div class="card-remove" title="Remove" onclick="removeCard(${id})">✕</div>
+          <div class="card-remove" title="${sfT('x_remove')}" onclick="removeCard(${id})"><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-x"/></svg></div>
         </div>
         <div class="card-body">
           <div class="card-filename" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</div>
-          <div class="card-sizes">Before: <strong>${formatBytes(file.size)}</strong></div>
+          <div class="card-sizes">${sfT('x_before')}: <strong>${formatBytes(file.size)}</strong></div>
           <div class="progress-wrap"><div class="progress-bar" id="prog-${id}" style="width:0%"></div></div>
           <div class="card-status compressing-label" id="status-${id}" data-i18n="compressing_label">Compressing…</div>
           <button class="btn-download" id="dl-${id}" disabled data-i18n="download_btn">Download</button>
@@ -887,8 +698,7 @@
         const card = resultsGrid.querySelector('[data-id="' + id + '"]');
         if (!card) return;
 
-        card.querySelector('.card-sizes').innerHTML =
-          'Before: <strong>' + formatBytes(file.size) + '</strong> → After: <strong>' + formatBytes(compressed.size) + '</strong>';
+        card.querySelector('.card-sizes').innerHTML = sizesHtml(file.size, compressed.size);
 
         // Insert badge
         const sizesEl = card.querySelector('.card-sizes');
@@ -898,14 +708,15 @@
           badge.className = 'badge-saved';
           sizesEl.insertAdjacentElement('afterend', badge);
         }
-        badge.textContent = saved + '% smaller';
+        badge.textContent = sfT('x_pct_smaller').replace('{n}', saved);
 
         // Progress → 100%
         const bar = document.getElementById('prog-' + id);
         if (bar) bar.style.width = '100%';
 
         const statusEl = document.getElementById('status-' + id);
-        if (statusEl) statusEl.textContent = '';
+        // drop the i18n key too, or a language switch re-applies "Compressing…" to a finished card
+        if (statusEl) { statusEl.removeAttribute('data-i18n'); statusEl.textContent = ''; }
 
         // Download button
         const dlBtn = document.getElementById('dl-' + id);
@@ -924,8 +735,8 @@
       } catch (err) {
         const statusEl = document.getElementById('status-' + id);
         if (statusEl) {
-          statusEl.textContent = 'Error: ' + (err.message || 'compression failed');
-          statusEl.style.color = '#ef4444';
+          statusEl.textContent = sfT('x_error') + (err.message || sfT('x_compress_failed'));
+          statusEl.style.color = 'var(--danger)';
         }
       }
     }
@@ -971,7 +782,7 @@
         return;
       }
       resultsSection.style.display = 'block';
-      resultsCount.textContent = count + ' file' + (count !== 1 ? 's' : '');
+      resultsCount.textContent = sfT(count === 1 ? 'x_files_one' : 'x_files_many').replace('{n}', count);
 
       const doneCount = Array.from(items.values()).filter(i => i.compressedBlob).length;
       if (doneCount >= 2) {
@@ -994,7 +805,17 @@
         if (dlBtn && !dlBtn.disabled) dlBtn.textContent = t.download_btn;
         const statusEl = document.getElementById('status-' + id);
         if (statusEl && !item.compressedBlob) statusEl.textContent = t.compressing_label;
+        const card = resultsGrid.querySelector('[data-id="' + id + '"]');
+        if (card && item.compressedBlob) {
+          card.querySelector('.card-sizes').innerHTML = sizesHtml(item.file.size, item.compressedBlob.size);
+          const badge = card.querySelector('.badge-saved');
+          if (badge) {
+            const saved = Math.max(0, Math.round((1 - item.compressedBlob.size / item.file.size) * 100));
+            badge.textContent = sfT('x_pct_smaller').replace('{n}', saved);
+          }
+        }
       });
+      updateResultsUI();
     });
   </script>
 <script src="/shared/i18n.js"></script>

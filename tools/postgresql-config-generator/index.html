@@ -26,294 +26,41 @@
   <meta name="twitter:title" content="PostgreSQL Config Generator | StackFreeks Tools" />
   <meta name="twitter:description" content="postgresql.conf tuning generator (pgtune alternative). Enter RAM, CPU and workload, get a tuned config." />
 
-  <!-- ADSENSE_SLOT_TOP -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "SFMono-Regular", "Consolas", "Monaco", monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
-
-    /* Main layout */
-    main { padding: 32px 0 48px; }
-    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 768px) { .tool-grid { grid-template-columns: minmax(0, 1fr); } }
-
-    /* Card */
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
-    .card-label {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 16px;
-    }
-
-    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+    /* PostgreSQL Config Generator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+    .tool-grid > * { min-width: 0; }
+    .card-label { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+    .tool label { display: block; font-size: 13px; font-weight: 500; color: var(--text-2); margin-bottom: 5px; }
     .form-group { margin-bottom: 14px; }
     .form-group:last-child { margin-bottom: 0; }
+    .tool input, .tool select { width: 100%; }
+    .tool input[type="number"] { font-variant-numeric: tabular-nums; }
+    .hint { font-size: 13px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
 
-    input, select {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      padding: 9px 12px;
-      font-size: 13px; font-family: var(--font);
-      outline: none;
-      transition: border-color 0.15s;
-      -webkit-appearance: none;
-    }
-    input:focus, select:focus { border-color: var(--border-2); }
-    input[type="number"] { -moz-appearance: textfield; }
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .conf-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .conf-head .card-label { font-family: var(--font-mono); }
+    .conf-output { margin: 0; padding: 14px 16px; font-size: 13px; line-height: 1.7; color: var(--text-1); white-space: pre; overflow-x: auto; }
 
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 28px;
-      cursor: pointer;
-    }
+    .plan-box { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-top: 14px; }
+    .plan-box-label { font-size: 13px; font-weight: 500; color: var(--text-3); margin-bottom: 4px; }
+    .plan-box-title { font-size: 17px; font-weight: 650; color: var(--text-1); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+    .plan-box-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
+    .disclaimer { font-size: 13px; color: var(--text-3); margin-top: 14px; line-height: 1.6; padding-top: 14px; border-top: 1px solid var(--border); }
 
-    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
-
-    /* Config output */
-    .conf-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .btn-copy {
-      background: var(--surface-2); color: var(--text-1);
-      border: 1px solid var(--border-2); border-radius: var(--radius);
-      padding: 5px 12px; font-size: 12px; font-weight: 500;
-      cursor: pointer; font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn-copy:hover { border-color: var(--accent); color: var(--accent-text); }
-    .conf-output {
-      background: #0d0d0e;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      line-height: 1.7;
-      color: var(--text-2);
-      white-space: pre;
-      overflow-x: auto;
-      max-height: 460px;
-      overflow-y: auto;
-    }
-
-    .plan-box {
-      background: var(--success-bg);
-      border: 1px solid rgba(34,197,94,0.3);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-      margin-top: 16px;
-    }
-    .plan-box-label { font-size: 11px; font-weight: 500; color: var(--success); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .plan-box-title { font-size: 1rem; font-weight: 500; color: var(--text-1); margin-bottom: 4px; }
-    .plan-box-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
-    .btn-vultr-plan {
-      background: var(--success);
-      color: var(--success-fg); border: none;
-      border-radius: var(--radius);
-      padding: 9px 18px;
-      font-size: 13px; font-weight: 500;
-      cursor: pointer; font-family: var(--font);
-      text-decoration: none; display: inline-block;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr-plan:hover { background: var(--success-hover); }
-
-    .disclaimer {
-      font-size: 11px; color: var(--text-3);
-      margin-top: 14px; line-height: 1.6;
-      padding-top: 14px; border-top: 1px solid var(--border);
-    }
-
-    /* About / SEO copy */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
+    /* about copy (sits above the guide) */
+    .about-section p { margin-bottom: 12px; color: var(--text-2); line-height: 1.7; max-width: 72ch; }
     .about-section p:last-child { margin-bottom: 0; }
 
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-list { display: flex; flex-direction: column; gap: 1px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related */
-    .related { padding: 40px 0; border-top: 1px solid var(--border); }
-    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .related-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 18px;
-      text-decoration: none; display: flex;
-      flex-direction: column; gap: 6px;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); }
-    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent-text); letter-spacing: 0.06em; text-transform: uppercase; }
-    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
-    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
-
-    /* Related tools (auto-injected style parity) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
-
-    /* Responsive */
-    @media (max-width: 640px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
-    }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
     @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .tool-grid { grid-template-columns: minmax(0, 1fr); }
+      .card-box { padding: 16px; }
     }
   </style>
 
@@ -328,46 +75,42 @@
 </head>
 <body>
 
-<!-- 1. Nav -->
-<nav>
-  <a href="/" class="logo">
-    <div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-  <div class="nav-right">
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-  </div>
-</nav>
-
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
-
-<!-- 3. Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="lang-en">
-      <p class="eyebrow">PostgreSQL &amp; VPS</p>
-      <h1>PostgreSQL Config Generator</h1>
-      <p class="hero-desc">Enter your RAM, CPU cores and workload, and get a tuned postgresql.conf — a free PGTune alternative that runs in your browser.</p>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-devops" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-wrench"/></svg><span data-i18n="cat_devops">DevOps &amp; Config Generators</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <div class="lang-ko">
-      <p class="eyebrow">PostgreSQL &amp; VPS</p>
-      <h1>PostgreSQL 설정 생성기</h1>
-      <p class="hero-desc">RAM, CPU 코어 수, 워크로드를 입력하면 튜닝된 postgresql.conf를 즉시 생성합니다. 브라우저에서 동작하는 무료 PGTune 대안입니다.</p>
-    </div>
-  </div>
-</section>
+  </nav>
 
-<!-- 4. Tool body -->
-<main>
-  <div class="container">
-    <!-- ADSENSE_SLOT_IN_TOOL -->
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-sliders-horizontal"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>PostgreSQL Config Generator</h1>
+        <p>Enter your RAM, CPU cores and workload, and get a tuned postgresql.conf — a free PGTune alternative that runs in your browser.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>PostgreSQL 설정 생성기</h1>
+        <p>RAM, CPU 코어 수, 워크로드를 입력하면 튜닝된 postgresql.conf를 즉시 생성합니다. 브라우저에서 동작하는 무료 PGTune 대안입니다.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
     <div class="tool-grid">
 
       <!-- Input card -->
-      <div class="card">
+      <div class="card-box">
         <p class="card-label" data-i18n="tool_input_label">Server &amp; Workload</p>
 
         <div class="form-group">
@@ -385,7 +128,7 @@
           <select id="storage" onchange="recalc()">
             <option value="ssd">SSD / NVMe</option>
             <option value="hdd">HDD</option>
-            <option value="san">Network / SAN</option>
+            <option value="san" data-i18n="x_network_san">Network / SAN</option>
           </select>
         </div>
 
@@ -402,11 +145,11 @@
         <div class="form-group">
           <label data-i18n="tool_workload_lbl">Workload type</label>
           <select id="workload" onchange="onWorkloadChange()">
-            <option value="web">Web application</option>
-            <option value="oltp">OLTP (transactional)</option>
-            <option value="dw">Data warehouse</option>
-            <option value="desktop">Desktop / development</option>
-            <option value="mixed">Mixed</option>
+            <option value="web" data-i18n="x_web_application">Web application</option>
+            <option value="oltp" data-i18n="x_oltp_transactional">OLTP (transactional)</option>
+            <option value="dw" data-i18n="x_data_warehouse">Data warehouse</option>
+            <option value="desktop" data-i18n="x_desktop_development">Desktop / development</option>
+            <option value="mixed" data-i18n="x_mixed">Mixed</option>
           </select>
         </div>
 
@@ -418,10 +161,10 @@
       </div>
 
       <!-- Results card -->
-      <div class="card">
+      <div class="card-box">
         <div class="conf-head">
           <p class="card-label" style="margin-bottom:0;" data-i18n="tool_results_label">postgresql.conf</p>
-          <button class="btn-copy" id="copyBtn" onclick="copyConf()" data-i18n="tool_copy_btn">Copy</button>
+          <button class="btn btn-secondary btn-copy" id="copyBtn" onclick="copyConf()" data-i18n="tool_copy_btn">Copy</button>
         </div>
 
         <pre class="conf-output" id="confOut">…</pre>
@@ -431,7 +174,7 @@
           <div class="plan-box-title" id="planTitle">—</div>
           <div class="plan-box-desc" id="planDesc" data-i18n="tool_plan_desc">Matches the RAM you entered — available as a Vultr Cloud Compute VPS or a Vultr Managed Database for PostgreSQL.</div>
           <a href="https://www.vultr.com/?ref=9907834-9J"
-             class="btn-vultr-plan"
+             class="btn btn-primary btn-vultr-plan"
              rel="nofollow sponsored"
              target="_blank"
              data-i18n="tool_vultr_cta">Get this plan on Vultr →</a>
@@ -441,90 +184,88 @@
       </div>
 
     </div>
-  </div>
-</main>
+  </main>
 
-<!-- About / SEO copy -->
-<section class="about-section">
-  <div class="container">
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More DevOps tools</h2>
+      <a class="sec-link" href="/#cat-devops"><span data-i18n="all_in_cat">All DevOps &amp; Config Generators tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/htpasswd-generator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-lock-keyhole"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">.htpasswd Generator</span><span class="lang-ko">.htpasswd 생성기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/og-meta-generator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-share-2"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Open Graph Meta Tag Generator</span><span class="lang-ko">OG 메타 태그 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- About -->
+  <section class="guide about-section">
     <div class="lang-en">
-      <h2>About this PostgreSQL config generator</h2>
+      <h2 class="guide-title">About this PostgreSQL config generator</h2>
       <p>PostgreSQL ships with conservative defaults that assume a shared machine with very little memory — <code>shared_buffers</code> of 128 MB, <code>work_mem</code> of 4 MB, and planner cost constants tuned for spinning disks. On a modern VPS or dedicated database server those defaults leave most of your RAM unused and force queries to spill sorts and hashes to disk. This tool generates a tuned <code>postgresql.conf</code> snippet from six inputs: total RAM, CPU cores, storage type, PostgreSQL version, workload type, and expected maximum connections.</p>
       <p>It ports the well-known PGTune formulas: <code>shared_buffers</code> at 25% of RAM (1/16 for desktop use), <code>effective_cache_size</code> at 75% of RAM, <code>work_mem</code> derived from available memory divided by connection count and a parallelism factor, <code>maintenance_work_mem</code> at 1/16 of RAM capped at 2 GB, <code>wal_buffers</code> at 3% of shared_buffers capped at 16 MB, workload-specific <code>min_wal_size</code> / <code>max_wal_size</code>, <code>checkpoint_completion_target</code> of 0.9, <code>default_statistics_target</code> of 100 (500 for data warehouses), <code>random_page_cost</code> of 1.1 for SSD/NVMe or 4 for HDD, <code>effective_io_concurrency</code>, and parallel worker settings when you have 4 or more cores. It is useful for developers deploying Postgres to a Vultr VPS, DevOps engineers sizing a managed database, and anyone comparing their current config against a known-good baseline.</p>
     </div>
     <div class="lang-ko">
-      <h2>PostgreSQL 설정 생성기 소개</h2>
+      <h2 class="guide-title">PostgreSQL 설정 생성기 소개</h2>
       <p>PostgreSQL의 기본 설정은 메모리가 거의 없는 공유 서버를 가정한 보수적인 값입니다 — <code>shared_buffers</code> 128MB, <code>work_mem</code> 4MB, 그리고 HDD 기준의 플래너 비용 상수입니다. 최신 VPS나 전용 DB 서버에서는 이 기본값이 대부분의 RAM을 놀리고, 정렬·해시 연산을 디스크로 넘기게 만듭니다. 이 도구는 총 RAM, CPU 코어 수, 스토리지 타입, PostgreSQL 버전, 워크로드 유형, 예상 최대 커넥션 수 6가지 입력으로 튜닝된 <code>postgresql.conf</code> 스니펫을 생성합니다.</p>
       <p>잘 알려진 PGTune 공식을 그대로 이식했습니다: <code>shared_buffers</code>는 RAM의 25%(데스크톱은 1/16), <code>effective_cache_size</code>는 RAM의 75%, <code>work_mem</code>은 가용 메모리를 커넥션 수와 병렬도 계수로 나눈 값, <code>maintenance_work_mem</code>은 RAM의 1/16(최대 2GB), <code>wal_buffers</code>는 shared_buffers의 3%(최대 16MB), 워크로드별 <code>min_wal_size</code> / <code>max_wal_size</code>, <code>checkpoint_completion_target</code> 0.9, <code>default_statistics_target</code> 100(데이터 웨어하우스는 500), SSD/NVMe는 <code>random_page_cost</code> 1.1(HDD는 4), <code>effective_io_concurrency</code>, 그리고 코어가 4개 이상일 때 병렬 워커 설정입니다. Vultr VPS에 Postgres를 배포하는 개발자, 매니지드 데이터베이스 사이징을 하는 DevOps 엔지니어, 현재 설정을 검증하려는 모두에게 유용합니다.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 5. How-to section -->
-<section class="guide-section">
-  <div class="container">
-
+  <!-- How to use -->
+  <section class="guide">
     <div class="lang-en">
-      <h2>How to use this generator</h2>
+      <h2 class="guide-title">How to use this generator</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">Enter your hardware</div>
-          <div class="guide-desc">Total RAM in GB, vCPU count, and the storage type — SSD/NVMe for almost every VPS, HDD only for old spinning disks.</div>
+          <h3>1. Enter your hardware</h3>
+          <p>Total RAM in GB, vCPU count, and the storage type — SSD/NVMe for almost every VPS, HDD only for old spinning disks.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">Pick version and workload</div>
-          <div class="guide-desc">Choose your PostgreSQL major version and whether the server is a web app, OLTP, data warehouse, desktop, or mixed.</div>
+          <h3>2. Pick version and workload</h3>
+          <p>Choose your PostgreSQL major version and whether the server is a web app, OLTP, data warehouse, desktop, or mixed.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">Set max connections</div>
-          <div class="guide-desc">Keep the workload default unless you know your real peak. High counts should go through PgBouncer, not raw Postgres.</div>
+          <h3>3. Set max connections</h3>
+          <p>Keep the workload default unless you know your real peak. High counts should go through PgBouncer, not raw Postgres.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">Copy the config</div>
-          <div class="guide-desc">Click Copy, paste the values into postgresql.conf (or ALTER SYSTEM), and restart Postgres for shared_buffers to take effect.</div>
+          <h3>4. Copy the config</h3>
+          <p>Click Copy, paste the values into postgresql.conf (or ALTER SYSTEM), and restart Postgres for shared_buffers to take effect.</p>
         </div>
       </div>
     </div>
 
     <div class="lang-ko">
-      <h2>생성기 사용 방법</h2>
+      <h2 class="guide-title">생성기 사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">하드웨어 입력</div>
-          <div class="guide-desc">총 RAM(GB), vCPU 수, 스토리지 타입을 입력하세요 — 대부분의 VPS는 SSD/NVMe, HDD는 구형 디스크만 해당됩니다.</div>
+          <h3>1. 하드웨어 입력</h3>
+          <p>총 RAM(GB), vCPU 수, 스토리지 타입을 입력하세요 — 대부분의 VPS는 SSD/NVMe, HDD는 구형 디스크만 해당됩니다.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">버전과 워크로드 선택</div>
-          <div class="guide-desc">PostgreSQL 메이저 버전과 서버 유형(웹 앱, OLTP, 데이터 웨어하우스, 데스크톱, 혼합)을 고르세요.</div>
+          <h3>2. 버전과 워크로드 선택</h3>
+          <p>PostgreSQL 메이저 버전과 서버 유형(웹 앱, OLTP, 데이터 웨어하우스, 데스크톱, 혼합)을 고르세요.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">최대 커넥션 설정</div>
-          <div class="guide-desc">실제 피크를 모른다면 워크로드 기본값을 유지하세요. 높은 커넥션은 raw Postgres가 아니라 PgBouncer로 처리해야 합니다.</div>
+          <h3>3. 최대 커넥션 설정</h3>
+          <p>실제 피크를 모른다면 워크로드 기본값을 유지하세요. 높은 커넥션은 raw Postgres가 아니라 PgBouncer로 처리해야 합니다.</p>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">설정 복사</div>
-          <div class="guide-desc">Copy를 눌러 postgresql.conf(또는 ALTER SYSTEM)에 붙여넣고, shared_buffers 적용을 위해 Postgres를 재시작하세요.</div>
+          <h3>4. 설정 복사</h3>
+          <p>Copy를 눌러 postgresql.conf(또는 ALTER SYSTEM)에 붙여넣고, shared_buffers 적용을 위해 Postgres를 재시작하세요.</p>
         </div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<!-- 6. FAQ -->
-<section class="faq-section">
-  <div class="container">
-
+  <!-- FAQ -->
+  <section class="faq">
     <div class="lang-en">
-      <h2>Frequently asked questions</h2>
+      <h2 class="faq-title">Frequently asked questions</h2>
       <div class="faq-list">
 
         <div class="faq-item">
@@ -571,7 +312,7 @@
     </div>
 
     <div class="lang-ko">
-      <h2>자주 묻는 질문</h2>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-list">
 
         <div class="faq-item">
@@ -616,76 +357,66 @@
 
       </div>
     </div>
+  </section>
 
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/redis-memory-estimator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database-zap"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Redis Memory Estimator</span><span class="lang-ko">Redis 메모리 예상 계산기</span></span></span></a></li>
+      <li><a href="/tools/managed-database-cost-calculator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Managed Database Cost Calculator</span><span class="lang-ko">매니지드 데이터베이스 비용 계산기</span></span></span></a></li>
+      <li><a href="/tools/server-spec-recommender/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-cpu"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Server Spec Recommender</span><span class="lang-ko">서버 사양 추천기</span></span></span></a></li>
+    </ul>
+  </section>
+
+  <!-- Related content -->
+  <section class="related">
+    <p><a href="https://stackfreeks.com/postgresql-vultr-vps/" target="_blank" rel="noopener">Running PostgreSQL on a Vultr VPS</a></p>
+  </section>
+
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
   </div>
-</section>
 
-<!-- 7. Related content -->
-<section class="related">
-  <div class="container">
-    <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
-    <div class="related-grid">
-      <a href="https://stackfreeks.com/postgresql-vultr-vps/" class="related-card" target="_blank" rel="noopener">
-        <span class="related-tag">PostgreSQL</span>
-        <p class="related-title">Running PostgreSQL on a Vultr VPS</p>
-        <span class="related-arrow">→</span>
-      </a>
-      <a href="/tools/managed-database-cost-calculator/" class="related-card">
-        <span class="related-tag">Database</span>
-        <p class="related-title">Managed Database Cost Calculator</p>
-        <span class="related-arrow">→</span>
-      </a>
-      <a href="/tools/redis-memory-estimator/" class="related-card">
-        <span class="related-tag">Redis</span>
-        <p class="related-title">Redis Memory Estimator</p>
-        <span class="related-arrow">→</span>
-      </a>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- 7.5. Related tools -->
-<section class="sf-related">
-  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-  <div class="sf-related-grid">
-    <a href="/tools/redis-memory-estimator/" class="sf-related-card"><span>🧮</span>Redis Memory Estimator</a>
-    <a href="/tools/managed-database-cost-calculator/" class="sf-related-card"><span>📊</span>Managed Database Cost Calculator</a>
-    <a href="/tools/server-spec-recommender/" class="sf-related-card"><span>🖥️</span>Server Spec Recommender</a>
-    <a href="https://stackfreeks.com/postgresql-vultr-vps/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>PostgreSQL on a Vultr VPS</a>
-  </div>
-</section>
-
-<!-- 8. Vultr banner -->
-<section class="vultr-banner">
-  <div class="container banner-inner">
-    <div>
-      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
-    </div>
-    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
-       rel="nofollow sponsored" target="_blank"
-       data-i18n="vultr_cta">Claim your credit →</a>
-  </div>
-</section>
-
-<!-- 9. Footer -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-    </div>
-  </div>
-</footer>
 
 <!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
+        cat_devops: "DevOps & Config Generators",
+        more_tools: "More DevOps tools",
+        all_in_cat: "All DevOps & Config Generators tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
     tool_input_label: "Server & Workload",
     tool_ram_lbl: "Total RAM (GB)",
     tool_cpu_lbl: "CPU cores (vCPU)",
@@ -700,9 +431,24 @@ window.SF_PAGE_I18N = {
     tool_plan_desc: "Matches the RAM you entered — available as a Vultr Cloud Compute VPS or a Vultr Managed Database for PostgreSQL.",
     tool_vultr_cta: "Get this plan on Vultr →",
     tool_disclaimer: "Baseline only. Ported from the published PGTune formulas. Verify against pg_stat_statements, temp file counts and checkpoint frequency under real load, and restart PostgreSQL for settings that require it (shared_buffers, wal_buffers, max_connections).",
-    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
-  },
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)",
+        x_data_warehouse: "Data warehouse",
+        x_desktop_development: "Desktop / development",
+        x_mixed: "Mixed",
+        x_network_san: "Network / SAN",
+        x_oltp_transactional: "OLTP (transactional)",
+        x_web_application: "Web application",
+        x_next_tier_up_for_headroom: "next tier up for headroom"
+      },
   ko: {
+        cat_devops: "DevOps & 설정 생성기",
+        more_tools: "DevOps 툴 더 보기",
+        all_in_cat: "DevOps & 설정 생성기 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
     tool_input_label: "서버 & 워크로드",
     tool_ram_lbl: "총 RAM (GB)",
     tool_cpu_lbl: "CPU 코어 (vCPU)",
@@ -717,8 +463,15 @@ window.SF_PAGE_I18N = {
     tool_plan_desc: "입력한 RAM에 맞는 플랜입니다 — Vultr Cloud Compute VPS 또는 PostgreSQL용 Vultr Managed Database로 사용할 수 있습니다.",
     tool_vultr_cta: "Vultr에서 이 플랜 선택 →",
     tool_disclaimer: "기준값일 뿐입니다. 공개된 PGTune 공식을 이식했습니다. 실제 부하에서 pg_stat_statements, 임시 파일 수, 체크포인트 빈도로 검증하고, 재시작이 필요한 설정(shared_buffers, wal_buffers, max_connections)은 PostgreSQL을 재시작하세요.",
-    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
-  }
+    vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)",
+        x_data_warehouse: "데이터 웨어하우스",
+        x_desktop_development: "데스크톱 / 개발용",
+        x_mixed: "혼합",
+        x_network_san: "네트워크 / SAN",
+        x_oltp_transactional: "OLTP (트랜잭션 처리)",
+        x_web_application: "웹 애플리케이션",
+        x_next_tier_up_for_headroom: "여유분을 위한 한 단계 위 플랜"
+      }
 };
 </script>
 
@@ -864,7 +617,9 @@ function recalc() {
   // Matched Vultr plan box
   document.getElementById("planTitle").textContent =
     plan.ram + " GB / " + plan.cpu + " vCPU (" + plan.price + ")" +
-    (plan.ram > ramGb ? " — next tier up for headroom" : "");
+    // sfT only exists once /shared/i18n.js has loaded; the first recalc() runs before it.
+    (plan.ram > ramGb ? " — " + (typeof sfT === "function"
+      ? sfT("x_next_tier_up_for_headroom") : "next tier up for headroom") : "");
 }
 
 function copyConf() {
@@ -872,7 +627,7 @@ function copyConf() {
   const btn = document.getElementById("copyBtn");
   const done = function () {
     const label = btn.textContent;
-    btn.textContent = "Copied ✓";
+    btn.textContent = sfT('x_copied_s') + ' ✓';
     setTimeout(function () { btn.textContent = label; }, 1500);
   };
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -899,11 +654,15 @@ function toggleFaq(btn) {
   btn.closest(".faq-item").classList.toggle("open");
 }
 
+// Re-render the matched-plan line when the language changes
+document.addEventListener("sfLangChanged", recalc);
+
 // Init
 recalc();
 </script>
 
 <!-- 10. i18n -->
 <script src="/shared/i18n.js"></script>
+
 </body>
 </html>

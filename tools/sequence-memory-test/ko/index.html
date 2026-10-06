@@ -8,7 +8,7 @@
 <link href="/stackfreeks_icon.png" rel="apple-touch-icon">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>순서 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks</title>
-<meta content="재미 & 테스트" name="description">
+<meta content="타일이 반짝이는 순서를 본 뒤 그대로 따라 눌러보세요. 레벨이 오를 때마다 기억할 타일이 하나씩 늘어납니다. 당신의 시각 기억력이 얼마나 긴 순서를 담을 수 있는지 확인하세요." name="description">
 <link href="https://tools.stackfreeks.com/tools/sequence-memory-test/ko/" rel="canonical">
 <link href="https://tools.stackfreeks.com/tools/sequence-memory-test/" hreflang="en" rel="alternate">
   <link href="https://tools.stackfreeks.com/tools/sequence-memory-test/ko/" hreflang="ko" rel="alternate">
@@ -18,240 +18,62 @@
 
 <!-- Open Graph -->
 <meta content="순서 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
-<meta content="재미 & 테스트" property="og:description">
+<meta content="타일이 반짝이는 순서를 본 뒤 그대로 따라 눌러보세요. 레벨이 오를 때마다 기억할 타일이 하나씩 늘어납니다. 당신의 시각 기억력이 얼마나 긴 순서를 담을 수 있는지 확인하세요." property="og:description">
 <meta content="https://tools.stackfreeks.com/tools/sequence-memory-test/ko/" property="og:url">
 <meta content="website" property="og:type">
 <meta content="StackFreeks Tools" property="og:site_name">
 <!-- Twitter -->
 <meta content="summary" name="twitter:card">
 <meta content="순서 기억력 테스트 &mdash; 무료 온라인 도구 | StackFreeks" name="twitter:title">
-<meta content="재미 & 테스트" name="twitter:description">
-<!-- ADSENSE_SLOT_TOP -->
+<meta content="타일이 반짝이는 순서를 본 뒤 그대로 따라 눌러보세요. 레벨이 오를 때마다 기억할 타일이 하나씩 늘어납니다. 당신의 시각 기억력이 얼마나 긴 순서를 담을 수 있는지 확인하세요." name="twitter:description">
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --danger: #ef4444;
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
+    /* Sequence Memory Test — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
-
-    main { padding: 32px 0 48px; }
-
-    /* Game */
+    /* Game (#grid / #grid .tile override the shell's .grid and .tile) */
     .game-wrap { max-width: 380px; margin: 0 auto; text-align: center; }
-    .grid {
+    #grid {
       user-select: none;
       -webkit-user-select: none;
       -webkit-tap-highlight-color: transparent;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
       aspect-ratio: 1 / 1;
       width: 100%;
     }
-    .tile {
+    #grid .tile {
+      display: block; width: auto; height: auto;
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-s);
       cursor: pointer;
-      transition: background 0.08s, transform 0.08s, border-color 0.08s;
+      transition: background-color 0.08s, transform 0.08s, border-color 0.08s;
     }
-    .grid.locked .tile { cursor: default; }
-    .tile.flash {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-    .tile.tap {
-      background: var(--border-2);
-      transform: scale(0.97);
-    }
-    .tile.wrong {
-      background: var(--danger);
-      border-color: var(--danger);
-    }
+    #grid .tile:hover { border-color: var(--border-2); }
+    #grid.locked .tile { cursor: default; }
+    #grid .tile.flash { background: var(--accent); border-color: var(--accent); }
+    #grid .tile.tap { background: var(--border-2); transform: scale(0.97); }
+    #grid .tile.wrong { background: var(--danger); border-color: var(--danger); }
 
-    .status { margin-top: 18px; min-height: 24px; font-size: 14px; color: var(--text-1); font-weight: 500; }
-    .status-sub { margin-top: 4px; font-size: 12px; color: var(--text-3); }
-    .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); }
+    .status { margin-top: 18px; min-height: 24px; font-size: var(--fs-m); color: var(--text-1); font-weight: 600; }
+    .status-sub { margin-top: 4px; font-size: var(--fs-s); color: var(--text-3); font-variant-numeric: tabular-nums; }
+    .yourbest { margin-top: 6px; font-size: var(--fs-xs); color: var(--text-3); }
+    #actionBtn { margin-top: 18px; min-width: 120px; }
 
-    /* Result panel */
-    .result-panel { margin-top: 18px; }
-    .result-level { font-size: 3rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
-    .result-level span { font-size: 1rem; color: var(--text-3); font-weight: 400; }
-    .result-context { margin-top: 10px; font-size: 13px; color: var(--text-2); max-width: 440px; margin-left: auto; margin-right: auto; }
-
-    .btn {
-      background: var(--accent-strong); color: #fff; border: none;
-      border-radius: var(--radius); padding: 10px 22px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); margin-top: 18px;
-      transition: opacity 0.15s;
-    }
-    .btn:hover { opacity: 0.88; }
-
-    /* About / SEO copy */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
-    .about-section p:last-child { margin-bottom: 0; }
-
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-list { display: flex; flex-direction: column; gap: 1px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related tools */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
+    /* About copy (below the tool) */
+    .about-section { max-width: var(--wrap-tool); margin: 0 auto; padding: 56px 32px 0; }
+    .about-section h2 { font-size: var(--fs-l); font-weight: 650; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .about-section p { color: var(--text-2); font-size: 15px; line-height: 1.7; max-width: 72ch; }
+    .about-section p + p { margin-top: 12px; }
 
     @media (max-width: 768px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
       .game-wrap { max-width: 320px; }
-      .result-level { font-size: 2.4rem; }
-      .banner-inner { flex-direction: column; align-items: flex-start; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
+      .about-section { padding: 40px 16px 0; }
     }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Sequence Memory Test", "description": "Free online sequence memory test. Watch a pattern of tiles flash on a 3x3 grid, then repeat it back. Each level adds one more tile, and the test measures how long a sequence you can remember.", "url": "https://tools.stackfreeks.com/tools/sequence-memory-test/ko/", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/sequence-memory-test/ko/"}}</script>
@@ -260,35 +82,36 @@
 </head>
 <body>
 <!-- 1. Nav -->
-<nav>
-<a class="logo" href="/ko/">
-<div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-<div class="nav-right">
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-fun"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-puzzle"></use></svg><span data-i18n="cat_fun">Fun & Tests</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/sequence-memory-test/">English</a>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
 </div>
 </nav>
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
 <!-- 3. Hero -->
-<section class="hero">
-<div class="container">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-grid-3x3"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
-<p class="eyebrow">재미 & 테스트</p>
 <h1>순서 기억력 테스트</h1>
-<p class="hero-desc">타일이 반짝이는 순서를 본 뒤 그대로 따라 눌러보세요. 레벨이 오를 때마다 기억할 타일이 하나씩 늘어납니다. 당신의 시각 기억력이 얼마나 긴 순서를 담을 수 있는지 확인하세요.</p>
+<p>타일이 반짝이는 순서를 본 뒤 그대로 따라 눌러보세요. 레벨이 오를 때마다 기억할 타일이 하나씩 늘어납니다. 당신의 시각 기억력이 얼마나 긴 순서를 담을 수 있는지 확인하세요.</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
 </div>
-</section>
+</header>
 <!-- 4. Tool body -->
-<main>
-<div class="container">
+<main class="tool wrap-tool">
 <div class="game-wrap">
-<div aria-label="Sequence memory grid" class="grid locked" id="grid">
+<div aria-label="Sequence memory grid" class="grid locked" data-i18n-aria="x_sequence_memory_grid" id="grid">
 <div class="tile" data-i="0"></div>
 <div class="tile" data-i="1"></div>
 <div class="tile" data-i="2"></div>
@@ -302,59 +125,61 @@
 <div aria-live="polite" class="status" data-i18n="st_start" id="status">Level 1 &mdash; press Start to begin</div>
 <div class="status-sub" id="statusSub"></div>
 <div class="yourbest" hidden id="yourBest"></div>
-<button class="btn" data-i18n="btn_start" id="actionBtn" type="button">Start</button>
-</div>
+<button class="btn btn-primary" data-i18n="btn_start" id="actionBtn" type="button">Start</button>
 </div>
 </main>
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More fun & tests</h2>
+<a class="sec-link" href="/#cat-fun"><span data-i18n="all_in_cat">All Fun & Tests tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/number-memory-test/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-list-ordered"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">숫자 기억력 테스트</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/verbal-memory-test/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-message-square-text"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">단어 기억력 테스트</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
 <!-- About / SEO copy -->
 <section class="about-section">
-<div class="container">
 
 <div class="lang-ko">
 <h2>순서 기억력 테스트 소개</h2>
 <p>이 순서 기억력 테스트는 Human Benchmark로 유명해진 "패턴 기억하기" 게임입니다. 3&times;3 타일 격자가 표시되고, 매 라운드마다 현재 순서가 재생되어 타일이 하나씩 차례로 켜진 뒤, 끝에 무작위 타일이 하나 추가됩니다. 즉 레벨마다 패턴이 정확히 한 칸씩 길어집니다. 같은 순서로 타일을 클릭하거나 탭하면 다음 레벨로 넘어가고, 하나라도 틀리면 도달한 레벨에서 게임이 끝납니다.</p>
 <p>점수는 실수하기 전까지 재현한 순서의 길이입니다. 평균 점수는 약 6으로, 잘 알려진 단기 기억 한계 "7 &plusmn; 2"와 일치합니다. 페이지는 즉시 로드되고 마우스와 터치 모두 지원하며, 최고 레벨은 브라우저에 로컬로 저장되고 서버로 아무것도 전송하지 않습니다.</p>
 </div>
-</div>
 </section>
 <!-- 5. How-to section -->
-<section class="guide-section">
-<div class="container">
+<section class="guide">
 
 <div class="lang-ko">
-<h2>순서 기억력 테스트 사용 방법</h2>
+<h2 class="guide-title">순서 기억력 테스트 사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<div class="guide-step">Step 1</div>
-<div class="guide-title">시작 누르기</div>
-<div class="guide-desc">격자가 잠기고 첫 타일이 반짝입니다. 순서가 재생되는 동안에는 입력이 비활성화되니 잘 보세요.</div>
+<h3>1. 시작 누르기</h3>
+<p>격자가 잠기고 첫 타일이 반짝입니다. 순서가 재생되는 동안에는 입력이 비활성화되니 잘 보세요.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 2</div>
-<div class="guide-title">패턴 관찰</div>
-<div class="guide-desc">매 라운드 전체 순서가 처음부터 다시 재생되고, 끝에 새 타일이 하나 추가됩니다.</div>
+<h3>2. 패턴 관찰</h3>
+<p>매 라운드 전체 순서가 처음부터 다시 재생되고, 끝에 새 타일이 하나 추가됩니다.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 3</div>
-<div class="guide-title">그대로 따라 누르기</div>
-<div class="guide-desc">같은 순서로 타일을 클릭하거나 탭하세요. 누를 때마다 잠깐 반짝여 진행 상황을 알 수 있습니다.</div>
+<h3>3. 그대로 따라 누르기</h3>
+<p>같은 순서로 타일을 클릭하거나 탭하세요. 누를 때마다 잠깐 반짝여 진행 상황을 알 수 있습니다.</p>
 </div>
 <div class="guide-card">
-<div class="guide-step">Step 4</div>
-<div class="guide-title">레벨 상승 또는 재시도</div>
-<div class="guide-desc">전체 순서를 맞히면 레벨이 오릅니다. 하나라도 틀리면 게임이 끝나며, 다시 시도를 눌러 레벨 1부터 재시작합니다.</div>
-</div>
+<h3>4. 레벨 상승 또는 재시도</h3>
+<p>전체 순서를 맞히면 레벨이 오릅니다. 하나라도 틀리면 게임이 끝나며, 다시 시도를 눌러 레벨 1부터 재시작합니다.</p>
 </div>
 </div>
 </div>
 </section>
 <!-- 6. FAQ -->
-<section class="faq-section">
-<div class="container">
+<section class="faq">
 
 <div class="lang-ko">
-<h2>자주 묻는 질문</h2>
-<div class="faq-list">
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>순서 기억력 점수는 어느 정도면 좋은가요?</span><span class="faq-icon">+</span></button>
 <div class="faq-a">3x3 격자 순서 기억력 테스트에서 레벨 8~9에 도달하면 좋은 결과이고, 레벨 10 이상이면 대부분의 사람보다 앞선 수준입니다. 평균 점수는 약 6으로, 인간의 단기 기억이 약 7개 항목을 담는다는 고전적 연구와 일치합니다. 레벨 12를 넘기는 경우는 드물며, 보통 타일 하나하나가 아니라 패턴을 묶어서(청킹) 또는 공간적 전략으로 기억하는 사람들입니다.</div>
@@ -376,45 +201,51 @@
 <div class="faq-a">밀접하게 관련됩니다. 임상 신경심리학에서 쓰이는 코르시 블록 태핑 테스트는 검사자가 불규칙하게 배열된 블록을 순서대로 두드리면 참가자가 이를 따라 하며, 평균 폭은 약 5입니다. 이 온라인 버전은 규칙적인 3x3 격자, 자동 재생, 계속 길어지는 순서를 사용하므로, 검증된 임상 도구가 아니라 같은 아이디어를 가볍게 각색한 것입니다.</div>
 </div>
 </div>
-</div>
-</div>
 </section>
 <!-- 7. Related content -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/number-memory-test/ko/"><span>🔢</span>Number Memory Test</a>
-<a class="sf-related-card" href="/tools/verbal-memory-test/ko/"><span>📖</span>Verbal Memory Test</a>
-<a class="sf-related-card" href="/tools/reaction-time-test/ko/"><span>⚡</span>Reaction Time Test</a>
-</div>
-</section>
 <!-- 8. Vultr banner -->
-<section class="vultr-banner">
-<div class="container banner-inner">
-<div>
-<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</p>
-</div>
-<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Claim your credit &rarr;</a>
-</div>
-</section>
 <!-- 9. Footer -->
-<footer class="footer">
-<div class="container footer-inner">
-<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/number-memory-test/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-list-ordered"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">숫자 기억력 테스트</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/verbal-memory-test/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-message-square-text"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">단어 기억력 테스트</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/reaction-time-test/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-zap"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">반응속도 테스트</span></span></span></a></li>
+</ul>
+</section>
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
+<div>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit &mdash; valid for 30 days (limited-time offer)</div>
+</div>
+<div class="vultr-cta" data-i18n="vultr_cta">Claim your credit &rarr;</div>
+</a>
+</div>
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
 </div>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
 </div>
 </footer>
 <!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
+    cat_fun: "Fun & Tests",
+    more_tools: "More fun & tests",
+    all_in_cat: "All Fun & Tests tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
     st_start: "Level 1 — press Start to begin",
     st_watch: "Watch the sequence…",
     st_your_turn: "Your turn — repeat the pattern",
@@ -426,9 +257,18 @@ window.SF_PAGE_I18N = {
     result_level_word: "Level",
     result_context: "The average score is 6. Level 8+ is strong; level 10+ beats most players.",
     your_best_tpl: "Your best: level {n}",
-    new_best: "New best!"
-  },
+    new_best: "New best!",
+        x_sequence_memory_grid: "Sequence memory grid"
+      },
   ko: {
+    cat_fun: "재미 & 테스트",
+    more_tools: "재미 & 테스트 더 보기",
+    all_in_cat: "재미 & 테스트 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
     st_start: "레벨 1 — 시작을 누르세요",
     st_watch: "순서를 보세요…",
     st_your_turn: "당신 차례 — 패턴을 따라 누르세요",
@@ -440,8 +280,9 @@ window.SF_PAGE_I18N = {
     result_level_word: "레벨",
     result_context: "평균 점수는 6입니다. 레벨 8 이상이면 우수하고, 레벨 10 이상이면 대부분을 앞섭니다.",
     your_best_tpl: "최고 기록: 레벨 {n}",
-    new_best: "최고 기록 경신!"
-  }
+    new_best: "최고 기록 경신!",
+        x_sequence_memory_grid: "순서 기억 격자"
+      }
 };
 </script>
 <script>
@@ -581,7 +422,7 @@ window.SF_PAGE_I18N = {
       '<span style="display:block;font-size:2.4rem;font-weight:600;color:var(--text-1);margin-top:10px;line-height:1.1">' +
         t('result_level_word') + ' ' + score +
       '</span>' +
-      (isBest ? '<span style="display:block;color:var(--success);font-weight:600;margin-top:4px">' + t('new_best') + ' 🏆</span>' : '') +
+      (isBest ? '<span style="display:block;color:var(--success-fg);font-weight:600;margin-top:4px">' + t('new_best') + ' <svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-trophy"/></svg></span>' : '') +
       '<span style="display:block;margin-top:8px;color:var(--text-2)">' + t('result_context') + '</span>';
 
     actionBtn.hidden = false;

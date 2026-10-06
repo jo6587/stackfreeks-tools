@@ -21,142 +21,15 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --accent-fg: #ffffff;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --warning: #f59e0b;
-      --warning-bg: rgba(245,158,11,0.08);
-      --error: #ef4444;
-      --error-bg: rgba(239,68,68,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* ── Nav ── */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .nav-left { display: flex; align-items: center; gap: 20px; }
-    .logo {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .logo-mark {
-      width: 20px;
-      height: 20px;
-      background: var(--accent);
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 10px;
-      cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-
-    /* ── Container ── */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      padding: 48px 0 32px;
-      border-bottom: 1px solid var(--border);
-    }
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-3);
-      margin-bottom: 10px;
-    }
-    .hero h1 {
-      font-size: 1.75rem;
-      font-weight: 500;
-      letter-spacing: -0.03em;
-      color: var(--text-1);
-      margin-bottom: 8px;
-    }
-    .hero-desc {
-      font-size: 0.95rem;
-      color: var(--text-2);
-      max-width: 520px;
-    }
-
-    /* ── Tool body ── */
-    .tool-wrap {
-      padding: 32px 0 0;
-    }
-
+    /* JWT Decoder — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* Input area */
     .input-section { margin-bottom: 24px; }
     .input-label-row {
@@ -178,7 +51,7 @@
       min-height: 120px;
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       color: var(--text-1);
       padding: 14px 16px;
       font-size: 13px;
@@ -192,34 +65,9 @@
     #jwt-input::placeholder { color: var(--text-3); }
 
     /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: none;
-      border-radius: var(--radius);
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.15s, border-color 0.15s, color 0.15s;
-      white-space: nowrap;
-    }
-    .btn-primary {
-      background: var(--text-1);
-      color: var(--bg);
-      padding: 8px 16px;
-    }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-3);
-      border: 1px solid var(--border);
-      padding: 7px 14px;
-    }
-    .btn-ghost:hover { border-color: var(--border-2); color: var(--text-2); }
+
     .btn-sm {
-      font-size: 11px;
+      font-size: 12px;
       padding: 4px 10px;
     }
     .btn-copy {
@@ -227,35 +75,19 @@
       color: var(--text-3);
       border: 1px solid var(--border);
       padding: 4px 10px;
-      font-size: 11px;
+      font-size: 12px;
     }
     .btn-copy:hover { border-color: var(--border-2); color: var(--text-2); }
-    .btn-copy.copied { color: var(--success); border-color: var(--success); }
-    .btn-vultr {
-      background: var(--success);
-      color: var(--success-fg);
-      border: none;
-      border-radius: var(--radius);
-      padding: 9px 18px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: var(--font);
-      text-decoration: none;
-      display: inline-block;
-      white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
+    .btn-copy.copied { color: var(--success-fg); border-color: var(--success); }
 
     /* Error banner */
     .error-banner {
       display: none;
-      background: var(--error-bg);
-      border: 1px solid rgba(239,68,68,0.2);
+      background: var(--danger-bg);
+      border: 1px solid var(--danger);
       border-radius: var(--radius);
       padding: 10px 14px;
-      color: var(--error);
+      color: var(--danger);
       font-size: 13px;
       margin-bottom: 20px;
     }
@@ -265,7 +97,7 @@
     .security-note {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 14px 18px;
       margin-bottom: 24px;
       display: flex;
@@ -273,10 +105,11 @@
       gap: 12px;
     }
     .security-note-icon {
-      font-size: 15px;
       flex-shrink: 0;
       margin-top: 1px;
+      color: var(--accent-text);
     }
+    .security-note-icon .ico { width: 16px; height: 16px; }
     .security-note-text { font-size: 12px; color: var(--text-3); line-height: 1.6; }
     .security-note-text strong { color: var(--text-2); font-weight: 500; }
 
@@ -292,7 +125,7 @@
     .output-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       overflow: hidden;
     }
     .output-card-header {
@@ -303,7 +136,7 @@
       border-bottom: 1px solid var(--border);
     }
     .output-card-title {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -312,9 +145,11 @@
       align-items: center;
       gap: 8px;
     }
+    /* the body IS the well — no bordered, rounded box nested inside the card */
     .output-card-body {
       padding: 16px;
       min-height: 100px;
+      background: var(--surface-2);
     }
     .output-placeholder {
       font-size: 12px;
@@ -327,22 +162,22 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--warning);
       background: var(--warning-bg);
       border-radius: 20px;
-      padding: 2px 8px;
+      padding: 3px 10px;
       letter-spacing: 0.03em;
     }
     .badge-success {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
-      color: var(--success);
-      background: var(--success-bg);
+      color: var(--success-fg);
+      background: var(--success);
       border-radius: 20px;
       padding: 3px 10px;
     }
@@ -350,16 +185,20 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
-      color: var(--error);
-      background: var(--error-bg);
+      color: var(--danger);
+      background: var(--danger-bg);
       border-radius: 20px;
       padding: 3px 10px;
     }
 
     /* JSON syntax highlight */
     pre.json-output {
+      background: none;
+      border: 0;
+      border-radius: 0;
+      padding: 0;
       font-family: var(--font-mono);
       font-size: 12px;
       line-height: 1.7;
@@ -370,16 +209,16 @@
       max-height: 260px;
     }
     .json-key   { color: var(--accent-text); }
-    .json-str   { color: #86efac; }
-    .json-num   { color: #fdba74; }
-    .json-bool  { color: #f472b6; }
+    .json-str   { color: var(--success-fg); }
+    .json-num   { color: var(--warning); }
+    .json-bool  { color: var(--danger); }
     .json-null  { color: var(--text-3); }
     .json-punct { color: var(--text-3); }
 
     /* Signature raw */
     .sig-value {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-3);
       word-break: break-all;
       line-height: 1.7;
@@ -389,7 +228,7 @@
     .expiry-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 20px 24px;
       margin-bottom: 20px;
       display: none;
@@ -404,7 +243,7 @@
       gap: 8px;
     }
     .expiry-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -425,7 +264,7 @@
     .claims-section {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       overflow: hidden;
       margin-bottom: 24px;
       display: none;
@@ -434,7 +273,7 @@
     .claims-header {
       padding: 12px 16px;
       border-bottom: 1px solid var(--border);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -465,182 +304,21 @@
       font-size: 12px;
     }
 
-    /* How-to guide */
-    .guide {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .guide-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 10px;
-    }
-    .guide-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-    .guide-step {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--accent-text);
-      margin-bottom: 8px;
-    }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p  { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FAQ */
-    .faq {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-    }
-    .faq-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-a code {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1px 5px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-1);
-    }
-
-    /* Related */
-    .related { padding: 0 0 40px; }
-    .related-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    .related-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: border-color 0.15s;
-      font-size: 13px;
-      color: var(--text-1);
-      font-weight: 500;
-    }
-    .related-card:hover { border-color: var(--border-2); opacity: 1; }
-    .related-arrow { color: var(--text-3); }
-
-    /* Vultr banner */
-    .vultr-banner {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 28px 0;
-      margin: 8px 0 0;
-    }
-    .banner-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-    }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-
-    /* Footer */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
-      margin-top: 0;
-    }
-    .footer-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 12px;
-      color: var(--text-3);
-    }
-    .footer a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
-    .footer a:hover { color: var(--text-2); opacity: 1; }
-    .footer-links { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-
     /* Divider */
     .divider { height: 1px; background: var(--border); margin: 24px 0; }
 
     /* Responsive */
     @media (max-width: 640px) {
-      .container { padding: 0 16px; }
-      .hero { padding: 32px 0 24px; }
-      .hero h1 { font-size: 1.4rem; }
+
       .output-grid { grid-template-columns: 1fr; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; }
+
       .expiry-header { flex-direction: column; align-items: flex-start; }
       .claims-table td { padding: 8px 12px; }
     }
   
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 900px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
-  </style>  <script type="application/ld+json">
+    
+  </style>
+  <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"JWT Decoder","description":"JWT decoder to inspect token header, payload and expiry instantly. Free, no account needed. Decoding runs in your browser.","url":"https://tools.stackfreeks.com/tools/jwt-decoder/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
   </script>
   <script type="application/ld+json">
@@ -650,205 +328,208 @@
 </head>
 <body>
 
-  <!-- Nav -->
-  <nav>
-    <div class="nav-left">
-      <a href="/" class="logo">
-        <div class="logo-mark"></div>
-        StackFreeks Tools
-      </a>
-    </div>
-    <div class="nav-right">
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-conv" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left-right"/></svg><span data-i18n="cat_converters">Converters &amp; Encoders</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
       <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-ticket"/></svg></span>
+    <div class="tool-head-text">
       <div class="lang-en">
-        <p class="eyebrow">Security &amp; Auth</p>
         <h1>JWT Decoder</h1>
-        <p class="hero-desc">Decode and inspect JSON Web Tokens — view header, payload, and expiry instantly</p>
+        <p>Decode and inspect JSON Web Tokens — view header, payload, and expiry instantly</p>
       </div>
       <div class="lang-ko">
-        <p class="eyebrow">보안 &amp; 인증</p>
         <h1>JWT 디코더</h1>
-        <p class="hero-desc">JSON Web Token을 즉시 디코딩 — 헤더·페이로드·만료시간 확인</p>
+        <p>JSON Web Token을 즉시 디코딩 — 헤더·페이로드·만료시간 확인</p>
       </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-  </section>
+  </header>
 
   <!-- Tool body -->
-  <main>
-    <div class="tool-wrap">
-      <div class="container">
+  <main class="tool wrap-tool">
+      <div class="tool-wrap">
+        <div class="container">
 
-        <!-- Security note -->
-        <div class="security-note">
-          <span class="security-note-icon">🔒</span>
-          <div class="security-note-text">
-            <strong>Your token stays in your browser.</strong>
-            Nothing is sent to any server. All decoding happens locally in JavaScript.
-            <br>
-            <strong>Signature is not verified</strong> — this tool only decodes the header and payload. Verification requires the secret key.
-          </div>
-        </div>
-
-        <!-- Input -->
-        <div class="input-section">
-          <div class="input-label-row">
-            <span class="input-label">Paste your JWT token</span>
-            <div class="input-actions">
-              <button class="btn btn-ghost btn-sm" id="btn-sample">Load sample</button>
-              <button class="btn btn-ghost btn-sm" id="btn-clear">Clear</button>
-            </div>
-          </div>
-          <textarea
-            id="jwt-input"
-            placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-            spellcheck="false"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-          ></textarea>
-        </div>
-
-        <!-- Error banner -->
-        <div class="error-banner" id="error-banner">
-          <span>⚠</span>
-          <span id="error-text">Invalid JWT format.</span>
-        </div>
-
-        <!-- Expiry status -->
-        <div class="expiry-card" id="expiry-card">
-          <div class="expiry-header">
-            <span class="expiry-label">Expiry Status</span>
-            <span id="expiry-badge"></span>
-          </div>
-          <div class="expiry-datetime" id="expiry-datetime"></div>
-          <div class="expiry-relative" id="expiry-relative"></div>
-        </div>
-
-        <!-- Output cards -->
-        <div class="output-grid">
-
-          <!-- Header card -->
-          <div class="output-card">
-            <div class="output-card-header">
-              <span class="output-card-title">Header</span>
-              <button class="btn btn-copy" data-target="header-output">Copy</button>
-            </div>
-            <div class="output-card-body">
-              <pre class="json-output" id="header-output"><span class="output-placeholder">—</span></pre>
+          <!-- Security note -->
+          <div class="security-note">
+            <span class="security-note-icon"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-lock-keyhole"/></svg></span>
+            <div class="security-note-text">
+              <strong data-i18n="x_your_token_stays_in_your_browser">Your token stays in your browser.</strong>
+              <span data-i18n="x_note_local">Nothing is sent to any server. All decoding happens locally in JavaScript.</span>
+              <br>
+              <strong data-i18n="x_signature_is_not_verified">Signature is not verified</strong> <span data-i18n="x_note_decode_only">— this tool only decodes the header and payload. Verification requires the secret key.</span>
             </div>
           </div>
 
-          <!-- Payload card -->
-          <div class="output-card">
-            <div class="output-card-header">
-              <span class="output-card-title">Payload</span>
-              <button class="btn btn-copy" data-target="payload-output">Copy</button>
+          <!-- Input -->
+          <div class="input-section">
+            <div class="input-label-row">
+              <span class="input-label" data-i18n="x_paste_your_jwt_token">Paste your JWT token</span>
+              <div class="input-actions">
+                <button class="btn btn-ghost btn-sm" id="btn-sample" data-i18n="x_load_sample">Load sample</button>
+                <button class="btn btn-ghost btn-sm" id="btn-clear" data-i18n="x_clear">Clear</button>
+              </div>
             </div>
-            <div class="output-card-body">
-              <pre class="json-output" id="payload-output"><span class="output-placeholder">—</span></pre>
-            </div>
+            <textarea
+              id="jwt-input"
+              placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+              spellcheck="false"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+            ></textarea>
           </div>
 
-          <!-- Signature card -->
-          <div class="output-card">
-            <div class="output-card-header">
-              <span class="output-card-title">
-                Signature
-                <span class="badge-warning">⚠ Not verified</span>
-              </span>
-              <button class="btn btn-copy" data-target="sig-output">Copy</button>
-            </div>
-            <div class="output-card-body">
-              <div class="sig-value" id="sig-output">—</div>
-              <p style="font-size:11px;color:var(--text-3);margin-top:10px;">
-                Signature verification requires the secret key and must be done server-side.
-              </p>
-            </div>
+          <!-- Error banner -->
+          <div class="error-banner" id="error-banner">
+            <span><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-triangle-alert"/></svg></span>
+            <span id="error-text" data-i18n="x_invalid_jwt_format">Invalid JWT format.</span>
           </div>
 
-        </div><!-- /output-grid -->
+          <!-- Expiry status -->
+          <div class="expiry-card" id="expiry-card">
+            <div class="expiry-header">
+              <span class="expiry-label" data-i18n="x_expiry_status">Expiry Status</span>
+              <span id="expiry-badge"></span>
+            </div>
+            <div class="expiry-datetime" id="expiry-datetime"></div>
+            <div class="expiry-relative" id="expiry-relative"></div>
+          </div>
 
-        <!-- Claims table -->
-        <div class="claims-section" id="claims-section">
-          <div class="claims-header">Well-Known Claims</div>
-          <table class="claims-table" id="claims-table">
-            <tbody></tbody>
-          </table>
-        </div>
+          <!-- Output cards -->
+          <div class="output-grid">
 
-      </div><!-- /container -->
-    </div><!-- /tool-wrap -->
+            <!-- Header card -->
+            <div class="output-card">
+              <div class="output-card-header">
+                <span class="output-card-title" data-i18n="x_header">Header</span>
+                <button class="btn btn-copy" data-target="header-output" data-i18n="x_copy">Copy</button>
+              </div>
+              <div class="output-card-body">
+                <pre class="json-output" id="header-output"><span class="output-placeholder">—</span></pre>
+              </div>
+            </div>
+
+            <!-- Payload card -->
+            <div class="output-card">
+              <div class="output-card-header">
+                <span class="output-card-title" data-i18n="x_payload">Payload</span>
+                <button class="btn btn-copy" data-target="payload-output" data-i18n="x_copy">Copy</button>
+              </div>
+              <div class="output-card-body">
+                <pre class="json-output" id="payload-output"><span class="output-placeholder">—</span></pre>
+              </div>
+            </div>
+
+            <!-- Signature card -->
+            <div class="output-card">
+              <div class="output-card-header">
+                <span class="output-card-title">
+                  <span data-i18n="x_signature">Signature</span>
+                  <span class="badge-warning"><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-triangle-alert"/></svg> <span data-i18n="x_not_verified">Not verified</span></span>
+                </span>
+                <button class="btn btn-copy" data-target="sig-output" data-i18n="x_copy">Copy</button>
+              </div>
+              <div class="output-card-body">
+                <div class="sig-value" id="sig-output">—</div>
+                <p style="font-size:12px;color:var(--text-3);margin-top:10px;" data-i18n="x_signature_verification_requires_the_secret_k">
+                  Signature verification requires the secret key and must be done server-side.
+                </p>
+              </div>
+            </div>
+
+          </div><!-- /output-grid -->
+
+          <!-- Claims table -->
+          <div class="claims-section" id="claims-section">
+            <div class="claims-header" data-i18n="x_well_known_claims">Well-Known Claims</div>
+            <table class="claims-table" id="claims-table">
+              <tbody></tbody>
+            </table>
+          </div>
+
+        </div><!-- /container -->
+      </div><!-- /tool-wrap -->
   </main>
 
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More converters</h2>
+      <a class="sec-link" href="/#cat-conv"><span data-i18n="all_in_cat">All Converters &amp; Encoders tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/hash-generator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-hash"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Hash Generator</span><span class="lang-ko">해시 생성기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/uuid-generator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-fingerprint"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">UUID Generator</span><span class="lang-ko">UUID 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
   <!-- How to use -->
-  <section style="padding: 40px 0 0;">
-    <div class="guide">
-      <div class="lang-en">
-        <p class="guide-title">How to use</p>
+  <section class="guide">
+    <div class="lang-en">
+        <h2 class="guide-title">How to use</h2>
         <div class="guide-grid">
           <div class="guide-card">
-            <p class="guide-step">Step 1</p>
-            <h3>Paste your token</h3>
+            <h3>1. Paste your token</h3>
             <p>Copy a JWT from your app, API response, or browser devtools and paste it into the textarea above.</p>
           </div>
           <div class="guide-card">
-            <p class="guide-step">Step 2</p>
-            <h3>Inspect header &amp; payload</h3>
+            <h3>2. Inspect header &amp; payload</h3>
             <p>The algorithm, token type, and all payload claims are decoded and displayed instantly.</p>
           </div>
           <div class="guide-card">
-            <p class="guide-step">Step 3</p>
-            <h3>Check expiry</h3>
-            <p>If the token has an <code style="font-family:monospace;font-size:11px;">exp</code> claim, the expiry time and current validity status are shown prominently.</p>
+            <h3>3. Check expiry</h3>
+            <p>If the token has an <code style="font-family:var(--font-mono);font-size:12px;">exp</code> claim, the expiry time and current validity status are shown prominently.</p>
           </div>
           <div class="guide-card">
-            <p class="guide-step">Step 4</p>
-            <h3>Copy decoded parts</h3>
+            <h3>4. Copy decoded parts</h3>
             <p>Use the Copy button on each panel to grab the decoded JSON for use in your debugging or testing workflow.</p>
           </div>
         </div>
       </div>
       <div class="lang-ko">
-        <p class="guide-title">사용 방법</p>
+        <h2 class="guide-title">사용 방법</h2>
         <div class="guide-grid">
           <div class="guide-card">
-            <p class="guide-step">Step 1</p>
-            <h3>토큰 붙여넣기</h3>
+            <h3>1. 토큰 붙여넣기</h3>
             <p>앱, API 응답, 또는 브라우저 개발자 도구에서 JWT를 복사해 위의 입력창에 붙여넣으세요.</p>
           </div>
           <div class="guide-card">
-            <p class="guide-step">Step 2</p>
-            <h3>헤더 &amp; 페이로드 확인</h3>
+            <h3>2. 헤더 &amp; 페이로드 확인</h3>
             <p>알고리즘, 토큰 타입, 모든 페이로드 클레임이 즉시 디코딩되어 표시됩니다.</p>
           </div>
           <div class="guide-card">
-            <p class="guide-step">Step 3</p>
-            <h3>만료 시간 확인</h3>
-            <p>토큰에 <code style="font-family:monospace;font-size:11px;">exp</code> 클레임이 있으면 만료 시각과 현재 유효 여부가 강조 표시됩니다.</p>
+            <h3>3. 만료 시간 확인</h3>
+            <p>토큰에 <code style="font-family:var(--font-mono);font-size:12px;">exp</code> 클레임이 있으면 만료 시각과 현재 유효 여부가 강조 표시됩니다.</p>
           </div>
           <div class="guide-card">
-            <p class="guide-step">Step 4</p>
-            <h3>디코딩 결과 복사</h3>
+            <h3>4. 디코딩 결과 복사</h3>
             <p>각 패널의 복사 버튼을 눌러 디코딩된 JSON을 디버깅 또는 테스트 워크플로우에 바로 사용하세요.</p>
           </div>
         </div>
       </div>
-    </div>
   </section>
 
   <!-- FAQ -->
-  <section>
-    <div class="faq">
-      <div class="lang-en">
-        <p class="faq-title">FAQ</p>
+  <section class="faq">
+    <div class="lang-en">
+        <h2 class="faq-title">FAQ</h2>
 
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>What is a JWT token?</span><span class="faq-icon">+</span></button>
@@ -877,7 +558,7 @@
       </div>
 
       <div class="lang-ko">
-        <p class="faq-title">자주 묻는 질문</p>
+        <h2 class="faq-title">자주 묻는 질문</h2>
 
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)"><span>JWT 토큰이란 무엇인가요?</span><span class="faq-icon">+</span></button>
@@ -904,60 +585,55 @@
           <div class="faq-a">JavaScript: <code>JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))</code>. Node.js는 <code>jsonwebtoken</code> 라이브러리를, Python은 <code>PyJWT</code>를, Go는 <code>golang-jwt/jwt</code>를 사용하세요. 디코딩은 검증과 다릅니다 — 토큰의 내용을 신뢰하기 전에 반드시 서버 측에서 검증하세요.</div>
         </div>
       </div>
-    </div>
   </section>
 
-  <!-- Related -->
-  <section class="related">
-    <div class="related-inner">
-      <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
-      <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
-        <span style="font-size:11px;font-weight:500;color:var(--accent-text);text-transform:uppercase;letter-spacing:0.06em;">Security</span>
-        More security and developer guides on stackfreeks.com →
-      </a>
-    </div>
-  </section>
-
-  <!-- Vultr banner -->
   <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/uuid-generator/" class="sf-related-card"><span>🆔</span>UUID Generator</a>
-      <a href="/tools/base-converter/" class="sf-related-card"><span>🔢</span>Number Base Converter</a>
-      <a href="/tools/json-formatter/" class="sf-related-card"><span>📋</span>JSON Formatter & Validator</a>
-          <a href="https://stackfreeks.com/deploy-nodejs-vultr-vps/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Deploy Node.js on a Vultr VPS</a>
-    </div>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a class="card card-sm sf-related-card" href="/tools/uuid-generator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-fingerprint"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">UUID Generator</span><span class="lang-ko">UUID 생성기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/base-converter/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-binary"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Number Base Converter</span><span class="lang-ko">진법 변환기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/json-formatter/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-braces"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">JSON Formatter &amp; Validator</span><span class="lang-ko">JSON 포매터 &amp; 유효성 검사기</span></span></span></a></li>
+    </ul>
   </section>
 
-  <section class="vultr-banner">
-    <div class="banner-inner">
-      <div>
-        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-        <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</p>
-      </div>
-      <a
-        href="https://www.vultr.com/?ref=9907834-9J"
-        class="btn-vultr"
-        rel="nofollow sponsored"
-        target="_blank"
-        data-i18n="vultr_cta"
-      >Claim your credit →</a>
-    </div>
+  <!-- Related content -->
+  <section class="related">
+    <h2 class="sf-related-title"><span class="lang-en">Related guides</span><span class="lang-ko">관련 가이드</span></h2>
+      <a href="https://stackfreeks.com" class="related-card" target="_blank" rel="noopener">
+        <span style="font-size:12px;font-weight:500;color:var(--accent-text);text-transform:uppercase;letter-spacing:0.06em;">Security</span>
+        More security and developer guides on stackfreeks.com →
+      </a>
+    <a href="https://stackfreeks.com/deploy-nodejs-vultr-vps/" target="_blank" rel="noopener">Deploy Node.js on a Vultr VPS</a>
   </section>
+
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <span data-i18n="footer_copy">© 2026 StackFreeks</span>
+  <footer class="site-footer">
+    <div class="wrap-tool">
       <div class="footer-links">
         <a href="/about/">About</a>
         <a href="/privacy/">Privacy</a>
         <a href="/contact/">Contact</a>
         <a href="/terms/">Terms</a>
-        <a href="https://stackfreeks.com" target="_blank">stackfreeks.com →</a>
       </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
   </footer>
 
@@ -970,13 +646,13 @@
         '.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
       var KNOWN_CLAIMS = [
-        { key: 'iss', label: 'Issuer' },
-        { key: 'sub', label: 'Subject' },
-        { key: 'aud', label: 'Audience' },
-        { key: 'exp', label: 'Expires' },
-        { key: 'iat', label: 'Issued At' },
-        { key: 'nbf', label: 'Not Before' },
-        { key: 'jti', label: 'JWT ID' },
+        { key: 'iss', i18n: 'x_claim_iss' },
+        { key: 'sub', i18n: 'x_claim_sub' },
+        { key: 'aud', i18n: 'x_claim_aud' },
+        { key: 'exp', i18n: 'x_claim_exp' },
+        { key: 'iat', i18n: 'x_claim_iat' },
+        { key: 'nbf', i18n: 'x_claim_nbf' },
+        { key: 'jti', i18n: 'x_claim_jti' },
       ];
 
       var input    = document.getElementById('jwt-input');
@@ -1047,13 +723,14 @@
         var past = diff < 0;
 
         var unit, val;
-        if (abs < 120) { unit = 'seconds'; val = abs; }
-        else if (abs < 7200) { unit = 'minutes'; val = Math.round(abs / 60); }
-        else if (abs < 172800) { unit = 'hours'; val = Math.round(abs / 3600); }
-        else { unit = 'days'; val = Math.round(abs / 86400); }
+        if (abs < 120) { unit = sfT('x_unit_seconds'); val = abs; }
+        else if (abs < 7200) { unit = sfT('x_unit_minutes'); val = Math.round(abs / 60); }
+        else if (abs < 172800) { unit = sfT('x_unit_hours'); val = Math.round(abs / 3600); }
+        else { unit = sfT('x_unit_days'); val = Math.round(abs / 86400); }
 
-        if (past) return 'Expired ' + val + ' ' + unit + ' ago';
-        return 'Expires in ' + val + ' ' + unit;
+        var amount = val + sfT('x_unit_sep') + unit;
+        if (past) return sfT('x_expired_pre') + amount + sfT('x_expired_post');
+        return sfT('x_expires_in_pre') + amount + sfT('x_expires_in_post');
       }
 
       function showError(msg) {
@@ -1080,7 +757,7 @@
         var parts = token.split('.');
         if (parts.length !== 3) {
           resetOutputs();
-          showError('Invalid JWT: expected 3 dot-separated parts, got ' + parts.length + '.');
+          showError(sfT('x_err_parts_pre') + parts.length + sfT('x_err_parts_post'));
           return;
         }
 
@@ -1089,14 +766,14 @@
           header = JSON.parse(b64urlDecode(parts[0]));
         } catch (e) {
           resetOutputs();
-          showError('Could not decode header: ' + e.message);
+          showError(sfT('x_err_header') + e.message);
           return;
         }
         try {
           payload = JSON.parse(b64urlDecode(parts[1]));
         } catch (e) {
           resetOutputs();
-          showError('Could not decode payload: ' + e.message);
+          showError(sfT('x_err_payload') + e.message);
           return;
         }
 
@@ -1117,8 +794,8 @@
           var expired = payload.exp < now;
           expiryCard.classList.add('visible');
           expiryBadge.innerHTML = expired
-            ? '<span class="badge-error">❌ Expired</span>'
-            : '<span class="badge-success">✅ Valid</span>';
+            ? '<span class="badge-error"><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-circle-x"/></svg> ' + sfT('x_badge_expired') + '</span>'
+            : '<span class="badge-success"><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg> ' + sfT('x_badge_valid') + '</span>';
           expiryDatetime.textContent = formatTimestamp(payload.exp);
           expiryRelative.textContent = relativeTime(payload.exp);
         } else {
@@ -1143,7 +820,7 @@
             display = display.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
             return '<tr>' +
               '<td class="claim-key">' + c.key + '</td>' +
-              '<td class="claim-label">' + c.label + '</td>' +
+              '<td class="claim-label">' + sfT(c.i18n) + '</td>' +
               '<td class="claim-value">' + display + '</td>' +
               '</tr>';
           }).join('');
@@ -1182,10 +859,10 @@
           text = text.trim();
           if (!text || text === '—') return;
           navigator.clipboard.writeText(text).then(function () {
-            btn.textContent = 'Copied!';
+            btn.textContent = sfT('x_copied');
             btn.classList.add('copied');
             setTimeout(function () {
-              btn.textContent = 'Copy';
+              btn.textContent = sfT('x_copy');
               btn.classList.remove('copied');
             }, 1500);
           }).catch(function () {
@@ -1198,21 +875,98 @@
             ta.select();
             document.execCommand('copy');
             document.body.removeChild(ta);
-            btn.textContent = 'Copied!';
+            btn.textContent = sfT('x_copied');
             btn.classList.add('copied');
             setTimeout(function () {
-              btn.textContent = 'Copy';
+              btn.textContent = sfT('x_copy');
               btn.classList.remove('copied');
             }, 1500);
           });
         });
       });
 
+      // Outputs are built in JS, so re-decode when the language changes.
+      document.addEventListener('sfLangChanged', function () { decode(input.value); });
+
     })();
   </script>
 
   <!-- i18n -->
-  <script>window.SF_PAGE_I18N = { en: { nav_back: "← All Tools", vultr_label: "Sponsor", vultr_title: "Get started on Vultr", vultr_sub: "Get $300 free credit — valid for 30 days", vultr_cta: "Claim your credit →", footer_copy: "© 2026 StackFreeks" }, ko: { nav_back: "← 전체 툴", vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요", vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)", vultr_cta: "크레딧 받기 →", footer_copy: "© 2026 StackFreeks" } }</script>
+  <script>window.SF_PAGE_I18N = { en: { cat_converters: "Converters & Encoders", more_tools: "More converters", all_in_cat: "All Converters & Encoders tools", prev_tool: "Previous tool", next_tool: "Next tool", badge_free: "Free", badge_signup: "No sign-up", badge_browser: "Runs in your browser", nav_back: "← All Tools", vultr_label: "Sponsor", vultr_title: "Get started on Vultr", vultr_sub: "Get $300 free credit — valid for 30 days", vultr_cta: "Claim your credit →", footer_copy: "© 2026 StackFreeks" ,
+        x_expiry_status: "Expiry Status",
+        x_header: "Header",
+        x_invalid_jwt_format: "Invalid JWT format.",
+        x_load_sample: "Load sample",
+        x_paste_your_jwt_token: "Paste your JWT token",
+        x_payload: "Payload",
+        x_signature_is_not_verified: "Signature is not verified",
+        x_signature_verification_requires_the_secret_k: "Signature verification requires the secret key and must be done server-side.",
+        x_well_known_claims: "Well-Known Claims",
+        x_your_token_stays_in_your_browser: "Your token stays in your browser.",
+        x_note_local: "Nothing is sent to any server. All decoding happens locally in JavaScript.",
+        x_note_decode_only: "— this tool only decodes the header and payload. Verification requires the secret key.",
+        x_signature: "Signature",
+        x_not_verified: "Not verified",
+        x_claim_iss: "Issuer",
+        x_claim_sub: "Subject",
+        x_claim_aud: "Audience",
+        x_claim_exp: "Expires",
+        x_claim_iat: "Issued At",
+        x_claim_nbf: "Not Before",
+        x_claim_jti: "JWT ID",
+        x_unit_sep: " ",
+        x_unit_seconds: "seconds",
+        x_unit_minutes: "minutes",
+        x_unit_hours: "hours",
+        x_unit_days: "days",
+        x_expired_pre: "Expired ",
+        x_expired_post: " ago",
+        x_expires_in_pre: "Expires in ",
+        x_expires_in_post: "",
+        x_err_parts_pre: "Invalid JWT: expected 3 dot-separated parts, got ",
+        x_err_parts_post: ".",
+        x_err_header: "Could not decode header: ",
+        x_err_payload: "Could not decode payload: ",
+        x_badge_expired: "Expired",
+        x_badge_valid: "Valid"
+      }, ko: { cat_converters: "변환 & 인코딩", more_tools: "변환 툴 더 보기", all_in_cat: "변환 & 인코딩 전체", prev_tool: "이전 툴", next_tool: "다음 툴", badge_free: "무료", badge_signup: "가입 없음", badge_browser: "브라우저에서 실행", nav_back: "← 전체 툴", vultr_label: "스폰서", vultr_title: "Vultr로 시작하세요", vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)", vultr_cta: "크레딧 받기 →", footer_copy: "© 2026 StackFreeks" ,
+        x_expiry_status: "만료 상태",
+        x_header: "헤더",
+        x_invalid_jwt_format: "올바르지 않은 JWT 형식입니다.",
+        x_load_sample: "샘플 불러오기",
+        x_paste_your_jwt_token: "JWT 토큰 붙여넣기",
+        x_payload: "페이로드",
+        x_signature_is_not_verified: "서명은 검증하지 않습니다",
+        x_signature_verification_requires_the_secret_k: "서명 검증에는 비밀 키가 필요하며 서버에서 수행해야 합니다.",
+        x_well_known_claims: "표준 클레임",
+        x_your_token_stays_in_your_browser: "토큰은 브라우저 안에만 남습니다.",
+        x_note_local: "어떤 서버로도 전송되지 않으며, 모든 디코딩은 브라우저의 JavaScript에서 처리됩니다.",
+        x_note_decode_only: "— 이 툴은 헤더와 페이로드를 디코딩만 합니다. 검증에는 비밀 키가 필요합니다.",
+        x_signature: "서명",
+        x_not_verified: "검증 안 함",
+        x_claim_iss: "발급자",
+        x_claim_sub: "주체",
+        x_claim_aud: "대상",
+        x_claim_exp: "만료",
+        x_claim_iat: "발급 시각",
+        x_claim_nbf: "유효 시작",
+        x_claim_jti: "JWT ID",
+        x_unit_sep: "",
+        x_unit_seconds: "초",
+        x_unit_minutes: "분",
+        x_unit_hours: "시간",
+        x_unit_days: "일",
+        x_expired_pre: "",
+        x_expired_post: " 전에 만료됨",
+        x_expires_in_pre: "",
+        x_expires_in_post: " 후 만료",
+        x_err_parts_pre: "올바르지 않은 JWT입니다. 점으로 구분된 3개 부분이 필요하지만 ",
+        x_err_parts_post: "개입니다.",
+        x_err_header: "헤더를 디코딩할 수 없습니다: ",
+        x_err_payload: "페이로드를 디코딩할 수 없습니다: ",
+        x_badge_expired: "만료됨",
+        x_badge_valid: "유효함"
+      } }</script>
   <script src="/shared/i18n.js"></script>
   <script>
     function toggleFaq(btn) {

@@ -26,140 +26,39 @@
   <meta name="twitter:title" content="Managed Database Cost Calculator | StackFreeks Tools" />
   <meta name="twitter:description" content="Compare monthly managed PostgreSQL/MySQL/Redis pricing across Vultr, DigitalOcean and AWS RDS." />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .nav-left { display: flex; align-items: center; gap: 8px; }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 520px; }
-
+    /* Managed Database Cost Calculator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* Main layout */
-    main { padding: 32px 0 48px; }
+    
     .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) { .tool-grid { grid-template-columns: 1fr; }
+    }
 
     /* Card */
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
-    .card + .card { margin-top: 12px; }
+    .tool .card:hover { border-color: var(--border); box-shadow: none; transform: none; }
+    .tool .card { display: block; height: auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .tool .card + .card { margin-top: 12px; }
     .card-label {
-      font-size: 11px; font-weight: 500;
+      font-size: 12px; font-weight: 500;
       letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--text-3); margin-bottom: 16px;
     }
 
-    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
     .form-group { margin-bottom: 14px; }
     .form-group:last-child { margin-bottom: 0; }
 
-    input, select {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      padding: 9px 12px;
-      font-size: 13px; font-family: var(--font);
-      outline: none;
-      transition: border-color 0.15s;
-      -webkit-appearance: none;
-    }
-    input:focus, select:focus { border-color: var(--border-2); }
-    input::placeholder { color: var(--text-3); }
     input[type="number"] { -moz-appearance: textfield; }
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2352525b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 28px;
-      cursor: pointer;
-    }
-
-    .hint { font-size: 11px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+    .hint { font-size: 12px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
 
     /* HA toggle */
     .toggle-row {
@@ -182,17 +81,17 @@
     .compare-row:last-child { border-bottom: none; }
     .compare-label { color: var(--text-2); display: flex; align-items: center; gap: 8px; }
     .compare-val { color: var(--text-1); font-weight: 500; font-variant-numeric: tabular-nums; font-size: 1.05rem; }
-    .compare-row.winner .compare-val { color: var(--success); }
-    .compare-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+    .compare-row.winner .compare-val { color: var(--success-fg); }
+    .compare-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
 
     .badge-success {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
-      color: var(--success);
-      background: var(--success-bg);
+      color: var(--success-fg);
+      background: var(--success);
       border-radius: 20px;
       padding: 3px 10px;
     }
@@ -200,125 +99,28 @@
     .save-box {
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 16px 18px;
       margin-top: 16px;
     }
     .save-box-title { font-size: 12px; font-weight: 500; color: var(--text-1); margin-bottom: 8px; }
     .save-list { list-style: none; font-size: 12px; color: var(--text-2); line-height: 1.8; }
-    .save-list li::before { content: "✓ "; color: var(--success); font-weight: 600; }
+    .save-list li { display: flex; align-items: flex-start; gap: 6px; }
+    .save-list li .ico { color: var(--accent-text); margin-top: 0.25em; }
 
     .disclaimer {
-      font-size: 11px; color: var(--text-3);
+      font-size: 12px; color: var(--text-3);
       margin-top: 14px; line-height: 1.6;
       padding-top: 14px; border-top: 1px solid var(--border);
     }
     .disclaimer a { color: var(--text-3); text-decoration: underline; }
     .disclaimer a:hover { color: var(--text-2); }
 
-    /* About / SEO copy */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
-    .about-section p:last-child { margin-bottom: 0; }
-
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-list { display: flex; flex-direction: column; gap: 1px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related */
-    .related { padding: 40px 0; border-top: 1px solid var(--border); }
-    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .related-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 18px;
-      text-decoration: none; display: flex;
-      flex-direction: column; gap: 6px;
-      transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); }
-    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent-text); letter-spacing: 0.06em; text-transform: uppercase; }
-    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
-    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
-
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
-
-    /* Responsive */
-    @media (max-width: 640px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
-    }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
+    
+    /* form fields fill their column (the old page's generic input rule) */
+    .tool :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), select, textarea) { width: 100%; }
+    /* sf.css gives every input 9px 12px padding; a range track must not get it */
+    .tool input[type="range"] { padding: 0; }
   </style>
 
   <script type="application/ld+json">
@@ -332,190 +134,184 @@
 </head>
 <body>
 
-<!-- 1. Nav -->
-<nav>
-  <a href="/" class="logo">
-    <div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-  <div class="nav-right">
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-  </div>
-</nav>
-
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
-
-<!-- 3. Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="lang-en">
-      <p class="eyebrow">Database &amp; VPS</p>
-      <h1>Managed Database Cost Calculator</h1>
-      <p class="hero-desc">Estimate and compare monthly PostgreSQL/MySQL/Redis costs across Vultr, DigitalOcean, and AWS RDS managed databases — by RAM, storage, and HA replica.</p>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-vps" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-hard-drive"/></svg><span data-i18n="cat_vps_server">VPS &amp; Server</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <div class="lang-ko">
-      <p class="eyebrow">데이터베이스 &amp; VPS</p>
-      <h1>매니지드 데이터베이스 비용 계산기</h1>
-      <p class="hero-desc">RAM, 스토리지, HA 복제본 여부에 따라 Vultr, DigitalOcean, AWS RDS 매니지드 데이터베이스의 월 비용을 즉시 비교하세요.</p>
+  </nav>
+
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Managed Database Cost Calculator</h1>
+        <p>Estimate and compare monthly PostgreSQL/MySQL/Redis costs across Vultr, DigitalOcean, and AWS RDS managed databases — by RAM, storage, and HA replica.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>매니지드 데이터베이스 비용 계산기</h1>
+        <p>RAM, 스토리지, HA 복제본 여부에 따라 Vultr, DigitalOcean, AWS RDS 매니지드 데이터베이스의 월 비용을 즉시 비교하세요.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- 4. Tool body -->
-<main>
-  <div class="container">
-    <div class="tool-grid">
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
+  <div class="tool-grid">
 
-      <!-- Input card -->
-      <div class="card">
-        <p class="card-label" data-i18n="tool_input_label">Database Config</p>
+        <!-- Input card -->
+        <div class="card">
+          <p class="card-label" data-i18n="tool_input_label">Database Config</p>
 
-        <div class="form-group">
-          <label data-i18n="tool_engine_lbl">Database engine</label>
-          <select id="engine">
-            <option value="postgres">PostgreSQL</option>
-            <option value="mysql">MySQL</option>
-            <option value="redis">Redis / Valkey</option>
-          </select>
-          <p class="hint" data-i18n="tool_engine_hint">Engine choice doesn't change the tier price much on these providers — it mainly affects which plans are offered.</p>
-        </div>
-
-        <div class="form-group">
-          <label data-i18n="tool_ram_lbl">RAM</label>
-          <select id="ram" onchange="recalc()">
-            <option value="1">1 GB</option>
-            <option value="2">2 GB</option>
-            <option value="4" selected>4 GB</option>
-            <option value="8">8 GB</option>
-            <option value="16">16 GB</option>
-            <option value="32">32 GB</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label data-i18n="tool_storage_lbl">Storage (GB)</label>
-          <input type="number" id="storage" value="60" min="0" step="10" oninput="recalc()" />
-          <p class="hint" data-i18n="tool_storage_hint">Total disk size for your database, including indexes and WAL/binlog overhead.</p>
-        </div>
-
-        <div class="form-group">
-          <div class="toggle-row">
-            <input type="checkbox" id="haToggle" onchange="recalc()" />
-            <label for="haToggle" data-i18n="tool_ha_lbl">Enable standby replica (High Availability)</label>
+          <div class="form-group">
+            <label data-i18n="tool_engine_lbl">Database engine</label>
+            <select id="engine">
+              <option value="postgres">PostgreSQL</option>
+              <option value="mysql">MySQL</option>
+              <option value="redis">Redis / Valkey</option>
+            </select>
+            <p class="hint" data-i18n="tool_engine_hint">Engine choice doesn't change the tier price much on these providers — it mainly affects which plans are offered.</p>
           </div>
-          <p class="hint" data-i18n="tool_ha_hint">Adds a synced standby node for automatic failover — roughly doubles the monthly price on all three providers.</p>
+
+          <div class="form-group">
+            <label data-i18n="tool_ram_lbl">RAM</label>
+            <select id="ram" onchange="recalc()">
+              <option value="1">1 GB</option>
+              <option value="2">2 GB</option>
+              <option value="4" selected>4 GB</option>
+              <option value="8">8 GB</option>
+              <option value="16">16 GB</option>
+              <option value="32">32 GB</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="tool_storage_lbl">Storage (GB)</label>
+            <input type="number" id="storage" value="60" min="0" step="10" oninput="recalc()" />
+            <p class="hint" data-i18n="tool_storage_hint">Total disk size for your database, including indexes and WAL/binlog overhead.</p>
+          </div>
+
+          <div class="form-group">
+            <div class="toggle-row">
+              <input type="checkbox" id="haToggle" onchange="recalc()" />
+              <label for="haToggle" data-i18n="tool_ha_lbl">Enable standby replica (High Availability)</label>
+            </div>
+            <p class="hint" data-i18n="tool_ha_hint">Adds a synced standby node for automatic failover — roughly doubles the monthly price on all three providers.</p>
+          </div>
         </div>
+
+        <!-- Results card -->
+        <div class="card">
+          <p class="card-label" data-i18n="tool_results_label">Estimated Monthly Cost</p>
+
+          <div id="compareRows">
+            <!-- filled by JS -->
+          </div>
+
+          <div class="save-box">
+            <div class="save-box-title" data-i18n="tool_save_title">What "managed" saves you vs. self-hosting</div>
+            <ul class="save-list">
+              <li><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="tool_save_1">Automated daily backups with point-in-time recovery</span></li>
+              <li><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="tool_save_2">Automatic minor-version patching &amp; security updates</span></li>
+              <li><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="tool_save_3">Built-in monitoring, alerting &amp; slow-query insights</span></li>
+              <li><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="tool_save_4">One-click HA failover instead of building your own</span></li>
+            </ul>
+          </div>
+
+          <p class="disclaimer" data-i18n="tool_disclaimer">Estimates only, based on published 2026 pricing tiers — actual prices vary by region and change over time. Check exact figures on the <a href="https://www.vultr.com/products/managed-databases/" target="_blank" rel="noopener nofollow">Vultr</a>, <a href="https://www.digitalocean.com/pricing/managed-databases" target="_blank" rel="noopener nofollow">DigitalOcean</a>, and <a href="https://aws.amazon.com/rds/pricing/" target="_blank" rel="noopener nofollow">AWS RDS</a> pricing pages before purchasing.</p>
+        </div>
+
       </div>
+  </main>
 
-      <!-- Results card -->
-      <div class="card">
-        <p class="card-label" data-i18n="tool_results_label">Estimated Monthly Cost</p>
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
 
-        <div id="compareRows">
-          <!-- filled by JS -->
-        </div>
-
-        <div class="save-box">
-          <div class="save-box-title" data-i18n="tool_save_title">What "managed" saves you vs. self-hosting</div>
-          <ul class="save-list">
-            <li data-i18n="tool_save_1">Automated daily backups with point-in-time recovery</li>
-            <li data-i18n="tool_save_2">Automatic minor-version patching &amp; security updates</li>
-            <li data-i18n="tool_save_3">Built-in monitoring, alerting &amp; slow-query insights</li>
-            <li data-i18n="tool_save_4">One-click HA failover instead of building your own</li>
-          </ul>
-        </div>
-
-        <p class="disclaimer" data-i18n="tool_disclaimer">Estimates only, based on published 2026 pricing tiers — actual prices vary by region and change over time. Check exact figures on the <a href="https://www.vultr.com/products/managed-databases/" target="_blank" rel="noopener nofollow">Vultr</a>, <a href="https://www.digitalocean.com/pricing/managed-databases" target="_blank" rel="noopener nofollow">DigitalOcean</a>, and <a href="https://aws.amazon.com/rds/pricing/" target="_blank" rel="noopener nofollow">AWS RDS</a> pricing pages before purchasing.</p>
-      </div>
-
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More server tools</h2>
+      <a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS &amp; Server tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
     </div>
-  </div>
-</main>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/php-fpm-max-children-calculator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-layers"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">PHP-FPM pm.max_children Calculator</span><span class="lang-ko">PHP-FPM pm.max_children 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+    </ul>
+  </section>
 
-<!-- About / SEO copy -->
-<section class="about-section">
-  <div class="container">
+  <!-- About -->
+  <section class="guide about-section">
     <div class="lang-en">
-      <h2>About this managed database cost calculator</h2>
+      <h2 class="guide-title">About this managed database cost calculator</h2>
       <p>Choosing between a fully managed database service and self-hosting PostgreSQL or MySQL on a plain VPS is one of the first infrastructure decisions a growing app has to make. Managed database pricing on Vultr, DigitalOcean, and AWS RDS is structured differently — RAM/vCPU tiers, included storage allowances, per-GB storage add-ons, and high-availability standby replicas all factor into the final bill in ways that aren't obvious from a single pricing page. This calculator estimates and compares the monthly cost across all three providers side by side, using your RAM tier, storage size, and whether you need an HA replica.</p>
       <p>It's built for backend engineers and DevOps teams sizing a production PostgreSQL, MySQL, or Redis/Valkey instance, indie hackers deciding whether a managed database is worth the premium over a self-managed one on a Vultr VPS, and anyone comparing "vultr managed database pricing" against DigitalOcean or AWS RDS before committing budget. All figures are estimates based on publicly published 2026 tiers — use them for fast planning, then confirm exact numbers on each provider's pricing page.</p>
     </div>
     <div class="lang-ko">
-      <h2>매니지드 데이터베이스 비용 계산기 소개</h2>
+      <h2 class="guide-title">매니지드 데이터베이스 비용 계산기 소개</h2>
       <p>완전 관리형(매니지드) 데이터베이스 서비스와 VPS에 직접 PostgreSQL·MySQL을 셀프 호스팅하는 것 중 선택하는 것은 성장하는 서비스가 처음 마주하는 인프라 결정 중 하나입니다. Vultr, DigitalOcean, AWS RDS의 매니지드 데이터베이스 가격 구조는 서로 달라서 RAM/vCPU 등급, 기본 포함 스토리지, GB당 추가 스토리지 요금, HA 복제본 비용이 최종 청구서에 각각 다르게 반영됩니다. 이 계산기는 RAM 등급, 스토리지 크기, HA 여부를 입력받아 세 제공업체의 월 비용을 나란히 비교합니다.</p>
       <p>프로덕션 PostgreSQL·MySQL·Redis/Valkey 인스턴스를 산정하는 백엔드 엔지니어와 DevOps 팀, Vultr VPS에서 직접 운영하는 것보다 매니지드 데이터베이스의 프리미엄이 그만한 가치가 있는지 고민하는 1인 개발자, "vultr managed database pricing"을 DigitalOcean·AWS RDS와 비교하려는 모든 사람에게 유용합니다. 모든 수치는 2026년 공개된 요금제를 기준으로 한 추정치이며, 빠른 예산 산정용으로 활용한 뒤 정확한 금액은 각 제공업체의 요금 페이지에서 확인하세요.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 5. How-to section -->
-<section class="guide-section">
-  <div class="container">
-
+  <!-- How to use -->
+  <section class="guide">
     <div class="lang-en">
-      <h2>How to use this calculator</h2>
+      <h2 class="guide-title">How to use this calculator</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">Pick your engine</div>
+          <h3>1. Pick your engine</h3>
           <div class="guide-desc">Select PostgreSQL, MySQL, or Redis/Valkey. This mainly narrows which provider plans apply.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">Choose RAM</div>
+          <h3>2. Choose RAM</h3>
           <div class="guide-desc">Pick the RAM tier that matches your working set size — start with 2x your current dataset if unsure.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">Set storage &amp; HA</div>
+          <h3>3. Set storage &amp; HA</h3>
           <div class="guide-desc">Enter total disk size, and toggle HA on if you need automatic failover to a standby replica.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">Compare providers</div>
+          <h3>4. Compare providers</h3>
           <div class="guide-desc">The cheapest option is highlighted. If Vultr comes out ahead, claim your free credit to get started.</div>
         </div>
       </div>
     </div>
 
     <div class="lang-ko">
-      <h2>계산기 사용 방법</h2>
+      <h2 class="guide-title">계산기 사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">엔진 선택</div>
+          <h3>1. 엔진 선택</h3>
           <div class="guide-desc">PostgreSQL, MySQL, Redis/Valkey 중 선택하세요. 주로 어떤 플랜이 적용되는지에 영향을 줍니다.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">RAM 선택</div>
+          <h3>2. RAM 선택</h3>
           <div class="guide-desc">작업 데이터 크기에 맞는 RAM 등급을 선택하세요. 불확실하다면 현재 데이터셋의 2배로 시작하세요.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">스토리지 &amp; HA 설정</div>
+          <h3>3. 스토리지 &amp; HA 설정</h3>
           <div class="guide-desc">총 디스크 크기를 입력하고, 자동 장애 조치가 필요하면 HA를 켜세요.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">제공업체 비교</div>
+          <h3>4. 제공업체 비교</h3>
           <div class="guide-desc">가장 저렴한 옵션이 강조 표시됩니다. Vultr가 가장 저렴하다면 무료 크레딧으로 바로 시작해보세요.</div>
         </div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<!-- 6. FAQ -->
-<section class="faq-section">
-  <div class="container">
-
+  <!-- FAQ -->
+  <section class="faq">
     <div class="lang-en">
-      <h2>Frequently asked questions</h2>
+      <h2 class="faq-title">Frequently asked questions</h2>
       <div class="faq-list">
 
         <div class="faq-item">
@@ -562,7 +358,7 @@
     </div>
 
     <div class="lang-ko">
-      <h2>자주 묻는 질문</h2>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-list">
 
         <div class="faq-item">
@@ -607,14 +403,23 @@
 
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a class="card card-sm sf-related-card" href="/tools/object-storage-calculator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-archive"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Object Storage Cost Calculator</span><span class="lang-ko">오브젝트 스토리지 비용 계산기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/mysql-backup-script-generator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database-backup"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">MySQL Backup Script Generator</span><span class="lang-ko">MySQL 백업 스크립트 생성기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/vps-cost-calculator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-server"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">VPS Cost Calculator</span><span class="lang-ko">VPS 비용 계산기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/redis-memory-estimator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database-zap"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Redis Memory Estimator</span><span class="lang-ko">Redis 메모리 예상 계산기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/postgresql-config-generator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-sliders-horizontal"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">PostgreSQL Config Generator</span><span class="lang-ko">PostgreSQL 설정 생성기</span></span></span></a></li>
+    </ul>
+  </section>
 
-<!-- 7. Related content -->
-<section class="related">
-  <div class="container">
-    <p class="eyebrow" style="margin-bottom:12px;">Related guides</p>
+  <!-- Related content -->
+  <section class="related">
+    <h2 class="sf-related-title"><span class="lang-en">Related guides</span><span class="lang-ko">관련 가이드</span></h2>
     <div class="related-grid">
       <a href="https://stackfreeks.com/vultr-managed-database-review/" class="related-card" target="_blank" rel="noopener">
         <span class="related-tag">Database</span>
@@ -637,53 +442,51 @@
         <span class="related-arrow">→</span>
       </a>
     </div>
-  </div>
-</section>
+    <a href="https://stackfreeks.com/vultr-managed-database-review/" target="_blank" rel="noopener">Vultr Managed Database Review 2026</a>
+  </section>
 
-<!-- 7.5. Related tools -->
-<section class="sf-related">
-  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-  <div class="sf-related-grid">
-    <a href="/tools/object-storage-calculator/" class="sf-related-card"><span>🗄️</span>Object Storage Cost Calculator</a>
-    <a href="/tools/mysql-backup-script-generator/" class="sf-related-card"><span>💾</span>MySQL Backup Script Generator</a>
-    <a href="/tools/vps-cost-calculator/" class="sf-related-card"><span>💰</span>VPS Cost Calculator</a>
-    <a href="/tools/redis-memory-estimator/" class="sf-related-card"><span>🔴</span>Redis Memory Estimator</a>
-    <a href="/tools/postgresql-config-generator/" class="sf-related-card"><span>🐘</span>PostgreSQL Config Generator</a>
-    <a href="https://stackfreeks.com/vultr-managed-database-review/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Vultr Managed Database Review 2026</a>
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
   </div>
-</section>
 
-<!-- 8. Vultr banner -->
-<section class="vultr-banner">
-  <div class="container banner-inner">
-    <div>
-      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
-       rel="nofollow sponsored" target="_blank"
-       data-i18n="vultr_cta">Claim your credit →</a>
-  </div>
-</section>
-
-<!-- 9. Footer -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-    </div>
-  </div>
-</footer>
+  </footer>
 
 <!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
+    cat_vps_server: "VPS & Server",
+    more_tools: "More server tools",
+    all_in_cat: "All VPS & Server tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
     tool_input_label: "Database Config",
     tool_engine_lbl: "Database engine",
     tool_engine_hint: "Engine choice doesn't change the tier price much on these providers — it mainly affects which plans are offered.",
@@ -700,10 +503,20 @@ window.SF_PAGE_I18N = {
     tool_save_4: "One-click HA failover instead of building your own",
     tool_disclaimer: "Estimates only, based on published 2026 pricing tiers — actual prices vary by region and change over time. Check exact figures on the Vultr, DigitalOcean, and AWS RDS pricing pages before purchasing.",
     tool_cheapest: "Cheapest",
+    tool_per_mo: "/mo",
+    tool_ha_short: "HA",
     tool_vultr_note: "Vultr is the most affordable option for this configuration — claim your free credit below to get started.",
     vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)"
   },
   ko: {
+    cat_vps_server: "VPS & 서버",
+    more_tools: "서버 툴 더 보기",
+    all_in_cat: "VPS & 서버 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
     tool_input_label: "데이터베이스 설정",
     tool_engine_lbl: "데이터베이스 엔진",
     tool_engine_hint: "엔진 선택은 가격에 큰 영향을 주지 않으며, 주로 제공되는 플랜 종류에 영향을 줍니다.",
@@ -720,6 +533,8 @@ window.SF_PAGE_I18N = {
     tool_save_4: "직접 구축할 필요 없는 원클릭 HA 장애 조치",
     tool_disclaimer: "2026년 공개된 요금제를 기반으로 한 추정치입니다 — 실제 가격은 리전에 따라 다르고 시간이 지나면 변경됩니다. 구매 전 Vultr, DigitalOcean, AWS RDS 요금 페이지에서 정확한 금액을 확인하세요.",
     tool_cheapest: "최저가",
+    tool_per_mo: "/월",
+    tool_ha_short: "HA",
     tool_vultr_note: "이 구성에서는 Vultr가 가장 저렴한 옵션입니다 — 아래에서 무료 크레딧을 받아 바로 시작해보세요.",
     vultr_sub: "최대 $300 무료 크레딧 — 30일 유효 (기간 한정 혜택)"
   }
@@ -802,6 +617,8 @@ function recalc() {
   const lang = window.sfLang ? window.sfLang.current : 'en';
   const t = Object.assign({}, (window.SF_PAGE_I18N || {})[lang]);
   const cheapestLabel = t.tool_cheapest || 'Cheapest';
+  const perMo = t.tool_per_mo || '/mo';
+  const haLabel = t.tool_ha_short || 'HA';
 
   const order = ['vultr', 'digitalocean', 'aws'];
   const html = order.map(function (key) {
@@ -811,9 +628,9 @@ function recalc() {
       '<div class="compare-row' + (isWinner ? ' winner' : '') + '">' +
         '<div>' +
           '<div class="compare-label">' + r.name + (isWinner ? ' <span class="badge-success">' + cheapestLabel + '</span>' : '') + '</div>' +
-          '<div class="compare-sub">' + r.vcpu + ' vCPU · ' + ram + ' GB RAM' + (ha ? ' · HA' : '') + '</div>' +
+          '<div class="compare-sub">' + r.vcpu + ' vCPU · ' + ram + ' GB RAM' + (ha ? ' · ' + haLabel : '') + '</div>' +
         '</div>' +
-        '<span class="compare-val">' + fmtUsd(r.total) + '/mo</span>' +
+        '<span class="compare-val">' + fmtUsd(r.total) + perMo + '</span>' +
       '</div>';
   }).join('');
 

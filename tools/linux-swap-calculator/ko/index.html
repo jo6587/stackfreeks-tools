@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>리눅스 스왑 크기 계산기 &mdash; 무료 온라인 도구 | StackFreeks</title>
-<meta content="VPS & 리눅스" name="description">
+<meta content="서버에 맞는 최적 스왑 크기를 즉시 계산하고 바로 사용할 수 있는 명령어를 확인하세요." name="description">
 <link href="https://tools.stackfreeks.com/tools/linux-swap-calculator/ko/" rel="canonical">
 <link href="https://tools.stackfreeks.com/tools/linux-swap-calculator/" hreflang="en" rel="alternate">
   <link href="https://tools.stackfreeks.com/tools/linux-swap-calculator/ko/" hreflang="ko" rel="alternate">
@@ -15,125 +15,33 @@
 
 
 <meta content="리눅스 스왑 크기 계산기 &mdash; 무료 온라인 도구 | StackFreeks" property="og:title">
-<meta content="VPS & 리눅스" property="og:description">
+<meta content="서버에 맞는 최적 스왑 크기를 즉시 계산하고 바로 사용할 수 있는 명령어를 확인하세요." property="og:description">
 <meta content="https://tools.stackfreeks.com/tools/linux-swap-calculator/ko/" property="og:url">
-<!-- ADSENSE_SLOT_TOP -->
+<link crossorigin href="https://cdn.jsdelivr.net" rel="preconnect">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+<link href="/shared/sf.css" rel="stylesheet">
 <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --accent-fg: #ffffff;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--accent-text); text-decoration: none; }
-    .container { max-width: 840px; margin: 0 auto; padding: 0 24px; }
-
-    /* Nav */
-    .navbar {
-      border-bottom: 1px solid var(--border);
-      padding: 14px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(12px);
-      background: rgba(10,10,11,0.85);
-    }
-    .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-    .nav-logo {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-1);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .logo-mark {
-      width: 20px; height: 20px;
-      background: var(--accent);
-      border-radius: 6px;
-    }
-    .nav-actions { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 10px;
-      cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-3);
-      margin-bottom: 10px;
-    }
-    h1 {
-      font-size: 1.75rem;
-      font-weight: 500;
-      letter-spacing: -0.03em;
-      color: var(--text-1);
-    }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 480px; }
-
+    /* Linux Swap Size Calculator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* Tool */
-    main { padding: 32px 0; }
+    
     .tool-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
-    .card {
+    .tool .card:hover { border-color: var(--border); box-shadow: none; transform: none; }
+    .tool .card {
+      display: block;
+      height: auto;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       padding: 24px;
     }
     .card-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -141,22 +49,6 @@
       margin-bottom: 16px;
     }
     .form-group { margin-bottom: 14px; }
-    label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
-    input, select {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      padding: 9px 12px;
-      font-size: 13px;
-      font-family: var(--font);
-      outline: none;
-      transition: border-color 0.15s;
-      -webkit-appearance: none;
-    }
-    input:focus, select:focus { border-color: var(--border-2); }
-    input::placeholder { color: var(--text-3); }
 
     .toggle-row {
       display: flex;
@@ -167,7 +59,7 @@
       margin-bottom: 14px;
     }
     .toggle-label { font-size: 13px; color: var(--text-2); }
-    .toggle-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+    .toggle-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
     .switch {
       position: relative; width: 36px; height: 20px; flex-shrink: 0;
     }
@@ -189,8 +81,8 @@
       border-radius: 50%;
       transition: transform 0.2s, background 0.2s;
     }
-    .switch input:checked + .slider { background: var(--accent); border-color: var(--accent); }
-    .switch input:checked + .slider::before { transform: translateX(16px); background: #fff; }
+    .switch input:checked + .slider { background: var(--accent-strong); border-color: var(--accent-strong); }
+    .switch input:checked + .slider::before { transform: translateX(16px); background: var(--accent-fg); }
 
     /* Result */
     .result-main {
@@ -215,10 +107,10 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
-      color: var(--success);
-      background: var(--success-bg);
+      color: var(--success-fg);
+      background: var(--success);
       border-radius: 20px;
       padding: 3px 10px;
       margin-bottom: 16px;
@@ -227,10 +119,10 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--warning);
-      background: rgba(245,158,11,0.08);
+      background: var(--warning-bg);
       border-radius: 20px;
       padding: 3px 10px;
       margin-bottom: 16px;
@@ -239,7 +131,7 @@
     /* Commands */
     .cmd-section { margin-top: 20px; }
     .cmd-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--text-3);
       text-transform: uppercase;
@@ -266,7 +158,7 @@
       border: 1px solid var(--border);
       border-radius: 5px;
       color: var(--text-3);
-      font-size: 11px;
+      font-size: 12px;
       padding: 3px 8px;
       cursor: pointer;
       font-family: var(--font);
@@ -288,144 +180,60 @@
     .info-val { color: var(--text-1); font-weight: 500; font-variant-numeric: tabular-nums; }
     .info-val.accent { color: var(--accent-text); }
 
-    /* Guide */
-    .guide { max-width: 840px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FAQ */
-    .faq { max-width: 840px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q {
-      width: 100%; background: none; border: none; text-align: left;
-      padding: 16px 20px; font-family: var(--font); font-size: 14px;
-      font-weight: 600; color: var(--text-1); cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related */
-    .related { padding: 40px 0; }
-    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .related-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 18px; text-decoration: none;
-      display: flex; flex-direction: column; gap: 6px; transition: border-color 0.15s;
-    }
-    .related-card:hover { border-color: var(--border-2); }
-    .related-tag { font-size: 11px; font-weight: 500; color: var(--accent-text); letter-spacing: 0.06em; text-transform: uppercase; }
-    .related-title { font-size: 13px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
-    .related-arrow { font-size: 13px; color: var(--text-3); margin-top: auto; }
-
-    /* Vultr banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font);
-      text-decoration: none; display: inline-block; white-space: nowrap; transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
-    /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
-
     /* Mobile */
     @media (max-width: 768px) {
-      h1 { font-size: 1.4rem; }
+      
       .result-number { font-size: 2rem; }
       .tool-grid { grid-template-columns: minmax(0, 1fr); }
-      .container { padding: 0 16px; }
-      .guide { padding: 0 16px 32px; }
-      .faq { padding: 0 16px 32px; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; }
     }
     @media (max-width: 640px) {
-      .cmd-block { font-size: 11px; }
+      .cmd-block { font-size: 12px; }
     }
   
-    /* Related tools (auto-injected) */
-    .sf-related { max-width: 840px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link):not(.slider) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link):not(.slider)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
+    
+    /* form fields fill their column (the old page's generic input rule) */
+    .tool :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), select, textarea) { width: 100%; }
+    /* sf.css gives every input 9px 12px padding; a range track must not get it */
+    .tool input[type="range"] { padding: 0; }
   </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Linux Swap Size Calculator", "description": "Calculate the recommended Linux swap size for a VPS or server. Results based on RAM, use case and hibernation — with ready-to-run commands.", "url": "https://tools.stackfreeks.com/tools/linux-swap-calculator/ko/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "StackFreeks", "url": "https://tools.stackfreeks.com/tools/linux-swap-calculator/ko/"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "2GB VPS에 스왑이 얼마나 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "2GB RAM VPS에서 일반 서버 용도라면 2GB 스왑이 표준 권장값입니다. RAM과 동일한 1:1 비율로, 2~8GB RAM 서버의 현대 권장 가이드라인을 따릅니다. 메모리 집약적 앱 실행이나 절전 모드가 필요하면 4GB로 늘리세요."}}, {"@type": "Question", "name": "RAM이 충분하면 스왑이 필요 없나요?", "acceptedAnswer": {"@type": "Answer", "text": "RAM이 충분해도 최소 1~2GB 스왑을 권장합니다. 커널은 유휴 메모리 페이지를 스왑으로 옮겨 활성 프로세스에 RAM을 확보합니다. 스왑 없이 RAM이 가득 차면 OOM killer가 프로세스를 강제 종료합니다."}}, {"@type": "Question", "name": "스왑 파일과 스왑 파티션, 어떤 게 더 좋나요?", "acceptedAnswer": {"@type": "Answer", "text": "스왑 파일이 더 유연합니다. 파티션 재구성 없이 크기 조정이나 삭제가 가능합니다. 스왑 파티션은 구형 HDD에서 약간 빠르지만, 현대 SSD나 클라우드 VPS 스토리지에서는 차이가 미미합니다. 대부분의 클라우드 VPS 사용자에게는 스왑 파일이 더 실용적입니다."}}, {"@type": "Question", "name": "Swappiness란 무엇이고 어떤 값을 설정해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "Swappiness(0~100)는 커널이 메모리 페이지를 스왑으로 이동하는 적극성을 제어합니다. 기본값 60은 데스크탑에 적합합니다. 서버에는 10을 권장 — 불필요한 스왑을 줄이고 데이터를 RAM에 더 오래 유지합니다. 데이터베이스 서버는 1~5로 설정해 스왑을 최소화합니다."}}, {"@type": "Question", "name": "스왑이 VPS 속도를 느리게 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "스왑은 RAM보다 훨씬 느립니다 — 특히 HDD에서. 클라우드 VPS SSD에서도 상당한 병목이 됩니다. 스왑은 성능 향상이 아닌 안전망입니다. 서버가 스왑을 자주 사용한다면 RAM이 더 많은 플랜으로 업그레이드할 신호입니다."}}]}</script>
 <!-- Cloudflare Web Analytics --><script data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}' defer src="https://static.cloudflareinsights.com/beacon.min.js"></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<nav class="navbar">
-<div class="container nav-inner">
-<a class="nav-logo" href="/ko/">
-<div class="logo-mark"></div>
-      StackFreeks Tools
-    </a>
-<div class="nav-actions">
+<nav aria-label="Main" class="nav">
+<div class="nav-inner">
+<a aria-label="StackFreeks Tools" class="logo" href="/ko/"><svg aria-hidden="true" class="logo-mark" height="28" viewbox="0 0 28 28" width="28"><circle cx="14" cy="14" fill="none" r="12.4" stroke="currentColor" stroke-dasharray="64 14" stroke-linecap="round" stroke-width="1.6" transform="rotate(116 14 14)"></circle><text dominant-baseline="central" text-anchor="middle" x="14" y="14">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+<a class="nav-link nav-cat" href="/#cat-vps"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-hard-drive"></use></svg><span data-i18n="cat_vps_server">VPS & Server</span></a>
+<a class="nav-back nav-push" data-i18n="nav_back" href="/ko/">&larr; All Tools</a>
+<a class="nav-blog" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog <svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-up-right"></use></svg></a>
 <a class="lang-toggle" href="https://tools.stackfreeks.com/tools/linux-swap-calculator/">English</a>
-<a class="nav-back" data-i18n="nav_back" href="/ko/">&larr; all tools</a>
-<a class="nav-back" href="https://stackfreeks.com" rel="noopener" target="_blank">Blog &nearrow;</a>
-</div>
+<button aria-pressed="false" class="theme-toggle" onclick="sfTheme.toggle()" type="button"><svg aria-hidden="true" class="ico i-moon"><use href="/shared/icons.svg#i-moon"></use></svg><svg aria-hidden="true" class="ico i-sun"><use href="/shared/icons.svg#i-sun"></use></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
 </div>
 </nav>
-<!-- ADSENSE_SLOT_TOP -->
-<section class="hero">
-<div class="container">
+<header class="hero tool-head wrap-tool">
+<span class="tile tile-lg"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-down-up"></use></svg></span>
+<div class="tool-head-text">
 
 <div class="lang-ko">
-<p class="eyebrow">VPS & 리눅스</p>
 <h1>리눅스 스왑 크기 계산기</h1>
-<p class="hero-desc">서버에 맞는 최적 스왑 크기를 즉시 계산하고 바로 사용할 수 있는 명령어를 확인하세요.</p>
+<p>서버에 맞는 최적 스왑 크기를 즉시 계산하고 바로 사용할 수 있는 명령어를 확인하세요.</p>
 </div>
+<ul class="badges">
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_free">Free</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_signup">No sign-up</span></li>
+<li><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-circle-check"></use></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+</ul>
 </div>
-</section>
-<main>
-<div class="container">
+</header>
+<!-- Tool body -->
+<main class="tool wrap-tool">
 <div class="tool-grid">
 <!-- Input -->
 <div class="card">
-<p class="card-label" id="lbl-input">Server Configuration</p>
+<p class="card-label" data-i18n="x_server_configuration" id="lbl-input">Server Configuration</p>
 <div class="form-group">
-<label id="lbl-ram">RAM Size</label>
+<label data-i18n="x_ram_size" id="lbl-ram">RAM Size</label>
 <select id="ramSelect" onchange="calculate()">
 <option value="0.5">512 MB</option>
 <option value="1">1 GB</option>
@@ -440,18 +248,18 @@
 </select>
 </div>
 <div class="form-group">
-<label id="lbl-usecase">Use Case</label>
+<label data-i18n="x_use_case" id="lbl-usecase">Use Case</label>
 <select id="usecaseSelect" onchange="calculate()">
-<option id="opt-general" value="general">General Server / VPS</option>
-<option id="opt-db" value="database">Database Server</option>
-<option id="opt-dev" value="dev">Development Machine</option>
-<option id="opt-desktop" value="desktop">Desktop / Workstation</option>
+<option data-i18n="x_general_server_vps" id="opt-general" value="general">General Server / VPS</option>
+<option data-i18n="x_database_server" id="opt-db" value="database">Database Server</option>
+<option data-i18n="x_development_machine" id="opt-dev" value="dev">Development Machine</option>
+<option data-i18n="x_desktop_workstation" id="opt-desktop" value="desktop">Desktop / Workstation</option>
 </select>
 </div>
 <div class="toggle-row">
 <div>
-<p class="toggle-label" id="lbl-hibernate">Hibernation Support</p>
-<p class="toggle-sub" id="lbl-hibernate-sub">Requires swap &ge; RAM size</p>
+<p class="toggle-label" data-i18n="x_hibernation_support" id="lbl-hibernate">Hibernation Support</p>
+<p class="toggle-sub" data-i18n="x_requires_swap_ram_size" id="lbl-hibernate-sub">Requires swap &ge; RAM size</p>
 </div>
 <label class="switch">
 <input id="hibernateToggle" onchange="calculate()" type="checkbox">
@@ -460,8 +268,8 @@
 </div>
 <div class="toggle-row" style="border-bottom:none; margin-bottom:0;">
 <div>
-<p class="toggle-label" id="lbl-swapfile">Use Swap File</p>
-<p class="toggle-sub" id="lbl-swapfile-sub">vs. swap partition</p>
+<p class="toggle-label" data-i18n="x_use_swap_file" id="lbl-swapfile">Use Swap File</p>
+<p class="toggle-sub" data-i18n="x_vs_swap_partition" id="lbl-swapfile-sub">vs. swap partition</p>
 </div>
 <label class="switch">
 <input checked id="swapfileToggle" onchange="calculate()" type="checkbox">
@@ -471,63 +279,71 @@
 </div>
 <!-- Result -->
 <div class="card">
-<p class="card-label" id="lbl-result">Recommended Swap</p>
+<p class="card-label" data-i18n="x_recommended_swap" id="lbl-result">Recommended Swap</p>
 <div class="result-main">
 <span class="result-number" id="swapResult">2</span>
 <span class="result-unit" id="swapUnit">GB</span>
 </div>
-<div class="badge-success" id="swapBadge">&checkmark; <span id="badgeText">Optimal for this config</span></div>
+<div class="badge-success" id="swapBadge"><svg aria-hidden="true" class="ico ico-inline"><use href="/shared/icons.svg#i-circle-check"></use></svg> <span data-i18n="x_optimal_for_this_config" id="badgeText">Optimal for this config</span></div>
 <p class="result-note" id="swapNote"></p>
 <div class="divider"></div>
 <div id="swapInfo">
 <div class="info-row">
-<span class="info-key" id="lbl-swappiness">Recommended swappiness</span>
+<span class="info-key" data-i18n="x_recommended_swappiness" id="lbl-swappiness">Recommended swappiness</span>
 <span class="info-val accent" id="swappinessVal">10</span>
 </div>
 <div class="info-row">
-<span class="info-key" id="lbl-swapfile-type">Type</span>
-<span class="info-val" id="swapTypeVal">Swap file</span>
+<span class="info-key" data-i18n="x_type" id="lbl-swapfile-type">Type</span>
+<span class="info-val" data-i18n="x_swap_file" id="swapTypeVal">Swap file</span>
 </div>
 <div class="info-row">
-<span class="info-key" id="lbl-disk-needed">Disk needed</span>
+<span class="info-key" data-i18n="x_disk_needed" id="lbl-disk-needed">Disk needed</span>
 <span class="info-val" id="diskNeededVal">2 GB</span>
 </div>
 </div>
 <div class="cmd-section">
-<p class="cmd-label" id="lbl-commands">Commands</p>
+<p class="cmd-label" data-i18n="x_commands" id="lbl-commands">Commands</p>
 <div style="position:relative;">
 <pre class="cmd-block" id="cmdBlock"></pre>
-<button class="copy-btn" id="btn-copy" onclick="copyCmd()">Copy</button>
-</div>
+<button class="copy-btn" data-i18n="x_copy" id="btn-copy" onclick="copyCmd()">Copy</button>
 </div>
 </div>
 </div>
 </div>
 </main>
-<!-- How to Use -->
+<!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+<div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+<!-- More in this category: previous / next tool -->
+<section aria-labelledby="h-more" class="more-tools">
+<div class="sec-head">
+<h2 data-i18n="more_tools" id="h-more">More server tools</h2>
+<a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS & Server tools</span><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a>
+</div>
+<ul class="grid grid-2">
+<li><a class="card prev" href="/tools/object-storage-calculator/ko/" rel="prev"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-archive"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">오브젝트 스토리지 비용 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-left"></use></svg></a></li>
+<li><a class="card next" href="/tools/docker-ram-calculator/ko/" rel="next"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-container"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Docker RAM 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg aria-hidden="true" class="ico card-go"><use href="/shared/icons.svg#i-arrow-right"></use></svg></a></li>
+</ul>
+</section>
+<!-- How to use -->
 <section class="guide">
 
 <div class="lang-ko">
-<p class="guide-title">사용 방법</p>
+<h2 class="guide-title">사용 방법</h2>
 <div class="guide-grid">
 <div class="guide-card">
-<p class="guide-step">STEP 1</p>
-<h3>RAM 선택</h3>
+<h3>1. RAM 선택</h3>
 <p>현재 서버 또는 VPS의 총 RAM을 선택하세요. 업그레이드를 계획 중이라면 목표 RAM 크기를 입력하세요.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">STEP 2</p>
-<h3>사용 목적 선택</h3>
+<h3>2. 사용 목적 선택</h3>
 <p>일반 VPS, 데이터베이스, 개발 서버, 데스크탑 &mdash; 각각 스왑 동작과 swappiness 설정이 다릅니다.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">STEP 3</p>
-<h3>옵션 설정</h3>
+<h3>3. 옵션 설정</h3>
 <p>절전(hibernation)이 필요하면 활성화하세요. 스왑 파일(유연함) 또는 스왑 파티션(약간 더 빠름)을 선택하세요.</p>
 </div>
 <div class="guide-card">
-<p class="guide-step">STEP 4</p>
-<h3>명령어 복사 & 붙여넣기</h3>
+<h3>4. 명령어 복사 & 붙여넣기</h3>
 <p>생성된 명령어로 스왑 파일 생성, 권한 설정, 활성화, /etc/fstab 등록까지 한 번에 처리하세요.</p>
 </div>
 </div>
@@ -537,7 +353,7 @@
 <section class="faq">
 
 <div class="lang-ko">
-<p class="faq-title">자주 묻는 질문</p>
+<h2 class="faq-title">자주 묻는 질문</h2>
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)"><span>2GB VPS에 스왑이 얼마나 필요한가요?</span><span class="faq-icon">+</span></button>
 <div class="faq-a">2GB RAM VPS에서 일반 서버 용도라면 2GB 스왑이 표준 권장값입니다. RAM과 동일한 1:1 비율로, 2~8GB RAM 서버의 현대 권장 가이드라인을 따릅니다. 메모리 집약적 앱 실행이나 절전 모드가 필요하면 4GB로 늘리세요.</div>
@@ -560,12 +376,20 @@
 </div>
 </div>
 </section>
-<!-- Related -->
+<!-- Related tools -->
+<section class="sf-related">
+<h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+<ul class="grid">
+<li><a class="card card-sm sf-related-card" href="/tools/nginx-config-generator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-server-cog"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">Nginx 설정 생성기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/ssh-config-generator/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-key-round"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">SSH Config 생성기</span></span></span></a></li>
+<li><a class="card card-sm sf-related-card" href="/tools/firewall-rule-builder/ko/"><span class="tile"><svg aria-hidden="true" class="ico"><use href="/shared/icons.svg#i-brick-wall"></use></svg></span><span class="card-text"><span class="card-name"><span class="lang-ko">방화벽 규칙 생성기</span></span></span></a></li>
+</ul>
+</section>
+<!-- Related content -->
 <section class="related">
-<div class="container">
 
 <div class="lang-ko">
-<p class="eyebrow" style="margin-bottom:12px;">관련 가이드</p>
+<h2 class="sf-related-title">관련 가이드</h2>
 <div class="related-grid">
 <a class="related-card" href="https://stackfreeks.com" rel="noopener" target="_blank">
 <span class="related-tag">VPS</span>
@@ -584,44 +408,42 @@
 </a>
 </div>
 </div>
-</div>
+<a href="https://stackfreeks.com/best-cheap-vps-2026/" rel="noopener" target="_blank">Best Cheap VPS Providers 2026</a>
 </section>
-<!-- Vultr Banner -->
-<!-- Related tools -->
-<section class="sf-related">
-<p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-<div class="sf-related-grid">
-<a class="sf-related-card" href="/tools/nginx-config-generator/ko/"><span>⚙️</span>Nginx Config Generator</a>
-<a class="sf-related-card" href="/tools/ssh-config-generator/ko/"><span>🔑</span>SSH Config Generator</a>
-<a class="sf-related-card" href="/tools/firewall-rule-builder/ko/"><span>🔥</span>Firewall Rule Builder</a>
-<a class="sf-related-card" href="https://stackfreeks.com/best-cheap-vps-2026/" rel="noopener" target="_blank"><span>📖</span>Best Cheap VPS Providers 2026</a>
-</div>
-</section>
-<section class="vultr-banner">
-<div class="container banner-inner">
+<!-- Vultr affiliate banner -->
+<div class="vultr-banner">
+<a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
 <div>
-<p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-<p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-<p class="banner-sub" data-i18n="vultr_sub">$100 free credit for new accounts</p>
+<div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+<div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+<div class="vultr-sub" data-i18n="vultr_sub">$100 free credit for new accounts</div>
 </div>
-<a class="btn-vultr" data-i18n="vultr_cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">Try Vultr &rarr;</a>
+<div class="vultr-cta" data-i18n="vultr_cta">Try Vultr &rarr;</div>
+</a>
 </div>
-</section>
-<footer class="footer">
-<div class="container footer-inner">
-<span data-i18n="footer_copy">&copy; 2026 StackFreeks</span>
+<!-- Footer -->
+<footer class="site-footer">
+<div class="wrap-tool">
 <div class="footer-links">
 <a href="/about/">About</a>
 <a href="/privacy/">Privacy</a>
 <a href="/contact/">Contact</a>
 <a href="/terms/">Terms</a>
-<a href="https://stackfreeks.com" rel="noopener" target="_blank">stackfreeks.com &rarr;</a>
 </div>
+<div class="footer-copy" data-i18n="footer_copy">&copy; 2026 StackFreeks</div>
 </div>
 </footer>
 <script>
 window.SF_PAGE_I18N = {
   en: {
+    cat_vps_server: "VPS & Server",
+    more_tools: "More server tools",
+    all_in_cat: "All VPS & Server tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
     'lbl-input':         'Server Configuration',
     'lbl-ram':           'RAM Size',
     'lbl-usecase':       'Use Case',
@@ -639,8 +461,36 @@ window.SF_PAGE_I18N = {
     'lbl-disk-needed':   'Disk needed',
     'lbl-commands':      'Commands',
     'btn-copy':          'Copy',
-  },
+        x_commands: "Commands",
+        x_database_server: "Database Server",
+        x_desktop_workstation: "Desktop / Workstation",
+        x_development_machine: "Development Machine",
+        x_disk_needed: "Disk needed",
+        x_general_server_vps: "General Server / VPS",
+        x_hibernation_support: "Hibernation Support",
+        x_optimal_for_this_config: "Optimal for this config",
+        x_ram_size: "RAM Size",
+        x_recommended_swap: "Recommended Swap",
+        x_recommended_swappiness: "Recommended swappiness",
+        x_requires_swap_ram_size: "Requires swap ≥ RAM size",
+        x_server_configuration: "Server Configuration",
+        x_swap_file: "Swap file",
+        x_swap_partition: "Swap partition",
+        x_consider_upgrading_ram: "Consider upgrading RAM instead",
+        x_type: "Type",
+        x_use_case: "Use Case",
+        x_use_swap_file: "Use Swap File",
+        x_vs_swap_partition: "vs. swap partition"
+      },
   ko: {
+    cat_vps_server: "VPS & 서버",
+    more_tools: "서버 툴 더 보기",
+    all_in_cat: "VPS & 서버 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
     'lbl-input':         '서버 구성',
     'lbl-ram':           'RAM 크기',
     'lbl-usecase':       '사용 목적',
@@ -658,7 +508,27 @@ window.SF_PAGE_I18N = {
     'lbl-disk-needed':   '필요 디스크 공간',
     'lbl-commands':      '명령어',
     'btn-copy':          '복사',
-  }
+        x_commands: "명령어",
+        x_database_server: "데이터베이스 서버",
+        x_desktop_workstation: "데스크톱 / 워크스테이션",
+        x_development_machine: "개발용 머신",
+        x_disk_needed: "필요 디스크",
+        x_general_server_vps: "일반 서버 / VPS",
+        x_hibernation_support: "최대 절전 모드 지원",
+        x_optimal_for_this_config: "이 구성에 최적",
+        x_ram_size: "RAM 용량",
+        x_recommended_swap: "권장 swap 크기",
+        x_recommended_swappiness: "권장 swappiness",
+        x_requires_swap_ram_size: "swap이 RAM 용량 이상이어야 합니다",
+        x_server_configuration: "서버 구성",
+        x_swap_file: "swap 파일",
+        x_swap_partition: "swap 파티션",
+        x_consider_upgrading_ram: "swap보다 RAM 증설을 권장합니다",
+        x_type: "종류",
+        x_use_case: "용도",
+        x_use_swap_file: "swap 파일 사용",
+        x_vs_swap_partition: "swap 파티션 대신"
+      }
 };
 </script>
 <script src="/shared/i18n.js"></script>
@@ -773,7 +643,7 @@ function calculate() {
   document.getElementById('swapResult').textContent = val;
   document.getElementById('swapUnit').textContent   = unit;
   document.getElementById('swappinessVal').textContent = swappiness;
-  document.getElementById('swapTypeVal').textContent   = useSwapfile ? 'Swap file' : 'Swap partition';
+  document.getElementById('swapTypeVal').textContent   = useSwapfile ? sfT('x_swap_file') : sfT('x_swap_partition');
   document.getElementById('diskNeededVal').textContent = `${val} ${unit}`;
   document.getElementById('swapNote').textContent      = noteFor(ramGB, swapGB, usecase, hibernate);
   document.getElementById('cmdBlock').textContent      = genCmds(swapGB, useSwapfile, swappiness);
@@ -782,9 +652,11 @@ function calculate() {
   // Warn if swap seems excessive
   const warnClass = swapGB > ramGB * 2 && !hibernate;
   badge.className = warnClass ? 'badge-warn' : 'badge-success';
+  badge.querySelector('use').setAttribute('href',
+    warnClass ? '/shared/icons.svg#i-triangle-alert' : '/shared/icons.svg#i-circle-check');
   document.getElementById('badgeText').textContent = warnClass
-    ? 'Consider upgrading RAM instead'
-    : 'Optimal for this config';
+    ? sfT('x_consider_upgrading_ram')
+    : sfT('x_optimal_for_this_config');
 }
 
 function copyCmd() {
@@ -792,7 +664,7 @@ function copyCmd() {
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.getElementById('btn-copy');
     const orig = btn.textContent;
-    btn.textContent = '✓ Copied';
+    btn.textContent = '✓ ' + sfT('x_copied_s');
     setTimeout(() => { btn.textContent = orig; }, 1500);
   });
 }
@@ -802,6 +674,8 @@ function toggleFaq(btn) {
 }
 
 calculate();
+// Results are built in JS, so recompute them when the language changes.
+document.addEventListener('sfLangChanged', calculate);
 </script>
 </body>
 </html>

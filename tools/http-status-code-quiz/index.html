@@ -26,104 +26,20 @@
   <meta name="twitter:title" content="HTTP Status Code Quiz | StackFreeks Tools" />
   <meta name="twitter:description" content="A 15-question http status code quiz with instant explanations and a full cheat sheet. 401 vs 403, 502 vs 503 vs 504, 301 vs 302 vs 308." />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --danger: #ef4444;
-      --danger-bg: rgba(239,68,68,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-2);
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-    code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,11,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-    .logo-mark { width: 20px; height: 20px; background: var(--accent); border-radius: 6px; flex-shrink: 0; }
-    .logo {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-3);
-      font-size: 12px; font-weight: 500;
-      padding: 4px 10px; cursor: pointer;
-      font-family: var(--font);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--border-2); color: var(--text-2); }
-    .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
-    .nav-back:hover { color: var(--text-1); }
-
-    /* Container */
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
-    .eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-    h1 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.03em; color: var(--text-1); line-height: 1.2; }
-    .hero-desc { margin-top: 8px; font-size: 0.95rem; color: var(--text-2); max-width: 560px; }
-
-    main { padding: 32px 0 48px; }
-
+    /* HTTP Status Code Quiz — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
     /* Quiz */
     .quizbox {
       width: 100%;
       min-height: 300px;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       border: 1px solid var(--border);
       background: var(--surface-2);
       color: var(--text-1);
@@ -149,13 +65,13 @@
     }
     .choice:hover:not([disabled]) { border-color: var(--border-2); background: var(--surface-2); }
     .choice[disabled] { cursor: default; }
-    .choice.correct { border-color: var(--success); background: var(--success-bg); color: var(--success); }
+    .choice.correct { border-color: var(--success); background: var(--success); color: var(--success-fg); }
     .choice.wrong { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
     .choice.dim { opacity: 0.45; }
 
     .feedback { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
     .fb-verdict { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
-    .feedback.ok .fb-verdict { color: var(--success); }
+    .feedback.ok .fb-verdict { color: var(--success-fg); }
     .feedback.no .fb-verdict { color: var(--danger); }
     .fb-expl { font-size: 13px; color: var(--text-2); line-height: 1.6; }
 
@@ -164,16 +80,7 @@
     .start-sub { margin-top: 10px; font-size: 0.95rem; color: var(--text-2); max-width: 440px; margin-left: auto; margin-right: auto; }
     .result-avg { font-size: 3rem; font-weight: 600; color: var(--text-1); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; margin-top: 8px; }
     .result-avg span { font-size: 1rem; color: var(--text-3); font-weight: 400; }
-    .result-band { margin-top: 6px; font-size: 0.95rem; font-weight: 500; color: var(--success); }
-
-    .btn {
-      background: var(--accent-strong); color: #fff; border: none;
-      border-radius: var(--radius); padding: 10px 22px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); margin-top: 18px;
-      transition: opacity 0.15s;
-    }
-    .btn:hover { opacity: 0.88; }
+    .result-band { margin-top: 6px; font-size: 0.95rem; font-weight: 500; color: var(--success-fg); }
 
     .progress { margin-top: 14px; font-size: 12px; color: var(--text-3); text-align: center; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
     .yourbest { margin-top: 6px; font-size: 12px; color: var(--text-3); text-align: center; }
@@ -203,92 +110,19 @@
     .cheat-row b { color: var(--text-1); font-weight: 500; }
     .cheat-row span { color: var(--text-2); }
 
-    /* About / SEO copy */
-    .about-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text-1); margin-bottom: 14px; }
-    .about-section p { margin-bottom: 12px; font-size: 13px; color: var(--text-2); line-height: 1.7; max-width: 720px; }
-    .about-section p:last-child { margin-bottom: 0; }
-
-    /* Guide */
-    .guide-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
-
-    /* FAQ */
-    .faq-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; background: none; border: none;
-      color: var(--text-1); font-size: 14px; font-weight: 500;
-      cursor: pointer; text-align: left; padding: 0;
-      font-family: var(--font); gap: 12px;
-    }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-a { display: none; font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 10px; }
-    .faq-item.open .faq-a { display: block; }
-    .faq-icon { font-size: 18px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Related tools */
-    .sf-related { max-width: 860px; margin: 0 auto; padding: 40px 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3, #52525b); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface, #111113); border: 1px solid var(--border, rgba(255,255,255,0.08)); border-radius: var(--radius, 8px); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1, #fafafa); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2, rgba(255,255,255,0.14)); }
-    @media (max-width: 768px) { .sf-related { padding: 32px 16px 36px; } }
-
-    /* Vultr Banner */
-    .vultr-banner { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin: 48px 0 0; }
-    .banner-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-    .banner-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin: 4px 0 2px; }
-    .banner-sub { font-size: 13px; color: var(--text-2); }
-    .btn-vultr {
-      background: var(--success); color: var(--success-fg); border: none;
-      border-radius: var(--radius); padding: 9px 18px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); text-decoration: none;
-      display: inline-block; white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); }
-
     /* Footer */
-    .footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 64px; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-3); }
-    .footer a { color: var(--text-3); text-decoration: none; }
-    .footer a:hover { color: var(--text-2); }
-    .footer-links { display: flex; gap: 16px; align-items: center; }
 
     @media (max-width: 768px) {
-      h1 { font-size: 1.4rem; }
-      .container { padding: 0 16px; }
+
       .quizbox { padding: 22px 16px; }
       .choice { width: 100%; }
       .result-avg { font-size: 2.4rem; }
       .cheat-row { min-width: 480px; grid-template-columns: 48px 150px 1fr; }
-      .banner-inner { flex-direction: column; align-items: flex-start; }
-      .btn-vultr { width: 100%; text-align: center; }
-      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
     }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
+    
+    /* buttons are built by the game script as class="btn" */
+    .tool .btn { background: var(--accent-strong); color: var(--accent-fg); }
+    .tool .btn:hover { background: var(--accent-hover); }
   </style>
 
   <script type="application/ld+json">
@@ -302,164 +136,162 @@
 </head>
 <body>
 
-<!-- 1. Nav -->
-<nav>
-  <a href="/" class="logo">
-    <div class="logo-mark"></div>
-    StackFreeks Tools
-  </a>
-  <div class="nav-right">
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
-    <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-    <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
-  </div>
-</nav>
-
-<!-- 2. AdSense slot -->
-<!-- ADSENSE_SLOT_TOP -->
-
-<!-- 3. Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="lang-en">
-      <p class="eyebrow">Fun &amp; Tests</p>
-      <h1>HTTP Status Code Quiz</h1>
-      <p class="hero-desc">Test how well you know HTTP status codes. Fifteen mixed questions — match a code like 429 or 502 to its meaning, and match real situations to the right code. Instant explanations and a cheat sheet included.</p>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-fun" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-puzzle"/></svg><span data-i18n="cat_fun">Fun &amp; Tests</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <div class="lang-ko">
-      <p class="eyebrow">재미 &amp; 테스트</p>
-      <h1>HTTP 상태 코드 퀴즈</h1>
-      <p class="hero-desc">HTTP 상태 코드를 얼마나 잘 아는지 테스트하세요. 15개의 혼합 문제 — 429나 502 같은 코드를 의미와 연결하고, 실제 상황을 알맞은 코드와 연결합니다. 즉시 해설과 치트 시트를 제공합니다.</p>
-    </div>
-  </div>
-</section>
+  </nav>
 
-<!-- 4. Tool body -->
-<main>
-  <div class="container">
-    <div id="quiz" class="quizbox" aria-live="polite"></div>
-    <div class="progress" id="progress"></div>
-    <div class="yourbest" id="yourBest" hidden></div>
-
-    <!-- Cheat sheet (collapsed by default) -->
-    <section class="cheat-section">
-      <button class="cheat-toggle" id="cheatToggle" type="button" aria-expanded="false" aria-controls="cheatBody">Show cheat sheet</button>
-      <div class="cheat-body" id="cheatBody" hidden>
-        <div class="lang-en"><h2 style="margin-bottom:4px">HTTP status code cheat sheet</h2></div>
-        <div class="lang-ko"><h2 style="margin-bottom:4px">HTTP 상태 코드 치트 시트</h2></div>
-
-        <p class="cheat-class">2xx Success</p>
-        <div class="cheat-row"><code>200</code><b>OK</b><span class="lang-en">Request succeeded.</span><span class="lang-ko">요청이 성공했습니다.</span></div>
-        <div class="cheat-row"><code>201</code><b>Created</b><span class="lang-en">Request succeeded and a new resource was created.</span><span class="lang-ko">요청이 성공했고 새 리소스가 생성되었습니다.</span></div>
-        <div class="cheat-row"><code>202</code><b>Accepted</b><span class="lang-en">Request accepted for processing, but not completed yet.</span><span class="lang-ko">요청이 처리를 위해 접수되었지만 아직 완료되지 않았습니다.</span></div>
-        <div class="cheat-row"><code>204</code><b>No Content</b><span class="lang-en">Success, but there is no content to return in the body.</span><span class="lang-ko">성공했지만 본문에 반환할 내용이 없습니다.</span></div>
-
-        <p class="cheat-class">3xx Redirection</p>
-        <div class="cheat-row"><code>301</code><b>Moved Permanently</b><span class="lang-en">The resource has permanently moved to a new URL.</span><span class="lang-ko">리소스가 새 URL로 영구 이동했습니다.</span></div>
-        <div class="cheat-row"><code>302</code><b>Found</b><span class="lang-en">The resource is temporarily at a different URL.</span><span class="lang-ko">리소스가 일시적으로 다른 URL에 있습니다.</span></div>
-        <div class="cheat-row"><code>304</code><b>Not Modified</b><span class="lang-en">The cached copy is still valid; no body is sent.</span><span class="lang-ko">캐시된 사본이 여전히 유효하며 본문은 전송되지 않습니다.</span></div>
-        <div class="cheat-row"><code>307</code><b>Temporary Redirect</b><span class="lang-en">Temporary redirect; the request method must not change.</span><span class="lang-ko">임시 리디렉션이며 요청 메서드를 바꾸면 안 됩니다.</span></div>
-        <div class="cheat-row"><code>308</code><b>Permanent Redirect</b><span class="lang-en">Permanent redirect; the request method must not change.</span><span class="lang-ko">영구 리디렉션이며 요청 메서드를 바꾸면 안 됩니다.</span></div>
-
-        <p class="cheat-class">4xx Client Error</p>
-        <div class="cheat-row"><code>400</code><b>Bad Request</b><span class="lang-en">The server cannot process the request due to a client error such as malformed syntax.</span><span class="lang-ko">잘못된 문법 등 클라이언트 오류로 서버가 요청을 처리할 수 없습니다.</span></div>
-        <div class="cheat-row"><code>401</code><b>Unauthorized</b><span class="lang-en">Authentication is required or has failed.</span><span class="lang-ko">인증이 필요하거나 인증에 실패했습니다.</span></div>
-        <div class="cheat-row"><code>403</code><b>Forbidden</b><span class="lang-en">The server understood the request but refuses to authorize it.</span><span class="lang-ko">서버가 요청을 이해했지만 인가를 거부합니다.</span></div>
-        <div class="cheat-row"><code>404</code><b>Not Found</b><span class="lang-en">The server cannot find the requested resource.</span><span class="lang-ko">서버가 요청한 리소스를 찾을 수 없습니다.</span></div>
-        <div class="cheat-row"><code>405</code><b>Method Not Allowed</b><span class="lang-en">The HTTP method is not allowed for this resource.</span><span class="lang-ko">이 리소스에 대해 해당 HTTP 메서드가 허용되지 않습니다.</span></div>
-        <div class="cheat-row"><code>409</code><b>Conflict</b><span class="lang-en">The request conflicts with the current state of the resource.</span><span class="lang-ko">요청이 리소스의 현재 상태와 충돌합니다.</span></div>
-        <div class="cheat-row"><code>410</code><b>Gone</b><span class="lang-en">The resource is permanently gone with no forwarding address.</span><span class="lang-ko">리소스가 전달 주소 없이 영구히 사라졌습니다.</span></div>
-        <div class="cheat-row"><code>418</code><b>I'm a teapot</b><span class="lang-en">An April Fools' joke code: the server refuses to brew coffee because it is a teapot.</span><span class="lang-ko">만우절 농담 코드: 서버가 찻주전자라서 커피 내리기를 거부합니다.</span></div>
-        <div class="cheat-row"><code>422</code><b>Unprocessable Content</b><span class="lang-en">The syntax is valid but the content is semantically invalid.</span><span class="lang-ko">문법은 유효하지만 내용이 의미상 올바르지 않습니다.</span></div>
-        <div class="cheat-row"><code>429</code><b>Too Many Requests</b><span class="lang-en">The client has sent too many requests in a given amount of time (rate limiting).</span><span class="lang-ko">클라이언트가 일정 시간 동안 너무 많은 요청을 보냈습니다(속도 제한).</span></div>
-
-        <p class="cheat-class">5xx Server Error</p>
-        <div class="cheat-row"><code>500</code><b>Internal Server Error</b><span class="lang-en">The server hit an unexpected condition and could not complete the request.</span><span class="lang-ko">서버가 예기치 않은 상황을 만나 요청을 완료하지 못했습니다.</span></div>
-        <div class="cheat-row"><code>502</code><b>Bad Gateway</b><span class="lang-en">A server acting as a gateway received an invalid response from the upstream server.</span><span class="lang-ko">게이트웨이 역할의 서버가 업스트림 서버로부터 잘못된 응답을 받았습니다.</span></div>
-        <div class="cheat-row"><code>503</code><b>Service Unavailable</b><span class="lang-en">The server is temporarily overloaded or down for maintenance.</span><span class="lang-ko">서버가 일시적으로 과부하 상태이거나 점검 중입니다.</span></div>
-        <div class="cheat-row"><code>504</code><b>Gateway Timeout</b><span class="lang-en">A gateway did not get a timely response from the upstream server.</span><span class="lang-ko">게이트웨이가 업스트림 서버로부터 제때 응답을 받지 못했습니다.</span></div>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-globe"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>HTTP Status Code Quiz</h1>
+        <p>Test how well you know HTTP status codes. Fifteen mixed questions — match a code like 429 or 502 to its meaning, and match real situations to the right code. Instant explanations and a cheat sheet included.</p>
       </div>
-    </section>
-  </div>
-</main>
+      <div class="lang-ko">
+        <h1>HTTP 상태 코드 퀴즈</h1>
+        <p>HTTP 상태 코드를 얼마나 잘 아는지 테스트하세요. 15개의 혼합 문제 — 429나 502 같은 코드를 의미와 연결하고, 실제 상황을 알맞은 코드와 연결합니다. 즉시 해설과 치트 시트를 제공합니다.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
+    </div>
+  </header>
 
-<!-- About / SEO copy -->
-<section class="about-section">
-  <div class="container">
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
+  <div id="quiz" class="quizbox" aria-live="polite"></div>
+      <div class="progress" id="progress"></div>
+      <div class="yourbest" id="yourBest" hidden></div>
+
+      <!-- Cheat sheet (collapsed by default) -->
+      <section class="cheat-section">
+        <button class="cheat-toggle" id="cheatToggle" type="button" aria-expanded="false" aria-controls="cheatBody" data-i18n="x_show_cheat_sheet">Show cheat sheet</button>
+        <div class="cheat-body" id="cheatBody" hidden>
+          <div class="lang-en"><h2 style="margin-bottom:4px">HTTP status code cheat sheet</h2></div>
+          <div class="lang-ko"><h2 style="margin-bottom:4px">HTTP 상태 코드 치트 시트</h2></div>
+
+          <p class="cheat-class" data-i18n="x_2xx_success">2xx Success</p>
+          <div class="cheat-row"><code>200</code><b>OK</b><span class="lang-en">Request succeeded.</span><span class="lang-ko">요청이 성공했습니다.</span></div>
+          <div class="cheat-row"><code>201</code><b>Created</b><span class="lang-en">Request succeeded and a new resource was created.</span><span class="lang-ko">요청이 성공했고 새 리소스가 생성되었습니다.</span></div>
+          <div class="cheat-row"><code>202</code><b>Accepted</b><span class="lang-en">Request accepted for processing, but not completed yet.</span><span class="lang-ko">요청이 처리를 위해 접수되었지만 아직 완료되지 않았습니다.</span></div>
+          <div class="cheat-row"><code>204</code><b>No Content</b><span class="lang-en">Success, but there is no content to return in the body.</span><span class="lang-ko">성공했지만 본문에 반환할 내용이 없습니다.</span></div>
+
+          <p class="cheat-class" data-i18n="x_3xx_redirection">3xx Redirection</p>
+          <div class="cheat-row"><code>301</code><b>Moved Permanently</b><span class="lang-en">The resource has permanently moved to a new URL.</span><span class="lang-ko">리소스가 새 URL로 영구 이동했습니다.</span></div>
+          <div class="cheat-row"><code>302</code><b>Found</b><span class="lang-en">The resource is temporarily at a different URL.</span><span class="lang-ko">리소스가 일시적으로 다른 URL에 있습니다.</span></div>
+          <div class="cheat-row"><code>304</code><b>Not Modified</b><span class="lang-en">The cached copy is still valid; no body is sent.</span><span class="lang-ko">캐시된 사본이 여전히 유효하며 본문은 전송되지 않습니다.</span></div>
+          <div class="cheat-row"><code>307</code><b>Temporary Redirect</b><span class="lang-en">Temporary redirect; the request method must not change.</span><span class="lang-ko">임시 리디렉션이며 요청 메서드를 바꾸면 안 됩니다.</span></div>
+          <div class="cheat-row"><code>308</code><b>Permanent Redirect</b><span class="lang-en">Permanent redirect; the request method must not change.</span><span class="lang-ko">영구 리디렉션이며 요청 메서드를 바꾸면 안 됩니다.</span></div>
+
+          <p class="cheat-class" data-i18n="x_4xx_client_error">4xx Client Error</p>
+          <div class="cheat-row"><code>400</code><b>Bad Request</b><span class="lang-en">The server cannot process the request due to a client error such as malformed syntax.</span><span class="lang-ko">잘못된 문법 등 클라이언트 오류로 서버가 요청을 처리할 수 없습니다.</span></div>
+          <div class="cheat-row"><code>401</code><b>Unauthorized</b><span class="lang-en">Authentication is required or has failed.</span><span class="lang-ko">인증이 필요하거나 인증에 실패했습니다.</span></div>
+          <div class="cheat-row"><code>403</code><b>Forbidden</b><span class="lang-en">The server understood the request but refuses to authorize it.</span><span class="lang-ko">서버가 요청을 이해했지만 인가를 거부합니다.</span></div>
+          <div class="cheat-row"><code>404</code><b>Not Found</b><span class="lang-en">The server cannot find the requested resource.</span><span class="lang-ko">서버가 요청한 리소스를 찾을 수 없습니다.</span></div>
+          <div class="cheat-row"><code>405</code><b>Method Not Allowed</b><span class="lang-en">The HTTP method is not allowed for this resource.</span><span class="lang-ko">이 리소스에 대해 해당 HTTP 메서드가 허용되지 않습니다.</span></div>
+          <div class="cheat-row"><code>409</code><b>Conflict</b><span class="lang-en">The request conflicts with the current state of the resource.</span><span class="lang-ko">요청이 리소스의 현재 상태와 충돌합니다.</span></div>
+          <div class="cheat-row"><code>410</code><b>Gone</b><span class="lang-en">The resource is permanently gone with no forwarding address.</span><span class="lang-ko">리소스가 전달 주소 없이 영구히 사라졌습니다.</span></div>
+          <div class="cheat-row"><code>418</code><b>I'm a teapot</b><span class="lang-en">An April Fools' joke code: the server refuses to brew coffee because it is a teapot.</span><span class="lang-ko">만우절 농담 코드: 서버가 찻주전자라서 커피 내리기를 거부합니다.</span></div>
+          <div class="cheat-row"><code>422</code><b>Unprocessable Content</b><span class="lang-en">The syntax is valid but the content is semantically invalid.</span><span class="lang-ko">문법은 유효하지만 내용이 의미상 올바르지 않습니다.</span></div>
+          <div class="cheat-row"><code>429</code><b>Too Many Requests</b><span class="lang-en">The client has sent too many requests in a given amount of time (rate limiting).</span><span class="lang-ko">클라이언트가 일정 시간 동안 너무 많은 요청을 보냈습니다(속도 제한).</span></div>
+
+          <p class="cheat-class" data-i18n="x_5xx_server_error">5xx Server Error</p>
+          <div class="cheat-row"><code>500</code><b>Internal Server Error</b><span class="lang-en">The server hit an unexpected condition and could not complete the request.</span><span class="lang-ko">서버가 예기치 않은 상황을 만나 요청을 완료하지 못했습니다.</span></div>
+          <div class="cheat-row"><code>502</code><b>Bad Gateway</b><span class="lang-en">A server acting as a gateway received an invalid response from the upstream server.</span><span class="lang-ko">게이트웨이 역할의 서버가 업스트림 서버로부터 잘못된 응답을 받았습니다.</span></div>
+          <div class="cheat-row"><code>503</code><b>Service Unavailable</b><span class="lang-en">The server is temporarily overloaded or down for maintenance.</span><span class="lang-ko">서버가 일시적으로 과부하 상태이거나 점검 중입니다.</span></div>
+          <div class="cheat-row"><code>504</code><b>Gateway Timeout</b><span class="lang-en">A gateway did not get a timely response from the upstream server.</span><span class="lang-ko">게이트웨이가 업스트림 서버로부터 제때 응답을 받지 못했습니다.</span></div>
+        </div>
+      </section>
+  </main>
+
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More fun &amp; tests</h2>
+      <a class="sec-link" href="/#cat-fun"><span data-i18n="all_in_cat">All Fun &amp; Tests tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/guess-the-output/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-help"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Guess the Output</span><span class="lang-ko">출력 맞히기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/chimp-test/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-brain"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Chimp Test</span><span class="lang-ko">침팬지 테스트</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- About -->
+  <section class="guide about-section">
     <div class="lang-en">
-      <h2>About this HTTP status code quiz</h2>
+      <h2 class="guide-title">About this HTTP status code quiz</h2>
       <p>HTTP status codes are the three-digit numbers a server returns with every response, and knowing them by heart makes debugging APIs and web apps far faster. This quiz focuses on the 23 codes that actually show up in day-to-day work — the 2xx success codes, the 3xx redirects, the 4xx client errors like 401, 403, 404 and 429, and the 5xx server errors like 500, 502, 503 and 504.</p>
       <p>Each question either shows you a code and asks for its meaning, or describes a real situation and asks which code fits. Wrong answers are drawn from codes with nearby numbers, so you have to actually know 302 from 307 rather than guess by range. Every answer is followed by a plain-language explanation, and the cheat sheet lists all 23 codes grouped by class for quick review. It runs entirely in your browser, needs no signup, and saves your best score locally.</p>
     </div>
     <div class="lang-ko">
-      <h2>HTTP 상태 코드 퀴즈 소개</h2>
+      <h2 class="guide-title">HTTP 상태 코드 퀴즈 소개</h2>
       <p>HTTP 상태 코드는 서버가 모든 응답과 함께 반환하는 세 자리 숫자이며, 이를 외워두면 API와 웹 앱 디버깅이 훨씬 빨라집니다. 이 퀴즈는 실무에서 실제로 자주 등장하는 23개 코드에 집중합니다 — 2xx 성공 코드, 3xx 리디렉션, 401·403·404·429 같은 4xx 클라이언트 오류, 그리고 500·502·503·504 같은 5xx 서버 오류입니다.</p>
       <p>각 문제는 코드를 보여주고 의미를 묻거나, 실제 상황을 설명하고 어떤 코드가 맞는지 묻습니다. 오답 보기는 번호가 가까운 코드에서 뽑히므로 범위로 찍는 대신 302와 307을 실제로 구분할 수 있어야 합니다. 모든 답변 뒤에는 쉬운 설명이 따라오고, 치트 시트에는 23개 코드가 클래스별로 정리되어 있습니다. 전부 브라우저에서 실행되며 가입이 필요 없고 최고 점수는 로컬에 저장됩니다.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 5. How-to section -->
-<section class="guide-section">
-  <div class="container">
+  <!-- How to use -->
+  <section class="guide">
     <div class="lang-en">
-      <h2>How to use this quiz</h2>
+      <h2 class="guide-title">How to use this quiz</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">Start the quiz</div>
+          <h3>1. Start the quiz</h3>
           <div class="guide-desc">Click Start quiz. You get 15 questions drawn at random from the 23 most common HTTP status codes.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">Answer each question</div>
+          <h3>2. Answer each question</h3>
           <div class="guide-desc">Two formats are mixed: pick the meaning of a shown code, or pick the code that fits a described situation. Tap one of the four choices.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">Read the explanation</div>
+          <h3>3. Read the explanation</h3>
           <div class="guide-desc">After you answer, the correct choice turns green and a one-line explanation shows what the code really means. Press Next.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">Check your score</div>
+          <h3>4. Check your score</h3>
           <div class="guide-desc">At the end you get a score out of 15 and your best run is saved. Open the cheat sheet to review every code.</div>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <h2>퀴즈 사용 방법</h2>
+      <h2 class="guide-title">퀴즈 사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <div class="guide-step">Step 1</div>
-          <div class="guide-title">퀴즈 시작</div>
+          <h3>1. 퀴즈 시작</h3>
           <div class="guide-desc">퀴즈 시작을 누르세요. 가장 흔한 23개 HTTP 상태 코드에서 무작위로 뽑은 15문제가 출제됩니다.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 2</div>
-          <div class="guide-title">문제 풀기</div>
+          <h3>2. 문제 풀기</h3>
           <div class="guide-desc">두 형식이 섞여 나옵니다: 제시된 코드의 의미를 고르거나, 설명된 상황에 맞는 코드를 고릅니다. 네 개의 보기 중 하나를 탭하세요.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 3</div>
-          <div class="guide-title">해설 확인</div>
+          <h3>3. 해설 확인</h3>
           <div class="guide-desc">답하면 정답이 초록색으로 바뀌고 코드의 실제 의미를 한 줄로 설명합니다. 다음을 누르세요.</div>
         </div>
         <div class="guide-card">
-          <div class="guide-step">Step 4</div>
-          <div class="guide-title">점수 확인</div>
+          <h3>4. 점수 확인</h3>
           <div class="guide-desc">마지막에 15점 만점의 점수가 나오고 최고 기록이 저장됩니다. 치트 시트를 열어 모든 코드를 복습하세요.</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 6. FAQ -->
-<section class="faq-section">
-  <div class="container">
+  <!-- FAQ -->
+  <section class="faq">
     <div class="lang-en">
-      <h2>Frequently asked questions</h2>
+      <h2 class="faq-title">Frequently asked questions</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between 401 and 403?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">401 Unauthorized means the request lacks valid authentication credentials — the server does not know who you are, and sending correct credentials may fix it. 403 Forbidden means the server knows who you are but refuses to grant access — logging in again will not help because your account simply is not allowed to do this. In short: 401 is authenticate yourself, 403 is you are authenticated but not permitted.</div>
@@ -482,7 +314,7 @@
       </div>
     </div>
     <div class="lang-ko">
-      <h2>자주 묻는 질문</h2>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>401과 403의 차이는 무엇인가요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">401 Unauthorized는 요청에 유효한 인증 정보가 없다는 뜻입니다 — 서버가 당신이 누구인지 모르며, 올바른 인증 정보를 보내면 해결될 수 있습니다. 403 Forbidden은 서버가 당신이 누구인지는 알지만 접근을 거부한다는 뜻입니다 — 계정 자체에 권한이 없으므로 다시 로그인해도 소용이 없습니다. 요약하면 401은 "인증하라", 403은 "인증은 됐지만 허용되지 않는다"입니다.</div>
@@ -504,55 +336,83 @@
         <div class="faq-a">IANA HTTP 상태 코드 레지스트리에는 다섯 클래스에 걸쳐 약 70개의 코드가 등록되어 있습니다: 1xx 정보, 2xx 성공, 3xx 리디렉션, 4xx 클라이언트 오류, 5xx 서버 오류입니다. 일상적인 웹 개발에서는 약 20~25개만 알면 됩니다. 이 퀴즈는 실제 API와 웹 앱에서 가장 자주 등장하는 23개 코드를 훈련합니다.</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 7.5. Related tools -->
-<section class="sf-related">
-  <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-  <div class="sf-related-grid">
-    <a href="/tools/curl-command-generator/" class="sf-related-card"><span>🌀</span>curl Command Generator</a>
-    <a href="/tools/jwt-decoder/" class="sf-related-card"><span>🔑</span>JWT Decoder</a>
-    <a href="/tools/guess-the-output/" class="sf-related-card"><span>❓</span>Guess the Output</a>
-  </div>
-</section>
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a class="card card-sm sf-related-card" href="/tools/curl-command-generator/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-terminal"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">curl Command Generator</span><span class="lang-ko">curl 명령어 생성기</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/jwt-decoder/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-ticket"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">JWT Decoder</span><span class="lang-ko">JWT 디코더</span></span></span></a></li>
+      <li><a class="card card-sm sf-related-card" href="/tools/guess-the-output/"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-help"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Guess the Output</span><span class="lang-ko">출력 맞히기</span></span></span></a></li>
+    </ul>
+  </section>
 
-<!-- 8. Vultr banner -->
-<section class="vultr-banner">
-  <div class="container banner-inner">
-    <div>
-      <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-      <p class="banner-title" data-i18n="vultr_title">Get started on Vultr</p>
-      <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
-       rel="nofollow sponsored" target="_blank"
-       data-i18n="vultr_cta">Claim your credit →</a>
-  </div>
-</section>
-
-<!-- 9. Footer -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <span data-i18n="footer_copy">© 2026 StackFreeks</span>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-    </div>
-  </div>
-</footer>
+  </footer>
 
 <!-- Page-specific i18n -->
 <script>
 window.SF_PAGE_I18N = {
   en: {
-    related_title: "Related Tools"
-  },
+    cat_fun: "Fun & Tests",
+    more_tools: "More fun & tests",
+    all_in_cat: "All Fun & Tests tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
+    related_title: "Related Tools",
+        x_2xx_success: "2xx Success",
+        x_3xx_redirection: "3xx Redirection",
+        x_4xx_client_error: "4xx Client Error",
+        x_5xx_server_error: "5xx Server Error",
+        x_show_cheat_sheet: "Show cheat sheet"
+      },
   ko: {
-    related_title: "관련 툴"
-  }
+    cat_fun: "재미 & 테스트",
+    more_tools: "재미 & 테스트 더 보기",
+    all_in_cat: "재미 & 테스트 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
+    related_title: "관련 툴",
+        x_2xx_success: "2xx 성공",
+        x_3xx_redirection: "3xx 리다이렉션",
+        x_4xx_client_error: "4xx 클라이언트 오류",
+        x_5xx_server_error: "5xx 서버 오류",
+        x_show_cheat_sheet: "치트시트 보기"
+      }
 };
 </script>
 
@@ -852,7 +712,7 @@ window.SF_PAGE_I18N = {
     quizEl.innerHTML =
       '<div class="result-panel">' +
         '<div class="result-avg">' + score + ' <span>/ ' + TOTAL + '</span></div>' +
-        '<div class="result-band">' + esc(t(band)) + (endNew ? ' 🏆' : '') + '</div>' +
+        '<div class="result-band">' + esc(t(band)) + (endNew ? ' <svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-trophy"/></svg>' : '') + '</div>' +
         '<button class="btn" id="restartBtn" type="button">' + esc(t('restart')) + '</button>' +
       '</div>';
     document.getElementById('restartBtn').addEventListener('click', start);

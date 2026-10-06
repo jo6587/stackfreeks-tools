@@ -5,6 +5,7 @@ The judgment part (acceptance criteria, real usefulness vs competitors) is agent
   python scripts/qa_check.py <slug> [<slug> ...]   # exit 1 on any FAIL
   python scripts/qa_check.py --all                 # every tool (survey; old tools may predate rules)
   python scripts/qa_check.py --push                # pre-push gate: tools changed since origin/main
+  python scripts/qa_check.py --selftest            # the parser-backed rules check themselves
 
 --push also requires output/<slug>/qa-report.md starting with "QA: PASS" and newer than
 tools/<slug>/index.html for every tool *added* in the push. Installed as .git/hooks/pre-push.
@@ -22,7 +23,22 @@ ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://tools.stackfreeks.com"
 VULTR_REF = "https://www.vultr.com/?ref=9907834-9J"
 HANGUL = re.compile(r"[가-힣]")
+# anchor on the ASSIGNMENT: pages also read window.SF_PAGE_I18N inside guards
+PAGE_I18N_ASSIGN = re.compile(r"SF_PAGE_I18N\s*=\s*\{")
 _post_urls = None
+
+# tokens that name a background/surface — never legal as a text colour (design-guide §2)
+SURFACE_TOKENS = ("--success", "--danger-bg", "--warning-bg", "--accent-soft", "--accent-soft-2",
+                  "--surface", "--surface-2", "--bg", "--border", "--border-2")
+COLOR_DECL = re.compile(r"(?<![-\w])color\s*:\s*var\((--[\w-]+)\)")
+
+# design-guide §8: no emoji / unicode-symbol icons.
+# EMOJI_ANY — emoji presentation, banned anywhere in <body> (never body wording here).
+# MARK_SCOPED — plain marks, banned only as an element's sole content or inside a button/label,
+#   so "✓ Valid JSON — 3 keys" and "6 × 1024" in a sentence stay legal (see §8 for the limits).
+EMOJI_ANY = re.compile(r"[\U0001F000-\U0001FAFFℹ⏰✅⚠⚡❌]")
+MARK_SCOPED = re.compile(r"[✓✕✖✗✎▲▼★☆♥]")
+CONTROLISH = re.compile(r"\b(btn|button|tab|label|chip|toggle|pill|remove|close)\b")
 
 
 def blog_post_urls():
@@ -48,6 +64,85 @@ def contrast(a: str, b: str) -> float:
     return (hi + 0.05) / (lo + 0.05)
 
 
+def _scan_js(s: str, i: int):
+    """Walk JS source from i, yielding (index, nesting depth) for chars OUTSIDE string
+    literals only. Stops when nesting falls below the starting level (the closing brace)."""
+    q, depth = None, 0
+    while i < len(s):
+        c = s[i]
+        if q:
+            if c == "\\":
+                i += 2
+                continue
+            if c == q:
+                q = None
+            i += 1
+            continue
+        if c in "\"'`":
+            q = c
+            yield i, depth  # a quoted object key starts here
+        elif c in "{[(":
+            depth += 1
+        elif c in "}])":
+            depth -= 1
+            if depth < 0:
+                return
+        else:
+            yield i, depth
+        i += 1
+
+
+def _obj_keys(src: str, open_brace: int) -> list[str]:
+    """Top-level keys of the object literal whose '{' is at open_brace."""
+    keys = []
+    for i, depth in _scan_js(src, open_brace + 1):
+        if depth:
+            continue
+        m = re.match(r"([A-Za-z_$][\w$]*|\"[^\"]*\"|'[^']*')\s*:", src[i:])
+        if m and (i == 0 or not re.match(r"[\w$.]", src[i - 1])):
+            keys.append(m.group(1).strip("\"'"))
+    return keys
+
+
+def page_i18n_halves(html: str):
+    """{'en': [keys], 'ko': [keys]} from SF_PAGE_I18N, or None if the page has none."""
+    m = PAGE_I18N_ASSIGN.search(html)
+    if not m:
+        return None
+    outer = m.end() - 1
+    out = {}
+    for j, depth in _scan_js(html, outer + 1):
+        if depth:
+            continue
+        m = re.match(r"(en|ko)\s*:\s*\{", html[j:])
+        if m and not re.match(r"[\w$]", html[j - 1]):
+            out[m.group(1)] = _obj_keys(html, html.index("{", j))
+    return out
+
+
+def glyph_fails(soup) -> list[str]:
+    """design-guide §8: emoji anywhere, plain marks as an icon (sole content / in a control)."""
+    body = soup.body
+    out = []
+    if not body:
+        return out
+    for el in body.find_all(True):
+        own = "".join(c for c in el.children if isinstance(c, str))
+        label = f"<{el.name}{'.' + '.'.join(el.get('class')) if el.get('class') else ''}>"
+        for m in set(EMOJI_ANY.findall(own)):
+            out.append(f"emoji {m!r} in {label} — use a /shared/icons.svg sprite icon (design-guide §8)")
+        marks = set(MARK_SCOPED.findall(own))
+        if not marks:
+            continue
+        sole = not MARK_SCOPED.sub("", el.get_text()).strip()
+        control = el.name in ("button", "label") or CONTROLISH.search(" ".join(el.get("class") or []))
+        if sole or control:
+            where = "sole content of" if sole else "control"
+            out.append(f"symbol icon {''.join(sorted(marks))!r} as {where} {label} — "
+                       f"use a sprite icon (design-guide §8)")
+    return out
+
+
 def check(slug: str) -> tuple[list[str], list[str]]:
     d = ROOT / "tools" / slug
     page = d / "index.html"
@@ -55,6 +150,11 @@ def check(slug: str) -> tuple[list[str], list[str]]:
         return [f"{page} missing"], []
     html = page.read_text(encoding="utf-8")
     soup = BeautifulSoup(html, "lxml")
+    # design checks below also cover linked local stylesheets (/shared/sf.css), read as if inline
+    for link in soup.find_all("link", rel="stylesheet", href=True):
+        sheet = ROOT / link["href"].lstrip("/")
+        if link["href"].startswith("/") and sheet.is_file():
+            html += f"\n<style>{sheet.read_text(encoding='utf-8')}</style>"
     url = f"{BASE}/tools/{slug}/"
     fails, warns = [], []
 
@@ -69,8 +169,22 @@ def check(slug: str) -> tuple[list[str], list[str]]:
     need(soup.select_one(".lang-en") and soup.select_one(".lang-ko"), "hero missing .lang-en / .lang-ko block")
     i18n = html.find('<script src="/shared/i18n.js"></script>')
     need(i18n != -1, 'no <script src="/shared/i18n.js"></script>')
-    page_i18n = html.find("SF_PAGE_I18N")
+    pm = PAGE_I18N_ASSIGN.search(html)
+    page_i18n = pm.start() if pm else -1
     need(page_i18n == -1 or page_i18n < i18n, "SF_PAGE_I18N defined after i18n.js loads")
+
+    # SF_PAGE_I18N EN/KO parity — a key missing from one half leaves that language untranslated
+    halves = page_i18n_halves(html)
+    if halves is not None:
+        need("en" in halves and "ko" in halves,
+             f"SF_PAGE_I18N needs both en: and ko: halves (have {sorted(halves)})")
+        if {"en", "ko"} <= set(halves):
+            for a, b in (("en", "ko"), ("ko", "en")):
+                gone = sorted(set(halves[a]) - set(halves[b]))
+                need(not gone, f"SF_PAGE_I18N {b}: missing keys present in {a}: {gone}")
+            for lang in ("en", "ko"):
+                dup = sorted({k for k in halves[lang] if halves[lang].count(k) > 1})
+                need(not dup, f"SF_PAGE_I18N {lang}: duplicate keys {dup}")
 
     # SEO
     title = soup.title.string.strip() if soup.title and soup.title.string else ""
@@ -154,6 +268,22 @@ def check(slug: str) -> tuple[list[str], list[str]]:
     need(not re.search(r"(?<![-\w])color\s*:\s*#818cf8", html),
          "hardcoded #818cf8 — use var(--accent-text) (design-guide §2)")
 
+    # surface/background token used as a text colour — invisible or near-invisible in one theme.
+    # CSS blocks, plus every style="" attribute in the file (so JS template literals count too).
+    for sel, body in re.findall(r"([^{}@]+)\{([^{}]*)\}", css):
+        for m in COLOR_DECL.finditer(body):
+            if m.group(1) in SURFACE_TOKENS:
+                fails.append(f"color: var({m.group(1)}) is a surface token, not a text colour, "
+                             f"in {' '.join(sel.split())[:60]!r} (design-guide §2)")
+    for m in re.finditer(r"""style\s*=\s*(\\?["'])(.*?)\1""", html, re.S):
+        for mm in COLOR_DECL.finditer(m.group(2)):
+            if mm.group(1) in SURFACE_TOKENS:
+                fails.append(f"color: var({mm.group(1)}) is a surface token, not a text colour, "
+                             f"in inline style {m.group(2)[:70]!r} (design-guide §2)")
+
+    # emoji / unicode-symbol icons (design-guide §8)
+    fails += glyph_fails(soup)
+
     # mobile + content
     need(re.search(r"@media\s*\(max-width:\s*768px\)", html), "no @media (max-width: 768px)")
     need(soup.select_one(".guide-grid"), "no How-to section (.guide-grid)")
@@ -190,9 +320,36 @@ def changed_slugs():
     return sorted(s for s in changed if (ROOT / "tools" / s / "index.html").exists()), added
 
 
+def selftest():
+    """The three rules that need a parser rather than a regex — keep them honest."""
+    src = """<script>window.SF_PAGE_I18N = {
+      en: { a: 'x: not a key', b: "}", c: { nested: 1 }, "d": 2, only_en: 3 },
+      ko: { a: '1', b: '2', c: { nested: 1 }, "d": 2 }
+    };</script>"""
+    h = page_i18n_halves(src)
+    assert h["en"] == ["a", "b", "c", "d", "only_en"], h
+    assert h["ko"] == ["a", "b", "c", "d"], h
+    assert set(h["en"]) - set(h["ko"]) == {"only_en"}
+    assert page_i18n_halves("<p>no i18n here</p>") is None
+
+    ok = BeautifulSoup("<body><p>Result: 6 × 1024 ✓ done, 50 ÷ 2 → fine</p>"
+                       "<a href='/'>All tools →</a></body>", "lxml")
+    assert glyph_fails(ok) == [], glyph_fails(ok)
+    bad = BeautifulSoup("<body><button class='btn'>📋</button><span>✕</span>"
+                        "<p>fine ✓ here too</p></body>", "lxml")
+    assert len(glyph_fails(bad)) == 2, glyph_fails(bad)
+
+    assert COLOR_DECL.search("color: var(--surface-2)").group(1) in SURFACE_TOKENS
+    assert COLOR_DECL.search("background-color: var(--surface-2)") is None
+    print("selftest OK")
+    return 0
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     args = sys.argv[1:]
+    if args == ["--selftest"]:
+        return selftest()
     added = set()
     if args == ["--all"]:
         slugs = sorted(p.parent.name for p in (ROOT / "tools").glob("*/index.html"))

@@ -23,8 +23,20 @@ const SF_I18N = {
     cw_cta: 'Start free trial →',
     // Related tools
     related_title: 'Related Tools',
+    // Theme toggle (sr-only label; aria-pressed = dark is on)
+    theme_dark: 'Dark mode',
     // Footer
     footer_copy: '© 2026 StackFreeks',
+    // Common tool-body chrome (reused across tools)
+    x_clear: 'Clear',
+    x_copied: 'Copied!',
+    x_copied_s: 'Copied',
+    x_copy: 'Copy',
+    x_description: 'Description',
+    x_group: 'Group',
+    x_none: 'None',
+    x_remove: 'Remove',
+    x_words: 'Words',
   },
   ko: {
     // Navbar
@@ -41,8 +53,20 @@ const SF_I18N = {
     cw_cta: '무료 체험 시작 →',
     // Related tools
     related_title: '관련 툴',
+    // Theme toggle
+    theme_dark: '다크 모드',
     // Footer
     footer_copy: '© 2026 StackFreeks',
+    // Common tool-body chrome (reused across tools)
+    x_clear: '지우기',
+    x_copied: '복사됨!',
+    x_copied_s: '복사됨',
+    x_copy: '복사',
+    x_description: '설명',
+    x_group: '그룹',
+    x_none: '없음',
+    x_remove: '삭제',
+    x_words: '단어',
   }
 };
 
@@ -72,10 +96,16 @@ const SF_I18N = {
       if (t[el.dataset.i18n] != null) el.textContent = t[el.dataset.i18n];
     });
 
-    // Update data-i18n-placeholder
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
-      if (t[el.dataset.i18nPlaceholder] != null) el.placeholder = t[el.dataset.i18nPlaceholder];
-    });
+    // Update data-i18n-placeholder / -aria / -title (attribute-only strings)
+    [['i18nPlaceholder', 'placeholder'], ['i18nAria', 'aria-label'], ['i18nTitle', 'title']]
+      .forEach(function (pair) {
+        document.querySelectorAll('[data-' + pair[0].replace(/[A-Z]/g, function (c) {
+          return '-' + c.toLowerCase();
+        }) + ']').forEach(function (el) {
+          var v = t[el.dataset[pair[0]]];
+          if (v != null) el.setAttribute(pair[1], v);
+        });
+      });
 
     // Show/hide language blocks
     document.querySelectorAll('.lang-en').forEach(function (el) { el.hidden = lang !== 'en'; });
@@ -108,8 +138,9 @@ const SF_I18N = {
       // Only element nodes that carry (or contain) language markup. This skips the
       // text nodes our own textContent writes produce, so we never loop.
       if (node.nodeType !== 1) return false;
-      if (node.matches && node.matches('.lang-en, .lang-ko, [data-i18n], [data-i18n-placeholder]')) return true;
-      return !!(node.querySelector && node.querySelector('.lang-en, .lang-ko, [data-i18n], [data-i18n-placeholder]'));
+      var sel = '.lang-en, .lang-ko, [data-i18n], [data-i18n-placeholder], [data-i18n-aria], [data-i18n-title]';
+      if (node.matches && node.matches(sel)) return true;
+      return !!(node.querySelector && node.querySelector(sel));
     }
     var obs = new MutationObserver(function (mutations) {
       for (var i = 0; i < mutations.length; i++) {
@@ -123,6 +154,17 @@ const SF_I18N = {
     if (document.body) start();
     else document.addEventListener('DOMContentLoaded', start);
   })();
+
+  // Translation lookup for strings a tool's own JS writes into the DOM.
+  // Falls back to the page's EN value, then the shared EN value, then the key.
+  window.sfT = function (key) {
+    var page = window.SF_PAGE_I18N || {};
+    var v = (page[lang] || {})[key];
+    if (v == null) v = SF_I18N[lang][key];
+    if (v == null) v = (page.en || {})[key];
+    if (v == null) v = SF_I18N.en[key];
+    return v == null ? key : v;
+  };
 
   window.sfLang = {
     get current() { return lang; },
@@ -142,6 +184,30 @@ const SF_I18N = {
     // re-render against the resolved language (localStorage / data-force-lang).
     document.dispatchEvent(new CustomEvent('sfLangChanged', { detail: { lang: lang } }));
   });
+})();
+
+// Light/dark theme toggle: <button class="theme-toggle" onclick="sfTheme.toggle()" aria-pressed="false">.
+// No stored choice = follow the system (CSS media query). A click stores 'light'/'dark' in localStorage('sf-theme');
+// the <head> one-liner re-applies it as html[data-theme] before first paint.
+(function () {
+  var root = document.documentElement;
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  function current() { return root.dataset.theme || (mq.matches ? 'dark' : 'light'); }
+  function sync() {
+    var dark = current() === 'dark';
+    document.querySelectorAll('.theme-toggle').forEach(function (b) { b.setAttribute('aria-pressed', dark); });
+  }
+  window.sfTheme = {
+    get current() { return current(); },
+    toggle: function () {
+      var t = current() === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = t;
+      try { localStorage.setItem('sf-theme', t); } catch (e) {}
+      sync();
+    }
+  };
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  document.addEventListener('DOMContentLoaded', sync);
 })();
 
 // Inject Cloudways banner after .vultr-banner on every page

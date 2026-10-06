@@ -21,472 +21,49 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="StackFreeks Tools" />
 
-  <!-- ADSENSE_SLOT_TOP -->
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
 
   <style>
-    :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --surface-2: #18181b;
-      --border: rgba(255,255,255,0.08);
-      --border-2: rgba(255,255,255,0.14);
-      --text-1: #fafafa;
-      --text-2: #a1a1aa;
-      --text-3: #80808a;
-      --accent: #6366f1;
-      --accent-text: #818cf8;
-      --accent-strong: #4f46e5;
-      --success: #22c55e;
-      --success-fg: #0a0a0b;
-      --success-hover: #4ade80;
-      --success-bg: rgba(34,197,94,0.08);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", "Monaco", monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-1);
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a { color: var(--accent-text); text-decoration: none; }
-    a:hover { opacity: 0.8; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-1);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-back {
-      font-size: 13px;
-      color: var(--text-2);
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text-1); opacity: 1; }
-
-    .nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border-2);
-    }
-
-    .lang-toggle {
-      background: var(--surface-2);
-      border: 1px solid var(--border-2);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .lang-toggle:hover { border-color: var(--accent); }
-
-    /* Hero */
-    .hero {
-      padding: 48px 24px 32px;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--text-1);
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: var(--text-2);
-    }
-
-    /* Tool layout */
-    .tool-wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 0 24px 48px;
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    /* Form panel */
-    .form-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
+    /* Fail2ban Jail Generator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .form-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 18px; }
     .field { display: flex; flex-direction: column; gap: 6px; }
-
-    .field label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-2);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .field select,
-    .field input[type="text"] {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-1);
-      font-family: var(--font);
-      font-size: 14px;
-      padding: 8px 12px;
-      width: 100%;
-      transition: border-color 0.15s;
-    }
-    .field select:focus,
-    .field input[type="text"]:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    .field select option { background: #18181b; }
-
-    .field-hint {
-      font-size: 11px;
-      color: var(--text-3);
-      text-transform: none;
-      letter-spacing: 0;
-      font-weight: 400;
-    }
-
-    .section-divider {
-      height: 1px;
-      background: var(--border);
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    /* Checkboxes */
+    .field label { font-size: 12px; font-weight: 500; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em; }
+    .field select, .field input[type="text"] { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); color: var(--text-1); font-family: var(--font); font-size: 14px; padding: 8px 12px; width: 100%; transition: border-color 0.15s; }
+    .field select:focus, .field input[type="text"]:focus { outline: none; border-color: var(--accent); }
+    .field-hint { font-size: 12px; color: var(--text-3); text-transform: none; letter-spacing: 0; font-weight: 400; }
+    .section-divider { height: 1px; background: var(--border); }
     .check-list { display: flex; flex-direction: column; gap: 10px; }
-
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
-
-    .check-item input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--accent);
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .check-item span {
-      font-size: 13px;
-      color: var(--text-2);
-      font-family: var(--font-mono);
-    }
-
-    .check-item small {
-      font-size: 11px;
-      color: var(--text-3);
-      font-family: var(--font);
-      margin-left: auto;
-      text-align: right;
-    }
-
-    /* Slider */
-    .slider-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .slider-row input[type="range"] {
-      flex: 1;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-    .slider-val {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      color: var(--text-1);
-      min-width: 24px;
-      text-align: center;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2px 8px;
-    }
-
-    .btn-generate {
-      background: var(--accent-strong);
-      border: none;
-      border-radius: var(--radius);
-      color: #fff;
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 500;
-      padding: 10px 20px;
-      cursor: pointer;
-      width: 100%;
-      transition: opacity 0.15s;
-      margin-top: 4px;
-    }
+    .check-item { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+    .check-item span { font-size: 13px; color: var(--text-2); font-family: var(--font-mono); }
+    .check-item small { font-size: 12px; color: var(--text-3); font-family: var(--font); margin-left: auto; text-align: right; }
+    .slider-row { display: flex; align-items: center; gap: 12px; }
+    .slider-row input[type="range"] { flex: 1; accent-color: var(--accent); cursor: pointer; }
+    .slider-val { font-family: var(--font-mono); font-size: 14px; color: var(--text-1); min-width: 24px; text-align: center; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 2px 8px; }
+    .btn-generate { background: var(--accent-strong); border: none; border-radius: var(--radius-s); color: var(--accent-fg); font-family: var(--font); font-size: 14px; font-weight: 500; padding: 10px 20px; cursor: pointer; width: 100%; transition: opacity 0.15s; margin-top: 4px; }
     .btn-generate:hover { opacity: 0.85; }
-
-    /* Output panel */
-    .output-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .output-block {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .output-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      gap: 8px;
-    }
-
-    .output-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-2);
-      font-family: var(--font-mono);
-      letter-spacing: 0.02em;
-    }
-
+    .output-panel { display: flex; flex-direction: column; gap: 20px; }
+    .output-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .output-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); gap: 8px; }
+    .output-title { font-size: 12px; font-weight: 600; color: var(--text-2); font-family: var(--font-mono); letter-spacing: 0.02em; }
     .output-actions { display: flex; gap: 8px; }
-
-    .btn-copy {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-2);
-      font-family: var(--font);
-      font-size: 12px;
-      padding: 4px 12px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
+    .btn-copy { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); color: var(--text-2); font-family: var(--font); font-size: 12px; padding: 4px 12px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
     .btn-copy:hover { border-color: var(--accent); color: var(--accent-text); }
-    .btn-copy.copied { border-color: var(--success); color: var(--success); }
-
-    .output-code {
-      padding: 16px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text-1);
-      white-space: pre;
-      overflow-x: auto;
-      min-height: 80px;
-    }
-
-    /* Syntax colors */
-    .f2b-comment { color: #52525b; }
+    .btn-copy.copied { border-color: var(--success); color: var(--success-fg); }
+    .output-code { padding: 16px; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--text-1); white-space: pre; overflow-x: auto; min-height: 80px; }
+    .f2b-comment { color: var(--text-3); }
     .f2b-section { color: var(--accent-text); }
-    .f2b-key { color: #fbbf24; }
-    .f2b-cmd { color: #86efac; }
-
-    .placeholder-msg {
-      color: var(--text-3);
-      font-family: var(--font);
-      font-size: 14px;
-      font-style: italic;
-      padding: 24px 16px;
-      text-align: center;
-    }
-
-    /* Guide */
-    .guide { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
-    .guide-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .guide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
-    .guide-step { font-size: 11px; font-weight: 500; color: var(--accent-text); margin-bottom: 8px; }
-    .guide-card h3 { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 6px; }
-    .guide-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FAQ */
-    .faq { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
-    .faq-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-    .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 16px 20px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .faq-q:hover { color: var(--accent-text); }
-    .faq-icon { font-size: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* Related tools */
-    .sf-related { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; }
-    .sf-related-title { font-size: 13px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-    .sf-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .sf-related-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-1); font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
-    .sf-related-card:hover { border-color: var(--border-2); opacity: 1; }
-
-    /* Vultr banner */
-    .vultr-banner {
-      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(34,197,94,0.08));
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 32px 24px;
-      margin-bottom: 0;
-    }
-
-    .banner-inner {
-      max-width: 980px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 4px;
-    }
-
-    .banner-title {
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--text-1);
-      margin-bottom: 4px;
-    }
-
-    .banner-sub {
-      font-size: 14px;
-      color: var(--text-2);
-    }
-
-    .btn-vultr {
-      background: var(--success);
-      border: none;
-      border-radius: var(--radius);
-      color: var(--success-fg);
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 12px 24px;
-      white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .btn-vultr:hover { background: var(--success-hover); color: var(--success-fg); }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text-2); opacity: 1; }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      .hero { padding: 32px 16px 24px; }
-      .hero h1 { font-size: 22px; }
-      .tool-wrap { grid-template-columns: 1fr; padding: 0 16px 40px; }
-      .guide { padding: 0 16px 36px; }
-      .faq { padding: 0 16px 36px; }
-      .sf-related { padding: 0 16px 36px; }
-      .banner-inner { flex-direction: column; }
-      .btn-vultr { width: 100%; text-align: center; display: block; padding: 12px; }
-    }
-    /* sf-mobile-input-16: iOS zooms on focus below 16px (design-guide 5-4) */
-    @media (max-width: 768px) {
-      input, select, textarea { font-size: max(16px, var(--input-fs, 0px)) !important; }
-    }
-    /* sf-touch-40: invisible 40px hit area (design-guide 5-5) */
-    @media (max-width: 768px), (pointer: coarse) {
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link) { position: relative; }
-      :where(button, [role="button"], .lang-toggle, nav a, header a, a[class*="btn"], a[class*="cta"], .nav-back, .back-link)::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 40px); height: max(100%, 40px); transform: translate(-50%, -50%); }
-    }
-    /* sf-nav-compact: nav stays one row at 375/320 (design-guide 5-1) */
-    @media (max-width: 480px) {
-      body > nav:not(.navbar), nav.nav, nav.navbar > .container { padding-left: 12px !important; padding-right: 12px !important; gap: 8px !important; }
-      nav :is(.nav-inner, .nav-left, .nav-right, .nav-actions), nav > div { gap: 10px !important; flex-wrap: nowrap !important; min-width: 0; }
-      nav :is(a, button) { white-space: nowrap !important; flex-shrink: 0; }
-      nav .nav-sep { display: none !important; }
-    }
-    @media (max-width: 360px) {
-      nav a[href^="https://stackfreeks.com"]:not(.logo):not(.nav-logo) { display: none !important; }
-    }
+    .f2b-key { color: var(--warning); }
+    .f2b-cmd { color: var(--success-fg); }
+    .placeholder-msg { color: var(--text-3); font-family: var(--font); font-size: 14px; font-style: italic; padding: 24px 16px; text-align: center; }
+    /* sf.css gives every input 9px 12px padding; a range track must not get it */
+    .tool input[type="range"] { padding: 0; }
+    .section-label { font-size: 12px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"Fail2ban Jail Generator","description":"Fail2ban jail.local generator for SSH, Nginx, Apache, Postfix and WordPress. Set bantime, maxretry, ignoreip — copy or download. No signup.","url":"https://tools.stackfreeks.com/tools/fail2ban-jail-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
@@ -497,33 +74,37 @@
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-
-  <!-- Nav -->
-  <nav>
-    <div class="nav-left">
-      <a href="/" class="logo">StackFreeks Tools</a>
-      <div class="nav-sep"></div>
-      <a href="/" class="nav-back" data-i18n="nav_back">← All Tools</a>
-      <a href="https://stackfreeks.com" class="nav-back" target="_blank" rel="noopener">Blog ↗</a>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-devops" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-wrench"/></svg><span data-i18n="cat_devops">DevOps &amp; Config Generators</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
     </div>
-    <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="lang-en">
-      <h1>Fail2ban Jail Generator</h1>
-      <p>Generate a complete <code style="color:var(--accent-text)">jail.local</code> config for SSH, Nginx, Apache, Postfix, vsftpd, and WordPress — with bantime, maxretry, ignoreip, and ready-to-run install commands.</p>
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-shield-ban"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Fail2ban Jail Generator</h1>
+        <p>Generate a complete <code style="color:var(--accent-text)">jail.local</code> config for SSH, Nginx, Apache, Postfix, vsftpd, and WordPress — with bantime, maxretry, ignoreip, and ready-to-run install commands.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>Fail2ban Jail 생성기</h1>
+        <p>SSH, Nginx, Apache, Postfix, vsftpd, WordPress용 <code style="color:var(--accent-text)">jail.local</code> 설정을 즉시 생성 — bantime, maxretry, ignoreip 및 설치·적용 명령어 포함.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
     </div>
-    <div class="lang-ko">
-      <h1>Fail2ban Jail 생성기</h1>
-      <p>SSH, Nginx, Apache, Postfix, vsftpd, WordPress용 <code style="color:var(--accent-text)">jail.local</code> 설정을 즉시 생성 — bantime, maxretry, ignoreip 및 설치·적용 명령어 포함.</p>
-    </div>
-  </section>
+  </header>
 
-  <!-- Tool -->
-  <section class="tool-wrap">
-
+  <main class="tool wrap-tool tool-wrap">
     <!-- Form panel -->
     <div class="form-panel">
 
@@ -578,21 +159,21 @@
       <div class="field">
         <label data-i18n="f2b_bantime">Ban Time</label>
         <select id="bantime">
-          <option value="10m">10 minutes</option>
-          <option value="1h" selected>1 hour</option>
-          <option value="24h">24 hours</option>
-          <option value="1w">1 week</option>
-          <option value="-1">Permanent</option>
+          <option value="10m" data-i18n="x_10_minutes">10 minutes</option>
+          <option value="1h" selected data-i18n="x_1_hour">1 hour</option>
+          <option value="24h" data-i18n="x_24_hours">24 hours</option>
+          <option value="1w" data-i18n="x_1_week">1 week</option>
+          <option value="-1" data-i18n="x_permanent">Permanent</option>
         </select>
       </div>
 
       <div class="field">
         <label data-i18n="f2b_findtime">Find Time</label>
         <select id="findtime">
-          <option value="5m">5 minutes</option>
-          <option value="10m" selected>10 minutes</option>
-          <option value="30m">30 minutes</option>
-          <option value="1h">1 hour</option>
+          <option value="5m" data-i18n="x_5_minutes">5 minutes</option>
+          <option value="10m" selected data-i18n="x_10_minutes">10 minutes</option>
+          <option value="30m" data-i18n="x_30_minutes">30 minutes</option>
+          <option value="1h" data-i18n="x_1_hour">1 hour</option>
         </select>
         <span class="field-hint" data-i18n="f2b_findtime_hint">Window in which retries are counted</span>
       </div>
@@ -634,67 +215,71 @@
       </div>
 
     </div>
+  </main>
 
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More DevOps tools</h2>
+      <a class="sec-link" href="/#cat-devops"><span data-i18n="all_in_cat">All DevOps &amp; Config Generators tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/ssh-config-generator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-key-round"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">SSH Config Generator</span><span class="lang-ko">SSH Config 생성기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/firewall-rule-builder/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-brick-wall"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Firewall Rule Builder</span><span class="lang-ko">방화벽 규칙 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
   </section>
 
-  <!-- Guide -->
   <section class="guide">
     <div class="lang-en">
-      <p class="guide-title">How to Use</p>
+      <h2 class="guide-title">How to Use</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">STEP 1</p>
-          <h3>Pick services to protect</h3>
+          <h3>1. Pick services to protect</h3>
           <p>Check the daemons running on your server — <code style="color:var(--accent-text)">sshd</code> is the minimum for any VPS. Add the Nginx or Apache jails if you serve websites, and postfix/vsftpd for mail or FTP.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 2</p>
-          <h3>Tune the ban policy</h3>
+          <h3>2. Tune the ban policy</h3>
           <p>Set maxretry (failed attempts allowed), bantime (how long an IP stays banned), and findtime (the counting window). Defaults of 3 / 1h / 10m work well for most servers.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 3</p>
-          <h3>Whitelist your own IP</h3>
+          <h3>3. Whitelist your own IP</h3>
           <p>Add your home or office IP to ignoreip so fail2ban can never lock you out — especially important if you choose a permanent ban time.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 4</p>
-          <h3>Install and apply</h3>
+          <h3>4. Install and apply</h3>
           <p>Copy or download the file to <code style="color:var(--accent-text)">/etc/fail2ban/jail.local</code>, then run the generated commands: install fail2ban, restart the service, and verify with <code style="color:var(--accent-text)">fail2ban-client status</code>.</p>
         </div>
       </div>
     </div>
     <div class="lang-ko">
-      <p class="guide-title">사용 방법</p>
+      <h2 class="guide-title">사용 방법</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <p class="guide-step">STEP 1</p>
-          <h3>보호할 서비스 선택</h3>
+          <h3>1. 보호할 서비스 선택</h3>
           <p>서버에서 실행 중인 데몬을 체크하세요 — 모든 VPS에서 <code style="color:var(--accent-text)">sshd</code>는 필수입니다. 웹사이트를 운영하면 Nginx/Apache jail을, 메일·FTP는 postfix/vsftpd를 추가하세요.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 2</p>
-          <h3>차단 정책 조정</h3>
+          <h3>2. 차단 정책 조정</h3>
           <p>maxretry(허용 실패 횟수), bantime(차단 유지 시간), findtime(집계 시간 창)을 설정하세요. 기본값 3 / 1h / 10m이 대부분의 서버에 적합합니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 3</p>
-          <h3>내 IP 화이트리스트</h3>
+          <h3>3. 내 IP 화이트리스트</h3>
           <p>집이나 사무실 IP를 ignoreip에 추가해 스스로 차단되는 일을 방지하세요 — 영구 차단을 선택했다면 특히 중요합니다.</p>
         </div>
         <div class="guide-card">
-          <p class="guide-step">STEP 4</p>
-          <h3>설치 후 적용</h3>
+          <h3>4. 설치 후 적용</h3>
           <p>생성된 파일을 <code style="color:var(--accent-text)">/etc/fail2ban/jail.local</code>에 저장하고 명령어를 실행하세요: fail2ban 설치, 서비스 재시작, <code style="color:var(--accent-text)">fail2ban-client status</code>로 확인.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
   <section class="faq">
     <div class="lang-en">
-      <p class="faq-title">Frequently Asked Questions</p>
+      <h2 class="faq-title">Frequently Asked Questions</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>What is the recommended bantime for fail2ban?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">For most VPS setups, a bantime of 1 hour (<code style="color:var(--accent-text)">1h</code>) is a solid default — long enough to stop brute-force scripts, short enough to forgive a mistyped password. High-value servers often use 24h or 1w. A permanent ban (<code style="color:var(--accent-text)">bantime = -1</code>) is aggressive: use it only together with a correct ignoreip so you never lock yourself out.</div>
@@ -717,7 +302,7 @@
       </div>
     </div>
     <div class="lang-ko">
-      <p class="faq-title">자주 묻는 질문</p>
+      <h2 class="faq-title">자주 묻는 질문</h2>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span>fail2ban bantime 추천값은 얼마인가요?</span><span class="faq-icon">+</span></button>
         <div class="faq-a">대부분의 VPS에는 1시간(<code style="color:var(--accent-text)">1h</code>)이 무난한 기본값입니다 — 브루트포스 스크립트를 막기에 충분하고, 비밀번호 오타 정도는 용서할 만큼 짧습니다. 중요한 서버는 24h 또는 1w를 많이 사용합니다. 영구 차단(<code style="color:var(--accent-text)">bantime = -1</code>)은 공격적이므로 반드시 ignoreip를 올바르게 설정한 뒤 사용하세요.</div>
@@ -741,47 +326,59 @@
     </div>
   </section>
 
-  <!-- Related tools -->
   <section class="sf-related">
-    <p class="sf-related-title" data-i18n="related_title">Related Tools</p>
-    <div class="sf-related-grid">
-      <a href="/tools/firewall-rule-builder/" class="sf-related-card"><span>🔥</span>Firewall Rule Builder</a>
-      <a href="/tools/ssh-config-generator/" class="sf-related-card"><span>🔑</span>SSH Config Generator</a>
-      <a href="/tools/htpasswd-generator/" class="sf-related-card"><span>🔒</span>Htpasswd Generator</a>
-      <a href="https://stackfreeks.com/vultr-firewall-setup/" target="_blank" rel="noopener" class="sf-related-card"><span>📖</span>Vultr Firewall Setup Guide</a>
-    </div>
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/firewall-rule-builder/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-brick-wall"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Firewall Rule Builder</span><span class="lang-ko">방화벽 규칙 생성기</span></span></span></a></li>
+      <li><a href="/tools/ssh-config-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-key-round"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">SSH Config Generator</span><span class="lang-ko">SSH Config 생성기</span></span></span></a></li>
+      <li><a href="/tools/htpasswd-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-lock-keyhole"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">.htpasswd Generator</span><span class="lang-ko">.htpasswd 생성기</span></span></span></a></li>
+    </ul>
   </section>
 
-  <!-- Vultr Banner -->
-  <section class="vultr-banner">
-    <div class="banner-inner">
+  <section class="related">
+    <p><a href="https://stackfreeks.com/vultr-firewall-setup/" target="_blank" rel="noopener">Vultr Firewall Setup Guide</a></p>
+  </section>
+
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
       <div>
-        <p class="eyebrow" data-i18n="vultr_label">Sponsor</p>
-        <p class="banner-title" data-i18n="vultr_title">Secure your server on Vultr</p>
-        <p class="banner-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</p>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Secure your server on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
       </div>
-      <a href="https://www.vultr.com/?ref=9907834-9J" class="btn-vultr"
-         rel="nofollow sponsored" target="_blank"
-         data-i18n="vultr_cta">Claim your credit →</a>
-    </div>
-  </section>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="/about/">About</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
-      <a href="/terms/">Terms</a>
-      <a href="https://stackfreeks.com" target="_blank" rel="noopener">stackfreeks.com</a>
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
     </div>
-    <p class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</p>
   </footer>
 
   <script>
     // i18n page-specific keys (must be before i18n.js)
     window.SF_PAGE_I18N = {
       en: {
+        cat_devops: "DevOps & Config Generators",
+        more_tools: "More DevOps tools",
+        all_in_cat: "All DevOps & Config Generators tools",
+        prev_tool: "Previous tool",
+        next_tool: "Next tool",
+        badge_free: "Free",
+        badge_signup: "No sign-up",
+        badge_browser: "Runs in your browser",
         f2b_services: 'Services to Protect',
         f2b_svc_sshd: 'SSH login',
         f2b_svc_nginx_auth: 'Nginx basic auth',
@@ -804,8 +401,24 @@
         f2b_cmd_title: 'Install & apply commands',
         copy_btn: 'Copy',
         download_btn: 'Download',
+        x_10_minutes: "10 minutes",
+        x_1_hour: "1 hour",
+        x_1_week: "1 week",
+        x_24_hours: "24 hours",
+        x_30_minutes: "30 minutes",
+        x_5_minutes: "5 minutes",
+        x_permanent: "Permanent",
+        x_pick_service: "Select at least one service to protect."
       },
       ko: {
+        cat_devops: "DevOps & 설정 생성기",
+        more_tools: "DevOps 툴 더 보기",
+        all_in_cat: "DevOps & 설정 생성기 전체",
+        prev_tool: "이전 툴",
+        next_tool: "다음 툴",
+        badge_free: "무료",
+        badge_signup: "가입 없음",
+        badge_browser: "브라우저에서 실행",
         f2b_services: '보호할 서비스',
         f2b_svc_sshd: 'SSH 로그인',
         f2b_svc_nginx_auth: 'Nginx 기본 인증',
@@ -828,6 +441,14 @@
         f2b_cmd_title: '설치 · 적용 명령어',
         copy_btn: '복사',
         download_btn: '다운로드',
+        x_10_minutes: "10분",
+        x_1_hour: "1시간",
+        x_1_week: "1주",
+        x_24_hours: "24시간",
+        x_30_minutes: "30분",
+        x_5_minutes: "5분",
+        x_permanent: "영구",
+        x_pick_service: "보호할 서비스를 하나 이상 선택하세요."
       }
     };
 
@@ -876,7 +497,7 @@
       const outEl = document.getElementById('jail-out');
 
       if (services.length === 0) {
-        outEl.innerHTML = '<div class="placeholder-msg">Select at least one service to protect.</div>';
+        outEl.innerHTML = '<div class="placeholder-msg">' + sfT('x_pick_service') + '</div>';
         outEl._raw = '';
         document.getElementById('cmd-block').style.display = 'none';
         return;
@@ -959,10 +580,10 @@
       if (!text) return;
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.getElementById(btnId);
-        btn.textContent = '✓ Copied';
+        btn.textContent = '✓ ' + sfT('x_copied_s');
         btn.classList.add('copied');
         setTimeout(() => {
-          btn.textContent = 'Copy';
+          btn.textContent = sfT('x_copy');
           btn.classList.remove('copied');
         }, 2000);
       });
@@ -985,7 +606,7 @@
 
     function resetCopy(btnId) {
       const btn = document.getElementById(btnId);
-      if (btn) { btn.textContent = 'Copy'; btn.classList.remove('copied'); }
+      if (btn) { btn.textContent = sfT('x_copy'); btn.classList.remove('copied'); }
     }
 
     function toggleFaq(btn) {
@@ -994,5 +615,6 @@
   </script>
 
   <script src="/shared/i18n.js"></script>
+
 </body>
 </html>
