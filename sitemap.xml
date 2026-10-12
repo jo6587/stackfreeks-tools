@@ -289,6 +289,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tools.stackfreeks.com/tools/ipv6-subnet-calculator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/ipv6-subnet-calculator/ko/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tools.stackfreeks.com/tools/json-formatter/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

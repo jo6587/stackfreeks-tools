@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPv6 Subnet Calculator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Free IPv6 subnet calculator: split a /48 or /56 into /64s, list every subnet, see expanded form, ip6.arpa zone and address type. No signup." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/ipv6-subnet-calculator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/ipv6-subnet-calculator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/ipv6-subnet-calculator/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/ipv6-subnet-calculator/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="IPv6 Subnet Calculator | StackFreeks Tools" />
+  <meta property="og:description" content="Free IPv6 subnet calculator: split a /48 or /56 into /64s, list every subnet, see expanded form, ip6.arpa zone and address type. No signup." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/ipv6-subnet-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="IPv6 Subnet Calculator | StackFreeks Tools" />
+  <meta name="twitter:description" content="Free IPv6 subnet calculator: split a /48 or /56 into /64s, list every subnet, see expanded form, ip6.arpa zone and address type. No signup." />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
+
+  <style>
+    /* IPv6 Subnet Calculator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+    .input-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+    .input-group { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .input-group input { width: 100%; font-family: var(--font-mono); }
+    .error-text { font-size: 13px; color: var(--danger); }
+    .error-text:empty { display: none; }
+    .chips { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .chips-label { font-size: 13px; color: var(--text-3); margin-right: 2px; }
+    .chip { background: var(--surface); border: 1px solid var(--border-2); color: var(--text-2); font-size: 13px; font-family: var(--font-mono); padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: border-color var(--t), color var(--t), background-color var(--t); }
+    .chip:hover { border-color: var(--accent); color: var(--accent-text); }
+    .chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); }
+    .v4-link { margin-top: 12px; font-size: 14px; }
+
+    .headline { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+    .hl-num { font-size: 30px; font-weight: 650; color: var(--text-1); font-variant-numeric: tabular-nums; word-break: break-all; }
+    .hl-text { font-size: 15px; color: var(--text-2); font-family: var(--font-mono); word-break: break-all; }
+    .notes { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+    .notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; padding: 10px 12px; border-radius: var(--radius-s); }
+    .notes li .ico { flex-shrink: 0; width: 16px; height: 16px; margin-top: 2px; }
+    .notes .warn { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning); }
+    .notes .info { background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); }
+    .v-cta { display: inline-block; margin-top: 12px; font-size: 14px; font-weight: 600; }
+
+    .result-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 12px; }
+    .result-table tr { border-bottom: 1px solid var(--border); }
+    .result-table tr:last-child { border-bottom: none; }
+    .result-table th { text-align: left; font-weight: 400; color: var(--text-2); width: 34%; padding: 10px 16px 10px 0; vertical-align: top; }
+    .result-table td { padding: 10px 0; color: var(--text-1); font-family: var(--font-mono); word-break: break-all; font-variant-numeric: tabular-nums; }
+    .result-table td small { display: block; font-family: var(--font); font-size: 13px; color: var(--text-3); margin-top: 2px; word-break: normal; }
+
+    .list-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .list-title { font-size: 16px; font-weight: 600; color: var(--text-1); }
+    .list-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .list-ctrl { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; font-size: 13px; color: var(--text-3); }
+    .list-ctrl input { width: 160px; font-family: var(--font-mono); }
+    .pager { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; font-size: 13px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+    #page-info { overflow-wrap: anywhere; min-width: 0; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-s); }
+    .sub-table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+    .sub-table th { text-align: left; padding: 8px 12px; font-family: var(--font); font-weight: 600; color: var(--text-3); background: var(--surface-2); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .sub-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); white-space: nowrap; vertical-align: top; }
+    .sub-table tr:last-child td { border-bottom: none; }
+    .sub-table td:first-child { color: var(--text-3); }
+    .sub-table td:nth-child(2) { color: var(--text-1); }
+    .sub-table td span { display: block; }
+    .sub-table tr.hit td { background: var(--accent-soft); }
+    .sub-table tr.hit td:first-child { color: var(--accent-text); font-weight: 600; }
+    .copied { background: var(--success); color: var(--success-fg); font-size: 13px; padding: 4px 12px; border-radius: var(--radius-s); }
+    .copied:empty { display: none; }
+    .faq-a strong { color: var(--text-1); }
+
+    @media (max-width: 768px) {
+      .input-row { grid-template-columns: minmax(0, 1fr); }
+      .result-table th { width: 40%; }
+      .hl-num { font-size: 24px; }
+      .list-ctrl input { flex: 1; min-width: 0; width: auto; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"IPv6 Subnet Calculator","description":"Free IPv6 subnet calculator: split a /48 or /56 into /64s, list every subnet, see expanded form, ip6.arpa zone and address type. No signup.","url":"https://tools.stackfreeks.com/tools/ipv6-subnet-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many /64 subnets are in a /48 or a /56?","acceptedAnswer":{"@type":"Answer","text":"A /48 holds 2^16 = 65,536 /64 subnets and a /56 holds 2^8 = 256. In general a /p prefix holds 2^(64 - p) /64s, because every extra prefix bit doubles the number of subnets. Enter your prefix above and the calculator shows the exact count, plus the total number of addresses as an exact integer."}},{"@type":"Question","name":"Why should IPv6 LAN subnets be /64?","acceptedAnswer":{"@type":"Answer","text":"SLAAC (RFC 4862) builds each host address from a 64-bit interface identifier, so automatic addressing only works on a /64. On longer prefixes such as /80 or /112 hosts need static addresses or DHCPv6. Longer prefixes are fine for point-to-point router links (/127, RFC 6164) and loopbacks (/128)."}},{"@type":"Question","name":"What is the RFC 5952 compressed IPv6 format?","acceptedAnswer":{"@type":"Answer","text":"RFC 5952 defines one canonical text form: lowercase hex, no leading zeros in a group, and the longest run of two or more all-zero groups replaced by :: (the leftmost run if two are equally long). A single zero group is never shortened to ::. The expanded form writes all 8 groups as 4 hex digits, which is what you need for reverse DNS and for sorting."}},{"@type":"Question","name":"How does ip6.arpa reverse DNS work for an IPv6 prefix?","acceptedAnswer":{"@type":"Answer","text":"Reverse zones are delegated one nibble (4 bits, one hex digit) at a time. Take the hex digits of the expanded prefix, reverse them, separate them with dots and append ip6.arpa: 2001:db8:1234::/56 becomes 0.0.4.3.2.1.8.b.d.0.1.0.0.2.ip6.arpa. A prefix that is not a multiple of 4, such as /57, cannot be a single zone: it needs 8 /60 zones, and the calculator shows the first one and the count."}},{"@type":"Question","name":"What IPv6 prefix size will my ISP or VPS provider give me?","acceptedAnswer":{"@type":"Answer","text":"RFC 6177 recommends giving end sites more than a single /64, typically a /48 or /56. Home ISPs commonly delegate a /56 or /60 through DHCPv6 prefix delegation, and many VPS providers route a /64 to each server. The exact size depends on the provider, so check your control panel, then enter the prefix here to plan your subnets."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-conv" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left-right"/></svg><span data-i18n="cat_converters">Converters &amp; Encoders</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+    </div>
+  </nav>
+
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-split"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>IPv6 Subnet Calculator</h1>
+        <p>Split any IPv6 prefix into child subnets: exact counts, every subnet listed, expanded form, ip6.arpa zone and address type</p>
+      </div>
+      <div class="lang-ko">
+        <h1>IPv6 서브넷 계산기</h1>
+        <p>IPv6 프리픽스를 하위 서브넷으로 분할: 정확한 개수, 전체 서브넷 목록, 확장 표기, ip6.arpa 존, 주소 유형까지 한 번에</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
+    <div class="tool-card">
+      <div class="input-row">
+        <div class="input-group">
+          <label for="addr" data-i18n="x_addr_label">IPv6 address / prefix</label>
+          <input type="text" id="addr" value="2001:db8:1234::/56" placeholder="2001:db8:1234::/56" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="addr-err" />
+          <div class="error-text" id="addr-err" role="alert"></div>
+        </div>
+        <div class="input-group">
+          <label for="child" data-i18n="x_child_label">Split into prefix length</label>
+          <input type="number" id="child" value="64" min="0" max="128" step="1" inputmode="numeric" aria-describedby="child-err" />
+          <div class="error-text" id="child-err" role="alert"></div>
+        </div>
+      </div>
+      <div class="chips" id="child-chips">
+        <span class="chips-label" data-i18n="x_split_into">Split into:</span>
+        <button type="button" class="chip" data-child="48">/48</button>
+        <button type="button" class="chip" data-child="52">/52</button>
+        <button type="button" class="chip" data-child="56">/56</button>
+        <button type="button" class="chip" data-child="60">/60</button>
+        <button type="button" class="chip" data-child="64">/64</button>
+        <button type="button" class="chip" data-child="80">/80</button>
+      </div>
+      <div class="chips">
+        <span class="chips-label" data-i18n="x_try">Try:</span>
+        <button type="button" class="chip" data-ex="2001:db8:1234::/56" data-exchild="64">2001:db8:1234::/56</button>
+        <button type="button" class="chip" data-ex="2001:db8::/48" data-exchild="64">2001:db8::/48</button>
+        <button type="button" class="chip" data-ex="fd12:3456:789a::/48" data-exchild="56">fd12:3456:789a::/48</button>
+        <button type="button" class="chip" data-ex="2001:db8:abcd:12::/57" data-exchild="64">2001:db8:abcd:12::/57</button>
+        <button type="button" class="chip" data-ex="::ffff:192.0.2.1/128" data-exchild="128">::ffff:192.0.2.1</button>
+      </div>
+      <p class="v4-link"><a href="/tools/subnet-calculator/" data-i18n="x_v4_link">Need IPv4? Use the IP Subnet Calculator →</a></p>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="tool-card" id="results" aria-live="polite">
+      <div class="headline"><span class="hl-num" id="hl-num"></span><span class="hl-text" id="hl-text"></span></div>
+      <ul class="notes" id="notes"></ul>
+      <table class="result-table"><tbody id="result-body"></tbody></table>
+      <a class="v-cta" id="v-cta" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank" data-i18n="x_vultr_cta">Putting this prefix on a server? Deploy a Vultr instance with IPv6 enabled — $300 free credit for new accounts →</a>
+    </div>
+
+    <!-- CHILD SUBNET LIST -->
+    <div class="tool-card" id="list-card">
+      <div class="list-head">
+        <h2 class="list-title" id="list-title"></h2>
+        <div class="list-actions">
+          <span class="copied" id="copied" role="status"></span>
+          <button type="button" class="btn btn-secondary" id="copy-btn"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-copy"/></svg><span data-i18n="x_copy_page">Copy page</span></button>
+          <button type="button" class="btn btn-secondary" id="csv-btn"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-download"/></svg><span data-i18n="x_csv">Download CSV</span></button>
+        </div>
+      </div>
+      <div class="list-ctrl">
+        <label for="jump" data-i18n="x_jump">Jump to subnet #</label>
+        <input type="text" id="jump" inputmode="numeric" placeholder="0" autocomplete="off" aria-describedby="jump-err" />
+        <button type="button" class="btn btn-secondary" id="jump-btn" data-i18n="x_go">Go</button>
+        <span class="error-text" id="jump-err" role="alert"></span>
+      </div>
+      <div class="table-wrap">
+        <table class="sub-table">
+          <thead><tr><th>#</th><th data-i18n="x_col_net">Subnet</th><th data-i18n="x_col_range">First – last address</th></tr></thead>
+          <tbody id="sub-body"></tbody>
+        </table>
+      </div>
+      <div class="pager">
+        <button type="button" class="btn btn-secondary" id="prev-btn"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg><span data-i18n="x_prev">Previous</span></button>
+        <button type="button" class="btn btn-secondary" id="next-btn"><span data-i18n="x_next">Next</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></button>
+        <span id="page-info"></span>
+      </div>
+    </div>
+  </main>
+
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More converters</h2>
+      <a class="sec-link" href="/#cat-conv"><span data-i18n="all_in_cat">All Converters &amp; Encoders tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/subnet-calculator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-network"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">IP Subnet Calculator</span><span class="lang-ko">IP 서브넷 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/password-generator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-rectangle-ellipsis"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Password Generator</span><span class="lang-ko">비밀번호 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <section class="guide">
+    <div class="lang-en">
+      <h2 class="guide-title">How to Use</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <h3>1. Enter your prefix</h3>
+          <p>Type an address with its prefix length, e.g. <code>2001:db8:1234::/56</code>. The <code>::</code> shorthand and IPv4-embedded forms like <code>::ffff:192.0.2.1</code> work. With no <code>/prefix</code> the calculator assumes /64.</p>
+        </div>
+        <div class="guide-card">
+          <h3>2. Choose the child prefix</h3>
+          <p>Set the prefix length you want to split into. Use /64 for LANs (SLAAC needs it), or /60 and /56 when you hand blocks to other sites or customers.</p>
+        </div>
+        <div class="guide-card">
+          <h3>3. Read the results</h3>
+          <p>See the subnet count, network, first and last address, exact address totals, compressed and expanded forms, the ip6.arpa reverse zone and the address type. Warnings flag non-/64 LANs and non-nibble prefixes.</p>
+        </div>
+        <div class="guide-card">
+          <h3>4. Browse and export</h3>
+          <p>Page through the child subnets, jump straight to subnet #N, then copy the page or download a CSV for your IPAM or config files.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lang-ko">
+      <h2 class="guide-title">사용 방법</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <h3>1. 프리픽스 입력</h3>
+          <p>주소와 프리픽스 길이를 함께 입력하세요. 예: <code>2001:db8:1234::/56</code>. <code>::</code> 축약형과 <code>::ffff:192.0.2.1</code> 같은 IPv4 포함 표기도 됩니다. <code>/프리픽스</code>를 빼면 /64로 계산합니다.</p>
+        </div>
+        <div class="guide-card">
+          <h3>2. 분할할 프리픽스 선택</h3>
+          <p>나눌 서브넷의 프리픽스 길이를 정하세요. LAN은 /64(SLAAC 필수), 다른 지점이나 고객에게 블록을 나눠 줄 때는 /60이나 /56을 씁니다.</p>
+        </div>
+        <div class="guide-card">
+          <h3>3. 결과 확인</h3>
+          <p>서브넷 개수, 네트워크, 첫·마지막 주소, 정확한 전체 주소 수, 축약·확장 표기, ip6.arpa 역방향 존, 주소 유형을 보여줍니다. /64가 아닌 LAN이나 니블 경계가 아닌 프리픽스는 경고로 알려줍니다.</p>
+        </div>
+        <div class="guide-card">
+          <h3>4. 목록 탐색과 내보내기</h3>
+          <p>하위 서브넷을 페이지별로 넘겨 보거나 서브넷 #N으로 바로 이동하고, 현재 페이지를 복사하거나 CSV로 내려받아 IPAM·설정 파일에 쓰세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="lang-en">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How many /64 subnets are in a /48 or a /56?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">A <code>/48</code> holds 2<sup>16</sup> = <strong>65,536</strong> /64 subnets and a <code>/56</code> holds 2<sup>8</sup> = <strong>256</strong>. In general a /p prefix holds 2<sup>(64 - p)</sup> /64s, because every extra prefix bit doubles the number of subnets. Enter your prefix above and the calculator shows the exact count, plus the total number of addresses as an exact integer.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Why should IPv6 LAN subnets be /64?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">SLAAC (RFC 4862) builds each host address from a 64-bit interface identifier, so automatic addressing only works on a <code>/64</code>. On longer prefixes such as <code>/80</code> or <code>/112</code> hosts need static addresses or DHCPv6. Longer prefixes are fine for point-to-point router links (<code>/127</code>, RFC 6164) and loopbacks (<code>/128</code>).</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the RFC 5952 compressed IPv6 format?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">RFC 5952 defines one canonical text form: lowercase hex, no leading zeros in a group, and the longest run of two or more all-zero groups replaced by <code>::</code> (the leftmost run if two are equally long). A single zero group is never shortened to <code>::</code>. The expanded form writes all 8 groups as 4 hex digits, which is what you need for reverse DNS and for sorting.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How does ip6.arpa reverse DNS work for an IPv6 prefix?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">Reverse zones are delegated one nibble (4 bits, one hex digit) at a time. Take the hex digits of the expanded prefix, reverse them, separate them with dots and append <code>ip6.arpa</code>: <code>2001:db8:1234::/56</code> becomes <code>0.0.4.3.2.1.8.b.d.0.1.0.0.2.ip6.arpa</code>. A prefix that is not a multiple of 4, such as <code>/57</code>, cannot be a single zone: it needs 8 /60 zones, and the calculator shows the first one and the count.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What IPv6 prefix size will my ISP or VPS provider give me?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">RFC 6177 recommends giving end sites more than a single /64, typically a <code>/48</code> or <code>/56</code>. Home ISPs commonly delegate a <code>/56</code> or <code>/60</code> through DHCPv6 prefix delegation, and many VPS providers route a <code>/64</code> to each server. The exact size depends on the provider, so check your control panel, then enter the prefix here to plan your subnets.</div>
+      </div>
+    </div>
+
+    <div class="lang-ko">
+      <h2 class="faq-title">자주 묻는 질문</h2>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>/48이나 /56 안에 /64 서브넷은 몇 개인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><code>/48</code>에는 2<sup>16</sup> = <strong>65,536개</strong>, <code>/56</code>에는 2<sup>8</sup> = <strong>256개</strong>의 /64 서브넷이 들어갑니다. 일반적으로 /p 프리픽스에는 2<sup>(64 - p)</sup>개의 /64가 있습니다. 프리픽스가 1비트 길어질 때마다 서브넷 수가 두 배가 되기 때문입니다. 위에 프리픽스를 입력하면 정확한 개수와 전체 주소 수를 정수 그대로 보여줍니다.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>IPv6 LAN 서브넷은 왜 /64여야 하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">SLAAC(RFC 4862)는 64비트 인터페이스 식별자로 호스트 주소를 만들기 때문에 자동 주소 설정은 <code>/64</code>에서만 동작합니다. <code>/80</code>, <code>/112</code>처럼 더 긴 프리픽스에서는 고정 주소나 DHCPv6가 필요합니다. 라우터 간 point-to-point 링크(<code>/127</code>, RFC 6164)나 루프백(<code>/128</code>)에는 긴 프리픽스를 써도 됩니다.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>RFC 5952 IPv6 축약 표기란 무엇인가요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">RFC 5952는 표준 텍스트 표기를 하나로 정합니다: 16진수 소문자, 그룹 앞자리 0 생략, 0으로만 된 그룹이 2개 이상 이어지는 가장 긴 구간을 <code>::</code>로 대체(길이가 같으면 왼쪽 구간). 0 그룹 하나는 <code>::</code>로 줄이지 않습니다. 확장 표기는 8개 그룹을 모두 16진수 4자리로 쓰며, 역방향 DNS나 정렬에 필요합니다.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>IPv6 프리픽스의 ip6.arpa 역방향 DNS는 어떻게 동작하나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">역방향 존은 니블(4비트, 16진수 한 자리) 단위로 위임됩니다. 확장된 프리픽스의 16진수 자릿수를 거꾸로 뒤집어 점으로 구분하고 <code>ip6.arpa</code>를 붙입니다: <code>2001:db8:1234::/56</code>은 <code>0.0.4.3.2.1.8.b.d.0.1.0.0.2.ip6.arpa</code>가 됩니다. <code>/57</code>처럼 4의 배수가 아닌 프리픽스는 존 하나로 만들 수 없어 /60 존 8개가 필요하며, 계산기는 첫 존과 개수를 보여줍니다.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>ISP나 VPS 업체는 어떤 크기의 IPv6 프리픽스를 주나요?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a">RFC 6177은 최종 사이트에 /64 하나보다 큰 블록, 보통 <code>/48</code>이나 <code>/56</code>을 주도록 권장합니다. 가정용 ISP는 DHCPv6 프리픽스 위임으로 <code>/56</code>이나 <code>/60</code>을 주는 경우가 많고, 많은 VPS 업체는 서버마다 <code>/64</code>를 라우팅합니다. 정확한 크기는 업체마다 다르니 관리 화면에서 확인한 뒤 여기에 입력해 서브넷을 계획하세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/subnet-calculator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-network"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">IP Subnet Calculator</span><span class="lang-ko">IP 서브넷 계산기</span></span></span></a></li>
+      <li><a href="/tools/firewall-rule-builder/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-brick-wall"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Firewall Rule Builder</span><span class="lang-ko">방화벽 규칙 생성기</span></span></span></a></li>
+      <li><a href="/tools/base-converter/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-binary"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Number Base Converter</span><span class="lang-ko">진법 변환기</span></span></span></a></li>
+    </ul>
+  </section>
+
+  <!-- Related content -->
+  <section class="related">
+    <p><a href="https://stackfreeks.com/vultr-firewall-setup/" target="_blank" rel="noopener">Vultr Firewall Setup Guide →</a></p>
+    <p><a href="https://stackfreeks.com" target="_blank" rel="noopener"><span class="lang-en">More networking and VPS guides on stackfreeks.com →</span><span class="lang-ko">stackfreeks.com에서 더 많은 네트워킹·VPS 가이드 보기 →</span></a></p>
+  </section>
+
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a class="vultr-inner" href="https://www.vultr.com/?ref=9907834-9J" rel="nofollow sponsored" target="_blank">
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
+    </div>
+  </footer>
+
+<!-- PAGE I18N -->
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    cat_converters: "Converters & Encoders",
+    more_tools: "More converters",
+    all_in_cat: "All Converters & Encoders tools",
+    prev_tool: "Previous tool",
+    next_tool: "Next tool",
+    badge_free: "Free",
+    badge_signup: "No sign-up",
+    badge_browser: "Runs in your browser",
+    nav_back: "← All Tools",
+    vultr_label: "Sponsor",
+    vultr_title: "Get started on Vultr",
+    vultr_sub: "Get $300 free credit — valid for 30 days (limited-time offer)",
+    vultr_cta: "Claim your credit →",
+    footer_copy: "© 2026 StackFreeks",
+    x_addr_label: "IPv6 address / prefix",
+    x_child_label: "Split into prefix length",
+    x_split_into: "Split into:",
+    x_try: "Try:",
+    x_v4_link: "Need IPv4? Use the IP Subnet Calculator →",
+    x_vultr_cta: "Putting this prefix on a server? Deploy a Vultr instance with IPv6 enabled — $300 free credit for new accounts →",
+    x_copy_page: "Copy page",
+    x_csv: "Download CSV",
+    x_jump: "Jump to subnet #",
+    x_go: "Go",
+    x_col_net: "Subnet",
+    x_col_range: "First – last address",
+    x_prev: "Previous",
+    x_next: "Next",
+    x_hl: "{child} subnets in {net}",
+    x_list_title: "{child} subnets of {net}",
+    x_page_info: "#{from}–#{to} of {count} · page {page} of {pages}",
+    x_copied: "Copied",
+    x_csv_capped: "CSV holds rows #{from}–#{to} (65,536 max per file). Jump further to export the next block.",
+    x_network: "Network",
+    x_first: "First address",
+    x_last: "Last address",
+    x_total: "Total addresses",
+    x_per_subnet: "Addresses per {child}",
+    x_mask: "Prefix mask",
+    x_compressed: "Address (RFC 5952 compressed)",
+    x_expanded: "Address (expanded)",
+    x_reverse: "Reverse DNS zone (ip6.arpa)",
+    x_reverse_more: "First of {n} /{len} zones: /{p} is not on a nibble boundary",
+    x_type: "Address type",
+    x_t_unspec: "Unspecified (::/128)",
+    x_t_loop: "Loopback (::1/128)",
+    x_t_mapped: "IPv4-mapped (::ffff:0:0/96)",
+    x_t_nat64: "IPv4/IPv6 translation, NAT64 (64:ff9b::/96)",
+    x_t_doc: "Documentation (2001:db8::/32, RFC 3849)",
+    x_t_doc2: "Documentation (3fff::/20, RFC 9637)",
+    x_t_teredo: "Teredo (2001::/32)",
+    x_t_6to4: "6to4 (2002::/16)",
+    x_t_ll: "Link-local unicast (fe80::/10)",
+    x_t_ula: "Unique local address, ULA (fc00::/7, RFC 4193)",
+    x_t_mc: "Multicast (ff00::/8)",
+    x_t_gua: "Global unicast (2000::/3)",
+    x_t_reserved: "Reserved by IETF",
+    x_n_noprefix: "No /prefix given, so /64 is assumed.",
+    x_n_hostbits: "Host bits were set in {addr}; the network is {net}.",
+    x_w_slaac: "/{child} is longer than /64: SLAAC needs /64, so hosts on these subnets need static addresses or DHCPv6.",
+    x_w_nibble: "/{p} is not on a nibble boundary (a multiple of 4): reverse DNS delegation gets harder.",
+    x_err_empty: "Enter an IPv6 address, e.g. 2001:db8:1234::/56",
+    x_err_chars: "Only hex digits (0–9, a–f), colons and dots are allowed.",
+    x_err_double: ":: can appear only once in an address.",
+    x_err_count: "An IPv6 address has exactly 8 groups (fewer only with ::).",
+    x_err_hextet: "Each group must be 1–4 hex digits. Invalid group:",
+    x_err_v4: "The embedded IPv4 part must be four numbers 0–255 at the end, e.g. ::ffff:192.0.2.1",
+    x_err_prefix: "The prefix length must be a whole number from 0 to 128.",
+    x_err_child: "The split prefix must be a whole number from /{p} to /128.",
+    x_err_jump: "Enter a subnet number from 0 to {max}."
+  },
+  ko: {
+    cat_converters: "변환 & 인코딩",
+    more_tools: "변환 툴 더 보기",
+    all_in_cat: "변환 & 인코딩 전체",
+    prev_tool: "이전 툴",
+    next_tool: "다음 툴",
+    badge_free: "무료",
+    badge_signup: "가입 없음",
+    badge_browser: "브라우저에서 실행",
+    nav_back: "← 전체 툴",
+    vultr_label: "스폰서",
+    vultr_title: "Vultr로 시작하세요",
+    vultr_sub: "$300 무료 크레딧 — 30일 유효 (기간 한정)",
+    vultr_cta: "크레딧 받기 →",
+    footer_copy: "© 2026 StackFreeks",
+    x_addr_label: "IPv6 주소 / 프리픽스",
+    x_child_label: "분할할 프리픽스 길이",
+    x_split_into: "분할:",
+    x_try: "예시:",
+    x_v4_link: "IPv4가 필요하세요? IP 서브넷 계산기로 →",
+    x_vultr_cta: "이 프리픽스를 서버에 쓰시나요? IPv6를 켜고 Vultr 인스턴스 배포 — 신규 가입 $300 무료 크레딧 →",
+    x_copy_page: "페이지 복사",
+    x_csv: "CSV 다운로드",
+    x_jump: "서브넷 # 이동",
+    x_go: "이동",
+    x_col_net: "서브넷",
+    x_col_range: "첫 주소 – 마지막 주소",
+    x_prev: "이전",
+    x_next: "다음",
+    x_hl: "{net} 안의 {child} 서브넷 수",
+    x_list_title: "{net}의 {child} 서브넷",
+    x_page_info: "#{from}–#{to} / 전체 {count}개 · {page}/{pages} 페이지",
+    x_copied: "복사됨",
+    x_csv_capped: "CSV에는 #{from}–#{to}가 들어 있습니다 (파일당 최대 65,536행). 다음 구간은 더 뒤로 이동해 내보내세요.",
+    x_network: "네트워크",
+    x_first: "첫 주소",
+    x_last: "마지막 주소",
+    x_total: "전체 주소 수",
+    x_per_subnet: "{child} 하나의 주소 수",
+    x_mask: "프리픽스 마스크",
+    x_compressed: "주소 (RFC 5952 축약)",
+    x_expanded: "주소 (확장)",
+    x_reverse: "역방향 DNS 존 (ip6.arpa)",
+    x_reverse_more: "/{len} 존 {n}개 중 첫 번째: /{p}{iga} 니블 경계가 아님",
+    x_type: "주소 유형",
+    x_t_unspec: "미지정 (::/128)",
+    x_t_loop: "루프백 (::1/128)",
+    x_t_mapped: "IPv4 매핑 (::ffff:0:0/96)",
+    x_t_nat64: "IPv4/IPv6 변환, NAT64 (64:ff9b::/96)",
+    x_t_doc: "문서용 (2001:db8::/32, RFC 3849)",
+    x_t_doc2: "문서용 (3fff::/20, RFC 9637)",
+    x_t_teredo: "Teredo (2001::/32)",
+    x_t_6to4: "6to4 (2002::/16)",
+    x_t_ll: "링크 로컬 유니캐스트 (fe80::/10)",
+    x_t_ula: "고유 로컬 주소, ULA (fc00::/7, RFC 4193)",
+    x_t_mc: "멀티캐스트 (ff00::/8)",
+    x_t_gua: "글로벌 유니캐스트 (2000::/3)",
+    x_t_reserved: "IETF 예약",
+    x_n_noprefix: "/프리픽스가 없어 /64로 계산했습니다.",
+    x_n_hostbits: "{addr}에 호스트 비트가 있어 네트워크는 {net}입니다.",
+    x_w_slaac: "/{child}{eun} /64보다 깁니다: SLAAC는 /64가 필요하므로 이 서브넷의 호스트는 고정 주소나 DHCPv6를 써야 합니다.",
+    x_w_nibble: "/{p}{eun} 니블 경계(4의 배수)가 아닙니다: 역방향 DNS 위임이 까다로워집니다.",
+    x_err_empty: "IPv6 주소를 입력하세요. 예: 2001:db8:1234::/56",
+    x_err_chars: "16진수(0–9, a–f), 콜론, 점만 쓸 수 있습니다.",
+    x_err_double: "::는 주소에 한 번만 쓸 수 있습니다.",
+    x_err_count: "IPv6 주소는 정확히 8개 그룹입니다 (::를 쓸 때만 더 적게).",
+    x_err_hextet: "각 그룹은 16진수 1–4자리여야 합니다. 잘못된 그룹:",
+    x_err_v4: "포함된 IPv4 부분은 맨 끝에 0–255 숫자 4개여야 합니다. 예: ::ffff:192.0.2.1",
+    x_err_prefix: "프리픽스 길이는 0에서 128 사이의 정수여야 합니다.",
+    x_err_child: "분할 프리픽스는 /{p}에서 /128 사이의 정수여야 합니다.",
+    x_err_jump: "0에서 {max} 사이의 서브넷 번호를 입력하세요."
+  }
+};
+</script>
+
+<!-- TOOL JS -->
+<script>
+(function () {
+  'use strict';
+  var MAX = (1n << 128n) - 1n;
+  var PAGE = 64n;          // rows per page in the child subnet list
+  var CSV_MAX = 65536n;    // rows per CSV file (keeps the tab responsive)
+
+  var $ = function (id) { return document.getElementById(id); };
+  var addrIn = $('addr'), childIn = $('child'), jumpIn = $('jump');
+
+  // Translation lookup that also works before /shared/i18n.js has loaded; {name} placeholders filled from vars.
+  function T(key, en, vars) {
+    var s = window.sfT ? window.sfT(key) : en;
+    if (!s || s === key) s = en;
+    if (vars && vars.josa !== undefined) {
+      var jong = [0, 1, 3, 6, 7, 8].indexOf(vars.josa % 10) !== -1;
+      vars.eun = jong ? '은' : '는'; vars.iga = jong ? '이' : '가';
+    }
+    for (var k in (vars || {})) s = s.split('{' + k + '}').join(vars[k]);
+    return s;
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  // Exact integer with thousands separators (BigInt — never rounded or in e-notation).
+  function group(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  // ---- Parsing (RFC 4291 §2.2 text forms) -> { v: BigInt } or { err: key, extra } ----
+  function parseAddr(s) {
+    s = s.trim().toLowerCase();
+    if (!s) return { err: 'x_err_empty' };
+    if (!/^[0-9a-f:.]+$/.test(s)) return { err: 'x_err_chars' };
+    var dbl = s.split('::').length - 1;
+    if (dbl > 1) return { err: 'x_err_double' };
+    if (s.indexOf('.') !== -1) {
+      // IPv4-embedded form: dotted quad replaces the last two groups, e.g. ::ffff:192.0.2.1
+      var m = s.match(/^(.*:)(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+      if (!m) return { err: 'x_err_v4' };
+      var q = [m[2], m[3], m[4], m[5]].map(Number);
+      if (q.some(function (x) { return x > 255; })) return { err: 'x_err_v4' };
+      s = m[1] + (q[0] * 256 + q[1]).toString(16) + ':' + (q[2] * 256 + q[3]).toString(16);
+    }
+    var groups;
+    if (dbl) {
+      var halves = s.split('::');
+      var head = halves[0] ? halves[0].split(':') : [];
+      var tail = halves[1] ? halves[1].split(':') : [];
+      if (head.length + tail.length > 7) return { err: 'x_err_count' };
+      groups = head.concat(new Array(8 - head.length - tail.length).fill('0'), tail);
+    } else {
+      groups = s.split(':');
+      if (groups.length !== 8) return { err: 'x_err_count' };
+    }
+    var v = 0n;
+    for (var i = 0; i < 8; i++) {
+      if (!/^[0-9a-f]{1,4}$/.test(groups[i])) return { err: 'x_err_hextet', extra: '"' + groups[i] + '"' };
+      v = (v << 16n) | BigInt(parseInt(groups[i], 16));
+    }
+    return { v: v };
+  }
+
+  // "addr/prefix" -> { v, p, noPrefix } or { err }
+  function parseCidr(s) {
+    var parts = s.trim().split('/');
+    if (parts.length > 2) return { err: 'x_err_prefix' };
+    var a = parseAddr(parts[0]);
+    if (a.err) return a;
+    if (parts.length === 1) return { v: a.v, p: 64, noPrefix: true };
+    if (!/^\d{1,3}$/.test(parts[1]) || +parts[1] > 128) return { err: 'x_err_prefix' };
+    return { v: a.v, p: +parts[1] };
+  }
+
+  // ---- Formatting ----
+  function groupsOf(v) { var g = []; for (var i = 7; i >= 0; i--) g.push(Number((v >> BigInt(i * 16)) & 0xffffn)); return g; }
+  function expand(v) { return groupsOf(v).map(function (x) { return x.toString(16).padStart(4, '0'); }).join(':'); }
+  function v4(n) { return [24, 16, 8, 0].map(function (b) { return Number((n >> BigInt(b)) & 255n); }).join('.'); }
+  // RFC 5952: lowercase, no leading zeros, longest (leftmost on tie) run of 2+ zero groups -> "::"
+  function compress(v) {
+    if ((v >> 32n) === 0xffffn) return '::ffff:' + v4(v & 0xffffffffn); // §5: IPv4-mapped keeps dotted quad
+    var g = groupsOf(v), bs = -1, bl = 0, cs = -1, cl = 0;
+    for (var i = 0; i < 8; i++) {
+      if (g[i] === 0) { if (cs < 0) cs = i; cl++; if (cl > bl) { bl = cl; bs = cs; } }
+      else { cs = -1; cl = 0; }
+    }
+    var h = g.map(function (x) { return x.toString(16); });
+    if (bl < 2) return h.join(':');
+    return h.slice(0, bs).join(':') + '::' + h.slice(bs + bl).join(':');
+  }
+  function mask(p) { return p === 0 ? 0n : ((1n << BigInt(p)) - 1n) << BigInt(128 - p); }
+  // ip6.arpa zone covering the first `nibbles` hex digits (RFC 3596)
+  function arpa(v, nibbles) {
+    var hex = expand(v).replace(/:/g, '').slice(0, nibbles).split('').reverse();
+    return (hex.length ? hex.join('.') + '.' : '') + 'ip6.arpa';
+  }
+
+  // Address type (IANA IPv6 special-purpose registry), most specific first
+  var TYPES = [
+    ['::', 128, 'x_t_unspec', 'Unspecified (::/128)'],
+    ['::1', 128, 'x_t_loop', 'Loopback (::1/128)'],
+    ['::ffff:0:0', 96, 'x_t_mapped', 'IPv4-mapped (::ffff:0:0/96)'],
+    ['64:ff9b::', 96, 'x_t_nat64', 'IPv4/IPv6 translation, NAT64 (64:ff9b::/96)'],
+    ['2001:db8::', 32, 'x_t_doc', 'Documentation (2001:db8::/32, RFC 3849)'],
+    ['2001::', 32, 'x_t_teredo', 'Teredo (2001::/32)'],
+    ['3fff::', 20, 'x_t_doc2', 'Documentation (3fff::/20, RFC 9637)'],
+    ['2002::', 16, 'x_t_6to4', '6to4 (2002::/16)'],
+    ['fe80::', 10, 'x_t_ll', 'Link-local unicast (fe80::/10)'],
+    ['fc00::', 7, 'x_t_ula', 'Unique local address, ULA (fc00::/7, RFC 4193)'],
+    ['ff00::', 8, 'x_t_mc', 'Multicast (ff00::/8)'],
+    ['2000::', 3, 'x_t_gua', 'Global unicast (2000::/3)']
+  ].map(function (t) { return { net: parseAddr(t[0]).v, m: mask(t[1]), key: t[2], en: t[3] }; });
+  function addrType(v) {
+    for (var i = 0; i < TYPES.length; i++) if ((v & TYPES[i].m) === TYPES[i].net) return T(TYPES[i].key, TYPES[i].en);
+    return T('x_t_reserved', 'Reserved by IETF');
+  }
+
+  // ---- State + rendering ----
+  var st = null;      // { net, p, c, count, size }
+  var page = 0n, hit = -1n;
+
+  function setErr(id, input, msg) {
+    $(id).textContent = msg || '';
+    if (input) input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+  }
+
+  function calc() {
+    setErr('addr-err', addrIn, '');
+    setErr('child-err', childIn, '');
+    var r = parseCidr(addrIn.value);
+    if (r.err) {
+      setErr('addr-err', addrIn, T(r.err, ENGLISH[r.err]) + (r.extra ? ' ' + r.extra : ''));
+      $('results').hidden = $('list-card').hidden = true; // no stale numbers for an invalid input
+      st = null;
+      return;
+    }
+    $('results').hidden = false;
+    var p = r.p, net = r.v & mask(p), last = net | (MAX ^ mask(p));
+    var cRaw = childIn.value.trim(), c = /^\d{1,3}$/.test(cRaw) ? +cRaw : NaN;
+    var childOk = c >= p && c <= 128;
+    if (!childOk) setErr('child-err', childIn, T('x_err_child', ENGLISH.x_err_child, { p: p }));
+
+    var netStr = compress(net) + '/' + p;
+    var cLabel = '/' + (childOk ? c : '?');
+
+    // Headline: how many child subnets fit
+    $('hl-num').textContent = childOk ? group(1n << BigInt(c - p)) : '—';
+    $('hl-text').textContent = T('x_hl', ENGLISH.x_hl, { child: cLabel, net: netStr });
+
+    // Notes + warnings
+    var notes = [];
+    if (r.noPrefix) notes.push(['info', T('x_n_noprefix', ENGLISH.x_n_noprefix)]);
+    if (r.v !== net) notes.push(['info', T('x_n_hostbits', ENGLISH.x_n_hostbits, { addr: compress(r.v), net: netStr })]);
+    if (childOk && c > 64) notes.push(['warn', T('x_w_slaac', ENGLISH.x_w_slaac, { child: c, josa: c })]);
+    if (p % 4) notes.push(['warn', T('x_w_nibble', ENGLISH.x_w_nibble, { p: p, josa: p })]);
+    if (childOk && c % 4 && c !== p) notes.push(['warn', T('x_w_nibble', ENGLISH.x_w_nibble, { p: c, josa: c })]);
+    $('notes').innerHTML = notes.map(function (n) {
+      return '<li class="' + n[0] + '"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-' +
+        (n[0] === 'warn' ? 'triangle-alert' : 'info') + '"/></svg><span>' + esc(n[1]) + '</span></li>';
+    }).join('');
+
+    // Reverse zone: whole nibbles only; a non-nibble prefix needs 2^(4·ceil(p/4) - p) zones
+    var nib = Math.ceil(p / 4), zones = 1 << (nib * 4 - p);
+    var zone = esc(arpa(net, nib)) + (zones > 1 ? '<small>' + esc(T('x_reverse_more', ENGLISH.x_reverse_more, { n: zones, len: nib * 4, p: p, josa: p })) + '</small>' : '');
+
+    var hostBits = 128 - p;
+    var rows = [
+      [T('x_network', 'Network'), esc(netStr)],
+      [T('x_first', 'First address'), esc(compress(net))],
+      [T('x_last', 'Last address'), esc(compress(last))],
+      [T('x_total', 'Total addresses'), '2<sup>' + hostBits + '</sup> = ' + group(1n << BigInt(hostBits))]
+    ];
+    if (childOk) rows.push([T('x_per_subnet', ENGLISH.x_per_subnet, { child: '/' + c }), '2<sup>' + (128 - c) + '</sup> = ' + group(1n << BigInt(128 - c))]);
+    rows.push(
+      [T('x_mask', 'Prefix mask'), esc(compress(mask(p)))],
+      [T('x_compressed', ENGLISH.x_compressed), esc(compress(r.v))],
+      [T('x_expanded', ENGLISH.x_expanded), esc(expand(r.v))],
+      [T('x_reverse', ENGLISH.x_reverse), zone],
+      [T('x_type', 'Address type'), esc(addrType(r.v))]
+    );
+    $('result-body').innerHTML = rows.map(function (x) { return '<tr><th scope="row">' + esc(x[0]) + '</th><td>' + x[1] + '</td></tr>'; }).join('');
+
+    // Child chips reflect the current split
+    document.querySelectorAll('#child-chips .chip').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.dataset.child === c)); });
+
+    var changed = !st || st.net !== net || st.p !== p || st.c !== c;
+    st = childOk ? { net: net, p: p, c: c, count: 1n << BigInt(c - p), size: 1n << BigInt(128 - c), netStr: netStr } : null;
+    if (changed) { page = 0n; hit = -1n; setErr('jump-err', jumpIn, ''); }
+    renderList();
+  }
+
+  function rowsFor(from, n) {
+    var out = [];
+    for (var i = from; i < from + n && i < st.count; i++) {
+      var a = st.net + i * st.size;
+      out.push([i, compress(a) + '/' + st.c, compress(a), compress(a + st.size - 1n)]);
+    }
+    return out;
+  }
+
+  function renderList() {
+    $('list-card').hidden = !st;
+    if (!st) return;
+    var pages = (st.count + PAGE - 1n) / PAGE;
+    if (page >= pages) page = pages - 1n;
+    var from = page * PAGE, rows = rowsFor(from, PAGE);
+    $('list-title').textContent = T('x_list_title', ENGLISH.x_list_title, { child: '/' + st.c, net: st.netStr });
+    $('sub-body').innerHTML = rows.map(function (r) {
+      return '<tr' + (r[0] === hit ? ' class="hit"' : '') + '><td>' + r[0] + '</td><td>' + esc(r[1]) +
+        '</td><td><span>' + esc(r[2]) + '</span><span>' + esc(r[3]) + '</span></td></tr>';
+    }).join('');
+    $('page-info').textContent = T('x_page_info', ENGLISH.x_page_info, {
+      from: group(from), to: group(from + BigInt(rows.length) - 1n), count: group(st.count),
+      page: group(page + 1n), pages: group(pages)
+    });
+    $('prev-btn').disabled = page === 0n;
+    $('next-btn').disabled = page + 1n >= pages;
+  }
+
+  function jump() {
+    if (!st) return;
+    var s = jumpIn.value.trim().replace(/[,\s#]/g, '');
+    var n = /^\d+$/.test(s) ? BigInt(s) : -1n;
+    if (n < 0n || n >= st.count) { setErr('jump-err', jumpIn, T('x_err_jump', ENGLISH.x_err_jump, { max: group(st.count - 1n) })); return; }
+    setErr('jump-err', jumpIn, '');
+    hit = n; page = n / PAGE;
+    renderList();
+  }
+
+  function flash(msg) {
+    var el = $('copied'); el.textContent = msg;
+    clearTimeout(flash.t); flash.t = setTimeout(function () { el.textContent = ''; }, 4000);
+  }
+
+  function copyPage() {
+    if (!st) return;
+    var text = rowsFor(page * PAGE, PAGE).map(function (r) { return r[1] + '\t' + r[2] + '\t' + r[3]; }).join('\n');
+    var done = function () { flash(T('x_copied', 'Copied')); };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+    function fallback() {
+      var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      ta.remove();
+    }
+  }
+
+  function downloadCsv() {
+    if (!st) return;
+    var from = page * PAGE, n = st.count - from < CSV_MAX ? st.count - from : CSV_MAX;
+    var lines = ['#,subnet,first,last'];
+    rowsFor(from, n).forEach(function (r) { lines.push(r.join(',')); });
+    var blob = new Blob([lines.join('\n') + '\n'], { type: 'text/csv' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'ipv6-subnets-' + st.netStr.replace(/[:/]/g, '-') + '-to-' + st.c + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    if (n < st.count) flash(T('x_csv_capped', ENGLISH.x_csv_capped, { from: group(from), to: group(from + n - 1n) }));
+  }
+
+  // English fallbacks for keys used before i18n.js loads (same text as SF_PAGE_I18N.en)
+  var ENGLISH = window.SF_PAGE_I18N.en;
+
+  // ---- Events ----
+  addrIn.addEventListener('input', calc);
+  childIn.addEventListener('input', calc);
+  document.querySelectorAll('[data-child]').forEach(function (b) {
+    b.addEventListener('click', function () { childIn.value = b.dataset.child; calc(); });
+  });
+  document.querySelectorAll('[data-ex]').forEach(function (b) {
+    b.addEventListener('click', function () { addrIn.value = b.dataset.ex; childIn.value = b.dataset.exchild; calc(); });
+  });
+  $('prev-btn').addEventListener('click', function () { if (page > 0n) { page--; renderList(); } });
+  $('next-btn').addEventListener('click', function () { page++; renderList(); });
+  $('jump-btn').addEventListener('click', jump);
+  jumpIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') jump(); });
+  $('copy-btn').addEventListener('click', copyPage);
+  $('csv-btn').addEventListener('click', downloadCsv);
+  // Results are built in JS, so re-render them when the language changes.
+  document.addEventListener('sfLangChanged', calc);
+
+  calc(); // default 2001:db8:1234::/56 -> /64 answers on first paint, no click
+})();
+</script>
+
+<script src="/shared/i18n.js"></script>
+<script>
+  function toggleFaq(btn) {
+    btn.closest('.faq-item').classList.toggle('open');
+  }
+</script>
+</body>
+</html>

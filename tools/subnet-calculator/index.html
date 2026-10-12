@@ -75,6 +75,7 @@
       #prefix-slider { flex: 1; width: auto; min-width: 0; }
       .result-table td:first-child { width: 45%; }
     }
+    .v6-link { margin-top: 12px; font-size: 14px; }
     .related-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
   </style>
   <script type="application/ld+json">
@@ -143,6 +144,7 @@
         <span class="example-chip" onclick="loadExample('172.16.0.0','12')">172.16.0.0/12</span>
         <span class="example-chip" onclick="loadExample('192.168.0.0','16')">192.168.0.0/16</span>
       </div>
+      <p class="v6-link"><a href="/tools/ipv6-subnet-calculator/" data-i18n="x_v6_link">Working with IPv6? Use the IPv6 Subnet Calculator →</a></p>
     </div>
   
     <!-- RESULTS -->
@@ -180,7 +182,7 @@
     </div>
     <ul class="grid grid-2">
       <li><a class="card prev" href="/tools/chmod-calculator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-file-lock"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Chmod Calculator</span><span class="lang-ko">Chmod 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
-      <li><a class="card next" href="/tools/password-generator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-rectangle-ellipsis"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Password Generator</span><span class="lang-ko">비밀번호 생성기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+      <li><a class="card next" href="/tools/ipv6-subnet-calculator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-split"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">IPv6 Subnet Calculator</span><span class="lang-ko">IPv6 서브넷 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
     </ul>
   </section>
 
@@ -379,7 +381,8 @@ window.SF_PAGE_I18N = {
         x_reserved: "Reserved",
         x_err_no_ip: "Please enter an IP address.",
         x_err_prefix_range: "Prefix length must be between 0 and 32.",
-        x_err_bad_ip: "Invalid IP address. Please enter 4 octets (0–255), e.g. 192.168.1.0"
+        x_err_bad_ip: "Invalid IP address. Please enter 4 octets (0–255), e.g. 192.168.1.0",
+        x_v6_link: "Working with IPv6? Use the IPv6 Subnet Calculator →"
       },
   ko: {
     cat_converters: "변환 & 인코딩",
@@ -420,7 +423,8 @@ window.SF_PAGE_I18N = {
         x_reserved: "예약됨",
         x_err_no_ip: "IP 주소를 입력하세요.",
         x_err_prefix_range: "프리픽스 길이는 0에서 32 사이여야 합니다.",
-        x_err_bad_ip: "유효하지 않은 IP 주소입니다. 0–255 범위의 옥텟 4개를 입력하세요. 예: 192.168.1.0"
+        x_err_bad_ip: "유효하지 않은 IP 주소입니다. 0–255 범위의 옥텟 4개를 입력하세요. 예: 192.168.1.0",
+        x_v6_link: "IPv6를 쓰시나요? IPv6 서브넷 계산기로 →"
       }
 };
 </script>
