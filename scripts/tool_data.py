@@ -74,6 +74,7 @@ ICONS = {
     "uuid-generator": "fingerprint",
     "chmod-calculator": "file-lock",
     "subnet-calculator": "network",
+    "ipv6-subnet-calculator": "split",
     "password-generator": "rectangle-ellipsis",
     # Text & Code
     "json-formatter": "braces",
