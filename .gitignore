@@ -27,3 +27,6 @@ gsc-token.json
 # Impeccable design workspace (local only)
 .impeccable/
 PRODUCT.md
+
+# Marketing drafts (local only)
+marketing/
