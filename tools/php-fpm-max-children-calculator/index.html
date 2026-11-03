@@ -274,7 +274,7 @@
     </div>
     <ul class="grid grid-2">
       <li><a class="card prev" href="/tools/redis-memory-estimator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database-zap"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Redis Memory Estimator</span><span class="lang-ko">Redis 메모리 예상 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
-      <li><a class="card next" href="/tools/managed-database-cost-calculator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Managed Database Cost Calculator</span><span class="lang-ko">매니지드 데이터베이스 비용 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+      <li><a class="card next" href="/tools/innodb-buffer-pool-size-calculator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-chart-pie"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">InnoDB Buffer Pool Size Calculator</span><span class="lang-ko">InnoDB 버퍼 풀 크기 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
     </ul>
   </section>
 
@@ -285,7 +285,7 @@
     <div class="guide-grid">
       <div class="guide-card">
         <h3>1. Enter total RAM and reservations</h3>
-        <p>Put in your server RAM, then what the OS, MySQL/MariaDB (roughly innodb_buffer_pool_size plus overhead), Redis and anything else need. Check real usage with free -m and htop.</p>
+        <p>Put in your server RAM, then what the OS, MySQL/MariaDB (roughly <a href="/tools/innodb-buffer-pool-size-calculator/">innodb_buffer_pool_size</a> plus overhead), Redis and anything else need. Check real usage with free -m and htop.</p>
       </div>
       <div class="guide-card">
         <h3>2. Measure your worker size</h3>
@@ -306,7 +306,7 @@
     <div class="guide-grid">
       <div class="guide-card">
         <h3>1. 총 RAM과 예약 메모리 입력</h3>
-        <p>서버 RAM을 넣고 OS, MySQL/MariaDB(대략 innodb_buffer_pool_size + 오버헤드), Redis 등 다른 서비스가 쓰는 메모리를 입력하세요. 실제 사용량은 free -m, htop으로 확인합니다.</p>
+        <p>서버 RAM을 넣고 OS, MySQL/MariaDB(대략 <a href="/tools/innodb-buffer-pool-size-calculator/">innodb_buffer_pool_size</a> + 오버헤드), Redis 등 다른 서비스가 쓰는 메모리를 입력하세요. 실제 사용량은 free -m, htop으로 확인합니다.</p>
       </div>
       <div class="guide-card">
         <h3>2. 워커 크기 실측</h3>
