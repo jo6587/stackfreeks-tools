@@ -63,6 +63,18 @@ def launched(slug):
     return out[-1] if out else str(date.today())
 
 
+def index_rows(session, slugs):
+    """URL Inspection for zero-impression tools, so 'not indexed' isn't misread as 'format failed' (tool-picker §2b)."""
+    rows = []
+    for s in slugs:
+        for path in (f"{s}/", f"{s}/ko/"):
+            r = session.post("https://searchconsole.googleapis.com/v1/urlInspection/index:inspect",
+                             json={"inspectionUrl": BASE + path, "siteUrl": SITE})
+            st = r.json()["inspectionResult"]["indexStatusResult"] if r.status_code == 200 else {}
+            rows.append(f"| {path} | {st.get('coverageState', f'error {r.status_code}')} | {st.get('lastCrawlTime', '-')} |")
+    return rows
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     session = AuthorizedSession(credentials())
@@ -100,6 +112,9 @@ def main():
     out += ["", "## Top search queries (what Google already shows us for)", "",
             "| Query | Impr | Clicks | Avg pos |", "|---|---:|---:|---:|"]
     out += [f"| {q['keys'][0]} | {q['impressions']:.0f} | {q['clicks']:.0f} | {q['position']:.1f} |" for q in queries]
+    out += ["", "## Index status (zero-impression tools, URL Inspection)", "",
+            "| Page | coverageState | lastCrawlTime |", "|---|---|---|"]
+    out += index_rows(session, [s for i, _, _, s, _ in rows if i == 0]) or ["| - | none | - |"]
 
     target = ROOT / "output" / "performance.md"
     target.parent.mkdir(exist_ok=True)
