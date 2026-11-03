@@ -46,6 +46,7 @@ ICONS = {
     "llm-gpu-cost-calculator": "brain-circuit",
     "redis-memory-estimator": "database-zap",
     "php-fpm-max-children-calculator": "layers",
+    "innodb-buffer-pool-size-calculator": "chart-pie",
     "managed-database-cost-calculator": "database",
     # DevOps & Config Generators
     "cron-builder": "calendar-clock",

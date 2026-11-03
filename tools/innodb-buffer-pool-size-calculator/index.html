@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InnoDB Buffer Pool Size Calculator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Calculate innodb_buffer_pool_size from RAM, PHP-FPM/Redis reservations and max_connections. my.cnf for MySQL 8.4, 8.0 and MariaDB." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/innodb-buffer-pool-size-calculator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/innodb-buffer-pool-size-calculator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/innodb-buffer-pool-size-calculator/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/innodb-buffer-pool-size-calculator/" />
+  <meta property="og:title" content="InnoDB Buffer Pool Size Calculator | StackFreeks Tools" />
+  <meta property="og:description" content="Size innodb_buffer_pool_size for a shared or dedicated VPS, see the full memory breakdown and copy a [mysqld] block for MySQL or MariaDB." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/innodb-buffer-pool-size-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
+
+  <style>
+    /* InnoDB Buffer Pool Size Calculator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool code { color: var(--text-1); }
+    .tool-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+    .tool-grid > *, .reverse-grid > * { min-width: 0; }
+    .card-wide { margin-top: 12px; }
+    .card-label { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+    .form-group { margin-bottom: 14px; }
+    .form-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .tool label { display: block; font-size: 13px; font-weight: 500; color: var(--text-2); margin-bottom: 5px; }
+    .tool input, .tool select { width: 100%; font-variant-numeric: tabular-nums; }
+    .tool input:disabled { opacity: .55; }
+    .hint { font-size: 13px; color: var(--text-3); margin-top: 4px; line-height: 1.5; overflow-wrap: anywhere; }
+    .sub-label { font-size: 13px; font-weight: 600; color: var(--text-1); margin: 18px 0 10px; }
+    .tool label.check-row { display: flex; align-items: center; gap: 10px; min-height: 40px; margin: 4px 0 0; font-size: 14px; color: var(--text-1); cursor: pointer; }
+    .tool label.check-row input { width: 18px; height: 18px; flex-shrink: 0; margin: 0; }
+
+    /* result */
+    .result-main { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+    .result-number { font-size: 40px; font-weight: 650; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--text-1); }
+    .result-unit { font-size: 13px; color: var(--text-3); font-family: var(--font-mono); }
+    .result-note { font-size: 13px; color: var(--text-2); margin-bottom: 12px; line-height: 1.5; }
+    .divider { height: 1px; background: var(--border); margin: 14px 0; }
+    .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; border-radius: 999px; padding: 3px 10px; margin-bottom: 12px; border: 1px solid transparent; }
+    .badge:empty { display: none; }
+    .badge-success { color: var(--success-fg); background: var(--success); }
+    .badge-warn { color: var(--warning); background: var(--warning-bg); border-color: var(--warning); }
+    .badge-danger { color: var(--danger); background: var(--danger-bg); border-color: var(--danger); }
+    .info-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 7px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { color: var(--text-2); font-family: var(--font-mono); font-size: 13px; min-width: 0; overflow-wrap: anywhere; }
+    .info-key.plain { font-family: var(--font); font-size: 14px; }
+    .info-val { color: var(--text-1); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+    .info-val.accent { color: var(--accent-text); }
+    .formula { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 10px 12px; font-family: var(--font-mono); font-size: 12.5px; color: var(--text-1); line-height: 1.7; margin-top: 4px; overflow-wrap: anywhere; }
+    .formula .muted { color: var(--text-2); }
+    .basis { font-size: 13px; color: var(--text-3); margin-top: 12px; line-height: 1.6; }
+    .basis a { color: var(--text-2); text-decoration: underline; text-underline-offset: 2px; }
+    .basis a:hover { color: var(--text-1); }
+
+    /* memory breakdown */
+    .mem-bar { display: flex; height: 8px; border-radius: 999px; overflow: hidden; background: var(--surface-2); margin: 4px 0 12px; }
+    .mem-bar span { display: block; height: 100%; }
+    .seg-pool { background: var(--accent); }
+    .seg-conn { background: var(--text-3); }
+    .seg-res { background: var(--border-2); }
+    .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: 0; }
+    .over-warn { display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; padding: 10px 12px; border: 1px solid var(--danger); background: var(--danger-bg); color: var(--danger); border-radius: var(--radius-s); font-size: 14px; line-height: 1.5; }
+    .over-warn[hidden] { display: none; }
+    .over-warn .ico { flex-shrink: 0; margin-top: 2px; }
+
+    /* commands */
+    .cmd-label { font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
+    .cmd-wrap { position: relative; }
+    .cmd-block { margin: 0; padding: 12px 72px 12px 14px; font-size: 13px; color: var(--text-1); line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .cmd-block.small { font-size: 12px; line-height: 1.6; padding-top: 10px; padding-bottom: 10px; }
+    .copy-btn { position: absolute; top: 7px; right: 7px; background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius-s); color: var(--text-2); font: 600 13px var(--font); padding: 3px 10px; cursor: pointer; transition: background-color var(--t), border-color var(--t), color var(--t); }
+    .copy-btn:hover { color: var(--text-1); border-color: var(--text-3); }
+
+    /* reverse */
+    .reverse-grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 20px; align-items: start; }
+    .reverse-out { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+    .reverse-big { font-size: 26px; font-weight: 650; color: var(--text-1); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .vultr-inline { margin-top: 14px; border: 1px solid var(--border); background: var(--surface-2); border-radius: var(--radius-s); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .vultr-inline[hidden] { display: none; }
+    .vultr-inline p { font-size: 14px; color: var(--text-1); }
+    .sql-block { margin-top: 14px; }
+
+    @media (max-width: 768px) {
+      .result-number { font-size: 32px; }
+      .tool-grid { grid-template-columns: minmax(0, 1fr); }
+      .reverse-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .card-box { padding: 16px; }
+    }
+    @media (max-width: 420px) {
+      .form-row { grid-template-columns: minmax(0, 1fr); }
+      .cmd-block { font-size: 12px; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"InnoDB Buffer Pool Size Calculator","description":"Calculate innodb_buffer_pool_size from RAM, PHP-FPM/Redis reservations and max_connections. my.cnf for MySQL 8.4, 8.0 and MariaDB.","url":"https://tools.stackfreeks.com/tools/innodb-buffer-pool-size-calculator/","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I calculate innodb_buffer_pool_size?","acceptedAnswer":{"@type":"Answer","text":"Start from total RAM, subtract what the OS and every other service on the server need (PHP-FPM, Redis, the web server), subtract the per-connection buffers (max_connections × sort, join, read, read_rnd, binlog cache buffers and thread stack), keep about 10% for MySQL's own global buffers, and cap the result at 80% of RAM. Then round down to a multiple of innodb_buffer_pool_chunk_size × innodb_buffer_pool_instances (128 MB × instances by default)."}},{"@type":"Question","name":"What innodb_buffer_pool_size should I use for 4 GB RAM?","acceptedAnswer":{"@type":"Answer","text":"On a shared 4 GB VPS with 512 MB for the OS, 1 GB for PHP-FPM and 151 default connections, the calculator gives 1920M. On a 4 GB server that runs only MySQL, innodb_dedicated_server would set RAM × 0.5 = 2 GB. Using 80% (about 3.2 GB) on a 4 GB box that also runs PHP leaves too little for everything else and risks swapping or the OOM killer."}},{"@type":"Question","name":"Is 80% of RAM the right buffer pool size?","acceptedAnswer":{"@type":"Answer","text":"Only on a large server dedicated to MySQL. The MySQL manual says up to 80% of physical memory is often assigned on a dedicated database server, and MySQL's own innodb_dedicated_server uses 50% for 1–4 GB and 75% above 4 GB. On a small VPS that also runs PHP, Redis or a web server, subtract their memory first. A buffer pool larger than your data plus growth also brings no benefit."}},{"@type":"Question","name":"How many innodb_buffer_pool_instances should I set?","acceptedAnswer":{"@type":"Answer","text":"MySQL 8.0 defaults to 8 instances when the buffer pool is 1 GB or more (otherwise 1). MySQL 8.4 uses 1 instance up to 1 GiB, and above that the smaller of half of (pool size ÷ chunk size) and a quarter of the logical CPUs. Each instance should be at least 1 GB, so small servers want 1 or 2. MariaDB 10.5 and later use a single buffer pool: the variable is ignored in 10.5 and removed in 10.6."}},{"@type":"Question","name":"How do I know if my InnoDB buffer pool is big enough?","acceptedAnswer":{"@type":"Answer","text":"Run SHOW GLOBAL STATUS LIKE 'Innodb_buffer_pool_read%' under normal load. Innodb_buffer_pool_reads (reads that had to go to disk) divided by Innodb_buffer_pool_read_requests should stay well under 1%. Also compare the pool with your InnoDB data size from information_schema.tables: if the pool already holds all data and indexes, more RAM will not help."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-vps" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-hard-drive"/></svg><span data-i18n="cat_vps_server">VPS &amp; Server</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+    </div>
+  </nav>
+
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-chart-pie"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>InnoDB Buffer Pool Size Calculator</h1>
+        <p>Work out innodb_buffer_pool_size from your RAM after the OS, PHP-FPM, Redis and connection buffers take their share. See the memory breakdown and copy a [mysqld] block for MySQL 8.4, 8.0 or MariaDB.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>InnoDB 버퍼 풀 크기 계산기</h1>
+        <p>서버 RAM에서 OS·PHP-FPM·Redis·커넥션 버퍼 몫을 빼고 innodb_buffer_pool_size를 계산합니다. 메모리 내역을 확인하고 MySQL 8.4·8.0·MariaDB용 [mysqld] 설정을 바로 복사하세요.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
+    <div class="tool-grid">
+
+      <!-- Inputs -->
+      <div class="card-box">
+        <p class="card-label" data-i18n="lbl_input">Server</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ramGb" data-i18n="lbl_ram">Total RAM (GB)</label>
+            <input type="number" id="ramGb" value="4" min="0.5" step="0.5" inputmode="decimal" />
+          </div>
+          <div class="form-group">
+            <label for="dbVer" data-i18n="lbl_ver">Database</label>
+            <select id="dbVer">
+              <option value="mysql84" selected>MySQL 8.4 LTS</option>
+              <option value="mysql80">MySQL 8.0</option>
+              <option value="mariadb">MariaDB 10.5+ / 11.x</option>
+            </select>
+          </div>
+        </div>
+
+        <label class="check-row" for="dedicated"><input type="checkbox" id="dedicated" /><span data-i18n="lbl_dedicated">Dedicated database server (nothing else runs on it)</span></label>
+
+        <p class="sub-label" data-i18n="lbl_reserved">Reserved for other services (MB)</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="resOs" data-i18n="lbl_os">OS &amp; system</label>
+            <input type="number" id="resOs" value="512" min="0" step="64" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resPhp" data-i18n="lbl_php">PHP-FPM</label>
+            <input type="number" id="resPhp" class="app-res" value="1024" min="0" step="128" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resRedis" data-i18n="lbl_redis">Redis / Memcached</label>
+            <input type="number" id="resRedis" class="app-res" value="0" min="0" step="64" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resWeb" data-i18n="lbl_web">Web server (Nginx / Apache)</label>
+            <input type="number" id="resWeb" class="app-res" value="0" min="0" step="64" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resOther" data-i18n="lbl_other">Other (apps, cron…)</label>
+            <input type="number" id="resOther" class="app-res" value="0" min="0" step="64" inputmode="numeric" />
+          </div>
+        </div>
+        <p class="hint" data-i18n="hint_php">PHP-FPM ≈ pm.max_children × worker size. Dedicated mode sets every service except the OS to 0.</p>
+
+        <p class="sub-label" data-i18n="lbl_conn">Connections</p>
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="maxConn">max_connections</label>
+            <input type="number" id="maxConn" value="151" min="1" step="1" inputmode="numeric" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="perConn" data-i18n="lbl_perconn">Per-connection buffers (MB)</label>
+            <input type="number" id="perConn" value="1.9" min="0" step="0.1" inputmode="decimal" />
+          </div>
+        </div>
+        <p class="hint" id="perConnHint"></p>
+      </div>
+
+      <!-- Result -->
+      <div class="card-box">
+        <p class="card-label" data-i18n="lbl_result">Recommended buffer pool</p>
+
+        <div class="result-main">
+          <span class="result-number" id="resPool">1920 MB</span>
+          <span class="result-unit">innodb_buffer_pool_size</span>
+        </div>
+        <div id="resBadge" class="badge badge-success"></div>
+        <p class="result-note" id="resNote"></p>
+
+        <div>
+          <div class="info-row"><span class="info-key">innodb_buffer_pool_size</span><span class="info-val accent" id="rowSize"></span></div>
+          <div class="info-row"><span class="info-key">innodb_buffer_pool_instances</span><span class="info-val" id="rowInst"></span></div>
+          <div class="info-row"><span class="info-key plain" data-i18n="row_unit">Rounding unit (chunk × instances)</span><span class="info-val" id="rowUnit"></span></div>
+          <div class="info-row"><span class="info-key plain" data-i18n="row_pct">Share of total RAM</span><span class="info-val" id="rowPct"></span></div>
+          <div class="info-row"><span class="info-key plain" data-i18n="row_dedicated">innodb_dedicated_server would set</span><span class="info-val" id="rowDed"></span></div>
+        </div>
+        <p class="hint" id="instNote"></p>
+
+        <div class="divider"></div>
+
+        <p class="cmd-label" data-i18n="lbl_formula">Formula</p>
+        <div class="formula">
+          <div>pool = min((RAM − reserved − max_connections × per_conn) × 0.9, RAM × 0.8)</div>
+          <div data-i18n="x_formula_round">→ round down to a multiple of 128 MB × instances</div>
+          <div class="muted" id="formulaLive"></div>
+        </div>
+
+        <p class="basis" id="basisNote"></p>
+      </div>
+
+    </div>
+
+    <!-- Memory breakdown -->
+    <div class="card-box card-wide">
+      <p class="card-label" data-i18n="lbl_breakdown">Memory breakdown</p>
+      <div class="mem-bar" aria-hidden="true"><span class="seg-pool" id="barPool"></span><span class="seg-conn" id="barConn"></span><span class="seg-res" id="barRes"></span></div>
+      <div>
+        <div class="info-row"><span class="info-key plain"><span class="swatch seg-pool"></span><span data-i18n="row_pool">InnoDB buffer pool</span></span><span class="info-val" id="bdPool"></span></div>
+        <div class="info-row"><span class="info-key plain"><span class="swatch seg-conn"></span><span id="bdConnLabel">Connections</span></span><span class="info-val" id="bdConn"></span></div>
+        <div class="info-row"><span class="info-key plain"><span class="swatch seg-res"></span><span data-i18n="row_res">Reserved (OS + PHP-FPM + Redis + web + other)</span></span><span class="info-val" id="bdRes"></span></div>
+        <div class="info-row"><span class="info-key plain" data-i18n="row_sum">Total</span><span class="info-val" id="bdSum"></span></div>
+        <div class="info-row"><span class="info-key plain" data-i18n="row_left">Left for MySQL global buffers and page cache</span><span class="info-val" id="bdLeft"></span></div>
+      </div>
+      <div class="over-warn" id="overWarn" role="alert" hidden><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-triangle-alert"/></svg><span id="overWarnText"></span></div>
+    </div>
+
+    <!-- my.cnf -->
+    <div class="card-box card-wide">
+      <p class="card-label" data-i18n="lbl_config">my.cnf snippet</p>
+      <div class="cmd-wrap">
+        <pre class="cmd-block" id="confBlock"></pre>
+        <button class="copy-btn" onclick="copyText('confBlock', this)" data-i18n="btn_copy">Copy</button>
+      </div>
+      <p class="hint" style="margin-top:8px;" id="applyHint"></p>
+    </div>
+
+    <!-- Reverse mode -->
+    <div class="card-box card-wide">
+      <p class="card-label" data-i18n="lbl_reverse">Reverse: RAM needed to cache your InnoDB data</p>
+      <div class="reverse-grid">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="dataGb" data-i18n="lbl_data">InnoDB data + index size (GB)</label>
+          <input type="number" id="dataGb" value="1" min="0.1" step="0.1" inputmode="decimal" />
+          <p class="hint" data-i18n="hint_data">Uses the same reservations and connections as above. Add room for growth.</p>
+        </div>
+        <div class="reverse-out" id="reverseOut"></div>
+      </div>
+      <div class="vultr-inline" id="reverseCta" hidden>
+        <p id="reverseCtaText"></p>
+        <a href="https://www.vultr.com/?ref=9907834-9J" class="btn btn-primary" id="reverseCtaBtn" rel="nofollow sponsored" target="_blank"></a>
+      </div>
+      <div class="sql-block">
+        <p class="cmd-label" data-i18n="lbl_sql">Measure your InnoDB data size (run in the mysql / mariadb client)</p>
+        <div class="cmd-wrap">
+          <pre class="cmd-block small" id="sqlBlock">SELECT ROUND(SUM(data_length + index_length) / 1024 / 1024 / 1024, 2) AS innodb_gb
+FROM information_schema.tables
+WHERE engine = 'InnoDB';</pre>
+          <button class="copy-btn" onclick="copyText('sqlBlock', this)" data-i18n="btn_copy">Copy</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More server tools</h2>
+      <a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS &amp; Server tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/php-fpm-max-children-calculator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-layers"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">PHP-FPM pm.max_children Calculator</span><span class="lang-ko">PHP-FPM pm.max_children 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/managed-database-cost-calculator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Managed Database Cost Calculator</span><span class="lang-ko">매니지드 데이터베이스 비용 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- How to use -->
+  <section class="guide">
+  <div class="lang-en">
+    <h2 class="guide-title">How to Use</h2>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3>1. Enter RAM and what else runs</h3>
+        <p>Put in total RAM and the memory of every other service: OS, PHP-FPM (use the <a href="/tools/php-fpm-max-children-calculator/">PHP-FPM pm.max_children calculator</a>, which reserves this value for MySQL), Redis and the web server. Check real usage with free -m. Tick "dedicated" if the box runs only the database.</p>
+      </div>
+      <div class="guide-card">
+        <h3>2. Set connections</h3>
+        <p>Keep max_connections at 151 unless you raised it. Each connection can allocate sort, join and read buffers plus a thread stack, so the calculator subtracts the worst case before sizing the pool.</p>
+      </div>
+      <div class="guide-card">
+        <h3>3. Copy the [mysqld] block</h3>
+        <p>Pick MySQL 8.4, 8.0 or MariaDB and copy the snippet into a my.cnf include file. The size is already a multiple of chunk size × instances, so MySQL will not silently round it up.</p>
+      </div>
+      <div class="guide-card">
+        <h3>4. Check the hit ratio under load</h3>
+        <p>Run SHOW GLOBAL STATUS LIKE 'Innodb_buffer_pool_read%' after a day of traffic. If Innodb_buffer_pool_reads is more than about 1% of read requests, measure your data size and use the reverse calculator.</p>
+      </div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <h2 class="guide-title">사용 방법</h2>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3>1. RAM과 함께 도는 서비스 입력</h3>
+        <p>총 RAM과 다른 서비스가 쓰는 메모리를 입력하세요: OS, PHP-FPM(이 값을 MySQL 몫으로 잡는 <a href="/tools/php-fpm-max-children-calculator/">PHP-FPM pm.max_children 계산기</a> 참고), Redis, 웹 서버. 실제 사용량은 free -m으로 확인합니다. DB만 도는 서버라면 "전용 서버"에 체크하세요.</p>
+      </div>
+      <div class="guide-card">
+        <h3>2. 커넥션 수 설정</h3>
+        <p>max_connections를 바꾼 적이 없다면 151 그대로 두세요. 커넥션마다 sort·join·read 버퍼와 스레드 스택을 잡을 수 있으므로 계산기는 최악의 경우를 먼저 빼고 버퍼 풀을 계산합니다.</p>
+      </div>
+      <div class="guide-card">
+        <h3>3. [mysqld] 블록 복사</h3>
+        <p>MySQL 8.4, 8.0, MariaDB 중 하나를 고르고 설정을 my.cnf include 파일에 붙여넣으세요. 크기가 이미 chunk 크기 × 인스턴스 수의 배수라서 MySQL이 몰래 올려 잡지 않습니다.</p>
+      </div>
+      <div class="guide-card">
+        <h3>4. 부하 상태에서 적중률 확인</h3>
+        <p>하루 정도 트래픽을 받은 뒤 SHOW GLOBAL STATUS LIKE 'Innodb_buffer_pool_read%'를 실행하세요. Innodb_buffer_pool_reads가 읽기 요청의 약 1%를 넘으면 데이터 크기를 측정하고 역계산기를 쓰세요.</p>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+  <div class="lang-en">
+    <h2 class="faq-title">Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I calculate innodb_buffer_pool_size?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Start from total RAM, subtract what the OS and every other service on the server need (PHP-FPM, Redis, the web server), subtract the per-connection buffers (max_connections × sort, join, read, read_rnd, binlog cache buffers and thread stack), keep about 10% for MySQL's own global buffers, and cap the result at 80% of RAM. Then round down to a multiple of innodb_buffer_pool_chunk_size × innodb_buffer_pool_instances (128 MB × instances by default).</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What innodb_buffer_pool_size should I use for 4 GB RAM?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">On a shared 4 GB VPS with 512 MB for the OS, 1 GB for PHP-FPM and 151 default connections, the calculator gives 1920M. On a 4 GB server that runs only MySQL, innodb_dedicated_server would set RAM × 0.5 = 2 GB. Using 80% (about 3.2 GB) on a 4 GB box that also runs PHP leaves too little for everything else and risks swapping or the OOM killer.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Is 80% of RAM the right buffer pool size?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Only on a large server dedicated to MySQL. The MySQL manual says up to 80% of physical memory is often assigned on a dedicated database server, and MySQL's own innodb_dedicated_server uses 50% for 1–4 GB and 75% above 4 GB. On a small VPS that also runs PHP, Redis or a web server, subtract their memory first. A buffer pool larger than your data plus growth also brings no benefit.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How many innodb_buffer_pool_instances should I set?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">MySQL 8.0 defaults to 8 instances when the buffer pool is 1 GB or more (otherwise 1). MySQL 8.4 uses 1 instance up to 1 GiB, and above that the smaller of half of (pool size ÷ chunk size) and a quarter of the logical CPUs. Each instance should be at least 1 GB, so small servers want 1 or 2. MariaDB 10.5 and later use a single buffer pool: the variable is ignored in 10.5 and removed in 10.6.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I know if my InnoDB buffer pool is big enough?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Run SHOW GLOBAL STATUS LIKE 'Innodb_buffer_pool_read%' under normal load. Innodb_buffer_pool_reads (reads that had to go to disk) divided by Innodb_buffer_pool_read_requests should stay well under 1%. Also compare the pool with your InnoDB data size from information_schema.tables: if the pool already holds all data and indexes, more RAM will not help.</div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <h2 class="faq-title">자주 묻는 질문</h2>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>innodb_buffer_pool_size는 어떻게 계산하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">총 RAM에서 OS와 같은 서버의 다른 서비스(PHP-FPM, Redis, 웹 서버)가 쓰는 메모리를 빼고, 커넥션별 버퍼(max_connections × sort·join·read·read_rnd·binlog cache 버퍼와 스레드 스택)를 뺀 뒤, MySQL 전역 버퍼용으로 약 10%를 남기고 RAM의 80%를 넘지 않게 합니다. 그 값을 innodb_buffer_pool_chunk_size × innodb_buffer_pool_instances(기본 128MB × 인스턴스 수)의 배수로 내림합니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>RAM 4GB 서버에는 innodb_buffer_pool_size를 얼마로 하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">OS 512MB, PHP-FPM 1GB, 기본 커넥션 151개인 4GB 공용 VPS라면 계산 결과는 1920M입니다. MySQL만 도는 4GB 서버라면 innodb_dedicated_server가 RAM × 0.5 = 2GB로 잡습니다. PHP도 함께 도는 4GB 서버에 80%(약 3.2GB)를 주면 나머지 서비스가 쓸 메모리가 모자라 스왑이나 OOM killer가 발생할 수 있습니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>버퍼 풀은 RAM의 80%가 맞나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">MySQL 전용의 큰 서버에서만 그렇습니다. MySQL 매뉴얼은 전용 DB 서버에서 물리 메모리의 최대 80%를 버퍼 풀에 주는 경우가 많다고 하며, MySQL의 innodb_dedicated_server도 1–4GB에서는 50%, 4GB 초과에서는 75%를 씁니다. PHP·Redis·웹 서버가 함께 도는 작은 VPS라면 그 메모리를 먼저 빼세요. 데이터와 증가분보다 큰 버퍼 풀은 효과가 없습니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>innodb_buffer_pool_instances는 몇 개로 하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">MySQL 8.0은 버퍼 풀이 1GB 이상이면 기본 8개(아니면 1개)입니다. MySQL 8.4는 1GiB 이하에서 1개, 그 이상에서는 (풀 크기 ÷ chunk 크기)의 절반과 논리 CPU 수의 1/4 중 작은 값입니다. 인스턴스 하나가 최소 1GB는 되는 게 좋으므로 작은 서버는 1–2개가 맞습니다. MariaDB 10.5 이상은 버퍼 풀이 하나뿐이라 이 변수가 10.5에서는 무시되고 10.6에서 제거되었습니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>InnoDB 버퍼 풀이 충분한지 어떻게 확인하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">평소 부하에서 SHOW GLOBAL STATUS LIKE 'Innodb_buffer_pool_read%'를 실행하세요. Innodb_buffer_pool_reads(디스크까지 간 읽기)를 Innodb_buffer_pool_read_requests로 나눈 값이 1%보다 충분히 낮아야 합니다. information_schema.tables로 구한 InnoDB 데이터 크기와도 비교하세요. 버퍼 풀이 이미 데이터와 인덱스를 모두 담고 있다면 RAM을 늘려도 나아지지 않습니다.</div>
+    </div>
+  </div>
+  </section>
+
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/php-fpm-max-children-calculator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-layers"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">PHP-FPM pm.max_children Calculator</span><span class="lang-ko">PHP-FPM pm.max_children 계산기</span></span></span></a></li>
+      <li><a href="/tools/redis-memory-estimator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database-zap"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Redis Memory Estimator</span><span class="lang-ko">Redis 메모리 예상 계산기</span></span></span></a></li>
+      <li><a href="/tools/linux-swap-calculator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-down-up"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Linux Swap Size Calculator</span><span class="lang-ko">리눅스 스왑 크기 계산기</span></span></span></a></li>
+      <li><a href="/tools/mysql-backup-script-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database-backup"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">MySQL Backup Script Generator</span><span class="lang-ko">MySQL 백업 스크립트 생성기</span></span></span></a></li>
+    </ul>
+  </section>
+
+  <!-- Related content -->
+  <section class="related">
+    <p><a href="https://stackfreeks.com/vultr-managed-database-review/" target="_blank" rel="noopener">Vultr Managed Database Pricing: $15 Entry, Kafka from $475</a></p>
+    <p><a href="https://stackfreeks.com/best-cheap-vps-2026/" target="_blank" rel="noopener">Best Cheap VPS Under $10/Month in 2026 (Compared &amp; Ranked)</a></p>
+  </section>
+
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
+    </div>
+  </footer>
+
+
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    cat_vps_server: 'VPS & Server',
+    more_tools: 'More server tools',
+    all_in_cat: 'All VPS & Server tools',
+    prev_tool: 'Previous tool',
+    next_tool: 'Next tool',
+    badge_free: 'Free',
+    badge_signup: 'No sign-up',
+    badge_browser: 'Runs in your browser',
+    lbl_input: 'Server',
+    lbl_ram: 'Total RAM (GB)',
+    lbl_ver: 'Database',
+    lbl_dedicated: 'Dedicated database server (nothing else runs on it)',
+    lbl_reserved: 'Reserved for other services (MB)',
+    lbl_os: 'OS & system',
+    lbl_php: 'PHP-FPM',
+    lbl_redis: 'Redis / Memcached',
+    lbl_web: 'Web server (Nginx / Apache)',
+    lbl_other: 'Other (apps, cron…)',
+    hint_php: 'PHP-FPM ≈ pm.max_children × worker size. Dedicated mode sets every service except the OS to 0.',
+    lbl_conn: 'Connections',
+    lbl_perconn: 'Per-connection buffers (MB)',
+    lbl_result: 'Recommended buffer pool',
+    row_unit: 'Rounding unit (chunk × instances)',
+    row_pct: 'Share of total RAM',
+    row_dedicated: 'innodb_dedicated_server would set',
+    lbl_formula: 'Formula',
+    x_formula_round: '→ round down to a multiple of 128 MB × instances',
+    lbl_breakdown: 'Memory breakdown',
+    row_pool: 'InnoDB buffer pool',
+    row_res: 'Reserved (OS + PHP-FPM + Redis + web + other)',
+    row_sum: 'Total',
+    row_left: 'Left for MySQL global buffers and page cache',
+    lbl_config: 'my.cnf snippet',
+    btn_copy: 'Copy',
+    lbl_reverse: 'Reverse: RAM needed to cache your InnoDB data',
+    lbl_data: 'InnoDB data + index size (GB)',
+    hint_data: 'Uses the same reservations and connections as above. Add room for growth.',
+    lbl_sql: 'Measure your InnoDB data size (run in the mysql / mariadb client)'
+  },
+  ko: {
+    cat_vps_server: 'VPS & 서버',
+    more_tools: '서버 툴 더 보기',
+    all_in_cat: 'VPS & 서버 전체',
+    prev_tool: '이전 툴',
+    next_tool: '다음 툴',
+    badge_free: '무료',
+    badge_signup: '가입 없음',
+    badge_browser: '브라우저에서 실행',
+    lbl_input: '서버',
+    lbl_ram: '총 RAM (GB)',
+    lbl_ver: '데이터베이스',
+    lbl_dedicated: 'DB 전용 서버 (다른 서비스 없음)',
+    lbl_reserved: '다른 서비스용 예약 메모리 (MB)',
+    lbl_os: 'OS·시스템',
+    lbl_php: 'PHP-FPM',
+    lbl_redis: 'Redis / Memcached',
+    lbl_web: '웹 서버 (Nginx / Apache)',
+    lbl_other: '기타 (앱, cron…)',
+    hint_php: 'PHP-FPM ≈ pm.max_children × 워커 크기. 전용 서버 모드는 OS를 뺀 모든 서비스를 0으로 둡니다.',
+    lbl_conn: '커넥션',
+    lbl_perconn: '커넥션당 버퍼 (MB)',
+    lbl_result: '권장 버퍼 풀',
+    row_unit: '반올림 단위 (chunk × 인스턴스)',
+    row_pct: '총 RAM 대비 비율',
+    row_dedicated: 'innodb_dedicated_server 설정값',
+    lbl_formula: '계산식',
+    x_formula_round: '→ 128 MB × 인스턴스 수의 배수로 내림',
+    lbl_breakdown: '메모리 내역',
+    row_pool: 'InnoDB 버퍼 풀',
+    row_res: '예약 (OS + PHP-FPM + Redis + 웹 + 기타)',
+    row_sum: '합계',
+    row_left: 'MySQL 전역 버퍼·페이지 캐시용 여유',
+    lbl_config: 'my.cnf 설정',
+    btn_copy: '복사',
+    lbl_reverse: '역계산: InnoDB 데이터를 모두 캐시하는 데 필요한 RAM',
+    lbl_data: 'InnoDB 데이터 + 인덱스 크기 (GB)',
+    hint_data: '위와 같은 예약 메모리·커넥션 값을 사용합니다. 증가분도 감안하세요.',
+    lbl_sql: 'InnoDB 데이터 크기 측정 (mysql / mariadb 클라이언트에서 실행)'
+  }
+};
+</script>
+<script src="/shared/i18n.js"></script>
+
+<script>
+var VULTR_REF = 'https://www.vultr.com/?ref=9907834-9J';
+var DOC_DED = 'https://dev.mysql.com/doc/refman/8.4/en/innodb-dedicated-server.html';
+var DOC_RESIZE = 'https://dev.mysql.com/doc/refman/8.4/en/innodb-buffer-pool-resize.html';
+var DOC_POOL = 'https://dev.mysql.com/doc/refman/8.4/en/innodb-buffer-pool.html';
+var DOC_MARIA = 'https://mariadb.com/docs/server/server-usage/storage-engines/innodb/innodb-system-variables';
+// RAM sizes (GB) of Vultr Cloud Compute ("vc2") plans, same list as the PHP-FPM calculator
+// (https://api.vultr.com/v2/plans, checked 2026-10-03). No prices on purpose.
+var PLAN_SIZES_GB = [0.5, 1, 2, 4, 8, 16, 32, 64, 96];
+
+var CHUNK = 128;  // innodb_buffer_pool_chunk_size default, MB (MySQL 8.0/8.4)
+var HEAD = 0.9;   // keep 10% of what is left for MySQL global buffers (log buffer, key buffer, temp tables)
+var CAP = 0.8;    // MySQL manual: "up to 80% of physical memory" on a dedicated server
+// Default per-connection buffers, MB = (sort + join + read + read_rnd + thread_stack + binlog_cache) / 1024
+// MySQL 8.0/8.4: 256K + 256K + 128K + 256K + 1024K + 32K = 1952K; MariaDB: 2048K + 256K + 128K + 256K + 292K + 32K = 3012K
+var PER_CONN = { mysql84: 1.9, mysql80: 1.9, mariadb: 2.9 };
+var VER_NAME = { mysql84: 'MySQL 8.4', mysql80: 'MySQL 8.0', mariadb: 'MariaDB 10.5+' };
+
+var DYN = {
+  en: {
+    perConnHint: function (v) { return v === 'mariadb'
+      ? 'MariaDB defaults: sort 2M + join 256K + read 128K + read_rnd 256K + thread_stack 292K + binlog_cache 32K ≈ 2.9 MB.'
+      : 'MySQL defaults: sort 256K + join 256K + read 128K + read_rnd 256K + thread_stack 1M + binlog_cache 32K ≈ 1.9 MB.'; },
+    ok: 'Fits in RAM with headroom',
+    small: 'Small buffer pool — consider more RAM',
+    none: 'Not enough RAM left for InnoDB',
+    note: function (pct) { return 'About ' + pct + '% of RAM. The rest covers your reservations, worst-case connection buffers and MySQL global buffers.'; },
+    noteNone: 'Reservations and connection buffers use almost all RAM. The snippet falls back to the 128 MB default; lower the reservations or max_connections, or add RAM.',
+    inst84: 'MySQL 8.4 default above 1 GiB is min(½ × pool ÷ chunk, ¼ × logical CPUs). The snippet sets instances explicitly (at least 1 GB each) so the size stays a multiple of chunk × instances.',
+    inst80: 'MySQL 8.0 default is 8 instances once the pool reaches 1 GB, which would round the size to a multiple of 1 GB. The snippet sets instances explicitly (at least 1 GB each).',
+    instMaria: 'MariaDB 10.5+ has a single buffer pool (innodb_buffer_pool_instances ignored in 10.5, removed in 10.6), so the size is rounded to 128 MB.',
+    dedRule: function (ram) { return ram < 1024 ? '128 MB default (RAM < 1 GB)' : (ram <= 4096 ? 'RAM × 0.5' : 'RAM × 0.75'); },
+    dedMaria: 'MySQL only',
+    basis: 'Basis: MySQL 8.4 manual — <a href="' + DOC_DED + '" target="_blank" rel="noopener">innodb_dedicated_server</a>, <a href="' + DOC_RESIZE + '" target="_blank" rel="noopener">chunk × instances rounding</a>, <a href="' + DOC_POOL + '" target="_blank" rel="noopener">buffer pool</a>; <a href="' + DOC_MARIA + '" target="_blank" rel="noopener">MariaDB InnoDB variables</a>. These are rules of thumb, check the buffer pool hit ratio under load.',
+    connLabel: function (n, per) { return 'Connections (' + n + ' × ' + per + ' MB, worst case)'; },
+    over: function (sum, ram) { return 'Buffer pool + connections + reservations = ' + sum + ' MB, more than your ' + ram + ' MB of RAM. The server would swap or the OOM killer may stop MySQL.'; },
+    confHead: function (ram, ver, ded) { return '# Generated by tools.stackfreeks.com — ' + ram + ' GB RAM, ' + ver + ', ' + (ded ? 'dedicated server' : 'shared server'); },
+    confPathMy: '# File: /etc/mysql/mysql.conf.d/mysqld.cnf (Debian/Ubuntu) or /etc/my.cnf (RHEL)',
+    confPathMaria: '# File: /etc/mysql/mariadb.conf.d/50-server.cnf (Debian/Ubuntu) or /etc/my.cnf.d/server.cnf (RHEL)',
+    confMariaNote: '# MariaDB 10.5+ uses one buffer pool, so there is no instances setting',
+    confDed: '# Dedicated MySQL host alternative: innodb_dedicated_server = ON\n# (then remove innodb_buffer_pool_size; an explicit value wins and logs a warning)',
+    apply: function (bytes, maria) { return 'Apply: sudo systemctl restart ' + (maria ? 'mariadb' : 'mysql') + '. The size can also be changed online with SET GLOBAL innodb_buffer_pool_size = ' + bytes + ';' + (maria ? '' : ' (instances needs a restart).'); },
+    revPool: function (mb) { return 'Buffer pool needed: ' + mb + ' MB'; },
+    revNeed: 'Minimum total RAM',
+    revDetail: function (mb) { return 'max(pool ÷ 0.9 + reserved + connections, pool ÷ 0.8) = ' + mb + ' MB, then raised in 0.1 GB steps until the rounded result above reaches the pool'; },
+    revFits: function (cur) { return 'Your current ' + cur + ' GB is enough.'; },
+    revShort: function (cur) { return 'More than your current ' + cur + ' GB.'; },
+    ctaText: function (need, plan) { return 'You need ≥ ' + need + ' GB — deploy ' + (plan === 8 ? 'an ' : 'a ') + plan + ' GB Vultr instance.'; },
+    ctaBtn: function (plan) { return 'Deploy ' + plan + ' GB on Vultr →'; },
+    revTooBig: function (max) { return 'That is more than the largest single Vultr Cloud Compute instance (' + max + ' GB). Cache only the hot data, or move to a managed or dedicated database host.'; },
+    revInvalid: 'Enter a data size above 0.',
+    needRam: 'Enter your total RAM (GB) to calculate.',
+    copied: 'Copied'
+  },
+  ko: {
+    perConnHint: function (v) { return v === 'mariadb'
+      ? 'MariaDB 기본값: sort 2M + join 256K + read 128K + read_rnd 256K + thread_stack 292K + binlog_cache 32K ≈ 2.9MB.'
+      : 'MySQL 기본값: sort 256K + join 256K + read 128K + read_rnd 256K + thread_stack 1M + binlog_cache 32K ≈ 1.9MB.'; },
+    ok: '여유를 두고 RAM 안에 들어갑니다',
+    small: '버퍼 풀이 작음 — RAM 증설 권장',
+    none: 'InnoDB에 남는 RAM이 없습니다',
+    note: function (pct) { return 'RAM의 약 ' + pct + '%입니다. 나머지는 예약 메모리, 최악의 커넥션 버퍼, MySQL 전역 버퍼 몫입니다.'; },
+    noteNone: '예약 메모리와 커넥션 버퍼가 RAM을 거의 다 씁니다. 설정은 기본값 128MB로 둡니다. 예약 메모리나 max_connections를 줄이거나 RAM을 늘리세요.',
+    inst84: 'MySQL 8.4는 1GiB를 넘으면 기본값이 min(½ × 풀 ÷ chunk, ¼ × 논리 CPU)입니다. 크기가 chunk × 인스턴스의 배수로 유지되도록 설정에 인스턴스 수(각 1GB 이상)를 직접 적습니다.',
+    inst80: 'MySQL 8.0은 풀이 1GB 이상이면 기본 8개라서 크기가 1GB 단위로 올림됩니다. 그래서 설정에 인스턴스 수(각 1GB 이상)를 직접 적습니다.',
+    instMaria: 'MariaDB 10.5 이상은 버퍼 풀이 하나뿐이라(innodb_buffer_pool_instances는 10.5에서 무시, 10.6에서 제거) 크기를 128MB 단위로 맞춥니다.',
+    dedRule: function (ram) { return ram < 1024 ? '기본 128MB (RAM 1GB 미만)' : (ram <= 4096 ? 'RAM × 0.5' : 'RAM × 0.75'); },
+    dedMaria: 'MySQL 전용',
+    basis: '근거: MySQL 8.4 매뉴얼 — <a href="' + DOC_DED + '" target="_blank" rel="noopener">innodb_dedicated_server</a>, <a href="' + DOC_RESIZE + '" target="_blank" rel="noopener">chunk × 인스턴스 배수 규칙</a>, <a href="' + DOC_POOL + '" target="_blank" rel="noopener">버퍼 풀</a>; <a href="' + DOC_MARIA + '" target="_blank" rel="noopener">MariaDB InnoDB 변수</a>. 경험칙이므로 부하 상태에서 버퍼 풀 적중률을 확인하세요 (rules of thumb, check the buffer pool hit ratio under load).',
+    connLabel: function (n, per) { return '커넥션 (' + n + ' × ' + per + 'MB, 최악의 경우)'; },
+    over: function (sum, ram) { return '버퍼 풀 + 커넥션 + 예약 메모리 = ' + sum + ' MB로 RAM ' + ram + ' MB보다 큽니다. 스왑이 생기거나 OOM killer가 MySQL을 종료할 수 있습니다.'; },
+    confHead: function (ram, ver, ded) { return '# tools.stackfreeks.com 생성 — RAM ' + ram + 'GB, ' + ver + ', ' + (ded ? '전용 서버' : '공용 서버'); },
+    confPathMy: '# 파일: /etc/mysql/mysql.conf.d/mysqld.cnf (Debian/Ubuntu) 또는 /etc/my.cnf (RHEL)',
+    confPathMaria: '# 파일: /etc/mysql/mariadb.conf.d/50-server.cnf (Debian/Ubuntu) 또는 /etc/my.cnf.d/server.cnf (RHEL)',
+    confMariaNote: '# MariaDB 10.5 이상은 버퍼 풀이 하나라서 인스턴스 설정이 없습니다',
+    confDed: '# MySQL 전용 서버 대안: innodb_dedicated_server = ON\n# (이 경우 innodb_buffer_pool_size 줄 삭제 — 명시한 값이 우선하고 경고가 남습니다)',
+    apply: function (bytes, maria) { return '적용: sudo systemctl restart ' + (maria ? 'mariadb' : 'mysql') + '. 크기는 SET GLOBAL innodb_buffer_pool_size = ' + bytes + '; 으로 재시작 없이도 바꿀 수 있습니다' + (maria ? '.' : ' (인스턴스 수는 재시작 필요).'); },
+    revPool: function (mb) { return '필요한 버퍼 풀: ' + mb + ' MB'; },
+    revNeed: '필요한 최소 총 RAM',
+    revDetail: function (mb) { return 'max(풀 ÷ 0.9 + 예약 + 커넥션, 풀 ÷ 0.8) = ' + mb + ' MB에서 시작해, 위 계산(배수 내림 포함)이 필요한 풀에 닿을 때까지 0.1GB씩 올린 값'; },
+    revFits: function (cur) { return '현재 RAM ' + cur + 'GB로 충분합니다.'; },
+    revShort: function (cur) { return '현재 RAM ' + cur + 'GB보다 더 필요합니다.'; },
+    ctaText: function (need, plan) { return '최소 ' + need + 'GB 이상 필요 — ' + plan + 'GB Vultr 인스턴스를 배포하세요.'; },
+    ctaBtn: function (plan) { return 'Vultr ' + plan + 'GB 배포 →'; },
+    revTooBig: function (max) { return 'Vultr Cloud Compute 단일 인스턴스 최대 크기(' + max + 'GB)보다 큽니다. 자주 쓰는 데이터만 캐시하거나 매니지드·전용 DB 서버를 고려하세요.'; },
+    revInvalid: '0보다 큰 데이터 크기를 입력하세요.',
+    needRam: '계산하려면 총 RAM(GB)을 입력하세요.',
+    copied: '복사됨'
+  }
+};
+
+function L() { return (window.sfLang && window.sfLang.current === 'ko') ? DYN.ko : DYN.en; }
+function num(id, fallback) {
+  var el = document.getElementById(id);
+  if (el.disabled) return 0;
+  var v = parseFloat(el.value);
+  return isFinite(v) && v >= 0 ? v : fallback;
+}
+function fmt(n) { return (Math.round(n * 10) / 10).toLocaleString('en-US'); }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function ico(name) { return '<svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-' + name + '"/></svg>'; }
+
+function readInputs() {
+  var ver = document.getElementById('dbVer').value;
+  var ramGb = num('ramGb', 0);
+  return {
+    ver: ver, maria: ver === 'mariadb', ramGb: ramGb, ramMb: ramGb * 1024,
+    dedicated: document.getElementById('dedicated').checked,
+    reserved: num('resOs', 0) + num('resPhp', 0) + num('resRedis', 0) + num('resWeb', 0) + num('resOther', 0),
+    maxConn: Math.floor(num('maxConn', 0)), perConn: num('perConn', 0)
+  };
+}
+
+// Core: pool = min((RAM − reserved − connections) × 0.9, RAM × 0.8), rounded DOWN to a multiple of
+// chunk × instances (MySQL rounds a non-multiple UP on its own, which could overrun RAM).
+// Instances: try 1..min(8, GB of pool) (MySQL advice: each instance at least 1 GB) and keep the count that
+// loses the least to rounding; on a tie prefer more instances. MariaDB: always 1.
+function poolFor(p) {
+  var conn = p.maxConn * p.perConn;
+  var raw = Math.min((p.ramMb - p.reserved - conn) * HEAD, p.ramMb * CAP);
+  var maxInst = (!p.maria && raw >= 1024) ? Math.min(8, Math.floor(raw / 1024)) : 1;
+  var inst = 1, pool = -1;
+  for (var i = 1; i <= maxInst; i++) {
+    var cand = Math.floor(raw / (CHUNK * i)) * CHUNK * i;
+    if (cand >= pool) { pool = cand; inst = i; }
+  }
+  var unit = CHUNK * inst;
+  var tooSmall = pool < CHUNK;
+  if (tooSmall) { pool = CHUNK; inst = 1; unit = CHUNK; } // fall back to the 128 MB default
+  return { conn: conn, raw: raw, inst: inst, unit: unit, pool: pool, tooSmall: tooSmall };
+}
+
+// innodb_dedicated_server (MySQL 8.0/8.4): < 1 GB → 128 MB, 1–4 GB → RAM × 0.5, > 4 GB → RAM × 0.75
+function dedicatedPool(ramMb) { return ramMb < 1024 ? 128 : (ramMb <= 4096 ? ramMb * 0.5 : ramMb * 0.75); }
+
+// Reverse: closed-form inverse of the raw formula (before chunk rounding)
+function ramNeeded(pool, p) { return Math.max(pool / HEAD + p.reserved + p.maxConn * p.perConn, pool / CAP); }
+// Smallest RAM in displayed 0.1 GB steps where the forward calculator (with rounding) reaches `pool`
+function minRamGb(pool, p) {
+  var tenths = Math.ceil(ramNeeded(pool, p) / 1024 * 10);
+  var fits = function (t) { var r = poolFor(Object.assign({}, p, { ramMb: t / 10 * 1024 })); return !r.tooSmall && r.pool >= pool; };
+  while (!fits(tenths)) tenths++; // forward pool grows with RAM, so this ends within a few steps
+  return tenths / 10;
+}
+
+// self-check: first-screen defaults (4 GB, OS 512 + PHP 1024, 151 × 1.9 MB) → 1920 MB, 1 instance
+(function () {
+  var d = poolFor({ maria: false, ramMb: 4096, reserved: 1536, maxConn: 151, perConn: 1.9 });
+  console.assert(d.pool === 1920 && d.inst === 1, 'poolFor defaults', d);
+  var dp = { maria: false, reserved: 1536, maxConn: 151, perConn: 1.9 };
+  [2.1, 8.8].forEach(function (gb) { // reverse → forward round trip with defaults
+    var need = Math.ceil(gb * 1024 / CHUNK) * CHUNK;
+    console.assert(poolFor(Object.assign({}, dp, { ramMb: minRamGb(need, dp) * 1024 })).pool >= need, 'round trip', gb);
+  });
+  console.assert(poolFor(Object.assign({}, dp, { ramMb: 8192 })).pool === 5632, 'least-loss instances at 8 GB');
+  console.assert(dedicatedPool(4096) === 2048 && dedicatedPool(8192) === 6144 && dedicatedPool(512) === 128, 'dedicatedPool');
+})();
+
+function buildConfig(p, r) {
+  var t = L();
+  var lines = ['[mysqld]', t.confHead(fmt(p.ramGb), VER_NAME[p.ver], p.dedicated), p.maria ? t.confPathMaria : t.confPathMy];
+  if (p.maria) lines.push(t.confMariaNote);
+  lines.push('innodb_buffer_pool_size = ' + r.pool + 'M');
+  if (!p.maria) lines.push('innodb_buffer_pool_instances = ' + r.inst);
+  lines.push('max_connections = ' + p.maxConn);
+  if (p.dedicated && !p.maria) lines.push('', t.confDed);
+  return lines.join('\n');
+}
+
+function nextPlan(needGb) {
+  for (var i = 0; i < PLAN_SIZES_GB.length; i++) if (PLAN_SIZES_GB[i] >= needGb) return PLAN_SIZES_GB[i];
+  return null; // bigger than any single instance: never invent a size
+}
+
+function renderReverse(p) {
+  var t = L();
+  var out = document.getElementById('reverseOut');
+  var cta = document.getElementById('reverseCta');
+  var dataGb = num('dataGb', 0);
+  if (p.ramMb <= 0) { out.textContent = t.needRam; cta.hidden = true; return; }
+  if (dataGb <= 0) { out.textContent = t.revInvalid; cta.hidden = true; return; }
+  var pool = Math.ceil(dataGb * 1024 / CHUNK) * CHUNK; // round the data size up to whole 128 MB chunks
+  var needMb = ramNeeded(pool, p);
+  var needGb = minRamGb(pool, p);
+  var cur = poolFor(p);
+  var short = cur.tooSmall || cur.pool < pool;          // same answer as the forward result on this screen
+  var html = '<div class="cmd-label" style="margin-bottom:2px;">' + esc(t.revNeed) + '</div>' +
+             '<div class="reverse-big">' + fmt(needGb) + ' GB</div>' +
+             '<div class="hint">' + esc(t.revPool(fmt(pool))) + '</div>' +
+             '<div class="hint" style="margin-bottom:8px;">' + esc(t.revDetail(fmt(needMb))) + '</div>' +
+             '<div class="badge ' + (short ? 'badge-danger' : 'badge-success') + '" style="margin-bottom:0;">' +
+             ico(short ? 'circle-x' : 'circle-check') + esc(short ? t.revShort(fmt(p.ramGb)) : t.revFits(fmt(p.ramGb))) + '</div>';
+  var plan = short ? nextPlan(needGb) : null;
+  if (short && plan === null) html += '<p class="hint" style="margin-top:8px;">' + esc(t.revTooBig(PLAN_SIZES_GB[PLAN_SIZES_GB.length - 1])) + '</p>';
+  out.innerHTML = html;
+  if (short && plan !== null) {
+    document.getElementById('reverseCtaText').textContent = t.ctaText(fmt(needGb), plan);
+    var btn = document.getElementById('reverseCtaBtn');
+    btn.textContent = t.ctaBtn(plan);
+    btn.href = VULTR_REF;
+    cta.hidden = false;
+  } else {
+    cta.hidden = true;
+  }
+}
+
+function setText(id, s) { document.getElementById(id).textContent = s; }
+
+function calculate() {
+  var t = L();
+  var p = readInputs();
+  var r = poolFor(p);
+  var pct = p.ramMb > 0 ? Math.round(r.pool / p.ramMb * 100) : 0;
+
+  setText('resPool', fmt(r.pool) + ' MB');
+  setText('rowSize', r.pool + 'M (' + fmt(r.pool / 1024) + ' GB)');
+  setText('rowInst', p.maria ? '—' : r.inst);
+  setText('rowUnit', r.unit + ' MB');
+  setText('rowPct', pct + '%');
+  var ded = dedicatedPool(p.ramMb);
+  setText('rowDed', fmt(ded) + ' MB · ' + t.dedRule(p.ramMb) + (p.maria ? ' · ' + t.dedMaria : ''));
+  setText('instNote', p.maria ? t.instMaria : (p.ver === 'mysql80' ? t.inst80 : t.inst84));
+  setText('perConnHint', t.perConnHint(p.ver));
+
+  var badge = document.getElementById('resBadge');
+  var setBadge = function (cls, icon, text) {
+    badge.className = 'badge ' + cls;
+    badge.innerHTML = ico(icon);
+    badge.appendChild(document.createTextNode(text));
+  };
+  if (r.tooSmall) setBadge('badge-danger', 'circle-x', t.none);
+  else if (r.pool < 512) setBadge('badge-warn', 'triangle-alert', t.small);
+  else setBadge('badge-success', 'check', t.ok);
+  setText('resNote', r.tooSmall ? t.noteNone : t.note(pct));
+
+  setText('formulaLive', '= min((' + fmt(p.ramMb) + ' − ' + fmt(p.reserved) + ' − ' + p.maxConn + ' × ' + fmt(p.perConn) + ') × 0.9, ' +
+    fmt(p.ramMb) + ' × 0.8) = ' + fmt(Math.max(r.raw, 0)) + ' MB → ' + r.pool + ' MB (' + r.unit + ' MB × ' + (r.pool / r.unit) + ')');
+  document.getElementById('basisNote').innerHTML = t.basis;
+
+  // Breakdown: buffer pool + worst-case connections + reservations vs total RAM
+  var sum = r.pool + r.conn + p.reserved;
+  var scale = Math.max(sum, p.ramMb) || 1;
+  document.getElementById('barPool').style.width = (r.pool / scale * 100) + '%';
+  document.getElementById('barConn').style.width = (r.conn / scale * 100) + '%';
+  document.getElementById('barRes').style.width = (p.reserved / scale * 100) + '%';
+  setText('bdPool', fmt(r.pool) + ' MB');
+  setText('bdConnLabel', t.connLabel(p.maxConn, fmt(p.perConn)));
+  setText('bdConn', fmt(r.conn) + ' MB');
+  setText('bdRes', fmt(p.reserved) + ' MB');
+  setText('bdSum', fmt(sum) + ' / ' + fmt(p.ramMb) + ' MB');
+  setText('bdLeft', fmt(p.ramMb - sum) + ' MB');
+  var over = sum > p.ramMb;
+  document.getElementById('overWarn').hidden = !over;
+  if (over) setText('overWarnText', t.over(fmt(sum), fmt(p.ramMb)));
+
+  setText('confBlock', p.ramMb > 0 ? buildConfig(p, r) : '[mysqld]\n# ' + t.needRam);
+  if (p.ramMb <= 0) { setBadge('badge-warn', 'triangle-alert', t.needRam); setText('resNote', t.needRam); }
+  setText('applyHint', t.apply(r.pool * 1048576, p.maria));
+
+  renderReverse(p);
+}
+
+// Dedicated server: zero the app reservations (OS stays) and restore them when unticked
+function setDedicated(on) {
+  document.querySelectorAll('.app-res').forEach(function (el) {
+    if (on) { el.dataset.prev = el.value; el.value = 0; el.disabled = true; }
+    else { if (el.dataset.prev !== undefined) el.value = el.dataset.prev; el.disabled = false; }
+  });
+  calculate();
+}
+
+function copyText(id, btn) {
+  var text = document.getElementById(id).textContent;
+  var done = function () {
+    btn.textContent = L().copied;
+    setTimeout(function () { btn.textContent = (window.sfLang && sfLang.current === 'ko') ? '복사' : 'Copy'; }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+  } else { fallbackCopy(text); done(); }
+}
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+
+['ramGb', 'resOs', 'resPhp', 'resRedis', 'resWeb', 'resOther', 'maxConn', 'perConn', 'dataGb'].forEach(function (id) {
+  document.getElementById(id).addEventListener('input', calculate);
+});
+document.getElementById('dbVer').addEventListener('change', function () {
+  document.getElementById('perConn').value = PER_CONN[this.value]; // per-version default buffers
+  calculate();
+});
+document.getElementById('dedicated').addEventListener('change', function () { setDedicated(this.checked); });
+document.addEventListener('sfLangChanged', calculate);
+calculate();
+</script>
+
+</body>
+</html>
