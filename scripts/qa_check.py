@@ -46,7 +46,7 @@ def blog_post_urls():
     global _post_urls
     if _post_urls is None:
         try:
-            req = urllib.request.Request("https://stackfreeks.com/post-sitemap.xml", headers={"User-Agent": "sf-qa"})
+            req = urllib.request.Request("https://stackfreeks.com/sitemap.xml", headers={"User-Agent": "sf-qa"})
             xml = urllib.request.urlopen(req, timeout=15).read().decode("utf-8", "replace")
             _post_urls = {u.rstrip("/") for u in re.findall(r"<loc>(.*?)</loc>", xml)}
         except Exception:
@@ -303,9 +303,9 @@ def check(slug: str) -> tuple[list[str], list[str]]:
             if re.match(r"https://stackfreeks\.com/[^?#]+", a["href"])}
     posts = blog_post_urls()
     if posts is None:
-        warns.append("could not fetch stackfreeks.com/post-sitemap.xml — blog links unchecked")
+        warns.append("could not fetch stackfreeks.com/sitemap.xml — blog links unchecked")
     else:
-        need(not blog - posts, f"blog links not in post-sitemap: {sorted(blog - posts)}")
+        need(not blog - posts, f"blog links not in stackfreeks.com/sitemap.xml: {sorted(blog - posts)}")
     return fails, warns
 
 
