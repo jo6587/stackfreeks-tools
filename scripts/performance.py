@@ -7,7 +7,9 @@ so past tools feed back into planning (tool-picker) and lessons (retro).
 One-time setup:
   1. pip install google-auth google-auth-oauthlib
   2. Nothing else if the WordPress pipeline already has gsc-token.json — same Google account and
-     scope, so its token is shared (refreshes are written back there). Otherwise a browser opens to consent.
+     scope, so its token is shared (refreshes are written back there). Otherwise run once with --login
+     (opens a browser to consent). Without --login a missing/revoked token exits 2 instead of waiting
+     on a browser, so unattended scheduled runs fail fast.
 Same desktop OAuth app as 04_Ops_Briefing and the WordPress pipeline (only client_secret.json is read).
 Env overrides: GSC_CLIENT_SECRET, GSC_TOKEN (paths), GSC_SITE (default sc-domain:tools.stackfreeks.com)
 """
@@ -50,6 +52,9 @@ def credentials():
         except Exception:
             creds = None  # revoked refresh token → consent again
     if not creds or not creds.valid:
+        if "--login" not in sys.argv:
+            print("[auth] GSC token missing or revoked - Ren must run: py -3.10 scripts/performance.py --login", file=sys.stderr)
+            sys.exit(2)
         if not CLIENT_SECRET.exists():
             sys.exit(f"[error] {CLIENT_SECRET} not found — set GSC_CLIENT_SECRET")
         creds = InstalledAppFlow.from_client_secrets_file(str(CLIENT_SECRET), SCOPES).run_local_server(port=0)
@@ -64,7 +69,7 @@ def launched(slug):
 
 
 def index_rows(session, slugs):
-    """URL Inspection for zero-impression tools, so 'not indexed' isn't misread as 'format failed' (tool-picker §2b)."""
+    """URL Inspection for zero-impression and new tools, so 'not indexed' isn't misread as 'format failed' (tool-picker §2b)."""
     rows = []
     for s in slugs:
         for path in (f"{s}/", f"{s}/ko/"):
@@ -112,9 +117,10 @@ def main():
     out += ["", "## Top search queries (what Google already shows us for)", "",
             "| Query | Impr | Clicks | Avg pos |", "|---|---:|---:|---:|"]
     out += [f"| {q['keys'][0]} | {q['impressions']:.0f} | {q['clicks']:.0f} | {q['position']:.1f} |" for q in queries]
-    out += ["", "## Index status (zero-impression tools, URL Inspection)", "",
+    out += ["", "## Index status (zero-impression or launched ≤30 days, URL Inspection)", "",
             "| Page | coverageState | lastCrawlTime |", "|---|---|---|"]
-    out += index_rows(session, [s for i, _, _, s, _ in rows if i == 0]) or ["| - | none | - |"]
+    fresh = lambda pub: (date.today() - date.fromisoformat(pub)).days <= 30
+    out += index_rows(session, [s for i, _, _, s, pub in rows if i == 0 or fresh(pub)]) or ["| - | none | - |"]
 
     target = ROOT / "output" / "performance.md"
     target.parent.mkdir(exist_ok=True)
