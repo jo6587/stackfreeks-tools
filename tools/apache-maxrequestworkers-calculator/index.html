@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEC9N890GR"></script>
+  <script src="/shared/analytics.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/stackfreeks_icon.png">
+  <link rel="apple-touch-icon" href="/stackfreeks_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apache MaxRequestWorkers Calculator — Free Online Tool | StackFreeks</title>
+  <meta name="description" content="Calculate Apache MaxRequestWorkers and ServerLimit for prefork, worker or event MPM from RAM and process size. Copy the config. No sign-up." />
+  <link rel="canonical" href="https://tools.stackfreeks.com/tools/apache-maxrequestworkers-calculator/" />
+  <link rel="alternate" hreflang="en" href="https://tools.stackfreeks.com/tools/apache-maxrequestworkers-calculator/" />
+  <link rel="alternate" hreflang="ko" href="https://tools.stackfreeks.com/tools/apache-maxrequestworkers-calculator/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.stackfreeks.com/tools/apache-maxrequestworkers-calculator/" />
+  <meta property="og:title" content="Apache MaxRequestWorkers Calculator | StackFreeks Tools" />
+  <meta property="og:description" content="Size Apache MaxRequestWorkers and ServerLimit for prefork, worker or event MPM, with RAM reservations and a copy-ready config block." />
+  <meta property="og:url" content="https://tools.stackfreeks.com/tools/apache-maxrequestworkers-calculator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="StackFreeks Tools" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Apache MaxRequestWorkers Calculator | StackFreeks Tools" />
+  <meta name="twitter:description" content="Size Apache MaxRequestWorkers and ServerLimit for prefork, worker or event MPM, with RAM reservations and a copy-ready config block." />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script>try{localStorage.getItem('sf-theme')&&(document.documentElement.dataset.theme=localStorage.getItem('sf-theme'))}catch(e){}</script>
+  <link rel="stylesheet" href="/shared/sf.css">
+
+  <style>
+    /* Apache MaxRequestWorkers Calculator — tool-specific only; the shell lives in /shared/sf.css */
+    .tool { padding-bottom: 8px; }
+    .tool code { color: var(--text-1); }
+    .tool-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+    .tool-grid > *, .reverse-grid > * { min-width: 0; }
+    .card-wide { margin-top: 12px; }
+    .card-label { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+    .form-group { margin-bottom: 14px; }
+    .form-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .form-row > * { min-width: 0; }
+    .tool label { display: block; font-size: 13px; font-weight: 500; color: var(--text-2); margin-bottom: 5px; }
+    .tool input { width: 100%; font-variant-numeric: tabular-nums; }
+    .hint { font-size: 13px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+    .hint a { color: var(--accent-text); }
+    .sub-label { font-size: 13px; font-weight: 600; color: var(--text-1); margin: 18px 0 10px; }
+    .threads[hidden] { display: none; }
+
+    /* MPM selector */
+    .seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 8px; }
+    .seg-btn { background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius-s); color: var(--text-2); font-family: var(--font-mono); font-size: 13px; padding: 9px 8px; cursor: pointer; transition: background-color var(--t), border-color var(--t), color var(--t); }
+    .seg-btn:hover { border-color: var(--text-3); color: var(--text-1); }
+    .seg-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+
+    /* result */
+    .result-main { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+    .result-number { font-size: 40px; font-weight: 650; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--text-1); overflow-wrap: anywhere; min-width: 0; }
+    .result-unit { font-size: 13px; color: var(--text-3); font-family: var(--font-mono); }
+    .result-note { font-size: 13px; color: var(--text-2); margin-bottom: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+    .divider { height: 1px; background: var(--border); margin: 14px 0; }
+    .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; border-radius: 999px; padding: 3px 10px; margin-bottom: 12px; border: 1px solid transparent; }
+    .badge:empty { display: none; }
+    .badge-success { color: var(--success-fg); background: var(--success); }
+    .badge-warn { color: var(--warning); background: var(--warning-bg); border-color: var(--warning); }
+    .badge-danger { color: var(--danger); background: var(--danger-bg); border-color: var(--danger); }
+    .info-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 7px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { color: var(--text-2); font-family: var(--font-mono); font-size: 13px; min-width: 0; }
+    .info-key.plain { font-family: var(--font); font-size: 14px; }
+    .info-val { color: var(--text-1); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+    .info-val.accent { color: var(--accent-text); }
+    .formula { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 10px 12px; font-family: var(--font-mono); font-size: 12.5px; color: var(--text-1); line-height: 1.7; margin-top: 4px; overflow-wrap: anywhere; }
+    .formula .muted { color: var(--text-2); }
+    .basis { font-size: 13px; color: var(--text-3); margin-top: 12px; line-height: 1.6; }
+    .basis a { color: var(--text-2); text-decoration: underline; text-underline-offset: 2px; }
+    .basis a:hover { color: var(--text-1); }
+    .warn-list { margin-top: 12px; display: grid; gap: 8px; }
+    .warn-list:empty { display: none; }
+    .warn-item { display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--warning); background: var(--warning-bg); color: var(--warning); border-radius: var(--radius-s); font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; min-width: 0; }
+    .warn-item .ico { flex-shrink: 0; margin-top: 2px; }
+
+    /* memory breakdown */
+    .mem-bar { display: flex; height: 8px; border-radius: 999px; overflow: hidden; background: var(--surface-2); margin: 4px 0 12px; }
+    .mem-bar span { display: block; height: 100%; }
+    .seg-apache { background: var(--accent); }
+    .seg-db { background: var(--text-3); }
+    .seg-res { background: var(--border-2); }
+    .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: 0; }
+    .over-warn { display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; padding: 10px 12px; border: 1px solid var(--danger); background: var(--danger-bg); color: var(--danger); border-radius: var(--radius-s); font-size: 14px; line-height: 1.5; }
+    .over-warn[hidden] { display: none; }
+    .over-warn .ico { flex-shrink: 0; margin-top: 2px; }
+    .check-row { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; align-items: start; margin-top: 14px; }
+    .check-row > * { min-width: 0; }
+
+    /* commands */
+    .cmd-label { font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
+    .cmd-wrap { position: relative; }
+    .cmd-block { margin: 0; padding: 12px 72px 12px 14px; font-size: 13px; color: var(--text-1); line-height: 1.8; white-space: pre; overflow-x: auto; }
+    .cmd-block.small { font-size: 12px; line-height: 1.6; padding-top: 10px; padding-bottom: 10px; white-space: pre-wrap; word-break: break-all; }
+    .copy-btn { position: absolute; top: 7px; right: 7px; background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius-s); color: var(--text-2); font: 600 13px var(--font); padding: 3px 10px; cursor: pointer; transition: background-color var(--t), border-color var(--t), color var(--t); }
+    .copy-btn:hover { color: var(--text-1); border-color: var(--text-3); }
+
+    /* reverse */
+    .reverse-grid { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; align-items: start; }
+    .reverse-out { font-size: 14px; color: var(--text-2); line-height: 1.6; overflow-wrap: anywhere; }
+    .reverse-big { font-size: 26px; font-weight: 650; color: var(--text-1); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; min-width: 0; }
+    .vultr-inline { margin-top: 14px; border: 1px solid var(--border); background: var(--surface-2); border-radius: var(--radius-s); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .vultr-inline[hidden] { display: none; }
+    .vultr-inline p { font-size: 14px; color: var(--text-1); }
+
+    @media (max-width: 768px) {
+      .result-number { font-size: 32px; }
+      .tool-grid { grid-template-columns: minmax(0, 1fr); }
+      .reverse-grid, .check-row { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .card-box { padding: 16px; }
+    }
+    @media (max-width: 420px) {
+      .form-row { grid-template-columns: minmax(0, 1fr); }
+      .cmd-block { font-size: 12px; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Apache MaxRequestWorkers Calculator","description":"Calculate Apache MaxRequestWorkers and ServerLimit for prefork, worker or event MPM from RAM and process size. Copy the config. No sign-up.","url":"https://tools.stackfreeks.com/tools/apache-maxrequestworkers-calculator/","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"StackFreeks","url":"https://stackfreeks.com"}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I calculate MaxRequestWorkers for Apache?","acceptedAnswer":{"@type":"Answer","text":"Subtract what the OS, MySQL or MariaDB, PHP-FPM and other services need from total RAM, keep about 10% as headroom, then divide by the size of one Apache process and round down. Example for 4 GB with prefork, OS 512 MB, MySQL 1 GB and 40 MB processes: floor((4096 − 1536) × 0.9 ÷ 40) = 57. With worker or event, multiply the number of processes by ThreadsPerChild instead."}},{"@type":"Question","name":"What is the difference between MaxRequestWorkers and ServerLimit?","acceptedAnswer":{"@type":"Answer","text":"MaxRequestWorkers is the number of requests Apache serves at the same time. ServerLimit is the upper bound on the number of child processes. With prefork each process handles one request, so ServerLimit must be at least MaxRequestWorkers, and you must raise it to go above the default of 256. With worker or event, ServerLimit must be at least MaxRequestWorkers ÷ ThreadsPerChild, rounded up."}},{"@type":"Question","name":"Why must MaxRequestWorkers be a multiple of ThreadsPerChild?","acceptedAnswer":{"@type":"Answer","text":"With the threaded worker and event MPMs, Apache starts whole child processes that each run ThreadsPerChild threads. The Apache 2.4 docs say MaxRequestWorkers should be an integer multiple of ThreadsPerChild; otherwise Apache rounds it down and logs a warning. The default is 16 processes × 25 threads = 400."}},{"@type":"Question","name":"How do I measure the average Apache process size?","acceptedAnswer":{"@type":"Answer","text":"Run the ps and awk one-liner shown under the process-size field while the site has normal traffic. It averages the resident memory (RSS) of all apache2 processes. On RHEL, CentOS, AlmaLinux or Rocky Linux the process is called httpd. For a safer number, list the processes with ps -ylC apache2 --sort:rss and use the largest one."}},{"@type":"Question","name":"What happens if MaxRequestWorkers is too high or too low?","acceptedAnswer":{"@type":"Answer","text":"Too high: under a traffic spike Apache starts more processes than RAM can hold, the server swaps and the Linux OOM killer may stop MySQL. Too low: the error log shows \"server reached MaxRequestWorkers setting, consider raising the MaxRequestWorkers setting\" and new connections wait in a queue, so pages load slowly. Use the calculated value as a starting point and watch memory and the error log."}}]}
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ee6b4d739df9431caa200cf245d944f4"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="StackFreeks Tools"><svg class="logo-mark" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><circle cx="14" cy="14" r="12.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="64 14" transform="rotate(116 14 14)"/><text x="14" y="14" text-anchor="middle" dominant-baseline="central">SF</text></svg><span class="logo-text">StackFreeks Tools</span></a>
+      <a href="/#cat-vps" class="nav-link nav-cat"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-hard-drive"/></svg><span data-i18n="cat_vps_server">VPS &amp; Server</span></a>
+      <a href="/" class="nav-back nav-push" data-i18n="nav_back">← All Tools</a>
+      <a href="https://stackfreeks.com" class="nav-blog" target="_blank" rel="noopener">Blog <svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-up-right"/></svg></a>
+      <button class="lang-toggle" onclick="sfLang.toggle()">한국어</button>
+      <button class="theme-toggle" type="button" onclick="sfTheme.toggle()" aria-pressed="false"><svg class="ico i-moon" aria-hidden="true"><use href="/shared/icons.svg#i-moon"/></svg><svg class="ico i-sun" aria-hidden="true"><use href="/shared/icons.svg#i-sun"/></svg><span class="sr-only" data-i18n="theme_dark">Dark mode</span></button>
+    </div>
+  </nav>
+
+  <header class="hero tool-head wrap-tool">
+    <span class="tile tile-lg"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-feather"/></svg></span>
+    <div class="tool-head-text">
+      <div class="lang-en">
+        <h1>Apache MaxRequestWorkers Calculator</h1>
+        <p>Work out MaxRequestWorkers and ServerLimit for prefork, worker or event from your RAM, what MySQL, PHP-FPM and the OS need, and your measured Apache process size. Get a copy-ready config block.</p>
+      </div>
+      <div class="lang-ko">
+        <h1>Apache MaxRequestWorkers 계산기</h1>
+        <p>서버 RAM, MySQL·PHP-FPM·OS 예약 메모리, 실측 Apache 프로세스 크기로 prefork·worker·event별 MaxRequestWorkers와 ServerLimit을 계산하고 설정 블록을 바로 복사하세요.</p>
+      </div>
+      <ul class="badges">
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_free">Free</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_signup">No sign-up</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-circle-check"/></svg><span data-i18n="badge_browser">Runs in your browser</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Tool body -->
+  <main class="tool wrap-tool">
+    <div class="tool-grid">
+
+      <!-- Inputs -->
+      <div class="card-box">
+        <p class="card-label" data-i18n="lbl_input">Server &amp; MPM</p>
+
+        <p class="cmd-label" data-i18n="lbl_mpm">Apache MPM</p>
+        <div class="seg" role="radiogroup" aria-label="MPM" data-i18n-aria="x_mpm">
+          <button type="button" class="seg-btn active" data-mpm="prefork" role="radio" aria-checked="true" onclick="setMpm('prefork')">prefork</button>
+          <button type="button" class="seg-btn" data-mpm="worker" role="radio" aria-checked="false" onclick="setMpm('worker')">worker</button>
+          <button type="button" class="seg-btn" data-mpm="event" role="radio" aria-checked="false" onclick="setMpm('event')">event</button>
+        </div>
+        <p class="hint" style="margin-bottom:14px;" data-i18n="hint_mpm">Check yours with: apachectl -V | grep MPM (httpd -V on RHEL).</p>
+
+        <div class="form-group">
+          <label for="ramGb" data-i18n="lbl_ram">Total RAM (GB)</label>
+          <input type="number" id="ramGb" value="4" min="0.5" max="4096" step="0.5" inputmode="decimal" />
+        </div>
+
+        <p class="sub-label" data-i18n="lbl_reserved">Reserved for other services (MB)</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="resOs" data-i18n="lbl_os">OS &amp; system</label>
+            <input type="number" id="resOs" value="512" min="0" max="4194304" step="64" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resDb" data-i18n="lbl_db">MySQL / MariaDB</label>
+            <input type="number" id="resDb" value="1024" min="0" max="4194304" step="128" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resPhp" data-i18n="lbl_php">PHP-FPM</label>
+            <input type="number" id="resPhp" value="0" min="0" max="4194304" step="64" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="resOther" data-i18n="lbl_other">Other (Redis, cron…)</label>
+            <input type="number" id="resOther" value="0" min="0" max="4194304" step="64" inputmode="numeric" />
+          </div>
+        </div>
+        <p class="hint" style="margin:-4px 0 14px;"><span class="lang-en">Size MySQL with the <a href="/tools/innodb-buffer-pool-size-calculator/">InnoDB buffer pool calculator</a> and PHP-FPM with the <a href="/tools/php-fpm-max-children-calculator/">pm.max_children calculator</a>. With mod_php, leave PHP-FPM at 0 (PHP lives inside each Apache process).</span><span class="lang-ko">MySQL은 <a href="/tools/innodb-buffer-pool-size-calculator/">InnoDB 버퍼 풀 계산기</a>로, PHP-FPM은 <a href="/tools/php-fpm-max-children-calculator/">pm.max_children 계산기</a>로 구하세요. mod_php를 쓰면 PHP-FPM은 0으로 두세요 (PHP가 Apache 프로세스 안에서 실행됨).</span></p>
+
+        <div class="form-group">
+          <label for="bufferPct" data-i18n="lbl_buffer">Safety headroom (%)</label>
+          <input type="number" id="bufferPct" value="10" min="0" max="90" step="5" inputmode="numeric" />
+          <p class="hint" data-i18n="hint_buffer">Kept free for spikes and memory growth. 10% is typical; max 90% (higher values are reset to 90).</p>
+        </div>
+
+        <div class="form-group">
+          <label for="procMb" id="procLabel">Apache process size (MB)</label>
+          <input type="number" id="procMb" value="40" min="1" max="65536" step="1" inputmode="numeric" />
+          <p class="hint" id="procHint"></p>
+          <div class="cmd-wrap" style="margin-top:6px;">
+            <pre class="cmd-block small" id="psCmd">ps -o rss= -C apache2 | awk '{ s+=$1; n++ } END { printf "%d processes, avg %.0f MB\n", n, s/n/1024 }'</pre>
+            <button class="copy-btn" id="btnCopyPs" onclick="copyText('psCmd', this)" data-i18n="btn_copy">Copy</button>
+          </div>
+          <p class="hint" data-i18n="hint_proc2">RHEL/Alma/Rocky: replace apache2 with httpd. Run it under real traffic; ps -ylC apache2 --sort:rss lists each process if you want the largest one.</p>
+        </div>
+
+        <div class="threads" id="threadInputs" hidden>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tpc">ThreadsPerChild</label>
+              <input type="number" id="tpc" value="25" min="1" max="20000" step="1" inputmode="numeric" />
+            </div>
+            <div class="form-group">
+              <label for="threadLimit">ThreadLimit</label>
+              <input type="number" id="threadLimit" value="64" min="1" max="20000" step="1" inputmode="numeric" />
+            </div>
+          </div>
+          <p class="hint" style="margin:-6px 0 0;" data-i18n="hint_threads">Apache defaults: ThreadsPerChild 25, ThreadLimit 64. ThreadsPerChild cannot exceed ThreadLimit.</p>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="card-box">
+        <p class="card-label" data-i18n="lbl_result">Recommended limits</p>
+
+        <div class="result-main">
+          <span class="result-number" id="resMrw">57</span>
+          <span class="result-unit">MaxRequestWorkers</span>
+        </div>
+        <div id="resBadge" class="badge badge-success"></div>
+        <p class="result-note" id="resNote"></p>
+
+        <div>
+          <div class="info-row"><span class="info-key">ServerLimit</span><span class="info-val accent" id="resServerLimit">57</span></div>
+          <div class="info-row" id="rowTpc" hidden><span class="info-key">ThreadsPerChild</span><span class="info-val" id="resTpc"></span></div>
+          <div class="info-row"><span class="info-key">StartServers</span><span class="info-val" id="resStart"></span></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="cmd-label" data-i18n="lbl_formula">Formula</p>
+        <div class="formula">
+          <div id="formulaGeneric"></div>
+          <div class="muted" id="formulaLive"></div>
+          <div class="muted" id="formulaLimit"></div>
+        </div>
+
+        <div class="warn-list" id="warnList" role="status"></div>
+
+        <p class="basis" id="basisNote"></p>
+      </div>
+
+    </div>
+
+    <!-- Memory breakdown -->
+    <div class="card-box card-wide">
+      <p class="card-label" data-i18n="lbl_breakdown">Memory breakdown at peak</p>
+      <div class="mem-bar" aria-hidden="true"><span class="seg-apache" id="barApache"></span><span class="seg-db" id="barDb"></span><span class="seg-res" id="barRes"></span></div>
+      <div>
+        <div class="info-row"><span class="info-key plain"><span class="swatch seg-apache"></span><span id="bdApacheLabel">Apache peak</span></span><span class="info-val" id="bdApache"></span></div>
+        <div class="info-row"><span class="info-key plain"><span class="swatch seg-db"></span><span data-i18n="row_db">MySQL / MariaDB</span></span><span class="info-val" id="bdDb"></span></div>
+        <div class="info-row"><span class="info-key plain"><span class="swatch seg-res"></span><span data-i18n="row_res">OS + PHP-FPM + other</span></span><span class="info-val" id="bdRes"></span></div>
+        <div class="info-row"><span class="info-key plain" data-i18n="row_sum">Total vs RAM</span><span class="info-val" id="bdSum"></span></div>
+        <div class="info-row"><span class="info-key plain" data-i18n="row_left">Left free</span><span class="info-val" id="bdLeft"></span></div>
+      </div>
+      <div class="check-row">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="currentMrw" data-i18n="lbl_current">Check your current MaxRequestWorkers (optional)</label>
+          <input type="number" id="currentMrw" min="1" max="1000000" step="1" inputmode="numeric" placeholder="e.g. 150" />
+        </div>
+        <p class="hint" style="margin-top:0;" data-i18n="hint_current">Leave empty to chart the recommended value. Enter the number from your config to see whether it fits in RAM.</p>
+      </div>
+      <div class="over-warn" id="overWarn" role="alert" hidden><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-triangle-alert"/></svg><span id="overWarnText"></span></div>
+    </div>
+
+    <!-- Config -->
+    <div class="card-box card-wide">
+      <p class="card-label" id="confLabel">MPM config</p>
+      <div class="cmd-wrap">
+        <pre class="cmd-block" id="confBlock"></pre>
+        <button class="copy-btn" id="btnCopyConf" onclick="copyText('confBlock', this)" data-i18n="btn_copy">Copy</button>
+      </div>
+      <p class="hint" style="margin-top:8px;" id="applyHint"></p>
+    </div>
+
+    <!-- Reverse mode -->
+    <div class="card-box card-wide">
+      <p class="card-label" data-i18n="lbl_reverse">Reverse: RAM needed for a target number of concurrent requests</p>
+      <div class="reverse-grid">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="targetReq" data-i18n="lbl_target">Target concurrent requests</label>
+          <input type="number" id="targetReq" value="150" min="1" max="1000000" step="1" inputmode="numeric" />
+          <p class="hint" data-i18n="hint_target">Uses the same MPM, reservations, headroom and process size as above.</p>
+        </div>
+        <div class="reverse-out" id="reverseOut"></div>
+      </div>
+      <div class="vultr-inline" id="reverseCta" hidden>
+        <p id="reverseCtaText"></p>
+        <a href="https://www.vultr.com/?ref=9907834-9J" class="btn btn-primary btn-vultr-sm" id="reverseCtaBtn" rel="nofollow sponsored" target="_blank"></a>
+      </div>
+    </div>
+  </main>
+
+  <!-- AdSense: directly below the tool body (insert <ins> here after approval) -->
+  <div class="ad-slot"><!-- ADSENSE_SLOT_TOP --></div>
+
+  <!-- More in this category: previous / next tool -->
+  <section class="more-tools" aria-labelledby="h-more">
+    <div class="sec-head">
+      <h2 id="h-more" data-i18n="more_tools">More server tools</h2>
+      <a class="sec-link" href="/#cat-vps"><span data-i18n="all_in_cat">All VPS &amp; Server tools</span><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a>
+    </div>
+    <ul class="grid grid-2">
+      <li><a class="card prev" href="/tools/innodb-buffer-pool-size-calculator/" rel="prev"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-chart-pie"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">InnoDB Buffer Pool Size Calculator</span><span class="lang-ko">InnoDB 버퍼 풀 크기 계산기</span></span><span class="card-desc" data-i18n="prev_tool">Previous tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-left"/></svg></a></li>
+      <li><a class="card next" href="/tools/managed-database-cost-calculator/" rel="next"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-database"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Managed Database Cost Calculator</span><span class="lang-ko">매니지드 데이터베이스 비용 계산기</span></span><span class="card-desc" data-i18n="next_tool">Next tool</span></span><svg class="ico card-go" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-right"/></svg></a></li>
+    </ul>
+  </section>
+
+  <!-- How to use -->
+  <section class="guide">
+  <div class="lang-en">
+    <h2 class="guide-title">How to Use</h2>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3>1. Pick your MPM</h3>
+        <p>Run apachectl -V | grep MPM (or httpd -V) to see whether Apache uses prefork, worker or event. prefork is common with mod_php; event is the default on modern Debian, Ubuntu and RHEL builds with PHP-FPM.</p>
+      </div>
+      <div class="guide-card">
+        <h3>2. Enter RAM and reservations</h3>
+        <p>Put in total RAM, then what the OS, MySQL/MariaDB, PHP-FPM and anything else need. Check real usage with free -m and htop so Apache only gets the memory that is really left.</p>
+      </div>
+      <div class="guide-card">
+        <h3>3. Measure the Apache process size</h3>
+        <p>Copy the ps one-liner and run it during normal traffic. With prefork and mod_php a process is often 30–100 MB; measure yours instead of guessing, because modules and PHP code change it a lot.</p>
+      </div>
+      <div class="guide-card">
+        <h3>4. Copy the config and watch the log</h3>
+        <p>Paste the IfModule block into your MPM config, run apachectl configtest, then restart Apache. If the error log says "server reached MaxRequestWorkers", use the reverse calculator to see how much RAM a higher limit needs.</p>
+      </div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <h2 class="guide-title">사용 방법</h2>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3>1. MPM 고르기</h3>
+        <p>apachectl -V | grep MPM (또는 httpd -V)으로 Apache가 prefork, worker, event 중 무엇을 쓰는지 확인하세요. mod_php 환경은 보통 prefork이고, PHP-FPM을 쓰는 최신 Debian·Ubuntu·RHEL은 event가 기본입니다.</p>
+      </div>
+      <div class="guide-card">
+        <h3>2. RAM과 예약 메모리 입력</h3>
+        <p>총 RAM을 넣고 OS, MySQL/MariaDB, PHP-FPM 등 다른 서비스가 쓰는 메모리를 입력하세요. free -m, htop으로 실제 사용량을 확인하면 Apache에 정말 남는 메모리만 배정할 수 있습니다.</p>
+      </div>
+      <div class="guide-card">
+        <h3>3. Apache 프로세스 크기 측정</h3>
+        <p>ps 한 줄 명령을 복사해 평소 트래픽이 있을 때 실행하세요. prefork + mod_php 프로세스는 보통 30–100MB지만 모듈과 PHP 코드에 따라 크게 달라지므로 추측하지 말고 직접 측정하세요.</p>
+      </div>
+      <div class="guide-card">
+        <h3>4. 설정 복사 후 로그 확인</h3>
+        <p>IfModule 블록을 MPM 설정 파일에 붙여넣고 apachectl configtest로 확인한 뒤 Apache를 재시작하세요. 에러 로그에 "server reached MaxRequestWorkers"가 보이면 역계산기로 더 높은 값에 필요한 RAM을 확인하세요.</p>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+  <div class="lang-en">
+    <h2 class="faq-title">Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I calculate MaxRequestWorkers for Apache?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Subtract what the OS, MySQL or MariaDB, PHP-FPM and other services need from total RAM, keep about 10% as headroom, then divide by the size of one Apache process and round down. Example for 4 GB with prefork, OS 512 MB, MySQL 1 GB and 40 MB processes: floor((4096 − 1536) × 0.9 ÷ 40) = 57. With worker or event, multiply the number of processes by ThreadsPerChild instead.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between MaxRequestWorkers and ServerLimit?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">MaxRequestWorkers is the number of requests Apache serves at the same time. ServerLimit is the upper bound on the number of child processes. With prefork each process handles one request, so ServerLimit must be at least MaxRequestWorkers, and you must raise it to go above the default of 256. With worker or event, ServerLimit must be at least MaxRequestWorkers ÷ ThreadsPerChild, rounded up.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Why must MaxRequestWorkers be a multiple of ThreadsPerChild?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">With the threaded worker and event MPMs, Apache starts whole child processes that each run ThreadsPerChild threads. The Apache 2.4 docs say MaxRequestWorkers should be an integer multiple of ThreadsPerChild; otherwise Apache rounds it down and logs a warning. The default is 16 processes × 25 threads = 400.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>How do I measure the average Apache process size?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Run the ps and awk one-liner shown under the process-size field while the site has normal traffic. It averages the resident memory (RSS) of all apache2 processes. On RHEL, CentOS, AlmaLinux or Rocky Linux the process is called httpd. For a safer number, list the processes with ps -ylC apache2 --sort:rss and use the largest one.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>What happens if MaxRequestWorkers is too high or too low?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">Too high: under a traffic spike Apache starts more processes than RAM can hold, the server swaps and the Linux OOM killer may stop MySQL. Too low: the error log shows "server reached MaxRequestWorkers setting, consider raising the MaxRequestWorkers setting" and new connections wait in a queue, so pages load slowly. Use the calculated value as a starting point and watch memory and the error log.</div>
+    </div>
+  </div>
+  <div class="lang-ko">
+    <h2 class="faq-title">자주 묻는 질문</h2>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Apache MaxRequestWorkers는 어떻게 계산하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">총 RAM에서 OS, MySQL·MariaDB, PHP-FPM 등 다른 서비스가 쓰는 메모리를 빼고, 10% 정도 여유를 남긴 뒤 Apache 프로세스 1개 크기로 나누고 내림합니다. 예: 4GB, prefork, OS 512MB, MySQL 1GB, 프로세스 40MB → floor((4096 − 1536) × 0.9 ÷ 40) = 57. worker·event는 프로세스 수에 ThreadsPerChild를 곱합니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>MaxRequestWorkers와 ServerLimit은 무엇이 다른가요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">MaxRequestWorkers는 Apache가 동시에 처리하는 요청 수이고, ServerLimit은 자식 프로세스 수의 상한입니다. prefork는 프로세스 하나가 요청 하나를 처리하므로 ServerLimit이 MaxRequestWorkers 이상이어야 하고, 기본값 256을 넘기려면 ServerLimit도 올려야 합니다. worker·event는 ServerLimit이 MaxRequestWorkers ÷ ThreadsPerChild(올림) 이상이어야 합니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>MaxRequestWorkers가 ThreadsPerChild의 배수여야 하는 이유는?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">스레드 방식인 worker·event MPM은 ThreadsPerChild개 스레드를 가진 자식 프로세스를 통째로 띄웁니다. Apache 2.4 문서는 MaxRequestWorkers를 ThreadsPerChild의 정수배로 두라고 하며, 아니면 내림하고 경고를 남깁니다. 기본값은 프로세스 16개 × 스레드 25개 = 400입니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>Apache 프로세스 평균 크기는 어떻게 측정하나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">프로세스 크기 입력란 아래의 ps + awk 한 줄 명령을 평소 트래픽이 있을 때 실행하세요. 모든 apache2 프로세스의 상주 메모리(RSS) 평균을 MB로 보여줍니다. RHEL·CentOS·AlmaLinux·Rocky Linux는 프로세스 이름이 httpd입니다. 더 안전하게 잡으려면 ps -ylC apache2 --sort:rss로 목록을 보고 가장 큰 값을 쓰세요.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span>MaxRequestWorkers가 너무 크거나 작으면 어떻게 되나요?</span><span class="faq-icon">+</span></button>
+      <div class="faq-a">너무 크면: 트래픽이 몰릴 때 RAM에 다 들어가지 않을 만큼 프로세스가 늘어 스왑이 생기고, 리눅스 OOM killer가 MySQL을 종료시킬 수 있습니다. 너무 작으면: 에러 로그에 "server reached MaxRequestWorkers setting, consider raising the MaxRequestWorkers setting"이 찍히고 새 연결이 대기열에서 기다려 페이지가 느려집니다. 계산값을 출발점으로 삼고 메모리와 에러 로그를 보며 조정하세요.</div>
+    </div>
+  </div>
+  </section>
+
+  <!-- Related tools -->
+  <section class="sf-related">
+    <h2 class="sf-related-title" data-i18n="related_title">Related Tools</h2>
+    <ul class="grid">
+      <li><a href="/tools/php-fpm-max-children-calculator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-layers"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">PHP-FPM pm.max_children Calculator</span><span class="lang-ko">PHP-FPM pm.max_children 계산기</span></span></span></a></li>
+      <li><a href="/tools/innodb-buffer-pool-size-calculator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-chart-pie"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">InnoDB Buffer Pool Size Calculator</span><span class="lang-ko">InnoDB 버퍼 풀 크기 계산기</span></span></span></a></li>
+      <li><a href="/tools/linux-swap-calculator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-arrow-down-up"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">Linux Swap Size Calculator</span><span class="lang-ko">리눅스 스왑 크기 계산기</span></span></span></a></li>
+      <li><a href="/tools/htpasswd-generator/" class="card card-sm sf-related-card"><span class="tile"><svg class="ico" aria-hidden="true"><use href="/shared/icons.svg#i-lock-keyhole"/></svg></span><span class="card-text"><span class="card-name"><span class="lang-en">.htpasswd Generator</span><span class="lang-ko">.htpasswd 생성기</span></span></span></a></li>
+    </ul>
+  </section>
+
+  <!-- Related content -->
+  <section class="related">
+    <p><a href="https://stackfreeks.com/blog/best-cheap-vps-2026/" target="_blank" rel="noopener">Best Cheap VPS Under $10/Month in 2026 (Compared &amp; Ranked)</a></p>
+  </section>
+
+  <!-- Vultr affiliate banner -->
+  <div class="vultr-banner">
+    <a
+      class="vultr-inner"
+      href="https://www.vultr.com/?ref=9907834-9J"
+      rel="nofollow sponsored"
+      target="_blank"
+    >
+      <div>
+        <div class="vultr-label" data-i18n="vultr_label">Sponsor</div>
+        <div class="vultr-title" data-i18n="vultr_title">Get started on Vultr</div>
+        <div class="vultr-sub" data-i18n="vultr_sub">Get $300 free credit — valid for 30 days (limited-time offer)</div>
+      </div>
+      <div class="vultr-cta" data-i18n="vultr_cta">Claim your credit →</div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap-tool">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+        <a href="/terms/">Terms</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 StackFreeks</div>
+    </div>
+  </footer>
+
+
+<script>
+window.SF_PAGE_I18N = {
+  en: {
+    cat_vps_server: 'VPS & Server',
+    more_tools: 'More server tools',
+    all_in_cat: 'All VPS & Server tools',
+    prev_tool: 'Previous tool',
+    next_tool: 'Next tool',
+    badge_free: 'Free',
+    badge_signup: 'No sign-up',
+    badge_browser: 'Runs in your browser',
+    lbl_input: 'Server & MPM',
+    lbl_mpm: 'Apache MPM',
+    x_mpm: 'Apache MPM',
+    hint_mpm: 'Check yours with: apachectl -V | grep MPM (httpd -V on RHEL).',
+    lbl_ram: 'Total RAM (GB)',
+    lbl_reserved: 'Reserved for other services (MB)',
+    lbl_os: 'OS & system',
+    lbl_db: 'MySQL / MariaDB',
+    lbl_php: 'PHP-FPM',
+    lbl_other: 'Other (Redis, cron…)',
+    lbl_buffer: 'Safety headroom (%)',
+    hint_buffer: 'Kept free for spikes and memory growth. 10% is typical; max 90% (higher values are reset to 90).',
+    hint_proc2: 'RHEL/Alma/Rocky: replace apache2 with httpd. Run it under real traffic; ps -ylC apache2 --sort:rss lists each process if you want the largest one.',
+    hint_threads: 'Apache defaults: ThreadsPerChild 25, ThreadLimit 64. ThreadsPerChild cannot exceed ThreadLimit.',
+    btn_copy: 'Copy',
+    lbl_result: 'Recommended limits',
+    lbl_formula: 'Formula',
+    lbl_breakdown: 'Memory breakdown at peak',
+    row_db: 'MySQL / MariaDB',
+    row_res: 'OS + PHP-FPM + other',
+    row_sum: 'Total vs RAM',
+    row_left: 'Left free',
+    lbl_current: 'Check your current MaxRequestWorkers (optional)',
+    hint_current: 'Leave empty to chart the recommended value. Enter the number from your config to see whether it fits in RAM.',
+    lbl_reverse: 'Reverse: RAM needed for a target number of concurrent requests',
+    lbl_target: 'Target concurrent requests',
+    hint_target: 'Uses the same MPM, reservations, headroom and process size as above.'
+  },
+  ko: {
+    cat_vps_server: 'VPS & 서버',
+    more_tools: '서버 툴 더 보기',
+    all_in_cat: 'VPS & 서버 전체',
+    prev_tool: '이전 툴',
+    next_tool: '다음 툴',
+    badge_free: '무료',
+    badge_signup: '가입 없음',
+    badge_browser: '브라우저에서 실행',
+    lbl_input: '서버 & MPM',
+    lbl_mpm: 'Apache MPM',
+    x_mpm: 'Apache MPM',
+    hint_mpm: '확인 명령: apachectl -V | grep MPM (RHEL은 httpd -V)',
+    lbl_ram: '총 RAM (GB)',
+    lbl_reserved: '다른 서비스용 예약 메모리 (MB)',
+    lbl_os: 'OS·시스템',
+    lbl_db: 'MySQL / MariaDB',
+    lbl_php: 'PHP-FPM',
+    lbl_other: '기타 (Redis, cron…)',
+    lbl_buffer: '안전 여유분 (%)',
+    hint_buffer: '트래픽 급증·메모리 증가에 대비해 비워 두는 몫. 보통 10%, 최대 90% (초과 값은 90으로 맞춰짐).',
+    hint_proc2: 'RHEL/Alma/Rocky는 apache2 대신 httpd로 바꾸세요. 실제 트래픽이 있을 때 실행하고, 가장 큰 프로세스를 보려면 ps -ylC apache2 --sort:rss로 목록을 확인하세요.',
+    hint_threads: 'Apache 기본값: ThreadsPerChild 25, ThreadLimit 64. ThreadsPerChild는 ThreadLimit을 넘을 수 없습니다.',
+    btn_copy: '복사',
+    lbl_result: '권장 값',
+    lbl_formula: '계산식',
+    lbl_breakdown: '최대 부하 시 메모리 구성',
+    row_db: 'MySQL / MariaDB',
+    row_res: 'OS + PHP-FPM + 기타',
+    row_sum: '합계 / 총 RAM',
+    row_left: '남는 메모리',
+    lbl_current: '지금 쓰는 MaxRequestWorkers 확인 (선택)',
+    hint_current: '비워 두면 권장 값으로 그래프를 그립니다. 설정 파일의 값을 넣으면 RAM 안에 들어가는지 보여줍니다.',
+    lbl_reverse: '역계산: 목표 동시 요청 수에 필요한 RAM',
+    lbl_target: '목표 동시 요청 수',
+    hint_target: '위와 같은 MPM·예약 메모리·여유분·프로세스 크기를 사용합니다.'
+  }
+};
+</script>
+<script src="/shared/i18n.js"></script>
+
+<script>
+var VULTR_REF = 'https://www.vultr.com/?ref=9907834-9J';
+var DOCS = 'https://httpd.apache.org/docs/2.4/mod/mpm_common.html#maxrequestworkers';
+// RAM sizes (GB) of Vultr Cloud Compute ("vc2") plans, same list as php-fpm-max-children-calculator
+// (public plans API, checked 2026-10-03). No prices on purpose. Above the largest size we suggest nothing.
+var PLAN_SIZES_GB = [0.5, 1, 2, 4, 8, 16, 32, 64, 96];
+// Apache 2.4 mpm_common: prefork MaxRequestWorkers default 256 (ServerLimit 256),
+// ServerLimit hard limit 200000 (prefork) / 20000 (worker, event).
+var PREFORK_DEFAULT_LIMIT = 256;
+var HARD_LIMIT = { prefork: 200000, worker: 20000, event: 20000 };
+var mpm = 'prefork';
+
+var DYN = {
+  en: {
+    procLabelPrefork: 'Apache process size (MB)',
+    procLabelThreaded: 'Apache child process size (MB, all threads)',
+    procHintPrefork: 'Average RSS of one apache2/httpd process (one process = one request). Measure it on your server:',
+    procHintThreaded: 'Average RSS of one child process including its ThreadsPerChild threads. Measure it on your server:',
+    genPrefork: 'MaxRequestWorkers = floor((RAM − reserved) × (1 − headroom) ÷ process_size)',
+    genThreaded: 'MaxRequestWorkers = floor((RAM − reserved) × (1 − headroom) ÷ process_size) × ThreadsPerChild',
+    limitPrefork: function (n) { return 'ServerLimit = MaxRequestWorkers = ' + n; },
+    limitThreaded: function (n, t, s) { return 'ServerLimit = ceil(' + n + ' ÷ ' + t + ') = ' + s; },
+    roundNote: function (raw, t, n) { return 'raw ' + raw + ' → rounded down to a multiple of ThreadsPerChild (' + t + ') = ' + n; },
+    ok: 'Fits in RAM with your headroom',
+    tight: 'Very few workers — consider more RAM or smaller processes',
+    none: 'Not enough RAM left for Apache',
+    needProc: 'Enter your Apache process size (MB)',
+    notePrefork: function (n, size) { return 'Up to ' + n + ' Apache processes of ~' + size + ' MB can serve requests at once without touching swap.'; },
+    noteThreaded: function (n, p, size) { return p + ' child processes of ~' + size + ' MB give ' + n + ' threads, so up to ' + n + ' requests at once.'; },
+    noteNone: 'Reservations plus headroom use all RAM. Lower the reservations, shrink processes or add RAM.',
+    noteProc: 'Enter the average Apache process size (MB). Measure it with the ps command under the field.',
+    wPrefork256: function (n) { return 'MaxRequestWorkers ' + n + ' is above the prefork default of 256. Apache caps it at ServerLimit, so ServerLimit must be raised to at least ' + n + ' (the block below does this). Change ServerLimit with a full restart, not a graceful reload.'; },
+    wThreadLimit: function (t, l) { return 'ThreadsPerChild (' + t + ') is greater than ThreadLimit (' + l + '). Apache would lower ThreadsPerChild to ' + l + '. The block below raises ThreadLimit to ' + t + '; a higher ThreadLimit also uses a little more shared memory.'; },
+    wHard: function (s, h) { return 'ServerLimit ' + s + ' is above the Apache hard limit of ' + h + '. Apache will not start this many processes.'; },
+    basis: 'Basis: <a href="' + DOCS + '" target="_blank" rel="noopener">Apache 2.4 mpm_common docs (MaxRequestWorkers, ServerLimit, ThreadsPerChild)</a>. This is a starting point — watch the error log for "server reached MaxRequestWorkers" and memory with free -m, then adjust.',
+    apacheLabel: function (n, size, threaded, p) { return threaded ? 'Apache peak (' + p + ' processes × ' + size + ' MB)' : 'Apache peak (' + n + ' × ' + size + ' MB)'; },
+    over: function (sum, ram) { return 'Peak memory ' + sum + ' MB is more than your ' + ram + ' MB of RAM. At full load the server will swap or the OOM killer will stop a process. Lower MaxRequestWorkers or add RAM.'; },
+    confLabel: function (m) { return 'MPM config (mpm_' + m + '_module)'; },
+    confHead: function (ram, size) { return '# Generated by tools.stackfreeks.com — ' + ram + ' GB RAM, ~' + size + ' MB per process'; },
+    confPathDeb: function (m) { return '# Debian/Ubuntu: /etc/apache2/mods-available/mpm_' + m + '.conf'; },
+    confPathRh: '# RHEL/Alma/Rocky: /etc/httpd/conf.modules.d/ (or httpd.conf)',
+    confRaised: '# raised to match ThreadsPerChild',
+    confNone: '# Not enough free RAM for any Apache process.\n# Reduce reservations or process size, or add RAM.',
+    confProc: '# Enter your Apache process size (MB) to generate the config.',
+    apply: 'Apply: sudo apachectl configtest, then sudo systemctl restart apache2 (httpd on RHEL). ServerLimit and ThreadLimit only change on a full restart.',
+    revNeed: 'Minimum total RAM',
+    revDetailPrefork: function (t, mb) { return t + ' processes × process size ÷ (1 − headroom) + reservations = ' + mb + ' MB'; },
+    revDetailThreaded: function (t, p, tpc, mb) { return 'ceil(' + t + ' ÷ ' + tpc + ') = ' + p + ' processes × process size ÷ (1 − headroom) + reservations = ' + mb + ' MB'; },
+    revFits: function (cur, max) { return 'Your current ' + cur + ' GB is enough (it fits up to ' + max + ' requests).'; },
+    revShort: function (cur) { return 'More than your current ' + cur + ' GB.'; },
+    ctaText: function (need, plan) { return 'You need ≥ ' + need + ' GB — deploy ' + (plan === 8 ? 'an ' : 'a ') + plan + ' GB Vultr instance.'; },
+    ctaBtn: function (plan) { return 'Deploy ' + plan + ' GB on Vultr →'; },
+    revInvalid: 'Enter a target of 1 or more.',
+    revTooBig: function (max) { return 'That is more than the largest single Vultr Cloud Compute instance (' + max + ' GB). Shrink processes, lower the target or spread traffic across servers.'; },
+    copied: 'Copied'
+  },
+  ko: {
+    procLabelPrefork: 'Apache 프로세스 크기 (MB)',
+    procLabelThreaded: 'Apache 자식 프로세스 크기 (MB, 스레드 포함)',
+    procHintPrefork: 'apache2/httpd 프로세스 1개의 평균 RSS (프로세스 1개 = 요청 1개). 서버에서 직접 측정하세요:',
+    procHintThreaded: 'ThreadsPerChild개 스레드를 포함한 자식 프로세스 1개의 평균 RSS. 서버에서 직접 측정하세요:',
+    genPrefork: 'MaxRequestWorkers = floor((RAM − 예약) × (1 − 여유분) ÷ 프로세스 크기)',
+    genThreaded: 'MaxRequestWorkers = floor((RAM − 예약) × (1 − 여유분) ÷ 프로세스 크기) × ThreadsPerChild',
+    limitPrefork: function (n) { return 'ServerLimit = MaxRequestWorkers = ' + n; },
+    limitThreaded: function (n, t, s) { return 'ServerLimit = ceil(' + n + ' ÷ ' + t + ') = ' + s; },
+    roundNote: function (raw, t, n) { return '계산값 ' + raw + ' → ThreadsPerChild(' + t + ')의 배수로 내림 = ' + n; },
+    ok: '여유분을 포함해 RAM 안에 들어갑니다',
+    tight: '워커 수가 매우 적음 — RAM 증설 또는 프로세스 크기 축소 권장',
+    none: 'Apache에 남는 RAM이 없습니다',
+    needProc: 'Apache 프로세스 크기(MB)를 입력하세요',
+    notePrefork: function (n, size) { return '약 ' + size + 'MB 프로세스로 스왑 없이 동시에 최대 ' + n + '개 요청을 처리할 수 있습니다.'; },
+    noteThreaded: function (n, p, size) { return '약 ' + size + 'MB 자식 프로세스 ' + p + '개 → 스레드 ' + n + '개, 동시에 최대 ' + n + '개 요청을 처리합니다.'; },
+    noteNone: '예약 메모리와 여유분이 RAM 전체를 차지합니다. 예약을 줄이거나 프로세스를 줄이거나 RAM을 늘리세요.',
+    noteProc: 'Apache 프로세스 평균 크기(MB)를 입력하세요. 입력란 아래 ps 명령으로 측정할 수 있습니다.',
+    wPrefork256: function (n) { return 'MaxRequestWorkers ' + n + ' 값이 prefork 기본 상한 256보다 큽니다. Apache는 ServerLimit까지만 허용하므로 ServerLimit도 ' + n + ' 이상으로 올려야 합니다 (아래 블록에 포함). ServerLimit 변경은 graceful reload가 아니라 전체 재시작이 필요합니다.'; },
+    wThreadLimit: function (t, l) { return 'ThreadsPerChild(' + t + ') 값이 ThreadLimit(' + l + ')보다 큽니다. 이대로면 Apache가 ThreadsPerChild를 ' + l + '(으)로 낮춥니다. 아래 블록은 ThreadLimit을 ' + t + '(으)로 올립니다. ThreadLimit이 크면 공유 메모리도 조금 더 씁니다.'; },
+    wHard: function (s, h) { return 'ServerLimit ' + s + ' 값이 Apache 하드 상한 ' + h + '보다 큽니다. 이만큼의 프로세스는 띄울 수 없습니다.'; },
+    basis: '근거: <a href="' + DOCS + '" target="_blank" rel="noopener">Apache 2.4 mpm_common 문서 (MaxRequestWorkers, ServerLimit, ThreadsPerChild)</a>. 이 값은 출발점입니다. 에러 로그의 "server reached MaxRequestWorkers"와 free -m 메모리를 보며 조정하세요',
+    apacheLabel: function (n, size, threaded, p) { return threaded ? 'Apache 최대 (프로세스 ' + p + '개 × ' + size + 'MB)' : 'Apache 최대 (' + n + ' × ' + size + 'MB)'; },
+    over: function (sum, ram) { return '최대 메모리 ' + sum + 'MB가 RAM ' + ram + 'MB보다 큽니다. 최대 부하에서 스왑이 생기거나 OOM killer가 프로세스를 종료합니다. MaxRequestWorkers를 줄이거나 RAM을 늘리세요.'; },
+    confLabel: function (m) { return 'MPM 설정 (mpm_' + m + '_module)'; },
+    confHead: function (ram, size) { return '# tools.stackfreeks.com 생성 — RAM ' + ram + 'GB, 프로세스당 약 ' + size + 'MB'; },
+    confPathDeb: function (m) { return '# Debian/Ubuntu: /etc/apache2/mods-available/mpm_' + m + '.conf'; },
+    confPathRh: '# RHEL/Alma/Rocky: /etc/httpd/conf.modules.d/ (또는 httpd.conf)',
+    confRaised: '# ThreadsPerChild에 맞춰 올림',
+    confNone: '# Apache 프로세스를 띄울 여유 RAM이 없습니다.\n# 예약 메모리나 프로세스 크기를 줄이거나 RAM을 늘리세요.',
+    confProc: '# 설정을 만들려면 Apache 프로세스 크기(MB)를 입력하세요.',
+    apply: '적용: sudo apachectl configtest 후 sudo systemctl restart apache2 (RHEL은 httpd). ServerLimit·ThreadLimit은 전체 재시작해야 바뀝니다.',
+    revNeed: '필요한 최소 총 RAM',
+    revDetailPrefork: function (t, mb) { return '프로세스 ' + t + '개 × 프로세스 크기 ÷ (1 − 여유분) + 예약 메모리 = ' + mb + ' MB'; },
+    revDetailThreaded: function (t, p, tpc, mb) { return 'ceil(' + t + ' ÷ ' + tpc + ') = 프로세스 ' + p + '개 × 프로세스 크기 ÷ (1 − 여유분) + 예약 메모리 = ' + mb + ' MB'; },
+    revFits: function (cur, max) { return '현재 ' + cur + 'GB로 충분합니다 (최대 ' + max + '개 요청까지 가능).'; },
+    revShort: function (cur) { return '현재 ' + cur + 'GB보다 더 필요합니다.'; },
+    ctaText: function (need, plan) { return '최소 ' + need + 'GB 이상 필요 — ' + plan + 'GB Vultr 인스턴스를 배포하세요.'; },
+    ctaBtn: function (plan) { return 'Vultr ' + plan + 'GB 배포 →'; },
+    revInvalid: '1 이상의 목표값을 입력하세요.',
+    revTooBig: function (max) { return 'Vultr Cloud Compute 단일 인스턴스 최대 크기(' + max + 'GB)보다 큽니다. 프로세스 크기나 목표값을 줄이거나 트래픽을 여러 서버로 나누세요.'; },
+    copied: '복사됨'
+  }
+};
+
+function L() { return (window.sfLang && window.sfLang.current === 'ko') ? DYN.ko : DYN.en; }
+function num(id, fallback) {
+  var el = document.getElementById(id);
+  var v = parseFloat(el.value), max = parseFloat(el.max);
+  // Values above the field's max are written back so huge inputs can't blow up the layout.
+  if (v > max) { el.value = max; v = max; }
+  return isFinite(v) && v >= 0 ? v : fallback;
+}
+function fmt(n) { return (Math.round(n * 10) / 10).toLocaleString('en-US'); }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function setText(id, s) { document.getElementById(id).textContent = s; }
+function threaded() { return mpm !== 'prefork'; }
+
+function readInputs() {
+  var ramGb = num('ramGb', 0);
+  var db = num('resDb', 0);
+  var other = num('resOs', 0) + num('resPhp', 0) + num('resOther', 0);
+  // Headroom is limited to 0–90%; out-of-range values are written back so the field and formula agree.
+  var bufEl = document.getElementById('bufferPct');
+  var bufRaw = parseFloat(bufEl.value);
+  if (isFinite(bufRaw) && (bufRaw > 90 || bufRaw < 0)) bufEl.value = bufRaw > 90 ? 90 : 0;
+  var buffer = Math.min(num('bufferPct', 0), 90) / 100;
+  var tpc = Math.max(1, Math.floor(num('tpc', 25)) || 1);
+  var tl = Math.max(1, Math.floor(num('threadLimit', 64)) || 1);
+  return { ramGb: ramGb, ramMb: ramGb * 1024, db: db, other: other, reserved: db + other,
+           buffer: buffer, proc: num('procMb', 0) > 0 ? Math.max(1, num('procMb', 0)) : 0, tpc: tpc, threadLimit: tl };
+}
+
+// Core math.
+//   prefork:      MRW = floor(usable ÷ proc), ServerLimit = MRW (one process per request)
+//   worker/event: raw = usable ÷ proc × TPC, MRW = floor(raw ÷ TPC) × TPC (multiple of TPC),
+//                 ServerLimit = ceil(MRW ÷ TPC)
+//   usable = (RAM − reserved) × (1 − headroom)
+function compute(p) {
+  var r = { mrw: 0, procs: 0, serverLimit: 0, raw: 0, usable: Math.max(0, (p.ramMb - p.reserved) * (1 - p.buffer)) };
+  if (p.proc <= 0) return r;
+  if (!threaded()) {
+    r.raw = r.usable / p.proc;
+    r.mrw = Math.floor(r.raw);
+    r.procs = r.mrw;
+    r.serverLimit = r.mrw;
+  } else {
+    r.raw = r.usable / p.proc * p.tpc;
+    r.mrw = Math.floor(r.raw / p.tpc) * p.tpc;
+    r.serverLimit = Math.ceil(r.mrw / p.tpc);
+    r.procs = r.serverLimit;
+  }
+  return r;
+}
+
+// Peak Apache memory for a given MaxRequestWorkers value.
+function apachePeak(p, mrw) {
+  return threaded() ? Math.ceil(mrw / p.tpc) * p.proc : mrw * p.proc;
+}
+
+function buildConfig(p, r) {
+  var t = L();
+  if (p.proc <= 0) return t.confProc;
+  if (r.mrw < 1) return t.confNone;
+  var lines = [t.confHead(fmt(p.ramGb), fmt(p.proc)), t.confPathDeb(mpm), t.confPathRh, '', '<IfModule mpm_' + mpm + '_module>'];
+  if (!threaded()) {
+    // prefork directives only: StartServers, Min/MaxSpareServers, ServerLimit, MaxRequestWorkers
+    var start = Math.min(5, r.mrw);
+    lines.push('    StartServers             ' + start);
+    lines.push('    MinSpareServers          ' + Math.min(5, r.mrw));
+    lines.push('    MaxSpareServers          ' + Math.min(10, r.mrw));
+    lines.push('    ServerLimit              ' + r.serverLimit);
+    lines.push('    MaxRequestWorkers        ' + r.mrw);
+    lines.push('    MaxConnectionsPerChild   0');
+  } else {
+    var tl = Math.max(p.threadLimit, p.tpc);
+    lines.push('    StartServers             ' + Math.min(3, r.serverLimit));
+    lines.push('    ServerLimit              ' + r.serverLimit);
+    lines.push('    ThreadLimit              ' + tl + (tl > p.threadLimit ? '   ' + t.confRaised : ''));
+    lines.push('    ThreadsPerChild          ' + p.tpc);
+    lines.push('    MaxRequestWorkers        ' + r.mrw);
+    lines.push('    MaxConnectionsPerChild   0');
+  }
+  lines.push('</IfModule>');
+  return lines.join('\n');
+}
+
+function nextPlan(needGb) {
+  for (var i = 0; i < PLAN_SIZES_GB.length; i++) if (PLAN_SIZES_GB[i] >= needGb) return PLAN_SIZES_GB[i];
+  return null; // bigger than any single instance: never invent a size
+}
+
+function renderWarnings(p, r) {
+  var t = L();
+  var list = [];
+  if (r.mrw >= 1 && !threaded() && r.mrw > PREFORK_DEFAULT_LIMIT) list.push(t.wPrefork256(r.mrw));
+  if (threaded() && p.tpc > p.threadLimit) list.push(t.wThreadLimit(p.tpc, p.threadLimit));
+  if (r.serverLimit > HARD_LIMIT[mpm]) list.push(t.wHard(r.serverLimit, HARD_LIMIT[mpm]));
+  document.getElementById('warnList').innerHTML = list.map(function (w) {
+    return '<div class="warn-item"><svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-triangle-alert"/></svg><span>' + esc(w) + '</span></div>';
+  }).join('');
+}
+
+function renderBreakdown(p, r) {
+  var t = L();
+  var cur = Math.floor(num('currentMrw', 0));
+  var mrw = cur >= 1 ? cur : r.mrw;
+  var peak = p.proc > 0 ? apachePeak(p, mrw) : 0;
+  var sum = peak + p.reserved;
+  var scale = Math.max(sum, p.ramMb) || 1;
+  document.getElementById('barApache').style.width = (peak / scale * 100) + '%';
+  document.getElementById('barDb').style.width = (p.db / scale * 100) + '%';
+  document.getElementById('barRes').style.width = (p.other / scale * 100) + '%';
+  setText('bdApacheLabel', t.apacheLabel(mrw, fmt(p.proc), threaded(), Math.ceil(mrw / p.tpc)));
+  setText('bdApache', fmt(peak) + ' MB');
+  setText('bdDb', fmt(p.db) + ' MB');
+  setText('bdRes', fmt(p.other) + ' MB');
+  setText('bdSum', fmt(sum) + ' / ' + fmt(p.ramMb) + ' MB');
+  setText('bdLeft', fmt(p.ramMb - sum) + ' MB');
+  var over = sum > p.ramMb;
+  document.getElementById('overWarn').hidden = !over;
+  if (over) setText('overWarnText', t.over(fmt(sum), fmt(p.ramMb)));
+}
+
+function renderReverse(p, r) {
+  var t = L();
+  var out = document.getElementById('reverseOut');
+  var cta = document.getElementById('reverseCta');
+  var target = Math.floor(num('targetReq', 0));
+  if (p.proc <= 0) { out.textContent = t.noteProc; cta.hidden = true; return; }
+  if (target < 1) { out.textContent = t.revInvalid; cta.hidden = true; return; }
+  // Reverse: RAM = reserved + processes × proc ÷ (1 − headroom); processes = target (prefork) or ceil(target ÷ TPC)
+  var procs = threaded() ? Math.ceil(target / p.tpc) : target;
+  var needMb = p.reserved + procs * p.proc / (1 - p.buffer);
+  var needGb = Math.ceil(needMb / 1024 * 10) / 10; // round up to 0.1 GB
+  var detail = threaded() ? t.revDetailThreaded(target, procs, p.tpc, fmt(needMb)) : t.revDetailPrefork(target, fmt(needMb));
+  var html = '<div class="cmd-label" style="margin-bottom:2px;">' + esc(t.revNeed) + '</div>' +
+             '<div class="reverse-big">' + fmt(needGb) + ' GB</div>' +
+             '<div class="hint" style="margin-bottom:8px;">' + esc(detail) + '</div>';
+  var short = needMb > p.ramMb;
+  html += '<div class="badge ' + (short ? 'badge-danger' : 'badge-success') + '" style="margin-bottom:0;">' +
+          '<svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-' + (short ? 'circle-x' : 'circle-check') + '"/></svg>' +
+          esc(short ? t.revShort(fmt(p.ramGb)) : t.revFits(fmt(p.ramGb), r.mrw)) + '</div>';
+  var plan = short ? nextPlan(needGb) : null;
+  if (short && plan === null) html += '<p class="hint" style="margin-top:8px;">' + esc(t.revTooBig(PLAN_SIZES_GB[PLAN_SIZES_GB.length - 1])) + '</p>';
+  out.innerHTML = html;
+  if (short && plan !== null) {
+    setText('reverseCtaText', t.ctaText(fmt(needGb), plan));
+    var btn = document.getElementById('reverseCtaBtn');
+    btn.textContent = t.ctaBtn(plan);
+    btn.href = VULTR_REF;
+    cta.hidden = false;
+  } else {
+    cta.hidden = true;
+  }
+}
+
+function calculate() {
+  var t = L();
+  var p = readInputs();
+  var r = compute(p);
+  var noProc = p.proc <= 0;
+  var ok = r.mrw >= 1;
+
+  setText('procLabel', threaded() ? t.procLabelThreaded : t.procLabelPrefork);
+  setText('procHint', threaded() ? t.procHintThreaded : t.procHintPrefork);
+  document.getElementById('threadInputs').hidden = !threaded();
+  document.getElementById('rowTpc').hidden = !threaded();
+
+  setText('resMrw', r.mrw);
+  setText('resServerLimit', ok ? r.serverLimit : '—');
+  setText('resTpc', p.tpc);
+  setText('resStart', ok ? (threaded() ? Math.min(3, r.serverLimit) : Math.min(5, r.mrw)) : '—');
+
+  var badge = document.getElementById('resBadge');
+  var setBadge = function (cls, icon, text) {
+    badge.className = 'badge ' + cls;
+    badge.innerHTML = '<svg class="ico ico-inline" aria-hidden="true"><use href="/shared/icons.svg#i-' + icon + '"/></svg>';
+    badge.appendChild(document.createTextNode(text));
+  };
+  if (noProc) setBadge('badge-warn', 'triangle-alert', t.needProc);
+  else if (!ok) setBadge('badge-danger', 'circle-x', t.none);
+  else if (r.mrw < 10) setBadge('badge-warn', 'triangle-alert', t.tight);
+  else setBadge('badge-success', 'check', t.ok);
+  setText('resNote', noProc ? t.noteProc : (!ok ? t.noteNone :
+    (threaded() ? t.noteThreaded(r.mrw, r.procs, fmt(p.proc)) : t.notePrefork(r.mrw, fmt(p.proc)))));
+
+  // Formula with the actual numbers plugged in
+  setText('formulaGeneric', threaded() ? t.genThreaded : t.genPrefork);
+  var raw2 = Math.round(r.raw * 100) / 100;
+  if (noProc) {
+    setText('formulaLive', '');
+  } else if (!threaded()) {
+    setText('formulaLive', '= floor((' + fmt(p.ramMb) + ' − ' + fmt(p.reserved) + ') × ' + (1 - p.buffer).toFixed(2) +
+      ' ÷ ' + fmt(p.proc) + ') = floor(' + raw2 + ') = ' + r.mrw);
+  } else {
+    setText('formulaLive', '= (' + fmt(p.ramMb) + ' − ' + fmt(p.reserved) + ') × ' + (1 - p.buffer).toFixed(2) +
+      ' ÷ ' + fmt(p.proc) + ' × ' + p.tpc + ' = ' + raw2 + ' · ' + t.roundNote(raw2, p.tpc, r.mrw));
+  }
+  setText('formulaLimit', ok ? (threaded() ? t.limitThreaded(r.mrw, p.tpc, r.serverLimit) : t.limitPrefork(r.mrw)) : '');
+  renderWarnings(p, r);
+  document.getElementById('basisNote').innerHTML = t.basis;
+
+  renderBreakdown(p, r);
+  setText('confLabel', t.confLabel(mpm));
+  setText('confBlock', buildConfig(p, r));
+  setText('applyHint', t.apply);
+  renderReverse(p, r);
+}
+
+function setMpm(m) {
+  mpm = m;
+  document.querySelectorAll('.seg-btn').forEach(function (b) {
+    var on = b.getAttribute('data-mpm') === m;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-checked', on ? 'true' : 'false');
+  });
+  calculate();
+}
+
+function copyText(id, btn) {
+  var text = document.getElementById(id).textContent;
+  var done = function () {
+    btn.textContent = L().copied;
+    setTimeout(function () { btn.textContent = (window.sfLang && sfLang.current === 'ko') ? '복사' : 'Copy'; }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+  } else { fallbackCopy(text); done(); }
+}
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+
+['ramGb', 'resOs', 'resDb', 'resPhp', 'resOther', 'bufferPct', 'procMb', 'tpc', 'threadLimit', 'currentMrw', 'targetReq'].forEach(function (id) {
+  document.getElementById(id).addEventListener('input', calculate);
+});
+document.addEventListener('sfLangChanged', calculate);
+calculate();
+</script>
+
+</body>
+</html>

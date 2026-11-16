@@ -49,6 +49,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tools.stackfreeks.com/tools/apache-maxrequestworkers-calculator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tools.stackfreeks.com/tools/apache-maxrequestworkers-calculator/ko/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tools.stackfreeks.com/tools/base-converter/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
