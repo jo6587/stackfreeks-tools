@@ -372,8 +372,8 @@ window.SF_PAGE_I18N = {
   });
 
   // Enter key triggers calculate
-  ipInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') calculate(); });
-  prefixInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') calculate(); });
+  ipInput.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) calculate(); });
+  prefixInput.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) calculate(); });
 
   function showError(msg) {
     errorMsg.textContent = msg;

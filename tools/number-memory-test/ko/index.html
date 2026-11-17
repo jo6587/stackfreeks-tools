@@ -426,7 +426,7 @@ window.SF_PAGE_I18N = {
     var submitBtn = document.getElementById('submitBtn');
     input.focus();
     input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') { e.preventDefault(); submitAnswer(); }
+      if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); submitAnswer(); }
     });
     submitBtn.addEventListener('click', submitAnswer);
   }
