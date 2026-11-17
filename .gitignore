@@ -31,8 +31,5 @@ PRODUCT.md
 # Marketing drafts (local only)
 marketing/
 
-# Claude Code: 프로젝트 스킬만 올리고 나머지(.claude/settings.local.json, worktrees)는 로컬
-.claude/*
-!.claude/skills/
-# 위의 guides/ 무시 규칙이 스킬 안 guides/까지 잡지 않게
-!.claude/skills/*/guides/
+# Claude Code 로컬 파일 (스킬 포함). 루트가 그대로 배포되므로 올리지 않는다
+.claude/
