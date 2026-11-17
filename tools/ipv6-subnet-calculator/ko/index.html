@@ -712,7 +712,7 @@ window.SF_PAGE_I18N = {
   $('prev-btn').addEventListener('click', function () { if (page > 0n) { page--; renderList(); } });
   $('next-btn').addEventListener('click', function () { page++; renderList(); });
   $('jump-btn').addEventListener('click', jump);
-  jumpIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') jump(); });
+  jumpIn.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) jump(); });
   $('copy-btn').addEventListener('click', copyPage);
   $('csv-btn').addEventListener('click', downloadCsv);
   // Results are built in JS, so re-render them when the language changes.

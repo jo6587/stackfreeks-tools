@@ -639,7 +639,7 @@
     // ─── Allow Enter key on form fields to add host ───────
     document.querySelectorAll('.form-panel input').forEach(function(inp) {
       inp.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') { e.preventDefault(); addHost(); }
+        if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); addHost(); }
       });
     });
 
