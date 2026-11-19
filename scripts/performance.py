@@ -10,7 +10,7 @@ One-time setup:
      scope, so its token is shared (refreshes are written back there). Otherwise run once with --login
      (opens a browser to consent). Without --login a missing/revoked token exits 2 instead of waiting
      on a browser, so unattended scheduled runs fail fast.
-Same desktop OAuth app as 04_Ops_Briefing and the WordPress pipeline (only client_secret.json is read).
+Same desktop OAuth app as 01_Ops and the WordPress pipeline (only client_secret.json is read).
 Env overrides: GSC_CLIENT_SECRET, GSC_TOKEN (paths), GSC_SITE (default sc-domain:tools.stackfreeks.com)
 """
 import os
@@ -26,7 +26,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 
 ROOT = Path(__file__).resolve().parent.parent
-CLIENT_SECRET = Path(os.getenv("GSC_CLIENT_SECRET", r"F:\02_PipeLineWork\04_Ops_Briefing\_config\client_secret.json"))
+CLIENT_SECRET = Path(os.getenv("GSC_CLIENT_SECRET", r"F:\02_PipeLineWork\01_Ops\_config\client_secret.json"))
 TOKEN_FILE = Path(os.getenv("GSC_TOKEN", ROOT.parent / "02_Autoblog_StackFreeks_Wordpress" / "gsc-token.json"))
 SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
 SITE = os.getenv("GSC_SITE", "sc-domain:tools.stackfreeks.com")
