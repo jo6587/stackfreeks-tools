@@ -48,6 +48,7 @@ ICONS = {
     "php-fpm-max-children-calculator": "layers",
     "innodb-buffer-pool-size-calculator": "chart-pie",
     "apache-maxrequestworkers-calculator": "feather",
+    "zfs-arc-size-calculator": "cylinder",
     "managed-database-cost-calculator": "database",
     # DevOps & Config Generators
     "cron-builder": "calendar-clock",
