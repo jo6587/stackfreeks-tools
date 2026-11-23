@@ -36,6 +36,16 @@ def serialize(soup):
     return out
 
 
+def write_page(path, text):
+    """Skip unchanged pages (keeps mtime, which qa_check --push compares) and keep the file's line endings."""
+    newline = None
+    if path.exists():
+        if path.read_text(encoding="utf-8") == text:
+            return
+        newline = "\r\n" if b"\r\n" in path.read_bytes() else "\n"
+    path.write_text(text, encoding="utf-8", newline=newline)
+
+
 def hreflang_links(soup, en_url, ko_url):
     """Return list of new <link rel=alternate> tags (en, ko, x-default)."""
     tags = []
@@ -209,7 +219,7 @@ def build_ko_page(src_path, en_url, ko_url, slug, is_home):
 
     out_path = src_path.parent / "ko" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(serialize(soup), encoding="utf-8")
+    write_page(out_path, serialize(soup))
     return out_path
 
 
@@ -233,7 +243,7 @@ def patch_english_original(src_path, en_url, ko_url):
         m = re.search(r'</title>[ \t]*\n', new_text)
         pos = m.end()
     new_text = new_text[:pos] + triple + new_text[pos:]
-    src_path.write_text(new_text, encoding="utf-8", newline="")
+    write_page(src_path, new_text)
 
 
 def update_sitemap(slugs):
@@ -264,7 +274,7 @@ def update_sitemap(slugs):
         start = text.index("  <!-- Tools -->")
     end = text.index("</urlset>")
     new_text = text[:start] + block.lstrip("\n") + text[end:]
-    sm_path.write_text(new_text, encoding="utf-8")
+    write_page(sm_path, new_text)
 
 
 def main():
