@@ -618,7 +618,7 @@ function noteFor(ramGB, swapGB, usecase, hibernate) {
   const { val, unit } = formatSize(swapGB);
   if (isKo) {
     if (hibernate) return `절전 모드를 위해 스왑은 RAM(${ramGB >= 1 ? ramGB + 'GB' : ramGB*1024+'MB'}) 이상이어야 합니다.`;
-    if (ramGB <= 2) return `RAM이 적을수록 더 많은 스왑이 필요합니다. ${val}${unit}는 소규모 VPS에 표준 권장값입니다.`;
+    if (ramGB <= 2) return `RAM이 적을수록 더 많은 스왑이 필요합니다. 소규모 VPS의 표준 권장값은 ${val}${unit}입니다.`;
     if (ramGB >= 64) return `대용량 RAM 서버에서 스왑은 안전망 역할만 합니다. 4GB면 충분합니다.`;
     if (usecase === 'database') return `DB 서버에는 최소 4GB 스왑을 권장합니다. swappiness를 낮게 유지하세요.`;
     return `${ramGB}GB RAM 기준 표준 권장 스왑 크기입니다.`;
