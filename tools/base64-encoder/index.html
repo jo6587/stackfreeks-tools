@@ -469,19 +469,21 @@ window.SF_PAGE_I18N = {
   <script>
 // ── Utilities ─────────────────────────────────────────────────────────────────
 
-/** Encode string to Base64, handling Unicode via encodeURIComponent. */
+/** Encode string to Base64 as UTF-8. Returns null on unpaired surrogates. */
 function toBase64(str) {
-  try {
-    return btoa(unescape(encodeURIComponent(str)));
-  } catch (e) {
-    return null;
-  }
+  // TextEncoder would silently replace unpaired surrogates with U+FFFD
+  if (/\p{Surrogate}/u.test(str)) return null;
+  var binary = '';
+  // per byte: String.fromCharCode(...bytes) overflows the stack on large input
+  new TextEncoder().encode(str).forEach(function(b) { binary += String.fromCharCode(b); });
+  return btoa(binary);
 }
 
-/** Decode Base64 to string, handling Unicode. */
+/** Decode Base64 to string. Returns null on invalid Base64 or UTF-8. */
 function fromBase64(b64) {
   try {
-    return decodeURIComponent(escape(atob(b64)));
+    var bytes = Uint8Array.from(atob(b64), function(c) { return c.charCodeAt(0); });
+    return new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
   } catch (e) {
     return null;
   }
