@@ -26,6 +26,8 @@ HANGUL = re.compile(r"[가-힣]")
 # anchor on the ASSIGNMENT: pages also read window.SF_PAGE_I18N inside guards
 PAGE_I18N_ASSIGN = re.compile(r"SF_PAGE_I18N\s*=\s*\{")
 _post_urls = None
+# "{n}은" / "${x}가" in a template — the particle can't be fixed text when the value varies
+JOSA_AFTER_VAR = re.compile(r"\$?\{[\w.]+\}(?:은|는|이|가|을|를)(?![가-힣])")
 
 # tokens that name a background/surface — never legal as a text colour (design-guide §2)
 SURFACE_TOKENS = ("--success", "--danger-bg", "--warning-bg", "--accent-soft", "--accent-soft-2",
@@ -98,9 +100,10 @@ def _obj_keys(src: str, open_brace: int) -> list[str]:
     for i, depth in _scan_js(src, open_brace + 1):
         if depth:
             continue
-        m = re.match(r"([A-Za-z_$][\w$]*|\"[^\"]*\"|'[^']*')\s*:", src[i:])
+        # quoted keys are escape-aware: a value like "x\": y" must not read as key `x\`
+        m = re.match(r"([A-Za-z_$][\w$]*|\"(?:[^\"\\]|\\.)*\"|'(?:[^'\\]|\\.)*')\s*:", src[i:])
         if m and (i == 0 or not re.match(r"[\w$.]", src[i - 1])):
-            keys.append(m.group(1).strip("\"'"))
+            keys.append(m.group(1)[1:-1] if m.group(1)[0] in "\"'" else m.group(1))
     return keys
 
 
@@ -185,6 +188,11 @@ def check(slug: str) -> tuple[list[str], list[str]]:
             for lang in ("en", "ko"):
                 dup = sorted({k for k in halves[lang] if halves[lang].count(k) > 1})
                 need(not dup, f"SF_PAGE_I18N {lang}: duplicate keys {dup}")
+
+    # KO particle hardcoded after a runtime value ("{n}은", "${x}가") — wrong for half the values
+    for m in sorted(set(JOSA_AFTER_VAR.findall(html))):
+        warns.append(f"Korean particle hardcoded after a variable: {m!r} — pick 은/는·이/가·을/를 "
+                     f"from the value's last sound or rephrase (design-guide §6)")
 
     # SEO
     title = soup.title.string.strip() if soup.title and soup.title.string else ""
@@ -321,7 +329,7 @@ def changed_slugs():
 
 
 def selftest():
-    """The three rules that need a parser rather than a regex — keep them honest."""
+    """The rules that need a parser or a tricky regex — keep them honest."""
     src = """<script>window.SF_PAGE_I18N = {
       en: { a: 'x: not a key', b: "}", c: { nested: 1 }, "d": 2, only_en: 3 },
       ko: { a: '1', b: '2', c: { nested: 1 }, "d": 2 }
@@ -331,6 +339,10 @@ def selftest():
     assert h["ko"] == ["a", "b", "c", "d"], h
     assert set(h["en"]) - set(h["ko"]) == {"only_en"}
     assert page_i18n_halves("<p>no i18n here</p>") is None
+    # escaped quotes (ipv6-subnet-calculator false FAIL): value "x\": y" is not a key; "k\"q" is one
+    esc = page_i18n_halves(r"""<script>window.SF_PAGE_I18N = {
+      en: { a: "x\": y", "k\"q": 1, b: 'it\'s: ok' }, ko: { a: "x", "k\"q": 1, b: 'y' } };</script>""")
+    assert esc["en"] == esc["ko"] == ["a", 'k\\"q', "b"], esc
 
     ok = BeautifulSoup("<body><p>Result: 6 × 1024 ✓ done, 50 ÷ 2 → fine</p>"
                        "<a href='/'>All tools →</a></body>", "lxml")
@@ -338,6 +350,9 @@ def selftest():
     bad = BeautifulSoup("<body><button class='btn'>📋</button><span>✕</span>"
                         "<p>fine ✓ here too</p></body>", "lxml")
     assert len(glyph_fails(bad)) == 2, glyph_fails(bad)
+
+    assert JOSA_AFTER_VAR.findall('"#{to}가 들어", `${val}는 `') == ["{to}가", "${val}는"]
+    assert JOSA_AFTER_VAR.findall('"/{p}{eun} 니블", "{n}개가", "{n}이상", "{kind}이다"') == []
 
     assert COLOR_DECL.search("color: var(--surface-2)").group(1) in SURFACE_TOKENS
     assert COLOR_DECL.search("background-color: var(--surface-2)") is None
